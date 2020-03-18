@@ -1,0 +1,13 @@
+# Kubernetes branch/tag to get the OpenAPI spec from.
+export KUBERNETES_BRANCH="v1.17.4"
+
+# client version for packaging and releasing. It can
+# be different than SPEC_VERSION.
+export CLIENT_VERSION="0.0.1"
+
+# Name of the release package
+export PACKAGE_NAME="client"
+
+# OpenAPI-Generator branch/tag to generate the client library
+export OPENAPI_GENERATOR_COMMIT="master"
+
