@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <errno.h>
 
-#define K8S_APISERVER_BASEPATH "https://9.111.254.254:6443"
+#define K8S_APISERVER_BASEPATH "https://your.server.here"
 #define K8S_TOKEN_FILE_IN_CLUSTER "/var/run/secrets/kubernetes.io/serviceaccount/token"
 #define K8S_TOKEN_BUF_SIZE 1024
 #define K8S_AUTH_KEY "Authorization"
@@ -59,14 +59,10 @@ loadK8sConfigInCluster(char *token, int token_buf_size)
 
     if (fp == NULL) {
         if (errno == ENOENT) {
-            printf("\
-%s: The file %s does not exist.",
-            fname, K8S_TOKEN_FILE_IN_CLUSTER);
+            printf("%s: The file %s does not exist.", fname, K8S_TOKEN_FILE_IN_CLUSTER);
             return (-1);
         } else {
-            printf("\
-%s: Failed to open file %s (%m).",
-            fname, K8S_TOKEN_FILE_IN_CLUSTER);
+            printf("%s: Failed to open file %s.", fname, K8S_TOKEN_FILE_IN_CLUSTER);
             return (-1);
         }
     }
@@ -89,16 +85,11 @@ init_k8s_connector(const char *token_out_of_cluster)
     apiKeys = list_create();
 
     char *keyToken = strdup(K8S_AUTH_KEY);
-    char token_in_cluster[K8S_TOKEN_BUF_SIZE];
-    memset(token_in_cluster, 0, sizeof(token_in_cluster));
-
-    //loadK8sConfigInCluster(token_in_cluster, K8S_TOKEN_BUF_SIZE); // in cluster
-
+    
     char valueToken[K8S_TOKEN_BUF_SIZE];
     memset(valueToken, 0, sizeof(valueToken));
-    //sprintf(valueToken, K8S_AUTH_VALUE_TEMPLATE, token); // in cluster
     
-    sprintf(valueToken, K8S_AUTH_VALUE_TEMPLATE, token_out_of_cluster); // out of cluster
+    sprintf(valueToken, K8S_AUTH_VALUE_TEMPLATE, token_out_of_cluster);
 
     keyValuePair_t *keyPairToken = keyValuePair_create(keyToken, valueToken);
     list_addElement(apiKeys, keyPairToken);
