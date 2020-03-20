@@ -12,11 +12,11 @@
 
 apiClient_t *g_k8sAPIConnector;
 
-void create_a_pod(apiClient_t *apiClient)
+void create_a_pod(apiClient_t * apiClient)
 {
     char *namespace = "default";
 
-    v1_pod_t * podinfo = calloc(1, sizeof(v1_pod_t));
+    v1_pod_t *podinfo = calloc(1, sizeof(v1_pod_t));
     podinfo->api_version = strdup("v1");
     podinfo->kind = strdup("Pod");
     podinfo->spec = calloc(1, sizeof(v1_pod_spec_t));
@@ -43,14 +43,13 @@ void create_a_pod(apiClient_t *apiClient)
     list_addElement(containerlist, con);
     podinfo->spec->containers = containerlist;
 
-    v1_pod_t* apod = CoreV1API_createNamespacedPod(apiClient, namespace, podinfo, NULL, NULL, NULL);
+    v1_pod_t *apod = CoreV1API_createNamespacedPod(apiClient, namespace, podinfo, NULL, NULL, NULL);
     printf("code=%ld\n", apiClient->response_code);
 
     v1_pod_free(apod);
 }
 
-int
-loadK8sConfigInCluster(char *token, int token_buf_size)
+int loadK8sConfigInCluster(char *token, int token_buf_size)
 {
     static char fname[] = "loadK8sConfigInCluster()";
 
@@ -78,17 +77,16 @@ loadK8sConfigInCluster(char *token, int token_buf_size)
     return 0;
 }
 
-int
-init_k8s_connector(const char *token_out_of_cluster)
+int init_k8s_connector(const char *token_out_of_cluster)
 {
     list_t *apiKeys;
     apiKeys = list_create();
 
     char *keyToken = strdup(K8S_AUTH_KEY);
-    
+
     char valueToken[K8S_TOKEN_BUF_SIZE];
     memset(valueToken, 0, sizeof(valueToken));
-    
+
     sprintf(valueToken, K8S_AUTH_VALUE_TEMPLATE, token_out_of_cluster);
 
     keyValuePair_t *keyPairToken = keyValuePair_create(keyToken, valueToken);
@@ -99,11 +97,9 @@ init_k8s_connector(const char *token_out_of_cluster)
 
 int main(int argc, char *argv[])
 {
-
     init_k8s_connector(argv[1]);
 
     create_a_pod(g_k8sAPIConnector);
 
     apiClient_free(g_k8sAPIConnector);
 }
-

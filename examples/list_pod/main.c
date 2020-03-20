@@ -12,38 +12,35 @@
 
 apiClient_t *g_k8sAPIConnector;
 
-void list_pod(apiClient_t *apiClient)
+void list_pod(apiClient_t * apiClient)
 {
     v1_pod_list_t *pod_list = NULL;
-    pod_list = CoreV1API_listNamespacedPod( apiClient ,
-                                            "default", /*namespace*/
-                                            NULL, /* pretty */
-                                            0, /* allowWatchBookmarks */
-                                            NULL, /* continue */
-                                            NULL, /* fieldSelector */
-                                            NULL, /* labelSelector */
-                                            0, /* limit */
-                                            NULL, /* resourceVersion */
-                                            0, /* timeoutSeconds */
-                                            0 /* watch */
-                    );
+    pod_list = CoreV1API_listNamespacedPod(apiClient, "default",    /*namespace */
+                                           NULL,    /* pretty */
+                                           0,   /* allowWatchBookmarks */
+                                           NULL,    /* continue */
+                                           NULL,    /* fieldSelector */
+                                           NULL,    /* labelSelector */
+                                           0,   /* limit */
+                                           NULL,    /* resourceVersion */
+                                           0,   /* timeoutSeconds */
+                                           0    /* watch */
+        );
     printf("return code=%ld\n", apiClient->response_code);
-    if(pod_list){
+    if (pod_list) {
         printf("Get pod list.\n");
         listEntry_t *listEntry = NULL;
         v1_pod_t *pod = NULL;
-        list_ForEach(listEntry, pod_list->items){
+        list_ForEach(listEntry, pod_list->items) {
             pod = listEntry->data;
             printf("pod name=%s\n", pod->metadata->name);
         }
-
-    }else{
+    } else {
         printf("Cannot list any pod.\n");
     }
 }
 
-int
-loadK8sConfigInCluster(char *token, int token_buf_size)
+int loadK8sConfigInCluster(char *token, int token_buf_size)
 {
     static char fname[] = "loadK8sConfigInCluster()";
 
@@ -71,8 +68,7 @@ loadK8sConfigInCluster(char *token, int token_buf_size)
     return 0;
 }
 
-int
-init_k8s_connector(const char *token_out_of_cluster)
+int init_k8s_connector(const char *token_out_of_cluster)
 {
     list_t *apiKeys;
     apiKeys = list_create();
@@ -81,7 +77,7 @@ init_k8s_connector(const char *token_out_of_cluster)
 
     char valueToken[K8S_TOKEN_BUF_SIZE];
     memset(valueToken, 0, sizeof(valueToken));
-    
+
     sprintf(valueToken, K8S_AUTH_VALUE_TEMPLATE, token_out_of_cluster);
 
     keyValuePair_t *keyPairToken = keyValuePair_create(keyToken, valueToken);
@@ -92,11 +88,9 @@ init_k8s_connector(const char *token_out_of_cluster)
 
 int main(int argc, char *argv[])
 {
-
     init_k8s_connector(argv[1]);
 
     list_pod(g_k8sAPIConnector);
 
     apiClient_free(g_k8sAPIConnector);
 }
-
