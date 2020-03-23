@@ -1,16 +1,72 @@
-# Kubernetes Template Project
+# Kubernetes Client Library for C
 
-The Kubernetes Template Project is a template for starting new projects in the GitHub organizations owned by Kubernetes. All Kubernetes projects, at minimum, must have the following files:
+This is the official Kubernetes client library for the C programming language.
+It is a work in progress and should be considered _alpha_ quality software at this
+time.
 
-- a `README.md` outlining the project goals, sponsoring sig, and community contact information
-- an `OWNERS` with the project leads listed as approvers ([docs on `OWNERS` files][owners])
-- a `CONTRIBUTING.md` outlining how to contribute to the project
-- an unmodified copy of `code-of-conduct.md` from this repo, which outlines community behavior and the consequences of breaking the code
-- a `LICENSE` which must be Apache 2.0 for code projects, or [Creative Commons 4.0] for documentation repositories, without any custom content
-- a `SECURITY_CONTACTS` with the contact points for the Product Security Team 
-  to reach out to for triaging and handling of incoming issues. They must agree to abide by the
-  [Embargo Policy](https://git.k8s.io/security/private-distributors-list.md#embargo-policy)
-  and will be removed and replaced if they violate that agreement.
+## Building the library
+```bash
+# Clone the repo
+git clone https://github.com/kubernetes-client/c
+CLIENT_REPO_ROOT=${PWD}/c
+
+# Install pre-requisites
+sudo apt-get install libcurl4-openssl-dev uncrustify
+
+# Move into the Kubernetes directory
+cd ${CLIENT_REPO_ROOT}/kubernetes
+
+# Build
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local/lib ..
+make
+sudo make install
+```
+
+## Building an example
+```bash
+cd ${CLIENT_REPO_ROOT}/examples/list_pod
+make
+```
+
+## Running the example
+For now, you need to use `kubectl proxy` to handle authentication.
+
+```bash
+kubectl proxy
+./list_pod_bin
+```
+
+## Usage example
+
+```c
+    list_t *apiKeys;
+    apiKeys = list_create();
+    
+    keyValuePair_t *keyPairToken = keyValuePair_create(keyToken, valueToken);
+    list_addElement(apiKeys, keyPairToken);
+
+    g_k8sAPIConnector = apiClient_create_with_base_path(K8S_APISERVER_BASEPATH, NULL, apiKeys);
+
+    v1_pod_list_t *pod_list = NULL;
+    pod_list = CoreV1API_listNamespacedPod(apiClient,
+                                          "default",    /*namespace */
+                                           NULL,    /* pretty */
+                                           0,       /* allowWatchBookmarks */
+                                           NULL,    /* continue */
+                                           NULL,    /* fieldSelector */
+                                           NULL,    /* labelSelector */
+                                           0,       /* limit */
+                                           NULL,    /* resourceVersion */
+                                           0,       /* timeoutSeconds */
+                                           0        /* watch */
+        );
+    printf("return code=%ld\n", apiClient->response_code);
+    if (pod_list) {
+      ...
+    }
+```
 
 ## Community, discussion, contribution, and support
 

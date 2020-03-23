@@ -12,7 +12,14 @@ You'll need the `curl 7.58.0` package in order to build the API. To have code fo
 
 # Prerequisites
 
-## Install the `curl 7.58.0` package with the following command on Linux.
+## Install the `curl 7.58.0`
+
+### Install from package
+```bash
+sudo apt-get install libcurl4-openssl-dev
+```
+
+### Command line instructions
 ```bash
 sudo apt remove curl
 wget http://curl.haxx.se/download/curl-7.58.0.tar.gz
@@ -22,7 +29,14 @@ cd curl-7.58.0/
 make
 sudo make install
 ```
-## Install the `uncrustify 0.67` package with the following command on Linux.
+## Install the `uncrustify 0.67`
+
+### Install using a package manager
+```bash
+sudo apt-get install uncrustify
+```
+
+### Command line instructions
 ```bash
 git clone https://github.com/uncrustify/uncrustify.git
 cd uncrustify

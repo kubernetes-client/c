@@ -4,7 +4,12 @@
 #include <stdio.h>
 #include <errno.h>
 
-#define K8S_APISERVER_BASEPATH "https://your.server.here"
+// kubectl proxy server
+#define K8S_APISERVER_BASEPATH "http://localhost:8001"
+
+// Alternately from within a Kubernetes cluster:
+// #define K8S_APISERVER_BASEPATH https://your.server.here
+
 #define K8S_TOKEN_FILE_IN_CLUSTER "/var/run/secrets/kubernetes.io/serviceaccount/token"
 #define K8S_TOKEN_BUF_SIZE 1024
 #define K8S_AUTH_KEY "Authorization"
