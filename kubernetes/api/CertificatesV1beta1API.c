@@ -15,7 +15,7 @@
 // create a CertificateSigningRequest
 //
 v1beta1_certificate_signing_request_t*
-CertificatesV1beta1API_createCertificateSigningRequest(apiClient_t *apiClient, v1beta1_certificate_signing_request_t * body, char * pretty, char * dryRun, char * fieldManager)
+CertificatesV1beta1API_createCertificateSigningRequest(apiClient_t *apiClient, v1beta1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -166,7 +166,7 @@ end:
 // delete a CertificateSigningRequest
 //
 v1_status_t*
-CertificatesV1beta1API_deleteCertificateSigningRequest(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body)
+CertificatesV1beta1API_deleteCertificateSigningRequest(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -365,7 +365,7 @@ end:
 // delete collection of CertificateSigningRequest
 //
 v1_status_t*
-CertificatesV1beta1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, int timeoutSeconds, int watch, v1_delete_options_t * body)
+CertificatesV1beta1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -788,7 +788,7 @@ end:
 // list or watch objects of kind CertificateSigningRequest
 //
 v1beta1_certificate_signing_request_list_t*
-CertificatesV1beta1API_listCertificateSigningRequest(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, int timeoutSeconds, int watch)
+CertificatesV1beta1API_listCertificateSigningRequest(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1052,7 +1052,7 @@ end:
 // partially update the specified CertificateSigningRequest
 //
 v1beta1_certificate_signing_request_t*
-CertificatesV1beta1API_patchCertificateSigningRequest(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force)
+CertificatesV1beta1API_patchCertificateSigningRequest(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1232,7 +1232,7 @@ end:
 // partially update status of the specified CertificateSigningRequest
 //
 v1beta1_certificate_signing_request_t*
-CertificatesV1beta1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force)
+CertificatesV1beta1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1412,7 +1412,7 @@ end:
 // read the specified CertificateSigningRequest
 //
 v1beta1_certificate_signing_request_t*
-CertificatesV1beta1API_readCertificateSigningRequest(apiClient_t *apiClient, char * name, char * pretty, int exact, int export)
+CertificatesV1beta1API_readCertificateSigningRequest(apiClient_t *apiClient, char * name , char * pretty , int exact , int export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1549,7 +1549,7 @@ end:
 // read status of the specified CertificateSigningRequest
 //
 v1beta1_certificate_signing_request_t*
-CertificatesV1beta1API_readCertificateSigningRequestStatus(apiClient_t *apiClient, char * name, char * pretty)
+CertificatesV1beta1API_readCertificateSigningRequestStatus(apiClient_t *apiClient, char * name , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1646,7 +1646,7 @@ end:
 // replace the specified CertificateSigningRequest
 //
 v1beta1_certificate_signing_request_t*
-CertificatesV1beta1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char * name, v1beta1_certificate_signing_request_t * body, char * pretty, char * dryRun, char * fieldManager)
+CertificatesV1beta1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char * name , v1beta1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1805,7 +1805,7 @@ end:
 // replace approval of the specified CertificateSigningRequest
 //
 v1beta1_certificate_signing_request_t*
-CertificatesV1beta1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClient, char * name, v1beta1_certificate_signing_request_t * body, char * dryRun, char * fieldManager, char * pretty)
+CertificatesV1beta1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClient, char * name , v1beta1_certificate_signing_request_t * body , char * dryRun , char * fieldManager , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1964,7 +1964,7 @@ end:
 // replace status of the specified CertificateSigningRequest
 //
 v1beta1_certificate_signing_request_t*
-CertificatesV1beta1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient, char * name, v1beta1_certificate_signing_request_t * body, char * pretty, char * dryRun, char * fieldManager)
+CertificatesV1beta1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient, char * name , v1beta1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;

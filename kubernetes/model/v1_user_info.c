@@ -58,10 +58,6 @@ cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info) {
     if (v1_user_info->extra) {
     list_ForEach(extraListEntry, v1_user_info->extra) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)extraListEntry->data;
-        if(cJSON_AddNumberToObject(localMapObject, localKeyValue->key, *(double *)localKeyValue->value) == NULL)
-        {
-            goto fail;
-        }
     }
     }
      } 
@@ -124,11 +120,6 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     cJSON_ArrayForEach(extra_local_map, extra)
     {
 		cJSON *localMapObject = extra_local_map;
-        if(!cJSON_IsNumber(localMapObject))
-        {
-            goto end;
-        }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),&localMapObject->valuedouble );
         list_addElement(extraList , localMapKeyPair);
     }
     }

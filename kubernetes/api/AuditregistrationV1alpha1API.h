@@ -14,19 +14,19 @@
 // create an AuditSink
 //
 v1alpha1_audit_sink_t*
-AuditregistrationV1alpha1API_createAuditSink(apiClient_t *apiClient ,v1alpha1_audit_sink_t * body ,char * pretty ,char * dryRun ,char * fieldManager);
+AuditregistrationV1alpha1API_createAuditSink(apiClient_t *apiClient, v1alpha1_audit_sink_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // delete an AuditSink
 //
 v1_status_t*
-AuditregistrationV1alpha1API_deleteAuditSink(apiClient_t *apiClient ,char * name ,char * pretty ,char * dryRun ,int gracePeriodSeconds ,int orphanDependents ,char * propagationPolicy ,v1_delete_options_t * body);
+AuditregistrationV1alpha1API_deleteAuditSink(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
 // delete collection of AuditSink
 //
 v1_status_t*
-AuditregistrationV1alpha1API_deleteCollectionAuditSink(apiClient_t *apiClient ,char * pretty ,int allowWatchBookmarks ,char * _continue ,char * dryRun ,char * fieldSelector ,int gracePeriodSeconds ,char * labelSelector ,int limit ,int orphanDependents ,char * propagationPolicy ,char * resourceVersion ,int timeoutSeconds ,int watch ,v1_delete_options_t * body);
+AuditregistrationV1alpha1API_deleteCollectionAuditSink(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
 
 
 // get available resources
@@ -38,24 +38,24 @@ AuditregistrationV1alpha1API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind AuditSink
 //
 v1alpha1_audit_sink_list_t*
-AuditregistrationV1alpha1API_listAuditSink(apiClient_t *apiClient ,char * pretty ,int allowWatchBookmarks ,char * _continue ,char * fieldSelector ,char * labelSelector ,int limit ,char * resourceVersion ,int timeoutSeconds ,int watch);
+AuditregistrationV1alpha1API_listAuditSink(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // partially update the specified AuditSink
 //
 v1alpha1_audit_sink_t*
-AuditregistrationV1alpha1API_patchAuditSink(apiClient_t *apiClient ,char * name ,object_t * body ,char * pretty ,char * dryRun ,char * fieldManager ,int force);
+AuditregistrationV1alpha1API_patchAuditSink(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
 
 
 // read the specified AuditSink
 //
 v1alpha1_audit_sink_t*
-AuditregistrationV1alpha1API_readAuditSink(apiClient_t *apiClient ,char * name ,char * pretty ,int exact ,int export);
+AuditregistrationV1alpha1API_readAuditSink(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
 
 
 // replace the specified AuditSink
 //
 v1alpha1_audit_sink_t*
-AuditregistrationV1alpha1API_replaceAuditSink(apiClient_t *apiClient ,char * name ,v1alpha1_audit_sink_t * body ,char * pretty ,char * dryRun ,char * fieldManager);
+AuditregistrationV1alpha1API_replaceAuditSink(apiClient_t *apiClient, char * name , v1alpha1_audit_sink_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 

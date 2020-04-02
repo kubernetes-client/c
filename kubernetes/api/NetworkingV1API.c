@@ -15,7 +15,7 @@
 // create a NetworkPolicy
 //
 v1_network_policy_t*
-NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char * namespace, v1_network_policy_t * body, char * pretty, char * dryRun, char * fieldManager)
+NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char * namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -177,7 +177,7 @@ end:
 // delete collection of NetworkPolicy
 //
 v1_status_t*
-NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, char * namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, int timeoutSeconds, int watch, v1_delete_options_t * body)
+NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -549,7 +549,7 @@ end:
 // delete a NetworkPolicy
 //
 v1_status_t*
-NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char * name, char * namespace, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body)
+NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -821,7 +821,7 @@ end:
 // list or watch objects of kind NetworkPolicy
 //
 v1_network_policy_list_t*
-NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, int timeoutSeconds, int watch)
+NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1096,7 +1096,7 @@ end:
 // list or watch objects of kind NetworkPolicy
 //
 v1_network_policy_list_t*
-NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * pretty, char * resourceVersion, int timeoutSeconds, int watch)
+NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1360,7 +1360,7 @@ end:
 // partially update the specified NetworkPolicy
 //
 v1_network_policy_t*
-NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name, char * namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force)
+NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1551,7 +1551,7 @@ end:
 // read the specified NetworkPolicy
 //
 v1_network_policy_t*
-NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char * name, char * namespace, char * pretty, int exact, int export)
+NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1699,7 +1699,7 @@ end:
 // replace the specified NetworkPolicy
 //
 v1_network_policy_t*
-NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char * name, char * namespace, v1_network_policy_t * body, char * pretty, char * dryRun, char * fieldManager)
+NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;

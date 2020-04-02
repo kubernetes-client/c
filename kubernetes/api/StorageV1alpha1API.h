@@ -14,19 +14,19 @@
 // create a VolumeAttachment
 //
 v1alpha1_volume_attachment_t*
-StorageV1alpha1API_createVolumeAttachment(apiClient_t *apiClient ,v1alpha1_volume_attachment_t * body ,char * pretty ,char * dryRun ,char * fieldManager);
+StorageV1alpha1API_createVolumeAttachment(apiClient_t *apiClient, v1alpha1_volume_attachment_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // delete collection of VolumeAttachment
 //
 v1_status_t*
-StorageV1alpha1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient ,char * pretty ,int allowWatchBookmarks ,char * _continue ,char * dryRun ,char * fieldSelector ,int gracePeriodSeconds ,char * labelSelector ,int limit ,int orphanDependents ,char * propagationPolicy ,char * resourceVersion ,int timeoutSeconds ,int watch ,v1_delete_options_t * body);
+StorageV1alpha1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
 
 
 // delete a VolumeAttachment
 //
 v1_status_t*
-StorageV1alpha1API_deleteVolumeAttachment(apiClient_t *apiClient ,char * name ,char * pretty ,char * dryRun ,int gracePeriodSeconds ,int orphanDependents ,char * propagationPolicy ,v1_delete_options_t * body);
+StorageV1alpha1API_deleteVolumeAttachment(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
 // get available resources
@@ -38,24 +38,24 @@ StorageV1alpha1API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind VolumeAttachment
 //
 v1alpha1_volume_attachment_list_t*
-StorageV1alpha1API_listVolumeAttachment(apiClient_t *apiClient ,char * pretty ,int allowWatchBookmarks ,char * _continue ,char * fieldSelector ,char * labelSelector ,int limit ,char * resourceVersion ,int timeoutSeconds ,int watch);
+StorageV1alpha1API_listVolumeAttachment(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // partially update the specified VolumeAttachment
 //
 v1alpha1_volume_attachment_t*
-StorageV1alpha1API_patchVolumeAttachment(apiClient_t *apiClient ,char * name ,object_t * body ,char * pretty ,char * dryRun ,char * fieldManager ,int force);
+StorageV1alpha1API_patchVolumeAttachment(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
 
 
 // read the specified VolumeAttachment
 //
 v1alpha1_volume_attachment_t*
-StorageV1alpha1API_readVolumeAttachment(apiClient_t *apiClient ,char * name ,char * pretty ,int exact ,int export);
+StorageV1alpha1API_readVolumeAttachment(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
 
 
 // replace the specified VolumeAttachment
 //
 v1alpha1_volume_attachment_t*
-StorageV1alpha1API_replaceVolumeAttachment(apiClient_t *apiClient ,char * name ,v1alpha1_volume_attachment_t * body ,char * pretty ,char * dryRun ,char * fieldManager);
+StorageV1alpha1API_replaceVolumeAttachment(apiClient_t *apiClient, char * name , v1alpha1_volume_attachment_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 

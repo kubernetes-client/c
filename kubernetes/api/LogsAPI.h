@@ -7,7 +7,7 @@
 
 
 void
-LogsAPI_logFileHandler(apiClient_t *apiClient ,char * logpath);
+LogsAPI_logFileHandler(apiClient_t *apiClient, char * logpath );
 
 
 void

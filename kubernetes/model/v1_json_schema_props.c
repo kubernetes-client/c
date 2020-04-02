@@ -284,10 +284,6 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     if (v1_json_schema_props->definitions) {
     list_ForEach(definitionsListEntry, v1_json_schema_props->definitions) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)definitionsListEntry->data;
-        if(cJSON_AddNumberToObject(localMapObject, localKeyValue->key, *(double *)localKeyValue->value) == NULL)
-        {
-            goto fail;
-        }
     }
     }
      } 
@@ -304,10 +300,6 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     if (v1_json_schema_props->dependencies) {
     list_ForEach(dependenciesListEntry, v1_json_schema_props->dependencies) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)dependenciesListEntry->data;
-        if(cJSON_AddNumberToObject(localMapObject, localKeyValue->key, *(double *)localKeyValue->value) == NULL)
-        {
-            goto fail;
-        }
     }
     }
      } 
@@ -544,10 +536,6 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     if (v1_json_schema_props->pattern_properties) {
     list_ForEach(pattern_propertiesListEntry, v1_json_schema_props->pattern_properties) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)pattern_propertiesListEntry->data;
-        if(cJSON_AddNumberToObject(localMapObject, localKeyValue->key, *(double *)localKeyValue->value) == NULL)
-        {
-            goto fail;
-        }
     }
     }
      } 
@@ -564,10 +552,6 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     if (v1_json_schema_props->properties) {
     list_ForEach(propertiesListEntry, v1_json_schema_props->properties) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)propertiesListEntry->data;
-        if(cJSON_AddNumberToObject(localMapObject, localKeyValue->key, *(double *)localKeyValue->value) == NULL)
-        {
-            goto fail;
-        }
     }
     }
      } 
@@ -778,11 +762,6 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     cJSON_ArrayForEach(definitions_local_map, definitions)
     {
 		cJSON *localMapObject = definitions_local_map;
-        if(!cJSON_IsNumber(localMapObject))
-        {
-            goto end;
-        }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),&localMapObject->valuedouble );
         list_addElement(definitionsList , localMapKeyPair);
     }
     }
@@ -800,11 +779,6 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     cJSON_ArrayForEach(dependencies_local_map, dependencies)
     {
 		cJSON *localMapObject = dependencies_local_map;
-        if(!cJSON_IsNumber(localMapObject))
-        {
-            goto end;
-        }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),&localMapObject->valuedouble );
         list_addElement(dependenciesList , localMapKeyPair);
     }
     }
@@ -1038,11 +1012,6 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     cJSON_ArrayForEach(pattern_properties_local_map, pattern_properties)
     {
 		cJSON *localMapObject = pattern_properties_local_map;
-        if(!cJSON_IsNumber(localMapObject))
-        {
-            goto end;
-        }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),&localMapObject->valuedouble );
         list_addElement(pattern_propertiesList , localMapKeyPair);
     }
     }
@@ -1060,11 +1029,6 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     cJSON_ArrayForEach(properties_local_map, properties)
     {
 		cJSON *localMapObject = properties_local_map;
-        if(!cJSON_IsNumber(localMapObject))
-        {
-            goto end;
-        }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),&localMapObject->valuedouble );
         list_addElement(propertiesList , localMapKeyPair);
     }
     }

@@ -15,7 +15,7 @@
 // create an Ingress
 //
 networking_v1beta1_ingress_t*
-NetworkingV1beta1API_createNamespacedIngress(apiClient_t *apiClient, char * namespace, networking_v1beta1_ingress_t * body, char * pretty, char * dryRun, char * fieldManager)
+NetworkingV1beta1API_createNamespacedIngress(apiClient_t *apiClient, char * namespace , networking_v1beta1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -177,7 +177,7 @@ end:
 // delete collection of Ingress
 //
 v1_status_t*
-NetworkingV1beta1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char * namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, int timeoutSeconds, int watch, v1_delete_options_t * body)
+NetworkingV1beta1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -549,7 +549,7 @@ end:
 // delete an Ingress
 //
 v1_status_t*
-NetworkingV1beta1API_deleteNamespacedIngress(apiClient_t *apiClient, char * name, char * namespace, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body)
+NetworkingV1beta1API_deleteNamespacedIngress(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -821,7 +821,7 @@ end:
 // list or watch objects of kind Ingress
 //
 networking_v1beta1_ingress_list_t*
-NetworkingV1beta1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * pretty, char * resourceVersion, int timeoutSeconds, int watch)
+NetworkingV1beta1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1085,7 +1085,7 @@ end:
 // list or watch objects of kind Ingress
 //
 networking_v1beta1_ingress_list_t*
-NetworkingV1beta1API_listNamespacedIngress(apiClient_t *apiClient, char * namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, int timeoutSeconds, int watch)
+NetworkingV1beta1API_listNamespacedIngress(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1360,7 +1360,7 @@ end:
 // partially update the specified Ingress
 //
 networking_v1beta1_ingress_t*
-NetworkingV1beta1API_patchNamespacedIngress(apiClient_t *apiClient, char * name, char * namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force)
+NetworkingV1beta1API_patchNamespacedIngress(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1551,7 +1551,7 @@ end:
 // partially update status of the specified Ingress
 //
 networking_v1beta1_ingress_t*
-NetworkingV1beta1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char * name, char * namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force)
+NetworkingV1beta1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1742,7 +1742,7 @@ end:
 // read the specified Ingress
 //
 networking_v1beta1_ingress_t*
-NetworkingV1beta1API_readNamespacedIngress(apiClient_t *apiClient, char * name, char * namespace, char * pretty, int exact, int export)
+NetworkingV1beta1API_readNamespacedIngress(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1890,7 +1890,7 @@ end:
 // read status of the specified Ingress
 //
 networking_v1beta1_ingress_t*
-NetworkingV1beta1API_readNamespacedIngressStatus(apiClient_t *apiClient, char * name, char * namespace, char * pretty)
+NetworkingV1beta1API_readNamespacedIngressStatus(apiClient_t *apiClient, char * name , char * namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1998,7 +1998,7 @@ end:
 // replace the specified Ingress
 //
 networking_v1beta1_ingress_t*
-NetworkingV1beta1API_replaceNamespacedIngress(apiClient_t *apiClient, char * name, char * namespace, networking_v1beta1_ingress_t * body, char * pretty, char * dryRun, char * fieldManager)
+NetworkingV1beta1API_replaceNamespacedIngress(apiClient_t *apiClient, char * name , char * namespace , networking_v1beta1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2168,7 +2168,7 @@ end:
 // replace status of the specified Ingress
 //
 networking_v1beta1_ingress_t*
-NetworkingV1beta1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char * name, char * namespace, networking_v1beta1_ingress_t * body, char * pretty, char * dryRun, char * fieldManager)
+NetworkingV1beta1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char * name , char * namespace , networking_v1beta1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;

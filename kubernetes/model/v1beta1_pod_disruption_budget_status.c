@@ -76,10 +76,6 @@ cJSON *v1beta1_pod_disruption_budget_status_convertToJSON(v1beta1_pod_disruption
     if (v1beta1_pod_disruption_budget_status->disrupted_pods) {
     list_ForEach(disrupted_podsListEntry, v1beta1_pod_disruption_budget_status->disrupted_pods) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)disrupted_podsListEntry->data;
-        if(cJSON_AddNumberToObject(localMapObject, localKeyValue->key, *(double *)localKeyValue->value) == NULL)
-        {
-            goto fail;
-        }
     }
     }
      } 
@@ -161,11 +157,6 @@ v1beta1_pod_disruption_budget_status_t *v1beta1_pod_disruption_budget_status_par
     cJSON_ArrayForEach(disrupted_pods_local_map, disrupted_pods)
     {
 		cJSON *localMapObject = disrupted_pods_local_map;
-        if(!cJSON_IsNumber(localMapObject))
-        {
-            goto end;
-        }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),&localMapObject->valuedouble );
         list_addElement(disrupted_podsList , localMapKeyPair);
     }
     }
