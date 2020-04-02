@@ -15,7 +15,7 @@
 // create a MutatingWebhookConfiguration
 //
 v1beta1_mutating_webhook_configuration_t*
-AdmissionregistrationV1beta1API_createMutatingWebhookConfiguration(apiClient_t *apiClient, v1beta1_mutating_webhook_configuration_t * body, char * pretty, char * dryRun, char * fieldManager)
+AdmissionregistrationV1beta1API_createMutatingWebhookConfiguration(apiClient_t *apiClient, v1beta1_mutating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -166,7 +166,7 @@ end:
 // create a ValidatingWebhookConfiguration
 //
 v1beta1_validating_webhook_configuration_t*
-AdmissionregistrationV1beta1API_createValidatingWebhookConfiguration(apiClient_t *apiClient, v1beta1_validating_webhook_configuration_t * body, char * pretty, char * dryRun, char * fieldManager)
+AdmissionregistrationV1beta1API_createValidatingWebhookConfiguration(apiClient_t *apiClient, v1beta1_validating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -317,7 +317,7 @@ end:
 // delete collection of MutatingWebhookConfiguration
 //
 v1_status_t*
-AdmissionregistrationV1beta1API_deleteCollectionMutatingWebhookConfiguration(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, int timeoutSeconds, int watch, v1_delete_options_t * body)
+AdmissionregistrationV1beta1API_deleteCollectionMutatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -678,7 +678,7 @@ end:
 // delete collection of ValidatingWebhookConfiguration
 //
 v1_status_t*
-AdmissionregistrationV1beta1API_deleteCollectionValidatingWebhookConfiguration(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, int timeoutSeconds, int watch, v1_delete_options_t * body)
+AdmissionregistrationV1beta1API_deleteCollectionValidatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1039,7 +1039,7 @@ end:
 // delete a MutatingWebhookConfiguration
 //
 v1_status_t*
-AdmissionregistrationV1beta1API_deleteMutatingWebhookConfiguration(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body)
+AdmissionregistrationV1beta1API_deleteMutatingWebhookConfiguration(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1238,7 +1238,7 @@ end:
 // delete a ValidatingWebhookConfiguration
 //
 v1_status_t*
-AdmissionregistrationV1beta1API_deleteValidatingWebhookConfiguration(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body)
+AdmissionregistrationV1beta1API_deleteValidatingWebhookConfiguration(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1499,7 +1499,7 @@ end:
 // list or watch objects of kind MutatingWebhookConfiguration
 //
 v1beta1_mutating_webhook_configuration_list_t*
-AdmissionregistrationV1beta1API_listMutatingWebhookConfiguration(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, int timeoutSeconds, int watch)
+AdmissionregistrationV1beta1API_listMutatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1763,7 +1763,7 @@ end:
 // list or watch objects of kind ValidatingWebhookConfiguration
 //
 v1beta1_validating_webhook_configuration_list_t*
-AdmissionregistrationV1beta1API_listValidatingWebhookConfiguration(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, int timeoutSeconds, int watch)
+AdmissionregistrationV1beta1API_listValidatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2027,7 +2027,7 @@ end:
 // partially update the specified MutatingWebhookConfiguration
 //
 v1beta1_mutating_webhook_configuration_t*
-AdmissionregistrationV1beta1API_patchMutatingWebhookConfiguration(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force)
+AdmissionregistrationV1beta1API_patchMutatingWebhookConfiguration(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2207,7 +2207,7 @@ end:
 // partially update the specified ValidatingWebhookConfiguration
 //
 v1beta1_validating_webhook_configuration_t*
-AdmissionregistrationV1beta1API_patchValidatingWebhookConfiguration(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force)
+AdmissionregistrationV1beta1API_patchValidatingWebhookConfiguration(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2387,7 +2387,7 @@ end:
 // read the specified MutatingWebhookConfiguration
 //
 v1beta1_mutating_webhook_configuration_t*
-AdmissionregistrationV1beta1API_readMutatingWebhookConfiguration(apiClient_t *apiClient, char * name, char * pretty, int exact, int export)
+AdmissionregistrationV1beta1API_readMutatingWebhookConfiguration(apiClient_t *apiClient, char * name , char * pretty , int exact , int export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2524,7 +2524,7 @@ end:
 // read the specified ValidatingWebhookConfiguration
 //
 v1beta1_validating_webhook_configuration_t*
-AdmissionregistrationV1beta1API_readValidatingWebhookConfiguration(apiClient_t *apiClient, char * name, char * pretty, int exact, int export)
+AdmissionregistrationV1beta1API_readValidatingWebhookConfiguration(apiClient_t *apiClient, char * name , char * pretty , int exact , int export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2661,7 +2661,7 @@ end:
 // replace the specified MutatingWebhookConfiguration
 //
 v1beta1_mutating_webhook_configuration_t*
-AdmissionregistrationV1beta1API_replaceMutatingWebhookConfiguration(apiClient_t *apiClient, char * name, v1beta1_mutating_webhook_configuration_t * body, char * pretty, char * dryRun, char * fieldManager)
+AdmissionregistrationV1beta1API_replaceMutatingWebhookConfiguration(apiClient_t *apiClient, char * name , v1beta1_mutating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2820,7 +2820,7 @@ end:
 // replace the specified ValidatingWebhookConfiguration
 //
 v1beta1_validating_webhook_configuration_t*
-AdmissionregistrationV1beta1API_replaceValidatingWebhookConfiguration(apiClient_t *apiClient, char * name, v1beta1_validating_webhook_configuration_t * body, char * pretty, char * dryRun, char * fieldManager)
+AdmissionregistrationV1beta1API_replaceValidatingWebhookConfiguration(apiClient_t *apiClient, char * name , v1beta1_validating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;

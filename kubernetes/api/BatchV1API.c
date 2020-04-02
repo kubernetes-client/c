@@ -15,7 +15,7 @@
 // create a Job
 //
 v1_job_t*
-BatchV1API_createNamespacedJob(apiClient_t *apiClient, char * namespace, v1_job_t * body, char * pretty, char * dryRun, char * fieldManager)
+BatchV1API_createNamespacedJob(apiClient_t *apiClient, char * namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -177,7 +177,7 @@ end:
 // delete collection of Job
 //
 v1_status_t*
-BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char * namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, int timeoutSeconds, int watch, v1_delete_options_t * body)
+BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -549,7 +549,7 @@ end:
 // delete a Job
 //
 v1_status_t*
-BatchV1API_deleteNamespacedJob(apiClient_t *apiClient, char * name, char * namespace, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body)
+BatchV1API_deleteNamespacedJob(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -821,7 +821,7 @@ end:
 // list or watch objects of kind Job
 //
 v1_job_list_t*
-BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * pretty, char * resourceVersion, int timeoutSeconds, int watch)
+BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1085,7 +1085,7 @@ end:
 // list or watch objects of kind Job
 //
 v1_job_list_t*
-BatchV1API_listNamespacedJob(apiClient_t *apiClient, char * namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, int timeoutSeconds, int watch)
+BatchV1API_listNamespacedJob(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1360,7 +1360,7 @@ end:
 // partially update the specified Job
 //
 v1_job_t*
-BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char * name, char * namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force)
+BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1551,7 +1551,7 @@ end:
 // partially update status of the specified Job
 //
 v1_job_t*
-BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char * name, char * namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force)
+BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1742,7 +1742,7 @@ end:
 // read the specified Job
 //
 v1_job_t*
-BatchV1API_readNamespacedJob(apiClient_t *apiClient, char * name, char * namespace, char * pretty, int exact, int export)
+BatchV1API_readNamespacedJob(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1890,7 +1890,7 @@ end:
 // read status of the specified Job
 //
 v1_job_t*
-BatchV1API_readNamespacedJobStatus(apiClient_t *apiClient, char * name, char * namespace, char * pretty)
+BatchV1API_readNamespacedJobStatus(apiClient_t *apiClient, char * name , char * namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1998,7 +1998,7 @@ end:
 // replace the specified Job
 //
 v1_job_t*
-BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char * name, char * namespace, v1_job_t * body, char * pretty, char * dryRun, char * fieldManager)
+BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char * name , char * namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2168,7 +2168,7 @@ end:
 // replace status of the specified Job
 //
 v1_job_t*
-BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char * name, char * namespace, v1_job_t * body, char * pretty, char * dryRun, char * fieldManager)
+BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char * name , char * namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;

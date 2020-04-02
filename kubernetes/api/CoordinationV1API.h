@@ -14,19 +14,19 @@
 // create a Lease
 //
 v1_lease_t*
-CoordinationV1API_createNamespacedLease(apiClient_t *apiClient ,char * namespace ,v1_lease_t * body ,char * pretty ,char * dryRun ,char * fieldManager);
+CoordinationV1API_createNamespacedLease(apiClient_t *apiClient, char * namespace , v1_lease_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // delete collection of Lease
 //
 v1_status_t*
-CoordinationV1API_deleteCollectionNamespacedLease(apiClient_t *apiClient ,char * namespace ,char * pretty ,int allowWatchBookmarks ,char * _continue ,char * dryRun ,char * fieldSelector ,int gracePeriodSeconds ,char * labelSelector ,int limit ,int orphanDependents ,char * propagationPolicy ,char * resourceVersion ,int timeoutSeconds ,int watch ,v1_delete_options_t * body);
+CoordinationV1API_deleteCollectionNamespacedLease(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
 
 
 // delete a Lease
 //
 v1_status_t*
-CoordinationV1API_deleteNamespacedLease(apiClient_t *apiClient ,char * name ,char * namespace ,char * pretty ,char * dryRun ,int gracePeriodSeconds ,int orphanDependents ,char * propagationPolicy ,v1_delete_options_t * body);
+CoordinationV1API_deleteNamespacedLease(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
 // get available resources
@@ -38,30 +38,30 @@ CoordinationV1API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind Lease
 //
 v1_lease_list_t*
-CoordinationV1API_listLeaseForAllNamespaces(apiClient_t *apiClient ,int allowWatchBookmarks ,char * _continue ,char * fieldSelector ,char * labelSelector ,int limit ,char * pretty ,char * resourceVersion ,int timeoutSeconds ,int watch);
+CoordinationV1API_listLeaseForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Lease
 //
 v1_lease_list_t*
-CoordinationV1API_listNamespacedLease(apiClient_t *apiClient ,char * namespace ,char * pretty ,int allowWatchBookmarks ,char * _continue ,char * fieldSelector ,char * labelSelector ,int limit ,char * resourceVersion ,int timeoutSeconds ,int watch);
+CoordinationV1API_listNamespacedLease(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // partially update the specified Lease
 //
 v1_lease_t*
-CoordinationV1API_patchNamespacedLease(apiClient_t *apiClient ,char * name ,char * namespace ,object_t * body ,char * pretty ,char * dryRun ,char * fieldManager ,int force);
+CoordinationV1API_patchNamespacedLease(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
 
 
 // read the specified Lease
 //
 v1_lease_t*
-CoordinationV1API_readNamespacedLease(apiClient_t *apiClient ,char * name ,char * namespace ,char * pretty ,int exact ,int export);
+CoordinationV1API_readNamespacedLease(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export );
 
 
 // replace the specified Lease
 //
 v1_lease_t*
-CoordinationV1API_replaceNamespacedLease(apiClient_t *apiClient ,char * name ,char * namespace ,v1_lease_t * body ,char * pretty ,char * dryRun ,char * fieldManager);
+CoordinationV1API_replaceNamespacedLease(apiClient_t *apiClient, char * name , char * namespace , v1_lease_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 

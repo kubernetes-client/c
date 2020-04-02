@@ -64,10 +64,6 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
     if (v1_subject_access_review_spec->extra) {
     list_ForEach(extraListEntry, v1_subject_access_review_spec->extra) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)extraListEntry->data;
-        if(cJSON_AddNumberToObject(localMapObject, localKeyValue->key, *(double *)localKeyValue->value) == NULL)
-        {
-            goto fail;
-        }
     }
     }
      } 
@@ -156,11 +152,6 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
     cJSON_ArrayForEach(extra_local_map, extra)
     {
 		cJSON *localMapObject = extra_local_map;
-        if(!cJSON_IsNumber(localMapObject))
-        {
-            goto end;
-        }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),&localMapObject->valuedouble );
         list_addElement(extraList , localMapKeyPair);
     }
     }

@@ -66,10 +66,6 @@ cJSON *v1beta1_certificate_signing_request_spec_convertToJSON(v1beta1_certificat
     if (v1beta1_certificate_signing_request_spec->extra) {
     list_ForEach(extraListEntry, v1beta1_certificate_signing_request_spec->extra) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)extraListEntry->data;
-        if(cJSON_AddNumberToObject(localMapObject, localKeyValue->key, *(double *)localKeyValue->value) == NULL)
-        {
-            goto fail;
-        }
     }
     }
      } 
@@ -159,11 +155,6 @@ v1beta1_certificate_signing_request_spec_t *v1beta1_certificate_signing_request_
     cJSON_ArrayForEach(extra_local_map, extra)
     {
 		cJSON *localMapObject = extra_local_map;
-        if(!cJSON_IsNumber(localMapObject))
-        {
-            goto end;
-        }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),&localMapObject->valuedouble );
         list_addElement(extraList , localMapKeyPair);
     }
     }

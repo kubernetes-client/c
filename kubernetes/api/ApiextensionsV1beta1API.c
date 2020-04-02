@@ -15,7 +15,7 @@
 // create a CustomResourceDefinition
 //
 v1beta1_custom_resource_definition_t*
-ApiextensionsV1beta1API_createCustomResourceDefinition(apiClient_t *apiClient, v1beta1_custom_resource_definition_t * body, char * pretty, char * dryRun, char * fieldManager)
+ApiextensionsV1beta1API_createCustomResourceDefinition(apiClient_t *apiClient, v1beta1_custom_resource_definition_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -166,7 +166,7 @@ end:
 // delete collection of CustomResourceDefinition
 //
 v1_status_t*
-ApiextensionsV1beta1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, int timeoutSeconds, int watch, v1_delete_options_t * body)
+ApiextensionsV1beta1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -527,7 +527,7 @@ end:
 // delete a CustomResourceDefinition
 //
 v1_status_t*
-ApiextensionsV1beta1API_deleteCustomResourceDefinition(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body)
+ApiextensionsV1beta1API_deleteCustomResourceDefinition(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -788,7 +788,7 @@ end:
 // list or watch objects of kind CustomResourceDefinition
 //
 v1beta1_custom_resource_definition_list_t*
-ApiextensionsV1beta1API_listCustomResourceDefinition(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, int timeoutSeconds, int watch)
+ApiextensionsV1beta1API_listCustomResourceDefinition(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1052,7 +1052,7 @@ end:
 // partially update the specified CustomResourceDefinition
 //
 v1beta1_custom_resource_definition_t*
-ApiextensionsV1beta1API_patchCustomResourceDefinition(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force)
+ApiextensionsV1beta1API_patchCustomResourceDefinition(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1232,7 +1232,7 @@ end:
 // partially update status of the specified CustomResourceDefinition
 //
 v1beta1_custom_resource_definition_t*
-ApiextensionsV1beta1API_patchCustomResourceDefinitionStatus(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force)
+ApiextensionsV1beta1API_patchCustomResourceDefinitionStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1412,7 +1412,7 @@ end:
 // read the specified CustomResourceDefinition
 //
 v1beta1_custom_resource_definition_t*
-ApiextensionsV1beta1API_readCustomResourceDefinition(apiClient_t *apiClient, char * name, char * pretty, int exact, int export)
+ApiextensionsV1beta1API_readCustomResourceDefinition(apiClient_t *apiClient, char * name , char * pretty , int exact , int export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1549,7 +1549,7 @@ end:
 // read status of the specified CustomResourceDefinition
 //
 v1beta1_custom_resource_definition_t*
-ApiextensionsV1beta1API_readCustomResourceDefinitionStatus(apiClient_t *apiClient, char * name, char * pretty)
+ApiextensionsV1beta1API_readCustomResourceDefinitionStatus(apiClient_t *apiClient, char * name , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1646,7 +1646,7 @@ end:
 // replace the specified CustomResourceDefinition
 //
 v1beta1_custom_resource_definition_t*
-ApiextensionsV1beta1API_replaceCustomResourceDefinition(apiClient_t *apiClient, char * name, v1beta1_custom_resource_definition_t * body, char * pretty, char * dryRun, char * fieldManager)
+ApiextensionsV1beta1API_replaceCustomResourceDefinition(apiClient_t *apiClient, char * name , v1beta1_custom_resource_definition_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1805,7 +1805,7 @@ end:
 // replace status of the specified CustomResourceDefinition
 //
 v1beta1_custom_resource_definition_t*
-ApiextensionsV1beta1API_replaceCustomResourceDefinitionStatus(apiClient_t *apiClient, char * name, v1beta1_custom_resource_definition_t * body, char * pretty, char * dryRun, char * fieldManager)
+ApiextensionsV1beta1API_replaceCustomResourceDefinitionStatus(apiClient_t *apiClient, char * name , v1beta1_custom_resource_definition_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
