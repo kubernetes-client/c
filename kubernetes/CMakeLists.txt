@@ -9,6 +9,7 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN OFF)
 set(CMAKE_BUILD_TYPE Debug)
 
 set(pkgName "kubernetes")
+ADD_DEFINITIONS(-DOPENSSL)
 
 find_package(CURL 7.58.0 REQUIRED)
 if(CURL_FOUND)
@@ -18,7 +19,11 @@ else(CURL_FOUND)
 	message(FATAL_ERROR "Could not find the CURL library and development files.")
 endif()
 
+
 set(SRCS
+    config/kube_config_model.c
+    config/kube_config_yaml.c
+    config/kube_config.c
     src/list.c
     src/apiKey.c
     src/apiClient.c
@@ -770,6 +775,9 @@ set(SRCS
 )
 
 set(HDRS
+    config/kube_config_model.h
+    config/kube_config_yaml.h
+    config/kube_config.h
     include/apiClient.h
     include/list.h
     include/keyValuePair.h
