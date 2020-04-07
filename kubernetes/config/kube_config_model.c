@@ -15,24 +15,31 @@ void kubeconfig_auth_provider_free(kubeconfig_auth_provider_t * provider)
 
     if (provider->name) {
         free(provider->name);
+        provider->name = NULL;
     }
     if (provider->id_token) {
         free(provider->id_token);
+        provider->id_token = NULL;
     }
     if (provider->cmd_path) {
         free(provider->cmd_path);
+        provider->cmd_path = NULL;
     }
     if (provider->access_token) {
         free(provider->access_token);
+        provider->access_token = NULL;
     }
     if (provider->expires_on) {
         free(provider->expires_on);
+        provider->expires_on = NULL;
     }
     if (provider->expiry) {
         free(provider->expiry);
+        provider->expiry = NULL;
     }
     if (provider->idp_certificate_authority_data) {
         free(provider->idp_certificate_authority_data);
+        provider->idp_certificate_authority_data = NULL;
     }
 
     free(provider);
@@ -52,174 +59,105 @@ void kubeconfig_exec_free(kubeconfig_exec_t * exec)
 
     if (exec->command) {
         free(exec->command);
+        exec->command = NULL;
     }
 
     free(exec);
 }
 
-kubeconfig_cluster_t *kubeconfig_cluster_create()
+kubeconfig_property_t *kubeconfig_property_create(kubeconfig_property_type_t type)
 {
-    kubeconfig_cluster_t *cluster = calloc(1, sizeof(kubeconfig_cluster_t));
-    return cluster;
+    kubeconfig_property_t *property = calloc(1, sizeof(kubeconfig_property_t));
+    property->type = type;
+    return property;
 }
 
-void kubeconfig_cluster_free(kubeconfig_cluster_t * cluster)
+void kubeconfig_property_free(kubeconfig_property_t * property)
 {
-    if (!cluster) {
+    if (!property) {
         return;
     }
 
-    if (cluster->name) {
-        free(cluster->name);
-    }
-    if (cluster->server) {
-        free(cluster->server);
-    }
-    if (cluster->certificate_authority_data) {
-        free(cluster->certificate_authority_data);
+    if (property->name) {
+        free(property->name);
+        property->name = NULL;
     }
 
-    free(cluster);
-}
-
-kubeconfig_cluster_t **kubeconfig_clusters_create(int clusters_count)
-{
-    kubeconfig_cluster_t **clusters = (kubeconfig_cluster_t **) calloc(clusters_count, sizeof(kubeconfig_cluster_t *));
-    int i = 0;
-    for (i = 0; i < clusters_count; i++) {
-        clusters[i] = kubeconfig_cluster_create();
-    }
-    return clusters;
-}
-
-void kubeconfig_clusters_free(kubeconfig_cluster_t ** clusters, int cluster_count)
-{
-    if (!clusters) {
-        return;
-    }
-
-    int i = 0;
-    for (i = 0; i < cluster_count; i++) {
-        if (clusters[i]) {
-            kubeconfig_cluster_free(clusters[i]);
-            clusters[i] = NULL;
+    if (KUBECONFIG_PROPERTY_TYPE_CLUSTER == property->type) {
+        if (property->server) {
+            free(property->server);
+            property->server = NULL;
+        }
+        if (property->certificate_authority_data) {
+            free(property->certificate_authority_data);
+            property->certificate_authority_data = NULL;
         }
     }
-    free(clusters);
-}
 
-kubeconfig_user_t *kubeconfig_user_create()
-{
-    kubeconfig_user_t *user = calloc(1, sizeof(kubeconfig_user_t));
-    return user;
-}
-
-void kubeconfig_user_free(kubeconfig_user_t * user)
-{
-    if (!user) {
-        return;
-    }
-
-    if (user->name) {
-        free(user->name);
-    }
-    if (user->client_certificate_data) {
-        free(user->client_certificate_data);
-    }
-    if (user->client_key_data) {
-        free(user->client_key_data);
-    }
-    if (user->username) {
-        free(user->username);
-    }
-    if (user->password) {
-        free(user->password);
-    }
-    if (user->auth_provider) {
-        kubeconfig_auth_provider_free(user->auth_provider);
-    }
-    if (user->exec) {
-        kubeconfig_exec_free(user->exec);
-    }
-
-    free(user);
-}
-
-kubeconfig_user_t **kubeconfig_users_create(int users_count)
-{
-    kubeconfig_user_t **users = (kubeconfig_user_t **) calloc(users_count, sizeof(kubeconfig_user_t *));
-    int i = 0;
-    for (i = 0; i < users_count; i++) {
-        users[i] = kubeconfig_user_create();
-    }
-    return users;
-}
-
-void kubeconfig_users_free(kubeconfig_user_t ** users, int users_count)
-{
-    if (!users) {
-        return;
-    }
-
-    int i = 0;
-    for (i = 0; i < users_count; i++) {
-        if (users[i]) {
-            kubeconfig_user_free(users[i]);
-            users[i] = NULL;
+    if (KUBECONFIG_PROPERTY_TYPE_USER == property->type) {
+        if (property->client_certificate_data) {
+            free(property->client_certificate_data);
+            property->client_certificate_data = NULL;
+        }
+        if (property->client_key_data) {
+            free(property->client_key_data);
+            property->client_key_data = NULL;
+        }
+        if (property->username) {
+            free(property->username);
+            property->username = NULL;
+        }
+        if (property->password) {
+            free(property->password);
+            property->password = NULL;
+        }
+        if (property->auth_provider) {
+            kubeconfig_auth_provider_free(property->auth_provider);
+            property->auth_provider = NULL;
+        }
+        if (property->exec) {
+            kubeconfig_exec_free(property->exec);
+            property->exec = NULL;
         }
     }
-    free(users);
+
+    if (KUBECONFIG_PROPERTY_TYPE_CONTEXT == property->type) {
+        if (property->cluster) {
+            free(property->cluster);
+            property->cluster = NULL;
+        }
+        if (property->user) {
+            free(property->user);
+            property->user = NULL;
+        }
+    }
+
+    free(property);
 }
 
-kubeconfig_context_t *kubeconfig_context_create()
+kubeconfig_property_t **kubeconfig_properties_create(int contexts_count, kubeconfig_property_type_t type)
 {
-    kubeconfig_context_t *context = calloc(1, sizeof(kubeconfig_context_t));
-    return context;
-}
-
-void kubeconfig_context_free(kubeconfig_context_t * context)
-{
-    if (!context) {
-        return;
-    }
-
-    if (context->name) {
-        free(context->name);
-    }
-    if (context->cluster) {
-        free(context->cluster);
-    }
-    if (context->user) {
-        free(context->user);
-    }
-
-    free(context);
-}
-
-kubeconfig_context_t **kubeconfig_contexts_create(int contexts_count)
-{
-    kubeconfig_context_t **contexts = (kubeconfig_context_t **) calloc(contexts_count, sizeof(kubeconfig_context_t *));
+    kubeconfig_property_t **properties = (kubeconfig_property_t **) calloc(contexts_count, sizeof(kubeconfig_property_t *));
     int i = 0;
     for (i = 0; i < contexts_count; i++) {
-        contexts[i] = kubeconfig_context_create();
+        properties[i] = kubeconfig_property_create(type);
     }
-    return contexts;
+    return properties;
 }
 
-void kubeconfig_contexts_free(kubeconfig_context_t ** contexts, int context_count)
+void kubeconfig_properties_free(kubeconfig_property_t ** properties, int properties_count)
 {
-    if (!contexts) {
+    if (!properties) {
         return;
     }
 
-    int i = 0;
-    for (i = 0; i < context_count; i++) {
-        if (contexts[i]) {
-            kubeconfig_context_free(contexts[i]);
-            contexts[i] = NULL;
+    for (int i = 0; i < properties_count; i++) {
+        if (properties[i]) {
+            kubeconfig_property_free(properties[i]);
+            properties[i] = NULL;
         }
     }
-    free(contexts);
+    free(properties);
 }
 
 kubeconfig_t *kubeconfig_create()
@@ -236,29 +174,36 @@ void kubeconfig_free(kubeconfig_t * kubeconfig)
 
     if (kubeconfig->fileName) {
         free(kubeconfig->fileName);
+        kubeconfig->fileName = NULL;
     }
     if (kubeconfig->apiVersion) {
         free(kubeconfig->apiVersion);
+        kubeconfig->apiVersion = NULL;
     }
     if (kubeconfig->kind) {
         free(kubeconfig->kind);
+        kubeconfig->kind = NULL;
     }
     if (kubeconfig->preferences) {
         free(kubeconfig->preferences);
+        kubeconfig->preferences = NULL;
     }
     if (kubeconfig->current_context) {
         free(kubeconfig->current_context);
+        kubeconfig->current_context = NULL;
     }
     if (kubeconfig->clusters) {
-        kubeconfig_clusters_free(kubeconfig->clusters, kubeconfig->clusters_count);
+        kubeconfig_properties_free(kubeconfig->clusters, kubeconfig->clusters_count);
+        kubeconfig->clusters = NULL;
     }
     if (kubeconfig->users) {
-        kubeconfig_users_free(kubeconfig->users, kubeconfig->users_count);
+        kubeconfig_properties_free(kubeconfig->users, kubeconfig->users_count);
+        kubeconfig->users = NULL;
     }
     if (kubeconfig->contexts) {
-        kubeconfig_contexts_free(kubeconfig->contexts, kubeconfig->contexts_count);
+        kubeconfig_properties_free(kubeconfig->contexts, kubeconfig->contexts_count);
+        kubeconfig->contexts = NULL;
     }
 
     free(kubeconfig);
-
 }

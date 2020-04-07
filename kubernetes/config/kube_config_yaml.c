@@ -26,9 +26,9 @@ mapping :: = MAPPING - START(node node) * MAPPING - END
 #define KEY_CLIENT_CERTIFICATE_DATA "client-certificate-data"
 #define KEY_CLIENT_KEY_DATA "client-key-data"
 
-static int parse_kubeconfig_yaml_userinfo_mapping(kubeconfig_user_t * user, yaml_document_t * document, yaml_node_t * node)
+static int parse_kubeconfig_yaml_property_info_mapping(kubeconfig_property_t * property, yaml_document_t * document, yaml_node_t * node)
 {
-    static char fname[] = "parse_kubeconfig_yaml_userinfo_mapping()";
+    static char fname[] = "parse_kubeconfig_yaml_property_info_mapping()";
 
     yaml_node_pair_t *pair = NULL;
     yaml_node_t *key = NULL;
@@ -44,10 +44,24 @@ static int parse_kubeconfig_yaml_userinfo_mapping(kubeconfig_user_t * user, yaml
         }
 
         if (value->type == YAML_SCALAR_NODE) {
-            if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE_DATA)) {
-                user->client_certificate_data = strdup(value->data.scalar.value);
-            } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_KEY_DATA)) {
-                user->client_key_data = strdup(value->data.scalar.value);
+            if (KUBECONFIG_PROPERTY_TYPE_CLUSTER == property->type) {
+                if (0 == strcmp(key->data.scalar.value, KEY_CERTIFICATE_AUTHORITY_DATA)) {
+                    property->certificate_authority_data = strdup(value->data.scalar.value);
+                } else if (0 == strcmp(key->data.scalar.value, KEY_SERVER)) {
+                    property->server = strdup(value->data.scalar.value);
+                }
+            } else if (KUBECONFIG_PROPERTY_TYPE_USER == property->type) {
+                if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE_DATA)) {
+                    property->client_certificate_data = strdup(value->data.scalar.value);
+                } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_KEY_DATA)) {
+                    property->client_key_data = strdup(value->data.scalar.value);
+                }
+            } else if (KUBECONFIG_PROPERTY_TYPE_CONTEXT == property->type) {
+                if (0 == strcmp(key->data.scalar.value, KEY_CLUSTER)) {
+                    property->cluster = strdup(value->data.scalar.value);
+                } else if (0 == strcmp(key->data.scalar.value, KEY_USER)) {
+                    property->user = strdup(value->data.scalar.value);
+                }
             }
         }
     }
@@ -55,9 +69,9 @@ static int parse_kubeconfig_yaml_userinfo_mapping(kubeconfig_user_t * user, yaml
     return 0;
 }
 
-static int parse_kubeconfig_yaml_user_mapping(kubeconfig_user_t * user, yaml_document_t * document, yaml_node_t * node)
+static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * property, yaml_document_t * document, yaml_node_t * node)
 {
-    static char fname[] = "parse_kubeconfig_yaml_user_mapping()";
+    static char fname[] = "parse_kubeconfig_yaml_property_mapping()";
     int rc = 0;
 
     yaml_node_pair_t *pair = NULL;
@@ -75,207 +89,49 @@ static int parse_kubeconfig_yaml_user_mapping(kubeconfig_user_t * user, yaml_doc
 
         if (value->type == YAML_SCALAR_NODE) {
             if (0 == strcmp(key->data.scalar.value, KEY_NAME)) {
-                user->name = strdup(value->data.scalar.value);
+                property->name = strdup(value->data.scalar.value);
             }
         } else if (value->type == YAML_MAPPING_NODE) {
-            rc = parse_kubeconfig_yaml_userinfo_mapping(user, document, value);
+            rc = parse_kubeconfig_yaml_property_info_mapping(property, document, value);
         }
     }
 
     return rc;
 }
 
-static int parse_kubeconfig_yaml_users_sequence(kubeconfig_t * kubeconfig, yaml_document_t * document, yaml_node_t * node)
+static int parse_kubeconfig_yaml_sequence(kubeconfig_property_t *** p_properties, int *p_properties_count, kubeconfig_property_type_t type, yaml_document_t * document, yaml_node_t * node)
 {
-    int rc = 0;
-
     yaml_node_item_t *item = NULL;
     yaml_node_t *value = NULL;
     int item_count = 0;
     int i = 0;
+    int rc = 0;
 
-    // Get the count of users
+    // Get the count of data (e.g. cluster, context, user)
     for (item = node->data.sequence.items.start, item_count = 0; item < node->data.sequence.items.top; item++, item_count++) {
         ;
     }
 
-    kubeconfig->users_count = item_count;
-    kubeconfig->users = kubeconfig_users_create(kubeconfig->users_count);
+    int properties_count = item_count;
+    kubeconfig_property_t **properties = kubeconfig_properties_create(properties_count, type);
+    if (!properties) {
+        fprintf(stderr, "Cannot allocate memory for kubeconfig properties.\n");
+        return -1;
+    }
 
     for (item = node->data.sequence.items.start, i = 0; item < node->data.sequence.items.top; item++, i++) {
         value = yaml_document_get_node(document, *item);
-        rc = parse_kubeconfig_yaml_user_mapping(kubeconfig->users[i], document, value);
-    }
-
-    return rc;
-
-}
-
-static int parse_kubeconfig_yaml_contextinfo_mapping(kubeconfig_context_t * context, yaml_document_t * document, yaml_node_t * node)
-{
-    static char fname[] = "parse_kubeconfig_yaml_contextinfo_mapping()";
-
-    yaml_node_pair_t *pair = NULL;
-    yaml_node_t *key = NULL;
-    yaml_node_t *value = NULL;
-
-    for (pair = node->data.mapping.pairs.start; pair < node->data.mapping.pairs.top; pair++) {
-        key = yaml_document_get_node(document, pair->key);
-        value = yaml_document_get_node(document, pair->value);
-
-        if (key->type != YAML_SCALAR_NODE) {
-            fprintf(stderr, "%s: The key node is not YAML_SCALAR_NODE.\n", fname);
+        rc = parse_kubeconfig_yaml_property_mapping(properties[i], document, value);
+        if (0 != rc) {
+            fprintf(stderr, "Cannot parse kubeconfi properties.\n");
             return -1;
         }
-
-        if (value->type == YAML_SCALAR_NODE) {
-            if (0 == strcmp(key->data.scalar.value, KEY_CLUSTER)) {
-                context->cluster = strdup(value->data.scalar.value);
-            } else if (0 == strcmp(key->data.scalar.value, KEY_USER)) {
-                context->user = strdup(value->data.scalar.value);
-            }
-        }
     }
+
+    *p_properties = properties;
+    *p_properties_count = properties_count;
 
     return 0;
-}
-
-static int parse_kubeconfig_yaml_context_mapping(kubeconfig_context_t * context, yaml_document_t * document, yaml_node_t * node)
-{
-    static char fname[] = "parse_kubeconfig_yaml_context_mapping()";
-    int rc = 0;
-
-    yaml_node_pair_t *pair = NULL;
-    yaml_node_t *key = NULL;
-    yaml_node_t *value = NULL;
-
-    for (pair = node->data.mapping.pairs.start; pair < node->data.mapping.pairs.top; pair++) {
-        key = yaml_document_get_node(document, pair->key);
-        value = yaml_document_get_node(document, pair->value);
-
-        if (key->type != YAML_SCALAR_NODE) {
-            fprintf(stderr, "%s: The key node is not YAML_SCALAR_NODE.\n", fname);
-            return -1;
-        }
-
-        if (value->type == YAML_SCALAR_NODE) {
-            if (0 == strcmp(key->data.scalar.value, KEY_NAME)) {
-                context->name = strdup(value->data.scalar.value);
-            }
-        } else if (value->type == YAML_MAPPING_NODE) {
-            rc = parse_kubeconfig_yaml_contextinfo_mapping(context, document, value);
-        }
-    }
-
-    return rc;
-}
-
-static int parse_kubeconfig_yaml_contexts_sequence(kubeconfig_t * kubeconfig, yaml_document_t * document, yaml_node_t * node)
-{
-    int rc = 0;
-    yaml_node_item_t *item = NULL;
-    yaml_node_t *value = NULL;
-    int item_count = 0;
-    int i = 0;
-
-    // Get the count of contexts
-    for (item = node->data.sequence.items.start, item_count = 0; item < node->data.sequence.items.top; item++, item_count++) {
-        ;
-    }
-
-    kubeconfig->contexts_count = item_count;
-    kubeconfig->contexts = kubeconfig_contexts_create(kubeconfig->contexts_count);
-
-    for (item = node->data.sequence.items.start, i = 0; item < node->data.sequence.items.top; item++, i++) {
-        value = yaml_document_get_node(document, *item);
-        rc = parse_kubeconfig_yaml_context_mapping(kubeconfig->contexts[i], document, value);
-    }
-
-    return rc;
-
-}
-
-static int parse_kubeconfig_yaml_clusterinfo_mapping(kubeconfig_cluster_t * cluster, yaml_document_t * document, yaml_node_t * node)
-{
-    static char fname[] = "parse_kubeconfig_yaml_clusterinfo_mapping()";
-
-    yaml_node_pair_t *pair = NULL;
-    yaml_node_t *key = NULL;
-    yaml_node_t *value = NULL;
-
-    for (pair = node->data.mapping.pairs.start; pair < node->data.mapping.pairs.top; pair++) {
-        key = yaml_document_get_node(document, pair->key);
-        value = yaml_document_get_node(document, pair->value);
-
-        if (key->type != YAML_SCALAR_NODE) {
-            fprintf(stderr, "%s: The key node is not YAML_SCALAR_NODE.\n", fname);
-            return -1;
-        }
-
-        if (value->type == YAML_SCALAR_NODE) {
-            if (0 == strcmp(key->data.scalar.value, KEY_CERTIFICATE_AUTHORITY_DATA)) {
-                cluster->certificate_authority_data = strdup(value->data.scalar.value);
-            } else if (0 == strcmp(key->data.scalar.value, KEY_SERVER)) {
-                cluster->server = strdup(value->data.scalar.value);
-            }
-        }
-    }
-
-    return 0;
-}
-
-static int parse_kubeconfig_yaml_cluster_mapping(kubeconfig_cluster_t * cluster, yaml_document_t * document, yaml_node_t * node)
-{
-    static char fname[] = "parse_kubeconfig_yaml_cluster_mapping()";
-    int rc = 0;
-
-    yaml_node_pair_t *pair = NULL;
-    yaml_node_t *key = NULL;
-    yaml_node_t *value = NULL;
-
-    for (pair = node->data.mapping.pairs.start; pair < node->data.mapping.pairs.top; pair++) {
-        key = yaml_document_get_node(document, pair->key);
-        value = yaml_document_get_node(document, pair->value);
-
-        if (key->type != YAML_SCALAR_NODE) {
-            fprintf(stderr, "%s: The key node is not YAML_SCALAR_NODE.\n", fname);
-            return -1;
-        }
-
-        if (value->type == YAML_SCALAR_NODE) {
-            if (0 == strcmp(key->data.scalar.value, KEY_NAME)) {
-                cluster->name = strdup(value->data.scalar.value);
-            }
-        } else if (value->type == YAML_MAPPING_NODE) {
-            rc = parse_kubeconfig_yaml_clusterinfo_mapping(cluster, document, value);
-        }
-    }
-
-    return rc;
-}
-
-static int parse_kubeconfig_yaml_clusters_sequence(kubeconfig_t * kubeconfig, yaml_document_t * document, yaml_node_t * node)
-{
-    int rc = 0;
-    yaml_node_item_t *item = NULL;
-    yaml_node_t *value = NULL;
-    int item_count = 0;
-    int i = 0;
-
-    // Get the count of clusters
-    for (item = node->data.sequence.items.start, item_count = 0; item < node->data.sequence.items.top; item++, item_count++) {
-        ;
-    }
-
-    kubeconfig->clusters_count = item_count;
-    kubeconfig->clusters = kubeconfig_clusters_create(kubeconfig->clusters_count);
-
-    for (item = node->data.sequence.items.start, i = 0; item < node->data.sequence.items.top; item++, i++) {
-        value = yaml_document_get_node(document, *item);
-        rc = parse_kubeconfig_yaml_cluster_mapping(kubeconfig->clusters[i], document, value);
-    }
-
-    return rc;
 
 }
 
@@ -307,11 +163,11 @@ static int parse_kubeconfig_yaml_top_mapping(kubeconfig_t * kubeconfig, yaml_doc
             }
         } else {
             if (0 == strcmp(key->data.scalar.value, KEY_CLUSTERS)) {
-                rc = parse_kubeconfig_yaml_clusters_sequence(kubeconfig, document, value);
+                rc = parse_kubeconfig_yaml_sequence(&(kubeconfig->clusters), &(kubeconfig->clusters_count), KUBECONFIG_PROPERTY_TYPE_CLUSTER, document, value);
             } else if (0 == strcmp(key->data.scalar.value, KEY_CONTEXTS)) {
-                rc = parse_kubeconfig_yaml_contexts_sequence(kubeconfig, document, value);
+                rc = parse_kubeconfig_yaml_sequence(&(kubeconfig->contexts), &(kubeconfig->contexts_count), KUBECONFIG_PROPERTY_TYPE_CONTEXT, document, value);
             } else if (0 == strcmp(key->data.scalar.value, KEY_USERS)) {
-                rc = parse_kubeconfig_yaml_users_sequence(kubeconfig, document, value);
+                rc = parse_kubeconfig_yaml_sequence(&(kubeconfig->users), &(kubeconfig->users_count), KUBECONFIG_PROPERTY_TYPE_USER, document, value);
             }
         }
     }

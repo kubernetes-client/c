@@ -2,23 +2,21 @@
 #include "kube_config_yaml.h"
 #include <errno.h>
 #include <unistd.h>
+#include <string.h>
 
-#define ENV_KUBECONFIGE "KUBECONFIG"
+#define ENV_KUBECONFIG "KUBECONFIG"
 #define ENV_HOME "HOME"
 #define KUBE_CONFIG_DEFAULT_LOCATION "%s/.kube/config"
 #define KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE "/tmp/kubeconfig-XXXXXX"
 
 static int setBasePath(char **pBasePath, char *basePath)
 {
-    int rc = 0;
     char *_basePath = strdup(basePath);
     if (_basePath) {
         *pBasePath = _basePath;
-    } else {
-        rc = -1;
+        return 0;
     }
-    return rc;
-
+    return -1;
 }
 
 static char *kubeconfig_mk_cert_key_tempfile(const char *b64data)
@@ -39,13 +37,12 @@ static char *kubeconfig_mk_cert_key_tempfile(const char *b64data)
         return NULL;
     }
 
-    if (-1 == write(fd, b64decode, decoded_bytes)) {
+    int rc = write(fd, b64decode, decoded_bytes);
+    close(fd);
+    if (-1 == rc) {
         fprintf(stderr, "%s: Writing temp file failed with error [%s]\n", fname, strerror(errno));
-        close(fd);
         return NULL;
     }
-
-    close(fd);
 
     return strdup(tempfile_name_template);
 }
@@ -72,10 +69,9 @@ static void unsetSslConfig(sslConfig_t * sslConfig)
     if (sslConfig->CACertFile) {
         kubeconfig_rm_tempfile(sslConfig->CACertFile);
     }
-
 }
 
-static int setSslConfig(sslConfig_t ** pSslConfig, kubeconfig_cluster_t * cluster, kubeconfig_user_t * user)
+static int setSslConfig(sslConfig_t ** pSslConfig, const kubeconfig_property_t * cluster, const kubeconfig_property_t * user)
 {
     int rc = 0;
     char *client_cert_file = NULL;
@@ -119,19 +115,17 @@ static int setSslConfig(sslConfig_t ** pSslConfig, kubeconfig_cluster_t * cluste
     return rc;
 }
 
-static int setApiKeys(list_t ** pApiKeys, kubeconfig_user_t * user)
+static int setApiKeys(list_t ** pApiKeys, const kubeconfig_property_t * user)
 {
-    int rc = 0;
     list_t *apiKeys = list_create();
     if (apiKeys) {
 
         /* under development for the token based authentication */
 
         *pApiKeys = apiKeys;
-    } else {
-        rc = -1;
+        return 0;
     }
-    return rc;
+    return -1;
 }
 
 static char *getWorkingConfigFile(const char *configFileNamePassedIn)
@@ -143,7 +137,7 @@ static char *getWorkingConfigFile(const char *configFileNamePassedIn)
     if (configFileNamePassedIn) {
         configFileName = strdup(configFileNamePassedIn);
     } else {
-        kubeconfig_env = getenv(ENV_KUBECONFIGE);
+        kubeconfig_env = getenv(ENV_KUBECONFIG);
         if (kubeconfig_env) {
             configFileName = strdup(kubeconfig_env);
         } else {
@@ -160,61 +154,22 @@ static char *getWorkingConfigFile(const char *configFileNamePassedIn)
     return configFileName;
 }
 
-static kubeconfig_context_t *kubeconfig_get_current_context(kubeconfig_context_t ** contexts, int contexts_count, const char *current_context_str)
+static const kubeconfig_property_t *kubeconfig_get_current_property(kubeconfig_property_t ** properties, int properties_count, const char *property_name)
 {
-    kubeconfig_context_t *current_context = NULL;
+    const kubeconfig_property_t *current_property = NULL;
 
-    if (NULL == contexts || NULL == current_context_str) {
+    if (NULL == properties || NULL == property_name) {
         return NULL;
     }
 
-    int i = 0;
-    for (i = 0; i < contexts_count; i++) {
-        if (0 == strcmp(contexts[i]->name, current_context_str)) {
-            current_context = contexts[i];
+    for (int i = 0; i < properties_count; i++) {
+        if (0 == strcmp(properties[i]->name, property_name)) {
+            current_property = properties[i];
             break;
         }
     }
 
-    return current_context;
-}
-
-static kubeconfig_cluster_t *kubeconfig_get_current_cluster(kubeconfig_cluster_t ** clusters, int clusters_count, const char *cluster_name)
-{
-    kubeconfig_cluster_t *current_cluster = NULL;
-
-    if (NULL == clusters || NULL == cluster_name) {
-        return NULL;
-    }
-
-    int i = 0;
-    for (i = 0; i < clusters_count; i++) {
-        if (0 == strcmp(clusters[i]->name, cluster_name)) {
-            current_cluster = clusters[i];
-            break;
-        }
-    }
-
-    return current_cluster;
-}
-
-static kubeconfig_user_t *kubeconfig_get_current_user(kubeconfig_user_t ** users, int users_count, const char *user_name)
-{
-    kubeconfig_user_t *current_user = NULL;
-
-    if (NULL == users || NULL == user_name) {
-        return NULL;
-    }
-
-    int i = 0;
-    for (i = 0; i < users_count; i++) {
-        if (0 == strcmp(users[i]->name, user_name)) {
-            current_user = users[i];
-            break;
-        }
-    }
-
-    return current_user;
+    return current_property;
 }
 
 int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApiKeys, const char *configFileName)
@@ -223,9 +178,9 @@ int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApi
 
     int rc = 0;
 
-    kubeconfig_context_t *current_context = NULL;
-    kubeconfig_cluster_t *current_cluster = NULL;
-    kubeconfig_user_t *current_user = NULL;
+    const kubeconfig_property_t *current_context = NULL;
+    const kubeconfig_property_t *current_cluster = NULL;
+    const kubeconfig_property_t *current_user = NULL;
 
     kubeconfig_t *kubeconfig = kubeconfig_create();
     if (!kubeconfig) {
@@ -241,21 +196,21 @@ int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApi
         goto end;
     }
 
-    current_context = kubeconfig_get_current_context(kubeconfig->contexts, kubeconfig->contexts_count, kubeconfig->current_context);
+    current_context = kubeconfig_get_current_property(kubeconfig->contexts, kubeconfig->contexts_count, kubeconfig->current_context);
     if (!current_context) {
         fprintf(stderr, "%s: Cannot get the current context by the kubeconfig.\n", fname);
         rc = -1;
         goto end;
     }
 
-    current_cluster = kubeconfig_get_current_cluster(kubeconfig->clusters, kubeconfig->clusters_count, current_context->cluster);
+    current_cluster = kubeconfig_get_current_property(kubeconfig->clusters, kubeconfig->clusters_count, current_context->cluster);
     if (!current_cluster) {
         fprintf(stderr, "%s: Cannot get the current cluster information by the kubeconfig.\n", fname);
         rc = -1;
         goto end;
     }
 
-    current_user = kubeconfig_get_current_user(kubeconfig->users, kubeconfig->users_count, current_context->user);
+    current_user = kubeconfig_get_current_property(kubeconfig->users, kubeconfig->users_count, current_context->user);
     if (!current_user) {
         fprintf(stderr, "%s: Cannot get the current user information by the kubeconfig.\n", fname);
         rc = -1;
