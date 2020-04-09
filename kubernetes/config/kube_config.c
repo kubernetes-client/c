@@ -1,8 +1,10 @@
-#include "kube_config.h"
-#include "kube_config_yaml.h"
+#define _GNU_SOURCE
+#include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
 #include <string.h>
+#include "kube_config.h"
+#include "kube_config_yaml.h"
 
 #define ENV_KUBECONFIG "KUBECONFIG"
 #define ENV_HOME "HOME"
@@ -137,15 +139,16 @@ static char *getWorkingConfigFile(const char *configFileNamePassedIn)
     if (configFileNamePassedIn) {
         configFileName = strdup(configFileNamePassedIn);
     } else {
-        kubeconfig_env = getenv(ENV_KUBECONFIG);
+        kubeconfig_env = secure_getenv(ENV_KUBECONFIG);
         if (kubeconfig_env) {
             configFileName = strdup(kubeconfig_env);
         } else {
-            homedir_env = getenv(ENV_HOME);
+            homedir_env = secure_getenv(ENV_HOME);
             if (homedir_env) {
-                configFileName = calloc(strlen(homedir_env) + strlen(KUBE_CONFIG_DEFAULT_LOCATION) + 1, sizeof(char));
+                int configFileNameSize = strlen(homedir_env) + strlen(KUBE_CONFIG_DEFAULT_LOCATION) + 1;
+                configFileName = calloc(configFileNameSize, sizeof(char));
                 if (configFileName) {
-                    sprintf(configFileName, KUBE_CONFIG_DEFAULT_LOCATION, homedir_env);
+                    snprintf(configFileName, configFileNameSize, KUBE_CONFIG_DEFAULT_LOCATION, homedir_env);
                 }
             }
         }
