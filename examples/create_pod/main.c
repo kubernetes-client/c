@@ -15,14 +15,17 @@ void create_a_pod(apiClient_t * apiClient)
     podinfo->spec = calloc(1, sizeof(v1_pod_spec_t));
 
     podinfo->metadata = calloc(1, sizeof(v1_object_meta_t));
+    /* set pod name */
     podinfo->metadata->name = strdup("test-pod-6");
 
+    /* set containers for pod */
     list_t *containerlist = list_create();
     v1_container_t *con = calloc(1, sizeof(v1_container_t));
     con->name = strdup("my-container");
-    con->image = strdup("ubuntu:16.04");
+    con->image = strdup("ubuntu:latest");
     con->image_pull_policy = strdup("IfNotPresent");
 
+    /* set command for container */
     list_t *commandlist = list_create();
     char *cmd = strdup("sleep");
     list_addElement(commandlist, cmd);
@@ -33,9 +36,28 @@ void create_a_pod(apiClient_t * apiClient)
     list_addElement(arglist, arg1);
     con->args = arglist;
 
+    /* set volume mounts for container  */
+    list_t *volumemounts = list_create();
+    v1_volume_mount_t *volmou = v1_volume_mount_create("/test", NULL, "test", 0, NULL, NULL);
+    list_addElement(volumemounts, volmou);
+    con->volume_mounts = volumemounts;
+
     list_addElement(containerlist, con);
     podinfo->spec->containers = containerlist;
 
+    /* set volumes for pod */
+    list_t *volumelist = list_create();
+    v1_volume_t *volume = calloc(1, sizeof(v1_volume_t));
+    volume->name = strdup("test");
+
+    v1_host_path_volume_source_t *hostPath = calloc(1, sizeof(v1_host_path_volume_source_t));
+    hostPath->path = strdup("/test");
+    volume->host_path = hostPath;
+
+    list_addElement(volumelist, volume);
+    podinfo->spec->volumes = volumelist;
+
+    /* call API in libkubernetes to create pod */
     v1_pod_t *apod = CoreV1API_createNamespacedPod(apiClient, namespace, podinfo, NULL, NULL, NULL);
     printf("code=%ld\n", apiClient->response_code);
 

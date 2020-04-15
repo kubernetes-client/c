@@ -24,6 +24,7 @@ set(SRCS
     config/kube_config_model.c
     config/kube_config_yaml.c
     config/kube_config.c
+    config/incluster_config.c
     src/list.c
     src/apiKey.c
     src/apiClient.c
@@ -778,6 +779,7 @@ set(HDRS
     config/kube_config_model.h
     config/kube_config_yaml.h
     config/kube_config.h
+    config/incluster_config.h
     include/apiClient.h
     include/list.h
     include/keyValuePair.h
