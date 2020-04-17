@@ -1,0 +1,33 @@
+name: Code Check
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    types: [assigned, opened, synchronize, reopened]
+jobs:
+  code-static-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Prepare
+      run: sudo apt-get install -y cppcheck
+    - name: Code static check for config
+      run: sh ./code-check/code-static-check.sh ./kubernetes/config/
+    - name: Code static check for examples
+      run: sh ./code-check/code-static-check.sh ./examples/
+  code-style-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Prepare
+      run: sudo apt-get install -y indent
+    - name: Code style check for config
+      run: |
+        find ./kubernetes/config/ -type f -regextype posix-extended -regex ".*\.(c|h)" -exec sh ./code-check/code-style-check.sh {} \;
+        find ./kubernetes/config/ -type f -regextype posix-extended -regex ".*\.(c|h)" -exec diff {} {}~ \;
+    - name: Code style check for examples
+      run: |
+        find ./examples/ -type f -regextype posix-extended -regex ".*\.(c|h)" -exec sh ./code-check/code-style-check.sh {} \;
+        find ./examples/ -type f -regextype posix-extended -regex ".*\.(c|h)" -exec diff {} {}~ \;

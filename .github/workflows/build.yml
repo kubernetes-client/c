@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    types: [assigned, opened, synchronize, reopened]
+
+jobs:
+  build-library-and-examples:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Prepare
+      run: sudo apt-get install -y libcurl4-openssl-dev uncrustify libyaml-dev
+    - name: Build client library
+      run: |
+        cd kubernetes
+        mkdir build
+        cd build
+        cmake ..
+        make
+    - name: Build examples
+      run: |
+        cd examples/
+        make
