@@ -1,0 +1,4 @@
+my_exec_provider_bin
+list_pod_by_exec_provider_bin
+config_with_exec_provider
+config_with_exec_provider.*
