@@ -4,15 +4,13 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include "incluster_config.h"
+#include "kube_config_common.h"
 
 #define SERVICE_HOST_ENV_NAME "KUBERNETES_SERVICE_HOST"
 #define SERVICE_PORT_ENV_NAME "KUBERNETES_SERVICE_PORT"
 #define SERVICE_HTTPS_PREFIX "https://"
 #define SERVICE_TOKEN_FILENAME "/var/run/secrets/kubernetes.io/serviceaccount/token"
 #define SERVICE_CERT_FILENAME "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
-#define AUTH_TOKEN_KEY "Authorization"
-#define BEARER_TOKEN_TEMPLATE "Bearer %s"
-#define BEARER_TOKEN_BUFFER_SIZE 1024
 
 static int checkServiceAccountFile(const char *fileName)
 {
