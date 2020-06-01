@@ -28,6 +28,8 @@ void list_pod(apiClient_t * apiClient)
             pod = listEntry->data;
             printf("\tThe pod name: %s\n", pod->metadata->name);
         }
+        v1_pod_list_free(pod_list);
+        pod_list = NULL;
     } else {
         printf("Cannot get any pod.\n");
     }
