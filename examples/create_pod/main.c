@@ -38,7 +38,9 @@ void create_a_pod(apiClient_t * apiClient)
 
     /* set volume mounts for container  */
     list_t *volumemounts = list_create();
-    v1_volume_mount_t *volmou = v1_volume_mount_create("/test", NULL, "test", 0, NULL, NULL);
+    v1_volume_mount_t *volmou = calloc(1, sizeof(v1_volume_mount_t));
+    volmou->mount_path = strdup("/test");
+    volmou->name = strdup("test");
     list_addElement(volumemounts, volmou);
     con->volume_mounts = volumemounts;
 
@@ -62,6 +64,7 @@ void create_a_pod(apiClient_t * apiClient)
     printf("code=%ld\n", apiClient->response_code);
 
     v1_pod_free(apod);
+    v1_pod_free(podinfo);
 }
 
 int main(int argc, char *argv[])
