@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_event_series_t v1_event_series_t;
+
 
 
 

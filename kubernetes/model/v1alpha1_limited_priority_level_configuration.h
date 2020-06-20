@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1alpha1_limited_priority_level_configuration_t v1alpha1_limited_priority_level_configuration_t;
+
 #include "v1alpha1_limit_response.h"
 
 

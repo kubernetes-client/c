@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_endpoints_t v1_endpoints_t;
+
 #include "v1_endpoint_subset.h"
 #include "v1_object_meta.h"
 

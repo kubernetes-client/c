@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1alpha1_audit_sink_spec_t v1alpha1_audit_sink_spec_t;
+
 #include "v1alpha1_policy.h"
 #include "v1alpha1_webhook.h"
 

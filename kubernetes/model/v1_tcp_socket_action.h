@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_tcp_socket_action_t v1_tcp_socket_action_t;
+
 #include "object.h"
 
 

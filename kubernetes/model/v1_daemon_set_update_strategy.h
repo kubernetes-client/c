@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_daemon_set_update_strategy_t v1_daemon_set_update_strategy_t;
+
 #include "v1_rolling_update_daemon_set.h"
 
 

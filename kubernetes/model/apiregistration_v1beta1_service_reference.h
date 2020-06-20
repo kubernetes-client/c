@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct apiregistration_v1beta1_service_reference_t apiregistration_v1beta1_service_reference_t;
+
 
 
 

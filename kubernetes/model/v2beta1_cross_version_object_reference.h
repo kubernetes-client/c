@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v2beta1_cross_version_object_reference_t v2beta1_cross_version_object_reference_t;
+
 
 
 

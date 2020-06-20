@@ -4,6 +4,7 @@
 #include "../include/list.h"
 #include "../external/cJSON.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
 #include "../model/policy_v1beta1_pod_security_policy.h"
 #include "../model/policy_v1beta1_pod_security_policy_list.h"
 #include "../model/v1_api_resource_list.h"

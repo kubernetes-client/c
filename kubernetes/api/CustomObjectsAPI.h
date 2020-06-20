@@ -4,6 +4,7 @@
 #include "../include/list.h"
 #include "../external/cJSON.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
 #include "../model/object.h"
 #include "../model/v1_delete_options.h"
 

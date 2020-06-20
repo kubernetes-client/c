@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_mutating_webhook_configuration_t v1_mutating_webhook_configuration_t;
+
 #include "v1_mutating_webhook.h"
 #include "v1_object_meta.h"
 

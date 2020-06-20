@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1alpha1_flow_schema_spec_t v1alpha1_flow_schema_spec_t;
+
 #include "v1alpha1_flow_distinguisher_method.h"
 #include "v1alpha1_policy_rules_with_subjects.h"
 #include "v1alpha1_priority_level_configuration_reference.h"

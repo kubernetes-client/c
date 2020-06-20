@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_node_affinity_t v1_node_affinity_t;
+
 #include "v1_node_selector.h"
 #include "v1_preferred_scheduling_term.h"
 

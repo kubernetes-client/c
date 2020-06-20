@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_pod_template_t v1_pod_template_t;
+
 #include "v1_object_meta.h"
 #include "v1_pod_template_spec.h"
 

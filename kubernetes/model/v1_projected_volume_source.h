@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_projected_volume_source_t v1_projected_volume_source_t;
+
 #include "v1_volume_projection.h"
 
 

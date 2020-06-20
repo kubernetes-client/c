@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_mutating_webhook_t v1_mutating_webhook_t;
+
 #include "admissionregistration_v1_webhook_client_config.h"
 #include "v1_label_selector.h"
 #include "v1_rule_with_operations.h"

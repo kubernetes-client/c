@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct extensions_v1beta1_deployment_spec_t extensions_v1beta1_deployment_spec_t;
+
 #include "extensions_v1beta1_deployment_strategy.h"
 #include "extensions_v1beta1_rollback_config.h"
 #include "v1_label_selector.h"

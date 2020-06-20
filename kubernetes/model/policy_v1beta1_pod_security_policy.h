@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct policy_v1beta1_pod_security_policy_t policy_v1beta1_pod_security_policy_t;
+
 #include "policy_v1beta1_pod_security_policy_spec.h"
 #include "v1_object_meta.h"
 

@@ -4,6 +4,7 @@
 #include "../include/list.h"
 #include "../external/cJSON.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
 #include "../model/v1_api_resource_list.h"
 #include "../model/v1beta1_local_subject_access_review.h"
 #include "../model/v1beta1_self_subject_access_review.h"

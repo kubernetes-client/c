@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_node_status_t v1_node_status_t;
+
 #include "v1_attached_volume.h"
 #include "v1_container_image.h"
 #include "v1_node_address.h"

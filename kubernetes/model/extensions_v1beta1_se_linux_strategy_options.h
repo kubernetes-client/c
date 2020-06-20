@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct extensions_v1beta1_se_linux_strategy_options_t extensions_v1beta1_se_linux_strategy_options_t;
+
 #include "v1_se_linux_options.h"
 
 

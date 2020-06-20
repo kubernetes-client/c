@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_pod_anti_affinity_t v1_pod_anti_affinity_t;
+
 #include "v1_pod_affinity_term.h"
 #include "v1_weighted_pod_affinity_term.h"
 

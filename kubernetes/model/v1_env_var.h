@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_env_var_t v1_env_var_t;
+
 #include "v1_env_var_source.h"
 
 

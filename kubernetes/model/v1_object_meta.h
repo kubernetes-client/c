@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_object_meta_t v1_object_meta_t;
+
 #include "v1_managed_fields_entry.h"
 #include "v1_owner_reference.h"
 

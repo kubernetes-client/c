@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v2beta1_metric_spec_t v2beta1_metric_spec_t;
+
 #include "v2beta1_external_metric_source.h"
 #include "v2beta1_object_metric_source.h"
 #include "v2beta1_pods_metric_source.h"

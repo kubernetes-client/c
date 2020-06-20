@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_container_state_t v1_container_state_t;
+
 #include "v1_container_state_running.h"
 #include "v1_container_state_terminated.h"
 #include "v1_container_state_waiting.h"

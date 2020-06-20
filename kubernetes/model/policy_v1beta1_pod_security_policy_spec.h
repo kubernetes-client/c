@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct policy_v1beta1_pod_security_policy_spec_t policy_v1beta1_pod_security_policy_spec_t;
+
 #include "policy_v1beta1_allowed_csi_driver.h"
 #include "policy_v1beta1_allowed_flex_volume.h"
 #include "policy_v1beta1_allowed_host_path.h"

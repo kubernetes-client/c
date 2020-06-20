@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_limit_range_spec_t v1_limit_range_spec_t;
+
 #include "v1_limit_range_item.h"
 
 

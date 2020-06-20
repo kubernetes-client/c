@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v2beta1_horizontal_pod_autoscaler_spec_t v2beta1_horizontal_pod_autoscaler_spec_t;
+
 #include "v2beta1_cross_version_object_reference.h"
 #include "v2beta1_metric_spec.h"
 

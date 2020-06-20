@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct rbac_v1alpha1_subject_t rbac_v1alpha1_subject_t;
+
 
 
 

@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1beta1_custom_resource_definition_status_t v1beta1_custom_resource_definition_status_t;
+
 #include "v1beta1_custom_resource_definition_condition.h"
 #include "v1beta1_custom_resource_definition_names.h"
 

@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_csi_node_spec_t v1_csi_node_spec_t;
+
 #include "v1_csi_node_driver.h"
 
 

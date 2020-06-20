@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_ephemeral_container_t v1_ephemeral_container_t;
+
 #include "v1_container_port.h"
 #include "v1_env_from_source.h"
 #include "v1_env_var.h"

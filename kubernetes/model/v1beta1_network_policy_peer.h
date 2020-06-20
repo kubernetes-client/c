@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1beta1_network_policy_peer_t v1beta1_network_policy_peer_t;
+
 #include "v1_label_selector.h"
 #include "v1beta1_ip_block.h"
 

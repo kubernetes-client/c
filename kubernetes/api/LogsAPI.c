@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include "LogsAPI.h"
 
-
+#define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
 #define intToStr(dst, src) \
     do {\
@@ -56,6 +56,8 @@ LogsAPI_logFileHandler(apiClient_t *apiClient, char * logpath )
 end:
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
     }
     
     
@@ -101,6 +103,8 @@ LogsAPI_logFileListHandler(apiClient_t *apiClient)
 end:
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
     }
     
     
