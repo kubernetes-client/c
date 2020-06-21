@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_pod_status_t v1_pod_status_t;
+
 #include "v1_container_status.h"
 #include "v1_pod_condition.h"
 #include "v1_pod_ip.h"

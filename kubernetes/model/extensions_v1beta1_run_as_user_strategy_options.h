@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct extensions_v1beta1_run_as_user_strategy_options_t extensions_v1beta1_run_as_user_strategy_options_t;
+
 #include "extensions_v1beta1_id_range.h"
 
 

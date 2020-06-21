@@ -4,6 +4,7 @@
 #include "../include/list.h"
 #include "../external/cJSON.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
 #include "../model/apps_v1beta1_deployment.h"
 #include "../model/apps_v1beta1_deployment_list.h"
 #include "../model/apps_v1beta1_deployment_rollback.h"

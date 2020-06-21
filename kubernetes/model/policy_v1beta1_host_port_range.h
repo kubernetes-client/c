@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct policy_v1beta1_host_port_range_t policy_v1beta1_host_port_range_t;
+
 
 
 

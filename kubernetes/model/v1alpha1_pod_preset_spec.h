@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1alpha1_pod_preset_spec_t v1alpha1_pod_preset_spec_t;
+
 #include "v1_env_from_source.h"
 #include "v1_env_var.h"
 #include "v1_label_selector.h"

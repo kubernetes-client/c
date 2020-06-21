@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_azure_file_persistent_volume_source_t v1_azure_file_persistent_volume_source_t;
+
 
 
 

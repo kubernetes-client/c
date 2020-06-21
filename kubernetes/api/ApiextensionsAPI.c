@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include "ApiextensionsAPI.h"
 
-
+#define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
 #define intToStr(dst, src) \
     do {\
@@ -61,6 +61,8 @@ ApiextensionsAPI_getAPIGroup(apiClient_t *apiClient)
     //return type
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
     }
     
     

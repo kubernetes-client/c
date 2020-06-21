@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_downward_api_volume_file_t v1_downward_api_volume_file_t;
+
 #include "v1_object_field_selector.h"
 #include "v1_resource_field_selector.h"
 

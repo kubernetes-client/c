@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1beta1_json_schema_props_t v1beta1_json_schema_props_t;
+
 #include "object.h"
 #include "v1beta1_external_documentation.h"
 

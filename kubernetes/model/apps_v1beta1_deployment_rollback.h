@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct apps_v1beta1_deployment_rollback_t apps_v1beta1_deployment_rollback_t;
+
 #include "apps_v1beta1_rollback_config.h"
 
 

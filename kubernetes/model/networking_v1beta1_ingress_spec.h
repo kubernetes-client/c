@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct networking_v1beta1_ingress_spec_t networking_v1beta1_ingress_spec_t;
+
 #include "networking_v1beta1_ingress_backend.h"
 #include "networking_v1beta1_ingress_rule.h"
 #include "networking_v1beta1_ingress_tls.h"

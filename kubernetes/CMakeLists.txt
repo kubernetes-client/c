@@ -8,8 +8,20 @@ set(CMAKE_CXX_VISIBILITY_PRESET default)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN OFF)
 set(CMAKE_BUILD_TYPE Debug)
 
+find_package(OpenSSL)
+
+if (OPENSSL_FOUND)
+	message (STATUS "OPENSSL found")
+	set (CMAKE_C_FLAGS "-DOPENSSL")
+	include_directories(${OPENSSL_INCLUDE_DIR})
+	include_directories(${OPENSSL_INCLUDE_DIRS})
+	link_directories(${OPENSSL_LIBRARIES})
+	message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
+else() 
+	message (STATUS "OpenSSL Not found.")
+endif()
+
 set(pkgName "kubernetes")
-ADD_DEFINITIONS(-DOPENSSL)
 
 find_package(CURL 7.58.0 REQUIRED)
 if(CURL_FOUND)
@@ -18,7 +30,6 @@ if(CURL_FOUND)
 else(CURL_FOUND)
 	message(FATAL_ERROR "Could not find the CURL library and development files.")
 endif()
-
 
 set(SRCS
     config/kube_config_model.c
@@ -29,6 +40,7 @@ set(SRCS
     src/list.c
     src/apiKey.c
     src/apiClient.c
+    src/binary.c
     external/cJSON.c
     model/object.c
     model/admissionregistration_v1_service_reference.c
@@ -785,6 +797,7 @@ set(HDRS
     config/exec_provider.h
     include/apiClient.h
     include/list.h
+    include/binary.h
     include/keyValuePair.h
     external/cJSON.h
     model/object.h

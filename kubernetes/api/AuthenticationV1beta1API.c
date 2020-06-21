@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include "AuthenticationV1beta1API.h"
 
-
+#define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
 #define intToStr(dst, src) \
     do {\
@@ -112,6 +112,8 @@ AuthenticationV1beta1API_createTokenReview(apiClient_t *apiClient, v1beta1_token
     //return type
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
     }
     list_free(localVarQueryParameters);
     
@@ -212,6 +214,8 @@ AuthenticationV1beta1API_getAPIResources(apiClient_t *apiClient)
     //return type
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
     }
     
     

@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_deployment_t v1_deployment_t;
+
 #include "v1_deployment_spec.h"
 #include "v1_deployment_status.h"
 #include "v1_object_meta.h"

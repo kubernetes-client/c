@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v2alpha1_cron_job_spec_t v2alpha1_cron_job_spec_t;
+
 #include "v2alpha1_job_template_spec.h"
 
 

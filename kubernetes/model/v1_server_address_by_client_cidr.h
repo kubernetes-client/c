@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_server_address_by_client_cidr_t v1_server_address_by_client_cidr_t;
+
 
 
 

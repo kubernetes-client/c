@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1alpha1_role_t v1alpha1_role_t;
+
 #include "v1_object_meta.h"
 #include "v1alpha1_policy_rule.h"
 

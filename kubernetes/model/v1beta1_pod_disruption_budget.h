@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1beta1_pod_disruption_budget_t v1beta1_pod_disruption_budget_t;
+
 #include "v1_object_meta.h"
 #include "v1beta1_pod_disruption_budget_spec.h"
 #include "v1beta1_pod_disruption_budget_status.h"

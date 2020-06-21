@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct policy_v1beta1_supplemental_groups_strategy_options_t policy_v1beta1_supplemental_groups_strategy_options_t;
+
 #include "policy_v1beta1_id_range.h"
 
 

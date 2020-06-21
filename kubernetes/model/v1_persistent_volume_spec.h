@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_persistent_volume_spec_t v1_persistent_volume_spec_t;
+
 #include "v1_aws_elastic_block_store_volume_source.h"
 #include "v1_azure_disk_volume_source.h"
 #include "v1_azure_file_persistent_volume_source.h"

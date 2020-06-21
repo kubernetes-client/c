@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_cluster_role_t v1_cluster_role_t;
+
 #include "v1_aggregation_rule.h"
 #include "v1_object_meta.h"
 #include "v1_policy_rule.h"

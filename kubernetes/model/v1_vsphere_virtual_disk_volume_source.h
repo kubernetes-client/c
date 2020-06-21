@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_vsphere_virtual_disk_volume_source_t v1_vsphere_virtual_disk_volume_source_t;
+
 
 
 

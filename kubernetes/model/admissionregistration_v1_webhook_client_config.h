@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct admissionregistration_v1_webhook_client_config_t admissionregistration_v1_webhook_client_config_t;
+
 #include "admissionregistration_v1_service_reference.h"
 
 

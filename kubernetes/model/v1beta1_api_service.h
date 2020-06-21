@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1beta1_api_service_t v1beta1_api_service_t;
+
 #include "v1_object_meta.h"
 #include "v1beta1_api_service_spec.h"
 #include "v1beta1_api_service_status.h"

@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1beta2_stateful_set_spec_t v1beta2_stateful_set_spec_t;
+
 #include "v1_label_selector.h"
 #include "v1_persistent_volume_claim.h"
 #include "v1_pod_template_spec.h"

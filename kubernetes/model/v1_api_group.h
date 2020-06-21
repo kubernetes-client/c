@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_api_group_t v1_api_group_t;
+
 #include "v1_group_version_for_discovery.h"
 #include "v1_server_address_by_client_cidr.h"
 

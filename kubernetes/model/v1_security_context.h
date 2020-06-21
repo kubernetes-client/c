@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_security_context_t v1_security_context_t;
+
 #include "v1_capabilities.h"
 #include "v1_se_linux_options.h"
 #include "v1_windows_security_context_options.h"

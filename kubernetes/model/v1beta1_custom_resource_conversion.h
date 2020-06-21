@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1beta1_custom_resource_conversion_t v1beta1_custom_resource_conversion_t;
+
 #include "apiextensions_v1beta1_webhook_client_config.h"
 
 

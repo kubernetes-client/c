@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_cluster_role_binding_list_t v1_cluster_role_binding_list_t;
+
 #include "v1_cluster_role_binding.h"
 #include "v1_list_meta.h"
 

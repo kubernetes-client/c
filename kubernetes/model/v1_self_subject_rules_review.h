@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_self_subject_rules_review_t v1_self_subject_rules_review_t;
+
 #include "v1_object_meta.h"
 #include "v1_self_subject_rules_review_spec.h"
 #include "v1_subject_rules_review_status.h"

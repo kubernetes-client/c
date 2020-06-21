@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct networking_v1beta1_http_ingress_rule_value_t networking_v1beta1_http_ingress_rule_value_t;
+
 #include "networking_v1beta1_http_ingress_path.h"
 
 

@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_secret_projection_t v1_secret_projection_t;
+
 #include "v1_key_to_path.h"
 
 

@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1beta1_validating_webhook_t v1beta1_validating_webhook_t;
+
 #include "admissionregistration_v1beta1_webhook_client_config.h"
 #include "v1_label_selector.h"
 #include "v1beta1_rule_with_operations.h"

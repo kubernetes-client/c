@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct extensions_v1beta1_ingress_t extensions_v1beta1_ingress_t;
+
 #include "extensions_v1beta1_ingress_spec.h"
 #include "extensions_v1beta1_ingress_status.h"
 #include "v1_object_meta.h"

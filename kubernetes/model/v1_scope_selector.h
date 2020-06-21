@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct v1_scope_selector_t v1_scope_selector_t;
+
 #include "v1_scoped_resource_selector_requirement.h"
 
 

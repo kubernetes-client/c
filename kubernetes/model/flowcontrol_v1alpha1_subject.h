@@ -11,6 +11,10 @@
 #include "../external/cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
+#include "../include/binary.h"
+
+typedef struct flowcontrol_v1alpha1_subject_t flowcontrol_v1alpha1_subject_t;
+
 #include "v1alpha1_group_subject.h"
 #include "v1alpha1_service_account_subject.h"
 #include "v1alpha1_user_subject.h"
