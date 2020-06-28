@@ -31,23 +31,28 @@ make
 ```
 
 ## Running the example
-For now, you need to use `kubectl proxy` to handle authentication.
-
 ```bash
-kubectl proxy
 ./list_pod_bin
 ```
 
 ## Usage example
 
-```c
-    list_t *apiKeys;
-    apiKeys = list_create();
-    
-    keyValuePair_t *keyPairToken = keyValuePair_create(keyToken, valueToken);
-    list_addElement(apiKeys, keyPairToken);
+list all pods:
 
-    g_k8sAPIConnector = apiClient_create_with_base_path(K8S_APISERVER_BASEPATH, NULL, apiKeys);
+```c
+    char *basePath = NULL;
+    sslConfig_t *sslConfig = NULL;
+    list_t *apiKeys = NULL;
+    int rc = load_kube_config(&basePath, &sslConfig, &apiKeys, NULL);/* NULL means loading configuration from $HOME/.kube/config */
+    if (rc != 0) {
+        printf("Cannot load kubernetes configuration.\n");
+        return -1;
+    }
+    apiClient_t *apiClient = apiClient_create_with_base_path(basePath, sslConfig, apiKeys);
+    if (!apiClient) {
+        printf("Cannot create a kubernetes client.\n");
+        return -1;
+    }
 
     v1_pod_list_t *pod_list = NULL;
     pod_list = CoreV1API_listNamespacedPod(apiClient,
@@ -66,7 +71,58 @@ kubectl proxy
     if (pod_list) {
       ...
     }
+
+    apiClient_free(apiClient);
+    apiClient = NULL;
+    free_client_config(basePath, sslConfig, apiKeys);
+    basePath = NULL;
+    sslConfig = NULL;
+    apiKeys = NULL;
 ```
+
+list all pods in cluster:
+
+```c
+    char *basePath = NULL;
+    sslConfig_t *sslConfig = NULL;
+    list_t *apiKeys = NULL;
+    int rc = load_incluster_config(&basePath, &sslConfig, &apiKeys);
+    if (rc != 0) {
+        printf("Cannot load kubernetes configuration in cluster.\n");
+        return -1;
+    }
+    apiClient_t *apiClient = apiClient_create_with_base_path(basePath, sslConfig, apiKeys);
+    if (!apiClient) {
+        printf("Cannot create a kubernetes client.\n");
+        return -1;
+    }
+
+    v1_pod_list_t *pod_list = NULL;
+    pod_list = CoreV1API_listNamespacedPod(apiClient,
+                                          "default",    /*namespace */
+                                           NULL,    /* pretty */
+                                           0,       /* allowWatchBookmarks */
+                                           NULL,    /* continue */
+                                           NULL,    /* fieldSelector */
+                                           NULL,    /* labelSelector */
+                                           0,       /* limit */
+                                           NULL,    /* resourceVersion */
+                                           0,       /* timeoutSeconds */
+                                           0        /* watch */
+        );
+    printf("return code=%ld\n", apiClient->response_code);
+    if (pod_list) {
+      ...
+    }
+
+    apiClient_free(apiClient);
+    apiClient = NULL;
+    free_client_config(basePath, sslConfig, apiKeys);
+    basePath = NULL;
+    sslConfig = NULL;
+    apiKeys = NULL;
+```
+
 
 ## Community, discussion, contribution, and support
 

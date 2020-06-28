@@ -38,32 +38,27 @@ void list_pod(apiClient_t * apiClient)
 
 int main(int argc, char *argv[])
 {
-    int rc = 0;
-
-    char *baseName = NULL;
+    char *basePath = NULL;
     sslConfig_t *sslConfig = NULL;
     list_t *apiKeys = NULL;
-    apiClient_t *k8sApiClient = NULL;
-
-    rc = load_incluster_config(&baseName, &sslConfig, &apiKeys);
-    if (0 == rc) {
-        k8sApiClient = apiClient_create_with_base_path(baseName, sslConfig, apiKeys);
-    } else {
-        printf("Cannot load kubernetes configuration.\n");
+    int rc = load_incluster_config(&basePath, &sslConfig, &apiKeys);
+    if (rc != 0) {
+        printf("Cannot load kubernetes configuration in cluster.\n");
         return -1;
     }
-
-    if (k8sApiClient) {
-        list_pod(k8sApiClient);
+    apiClient_t *apiClient = apiClient_create_with_base_path(basePath, sslConfig, apiKeys);
+    if (!apiClient) {
+        printf("Cannot create a kubernetes client.\n");
+        return -1;
     }
+    list_pod(apiClient);
 
-    free_client_config(baseName, sslConfig, apiKeys);
-    baseName = NULL;
+    apiClient_free(apiClient);
+    apiClient = NULL;
+    free_client_config(basePath, sslConfig, apiKeys);
+    basePath = NULL;
     sslConfig = NULL;
     apiKeys = NULL;
 
-    apiClient_free(k8sApiClient);
-    k8sApiClient = NULL;
-
-    return rc;
+    return 0;
 }
