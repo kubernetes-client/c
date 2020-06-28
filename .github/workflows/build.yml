@@ -13,7 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Prepare
-      run: sudo apt-get install -y libcurl4-openssl-dev uncrustify libyaml-dev
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libcurl4-openssl-dev uncrustify libyaml-dev
     - name: Build client library
       run: |
         cd kubernetes
