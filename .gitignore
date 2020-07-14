@@ -1,4 +1,5 @@
 kubernetes/build/
+.vs/
 
 # Prerequisites
 *.d
