@@ -1,0 +1,44 @@
+#include <kube_config.h>
+#include <apiClient.h>
+#include <generic.h>
+#include <malloc.h>
+#include <stdio.h>
+#include <errno.h>
+
+int main(int argc, char *argv[])
+{
+    char *basePath = NULL;
+    sslConfig_t *sslConfig = NULL;
+    list_t *apiKeys = NULL;
+    int rc = load_kube_config(&basePath, &sslConfig, &apiKeys, NULL);   /* NULL means loading configuration from $HOME/.kube/config */
+    if (rc != 0) {
+        printf("Cannot load kubernetes configuration.\n");
+        return -1;
+    }
+    apiClient_t *apiClient = apiClient_create_with_base_path(basePath, sslConfig, apiKeys);
+    if (!apiClient) {
+        printf("Cannot create a kubernetes client.\n");
+        return -1;
+    }
+
+    genericClient_t *genericClient = genericClient_create(apiClient, "apps", "v1", "deployments");
+
+    char *list = Generic_listNamespaced(genericClient, "default");
+    printf("%s\n", list);
+    free(list);
+
+    char *result = Generic_readNamespacedResource(genericClient, "default", "camera-gc");
+    printf("%s\n", result);
+    free(result);
+
+    genericClient_free(genericClient);
+    genericClient = NULL;
+    apiClient_free(apiClient);
+    apiClient = NULL;
+    free_client_config(basePath, sslConfig, apiKeys);
+    basePath = NULL;
+    sslConfig = NULL;
+    apiKeys = NULL;
+
+    return 0;
+}
