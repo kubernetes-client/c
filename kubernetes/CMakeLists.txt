@@ -41,6 +41,7 @@ set(SRCS
     src/apiKey.c
     src/apiClient.c
     src/binary.c
+    src/generic.c
     external/cJSON.c
     model/object.c
     model/admissionregistration_v1_service_reference.c
