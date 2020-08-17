@@ -33,6 +33,27 @@ int main(int argc, char *argv[])
 
     genericClient_free(genericClient);
     genericClient = NULL;
+
+    genericClient = genericClient_create(apiClient, "", "v1", "namespaces");
+
+    const char *body = "{\"apiVersion\": \"v1\", \"kind\": \"Namespace\", \"metadata\": { \"name\": \"test\" } }";
+    char *create = Generic_createResource(genericClient, body);
+    printf("%s\n", create);
+    free(create);
+
+    const char *updateBody = "{\"apiVersion\": \"v1\", \"kind\": \"Namespace\", \"metadata\": { \"name\": \"test\", \"labels\": { \"foo\": \"bar\" } } }";
+    char *update = Generic_replaceResource(genericClient, "test", updateBody);
+    printf("%s\n", update);
+    free(update);
+
+    char *del = Generic_deleteResource(genericClient, "test");
+    printf("%s\n", del);
+    free(del);
+
+    genericClient_free(genericClient);
+    genericClient = NULL;
+
+
     apiClient_free(apiClient);
     apiClient = NULL;
     free_client_config(basePath, sslConfig, apiKeys);

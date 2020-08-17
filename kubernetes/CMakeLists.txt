@@ -800,6 +800,7 @@ set(HDRS
     include/list.h
     include/binary.h
     include/keyValuePair.h
+    include/generic.h
     external/cJSON.h
     model/object.h
     model/admissionregistration_v1_service_reference.h
