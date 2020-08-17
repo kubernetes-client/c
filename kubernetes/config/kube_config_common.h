@@ -8,6 +8,8 @@ extern "C" {
 #define AUTH_TOKEN_KEY "Authorization"
 #define BEARER_TOKEN_TEMPLATE "Bearer %s"
 #define BEARER_TOKEN_BUFFER_SIZE 1024
+#define BASIC_TOKEN_TEMPLATE "Basic %s"
+#define BASIC_TOKEN_BUFFER_SIZE 1024
 
 #ifdef  __cplusplus
 }

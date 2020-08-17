@@ -8,12 +8,13 @@
 #include "kube_config.h"
 #include "kube_config_yaml.h"
 #include "kube_config_common.h"
+#include "kube_config_util.h"
 #include "exec_provider.h"
+#include "authn_plugin/authn_plugin.h"
 
 #define ENV_KUBECONFIG "KUBECONFIG"
 #define ENV_HOME "HOME"
 #define KUBE_CONFIG_DEFAULT_LOCATION "%s/.kube/config"
-#define KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE "/tmp/kubeconfig-XXXXXX"
 
 static int setBasePath(char **pBasePath, char *basePath)
 {
@@ -23,82 +24,6 @@ static int setBasePath(char **pBasePath, char *basePath)
         return 0;
     }
     return -1;
-}
-
-static bool is_cert_or_key_base64_encoded(const char *data)
-{
-    if (NULL == strstr(data, "BEGIN")) {
-        return true;
-    } else {
-        return false;           // e.g. "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----"
-    }
-}
-
-static char *kubeconfig_mk_cert_key_tempfile(const char *data)
-{
-    static char fname[] = "kubeconfig_mk_tempfile()";
-
-    const char *cert_key_data = NULL;
-    int cert_key_data_bytes = 0;
-
-    bool is_data_base64_encoded = is_cert_or_key_base64_encoded(data);
-    if (true == is_data_base64_encoded) {
-        int decoded_bytes = 0;
-        char *b64decode = base64decode(data, strlen(data), &decoded_bytes);
-        if (!b64decode || 0 == decoded_bytes) {
-            fprintf(stderr, "%s: Base64 decodes failed.\n", fname);
-            return NULL;
-        }
-        cert_key_data = b64decode;
-        cert_key_data_bytes = decoded_bytes;
-    } else {                    // plain text, no need base64 decode
-        cert_key_data = data;
-        cert_key_data_bytes = strlen(cert_key_data);
-    }
-
-    char tempfile_name_template[] = KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE;
-    int fd = mkstemp(tempfile_name_template);
-    if (-1 == fd) {
-        fprintf(stderr, "%s: Creating temp file for kubeconfig failed with error [%s]\n", fname, strerror(errno));
-        return NULL;
-    }
-
-    int rc = write(fd, cert_key_data, cert_key_data_bytes);
-    close(fd);
-    if (true == is_data_base64_encoded && cert_key_data) {
-        free((char *) cert_key_data);   // cast "const char *" to "char *" 
-        cert_key_data = NULL;
-    }
-    if (-1 == rc) {
-        fprintf(stderr, "%s: Writing temp file failed with error [%s]\n", fname, strerror(errno));
-        return NULL;
-    }
-
-    return strdup(tempfile_name_template);
-}
-
-static void kubeconfig_rm_tempfile(const char *filename)
-{
-    if (filename) {
-        unlink(filename);
-    }
-}
-
-static void unsetSslConfig(sslConfig_t * sslConfig)
-{
-    if (!sslConfig) {
-        return;
-    }
-
-    if (sslConfig->clientCertFile) {
-        kubeconfig_rm_tempfile(sslConfig->clientCertFile);
-    }
-    if (sslConfig->clientKeyFile) {
-        kubeconfig_rm_tempfile(sslConfig->clientKeyFile);
-    }
-    if (sslConfig->CACertFile) {
-        kubeconfig_rm_tempfile(sslConfig->CACertFile);
-    }
 }
 
 static int setSslConfig(sslConfig_t ** pSslConfig, const kubeconfig_property_t * cluster, const kubeconfig_property_t * user)
@@ -290,6 +215,53 @@ static int kubeconfig_update_exec_command_path(kubeconfig_property_t * exec, con
     return rc;
 }
 
+static int kuberconfig_auth_provider(kubeconfig_property_t * current_user, kubeconfig_t * kubeconfig)
+{
+    static char fname[] = "kuberconfig_auth_provider()";
+
+    if (!current_user || !current_user->auth_provider || !kubeconfig) {
+        return 0;
+    }
+
+    kubeconfig_property_t *auth_provider = current_user->auth_provider;
+    if (!auth_provider->name) {
+        fprintf(stderr, "%s: The name of auth provider is not specified.\n", fname);
+        return -1;
+    }
+
+    authn_plugin_t *plugin = create_authn_plugin(auth_provider->name);
+    if (!plugin) {
+        fprintf(stderr, "%s: Cannot instantiate the auth provider plugin for %s.\n", fname, auth_provider->name);
+        return -1;
+    }
+
+    int rc = 0;
+    if (plugin->is_expired(auth_provider)) {
+        rc = plugin->refresh(auth_provider);
+        if (0 != rc) {
+            fprintf(stderr, "%s: Cannot refresh token of auth provider <%s>.\n", fname, auth_provider->name);
+            goto end;
+        }
+        rc = kubeyaml_save_kubeconfig(kubeconfig);
+        if (0 != rc) {
+            fprintf(stderr, "%s: Cannot persist to kubeconfig file: %s.\n", fname, kubeconfig->fileName);
+            goto end;
+        }
+    }
+    const char *token = plugin->get_token(auth_provider);
+    if (!token) {
+        fprintf(stderr, "%s: Cannot get token from auth provider <%s>.\n", fname, auth_provider->name);
+        rc = -1;
+        goto end;
+    }
+    current_user->token = strdup(token);
+
+  end:
+    free_authn_plugin(plugin);
+    plugin = NULL;
+    return rc;
+}
+
 int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApiKeys, const char *configFileName)
 {
     static char fname[] = "load_kube_config()";
@@ -346,6 +318,14 @@ int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApi
         }
     }
 
+    if (current_user && current_user->auth_provider) {
+        rc = kuberconfig_auth_provider(current_user, kubeconfig);
+        if (0 != rc) {
+            fprintf(stderr, "%s: Cannot get token from authentication provider.\n", fname);
+            goto end;
+        }
+    }
+
     if (current_cluster && current_cluster->server) {
         rc = setBasePath(pBasePath, current_cluster->server);
         if (0 != rc) {
@@ -388,17 +368,6 @@ void free_client_config(char *basePath, sslConfig_t * sslConfig, list_t * apiKey
     }
 
     if (apiKeys) {
-        listEntry_t *listEntry = NULL;
-        list_ForEach(listEntry, apiKeys) {
-            keyValuePair_t *pair = listEntry->data;
-            if (pair->key) {
-                free(pair->key);
-            }
-            if (pair->value) {
-                free(pair->value);
-            }
-            keyValuePair_free(pair);
-        }
-        list_free(apiKeys);
+        clear_and_free_string_pair_list(apiKeys);
     }
 }

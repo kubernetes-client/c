@@ -54,6 +54,26 @@ extern "C" {
  */
     int kubeyaml_parse_exec_crendential(ExecCredential_t * exec_credential, const char *exec_credential_string);
 
+/*
+ * kubeyaml_save_kubeconfig
+ *
+ * Description:
+ *
+ * Save the kubeconfig to the file specified by kubeconfig->fileName
+ *
+ * Return:
+ *
+ *   0     Success
+ *  -1     Failed
+ *
+ * Parameter:
+ *
+ * INT:
+ * kubeconfig: kubernetes cluster configuration including kubeconfig->fileName: kubernetes cluster configuration file name
+ *
+ */
+    int kubeyaml_save_kubeconfig(const kubeconfig_t * kubeconfig);
+
 #ifdef  __cplusplus
 }
 #endif                          /* __cplusplus  */
