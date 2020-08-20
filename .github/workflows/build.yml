@@ -23,6 +23,13 @@ jobs:
         cd build
         cmake ..
         make
+    - name: Build authentication plugin - oidc
+      run: |
+        cd kubernetes/config/authn_plugin/plugins/oidc
+        mkdir build
+        cd build
+        cmake ..
+        make
     - name: Build examples
       run: |
         cd examples/
