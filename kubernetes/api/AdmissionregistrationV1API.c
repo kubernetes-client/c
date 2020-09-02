@@ -69,7 +69,7 @@ AdmissionregistrationV1API_createMutatingWebhookConfiguration(apiClient_t *apiCl
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -121,7 +121,10 @@ AdmissionregistrationV1API_createMutatingWebhookConfiguration(apiClient_t *apiCl
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -161,6 +164,7 @@ AdmissionregistrationV1API_createMutatingWebhookConfiguration(apiClient_t *apiCl
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -222,7 +226,7 @@ AdmissionregistrationV1API_createValidatingWebhookConfiguration(apiClient_t *api
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -274,7 +278,10 @@ AdmissionregistrationV1API_createValidatingWebhookConfiguration(apiClient_t *api
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -314,6 +321,7 @@ AdmissionregistrationV1API_createValidatingWebhookConfiguration(apiClient_t *api
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -321,7 +329,7 @@ end:
 // delete collection of MutatingWebhookConfiguration
 //
 v1_status_t*
-AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -351,19 +359,6 @@ AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration(apiClien
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -487,21 +482,8 @@ AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration(apiClien
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -547,7 +529,10 @@ AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration(apiClien
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -560,14 +545,6 @@ AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration(apiClien
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -673,16 +650,9 @@ AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration(apiClien
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -690,7 +660,7 @@ end:
 // delete collection of ValidatingWebhookConfiguration
 //
 v1_status_t*
-AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -720,19 +690,6 @@ AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration(apiCli
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -856,21 +813,8 @@ AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration(apiCli
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -916,7 +860,10 @@ AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration(apiCli
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -929,14 +876,6 @@ AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration(apiCli
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -1042,16 +981,9 @@ AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration(apiCli
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1149,7 +1081,7 @@ AdmissionregistrationV1API_deleteMutatingWebhookConfiguration(apiClient_t *apiCl
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1199,7 +1131,10 @@ AdmissionregistrationV1API_deleteMutatingWebhookConfiguration(apiClient_t *apiCl
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1255,6 +1190,7 @@ AdmissionregistrationV1API_deleteMutatingWebhookConfiguration(apiClient_t *apiCl
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1352,7 +1288,7 @@ AdmissionregistrationV1API_deleteValidatingWebhookConfiguration(apiClient_t *api
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1402,7 +1338,10 @@ AdmissionregistrationV1API_deleteValidatingWebhookConfiguration(apiClient_t *api
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1458,6 +1397,7 @@ AdmissionregistrationV1API_deleteValidatingWebhookConfiguration(apiClient_t *api
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1522,6 +1462,7 @@ AdmissionregistrationV1API_getAPIResources(apiClient_t *apiClient)
     free(localVarPath);
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1792,6 +1733,7 @@ AdmissionregistrationV1API_listMutatingWebhookConfiguration(apiClient_t *apiClie
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2062,6 +2004,7 @@ AdmissionregistrationV1API_listValidatingWebhookConfiguration(apiClient_t *apiCl
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2146,7 +2089,7 @@ AdmissionregistrationV1API_patchMutatingWebhookConfiguration(apiClient_t *apiCli
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2197,7 +2140,10 @@ AdmissionregistrationV1API_patchMutatingWebhookConfiguration(apiClient_t *apiCli
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2245,6 +2191,7 @@ AdmissionregistrationV1API_patchMutatingWebhookConfiguration(apiClient_t *apiCli
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2329,7 +2276,7 @@ AdmissionregistrationV1API_patchValidatingWebhookConfiguration(apiClient_t *apiC
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2380,7 +2327,10 @@ AdmissionregistrationV1API_patchValidatingWebhookConfiguration(apiClient_t *apiC
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2428,6 +2378,7 @@ AdmissionregistrationV1API_patchValidatingWebhookConfiguration(apiClient_t *apiC
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2569,6 +2520,7 @@ AdmissionregistrationV1API_readMutatingWebhookConfiguration(apiClient_t *apiClie
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2710,6 +2662,7 @@ AdmissionregistrationV1API_readValidatingWebhookConfiguration(apiClient_t *apiCl
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2781,7 +2734,7 @@ AdmissionregistrationV1API_replaceMutatingWebhookConfiguration(apiClient_t *apiC
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2831,7 +2784,10 @@ AdmissionregistrationV1API_replaceMutatingWebhookConfiguration(apiClient_t *apiC
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2871,6 +2827,7 @@ AdmissionregistrationV1API_replaceMutatingWebhookConfiguration(apiClient_t *apiC
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2942,7 +2899,7 @@ AdmissionregistrationV1API_replaceValidatingWebhookConfiguration(apiClient_t *ap
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2992,7 +2949,10 @@ AdmissionregistrationV1API_replaceValidatingWebhookConfiguration(apiClient_t *ap
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -3032,6 +2992,7 @@ AdmissionregistrationV1API_replaceValidatingWebhookConfiguration(apiClient_t *ap
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }

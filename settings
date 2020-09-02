@@ -11,3 +11,4 @@ export PACKAGE_NAME="client"
 # OpenAPI-Generator branch/tag to generate the client library
 export OPENAPI_GENERATOR_COMMIT="master"
 
+export USERNAME=kubernetes

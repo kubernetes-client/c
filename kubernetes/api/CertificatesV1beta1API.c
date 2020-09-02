@@ -69,7 +69,7 @@ CertificatesV1beta1API_createCertificateSigningRequest(apiClient_t *apiClient, v
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -121,7 +121,10 @@ CertificatesV1beta1API_createCertificateSigningRequest(apiClient_t *apiClient, v
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -161,6 +164,7 @@ CertificatesV1beta1API_createCertificateSigningRequest(apiClient_t *apiClient, v
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -258,7 +262,7 @@ CertificatesV1beta1API_deleteCertificateSigningRequest(apiClient_t *apiClient, c
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -308,7 +312,10 @@ CertificatesV1beta1API_deleteCertificateSigningRequest(apiClient_t *apiClient, c
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -364,6 +371,7 @@ CertificatesV1beta1API_deleteCertificateSigningRequest(apiClient_t *apiClient, c
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -371,7 +379,7 @@ end:
 // delete collection of CertificateSigningRequest
 //
 v1_status_t*
-CertificatesV1beta1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+CertificatesV1beta1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -398,19 +406,6 @@ CertificatesV1beta1API_deleteCollectionCertificateSigningRequest(apiClient_t *ap
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
 
     // query parameters
@@ -537,21 +532,8 @@ CertificatesV1beta1API_deleteCollectionCertificateSigningRequest(apiClient_t *ap
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -597,7 +579,10 @@ CertificatesV1beta1API_deleteCollectionCertificateSigningRequest(apiClient_t *ap
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -610,14 +595,6 @@ CertificatesV1beta1API_deleteCollectionCertificateSigningRequest(apiClient_t *ap
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -723,16 +700,9 @@ CertificatesV1beta1API_deleteCollectionCertificateSigningRequest(apiClient_t *ap
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -797,6 +767,7 @@ CertificatesV1beta1API_getAPIResources(apiClient_t *apiClient)
     free(localVarPath);
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1067,6 +1038,7 @@ CertificatesV1beta1API_listCertificateSigningRequest(apiClient_t *apiClient, cha
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1151,7 +1123,7 @@ CertificatesV1beta1API_patchCertificateSigningRequest(apiClient_t *apiClient, ch
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1202,7 +1174,10 @@ CertificatesV1beta1API_patchCertificateSigningRequest(apiClient_t *apiClient, ch
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1250,6 +1225,7 @@ CertificatesV1beta1API_patchCertificateSigningRequest(apiClient_t *apiClient, ch
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1334,7 +1310,7 @@ CertificatesV1beta1API_patchCertificateSigningRequestStatus(apiClient_t *apiClie
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1385,7 +1361,10 @@ CertificatesV1beta1API_patchCertificateSigningRequestStatus(apiClient_t *apiClie
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1433,6 +1412,7 @@ CertificatesV1beta1API_patchCertificateSigningRequestStatus(apiClient_t *apiClie
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1574,6 +1554,7 @@ CertificatesV1beta1API_readCertificateSigningRequest(apiClient_t *apiClient, cha
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1673,6 +1654,7 @@ CertificatesV1beta1API_readCertificateSigningRequestStatus(apiClient_t *apiClien
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1744,7 +1726,7 @@ CertificatesV1beta1API_replaceCertificateSigningRequest(apiClient_t *apiClient, 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1794,7 +1776,10 @@ CertificatesV1beta1API_replaceCertificateSigningRequest(apiClient_t *apiClient, 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1834,6 +1819,7 @@ CertificatesV1beta1API_replaceCertificateSigningRequest(apiClient_t *apiClient, 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1905,7 +1891,7 @@ CertificatesV1beta1API_replaceCertificateSigningRequestApproval(apiClient_t *api
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1955,7 +1941,10 @@ CertificatesV1beta1API_replaceCertificateSigningRequestApproval(apiClient_t *api
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_dryRun){
         free(keyQuery_dryRun);
@@ -1995,6 +1984,7 @@ CertificatesV1beta1API_replaceCertificateSigningRequestApproval(apiClient_t *api
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2066,7 +2056,7 @@ CertificatesV1beta1API_replaceCertificateSigningRequestStatus(apiClient_t *apiCl
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2116,7 +2106,10 @@ CertificatesV1beta1API_replaceCertificateSigningRequestStatus(apiClient_t *apiCl
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2156,6 +2149,7 @@ CertificatesV1beta1API_replaceCertificateSigningRequestStatus(apiClient_t *apiCl
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }

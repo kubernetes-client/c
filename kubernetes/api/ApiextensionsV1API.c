@@ -69,7 +69,7 @@ ApiextensionsV1API_createCustomResourceDefinition(apiClient_t *apiClient, v1_cus
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -121,7 +121,10 @@ ApiextensionsV1API_createCustomResourceDefinition(apiClient_t *apiClient, v1_cus
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -161,6 +164,7 @@ ApiextensionsV1API_createCustomResourceDefinition(apiClient_t *apiClient, v1_cus
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -168,7 +172,7 @@ end:
 // delete collection of CustomResourceDefinition
 //
 v1_status_t*
-ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -195,19 +199,6 @@ ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClie
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
 
     // query parameters
@@ -334,21 +325,8 @@ ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClie
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -394,7 +372,10 @@ ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClie
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -407,14 +388,6 @@ ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClie
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -520,16 +493,9 @@ ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClie
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -627,7 +593,7 @@ ApiextensionsV1API_deleteCustomResourceDefinition(apiClient_t *apiClient, char *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -677,7 +643,10 @@ ApiextensionsV1API_deleteCustomResourceDefinition(apiClient_t *apiClient, char *
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -733,6 +702,7 @@ ApiextensionsV1API_deleteCustomResourceDefinition(apiClient_t *apiClient, char *
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -797,6 +767,7 @@ ApiextensionsV1API_getAPIResources(apiClient_t *apiClient)
     free(localVarPath);
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1067,6 +1038,7 @@ ApiextensionsV1API_listCustomResourceDefinition(apiClient_t *apiClient, char * p
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1151,7 +1123,7 @@ ApiextensionsV1API_patchCustomResourceDefinition(apiClient_t *apiClient, char * 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1202,7 +1174,10 @@ ApiextensionsV1API_patchCustomResourceDefinition(apiClient_t *apiClient, char * 
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1250,6 +1225,7 @@ ApiextensionsV1API_patchCustomResourceDefinition(apiClient_t *apiClient, char * 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1334,7 +1310,7 @@ ApiextensionsV1API_patchCustomResourceDefinitionStatus(apiClient_t *apiClient, c
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1385,7 +1361,10 @@ ApiextensionsV1API_patchCustomResourceDefinitionStatus(apiClient_t *apiClient, c
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1433,6 +1412,7 @@ ApiextensionsV1API_patchCustomResourceDefinitionStatus(apiClient_t *apiClient, c
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1574,6 +1554,7 @@ ApiextensionsV1API_readCustomResourceDefinition(apiClient_t *apiClient, char * n
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1673,6 +1654,7 @@ ApiextensionsV1API_readCustomResourceDefinitionStatus(apiClient_t *apiClient, ch
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1744,7 +1726,7 @@ ApiextensionsV1API_replaceCustomResourceDefinition(apiClient_t *apiClient, char 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1794,7 +1776,10 @@ ApiextensionsV1API_replaceCustomResourceDefinition(apiClient_t *apiClient, char 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1834,6 +1819,7 @@ ApiextensionsV1API_replaceCustomResourceDefinition(apiClient_t *apiClient, char 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1905,7 +1891,7 @@ ApiextensionsV1API_replaceCustomResourceDefinitionStatus(apiClient_t *apiClient,
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1955,7 +1941,10 @@ ApiextensionsV1API_replaceCustomResourceDefinitionStatus(apiClient_t *apiClient,
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1995,6 +1984,7 @@ ApiextensionsV1API_replaceCustomResourceDefinitionStatus(apiClient_t *apiClient,
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }

@@ -21,7 +21,7 @@ NetworkingV1beta1API_createNamespacedIngress(apiClient_t *apiClient, char * name
 // delete collection of Ingress
 //
 v1_status_t*
-NetworkingV1beta1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+NetworkingV1beta1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete an Ingress

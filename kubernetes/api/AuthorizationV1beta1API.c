@@ -79,7 +79,7 @@ AuthorizationV1beta1API_createNamespacedLocalSubjectAccessReview(apiClient_t *ap
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -132,7 +132,10 @@ AuthorizationV1beta1API_createNamespacedLocalSubjectAccessReview(apiClient_t *ap
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_dryRun){
         free(keyQuery_dryRun);
@@ -172,6 +175,7 @@ AuthorizationV1beta1API_createNamespacedLocalSubjectAccessReview(apiClient_t *ap
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -233,7 +237,7 @@ AuthorizationV1beta1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -285,7 +289,10 @@ AuthorizationV1beta1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_dryRun){
         free(keyQuery_dryRun);
@@ -325,6 +332,7 @@ AuthorizationV1beta1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -386,7 +394,7 @@ AuthorizationV1beta1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1b
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -438,7 +446,10 @@ AuthorizationV1beta1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1b
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_dryRun){
         free(keyQuery_dryRun);
@@ -478,6 +489,7 @@ AuthorizationV1beta1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1b
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -539,7 +551,7 @@ AuthorizationV1beta1API_createSubjectAccessReview(apiClient_t *apiClient, v1beta
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -591,7 +603,10 @@ AuthorizationV1beta1API_createSubjectAccessReview(apiClient_t *apiClient, v1beta
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_dryRun){
         free(keyQuery_dryRun);
@@ -631,6 +646,7 @@ AuthorizationV1beta1API_createSubjectAccessReview(apiClient_t *apiClient, v1beta
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -695,6 +711,7 @@ AuthorizationV1beta1API_getAPIResources(apiClient_t *apiClient)
     free(localVarPath);
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }

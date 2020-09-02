@@ -69,7 +69,7 @@ FlowcontrolApiserverV1alpha1API_createFlowSchema(apiClient_t *apiClient, v1alpha
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -121,7 +121,10 @@ FlowcontrolApiserverV1alpha1API_createFlowSchema(apiClient_t *apiClient, v1alpha
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -161,6 +164,7 @@ FlowcontrolApiserverV1alpha1API_createFlowSchema(apiClient_t *apiClient, v1alpha
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -222,7 +226,7 @@ FlowcontrolApiserverV1alpha1API_createPriorityLevelConfiguration(apiClient_t *ap
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -274,7 +278,10 @@ FlowcontrolApiserverV1alpha1API_createPriorityLevelConfiguration(apiClient_t *ap
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -314,6 +321,7 @@ FlowcontrolApiserverV1alpha1API_createPriorityLevelConfiguration(apiClient_t *ap
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -321,7 +329,7 @@ end:
 // delete collection of FlowSchema
 //
 v1_status_t*
-FlowcontrolApiserverV1alpha1API_deleteCollectionFlowSchema(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+FlowcontrolApiserverV1alpha1API_deleteCollectionFlowSchema(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -351,19 +359,6 @@ FlowcontrolApiserverV1alpha1API_deleteCollectionFlowSchema(apiClient_t *apiClien
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -487,21 +482,8 @@ FlowcontrolApiserverV1alpha1API_deleteCollectionFlowSchema(apiClient_t *apiClien
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -547,7 +529,10 @@ FlowcontrolApiserverV1alpha1API_deleteCollectionFlowSchema(apiClient_t *apiClien
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -560,14 +545,6 @@ FlowcontrolApiserverV1alpha1API_deleteCollectionFlowSchema(apiClient_t *apiClien
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -673,16 +650,9 @@ FlowcontrolApiserverV1alpha1API_deleteCollectionFlowSchema(apiClient_t *apiClien
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -690,7 +660,7 @@ end:
 // delete collection of PriorityLevelConfiguration
 //
 v1_status_t*
-FlowcontrolApiserverV1alpha1API_deleteCollectionPriorityLevelConfiguration(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+FlowcontrolApiserverV1alpha1API_deleteCollectionPriorityLevelConfiguration(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -720,19 +690,6 @@ FlowcontrolApiserverV1alpha1API_deleteCollectionPriorityLevelConfiguration(apiCl
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -856,21 +813,8 @@ FlowcontrolApiserverV1alpha1API_deleteCollectionPriorityLevelConfiguration(apiCl
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -916,7 +860,10 @@ FlowcontrolApiserverV1alpha1API_deleteCollectionPriorityLevelConfiguration(apiCl
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -929,14 +876,6 @@ FlowcontrolApiserverV1alpha1API_deleteCollectionPriorityLevelConfiguration(apiCl
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -1042,16 +981,9 @@ FlowcontrolApiserverV1alpha1API_deleteCollectionPriorityLevelConfiguration(apiCl
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1149,7 +1081,7 @@ FlowcontrolApiserverV1alpha1API_deleteFlowSchema(apiClient_t *apiClient, char * 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1199,7 +1131,10 @@ FlowcontrolApiserverV1alpha1API_deleteFlowSchema(apiClient_t *apiClient, char * 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1255,6 +1190,7 @@ FlowcontrolApiserverV1alpha1API_deleteFlowSchema(apiClient_t *apiClient, char * 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1352,7 +1288,7 @@ FlowcontrolApiserverV1alpha1API_deletePriorityLevelConfiguration(apiClient_t *ap
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1402,7 +1338,10 @@ FlowcontrolApiserverV1alpha1API_deletePriorityLevelConfiguration(apiClient_t *ap
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1458,6 +1397,7 @@ FlowcontrolApiserverV1alpha1API_deletePriorityLevelConfiguration(apiClient_t *ap
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1522,6 +1462,7 @@ FlowcontrolApiserverV1alpha1API_getAPIResources(apiClient_t *apiClient)
     free(localVarPath);
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1792,6 +1733,7 @@ FlowcontrolApiserverV1alpha1API_listFlowSchema(apiClient_t *apiClient, char * pr
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2062,6 +2004,7 @@ FlowcontrolApiserverV1alpha1API_listPriorityLevelConfiguration(apiClient_t *apiC
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2146,7 +2089,7 @@ FlowcontrolApiserverV1alpha1API_patchFlowSchema(apiClient_t *apiClient, char * n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2197,7 +2140,10 @@ FlowcontrolApiserverV1alpha1API_patchFlowSchema(apiClient_t *apiClient, char * n
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2245,6 +2191,7 @@ FlowcontrolApiserverV1alpha1API_patchFlowSchema(apiClient_t *apiClient, char * n
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2329,7 +2276,7 @@ FlowcontrolApiserverV1alpha1API_patchFlowSchemaStatus(apiClient_t *apiClient, ch
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2380,7 +2327,10 @@ FlowcontrolApiserverV1alpha1API_patchFlowSchemaStatus(apiClient_t *apiClient, ch
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2428,6 +2378,7 @@ FlowcontrolApiserverV1alpha1API_patchFlowSchemaStatus(apiClient_t *apiClient, ch
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2512,7 +2463,7 @@ FlowcontrolApiserverV1alpha1API_patchPriorityLevelConfiguration(apiClient_t *api
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2563,7 +2514,10 @@ FlowcontrolApiserverV1alpha1API_patchPriorityLevelConfiguration(apiClient_t *api
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2611,6 +2565,7 @@ FlowcontrolApiserverV1alpha1API_patchPriorityLevelConfiguration(apiClient_t *api
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2695,7 +2650,7 @@ FlowcontrolApiserverV1alpha1API_patchPriorityLevelConfigurationStatus(apiClient_
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2746,7 +2701,10 @@ FlowcontrolApiserverV1alpha1API_patchPriorityLevelConfigurationStatus(apiClient_
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2794,6 +2752,7 @@ FlowcontrolApiserverV1alpha1API_patchPriorityLevelConfigurationStatus(apiClient_
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2935,6 +2894,7 @@ FlowcontrolApiserverV1alpha1API_readFlowSchema(apiClient_t *apiClient, char * na
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3034,6 +2994,7 @@ FlowcontrolApiserverV1alpha1API_readFlowSchemaStatus(apiClient_t *apiClient, cha
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3175,6 +3136,7 @@ FlowcontrolApiserverV1alpha1API_readPriorityLevelConfiguration(apiClient_t *apiC
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3274,6 +3236,7 @@ FlowcontrolApiserverV1alpha1API_readPriorityLevelConfigurationStatus(apiClient_t
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3345,7 +3308,7 @@ FlowcontrolApiserverV1alpha1API_replaceFlowSchema(apiClient_t *apiClient, char *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -3395,7 +3358,10 @@ FlowcontrolApiserverV1alpha1API_replaceFlowSchema(apiClient_t *apiClient, char *
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -3435,6 +3401,7 @@ FlowcontrolApiserverV1alpha1API_replaceFlowSchema(apiClient_t *apiClient, char *
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3506,7 +3473,7 @@ FlowcontrolApiserverV1alpha1API_replaceFlowSchemaStatus(apiClient_t *apiClient, 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -3556,7 +3523,10 @@ FlowcontrolApiserverV1alpha1API_replaceFlowSchemaStatus(apiClient_t *apiClient, 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -3596,6 +3566,7 @@ FlowcontrolApiserverV1alpha1API_replaceFlowSchemaStatus(apiClient_t *apiClient, 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3667,7 +3638,7 @@ FlowcontrolApiserverV1alpha1API_replacePriorityLevelConfiguration(apiClient_t *a
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -3717,7 +3688,10 @@ FlowcontrolApiserverV1alpha1API_replacePriorityLevelConfiguration(apiClient_t *a
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -3757,6 +3731,7 @@ FlowcontrolApiserverV1alpha1API_replacePriorityLevelConfiguration(apiClient_t *a
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3828,7 +3803,7 @@ FlowcontrolApiserverV1alpha1API_replacePriorityLevelConfigurationStatus(apiClien
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -3878,7 +3853,10 @@ FlowcontrolApiserverV1alpha1API_replacePriorityLevelConfigurationStatus(apiClien
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -3918,6 +3896,7 @@ FlowcontrolApiserverV1alpha1API_replacePriorityLevelConfigurationStatus(apiClien
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }

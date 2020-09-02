@@ -69,7 +69,7 @@ RbacAuthorizationV1beta1API_createClusterRole(apiClient_t *apiClient, v1beta1_cl
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -121,7 +121,10 @@ RbacAuthorizationV1beta1API_createClusterRole(apiClient_t *apiClient, v1beta1_cl
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -161,6 +164,7 @@ RbacAuthorizationV1beta1API_createClusterRole(apiClient_t *apiClient, v1beta1_cl
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -222,7 +226,7 @@ RbacAuthorizationV1beta1API_createClusterRoleBinding(apiClient_t *apiClient, v1b
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -274,7 +278,10 @@ RbacAuthorizationV1beta1API_createClusterRoleBinding(apiClient_t *apiClient, v1b
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -314,6 +321,7 @@ RbacAuthorizationV1beta1API_createClusterRoleBinding(apiClient_t *apiClient, v1b
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -385,7 +393,7 @@ RbacAuthorizationV1beta1API_createNamespacedRole(apiClient_t *apiClient, char * 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -438,7 +446,10 @@ RbacAuthorizationV1beta1API_createNamespacedRole(apiClient_t *apiClient, char * 
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -478,6 +489,7 @@ RbacAuthorizationV1beta1API_createNamespacedRole(apiClient_t *apiClient, char * 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -549,7 +561,7 @@ RbacAuthorizationV1beta1API_createNamespacedRoleBinding(apiClient_t *apiClient, 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -602,7 +614,10 @@ RbacAuthorizationV1beta1API_createNamespacedRoleBinding(apiClient_t *apiClient, 
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -642,6 +657,7 @@ RbacAuthorizationV1beta1API_createNamespacedRoleBinding(apiClient_t *apiClient, 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -739,7 +755,7 @@ RbacAuthorizationV1beta1API_deleteClusterRole(apiClient_t *apiClient, char * nam
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -789,7 +805,10 @@ RbacAuthorizationV1beta1API_deleteClusterRole(apiClient_t *apiClient, char * nam
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -845,6 +864,7 @@ RbacAuthorizationV1beta1API_deleteClusterRole(apiClient_t *apiClient, char * nam
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -942,7 +962,7 @@ RbacAuthorizationV1beta1API_deleteClusterRoleBinding(apiClient_t *apiClient, cha
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -992,7 +1012,10 @@ RbacAuthorizationV1beta1API_deleteClusterRoleBinding(apiClient_t *apiClient, cha
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1048,6 +1071,7 @@ RbacAuthorizationV1beta1API_deleteClusterRoleBinding(apiClient_t *apiClient, cha
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1055,7 +1079,7 @@ end:
 // delete collection of ClusterRole
 //
 v1_status_t*
-RbacAuthorizationV1beta1API_deleteCollectionClusterRole(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+RbacAuthorizationV1beta1API_deleteCollectionClusterRole(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1085,19 +1109,6 @@ RbacAuthorizationV1beta1API_deleteCollectionClusterRole(apiClient_t *apiClient, 
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -1221,21 +1232,8 @@ RbacAuthorizationV1beta1API_deleteCollectionClusterRole(apiClient_t *apiClient, 
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1281,7 +1279,10 @@ RbacAuthorizationV1beta1API_deleteCollectionClusterRole(apiClient_t *apiClient, 
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1294,14 +1295,6 @@ RbacAuthorizationV1beta1API_deleteCollectionClusterRole(apiClient_t *apiClient, 
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -1407,16 +1400,9 @@ RbacAuthorizationV1beta1API_deleteCollectionClusterRole(apiClient_t *apiClient, 
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1424,7 +1410,7 @@ end:
 // delete collection of ClusterRoleBinding
 //
 v1_status_t*
-RbacAuthorizationV1beta1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+RbacAuthorizationV1beta1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1454,19 +1440,6 @@ RbacAuthorizationV1beta1API_deleteCollectionClusterRoleBinding(apiClient_t *apiC
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -1590,21 +1563,8 @@ RbacAuthorizationV1beta1API_deleteCollectionClusterRoleBinding(apiClient_t *apiC
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1650,7 +1610,10 @@ RbacAuthorizationV1beta1API_deleteCollectionClusterRoleBinding(apiClient_t *apiC
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1663,14 +1626,6 @@ RbacAuthorizationV1beta1API_deleteCollectionClusterRoleBinding(apiClient_t *apiC
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -1776,16 +1731,9 @@ RbacAuthorizationV1beta1API_deleteCollectionClusterRoleBinding(apiClient_t *apiC
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1793,7 +1741,7 @@ end:
 // delete collection of Role
 //
 v1_status_t*
-RbacAuthorizationV1beta1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+RbacAuthorizationV1beta1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1833,19 +1781,6 @@ RbacAuthorizationV1beta1API_deleteCollectionNamespacedRole(apiClient_t *apiClien
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -1969,21 +1904,8 @@ RbacAuthorizationV1beta1API_deleteCollectionNamespacedRole(apiClient_t *apiClien
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2030,7 +1952,10 @@ RbacAuthorizationV1beta1API_deleteCollectionNamespacedRole(apiClient_t *apiClien
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2043,14 +1968,6 @@ RbacAuthorizationV1beta1API_deleteCollectionNamespacedRole(apiClient_t *apiClien
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -2156,16 +2073,9 @@ RbacAuthorizationV1beta1API_deleteCollectionNamespacedRole(apiClient_t *apiClien
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2173,7 +2083,7 @@ end:
 // delete collection of RoleBinding
 //
 v1_status_t*
-RbacAuthorizationV1beta1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+RbacAuthorizationV1beta1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2213,19 +2123,6 @@ RbacAuthorizationV1beta1API_deleteCollectionNamespacedRoleBinding(apiClient_t *a
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -2349,21 +2246,8 @@ RbacAuthorizationV1beta1API_deleteCollectionNamespacedRoleBinding(apiClient_t *a
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2410,7 +2294,10 @@ RbacAuthorizationV1beta1API_deleteCollectionNamespacedRoleBinding(apiClient_t *a
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2423,14 +2310,6 @@ RbacAuthorizationV1beta1API_deleteCollectionNamespacedRoleBinding(apiClient_t *a
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -2536,16 +2415,9 @@ RbacAuthorizationV1beta1API_deleteCollectionNamespacedRoleBinding(apiClient_t *a
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2653,7 +2525,7 @@ RbacAuthorizationV1beta1API_deleteNamespacedRole(apiClient_t *apiClient, char * 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2704,7 +2576,10 @@ RbacAuthorizationV1beta1API_deleteNamespacedRole(apiClient_t *apiClient, char * 
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2760,6 +2635,7 @@ RbacAuthorizationV1beta1API_deleteNamespacedRole(apiClient_t *apiClient, char * 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2867,7 +2743,7 @@ RbacAuthorizationV1beta1API_deleteNamespacedRoleBinding(apiClient_t *apiClient, 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2918,7 +2794,10 @@ RbacAuthorizationV1beta1API_deleteNamespacedRoleBinding(apiClient_t *apiClient, 
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2974,6 +2853,7 @@ RbacAuthorizationV1beta1API_deleteNamespacedRoleBinding(apiClient_t *apiClient, 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3038,6 +2918,7 @@ RbacAuthorizationV1beta1API_getAPIResources(apiClient_t *apiClient)
     free(localVarPath);
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3308,6 +3189,7 @@ RbacAuthorizationV1beta1API_listClusterRole(apiClient_t *apiClient, char * prett
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3578,6 +3460,7 @@ RbacAuthorizationV1beta1API_listClusterRoleBinding(apiClient_t *apiClient, char 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3859,6 +3742,7 @@ RbacAuthorizationV1beta1API_listNamespacedRole(apiClient_t *apiClient, char * na
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -4140,6 +4024,7 @@ RbacAuthorizationV1beta1API_listNamespacedRoleBinding(apiClient_t *apiClient, ch
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -4410,6 +4295,7 @@ RbacAuthorizationV1beta1API_listRoleBindingForAllNamespaces(apiClient_t *apiClie
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -4680,6 +4566,7 @@ RbacAuthorizationV1beta1API_listRoleForAllNamespaces(apiClient_t *apiClient, int
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -4764,7 +4651,7 @@ RbacAuthorizationV1beta1API_patchClusterRole(apiClient_t *apiClient, char * name
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -4815,7 +4702,10 @@ RbacAuthorizationV1beta1API_patchClusterRole(apiClient_t *apiClient, char * name
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -4863,6 +4753,7 @@ RbacAuthorizationV1beta1API_patchClusterRole(apiClient_t *apiClient, char * name
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -4947,7 +4838,7 @@ RbacAuthorizationV1beta1API_patchClusterRoleBinding(apiClient_t *apiClient, char
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -4998,7 +4889,10 @@ RbacAuthorizationV1beta1API_patchClusterRoleBinding(apiClient_t *apiClient, char
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -5046,6 +4940,7 @@ RbacAuthorizationV1beta1API_patchClusterRoleBinding(apiClient_t *apiClient, char
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -5140,7 +5035,7 @@ RbacAuthorizationV1beta1API_patchNamespacedRole(apiClient_t *apiClient, char * n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -5192,7 +5087,10 @@ RbacAuthorizationV1beta1API_patchNamespacedRole(apiClient_t *apiClient, char * n
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -5240,6 +5138,7 @@ RbacAuthorizationV1beta1API_patchNamespacedRole(apiClient_t *apiClient, char * n
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -5334,7 +5233,7 @@ RbacAuthorizationV1beta1API_patchNamespacedRoleBinding(apiClient_t *apiClient, c
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -5386,7 +5285,10 @@ RbacAuthorizationV1beta1API_patchNamespacedRoleBinding(apiClient_t *apiClient, c
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -5434,6 +5336,7 @@ RbacAuthorizationV1beta1API_patchNamespacedRoleBinding(apiClient_t *apiClient, c
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -5533,6 +5436,7 @@ RbacAuthorizationV1beta1API_readClusterRole(apiClient_t *apiClient, char * name 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -5632,6 +5536,7 @@ RbacAuthorizationV1beta1API_readClusterRoleBinding(apiClient_t *apiClient, char 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -5742,6 +5647,7 @@ RbacAuthorizationV1beta1API_readNamespacedRole(apiClient_t *apiClient, char * na
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -5852,6 +5758,7 @@ RbacAuthorizationV1beta1API_readNamespacedRoleBinding(apiClient_t *apiClient, ch
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -5923,7 +5830,7 @@ RbacAuthorizationV1beta1API_replaceClusterRole(apiClient_t *apiClient, char * na
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -5973,7 +5880,10 @@ RbacAuthorizationV1beta1API_replaceClusterRole(apiClient_t *apiClient, char * na
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -6013,6 +5923,7 @@ RbacAuthorizationV1beta1API_replaceClusterRole(apiClient_t *apiClient, char * na
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -6084,7 +5995,7 @@ RbacAuthorizationV1beta1API_replaceClusterRoleBinding(apiClient_t *apiClient, ch
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -6134,7 +6045,10 @@ RbacAuthorizationV1beta1API_replaceClusterRoleBinding(apiClient_t *apiClient, ch
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -6174,6 +6088,7 @@ RbacAuthorizationV1beta1API_replaceClusterRoleBinding(apiClient_t *apiClient, ch
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -6255,7 +6170,7 @@ RbacAuthorizationV1beta1API_replaceNamespacedRole(apiClient_t *apiClient, char *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -6306,7 +6221,10 @@ RbacAuthorizationV1beta1API_replaceNamespacedRole(apiClient_t *apiClient, char *
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -6346,6 +6264,7 @@ RbacAuthorizationV1beta1API_replaceNamespacedRole(apiClient_t *apiClient, char *
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -6427,7 +6346,7 @@ RbacAuthorizationV1beta1API_replaceNamespacedRoleBinding(apiClient_t *apiClient,
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -6478,7 +6397,10 @@ RbacAuthorizationV1beta1API_replaceNamespacedRoleBinding(apiClient_t *apiClient,
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -6518,6 +6440,7 @@ RbacAuthorizationV1beta1API_replaceNamespacedRoleBinding(apiClient_t *apiClient,
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }

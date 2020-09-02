@@ -27,7 +27,7 @@ ApiregistrationV1beta1API_deleteAPIService(apiClient_t *apiClient, char * name ,
 // delete collection of APIService
 //
 v1_status_t*
-ApiregistrationV1beta1API_deleteCollectionAPIService(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+ApiregistrationV1beta1API_deleteCollectionAPIService(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // get available resources

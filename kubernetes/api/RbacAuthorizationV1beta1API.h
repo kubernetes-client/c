@@ -57,25 +57,25 @@ RbacAuthorizationV1beta1API_deleteClusterRoleBinding(apiClient_t *apiClient, cha
 // delete collection of ClusterRole
 //
 v1_status_t*
-RbacAuthorizationV1beta1API_deleteCollectionClusterRole(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+RbacAuthorizationV1beta1API_deleteCollectionClusterRole(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of ClusterRoleBinding
 //
 v1_status_t*
-RbacAuthorizationV1beta1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+RbacAuthorizationV1beta1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of Role
 //
 v1_status_t*
-RbacAuthorizationV1beta1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+RbacAuthorizationV1beta1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of RoleBinding
 //
 v1_status_t*
-RbacAuthorizationV1beta1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+RbacAuthorizationV1beta1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a Role

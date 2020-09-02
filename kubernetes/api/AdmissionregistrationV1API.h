@@ -29,13 +29,13 @@ AdmissionregistrationV1API_createValidatingWebhookConfiguration(apiClient_t *api
 // delete collection of MutatingWebhookConfiguration
 //
 v1_status_t*
-AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of ValidatingWebhookConfiguration
 //
 v1_status_t*
-AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a MutatingWebhookConfiguration

@@ -79,7 +79,7 @@ ExtensionsV1beta1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * na
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -132,7 +132,10 @@ ExtensionsV1beta1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * na
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -172,6 +175,7 @@ ExtensionsV1beta1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * na
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -243,7 +247,7 @@ ExtensionsV1beta1API_createNamespacedDeployment(apiClient_t *apiClient, char * n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -296,7 +300,10 @@ ExtensionsV1beta1API_createNamespacedDeployment(apiClient_t *apiClient, char * n
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -336,6 +343,7 @@ ExtensionsV1beta1API_createNamespacedDeployment(apiClient_t *apiClient, char * n
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -417,7 +425,7 @@ ExtensionsV1beta1API_createNamespacedDeploymentRollback(apiClient_t *apiClient, 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -471,7 +479,10 @@ ExtensionsV1beta1API_createNamespacedDeploymentRollback(apiClient_t *apiClient, 
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_dryRun){
         free(keyQuery_dryRun);
@@ -511,6 +522,7 @@ ExtensionsV1beta1API_createNamespacedDeploymentRollback(apiClient_t *apiClient, 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -582,7 +594,7 @@ ExtensionsV1beta1API_createNamespacedIngress(apiClient_t *apiClient, char * name
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -635,7 +647,10 @@ ExtensionsV1beta1API_createNamespacedIngress(apiClient_t *apiClient, char * name
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -675,6 +690,7 @@ ExtensionsV1beta1API_createNamespacedIngress(apiClient_t *apiClient, char * name
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -746,7 +762,7 @@ ExtensionsV1beta1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -799,7 +815,10 @@ ExtensionsV1beta1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char 
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -839,6 +858,7 @@ ExtensionsV1beta1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -910,7 +930,7 @@ ExtensionsV1beta1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -963,7 +983,10 @@ ExtensionsV1beta1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * n
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1003,6 +1026,7 @@ ExtensionsV1beta1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * n
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1064,7 +1088,7 @@ ExtensionsV1beta1API_createPodSecurityPolicy(apiClient_t *apiClient, extensions_
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1116,7 +1140,10 @@ ExtensionsV1beta1API_createPodSecurityPolicy(apiClient_t *apiClient, extensions_
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1156,6 +1183,7 @@ ExtensionsV1beta1API_createPodSecurityPolicy(apiClient_t *apiClient, extensions_
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1163,7 +1191,7 @@ end:
 // delete collection of DaemonSet
 //
 v1_status_t*
-ExtensionsV1beta1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+ExtensionsV1beta1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1203,19 +1231,6 @@ ExtensionsV1beta1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient,
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -1339,21 +1354,8 @@ ExtensionsV1beta1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient,
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1400,7 +1402,10 @@ ExtensionsV1beta1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient,
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1413,14 +1418,6 @@ ExtensionsV1beta1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient,
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -1526,16 +1523,9 @@ ExtensionsV1beta1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient,
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1543,7 +1533,7 @@ end:
 // delete collection of Deployment
 //
 v1_status_t*
-ExtensionsV1beta1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+ExtensionsV1beta1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1583,19 +1573,6 @@ ExtensionsV1beta1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -1719,21 +1696,8 @@ ExtensionsV1beta1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -1780,7 +1744,10 @@ ExtensionsV1beta1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -1793,14 +1760,6 @@ ExtensionsV1beta1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -1906,16 +1865,9 @@ ExtensionsV1beta1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -1923,7 +1875,7 @@ end:
 // delete collection of Ingress
 //
 v1_status_t*
-ExtensionsV1beta1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+ExtensionsV1beta1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1963,19 +1915,6 @@ ExtensionsV1beta1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, c
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -2099,21 +2038,8 @@ ExtensionsV1beta1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, c
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2160,7 +2086,10 @@ ExtensionsV1beta1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, c
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2173,14 +2102,6 @@ ExtensionsV1beta1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, c
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -2286,16 +2207,9 @@ ExtensionsV1beta1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, c
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2303,7 +2217,7 @@ end:
 // delete collection of NetworkPolicy
 //
 v1_status_t*
-ExtensionsV1beta1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+ExtensionsV1beta1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2343,19 +2257,6 @@ ExtensionsV1beta1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiCli
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -2479,21 +2380,8 @@ ExtensionsV1beta1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiCli
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2540,7 +2428,10 @@ ExtensionsV1beta1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiCli
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2553,14 +2444,6 @@ ExtensionsV1beta1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiCli
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -2666,16 +2549,9 @@ ExtensionsV1beta1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiCli
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -2683,7 +2559,7 @@ end:
 // delete collection of ReplicaSet
 //
 v1_status_t*
-ExtensionsV1beta1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+ExtensionsV1beta1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2723,19 +2599,6 @@ ExtensionsV1beta1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient
     }
 
     // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
-    }
-
-    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -2859,21 +2722,8 @@ ExtensionsV1beta1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -2920,7 +2770,10 @@ ExtensionsV1beta1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient
     
     free(localVarPath);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -2933,14 +2786,6 @@ ExtensionsV1beta1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -3046,16 +2891,9 @@ ExtensionsV1beta1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3063,7 +2901,7 @@ end:
 // delete collection of PodSecurityPolicy
 //
 v1_status_t*
-ExtensionsV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body )
+ExtensionsV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3090,19 +2928,6 @@ ExtensionsV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, c
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
-    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
-    {
-        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
-        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
-        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
 
     // query parameters
@@ -3229,21 +3054,8 @@ ExtensionsV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, c
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
 
-    // query parameters
-    char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
-    keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
-    {
-        keyQuery_watch = strdup("watch");
-        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
-        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
-        list_addElement(localVarQueryParameters,keyPairQuery_watch);
-    }
-
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -3289,7 +3101,10 @@ ExtensionsV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, c
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -3302,14 +3117,6 @@ ExtensionsV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, c
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_allowWatchBookmarks){
-        free(keyQuery_allowWatchBookmarks);
-        keyQuery_allowWatchBookmarks = NULL;
-    }
-    if(keyPairQuery_allowWatchBookmarks){
-        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
-        keyPairQuery_allowWatchBookmarks = NULL;
     }
     if(keyQuery__continue){
         free(keyQuery__continue);
@@ -3415,16 +3222,9 @@ ExtensionsV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, c
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
     }
-    if(keyQuery_watch){
-        free(keyQuery_watch);
-        keyQuery_watch = NULL;
-    }
-    if(keyPairQuery_watch){
-        keyValuePair_free(keyPairQuery_watch);
-        keyPairQuery_watch = NULL;
-    }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3532,7 +3332,7 @@ ExtensionsV1beta1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * na
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -3583,7 +3383,10 @@ ExtensionsV1beta1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * na
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -3639,6 +3442,7 @@ ExtensionsV1beta1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * na
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3746,7 +3550,7 @@ ExtensionsV1beta1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -3797,7 +3601,10 @@ ExtensionsV1beta1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * n
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -3853,6 +3660,7 @@ ExtensionsV1beta1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * n
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -3960,7 +3768,7 @@ ExtensionsV1beta1API_deleteNamespacedIngress(apiClient_t *apiClient, char * name
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -4011,7 +3819,10 @@ ExtensionsV1beta1API_deleteNamespacedIngress(apiClient_t *apiClient, char * name
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -4067,6 +3878,7 @@ ExtensionsV1beta1API_deleteNamespacedIngress(apiClient_t *apiClient, char * name
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -4174,7 +3986,7 @@ ExtensionsV1beta1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -4225,7 +4037,10 @@ ExtensionsV1beta1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char 
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -4281,6 +4096,7 @@ ExtensionsV1beta1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -4388,7 +4204,7 @@ ExtensionsV1beta1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -4439,7 +4255,10 @@ ExtensionsV1beta1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * n
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -4495,6 +4314,7 @@ ExtensionsV1beta1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * n
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -4592,7 +4412,7 @@ ExtensionsV1beta1API_deletePodSecurityPolicy(apiClient_t *apiClient, char * name
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -4642,7 +4462,10 @@ ExtensionsV1beta1API_deletePodSecurityPolicy(apiClient_t *apiClient, char * name
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -4698,6 +4521,7 @@ ExtensionsV1beta1API_deletePodSecurityPolicy(apiClient_t *apiClient, char * name
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -4762,6 +4586,7 @@ ExtensionsV1beta1API_getAPIResources(apiClient_t *apiClient)
     free(localVarPath);
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -5032,6 +4857,7 @@ ExtensionsV1beta1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int a
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -5302,6 +5128,7 @@ ExtensionsV1beta1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -5572,6 +5399,7 @@ ExtensionsV1beta1API_listIngressForAllNamespaces(apiClient_t *apiClient, int all
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -5853,6 +5681,7 @@ ExtensionsV1beta1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * name
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -6134,6 +5963,7 @@ ExtensionsV1beta1API_listNamespacedDeployment(apiClient_t *apiClient, char * nam
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -6415,6 +6245,7 @@ ExtensionsV1beta1API_listNamespacedIngress(apiClient_t *apiClient, char * namesp
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -6696,6 +6527,7 @@ ExtensionsV1beta1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -6977,6 +6809,7 @@ ExtensionsV1beta1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * nam
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -7247,6 +7080,7 @@ ExtensionsV1beta1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, i
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -7517,6 +7351,7 @@ ExtensionsV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -7787,6 +7622,7 @@ ExtensionsV1beta1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -7881,7 +7717,7 @@ ExtensionsV1beta1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * nam
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -7933,7 +7769,10 @@ ExtensionsV1beta1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * nam
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -7981,6 +7820,7 @@ ExtensionsV1beta1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * nam
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -8075,7 +7915,7 @@ ExtensionsV1beta1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -8127,7 +7967,10 @@ ExtensionsV1beta1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -8175,6 +8018,7 @@ ExtensionsV1beta1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -8269,7 +8113,7 @@ ExtensionsV1beta1API_patchNamespacedDeployment(apiClient_t *apiClient, char * na
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -8321,7 +8165,10 @@ ExtensionsV1beta1API_patchNamespacedDeployment(apiClient_t *apiClient, char * na
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -8369,6 +8216,7 @@ ExtensionsV1beta1API_patchNamespacedDeployment(apiClient_t *apiClient, char * na
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -8463,7 +8311,7 @@ ExtensionsV1beta1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -8515,7 +8363,10 @@ ExtensionsV1beta1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -8563,6 +8414,7 @@ ExtensionsV1beta1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -8657,7 +8509,7 @@ ExtensionsV1beta1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, cha
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -8709,7 +8561,10 @@ ExtensionsV1beta1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, cha
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -8757,6 +8612,7 @@ ExtensionsV1beta1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, cha
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -8851,7 +8707,7 @@ ExtensionsV1beta1API_patchNamespacedIngress(apiClient_t *apiClient, char * name 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -8903,7 +8759,10 @@ ExtensionsV1beta1API_patchNamespacedIngress(apiClient_t *apiClient, char * name 
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -8951,6 +8810,7 @@ ExtensionsV1beta1API_patchNamespacedIngress(apiClient_t *apiClient, char * name 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -9045,7 +8905,7 @@ ExtensionsV1beta1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -9097,7 +8957,10 @@ ExtensionsV1beta1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -9145,6 +9008,7 @@ ExtensionsV1beta1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -9239,7 +9103,7 @@ ExtensionsV1beta1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -9291,7 +9155,10 @@ ExtensionsV1beta1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -9339,6 +9206,7 @@ ExtensionsV1beta1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -9433,7 +9301,7 @@ ExtensionsV1beta1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * na
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -9485,7 +9353,10 @@ ExtensionsV1beta1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * na
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -9533,6 +9404,7 @@ ExtensionsV1beta1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * na
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -9627,7 +9499,7 @@ ExtensionsV1beta1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -9679,7 +9551,10 @@ ExtensionsV1beta1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -9727,6 +9602,7 @@ ExtensionsV1beta1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -9821,7 +9697,7 @@ ExtensionsV1beta1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, cha
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -9873,7 +9749,10 @@ ExtensionsV1beta1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, cha
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -9921,6 +9800,7 @@ ExtensionsV1beta1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, cha
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -10015,7 +9895,7 @@ ExtensionsV1beta1API_patchNamespacedReplicationControllerDummyScale(apiClient_t 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -10067,7 +9947,10 @@ ExtensionsV1beta1API_patchNamespacedReplicationControllerDummyScale(apiClient_t 
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -10115,6 +9998,7 @@ ExtensionsV1beta1API_patchNamespacedReplicationControllerDummyScale(apiClient_t 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -10199,7 +10083,7 @@ ExtensionsV1beta1API_patchPodSecurityPolicy(apiClient_t *apiClient, char * name 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -10250,7 +10134,10 @@ ExtensionsV1beta1API_patchPodSecurityPolicy(apiClient_t *apiClient, char * name 
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -10298,6 +10185,7 @@ ExtensionsV1beta1API_patchPodSecurityPolicy(apiClient_t *apiClient, char * name 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -10450,6 +10338,7 @@ ExtensionsV1beta1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -10560,6 +10449,7 @@ ExtensionsV1beta1API_readNamespacedDaemonSetStatus(apiClient_t *apiClient, char 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -10712,6 +10602,7 @@ ExtensionsV1beta1API_readNamespacedDeployment(apiClient_t *apiClient, char * nam
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -10822,6 +10713,7 @@ ExtensionsV1beta1API_readNamespacedDeploymentScale(apiClient_t *apiClient, char 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -10932,6 +10824,7 @@ ExtensionsV1beta1API_readNamespacedDeploymentStatus(apiClient_t *apiClient, char
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -11084,6 +10977,7 @@ ExtensionsV1beta1API_readNamespacedIngress(apiClient_t *apiClient, char * name ,
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -11194,6 +11088,7 @@ ExtensionsV1beta1API_readNamespacedIngressStatus(apiClient_t *apiClient, char * 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -11346,6 +11241,7 @@ ExtensionsV1beta1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char * 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -11498,6 +11394,7 @@ ExtensionsV1beta1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * nam
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -11608,6 +11505,7 @@ ExtensionsV1beta1API_readNamespacedReplicaSetScale(apiClient_t *apiClient, char 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -11718,6 +11616,7 @@ ExtensionsV1beta1API_readNamespacedReplicaSetStatus(apiClient_t *apiClient, char
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -11828,6 +11727,7 @@ ExtensionsV1beta1API_readNamespacedReplicationControllerDummyScale(apiClient_t *
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -11969,6 +11869,7 @@ ExtensionsV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name ,
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -12050,7 +11951,7 @@ ExtensionsV1beta1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -12101,7 +12002,10 @@ ExtensionsV1beta1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * n
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -12141,6 +12045,7 @@ ExtensionsV1beta1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * n
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -12222,7 +12127,7 @@ ExtensionsV1beta1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, ch
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -12273,7 +12178,10 @@ ExtensionsV1beta1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, ch
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -12313,6 +12221,7 @@ ExtensionsV1beta1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, ch
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -12394,7 +12303,7 @@ ExtensionsV1beta1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -12445,7 +12354,10 @@ ExtensionsV1beta1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * 
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -12485,6 +12397,7 @@ ExtensionsV1beta1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -12566,7 +12479,7 @@ ExtensionsV1beta1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, ch
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -12617,7 +12530,10 @@ ExtensionsV1beta1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, ch
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -12657,6 +12573,7 @@ ExtensionsV1beta1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, ch
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -12738,7 +12655,7 @@ ExtensionsV1beta1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, c
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -12789,7 +12706,10 @@ ExtensionsV1beta1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, c
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -12829,6 +12749,7 @@ ExtensionsV1beta1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, c
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -12910,7 +12831,7 @@ ExtensionsV1beta1API_replaceNamespacedIngress(apiClient_t *apiClient, char * nam
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -12961,7 +12882,10 @@ ExtensionsV1beta1API_replaceNamespacedIngress(apiClient_t *apiClient, char * nam
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -13001,6 +12925,7 @@ ExtensionsV1beta1API_replaceNamespacedIngress(apiClient_t *apiClient, char * nam
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -13082,7 +13007,7 @@ ExtensionsV1beta1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -13133,7 +13058,10 @@ ExtensionsV1beta1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -13173,6 +13101,7 @@ ExtensionsV1beta1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -13254,7 +13183,7 @@ ExtensionsV1beta1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -13305,7 +13234,10 @@ ExtensionsV1beta1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -13345,6 +13277,7 @@ ExtensionsV1beta1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -13426,7 +13359,7 @@ ExtensionsV1beta1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -13477,7 +13410,10 @@ ExtensionsV1beta1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * 
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -13517,6 +13453,7 @@ ExtensionsV1beta1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * 
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -13598,7 +13535,7 @@ ExtensionsV1beta1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, ch
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -13649,7 +13586,10 @@ ExtensionsV1beta1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, ch
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -13689,6 +13629,7 @@ ExtensionsV1beta1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, ch
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -13770,7 +13711,7 @@ ExtensionsV1beta1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, c
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -13821,7 +13762,10 @@ ExtensionsV1beta1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, c
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -13861,6 +13805,7 @@ ExtensionsV1beta1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, c
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -13942,7 +13887,7 @@ ExtensionsV1beta1API_replaceNamespacedReplicationControllerDummyScale(apiClient_
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -13993,7 +13938,10 @@ ExtensionsV1beta1API_replaceNamespacedReplicationControllerDummyScale(apiClient_
     free(localVarPath);
     free(localVarToReplace_name);
     free(localVarToReplace_namespace);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -14033,6 +13981,7 @@ ExtensionsV1beta1API_replaceNamespacedReplicationControllerDummyScale(apiClient_
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
@@ -14104,7 +14053,7 @@ ExtensionsV1beta1API_replacePodSecurityPolicy(apiClient_t *apiClient, char * nam
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body;
+    cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
@@ -14154,7 +14103,10 @@ ExtensionsV1beta1API_replacePodSecurityPolicy(apiClient_t *apiClient, char * nam
     
     free(localVarPath);
     free(localVarToReplace_name);
-    cJSON_Delete(localVarSingleItemJSON_body);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
     free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -14194,6 +14146,7 @@ ExtensionsV1beta1API_replacePodSecurityPolicy(apiClient_t *apiClient, char * nam
     }
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }

@@ -27,7 +27,7 @@ AuditregistrationV1alpha1API_deleteAuditSink(apiClient_t *apiClient, char * name
 // delete collection of AuditSink
 //
 v1_status_t*
-AuditregistrationV1alpha1API_deleteCollectionAuditSink(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+AuditregistrationV1alpha1API_deleteCollectionAuditSink(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // get available resources

@@ -29,13 +29,13 @@ PolicyV1beta1API_createPodSecurityPolicy(apiClient_t *apiClient, policy_v1beta1_
 // delete collection of PodDisruptionBudget
 //
 v1_status_t*
-PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of PodSecurityPolicy
 //
 v1_status_t*
-PolicyV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+PolicyV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a PodDisruptionBudget
