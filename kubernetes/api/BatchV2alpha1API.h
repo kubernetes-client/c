@@ -21,7 +21,7 @@ BatchV2alpha1API_createNamespacedCronJob(apiClient_t *apiClient, char * namespac
 // delete collection of CronJob
 //
 v1_status_t*
-BatchV2alpha1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+BatchV2alpha1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a CronJob

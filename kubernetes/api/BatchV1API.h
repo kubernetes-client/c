@@ -21,7 +21,7 @@ BatchV1API_createNamespacedJob(apiClient_t *apiClient, char * namespace , v1_job
 // delete collection of Job
 //
 v1_status_t*
-BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a Job

@@ -21,7 +21,7 @@ NodeV1alpha1API_createRuntimeClass(apiClient_t *apiClient, v1alpha1_runtime_clas
 // delete collection of RuntimeClass
 //
 v1_status_t*
-NodeV1alpha1API_deleteCollectionRuntimeClass(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+NodeV1alpha1API_deleteCollectionRuntimeClass(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a RuntimeClass

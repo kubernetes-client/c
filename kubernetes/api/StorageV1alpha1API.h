@@ -21,7 +21,7 @@ StorageV1alpha1API_createVolumeAttachment(apiClient_t *apiClient, v1alpha1_volum
 // delete collection of VolumeAttachment
 //
 v1_status_t*
-StorageV1alpha1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , int watch , v1_delete_options_t * body );
+StorageV1alpha1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a VolumeAttachment

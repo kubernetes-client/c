@@ -72,6 +72,7 @@ CertificatesAPI_getAPIGroup(apiClient_t *apiClient)
     free(localVarPath);
     return elementToReturn;
 end:
+    free(localVarPath);
     return NULL;
 
 }
