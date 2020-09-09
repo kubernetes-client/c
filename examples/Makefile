@@ -5,6 +5,7 @@ all:
 	cd exec_provider; make
 	cd generic; make
 	cd auth_provider; make
+	cd watch_list_pod; make
 
 clean:
 	cd create_pod; make clean
@@ -13,3 +14,4 @@ clean:
 	cd exec_provider; make clean
 	cd generic; make clean
 	cd auth_provider; make clean
+	cd watch_list_pod; make clean
