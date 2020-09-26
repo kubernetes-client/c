@@ -106,18 +106,3 @@ void clear_and_free_string_pair_list(list_t * list)
     }
     list_free(list);
 }
-
-void clear_and_free_string_list(list_t * list)
-{
-    if (!list) {
-        return;
-    }
-
-    listEntry_t *listEntry = NULL;
-    list_ForEach(listEntry, list) {
-        char *list_item = listEntry->data;
-        free(list_item);
-        list_item = NULL;
-    }
-    list_free(list);
-}
