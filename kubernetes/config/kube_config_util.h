@@ -26,7 +26,7 @@ extern "C" {
  * None
  *
  */
-    char *kubeconfig_mk_cert_key_tempfile(const char *data);
+char *kubeconfig_mk_cert_key_tempfile(const char *data);
 
 /*
  * unsetSslConfig
@@ -48,7 +48,7 @@ extern "C" {
  * None
  *
  */
-    void unsetSslConfig(sslConfig_t * sslConfig);
+void unsetSslConfig(sslConfig_t * sslConfig);
 
 /*
  * clear_and_free_string_pair_list
@@ -70,29 +70,7 @@ extern "C" {
  * None
  *
  */
-    void clear_and_free_string_pair_list(list_t * list);
-
-/*
- * clear_and_free_string_list
- *
- * Description:
- *
- * clear the content and free the memory for a string list
- *
- * Return:
- * 
- * None
- *
- * Parameter:
- *
- * IN:
- * list: The string list needs to clear and free
- *
- * OUT:
- * None
- *
- */
-    void clear_and_free_string_list(list_t * list);
+void clear_and_free_string_pair_list(list_t * list);
 
 #ifdef  __cplusplus
 }
