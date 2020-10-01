@@ -76,6 +76,7 @@ void apiClient_free(apiClient_t *apiClient) {
         }
         list_free(apiClient->apiKeys_BearerToken);
     }
+
     free(apiClient);
     curl_global_cleanup();
 }
