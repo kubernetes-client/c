@@ -11,7 +11,7 @@ git clone https://github.com/kubernetes-client/c
 CLIENT_REPO_ROOT=${PWD}/c
 
 # Install pre-requisites
-sudo apt-get install libcurl4-openssl-dev uncrustify
+sudo apt-get install libcurl4-openssl-dev uncrustify libyaml-dev
 
 # Move into the Kubernetes directory
 cd ${CLIENT_REPO_ROOT}/kubernetes
