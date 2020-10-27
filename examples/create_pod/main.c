@@ -96,5 +96,7 @@ int main(int argc, char *argv[])
 
     apiClient_free(k8sApiClient);
     k8sApiClient = NULL;
+    apiClient_unsetupGlobalEnv();
 
+    return 0;
 }

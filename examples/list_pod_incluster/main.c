@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
     basePath = NULL;
     sslConfig = NULL;
     apiKeys = NULL;
+    apiClient_unsetupGlobalEnv();
 
     return 0;
 }
