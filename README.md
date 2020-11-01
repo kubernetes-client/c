@@ -78,6 +78,7 @@ list all pods:
     basePath = NULL;
     sslConfig = NULL;
     apiKeys = NULL;
+    apiClient_unsetupGlobalEnv();
 ```
 
 list all pods in cluster:
@@ -121,6 +122,7 @@ list all pods in cluster:
     basePath = NULL;
     sslConfig = NULL;
     apiKeys = NULL;
+    apiClient_unsetupGlobalEnv();
 ```
 
 

@@ -1,5 +1,6 @@
 kubernetes/build/
 .vs/
+.vscode/
 
 # Prerequisites
 *.d
