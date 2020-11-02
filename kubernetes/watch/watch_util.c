@@ -25,6 +25,7 @@ static int wu_convert_to_json_array(list_t * json_array, const char *json_string
             rc = -1;
             goto end;
         }
+        cJSON_Delete(cjson);
         list_addElement(json_array, strdup(token));
         token = strtok(NULL, JSON_ARRAY_DELIM);
     }

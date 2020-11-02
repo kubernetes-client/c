@@ -13,6 +13,8 @@ apiClient_t *apiClient_create() {
     apiClient->dataReceived = NULL;
     apiClient->dataReceivedLen = 0;
     apiClient->data_callback_func = NULL;
+    apiClient->progress_func = NULL;
+    apiClient->progress_data = NULL;
     apiClient->response_code = 0;
     apiClient->apiKeys_BearerToken = NULL;
 
@@ -39,6 +41,8 @@ apiClient_t *apiClient_create_with_base_path(const char *basePath
     apiClient->dataReceived = NULL;
     apiClient->dataReceivedLen = 0;
     apiClient->data_callback_func = NULL;
+    apiClient->progress_func = NULL;
+    apiClient->progress_data = NULL;
     apiClient->response_code = 0;
     if(apiKeys_BearerToken!= NULL) {
         apiClient->apiKeys_BearerToken = list_create();
@@ -60,6 +64,8 @@ void apiClient_free(apiClient_t *apiClient) {
         free(apiClient->basePath);
     }
     apiClient->data_callback_func = NULL;
+    apiClient->progress_func = NULL;
+    apiClient->progress_data = NULL;
     if(apiClient->apiKeys_BearerToken) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, apiClient->apiKeys_BearerToken) {
@@ -381,6 +387,14 @@ void apiClient_invoke(apiClient_t    *apiClient,
                 curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
                 curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
             }
+        }
+
+        if (apiClient->progress_func != NULL) {
+            curl_easy_setopt(handle, CURLOPT_XFERINFOFUNCTION, apiClient->progress_func);
+            if (apiClient->progress_data != NULL) {
+                curl_easy_setopt(handle, CURLOPT_XFERINFODATA, apiClient->progress_data);
+            }
+            curl_easy_setopt(handle, CURLOPT_NOPROGRESS, 0L);
         }
 
         // this would only be generated for apiKey authentication
