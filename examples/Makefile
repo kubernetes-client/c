@@ -7,6 +7,7 @@ all:
 	cd generic; make
 	cd auth_provider; make
 	cd watch_list_pod; make
+	cd multi_thread; make
 
 clean:
 	cd create_pod; make clean
@@ -17,3 +18,4 @@ clean:
 	cd generic; make clean
 	cd auth_provider; make clean
 	cd watch_list_pod; make clean
+	cd multi_thread; make clean

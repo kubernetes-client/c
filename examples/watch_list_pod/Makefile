@@ -1,5 +1,5 @@
 INCLUDE:=-I../../kubernetes/include -I../../kubernetes/model -I../../kubernetes/api -I../../kubernetes/config -I../../kubernetes/watch
-LIBS:=-L../../kubernetes/build -lkubernetes -lcurl -lyaml -lpthread -lssl -lz
+LIBS:=-L../../kubernetes/build -lkubernetes -lyaml
 CFLAGS:=-g
 
 all:

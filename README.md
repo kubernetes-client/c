@@ -125,6 +125,15 @@ list all pods in cluster:
     apiClient_unsetupGlobalEnv();
 ```
 
+## Multi-threaded Usage
+
+If the C client library is used in multi-threaded program, the following 2 actions must be taken:
+
+1. After the program starts up, main thread must call the function ```apiClient_setupGlobalEnv()``` before any worker thread is created.
+
+2. If the C client is no longer used, main thread must call the function ```apiClient_unsetupGlobalEnv()``` after all worker threads end.
+
+Refer to the [example](https://github.com/kubernetes-client/c/tree/master/examples/multi_thread/) for detail. 
 
 ## Community, discussion, contribution, and support
 
