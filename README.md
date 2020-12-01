@@ -11,7 +11,7 @@ git clone https://github.com/kubernetes-client/c
 CLIENT_REPO_ROOT=${PWD}/c
 
 # Install pre-requisites
-sudo apt-get install libcurl4-openssl-dev uncrustify libyaml-dev
+sudo apt-get install libssl-dev libcurl4-openssl-dev uncrustify libyaml-dev
 
 # Move into the Kubernetes directory
 cd ${CLIENT_REPO_ROOT}/kubernetes
@@ -127,7 +127,7 @@ list all pods in cluster:
 
 ## Multi-threaded Usage
 
-If the C client library is used in multi-threaded program, the following 2 actions must be taken:
+If the C client library is used in multi-threaded program, the following 2 actions are required:
 
 1. After the program starts up, main thread must call the function ```apiClient_setupGlobalEnv()``` before any worker thread is created.
 
