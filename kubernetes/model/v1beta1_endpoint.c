@@ -42,6 +42,7 @@ void v1beta1_endpoint_free(v1beta1_endpoint_t *v1beta1_endpoint) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1beta1_endpoint->topology);
     free(v1beta1_endpoint);

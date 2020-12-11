@@ -462,7 +462,7 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char * group 
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -555,6 +555,10 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char * group 
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -562,6 +566,10 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char * group 
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -675,7 +683,7 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -779,6 +787,10 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -786,6 +798,10 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -909,7 +925,7 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -1014,6 +1030,10 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -1021,6 +1041,10 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -1142,7 +1166,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * gro
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -1236,6 +1260,10 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * gro
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -1243,6 +1271,10 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * gro
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -2100,7 +2132,7 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -2203,6 +2235,10 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -2223,6 +2259,10 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -2230,6 +2270,10 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -2390,7 +2434,7 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -2494,6 +2538,10 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -2514,6 +2562,10 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -2521,6 +2573,10 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -2619,7 +2675,7 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char * group ,
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -2713,6 +2769,10 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char * group ,
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
@@ -2811,7 +2871,7 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char * gr
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -2907,6 +2967,10 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char * gr
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
@@ -3005,7 +3069,7 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char * g
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -3101,6 +3165,10 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char * g
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
@@ -3209,7 +3277,7 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * grou
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -3304,6 +3372,10 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * grou
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
@@ -3412,7 +3484,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -3510,6 +3582,10 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
@@ -3618,7 +3694,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -3716,6 +3792,10 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);

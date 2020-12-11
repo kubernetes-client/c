@@ -37,6 +37,7 @@ void v1beta1_subject_access_review_spec_free(v1beta1_subject_access_review_spec_
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1beta1_subject_access_review_spec->extra);
     list_ForEach(listEntry, v1beta1_subject_access_review_spec->group) {

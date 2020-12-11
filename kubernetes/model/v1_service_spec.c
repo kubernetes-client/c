@@ -72,6 +72,7 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_service_spec->selector);
     free(v1_service_spec->session_affinity);

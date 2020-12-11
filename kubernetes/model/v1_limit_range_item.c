@@ -37,30 +37,35 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_limit_range_item->_default);
     list_ForEach(listEntry, v1_limit_range_item->default_request) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_limit_range_item->default_request);
     list_ForEach(listEntry, v1_limit_range_item->max) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_limit_range_item->max);
     list_ForEach(listEntry, v1_limit_range_item->max_limit_request_ratio) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_limit_range_item->max_limit_request_ratio);
     list_ForEach(listEntry, v1_limit_range_item->min) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_limit_range_item->min);
     free(v1_limit_range_item->type);

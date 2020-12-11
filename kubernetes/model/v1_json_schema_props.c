@@ -124,12 +124,14 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_json_schema_props->definitions);
     list_ForEach(listEntry, v1_json_schema_props->dependencies) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_json_schema_props->dependencies);
     free(v1_json_schema_props->description);
@@ -152,12 +154,14 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_json_schema_props->pattern_properties);
     list_ForEach(listEntry, v1_json_schema_props->properties) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_json_schema_props->properties);
     list_ForEach(listEntry, v1_json_schema_props->required) {

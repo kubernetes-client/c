@@ -33,6 +33,7 @@ void v1_replication_controller_spec_free(v1_replication_controller_spec_t *v1_re
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_replication_controller_spec->selector);
     v1_pod_template_spec_free(v1_replication_controller_spec->template);

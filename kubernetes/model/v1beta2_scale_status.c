@@ -31,6 +31,7 @@ void v1beta2_scale_status_free(v1beta2_scale_status_t *v1beta2_scale_status) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1beta2_scale_status->selector);
     free(v1beta2_scale_status->target_selector);

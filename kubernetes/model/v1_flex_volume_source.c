@@ -37,6 +37,7 @@ void v1_flex_volume_source_free(v1_flex_volume_source_t *v1_flex_volume_source) 
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_flex_volume_source->options);
     v1_local_object_reference_free(v1_flex_volume_source->secret_ref);

@@ -51,12 +51,14 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_node_status->allocatable);
     list_ForEach(listEntry, v1_node_status->capacity) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_node_status->capacity);
     list_ForEach(listEntry, v1_node_status->conditions) {

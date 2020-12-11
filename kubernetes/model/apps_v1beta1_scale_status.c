@@ -31,6 +31,7 @@ void apps_v1beta1_scale_status_free(apps_v1beta1_scale_status_t *apps_v1beta1_sc
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(apps_v1beta1_scale_status->selector);
     free(apps_v1beta1_scale_status->target_selector);

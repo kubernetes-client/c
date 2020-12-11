@@ -39,6 +39,7 @@ void extensions_v1beta1_deployment_rollback_free(extensions_v1beta1_deployment_r
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(extensions_v1beta1_deployment_rollback->updated_annotations);
     free(extensions_v1beta1_deployment_rollback);

@@ -970,7 +970,7 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -1123,6 +1123,10 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -1143,6 +1147,10 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -1150,6 +1158,10 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -1182,6 +1194,10 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
+    }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
     }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
@@ -1312,7 +1328,7 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * nam
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -1465,6 +1481,10 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * nam
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -1485,6 +1505,10 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * nam
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -1492,6 +1516,10 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * nam
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -1524,6 +1552,10 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * nam
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
+    }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
     }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
@@ -1654,7 +1686,7 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * na
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -1807,6 +1839,10 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * na
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -1827,6 +1863,10 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * na
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -1834,6 +1874,10 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * na
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -1866,6 +1910,10 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * na
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
+    }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
     }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
@@ -1996,7 +2044,7 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * na
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -2149,6 +2197,10 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * na
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -2169,6 +2221,10 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * na
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -2176,6 +2232,10 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * na
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -2208,6 +2268,10 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * na
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
+    }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
     }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
@@ -2338,7 +2402,7 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * n
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -2491,6 +2555,10 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * n
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -2511,6 +2579,10 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * n
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -2518,6 +2590,10 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * n
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -2550,6 +2626,10 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * n
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
+    }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
     }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
@@ -2641,7 +2721,7 @@ AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -2749,6 +2829,10 @@ AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -2756,6 +2840,10 @@ AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -2859,7 +2947,7 @@ AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char *
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -2967,6 +3055,10 @@ AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char *
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -2974,6 +3066,10 @@ AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char *
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -3077,7 +3173,7 @@ AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char 
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -3185,6 +3281,10 @@ AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char 
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -3192,6 +3292,10 @@ AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char 
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -3295,7 +3399,7 @@ AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char 
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -3403,6 +3507,10 @@ AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char 
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -3410,6 +3518,10 @@ AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char 
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -3513,7 +3625,7 @@ AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -3621,6 +3733,10 @@ AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -3628,6 +3744,10 @@ AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -3739,7 +3859,7 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -3838,7 +3958,7 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -3893,6 +4013,10 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -3937,6 +4061,10 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -3969,6 +4097,10 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -3976,6 +4108,10 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -4010,7 +4146,7 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -4109,7 +4245,7 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -4164,6 +4300,10 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -4208,6 +4348,10 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -4240,6 +4384,10 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -4247,6 +4395,10 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -4281,7 +4433,7 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -4380,7 +4532,7 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -4435,6 +4587,10 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -4479,6 +4635,10 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -4511,6 +4671,10 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -4518,6 +4682,10 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -4574,7 +4742,7 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * namesp
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -4661,7 +4829,7 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * namesp
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -4729,6 +4897,10 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * namesp
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -4773,6 +4945,10 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * namesp
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -4793,6 +4969,10 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * namesp
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -4800,6 +4980,10 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * namesp
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -4856,7 +5040,7 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , cha
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -4943,7 +5127,7 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , cha
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -5011,6 +5195,10 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , cha
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -5055,6 +5243,10 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , cha
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -5075,6 +5267,10 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , cha
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -5082,6 +5278,10 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , cha
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -5138,7 +5338,7 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * namespace , ch
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -5225,7 +5425,7 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * namespace , ch
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -5293,6 +5493,10 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * namespace , ch
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -5337,6 +5541,10 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * namespace , ch
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -5357,6 +5565,10 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * namespace , ch
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -5364,6 +5576,10 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * namespace , ch
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -5420,7 +5636,7 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , ch
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -5507,7 +5723,7 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , ch
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -5575,6 +5791,10 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , ch
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -5619,6 +5839,10 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , ch
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -5639,6 +5863,10 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , ch
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -5646,6 +5874,10 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , ch
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -5702,7 +5934,7 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * namespace , c
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -5789,7 +6021,7 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * namespace , c
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -5857,6 +6089,10 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * namespace , c
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -5901,6 +6137,10 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * namespace , c
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -5921,6 +6161,10 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * namespace , c
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -5928,6 +6172,10 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * namespace , c
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -5962,7 +6210,7 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -6061,7 +6309,7 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -6116,6 +6364,10 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -6160,6 +6412,10 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -6192,6 +6448,10 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -6199,6 +6459,10 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -6233,7 +6497,7 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -6332,7 +6596,7 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -6387,6 +6651,10 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -6431,6 +6699,10 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -6463,6 +6735,10 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -6470,6 +6746,10 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -6560,7 +6840,7 @@ AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name 
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -6668,6 +6948,10 @@ AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name 
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
@@ -6758,7 +7042,7 @@ AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * 
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -6866,6 +7150,10 @@ AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * 
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
@@ -6956,7 +7244,7 @@ AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , c
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -7064,6 +7352,10 @@ AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , c
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
@@ -7154,7 +7446,7 @@ AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char *
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -7262,6 +7554,10 @@ AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char *
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
@@ -7352,7 +7648,7 @@ AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , c
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -7461,6 +7757,10 @@ AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , c
         free(keyQuery_force);
         keyQuery_force = NULL;
     }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
         keyPairQuery_force = NULL;
@@ -7550,7 +7850,7 @@ AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , 
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -7659,6 +7959,10 @@ AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , 
         free(keyQuery_force);
         keyQuery_force = NULL;
     }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
         keyPairQuery_force = NULL;
@@ -7748,7 +8052,7 @@ AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char *
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -7856,6 +8160,10 @@ AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char *
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
@@ -7946,7 +8254,7 @@ AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , c
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -8055,6 +8363,10 @@ AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , c
         free(keyQuery_force);
         keyQuery_force = NULL;
     }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
         keyPairQuery_force = NULL;
@@ -8144,7 +8456,7 @@ AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , 
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -8253,6 +8565,10 @@ AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , 
         free(keyQuery_force);
         keyQuery_force = NULL;
     }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
         keyPairQuery_force = NULL;
@@ -8342,7 +8658,7 @@ AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char 
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -8451,6 +8767,10 @@ AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char 
         free(keyQuery_force);
         keyQuery_force = NULL;
     }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
         keyPairQuery_force = NULL;
@@ -8540,7 +8860,7 @@ AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , 
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -8649,6 +8969,10 @@ AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , 
         free(keyQuery_force);
         keyQuery_force = NULL;
     }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
         keyPairQuery_force = NULL;
@@ -8738,7 +9062,7 @@ AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name ,
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -8847,6 +9171,10 @@ AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name ,
         free(keyQuery_force);
         keyQuery_force = NULL;
     }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
         keyPairQuery_force = NULL;
@@ -8912,7 +9240,7 @@ AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name ,
 
     // query parameters
     char *keyQuery_exact = NULL;
-    char * valueQuery_exact ;
+    char * valueQuery_exact = NULL;
     keyValuePair_t *keyPairQuery_exact = 0;
     if (exact)
     {
@@ -8925,7 +9253,7 @@ AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name ,
 
     // query parameters
     char *keyQuery_export = NULL;
-    char * valueQuery_export ;
+    char * valueQuery_export = NULL;
     keyValuePair_t *keyPairQuery_export = 0;
     if (export)
     {
@@ -8992,6 +9320,10 @@ AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name ,
         free(keyQuery_exact);
         keyQuery_exact = NULL;
     }
+    if(valueQuery_exact){
+        free(valueQuery_exact);
+        valueQuery_exact = NULL;
+    }
     if(keyPairQuery_exact){
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
@@ -8999,6 +9331,10 @@ AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name ,
     if(keyQuery_export){
         free(keyQuery_export);
         keyQuery_export = NULL;
+    }
+    if(valueQuery_export){
+        free(valueQuery_export);
+        valueQuery_export = NULL;
     }
     if(keyPairQuery_export){
         keyValuePair_free(keyPairQuery_export);
@@ -9065,7 +9401,7 @@ AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * n
 
     // query parameters
     char *keyQuery_exact = NULL;
-    char * valueQuery_exact ;
+    char * valueQuery_exact = NULL;
     keyValuePair_t *keyPairQuery_exact = 0;
     if (exact)
     {
@@ -9078,7 +9414,7 @@ AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * n
 
     // query parameters
     char *keyQuery_export = NULL;
-    char * valueQuery_export ;
+    char * valueQuery_export = NULL;
     keyValuePair_t *keyPairQuery_export = 0;
     if (export)
     {
@@ -9145,6 +9481,10 @@ AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * n
         free(keyQuery_exact);
         keyQuery_exact = NULL;
     }
+    if(valueQuery_exact){
+        free(valueQuery_exact);
+        valueQuery_exact = NULL;
+    }
     if(keyPairQuery_exact){
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
@@ -9152,6 +9492,10 @@ AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * n
     if(keyQuery_export){
         free(keyQuery_export);
         keyQuery_export = NULL;
+    }
+    if(valueQuery_export){
+        free(valueQuery_export);
+        valueQuery_export = NULL;
     }
     if(keyPairQuery_export){
         keyValuePair_free(keyPairQuery_export);
@@ -9329,7 +9673,7 @@ AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * 
 
     // query parameters
     char *keyQuery_exact = NULL;
-    char * valueQuery_exact ;
+    char * valueQuery_exact = NULL;
     keyValuePair_t *keyPairQuery_exact = 0;
     if (exact)
     {
@@ -9342,7 +9686,7 @@ AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * 
 
     // query parameters
     char *keyQuery_export = NULL;
-    char * valueQuery_export ;
+    char * valueQuery_export = NULL;
     keyValuePair_t *keyPairQuery_export = 0;
     if (export)
     {
@@ -9409,6 +9753,10 @@ AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * 
         free(keyQuery_exact);
         keyQuery_exact = NULL;
     }
+    if(valueQuery_exact){
+        free(valueQuery_exact);
+        valueQuery_exact = NULL;
+    }
     if(keyPairQuery_exact){
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
@@ -9416,6 +9764,10 @@ AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * 
     if(keyQuery_export){
         free(keyQuery_export);
         keyQuery_export = NULL;
+    }
+    if(valueQuery_export){
+        free(valueQuery_export);
+        valueQuery_export = NULL;
     }
     if(keyPairQuery_export){
         keyValuePair_free(keyPairQuery_export);
@@ -9704,7 +10056,7 @@ AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * 
 
     // query parameters
     char *keyQuery_exact = NULL;
-    char * valueQuery_exact ;
+    char * valueQuery_exact = NULL;
     keyValuePair_t *keyPairQuery_exact = 0;
     if (exact)
     {
@@ -9717,7 +10069,7 @@ AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * 
 
     // query parameters
     char *keyQuery_export = NULL;
-    char * valueQuery_export ;
+    char * valueQuery_export = NULL;
     keyValuePair_t *keyPairQuery_export = 0;
     if (export)
     {
@@ -9784,6 +10136,10 @@ AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * 
         free(keyQuery_exact);
         keyQuery_exact = NULL;
     }
+    if(valueQuery_exact){
+        free(valueQuery_exact);
+        valueQuery_exact = NULL;
+    }
     if(keyPairQuery_exact){
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
@@ -9791,6 +10147,10 @@ AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * 
     if(keyQuery_export){
         free(keyQuery_export);
         keyQuery_export = NULL;
+    }
+    if(valueQuery_export){
+        free(valueQuery_export);
+        valueQuery_export = NULL;
     }
     if(keyPairQuery_export){
         keyValuePair_free(keyPairQuery_export);
@@ -10079,7 +10439,7 @@ AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char *
 
     // query parameters
     char *keyQuery_exact = NULL;
-    char * valueQuery_exact ;
+    char * valueQuery_exact = NULL;
     keyValuePair_t *keyPairQuery_exact = 0;
     if (exact)
     {
@@ -10092,7 +10452,7 @@ AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char *
 
     // query parameters
     char *keyQuery_export = NULL;
-    char * valueQuery_export ;
+    char * valueQuery_export = NULL;
     keyValuePair_t *keyPairQuery_export = 0;
     if (export)
     {
@@ -10159,6 +10519,10 @@ AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char *
         free(keyQuery_exact);
         keyQuery_exact = NULL;
     }
+    if(valueQuery_exact){
+        free(valueQuery_exact);
+        valueQuery_exact = NULL;
+    }
     if(keyPairQuery_exact){
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
@@ -10166,6 +10530,10 @@ AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char *
     if(keyQuery_export){
         free(keyQuery_export);
         keyQuery_export = NULL;
+    }
+    if(valueQuery_export){
+        free(valueQuery_export);
+        valueQuery_export = NULL;
     }
     if(keyPairQuery_export){
         keyValuePair_free(keyPairQuery_export);

@@ -29,12 +29,14 @@ void v1_resource_quota_status_free(v1_resource_quota_status_t *v1_resource_quota
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_resource_quota_status->hard);
     list_ForEach(listEntry, v1_resource_quota_status->used) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_resource_quota_status->used);
     free(v1_resource_quota_status);

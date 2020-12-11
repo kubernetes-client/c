@@ -37,6 +37,7 @@ void v1beta1_certificate_signing_request_spec_free(v1beta1_certificate_signing_r
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1beta1_certificate_signing_request_spec->extra);
     list_ForEach(listEntry, v1beta1_certificate_signing_request_spec->groups) {

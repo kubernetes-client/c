@@ -37,6 +37,7 @@ void v1_persistent_volume_claim_status_free(v1_persistent_volume_claim_status_t 
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_persistent_volume_claim_status->capacity);
     list_ForEach(listEntry, v1_persistent_volume_claim_status->conditions) {

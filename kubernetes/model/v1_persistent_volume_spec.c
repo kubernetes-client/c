@@ -92,6 +92,7 @@ void v1_persistent_volume_spec_free(v1_persistent_volume_spec_t *v1_persistent_v
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_persistent_volume_spec->capacity);
     v1_ceph_fs_persistent_volume_source_free(v1_persistent_volume_spec->cephfs);

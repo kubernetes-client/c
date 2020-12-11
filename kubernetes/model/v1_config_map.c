@@ -36,12 +36,14 @@ void v1_config_map_free(v1_config_map_t *v1_config_map) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_config_map->binary_data);
     list_ForEach(listEntry, v1_config_map->data) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_config_map->data);
     free(v1_config_map->kind);
