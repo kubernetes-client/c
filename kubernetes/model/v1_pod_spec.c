@@ -118,12 +118,14 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_pod_spec->node_selector);
     list_ForEach(listEntry, v1_pod_spec->overhead) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_pod_spec->overhead);
     free(v1_pod_spec->preemption_policy);

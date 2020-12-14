@@ -31,6 +31,7 @@ void extensions_v1beta1_scale_status_free(extensions_v1beta1_scale_status_t *ext
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(extensions_v1beta1_scale_status->selector);
     free(extensions_v1beta1_scale_status->target_selector);

@@ -455,7 +455,7 @@ PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiC
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -608,6 +608,10 @@ PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiC
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -628,6 +632,10 @@ PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiC
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -635,6 +643,10 @@ PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiC
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -667,6 +679,10 @@ PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiC
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
+    }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
     }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
@@ -787,7 +803,7 @@ PolicyV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char 
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -939,6 +955,10 @@ PolicyV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char 
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -959,6 +979,10 @@ PolicyV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char 
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -966,6 +990,10 @@ PolicyV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char 
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -998,6 +1026,10 @@ PolicyV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char 
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
+    }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
     }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
@@ -1089,7 +1121,7 @@ PolicyV1beta1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, cha
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -1197,6 +1229,10 @@ PolicyV1beta1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, cha
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -1204,6 +1240,10 @@ PolicyV1beta1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, cha
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -1297,7 +1337,7 @@ PolicyV1beta1API_deletePodSecurityPolicy(apiClient_t *apiClient, char * name , c
 
     // query parameters
     char *keyQuery_orphanDependents = NULL;
-    char * valueQuery_orphanDependents ;
+    char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
     if (orphanDependents)
     {
@@ -1404,6 +1444,10 @@ PolicyV1beta1API_deletePodSecurityPolicy(apiClient_t *apiClient, char * name , c
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
     }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
@@ -1411,6 +1455,10 @@ PolicyV1beta1API_deletePodSecurityPolicy(apiClient_t *apiClient, char * name , c
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
     }
     if(keyPairQuery_orphanDependents){
         keyValuePair_free(keyPairQuery_orphanDependents);
@@ -1544,7 +1592,7 @@ PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -1631,7 +1679,7 @@ PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -1699,6 +1747,10 @@ PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -1743,6 +1795,10 @@ PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -1763,6 +1819,10 @@ PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -1770,6 +1830,10 @@ PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -1804,7 +1868,7 @@ PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient,
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -1903,7 +1967,7 @@ PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient,
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -1958,6 +2022,10 @@ PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient,
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -2002,6 +2070,10 @@ PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient,
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -2034,6 +2106,10 @@ PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient,
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -2041,6 +2117,10 @@ PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient,
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -2087,7 +2167,7 @@ PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , i
 
     // query parameters
     char *keyQuery_allowWatchBookmarks = NULL;
-    char * valueQuery_allowWatchBookmarks ;
+    char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
     if (allowWatchBookmarks)
     {
@@ -2174,7 +2254,7 @@ PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , i
 
     // query parameters
     char *keyQuery_watch = NULL;
-    char * valueQuery_watch ;
+    char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
     if (watch)
     {
@@ -2241,6 +2321,10 @@ PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , i
         free(keyQuery_allowWatchBookmarks);
         keyQuery_allowWatchBookmarks = NULL;
     }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
     if(keyPairQuery_allowWatchBookmarks){
         keyValuePair_free(keyPairQuery_allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = NULL;
@@ -2285,6 +2369,10 @@ PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , i
         free(keyQuery_limit);
         keyQuery_limit = NULL;
     }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
     if(keyPairQuery_limit){
         keyValuePair_free(keyPairQuery_limit);
         keyPairQuery_limit = NULL;
@@ -2305,6 +2393,10 @@ PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , i
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
     }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
     if(keyPairQuery_timeoutSeconds){
         keyValuePair_free(keyPairQuery_timeoutSeconds);
         keyPairQuery_timeoutSeconds = NULL;
@@ -2312,6 +2404,10 @@ PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , i
     if(keyQuery_watch){
         free(keyQuery_watch);
         keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
     }
     if(keyPairQuery_watch){
         keyValuePair_free(keyPairQuery_watch);
@@ -2402,7 +2498,7 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -2510,6 +2606,10 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
     }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
@@ -2600,7 +2700,7 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -2709,6 +2809,10 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient
         free(keyQuery_force);
         keyQuery_force = NULL;
     }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
         keyPairQuery_force = NULL;
@@ -2788,7 +2892,7 @@ PolicyV1beta1API_patchPodSecurityPolicy(apiClient_t *apiClient, char * name , ob
 
     // query parameters
     char *keyQuery_force = NULL;
-    char * valueQuery_force ;
+    char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
     if (force)
     {
@@ -2896,6 +3000,10 @@ PolicyV1beta1API_patchPodSecurityPolicy(apiClient_t *apiClient, char * name , ob
         free(keyQuery_force);
         keyQuery_force = NULL;
     }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
     if(keyPairQuery_force){
         keyValuePair_free(keyPairQuery_force);
         keyPairQuery_force = NULL;
@@ -2961,7 +3069,7 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
 
     // query parameters
     char *keyQuery_exact = NULL;
-    char * valueQuery_exact ;
+    char * valueQuery_exact = NULL;
     keyValuePair_t *keyPairQuery_exact = 0;
     if (exact)
     {
@@ -2974,7 +3082,7 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
 
     // query parameters
     char *keyQuery_export = NULL;
-    char * valueQuery_export ;
+    char * valueQuery_export = NULL;
     keyValuePair_t *keyPairQuery_export = 0;
     if (export)
     {
@@ -3041,6 +3149,10 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
         free(keyQuery_exact);
         keyQuery_exact = NULL;
     }
+    if(valueQuery_exact){
+        free(valueQuery_exact);
+        valueQuery_exact = NULL;
+    }
     if(keyPairQuery_exact){
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
@@ -3048,6 +3160,10 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
     if(keyQuery_export){
         free(keyQuery_export);
         keyQuery_export = NULL;
+    }
+    if(valueQuery_export){
+        free(valueQuery_export);
+        valueQuery_export = NULL;
     }
     if(keyPairQuery_export){
         keyValuePair_free(keyPairQuery_export);
@@ -3215,7 +3331,7 @@ PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , cha
 
     // query parameters
     char *keyQuery_exact = NULL;
-    char * valueQuery_exact ;
+    char * valueQuery_exact = NULL;
     keyValuePair_t *keyPairQuery_exact = 0;
     if (exact)
     {
@@ -3228,7 +3344,7 @@ PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , cha
 
     // query parameters
     char *keyQuery_export = NULL;
-    char * valueQuery_export ;
+    char * valueQuery_export = NULL;
     keyValuePair_t *keyPairQuery_export = 0;
     if (export)
     {
@@ -3294,6 +3410,10 @@ PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , cha
         free(keyQuery_exact);
         keyQuery_exact = NULL;
     }
+    if(valueQuery_exact){
+        free(valueQuery_exact);
+        valueQuery_exact = NULL;
+    }
     if(keyPairQuery_exact){
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
@@ -3301,6 +3421,10 @@ PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , cha
     if(keyQuery_export){
         free(keyQuery_export);
         keyQuery_export = NULL;
+    }
+    if(valueQuery_export){
+        free(valueQuery_export);
+        valueQuery_export = NULL;
     }
     if(keyPairQuery_export){
         keyValuePair_free(keyPairQuery_export);

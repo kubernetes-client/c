@@ -57,6 +57,7 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_object_meta->annotations);
     free(v1_object_meta->cluster_name);
@@ -71,6 +72,7 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_object_meta->labels);
     list_ForEach(listEntry, v1_object_meta->managed_fields) {

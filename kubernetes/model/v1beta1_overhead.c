@@ -27,6 +27,7 @@ void v1beta1_overhead_free(v1beta1_overhead_t *v1beta1_overhead) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1beta1_overhead->pod_fixed);
     free(v1beta1_overhead);

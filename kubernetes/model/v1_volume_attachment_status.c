@@ -34,6 +34,7 @@ void v1_volume_attachment_status_free(v1_volume_attachment_status_t *v1_volume_a
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_volume_attachment_status->attachment_metadata);
     v1_volume_error_free(v1_volume_attachment_status->detach_error);

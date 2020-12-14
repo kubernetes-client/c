@@ -49,6 +49,7 @@ void v1_csi_persistent_volume_source_free(v1_csi_persistent_volume_source_t *v1_
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_csi_persistent_volume_source->volume_attributes);
     free(v1_csi_persistent_volume_source->volume_handle);

@@ -56,6 +56,7 @@ void v1beta1_storage_class_free(v1beta1_storage_class_t *v1beta1_storage_class) 
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1beta1_storage_class->parameters);
     free(v1beta1_storage_class->provisioner);

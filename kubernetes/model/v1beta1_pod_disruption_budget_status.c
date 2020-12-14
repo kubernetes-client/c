@@ -37,6 +37,7 @@ void v1beta1_pod_disruption_budget_status_free(v1beta1_pod_disruption_budget_sta
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1beta1_pod_disruption_budget_status->disrupted_pods);
     free(v1beta1_pod_disruption_budget_status);

@@ -29,12 +29,14 @@ void v1_resource_requirements_free(v1_resource_requirements_t *v1_resource_requi
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_resource_requirements->limits);
     list_ForEach(listEntry, v1_resource_requirements->requests) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_resource_requirements->requests);
     free(v1_resource_requirements);

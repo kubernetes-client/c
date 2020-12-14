@@ -39,6 +39,7 @@ void apps_v1beta1_deployment_rollback_free(apps_v1beta1_deployment_rollback_t *a
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(apps_v1beta1_deployment_rollback->updated_annotations);
     free(apps_v1beta1_deployment_rollback);

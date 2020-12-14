@@ -38,6 +38,7 @@ void v1_secret_free(v1_secret_t *v1_secret) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_secret->data);
     free(v1_secret->kind);
@@ -46,6 +47,7 @@ void v1_secret_free(v1_secret_t *v1_secret) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
         free (localKeyValue->key);
         free (localKeyValue->value);
+        keyValuePair_free(localKeyValue);
     }
     list_free(v1_secret->string_data);
     free(v1_secret->type);
