@@ -25,8 +25,14 @@ void v1alpha1_webhook_free(v1alpha1_webhook_t *v1alpha1_webhook) {
         return ;
     }
     listEntry_t *listEntry;
-    v1alpha1_webhook_client_config_free(v1alpha1_webhook->client_config);
-    v1alpha1_webhook_throttle_config_free(v1alpha1_webhook->throttle);
+    if (v1alpha1_webhook->client_config) {
+        v1alpha1_webhook_client_config_free(v1alpha1_webhook->client_config);
+        v1alpha1_webhook->client_config = NULL;
+    }
+    if (v1alpha1_webhook->throttle) {
+        v1alpha1_webhook_throttle_config_free(v1alpha1_webhook->throttle);
+        v1alpha1_webhook->throttle = NULL;
+    }
     free(v1alpha1_webhook);
 }
 

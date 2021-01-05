@@ -33,13 +33,25 @@ void v1beta1_custom_resource_definition_version_free(v1beta1_custom_resource_def
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_custom_resource_definition_version->additional_printer_columns) {
-        v1beta1_custom_resource_column_definition_free(listEntry->data);
+    if (v1beta1_custom_resource_definition_version->additional_printer_columns) {
+        list_ForEach(listEntry, v1beta1_custom_resource_definition_version->additional_printer_columns) {
+            v1beta1_custom_resource_column_definition_free(listEntry->data);
+        }
+        list_free(v1beta1_custom_resource_definition_version->additional_printer_columns);
+        v1beta1_custom_resource_definition_version->additional_printer_columns = NULL;
     }
-    list_free(v1beta1_custom_resource_definition_version->additional_printer_columns);
-    free(v1beta1_custom_resource_definition_version->name);
-    v1beta1_custom_resource_validation_free(v1beta1_custom_resource_definition_version->schema);
-    v1beta1_custom_resource_subresources_free(v1beta1_custom_resource_definition_version->subresources);
+    if (v1beta1_custom_resource_definition_version->name) {
+        free(v1beta1_custom_resource_definition_version->name);
+        v1beta1_custom_resource_definition_version->name = NULL;
+    }
+    if (v1beta1_custom_resource_definition_version->schema) {
+        v1beta1_custom_resource_validation_free(v1beta1_custom_resource_definition_version->schema);
+        v1beta1_custom_resource_definition_version->schema = NULL;
+    }
+    if (v1beta1_custom_resource_definition_version->subresources) {
+        v1beta1_custom_resource_subresources_free(v1beta1_custom_resource_definition_version->subresources);
+        v1beta1_custom_resource_definition_version->subresources = NULL;
+    }
     free(v1beta1_custom_resource_definition_version);
 }
 

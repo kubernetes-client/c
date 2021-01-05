@@ -25,11 +25,17 @@ void v1beta1_ip_block_free(v1beta1_ip_block_t *v1beta1_ip_block) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_ip_block->cidr);
-    list_ForEach(listEntry, v1beta1_ip_block->except) {
-        free(listEntry->data);
+    if (v1beta1_ip_block->cidr) {
+        free(v1beta1_ip_block->cidr);
+        v1beta1_ip_block->cidr = NULL;
     }
-    list_free(v1beta1_ip_block->except);
+    if (v1beta1_ip_block->except) {
+        list_ForEach(listEntry, v1beta1_ip_block->except) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_ip_block->except);
+        v1beta1_ip_block->except = NULL;
+    }
     free(v1beta1_ip_block);
 }
 

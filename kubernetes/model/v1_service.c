@@ -31,11 +31,26 @@ void v1_service_free(v1_service_t *v1_service) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_service->api_version);
-    free(v1_service->kind);
-    v1_object_meta_free(v1_service->metadata);
-    v1_service_spec_free(v1_service->spec);
-    v1_service_status_free(v1_service->status);
+    if (v1_service->api_version) {
+        free(v1_service->api_version);
+        v1_service->api_version = NULL;
+    }
+    if (v1_service->kind) {
+        free(v1_service->kind);
+        v1_service->kind = NULL;
+    }
+    if (v1_service->metadata) {
+        v1_object_meta_free(v1_service->metadata);
+        v1_service->metadata = NULL;
+    }
+    if (v1_service->spec) {
+        v1_service_spec_free(v1_service->spec);
+        v1_service->spec = NULL;
+    }
+    if (v1_service->status) {
+        v1_service_status_free(v1_service->status);
+        v1_service->status = NULL;
+    }
     free(v1_service);
 }
 

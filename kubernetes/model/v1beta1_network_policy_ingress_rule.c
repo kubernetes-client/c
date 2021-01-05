@@ -25,14 +25,20 @@ void v1beta1_network_policy_ingress_rule_free(v1beta1_network_policy_ingress_rul
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_network_policy_ingress_rule->from) {
-        v1beta1_network_policy_peer_free(listEntry->data);
+    if (v1beta1_network_policy_ingress_rule->from) {
+        list_ForEach(listEntry, v1beta1_network_policy_ingress_rule->from) {
+            v1beta1_network_policy_peer_free(listEntry->data);
+        }
+        list_free(v1beta1_network_policy_ingress_rule->from);
+        v1beta1_network_policy_ingress_rule->from = NULL;
     }
-    list_free(v1beta1_network_policy_ingress_rule->from);
-    list_ForEach(listEntry, v1beta1_network_policy_ingress_rule->ports) {
-        v1beta1_network_policy_port_free(listEntry->data);
+    if (v1beta1_network_policy_ingress_rule->ports) {
+        list_ForEach(listEntry, v1beta1_network_policy_ingress_rule->ports) {
+            v1beta1_network_policy_port_free(listEntry->data);
+        }
+        list_free(v1beta1_network_policy_ingress_rule->ports);
+        v1beta1_network_policy_ingress_rule->ports = NULL;
     }
-    list_free(v1beta1_network_policy_ingress_rule->ports);
     free(v1beta1_network_policy_ingress_rule);
 }
 

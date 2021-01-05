@@ -27,8 +27,14 @@ void v1_key_to_path_free(v1_key_to_path_t *v1_key_to_path) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_key_to_path->key);
-    free(v1_key_to_path->path);
+    if (v1_key_to_path->key) {
+        free(v1_key_to_path->key);
+        v1_key_to_path->key = NULL;
+    }
+    if (v1_key_to_path->path) {
+        free(v1_key_to_path->path);
+        v1_key_to_path->path = NULL;
+    }
     free(v1_key_to_path);
 }
 

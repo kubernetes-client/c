@@ -25,8 +25,14 @@ void v1_stateful_set_update_strategy_free(v1_stateful_set_update_strategy_t *v1_
         return ;
     }
     listEntry_t *listEntry;
-    v1_rolling_update_stateful_set_strategy_free(v1_stateful_set_update_strategy->rolling_update);
-    free(v1_stateful_set_update_strategy->type);
+    if (v1_stateful_set_update_strategy->rolling_update) {
+        v1_rolling_update_stateful_set_strategy_free(v1_stateful_set_update_strategy->rolling_update);
+        v1_stateful_set_update_strategy->rolling_update = NULL;
+    }
+    if (v1_stateful_set_update_strategy->type) {
+        free(v1_stateful_set_update_strategy->type);
+        v1_stateful_set_update_strategy->type = NULL;
+    }
     free(v1_stateful_set_update_strategy);
 }
 

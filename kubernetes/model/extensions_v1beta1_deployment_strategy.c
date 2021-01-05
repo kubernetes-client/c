@@ -25,8 +25,14 @@ void extensions_v1beta1_deployment_strategy_free(extensions_v1beta1_deployment_s
         return ;
     }
     listEntry_t *listEntry;
-    extensions_v1beta1_rolling_update_deployment_free(extensions_v1beta1_deployment_strategy->rolling_update);
-    free(extensions_v1beta1_deployment_strategy->type);
+    if (extensions_v1beta1_deployment_strategy->rolling_update) {
+        extensions_v1beta1_rolling_update_deployment_free(extensions_v1beta1_deployment_strategy->rolling_update);
+        extensions_v1beta1_deployment_strategy->rolling_update = NULL;
+    }
+    if (extensions_v1beta1_deployment_strategy->type) {
+        free(extensions_v1beta1_deployment_strategy->type);
+        extensions_v1beta1_deployment_strategy->type = NULL;
+    }
     free(extensions_v1beta1_deployment_strategy);
 }
 

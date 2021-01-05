@@ -29,10 +29,22 @@ void v1_vsphere_virtual_disk_volume_source_free(v1_vsphere_virtual_disk_volume_s
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_vsphere_virtual_disk_volume_source->fs_type);
-    free(v1_vsphere_virtual_disk_volume_source->storage_policy_id);
-    free(v1_vsphere_virtual_disk_volume_source->storage_policy_name);
-    free(v1_vsphere_virtual_disk_volume_source->volume_path);
+    if (v1_vsphere_virtual_disk_volume_source->fs_type) {
+        free(v1_vsphere_virtual_disk_volume_source->fs_type);
+        v1_vsphere_virtual_disk_volume_source->fs_type = NULL;
+    }
+    if (v1_vsphere_virtual_disk_volume_source->storage_policy_id) {
+        free(v1_vsphere_virtual_disk_volume_source->storage_policy_id);
+        v1_vsphere_virtual_disk_volume_source->storage_policy_id = NULL;
+    }
+    if (v1_vsphere_virtual_disk_volume_source->storage_policy_name) {
+        free(v1_vsphere_virtual_disk_volume_source->storage_policy_name);
+        v1_vsphere_virtual_disk_volume_source->storage_policy_name = NULL;
+    }
+    if (v1_vsphere_virtual_disk_volume_source->volume_path) {
+        free(v1_vsphere_virtual_disk_volume_source->volume_path);
+        v1_vsphere_virtual_disk_volume_source->volume_path = NULL;
+    }
     free(v1_vsphere_virtual_disk_volume_source);
 }
 

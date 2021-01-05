@@ -29,10 +29,22 @@ void v1_se_linux_options_free(v1_se_linux_options_t *v1_se_linux_options) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_se_linux_options->level);
-    free(v1_se_linux_options->role);
-    free(v1_se_linux_options->type);
-    free(v1_se_linux_options->user);
+    if (v1_se_linux_options->level) {
+        free(v1_se_linux_options->level);
+        v1_se_linux_options->level = NULL;
+    }
+    if (v1_se_linux_options->role) {
+        free(v1_se_linux_options->role);
+        v1_se_linux_options->role = NULL;
+    }
+    if (v1_se_linux_options->type) {
+        free(v1_se_linux_options->type);
+        v1_se_linux_options->type = NULL;
+    }
+    if (v1_se_linux_options->user) {
+        free(v1_se_linux_options->user);
+        v1_se_linux_options->user = NULL;
+    }
     free(v1_se_linux_options);
 }
 

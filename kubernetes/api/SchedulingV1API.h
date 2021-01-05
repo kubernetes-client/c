@@ -51,7 +51,7 @@ SchedulingV1API_patchPriorityClass(apiClient_t *apiClient, char * name , object_
 // read the specified PriorityClass
 //
 v1_priority_class_t*
-SchedulingV1API_readPriorityClass(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+SchedulingV1API_readPriorityClass(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // replace the specified PriorityClass

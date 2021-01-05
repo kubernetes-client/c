@@ -19,14 +19,14 @@ typedef struct v1_scoped_resource_selector_requirement_t v1_scoped_resource_sele
 
 
 typedef struct v1_scoped_resource_selector_requirement_t {
-    char *operator; // string
+    char *_operator; // string
     char *scope_name; // string
     list_t *values; //primitive container
 
 } v1_scoped_resource_selector_requirement_t;
 
 v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement_create(
-    char *operator,
+    char *_operator,
     char *scope_name,
     list_t *values
 );

@@ -25,8 +25,14 @@ void v1beta1_job_template_spec_free(v1beta1_job_template_spec_t *v1beta1_job_tem
         return ;
     }
     listEntry_t *listEntry;
-    v1_object_meta_free(v1beta1_job_template_spec->metadata);
-    v1_job_spec_free(v1beta1_job_template_spec->spec);
+    if (v1beta1_job_template_spec->metadata) {
+        v1_object_meta_free(v1beta1_job_template_spec->metadata);
+        v1beta1_job_template_spec->metadata = NULL;
+    }
+    if (v1beta1_job_template_spec->spec) {
+        v1_job_spec_free(v1beta1_job_template_spec->spec);
+        v1beta1_job_template_spec->spec = NULL;
+    }
     free(v1beta1_job_template_spec);
 }
 

@@ -25,11 +25,17 @@ void policy_v1beta1_runtime_class_strategy_options_free(policy_v1beta1_runtime_c
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, policy_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names) {
-        free(listEntry->data);
+    if (policy_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names) {
+        list_ForEach(listEntry, policy_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names) {
+            free(listEntry->data);
+        }
+        list_free(policy_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names);
+        policy_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names = NULL;
     }
-    list_free(policy_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names);
-    free(policy_v1beta1_runtime_class_strategy_options->default_runtime_class_name);
+    if (policy_v1beta1_runtime_class_strategy_options->default_runtime_class_name) {
+        free(policy_v1beta1_runtime_class_strategy_options->default_runtime_class_name);
+        policy_v1beta1_runtime_class_strategy_options->default_runtime_class_name = NULL;
+    }
     free(policy_v1beta1_runtime_class_strategy_options);
 }
 

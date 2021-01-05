@@ -27,8 +27,14 @@ void v1_config_map_key_selector_free(v1_config_map_key_selector_t *v1_config_map
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_config_map_key_selector->key);
-    free(v1_config_map_key_selector->name);
+    if (v1_config_map_key_selector->key) {
+        free(v1_config_map_key_selector->key);
+        v1_config_map_key_selector->key = NULL;
+    }
+    if (v1_config_map_key_selector->name) {
+        free(v1_config_map_key_selector->name);
+        v1_config_map_key_selector->name = NULL;
+    }
     free(v1_config_map_key_selector);
 }
 

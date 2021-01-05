@@ -25,11 +25,17 @@ void v1beta1_token_review_spec_free(v1beta1_token_review_spec_t *v1beta1_token_r
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_token_review_spec->audiences) {
-        free(listEntry->data);
+    if (v1beta1_token_review_spec->audiences) {
+        list_ForEach(listEntry, v1beta1_token_review_spec->audiences) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_token_review_spec->audiences);
+        v1beta1_token_review_spec->audiences = NULL;
     }
-    list_free(v1beta1_token_review_spec->audiences);
-    free(v1beta1_token_review_spec->token);
+    if (v1beta1_token_review_spec->token) {
+        free(v1beta1_token_review_spec->token);
+        v1beta1_token_review_spec->token = NULL;
+    }
     free(v1beta1_token_review_spec);
 }
 

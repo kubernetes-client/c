@@ -29,13 +29,25 @@ void v1_service_list_free(v1_service_list_t *v1_service_list) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_service_list->api_version);
-    list_ForEach(listEntry, v1_service_list->items) {
-        v1_service_free(listEntry->data);
+    if (v1_service_list->api_version) {
+        free(v1_service_list->api_version);
+        v1_service_list->api_version = NULL;
     }
-    list_free(v1_service_list->items);
-    free(v1_service_list->kind);
-    v1_list_meta_free(v1_service_list->metadata);
+    if (v1_service_list->items) {
+        list_ForEach(listEntry, v1_service_list->items) {
+            v1_service_free(listEntry->data);
+        }
+        list_free(v1_service_list->items);
+        v1_service_list->items = NULL;
+    }
+    if (v1_service_list->kind) {
+        free(v1_service_list->kind);
+        v1_service_list->kind = NULL;
+    }
+    if (v1_service_list->metadata) {
+        v1_list_meta_free(v1_service_list->metadata);
+        v1_service_list->metadata = NULL;
+    }
     free(v1_service_list);
 }
 

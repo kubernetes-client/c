@@ -25,8 +25,14 @@ void v1_token_request_status_free(v1_token_request_status_t *v1_token_request_st
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_token_request_status->expiration_timestamp);
-    free(v1_token_request_status->token);
+    if (v1_token_request_status->expiration_timestamp) {
+        free(v1_token_request_status->expiration_timestamp);
+        v1_token_request_status->expiration_timestamp = NULL;
+    }
+    if (v1_token_request_status->token) {
+        free(v1_token_request_status->token);
+        v1_token_request_status->token = NULL;
+    }
     free(v1_token_request_status);
 }
 

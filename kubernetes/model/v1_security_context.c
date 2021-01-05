@@ -41,10 +41,22 @@ void v1_security_context_free(v1_security_context_t *v1_security_context) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_capabilities_free(v1_security_context->capabilities);
-    free(v1_security_context->proc_mount);
-    v1_se_linux_options_free(v1_security_context->se_linux_options);
-    v1_windows_security_context_options_free(v1_security_context->windows_options);
+    if (v1_security_context->capabilities) {
+        v1_capabilities_free(v1_security_context->capabilities);
+        v1_security_context->capabilities = NULL;
+    }
+    if (v1_security_context->proc_mount) {
+        free(v1_security_context->proc_mount);
+        v1_security_context->proc_mount = NULL;
+    }
+    if (v1_security_context->se_linux_options) {
+        v1_se_linux_options_free(v1_security_context->se_linux_options);
+        v1_security_context->se_linux_options = NULL;
+    }
+    if (v1_security_context->windows_options) {
+        v1_windows_security_context_options_free(v1_security_context->windows_options);
+        v1_security_context->windows_options = NULL;
+    }
     free(v1_security_context);
 }
 

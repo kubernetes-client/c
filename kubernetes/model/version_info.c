@@ -39,15 +39,42 @@ void version_info_free(version_info_t *version_info) {
         return ;
     }
     listEntry_t *listEntry;
-    free(version_info->build_date);
-    free(version_info->compiler);
-    free(version_info->git_commit);
-    free(version_info->git_tree_state);
-    free(version_info->git_version);
-    free(version_info->go_version);
-    free(version_info->major);
-    free(version_info->minor);
-    free(version_info->platform);
+    if (version_info->build_date) {
+        free(version_info->build_date);
+        version_info->build_date = NULL;
+    }
+    if (version_info->compiler) {
+        free(version_info->compiler);
+        version_info->compiler = NULL;
+    }
+    if (version_info->git_commit) {
+        free(version_info->git_commit);
+        version_info->git_commit = NULL;
+    }
+    if (version_info->git_tree_state) {
+        free(version_info->git_tree_state);
+        version_info->git_tree_state = NULL;
+    }
+    if (version_info->git_version) {
+        free(version_info->git_version);
+        version_info->git_version = NULL;
+    }
+    if (version_info->go_version) {
+        free(version_info->go_version);
+        version_info->go_version = NULL;
+    }
+    if (version_info->major) {
+        free(version_info->major);
+        version_info->major = NULL;
+    }
+    if (version_info->minor) {
+        free(version_info->minor);
+        version_info->minor = NULL;
+    }
+    if (version_info->platform) {
+        free(version_info->platform);
+        version_info->platform = NULL;
+    }
     free(version_info);
 }
 

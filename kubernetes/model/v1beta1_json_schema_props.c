@@ -33,7 +33,7 @@ v1beta1_json_schema_props_t *v1beta1_json_schema_props_create(
     long min_properties,
     double minimum,
     double multiple_of,
-    v1beta1_json_schema_props_t *not,
+    v1beta1_json_schema_props_t *_not,
     int nullable,
     list_t *one_of,
     char *pattern,
@@ -81,7 +81,7 @@ v1beta1_json_schema_props_t *v1beta1_json_schema_props_create(
     v1beta1_json_schema_props_local_var->min_properties = min_properties;
     v1beta1_json_schema_props_local_var->minimum = minimum;
     v1beta1_json_schema_props_local_var->multiple_of = multiple_of;
-    v1beta1_json_schema_props_local_var->not = not;
+    v1beta1_json_schema_props_local_var->_not = _not;
     v1beta1_json_schema_props_local_var->nullable = nullable;
     v1beta1_json_schema_props_local_var->one_of = one_of;
     v1beta1_json_schema_props_local_var->pattern = pattern;
@@ -107,75 +107,156 @@ void v1beta1_json_schema_props_free(v1beta1_json_schema_props_t *v1beta1_json_sc
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_json_schema_props->ref);
-    free(v1beta1_json_schema_props->schema);
-    object_free(v1beta1_json_schema_props->additional_items);
-    object_free(v1beta1_json_schema_props->additional_properties);
-    list_ForEach(listEntry, v1beta1_json_schema_props->all_of) {
-        v1beta1_json_schema_props_free(listEntry->data);
+    if (v1beta1_json_schema_props->ref) {
+        free(v1beta1_json_schema_props->ref);
+        v1beta1_json_schema_props->ref = NULL;
     }
-    list_free(v1beta1_json_schema_props->all_of);
-    list_ForEach(listEntry, v1beta1_json_schema_props->any_of) {
-        v1beta1_json_schema_props_free(listEntry->data);
+    if (v1beta1_json_schema_props->schema) {
+        free(v1beta1_json_schema_props->schema);
+        v1beta1_json_schema_props->schema = NULL;
     }
-    list_free(v1beta1_json_schema_props->any_of);
-    object_free(v1beta1_json_schema_props->_default);
-    list_ForEach(listEntry, v1beta1_json_schema_props->definitions) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta1_json_schema_props->additional_items) {
+        object_free(v1beta1_json_schema_props->additional_items);
+        v1beta1_json_schema_props->additional_items = NULL;
     }
-    list_free(v1beta1_json_schema_props->definitions);
-    list_ForEach(listEntry, v1beta1_json_schema_props->dependencies) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta1_json_schema_props->additional_properties) {
+        object_free(v1beta1_json_schema_props->additional_properties);
+        v1beta1_json_schema_props->additional_properties = NULL;
     }
-    list_free(v1beta1_json_schema_props->dependencies);
-    free(v1beta1_json_schema_props->description);
-    list_ForEach(listEntry, v1beta1_json_schema_props->_enum) {
-        object_free(listEntry->data);
+    if (v1beta1_json_schema_props->all_of) {
+        list_ForEach(listEntry, v1beta1_json_schema_props->all_of) {
+            v1beta1_json_schema_props_free(listEntry->data);
+        }
+        list_free(v1beta1_json_schema_props->all_of);
+        v1beta1_json_schema_props->all_of = NULL;
     }
-    list_free(v1beta1_json_schema_props->_enum);
-    object_free(v1beta1_json_schema_props->example);
-    v1beta1_external_documentation_free(v1beta1_json_schema_props->external_docs);
-    free(v1beta1_json_schema_props->format);
-    free(v1beta1_json_schema_props->id);
-    object_free(v1beta1_json_schema_props->items);
-    v1beta1_json_schema_props_free(v1beta1_json_schema_props->not);
-    list_ForEach(listEntry, v1beta1_json_schema_props->one_of) {
-        v1beta1_json_schema_props_free(listEntry->data);
+    if (v1beta1_json_schema_props->any_of) {
+        list_ForEach(listEntry, v1beta1_json_schema_props->any_of) {
+            v1beta1_json_schema_props_free(listEntry->data);
+        }
+        list_free(v1beta1_json_schema_props->any_of);
+        v1beta1_json_schema_props->any_of = NULL;
     }
-    list_free(v1beta1_json_schema_props->one_of);
-    free(v1beta1_json_schema_props->pattern);
-    list_ForEach(listEntry, v1beta1_json_schema_props->pattern_properties) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta1_json_schema_props->_default) {
+        object_free(v1beta1_json_schema_props->_default);
+        v1beta1_json_schema_props->_default = NULL;
     }
-    list_free(v1beta1_json_schema_props->pattern_properties);
-    list_ForEach(listEntry, v1beta1_json_schema_props->properties) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta1_json_schema_props->definitions) {
+        list_ForEach(listEntry, v1beta1_json_schema_props->definitions) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta1_json_schema_props->definitions);
+        v1beta1_json_schema_props->definitions = NULL;
     }
-    list_free(v1beta1_json_schema_props->properties);
-    list_ForEach(listEntry, v1beta1_json_schema_props->required) {
-        free(listEntry->data);
+    if (v1beta1_json_schema_props->dependencies) {
+        list_ForEach(listEntry, v1beta1_json_schema_props->dependencies) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta1_json_schema_props->dependencies);
+        v1beta1_json_schema_props->dependencies = NULL;
     }
-    list_free(v1beta1_json_schema_props->required);
-    free(v1beta1_json_schema_props->title);
-    free(v1beta1_json_schema_props->type);
-    list_ForEach(listEntry, v1beta1_json_schema_props->x_kubernetes_list_map_keys) {
-        free(listEntry->data);
+    if (v1beta1_json_schema_props->description) {
+        free(v1beta1_json_schema_props->description);
+        v1beta1_json_schema_props->description = NULL;
     }
-    list_free(v1beta1_json_schema_props->x_kubernetes_list_map_keys);
-    free(v1beta1_json_schema_props->x_kubernetes_list_type);
-    free(v1beta1_json_schema_props->x_kubernetes_map_type);
+    if (v1beta1_json_schema_props->_enum) {
+        list_ForEach(listEntry, v1beta1_json_schema_props->_enum) {
+            object_free(listEntry->data);
+        }
+        list_free(v1beta1_json_schema_props->_enum);
+        v1beta1_json_schema_props->_enum = NULL;
+    }
+    if (v1beta1_json_schema_props->example) {
+        object_free(v1beta1_json_schema_props->example);
+        v1beta1_json_schema_props->example = NULL;
+    }
+    if (v1beta1_json_schema_props->external_docs) {
+        v1beta1_external_documentation_free(v1beta1_json_schema_props->external_docs);
+        v1beta1_json_schema_props->external_docs = NULL;
+    }
+    if (v1beta1_json_schema_props->format) {
+        free(v1beta1_json_schema_props->format);
+        v1beta1_json_schema_props->format = NULL;
+    }
+    if (v1beta1_json_schema_props->id) {
+        free(v1beta1_json_schema_props->id);
+        v1beta1_json_schema_props->id = NULL;
+    }
+    if (v1beta1_json_schema_props->items) {
+        object_free(v1beta1_json_schema_props->items);
+        v1beta1_json_schema_props->items = NULL;
+    }
+    if (v1beta1_json_schema_props->_not) {
+        v1beta1_json_schema_props_free(v1beta1_json_schema_props->_not);
+        v1beta1_json_schema_props->_not = NULL;
+    }
+    if (v1beta1_json_schema_props->one_of) {
+        list_ForEach(listEntry, v1beta1_json_schema_props->one_of) {
+            v1beta1_json_schema_props_free(listEntry->data);
+        }
+        list_free(v1beta1_json_schema_props->one_of);
+        v1beta1_json_schema_props->one_of = NULL;
+    }
+    if (v1beta1_json_schema_props->pattern) {
+        free(v1beta1_json_schema_props->pattern);
+        v1beta1_json_schema_props->pattern = NULL;
+    }
+    if (v1beta1_json_schema_props->pattern_properties) {
+        list_ForEach(listEntry, v1beta1_json_schema_props->pattern_properties) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta1_json_schema_props->pattern_properties);
+        v1beta1_json_schema_props->pattern_properties = NULL;
+    }
+    if (v1beta1_json_schema_props->properties) {
+        list_ForEach(listEntry, v1beta1_json_schema_props->properties) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta1_json_schema_props->properties);
+        v1beta1_json_schema_props->properties = NULL;
+    }
+    if (v1beta1_json_schema_props->required) {
+        list_ForEach(listEntry, v1beta1_json_schema_props->required) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_json_schema_props->required);
+        v1beta1_json_schema_props->required = NULL;
+    }
+    if (v1beta1_json_schema_props->title) {
+        free(v1beta1_json_schema_props->title);
+        v1beta1_json_schema_props->title = NULL;
+    }
+    if (v1beta1_json_schema_props->type) {
+        free(v1beta1_json_schema_props->type);
+        v1beta1_json_schema_props->type = NULL;
+    }
+    if (v1beta1_json_schema_props->x_kubernetes_list_map_keys) {
+        list_ForEach(listEntry, v1beta1_json_schema_props->x_kubernetes_list_map_keys) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_json_schema_props->x_kubernetes_list_map_keys);
+        v1beta1_json_schema_props->x_kubernetes_list_map_keys = NULL;
+    }
+    if (v1beta1_json_schema_props->x_kubernetes_list_type) {
+        free(v1beta1_json_schema_props->x_kubernetes_list_type);
+        v1beta1_json_schema_props->x_kubernetes_list_type = NULL;
+    }
+    if (v1beta1_json_schema_props->x_kubernetes_map_type) {
+        free(v1beta1_json_schema_props->x_kubernetes_map_type);
+        v1beta1_json_schema_props->x_kubernetes_map_type = NULL;
+    }
     free(v1beta1_json_schema_props);
 }
 
@@ -480,13 +561,13 @@ cJSON *v1beta1_json_schema_props_convertToJSON(v1beta1_json_schema_props_t *v1be
      } 
 
 
-    // v1beta1_json_schema_props->not
-    if(v1beta1_json_schema_props->not) { 
-    cJSON *not_local_JSON = v1beta1_json_schema_props_convertToJSON(v1beta1_json_schema_props->not);
-    if(not_local_JSON == NULL) {
+    // v1beta1_json_schema_props->_not
+    if(v1beta1_json_schema_props->_not) { 
+    cJSON *_not_local_JSON = v1beta1_json_schema_props_convertToJSON(v1beta1_json_schema_props->_not);
+    if(_not_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "not", not_local_JSON);
+    cJSON_AddItemToObject(item, "not", _not_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -956,11 +1037,11 @@ v1beta1_json_schema_props_t *v1beta1_json_schema_props_parseFromJSON(cJSON *v1be
     }
     }
 
-    // v1beta1_json_schema_props->not
-    cJSON *not = cJSON_GetObjectItemCaseSensitive(v1beta1_json_schema_propsJSON, "not");
-    v1beta1_json_schema_props_t *not_local_nonprim = NULL;
-    if (not) { 
-    not_local_nonprim = v1beta1_json_schema_props_parseFromJSON(not); //nonprimitive
+    // v1beta1_json_schema_props->_not
+    cJSON *_not = cJSON_GetObjectItemCaseSensitive(v1beta1_json_schema_propsJSON, "not");
+    v1beta1_json_schema_props_t *_not_local_nonprim = NULL;
+    if (_not) { 
+    _not_local_nonprim = v1beta1_json_schema_props_parseFromJSON(_not); //nonprimitive
     }
 
     // v1beta1_json_schema_props->nullable
@@ -1178,7 +1259,7 @@ v1beta1_json_schema_props_t *v1beta1_json_schema_props_parseFromJSON(cJSON *v1be
         min_properties ? min_properties->valuedouble : 0,
         minimum ? minimum->valuedouble : 0,
         multiple_of ? multiple_of->valuedouble : 0,
-        not ? not_local_nonprim : NULL,
+        _not ? _not_local_nonprim : NULL,
         nullable ? nullable->valueint : 0,
         one_of ? one_ofList : NULL,
         pattern ? strdup(pattern->valuestring) : NULL,

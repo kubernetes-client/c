@@ -23,7 +23,10 @@ void v1_pod_readiness_gate_free(v1_pod_readiness_gate_t *v1_pod_readiness_gate) 
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_pod_readiness_gate->condition_type);
+    if (v1_pod_readiness_gate->condition_type) {
+        free(v1_pod_readiness_gate->condition_type);
+        v1_pod_readiness_gate->condition_type = NULL;
+    }
     free(v1_pod_readiness_gate);
 }
 

@@ -7,7 +7,7 @@
 
 admissionregistration_v1beta1_service_reference_t *admissionregistration_v1beta1_service_reference_create(
     char *name,
-    char *namespace,
+    char *_namespace,
     char *path,
     int port
     ) {
@@ -16,7 +16,7 @@ admissionregistration_v1beta1_service_reference_t *admissionregistration_v1beta1
         return NULL;
     }
     admissionregistration_v1beta1_service_reference_local_var->name = name;
-    admissionregistration_v1beta1_service_reference_local_var->namespace = namespace;
+    admissionregistration_v1beta1_service_reference_local_var->_namespace = _namespace;
     admissionregistration_v1beta1_service_reference_local_var->path = path;
     admissionregistration_v1beta1_service_reference_local_var->port = port;
 
@@ -29,9 +29,18 @@ void admissionregistration_v1beta1_service_reference_free(admissionregistration_
         return ;
     }
     listEntry_t *listEntry;
-    free(admissionregistration_v1beta1_service_reference->name);
-    free(admissionregistration_v1beta1_service_reference->namespace);
-    free(admissionregistration_v1beta1_service_reference->path);
+    if (admissionregistration_v1beta1_service_reference->name) {
+        free(admissionregistration_v1beta1_service_reference->name);
+        admissionregistration_v1beta1_service_reference->name = NULL;
+    }
+    if (admissionregistration_v1beta1_service_reference->_namespace) {
+        free(admissionregistration_v1beta1_service_reference->_namespace);
+        admissionregistration_v1beta1_service_reference->_namespace = NULL;
+    }
+    if (admissionregistration_v1beta1_service_reference->path) {
+        free(admissionregistration_v1beta1_service_reference->path);
+        admissionregistration_v1beta1_service_reference->path = NULL;
+    }
     free(admissionregistration_v1beta1_service_reference);
 }
 
@@ -48,12 +57,12 @@ cJSON *admissionregistration_v1beta1_service_reference_convertToJSON(admissionre
     }
 
 
-    // admissionregistration_v1beta1_service_reference->namespace
-    if (!admissionregistration_v1beta1_service_reference->namespace) {
+    // admissionregistration_v1beta1_service_reference->_namespace
+    if (!admissionregistration_v1beta1_service_reference->_namespace) {
         goto fail;
     }
     
-    if(cJSON_AddStringToObject(item, "namespace", admissionregistration_v1beta1_service_reference->namespace) == NULL) {
+    if(cJSON_AddStringToObject(item, "namespace", admissionregistration_v1beta1_service_reference->_namespace) == NULL) {
     goto fail; //String
     }
 
@@ -97,14 +106,14 @@ admissionregistration_v1beta1_service_reference_t *admissionregistration_v1beta1
     goto end; //String
     }
 
-    // admissionregistration_v1beta1_service_reference->namespace
-    cJSON *namespace = cJSON_GetObjectItemCaseSensitive(admissionregistration_v1beta1_service_referenceJSON, "namespace");
-    if (!namespace) {
+    // admissionregistration_v1beta1_service_reference->_namespace
+    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(admissionregistration_v1beta1_service_referenceJSON, "namespace");
+    if (!_namespace) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(namespace))
+    if(!cJSON_IsString(_namespace))
     {
     goto end; //String
     }
@@ -130,7 +139,7 @@ admissionregistration_v1beta1_service_reference_t *admissionregistration_v1beta1
 
     admissionregistration_v1beta1_service_reference_local_var = admissionregistration_v1beta1_service_reference_create (
         strdup(name->valuestring),
-        strdup(namespace->valuestring),
+        strdup(_namespace->valuestring),
         path ? strdup(path->valuestring) : NULL,
         port ? port->valuedouble : 0
         );

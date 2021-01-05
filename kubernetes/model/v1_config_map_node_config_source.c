@@ -8,7 +8,7 @@
 v1_config_map_node_config_source_t *v1_config_map_node_config_source_create(
     char *kubelet_config_key,
     char *name,
-    char *namespace,
+    char *_namespace,
     char *resource_version,
     char *uid
     ) {
@@ -18,7 +18,7 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_create(
     }
     v1_config_map_node_config_source_local_var->kubelet_config_key = kubelet_config_key;
     v1_config_map_node_config_source_local_var->name = name;
-    v1_config_map_node_config_source_local_var->namespace = namespace;
+    v1_config_map_node_config_source_local_var->_namespace = _namespace;
     v1_config_map_node_config_source_local_var->resource_version = resource_version;
     v1_config_map_node_config_source_local_var->uid = uid;
 
@@ -31,11 +31,26 @@ void v1_config_map_node_config_source_free(v1_config_map_node_config_source_t *v
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_config_map_node_config_source->kubelet_config_key);
-    free(v1_config_map_node_config_source->name);
-    free(v1_config_map_node_config_source->namespace);
-    free(v1_config_map_node_config_source->resource_version);
-    free(v1_config_map_node_config_source->uid);
+    if (v1_config_map_node_config_source->kubelet_config_key) {
+        free(v1_config_map_node_config_source->kubelet_config_key);
+        v1_config_map_node_config_source->kubelet_config_key = NULL;
+    }
+    if (v1_config_map_node_config_source->name) {
+        free(v1_config_map_node_config_source->name);
+        v1_config_map_node_config_source->name = NULL;
+    }
+    if (v1_config_map_node_config_source->_namespace) {
+        free(v1_config_map_node_config_source->_namespace);
+        v1_config_map_node_config_source->_namespace = NULL;
+    }
+    if (v1_config_map_node_config_source->resource_version) {
+        free(v1_config_map_node_config_source->resource_version);
+        v1_config_map_node_config_source->resource_version = NULL;
+    }
+    if (v1_config_map_node_config_source->uid) {
+        free(v1_config_map_node_config_source->uid);
+        v1_config_map_node_config_source->uid = NULL;
+    }
     free(v1_config_map_node_config_source);
 }
 
@@ -62,12 +77,12 @@ cJSON *v1_config_map_node_config_source_convertToJSON(v1_config_map_node_config_
     }
 
 
-    // v1_config_map_node_config_source->namespace
-    if (!v1_config_map_node_config_source->namespace) {
+    // v1_config_map_node_config_source->_namespace
+    if (!v1_config_map_node_config_source->_namespace) {
         goto fail;
     }
     
-    if(cJSON_AddStringToObject(item, "namespace", v1_config_map_node_config_source->namespace) == NULL) {
+    if(cJSON_AddStringToObject(item, "namespace", v1_config_map_node_config_source->_namespace) == NULL) {
     goto fail; //String
     }
 
@@ -123,14 +138,14 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
     goto end; //String
     }
 
-    // v1_config_map_node_config_source->namespace
-    cJSON *namespace = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "namespace");
-    if (!namespace) {
+    // v1_config_map_node_config_source->_namespace
+    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "namespace");
+    if (!_namespace) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(namespace))
+    if(!cJSON_IsString(_namespace))
     {
     goto end; //String
     }
@@ -157,7 +172,7 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
     v1_config_map_node_config_source_local_var = v1_config_map_node_config_source_create (
         strdup(kubelet_config_key->valuestring),
         strdup(name->valuestring),
-        strdup(namespace->valuestring),
+        strdup(_namespace->valuestring),
         resource_version ? strdup(resource_version->valuestring) : NULL,
         uid ? strdup(uid->valuestring) : NULL
         );

@@ -25,8 +25,14 @@ void v1_external_documentation_free(v1_external_documentation_t *v1_external_doc
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_external_documentation->description);
-    free(v1_external_documentation->url);
+    if (v1_external_documentation->description) {
+        free(v1_external_documentation->description);
+        v1_external_documentation->description = NULL;
+    }
+    if (v1_external_documentation->url) {
+        free(v1_external_documentation->url);
+        v1_external_documentation->url = NULL;
+    }
     free(v1_external_documentation);
 }
 

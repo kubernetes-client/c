@@ -31,23 +31,38 @@ void v1alpha1_pod_preset_spec_free(v1alpha1_pod_preset_spec_t *v1alpha1_pod_pres
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1alpha1_pod_preset_spec->env) {
-        v1_env_var_free(listEntry->data);
+    if (v1alpha1_pod_preset_spec->env) {
+        list_ForEach(listEntry, v1alpha1_pod_preset_spec->env) {
+            v1_env_var_free(listEntry->data);
+        }
+        list_free(v1alpha1_pod_preset_spec->env);
+        v1alpha1_pod_preset_spec->env = NULL;
     }
-    list_free(v1alpha1_pod_preset_spec->env);
-    list_ForEach(listEntry, v1alpha1_pod_preset_spec->env_from) {
-        v1_env_from_source_free(listEntry->data);
+    if (v1alpha1_pod_preset_spec->env_from) {
+        list_ForEach(listEntry, v1alpha1_pod_preset_spec->env_from) {
+            v1_env_from_source_free(listEntry->data);
+        }
+        list_free(v1alpha1_pod_preset_spec->env_from);
+        v1alpha1_pod_preset_spec->env_from = NULL;
     }
-    list_free(v1alpha1_pod_preset_spec->env_from);
-    v1_label_selector_free(v1alpha1_pod_preset_spec->selector);
-    list_ForEach(listEntry, v1alpha1_pod_preset_spec->volume_mounts) {
-        v1_volume_mount_free(listEntry->data);
+    if (v1alpha1_pod_preset_spec->selector) {
+        v1_label_selector_free(v1alpha1_pod_preset_spec->selector);
+        v1alpha1_pod_preset_spec->selector = NULL;
     }
-    list_free(v1alpha1_pod_preset_spec->volume_mounts);
-    list_ForEach(listEntry, v1alpha1_pod_preset_spec->volumes) {
-        v1_volume_free(listEntry->data);
+    if (v1alpha1_pod_preset_spec->volume_mounts) {
+        list_ForEach(listEntry, v1alpha1_pod_preset_spec->volume_mounts) {
+            v1_volume_mount_free(listEntry->data);
+        }
+        list_free(v1alpha1_pod_preset_spec->volume_mounts);
+        v1alpha1_pod_preset_spec->volume_mounts = NULL;
     }
-    list_free(v1alpha1_pod_preset_spec->volumes);
+    if (v1alpha1_pod_preset_spec->volumes) {
+        list_ForEach(listEntry, v1alpha1_pod_preset_spec->volumes) {
+            v1_volume_free(listEntry->data);
+        }
+        list_free(v1alpha1_pod_preset_spec->volumes);
+        v1alpha1_pod_preset_spec->volumes = NULL;
+    }
     free(v1alpha1_pod_preset_spec);
 }
 

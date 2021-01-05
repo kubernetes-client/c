@@ -23,7 +23,7 @@ typedef struct v1_object_reference_t {
     char *field_path; // string
     char *kind; // string
     char *name; // string
-    char *namespace; // string
+    char *_namespace; // string
     char *resource_version; // string
     char *uid; // string
 
@@ -34,7 +34,7 @@ v1_object_reference_t *v1_object_reference_create(
     char *field_path,
     char *kind,
     char *name,
-    char *namespace,
+    char *_namespace,
     char *resource_version,
     char *uid
 );

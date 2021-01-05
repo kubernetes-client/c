@@ -29,22 +29,34 @@ void v1_persistent_volume_claim_status_free(v1_persistent_volume_claim_status_t 
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_persistent_volume_claim_status->access_modes) {
-        free(listEntry->data);
+    if (v1_persistent_volume_claim_status->access_modes) {
+        list_ForEach(listEntry, v1_persistent_volume_claim_status->access_modes) {
+            free(listEntry->data);
+        }
+        list_free(v1_persistent_volume_claim_status->access_modes);
+        v1_persistent_volume_claim_status->access_modes = NULL;
     }
-    list_free(v1_persistent_volume_claim_status->access_modes);
-    list_ForEach(listEntry, v1_persistent_volume_claim_status->capacity) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_persistent_volume_claim_status->capacity) {
+        list_ForEach(listEntry, v1_persistent_volume_claim_status->capacity) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_persistent_volume_claim_status->capacity);
+        v1_persistent_volume_claim_status->capacity = NULL;
     }
-    list_free(v1_persistent_volume_claim_status->capacity);
-    list_ForEach(listEntry, v1_persistent_volume_claim_status->conditions) {
-        v1_persistent_volume_claim_condition_free(listEntry->data);
+    if (v1_persistent_volume_claim_status->conditions) {
+        list_ForEach(listEntry, v1_persistent_volume_claim_status->conditions) {
+            v1_persistent_volume_claim_condition_free(listEntry->data);
+        }
+        list_free(v1_persistent_volume_claim_status->conditions);
+        v1_persistent_volume_claim_status->conditions = NULL;
     }
-    list_free(v1_persistent_volume_claim_status->conditions);
-    free(v1_persistent_volume_claim_status->phase);
+    if (v1_persistent_volume_claim_status->phase) {
+        free(v1_persistent_volume_claim_status->phase);
+        v1_persistent_volume_claim_status->phase = NULL;
+    }
     free(v1_persistent_volume_claim_status);
 }
 

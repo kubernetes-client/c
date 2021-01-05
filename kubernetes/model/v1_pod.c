@@ -31,11 +31,26 @@ void v1_pod_free(v1_pod_t *v1_pod) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_pod->api_version);
-    free(v1_pod->kind);
-    v1_object_meta_free(v1_pod->metadata);
-    v1_pod_spec_free(v1_pod->spec);
-    v1_pod_status_free(v1_pod->status);
+    if (v1_pod->api_version) {
+        free(v1_pod->api_version);
+        v1_pod->api_version = NULL;
+    }
+    if (v1_pod->kind) {
+        free(v1_pod->kind);
+        v1_pod->kind = NULL;
+    }
+    if (v1_pod->metadata) {
+        v1_object_meta_free(v1_pod->metadata);
+        v1_pod->metadata = NULL;
+    }
+    if (v1_pod->spec) {
+        v1_pod_spec_free(v1_pod->spec);
+        v1_pod->spec = NULL;
+    }
+    if (v1_pod->status) {
+        v1_pod_status_free(v1_pod->status);
+        v1_pod->status = NULL;
+    }
     free(v1_pod);
 }
 

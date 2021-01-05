@@ -17,7 +17,7 @@ v1_object_meta_t *v1_object_meta_create(
     list_t* labels,
     list_t *managed_fields,
     char *name,
-    char *namespace,
+    char *_namespace,
     list_t *owner_references,
     char *resource_version,
     char *self_link,
@@ -38,7 +38,7 @@ v1_object_meta_t *v1_object_meta_create(
     v1_object_meta_local_var->labels = labels;
     v1_object_meta_local_var->managed_fields = managed_fields;
     v1_object_meta_local_var->name = name;
-    v1_object_meta_local_var->namespace = namespace;
+    v1_object_meta_local_var->_namespace = _namespace;
     v1_object_meta_local_var->owner_references = owner_references;
     v1_object_meta_local_var->resource_version = resource_version;
     v1_object_meta_local_var->self_link = self_link;
@@ -53,41 +53,83 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_object_meta->annotations) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_object_meta->annotations) {
+        list_ForEach(listEntry, v1_object_meta->annotations) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_object_meta->annotations);
+        v1_object_meta->annotations = NULL;
     }
-    list_free(v1_object_meta->annotations);
-    free(v1_object_meta->cluster_name);
-    free(v1_object_meta->creation_timestamp);
-    free(v1_object_meta->deletion_timestamp);
-    list_ForEach(listEntry, v1_object_meta->finalizers) {
-        free(listEntry->data);
+    if (v1_object_meta->cluster_name) {
+        free(v1_object_meta->cluster_name);
+        v1_object_meta->cluster_name = NULL;
     }
-    list_free(v1_object_meta->finalizers);
-    free(v1_object_meta->generate_name);
-    list_ForEach(listEntry, v1_object_meta->labels) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_object_meta->creation_timestamp) {
+        free(v1_object_meta->creation_timestamp);
+        v1_object_meta->creation_timestamp = NULL;
     }
-    list_free(v1_object_meta->labels);
-    list_ForEach(listEntry, v1_object_meta->managed_fields) {
-        v1_managed_fields_entry_free(listEntry->data);
+    if (v1_object_meta->deletion_timestamp) {
+        free(v1_object_meta->deletion_timestamp);
+        v1_object_meta->deletion_timestamp = NULL;
     }
-    list_free(v1_object_meta->managed_fields);
-    free(v1_object_meta->name);
-    free(v1_object_meta->namespace);
-    list_ForEach(listEntry, v1_object_meta->owner_references) {
-        v1_owner_reference_free(listEntry->data);
+    if (v1_object_meta->finalizers) {
+        list_ForEach(listEntry, v1_object_meta->finalizers) {
+            free(listEntry->data);
+        }
+        list_free(v1_object_meta->finalizers);
+        v1_object_meta->finalizers = NULL;
     }
-    list_free(v1_object_meta->owner_references);
-    free(v1_object_meta->resource_version);
-    free(v1_object_meta->self_link);
-    free(v1_object_meta->uid);
+    if (v1_object_meta->generate_name) {
+        free(v1_object_meta->generate_name);
+        v1_object_meta->generate_name = NULL;
+    }
+    if (v1_object_meta->labels) {
+        list_ForEach(listEntry, v1_object_meta->labels) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_object_meta->labels);
+        v1_object_meta->labels = NULL;
+    }
+    if (v1_object_meta->managed_fields) {
+        list_ForEach(listEntry, v1_object_meta->managed_fields) {
+            v1_managed_fields_entry_free(listEntry->data);
+        }
+        list_free(v1_object_meta->managed_fields);
+        v1_object_meta->managed_fields = NULL;
+    }
+    if (v1_object_meta->name) {
+        free(v1_object_meta->name);
+        v1_object_meta->name = NULL;
+    }
+    if (v1_object_meta->_namespace) {
+        free(v1_object_meta->_namespace);
+        v1_object_meta->_namespace = NULL;
+    }
+    if (v1_object_meta->owner_references) {
+        list_ForEach(listEntry, v1_object_meta->owner_references) {
+            v1_owner_reference_free(listEntry->data);
+        }
+        list_free(v1_object_meta->owner_references);
+        v1_object_meta->owner_references = NULL;
+    }
+    if (v1_object_meta->resource_version) {
+        free(v1_object_meta->resource_version);
+        v1_object_meta->resource_version = NULL;
+    }
+    if (v1_object_meta->self_link) {
+        free(v1_object_meta->self_link);
+        v1_object_meta->self_link = NULL;
+    }
+    if (v1_object_meta->uid) {
+        free(v1_object_meta->uid);
+        v1_object_meta->uid = NULL;
+    }
     free(v1_object_meta);
 }
 
@@ -227,9 +269,9 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
      } 
 
 
-    // v1_object_meta->namespace
-    if(v1_object_meta->namespace) { 
-    if(cJSON_AddStringToObject(item, "namespace", v1_object_meta->namespace) == NULL) {
+    // v1_object_meta->_namespace
+    if(v1_object_meta->_namespace) { 
+    if(cJSON_AddStringToObject(item, "namespace", v1_object_meta->_namespace) == NULL) {
     goto fail; //String
     }
      } 
@@ -439,10 +481,10 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     }
     }
 
-    // v1_object_meta->namespace
-    cJSON *namespace = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "namespace");
-    if (namespace) { 
-    if(!cJSON_IsString(namespace))
+    // v1_object_meta->_namespace
+    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "namespace");
+    if (_namespace) { 
+    if(!cJSON_IsString(_namespace))
     {
     goto end; //String
     }
@@ -510,7 +552,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
         labels ? labelsList : NULL,
         managed_fields ? managed_fieldsList : NULL,
         name ? strdup(name->valuestring) : NULL,
-        namespace ? strdup(namespace->valuestring) : NULL,
+        _namespace ? strdup(_namespace->valuestring) : NULL,
         owner_references ? owner_referencesList : NULL,
         resource_version ? strdup(resource_version->valuestring) : NULL,
         self_link ? strdup(self_link->valuestring) : NULL,

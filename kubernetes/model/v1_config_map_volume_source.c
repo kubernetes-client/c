@@ -29,11 +29,17 @@ void v1_config_map_volume_source_free(v1_config_map_volume_source_t *v1_config_m
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_config_map_volume_source->items) {
-        v1_key_to_path_free(listEntry->data);
+    if (v1_config_map_volume_source->items) {
+        list_ForEach(listEntry, v1_config_map_volume_source->items) {
+            v1_key_to_path_free(listEntry->data);
+        }
+        list_free(v1_config_map_volume_source->items);
+        v1_config_map_volume_source->items = NULL;
     }
-    list_free(v1_config_map_volume_source->items);
-    free(v1_config_map_volume_source->name);
+    if (v1_config_map_volume_source->name) {
+        free(v1_config_map_volume_source->name);
+        v1_config_map_volume_source->name = NULL;
+    }
     free(v1_config_map_volume_source);
 }
 

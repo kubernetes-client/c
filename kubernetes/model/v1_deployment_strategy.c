@@ -25,8 +25,14 @@ void v1_deployment_strategy_free(v1_deployment_strategy_t *v1_deployment_strateg
         return ;
     }
     listEntry_t *listEntry;
-    v1_rolling_update_deployment_free(v1_deployment_strategy->rolling_update);
-    free(v1_deployment_strategy->type);
+    if (v1_deployment_strategy->rolling_update) {
+        v1_rolling_update_deployment_free(v1_deployment_strategy->rolling_update);
+        v1_deployment_strategy->rolling_update = NULL;
+    }
+    if (v1_deployment_strategy->type) {
+        free(v1_deployment_strategy->type);
+        v1_deployment_strategy->type = NULL;
+    }
     free(v1_deployment_strategy);
 }
 

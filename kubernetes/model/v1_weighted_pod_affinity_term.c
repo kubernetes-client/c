@@ -25,7 +25,10 @@ void v1_weighted_pod_affinity_term_free(v1_weighted_pod_affinity_term_t *v1_weig
         return ;
     }
     listEntry_t *listEntry;
-    v1_pod_affinity_term_free(v1_weighted_pod_affinity_term->pod_affinity_term);
+    if (v1_weighted_pod_affinity_term->pod_affinity_term) {
+        v1_pod_affinity_term_free(v1_weighted_pod_affinity_term->pod_affinity_term);
+        v1_weighted_pod_affinity_term->pod_affinity_term = NULL;
+    }
     free(v1_weighted_pod_affinity_term);
 }
 

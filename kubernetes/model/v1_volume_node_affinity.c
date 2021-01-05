@@ -23,7 +23,10 @@ void v1_volume_node_affinity_free(v1_volume_node_affinity_t *v1_volume_node_affi
         return ;
     }
     listEntry_t *listEntry;
-    v1_node_selector_free(v1_volume_node_affinity->required);
+    if (v1_volume_node_affinity->required) {
+        v1_node_selector_free(v1_volume_node_affinity->required);
+        v1_volume_node_affinity->required = NULL;
+    }
     free(v1_volume_node_affinity);
 }
 

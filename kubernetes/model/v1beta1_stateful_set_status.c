@@ -39,12 +39,21 @@ void v1beta1_stateful_set_status_free(v1beta1_stateful_set_status_t *v1beta1_sta
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_stateful_set_status->conditions) {
-        v1beta1_stateful_set_condition_free(listEntry->data);
+    if (v1beta1_stateful_set_status->conditions) {
+        list_ForEach(listEntry, v1beta1_stateful_set_status->conditions) {
+            v1beta1_stateful_set_condition_free(listEntry->data);
+        }
+        list_free(v1beta1_stateful_set_status->conditions);
+        v1beta1_stateful_set_status->conditions = NULL;
     }
-    list_free(v1beta1_stateful_set_status->conditions);
-    free(v1beta1_stateful_set_status->current_revision);
-    free(v1beta1_stateful_set_status->update_revision);
+    if (v1beta1_stateful_set_status->current_revision) {
+        free(v1beta1_stateful_set_status->current_revision);
+        v1beta1_stateful_set_status->current_revision = NULL;
+    }
+    if (v1beta1_stateful_set_status->update_revision) {
+        free(v1beta1_stateful_set_status->update_revision);
+        v1beta1_stateful_set_status->update_revision = NULL;
+    }
     free(v1beta1_stateful_set_status);
 }
 

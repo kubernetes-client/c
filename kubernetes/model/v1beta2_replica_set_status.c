@@ -33,10 +33,13 @@ void v1beta2_replica_set_status_free(v1beta2_replica_set_status_t *v1beta2_repli
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta2_replica_set_status->conditions) {
-        v1beta2_replica_set_condition_free(listEntry->data);
+    if (v1beta2_replica_set_status->conditions) {
+        list_ForEach(listEntry, v1beta2_replica_set_status->conditions) {
+            v1beta2_replica_set_condition_free(listEntry->data);
+        }
+        list_free(v1beta2_replica_set_status->conditions);
+        v1beta2_replica_set_status->conditions = NULL;
     }
-    list_free(v1beta2_replica_set_status->conditions);
     free(v1beta2_replica_set_status);
 }
 

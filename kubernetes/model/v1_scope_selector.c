@@ -23,10 +23,13 @@ void v1_scope_selector_free(v1_scope_selector_t *v1_scope_selector) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_scope_selector->match_expressions) {
-        v1_scoped_resource_selector_requirement_free(listEntry->data);
+    if (v1_scope_selector->match_expressions) {
+        list_ForEach(listEntry, v1_scope_selector->match_expressions) {
+            v1_scoped_resource_selector_requirement_free(listEntry->data);
+        }
+        list_free(v1_scope_selector->match_expressions);
+        v1_scope_selector->match_expressions = NULL;
     }
-    list_free(v1_scope_selector->match_expressions);
     free(v1_scope_selector);
 }
 

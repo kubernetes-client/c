@@ -33,12 +33,30 @@ void extensions_v1beta1_deployment_condition_free(extensions_v1beta1_deployment_
         return ;
     }
     listEntry_t *listEntry;
-    free(extensions_v1beta1_deployment_condition->last_transition_time);
-    free(extensions_v1beta1_deployment_condition->last_update_time);
-    free(extensions_v1beta1_deployment_condition->message);
-    free(extensions_v1beta1_deployment_condition->reason);
-    free(extensions_v1beta1_deployment_condition->status);
-    free(extensions_v1beta1_deployment_condition->type);
+    if (extensions_v1beta1_deployment_condition->last_transition_time) {
+        free(extensions_v1beta1_deployment_condition->last_transition_time);
+        extensions_v1beta1_deployment_condition->last_transition_time = NULL;
+    }
+    if (extensions_v1beta1_deployment_condition->last_update_time) {
+        free(extensions_v1beta1_deployment_condition->last_update_time);
+        extensions_v1beta1_deployment_condition->last_update_time = NULL;
+    }
+    if (extensions_v1beta1_deployment_condition->message) {
+        free(extensions_v1beta1_deployment_condition->message);
+        extensions_v1beta1_deployment_condition->message = NULL;
+    }
+    if (extensions_v1beta1_deployment_condition->reason) {
+        free(extensions_v1beta1_deployment_condition->reason);
+        extensions_v1beta1_deployment_condition->reason = NULL;
+    }
+    if (extensions_v1beta1_deployment_condition->status) {
+        free(extensions_v1beta1_deployment_condition->status);
+        extensions_v1beta1_deployment_condition->status = NULL;
+    }
+    if (extensions_v1beta1_deployment_condition->type) {
+        free(extensions_v1beta1_deployment_condition->type);
+        extensions_v1beta1_deployment_condition->type = NULL;
+    }
     free(extensions_v1beta1_deployment_condition);
 }
 

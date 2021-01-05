@@ -33,24 +33,42 @@ void v1_secret_free(v1_secret_t *v1_secret) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_secret->api_version);
-    list_ForEach(listEntry, v1_secret->data) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_secret->api_version) {
+        free(v1_secret->api_version);
+        v1_secret->api_version = NULL;
     }
-    list_free(v1_secret->data);
-    free(v1_secret->kind);
-    v1_object_meta_free(v1_secret->metadata);
-    list_ForEach(listEntry, v1_secret->string_data) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_secret->data) {
+        list_ForEach(listEntry, v1_secret->data) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_secret->data);
+        v1_secret->data = NULL;
     }
-    list_free(v1_secret->string_data);
-    free(v1_secret->type);
+    if (v1_secret->kind) {
+        free(v1_secret->kind);
+        v1_secret->kind = NULL;
+    }
+    if (v1_secret->metadata) {
+        v1_object_meta_free(v1_secret->metadata);
+        v1_secret->metadata = NULL;
+    }
+    if (v1_secret->string_data) {
+        list_ForEach(listEntry, v1_secret->string_data) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_secret->string_data);
+        v1_secret->string_data = NULL;
+    }
+    if (v1_secret->type) {
+        free(v1_secret->type);
+        v1_secret->type = NULL;
+    }
     free(v1_secret);
 }
 

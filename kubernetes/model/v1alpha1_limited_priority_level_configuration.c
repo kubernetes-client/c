@@ -25,7 +25,10 @@ void v1alpha1_limited_priority_level_configuration_free(v1alpha1_limited_priorit
         return ;
     }
     listEntry_t *listEntry;
-    v1alpha1_limit_response_free(v1alpha1_limited_priority_level_configuration->limit_response);
+    if (v1alpha1_limited_priority_level_configuration->limit_response) {
+        v1alpha1_limit_response_free(v1alpha1_limited_priority_level_configuration->limit_response);
+        v1alpha1_limited_priority_level_configuration->limit_response = NULL;
+    }
     free(v1alpha1_limited_priority_level_configuration);
 }
 

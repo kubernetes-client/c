@@ -23,7 +23,10 @@ void v1beta1_rolling_update_daemon_set_free(v1beta1_rolling_update_daemon_set_t 
         return ;
     }
     listEntry_t *listEntry;
-    object_free(v1beta1_rolling_update_daemon_set->max_unavailable);
+    if (v1beta1_rolling_update_daemon_set->max_unavailable) {
+        object_free(v1beta1_rolling_update_daemon_set->max_unavailable);
+        v1beta1_rolling_update_daemon_set->max_unavailable = NULL;
+    }
     free(v1beta1_rolling_update_daemon_set);
 }
 

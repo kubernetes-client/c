@@ -23,10 +23,13 @@ void networking_v1beta1_http_ingress_rule_value_free(networking_v1beta1_http_ing
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, networking_v1beta1_http_ingress_rule_value->paths) {
-        networking_v1beta1_http_ingress_path_free(listEntry->data);
+    if (networking_v1beta1_http_ingress_rule_value->paths) {
+        list_ForEach(listEntry, networking_v1beta1_http_ingress_rule_value->paths) {
+            networking_v1beta1_http_ingress_path_free(listEntry->data);
+        }
+        list_free(networking_v1beta1_http_ingress_rule_value->paths);
+        networking_v1beta1_http_ingress_rule_value->paths = NULL;
     }
-    list_free(networking_v1beta1_http_ingress_rule_value->paths);
     free(networking_v1beta1_http_ingress_rule_value);
 }
 

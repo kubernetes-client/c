@@ -35,11 +35,26 @@ void v1beta1_priority_class_free(v1beta1_priority_class_t *v1beta1_priority_clas
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_priority_class->api_version);
-    free(v1beta1_priority_class->description);
-    free(v1beta1_priority_class->kind);
-    v1_object_meta_free(v1beta1_priority_class->metadata);
-    free(v1beta1_priority_class->preemption_policy);
+    if (v1beta1_priority_class->api_version) {
+        free(v1beta1_priority_class->api_version);
+        v1beta1_priority_class->api_version = NULL;
+    }
+    if (v1beta1_priority_class->description) {
+        free(v1beta1_priority_class->description);
+        v1beta1_priority_class->description = NULL;
+    }
+    if (v1beta1_priority_class->kind) {
+        free(v1beta1_priority_class->kind);
+        v1beta1_priority_class->kind = NULL;
+    }
+    if (v1beta1_priority_class->metadata) {
+        v1_object_meta_free(v1beta1_priority_class->metadata);
+        v1beta1_priority_class->metadata = NULL;
+    }
+    if (v1beta1_priority_class->preemption_policy) {
+        free(v1beta1_priority_class->preemption_policy);
+        v1beta1_priority_class->preemption_policy = NULL;
+    }
     free(v1beta1_priority_class);
 }
 

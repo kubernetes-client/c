@@ -25,8 +25,14 @@ void v1_pod_dns_config_option_free(v1_pod_dns_config_option_t *v1_pod_dns_config
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_pod_dns_config_option->name);
-    free(v1_pod_dns_config_option->value);
+    if (v1_pod_dns_config_option->name) {
+        free(v1_pod_dns_config_option->name);
+        v1_pod_dns_config_option->name = NULL;
+    }
+    if (v1_pod_dns_config_option->value) {
+        free(v1_pod_dns_config_option->value);
+        v1_pod_dns_config_option->value = NULL;
+    }
     free(v1_pod_dns_config_option);
 }
 

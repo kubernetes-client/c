@@ -57,7 +57,7 @@ ApiregistrationV1API_patchAPIServiceStatus(apiClient_t *apiClient, char * name ,
 // read the specified APIService
 //
 v1_api_service_t*
-ApiregistrationV1API_readAPIService(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+ApiregistrationV1API_readAPIService(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read status of the specified APIService

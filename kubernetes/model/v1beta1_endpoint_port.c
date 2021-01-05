@@ -29,9 +29,18 @@ void v1beta1_endpoint_port_free(v1beta1_endpoint_port_t *v1beta1_endpoint_port) 
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_endpoint_port->app_protocol);
-    free(v1beta1_endpoint_port->name);
-    free(v1beta1_endpoint_port->protocol);
+    if (v1beta1_endpoint_port->app_protocol) {
+        free(v1beta1_endpoint_port->app_protocol);
+        v1beta1_endpoint_port->app_protocol = NULL;
+    }
+    if (v1beta1_endpoint_port->name) {
+        free(v1beta1_endpoint_port->name);
+        v1beta1_endpoint_port->name = NULL;
+    }
+    if (v1beta1_endpoint_port->protocol) {
+        free(v1beta1_endpoint_port->protocol);
+        v1beta1_endpoint_port->protocol = NULL;
+    }
     free(v1beta1_endpoint_port);
 }
 

@@ -29,7 +29,10 @@ void v1_horizontal_pod_autoscaler_spec_free(v1_horizontal_pod_autoscaler_spec_t 
         return ;
     }
     listEntry_t *listEntry;
-    v1_cross_version_object_reference_free(v1_horizontal_pod_autoscaler_spec->scale_target_ref);
+    if (v1_horizontal_pod_autoscaler_spec->scale_target_ref) {
+        v1_cross_version_object_reference_free(v1_horizontal_pod_autoscaler_spec->scale_target_ref);
+        v1_horizontal_pod_autoscaler_spec->scale_target_ref = NULL;
+    }
     free(v1_horizontal_pod_autoscaler_spec);
 }
 

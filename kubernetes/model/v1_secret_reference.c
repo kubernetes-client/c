@@ -7,14 +7,14 @@
 
 v1_secret_reference_t *v1_secret_reference_create(
     char *name,
-    char *namespace
+    char *_namespace
     ) {
     v1_secret_reference_t *v1_secret_reference_local_var = malloc(sizeof(v1_secret_reference_t));
     if (!v1_secret_reference_local_var) {
         return NULL;
     }
     v1_secret_reference_local_var->name = name;
-    v1_secret_reference_local_var->namespace = namespace;
+    v1_secret_reference_local_var->_namespace = _namespace;
 
     return v1_secret_reference_local_var;
 }
@@ -25,8 +25,14 @@ void v1_secret_reference_free(v1_secret_reference_t *v1_secret_reference) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_secret_reference->name);
-    free(v1_secret_reference->namespace);
+    if (v1_secret_reference->name) {
+        free(v1_secret_reference->name);
+        v1_secret_reference->name = NULL;
+    }
+    if (v1_secret_reference->_namespace) {
+        free(v1_secret_reference->_namespace);
+        v1_secret_reference->_namespace = NULL;
+    }
     free(v1_secret_reference);
 }
 
@@ -41,9 +47,9 @@ cJSON *v1_secret_reference_convertToJSON(v1_secret_reference_t *v1_secret_refere
      } 
 
 
-    // v1_secret_reference->namespace
-    if(v1_secret_reference->namespace) { 
-    if(cJSON_AddStringToObject(item, "namespace", v1_secret_reference->namespace) == NULL) {
+    // v1_secret_reference->_namespace
+    if(v1_secret_reference->_namespace) { 
+    if(cJSON_AddStringToObject(item, "namespace", v1_secret_reference->_namespace) == NULL) {
     goto fail; //String
     }
      } 
@@ -69,10 +75,10 @@ v1_secret_reference_t *v1_secret_reference_parseFromJSON(cJSON *v1_secret_refere
     }
     }
 
-    // v1_secret_reference->namespace
-    cJSON *namespace = cJSON_GetObjectItemCaseSensitive(v1_secret_referenceJSON, "namespace");
-    if (namespace) { 
-    if(!cJSON_IsString(namespace))
+    // v1_secret_reference->_namespace
+    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_secret_referenceJSON, "namespace");
+    if (_namespace) { 
+    if(!cJSON_IsString(_namespace))
     {
     goto end; //String
     }
@@ -81,7 +87,7 @@ v1_secret_reference_t *v1_secret_reference_parseFromJSON(cJSON *v1_secret_refere
 
     v1_secret_reference_local_var = v1_secret_reference_create (
         name ? strdup(name->valuestring) : NULL,
-        namespace ? strdup(namespace->valuestring) : NULL
+        _namespace ? strdup(_namespace->valuestring) : NULL
         );
 
     return v1_secret_reference_local_var;

@@ -47,34 +47,73 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_pod_status->conditions) {
-        v1_pod_condition_free(listEntry->data);
+    if (v1_pod_status->conditions) {
+        list_ForEach(listEntry, v1_pod_status->conditions) {
+            v1_pod_condition_free(listEntry->data);
+        }
+        list_free(v1_pod_status->conditions);
+        v1_pod_status->conditions = NULL;
     }
-    list_free(v1_pod_status->conditions);
-    list_ForEach(listEntry, v1_pod_status->container_statuses) {
-        v1_container_status_free(listEntry->data);
+    if (v1_pod_status->container_statuses) {
+        list_ForEach(listEntry, v1_pod_status->container_statuses) {
+            v1_container_status_free(listEntry->data);
+        }
+        list_free(v1_pod_status->container_statuses);
+        v1_pod_status->container_statuses = NULL;
     }
-    list_free(v1_pod_status->container_statuses);
-    list_ForEach(listEntry, v1_pod_status->ephemeral_container_statuses) {
-        v1_container_status_free(listEntry->data);
+    if (v1_pod_status->ephemeral_container_statuses) {
+        list_ForEach(listEntry, v1_pod_status->ephemeral_container_statuses) {
+            v1_container_status_free(listEntry->data);
+        }
+        list_free(v1_pod_status->ephemeral_container_statuses);
+        v1_pod_status->ephemeral_container_statuses = NULL;
     }
-    list_free(v1_pod_status->ephemeral_container_statuses);
-    free(v1_pod_status->host_ip);
-    list_ForEach(listEntry, v1_pod_status->init_container_statuses) {
-        v1_container_status_free(listEntry->data);
+    if (v1_pod_status->host_ip) {
+        free(v1_pod_status->host_ip);
+        v1_pod_status->host_ip = NULL;
     }
-    list_free(v1_pod_status->init_container_statuses);
-    free(v1_pod_status->message);
-    free(v1_pod_status->nominated_node_name);
-    free(v1_pod_status->phase);
-    free(v1_pod_status->pod_ip);
-    list_ForEach(listEntry, v1_pod_status->pod_i_ps) {
-        v1_pod_ip_free(listEntry->data);
+    if (v1_pod_status->init_container_statuses) {
+        list_ForEach(listEntry, v1_pod_status->init_container_statuses) {
+            v1_container_status_free(listEntry->data);
+        }
+        list_free(v1_pod_status->init_container_statuses);
+        v1_pod_status->init_container_statuses = NULL;
     }
-    list_free(v1_pod_status->pod_i_ps);
-    free(v1_pod_status->qos_class);
-    free(v1_pod_status->reason);
-    free(v1_pod_status->start_time);
+    if (v1_pod_status->message) {
+        free(v1_pod_status->message);
+        v1_pod_status->message = NULL;
+    }
+    if (v1_pod_status->nominated_node_name) {
+        free(v1_pod_status->nominated_node_name);
+        v1_pod_status->nominated_node_name = NULL;
+    }
+    if (v1_pod_status->phase) {
+        free(v1_pod_status->phase);
+        v1_pod_status->phase = NULL;
+    }
+    if (v1_pod_status->pod_ip) {
+        free(v1_pod_status->pod_ip);
+        v1_pod_status->pod_ip = NULL;
+    }
+    if (v1_pod_status->pod_i_ps) {
+        list_ForEach(listEntry, v1_pod_status->pod_i_ps) {
+            v1_pod_ip_free(listEntry->data);
+        }
+        list_free(v1_pod_status->pod_i_ps);
+        v1_pod_status->pod_i_ps = NULL;
+    }
+    if (v1_pod_status->qos_class) {
+        free(v1_pod_status->qos_class);
+        v1_pod_status->qos_class = NULL;
+    }
+    if (v1_pod_status->reason) {
+        free(v1_pod_status->reason);
+        v1_pod_status->reason = NULL;
+    }
+    if (v1_pod_status->start_time) {
+        free(v1_pod_status->start_time);
+        v1_pod_status->start_time = NULL;
+    }
     free(v1_pod_status);
 }
 

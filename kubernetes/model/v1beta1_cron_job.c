@@ -31,11 +31,26 @@ void v1beta1_cron_job_free(v1beta1_cron_job_t *v1beta1_cron_job) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_cron_job->api_version);
-    free(v1beta1_cron_job->kind);
-    v1_object_meta_free(v1beta1_cron_job->metadata);
-    v1beta1_cron_job_spec_free(v1beta1_cron_job->spec);
-    v1beta1_cron_job_status_free(v1beta1_cron_job->status);
+    if (v1beta1_cron_job->api_version) {
+        free(v1beta1_cron_job->api_version);
+        v1beta1_cron_job->api_version = NULL;
+    }
+    if (v1beta1_cron_job->kind) {
+        free(v1beta1_cron_job->kind);
+        v1beta1_cron_job->kind = NULL;
+    }
+    if (v1beta1_cron_job->metadata) {
+        v1_object_meta_free(v1beta1_cron_job->metadata);
+        v1beta1_cron_job->metadata = NULL;
+    }
+    if (v1beta1_cron_job->spec) {
+        v1beta1_cron_job_spec_free(v1beta1_cron_job->spec);
+        v1beta1_cron_job->spec = NULL;
+    }
+    if (v1beta1_cron_job->status) {
+        v1beta1_cron_job_status_free(v1beta1_cron_job->status);
+        v1beta1_cron_job->status = NULL;
+    }
     free(v1beta1_cron_job);
 }
 

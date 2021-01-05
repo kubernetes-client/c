@@ -25,20 +25,26 @@ void v1_resource_requirements_free(v1_resource_requirements_t *v1_resource_requi
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_resource_requirements->limits) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_resource_requirements->limits) {
+        list_ForEach(listEntry, v1_resource_requirements->limits) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_resource_requirements->limits);
+        v1_resource_requirements->limits = NULL;
     }
-    list_free(v1_resource_requirements->limits);
-    list_ForEach(listEntry, v1_resource_requirements->requests) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_resource_requirements->requests) {
+        list_ForEach(listEntry, v1_resource_requirements->requests) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_resource_requirements->requests);
+        v1_resource_requirements->requests = NULL;
     }
-    list_free(v1_resource_requirements->requests);
     free(v1_resource_requirements);
 }
 

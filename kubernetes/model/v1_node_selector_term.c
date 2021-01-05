@@ -25,14 +25,20 @@ void v1_node_selector_term_free(v1_node_selector_term_t *v1_node_selector_term) 
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_node_selector_term->match_expressions) {
-        v1_node_selector_requirement_free(listEntry->data);
+    if (v1_node_selector_term->match_expressions) {
+        list_ForEach(listEntry, v1_node_selector_term->match_expressions) {
+            v1_node_selector_requirement_free(listEntry->data);
+        }
+        list_free(v1_node_selector_term->match_expressions);
+        v1_node_selector_term->match_expressions = NULL;
     }
-    list_free(v1_node_selector_term->match_expressions);
-    list_ForEach(listEntry, v1_node_selector_term->match_fields) {
-        v1_node_selector_requirement_free(listEntry->data);
+    if (v1_node_selector_term->match_fields) {
+        list_ForEach(listEntry, v1_node_selector_term->match_fields) {
+            v1_node_selector_requirement_free(listEntry->data);
+        }
+        list_free(v1_node_selector_term->match_fields);
+        v1_node_selector_term->match_fields = NULL;
     }
-    list_free(v1_node_selector_term->match_fields);
     free(v1_node_selector_term);
 }
 

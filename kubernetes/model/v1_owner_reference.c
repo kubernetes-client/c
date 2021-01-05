@@ -33,10 +33,22 @@ void v1_owner_reference_free(v1_owner_reference_t *v1_owner_reference) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_owner_reference->api_version);
-    free(v1_owner_reference->kind);
-    free(v1_owner_reference->name);
-    free(v1_owner_reference->uid);
+    if (v1_owner_reference->api_version) {
+        free(v1_owner_reference->api_version);
+        v1_owner_reference->api_version = NULL;
+    }
+    if (v1_owner_reference->kind) {
+        free(v1_owner_reference->kind);
+        v1_owner_reference->kind = NULL;
+    }
+    if (v1_owner_reference->name) {
+        free(v1_owner_reference->name);
+        v1_owner_reference->name = NULL;
+    }
+    if (v1_owner_reference->uid) {
+        free(v1_owner_reference->uid);
+        v1_owner_reference->uid = NULL;
+    }
     free(v1_owner_reference);
 }
 

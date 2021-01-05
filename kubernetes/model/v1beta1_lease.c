@@ -29,10 +29,22 @@ void v1beta1_lease_free(v1beta1_lease_t *v1beta1_lease) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_lease->api_version);
-    free(v1beta1_lease->kind);
-    v1_object_meta_free(v1beta1_lease->metadata);
-    v1beta1_lease_spec_free(v1beta1_lease->spec);
+    if (v1beta1_lease->api_version) {
+        free(v1beta1_lease->api_version);
+        v1beta1_lease->api_version = NULL;
+    }
+    if (v1beta1_lease->kind) {
+        free(v1beta1_lease->kind);
+        v1beta1_lease->kind = NULL;
+    }
+    if (v1beta1_lease->metadata) {
+        v1_object_meta_free(v1beta1_lease->metadata);
+        v1beta1_lease->metadata = NULL;
+    }
+    if (v1beta1_lease->spec) {
+        v1beta1_lease_spec_free(v1beta1_lease->spec);
+        v1beta1_lease->spec = NULL;
+    }
     free(v1beta1_lease);
 }
 

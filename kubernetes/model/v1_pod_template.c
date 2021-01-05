@@ -9,7 +9,7 @@ v1_pod_template_t *v1_pod_template_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
-    v1_pod_template_spec_t *template
+    v1_pod_template_spec_t *_template
     ) {
     v1_pod_template_t *v1_pod_template_local_var = malloc(sizeof(v1_pod_template_t));
     if (!v1_pod_template_local_var) {
@@ -18,7 +18,7 @@ v1_pod_template_t *v1_pod_template_create(
     v1_pod_template_local_var->api_version = api_version;
     v1_pod_template_local_var->kind = kind;
     v1_pod_template_local_var->metadata = metadata;
-    v1_pod_template_local_var->template = template;
+    v1_pod_template_local_var->_template = _template;
 
     return v1_pod_template_local_var;
 }
@@ -29,10 +29,22 @@ void v1_pod_template_free(v1_pod_template_t *v1_pod_template) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_pod_template->api_version);
-    free(v1_pod_template->kind);
-    v1_object_meta_free(v1_pod_template->metadata);
-    v1_pod_template_spec_free(v1_pod_template->template);
+    if (v1_pod_template->api_version) {
+        free(v1_pod_template->api_version);
+        v1_pod_template->api_version = NULL;
+    }
+    if (v1_pod_template->kind) {
+        free(v1_pod_template->kind);
+        v1_pod_template->kind = NULL;
+    }
+    if (v1_pod_template->metadata) {
+        v1_object_meta_free(v1_pod_template->metadata);
+        v1_pod_template->metadata = NULL;
+    }
+    if (v1_pod_template->_template) {
+        v1_pod_template_spec_free(v1_pod_template->_template);
+        v1_pod_template->_template = NULL;
+    }
     free(v1_pod_template);
 }
 
@@ -68,13 +80,13 @@ cJSON *v1_pod_template_convertToJSON(v1_pod_template_t *v1_pod_template) {
      } 
 
 
-    // v1_pod_template->template
-    if(v1_pod_template->template) { 
-    cJSON *template_local_JSON = v1_pod_template_spec_convertToJSON(v1_pod_template->template);
-    if(template_local_JSON == NULL) {
+    // v1_pod_template->_template
+    if(v1_pod_template->_template) { 
+    cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_pod_template->_template);
+    if(_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "template", template_local_JSON);
+    cJSON_AddItemToObject(item, "template", _template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -117,11 +129,11 @@ v1_pod_template_t *v1_pod_template_parseFromJSON(cJSON *v1_pod_templateJSON){
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
-    // v1_pod_template->template
-    cJSON *template = cJSON_GetObjectItemCaseSensitive(v1_pod_templateJSON, "template");
-    v1_pod_template_spec_t *template_local_nonprim = NULL;
-    if (template) { 
-    template_local_nonprim = v1_pod_template_spec_parseFromJSON(template); //nonprimitive
+    // v1_pod_template->_template
+    cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_pod_templateJSON, "template");
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
+    if (_template) { 
+    _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
     }
 
 
@@ -129,7 +141,7 @@ v1_pod_template_t *v1_pod_template_parseFromJSON(cJSON *v1_pod_templateJSON){
         api_version ? strdup(api_version->valuestring) : NULL,
         kind ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
-        template ? template_local_nonprim : NULL
+        _template ? _template_local_nonprim : NULL
         );
 
     return v1_pod_template_local_var;

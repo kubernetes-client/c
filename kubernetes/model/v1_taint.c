@@ -29,10 +29,22 @@ void v1_taint_free(v1_taint_t *v1_taint) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_taint->effect);
-    free(v1_taint->key);
-    free(v1_taint->time_added);
-    free(v1_taint->value);
+    if (v1_taint->effect) {
+        free(v1_taint->effect);
+        v1_taint->effect = NULL;
+    }
+    if (v1_taint->key) {
+        free(v1_taint->key);
+        v1_taint->key = NULL;
+    }
+    if (v1_taint->time_added) {
+        free(v1_taint->time_added);
+        v1_taint->time_added = NULL;
+    }
+    if (v1_taint->value) {
+        free(v1_taint->value);
+        v1_taint->value = NULL;
+    }
     free(v1_taint);
 }
 

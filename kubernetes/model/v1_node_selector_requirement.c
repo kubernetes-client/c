@@ -7,7 +7,7 @@
 
 v1_node_selector_requirement_t *v1_node_selector_requirement_create(
     char *key,
-    char *operator,
+    char *_operator,
     list_t *values
     ) {
     v1_node_selector_requirement_t *v1_node_selector_requirement_local_var = malloc(sizeof(v1_node_selector_requirement_t));
@@ -15,7 +15,7 @@ v1_node_selector_requirement_t *v1_node_selector_requirement_create(
         return NULL;
     }
     v1_node_selector_requirement_local_var->key = key;
-    v1_node_selector_requirement_local_var->operator = operator;
+    v1_node_selector_requirement_local_var->_operator = _operator;
     v1_node_selector_requirement_local_var->values = values;
 
     return v1_node_selector_requirement_local_var;
@@ -27,12 +27,21 @@ void v1_node_selector_requirement_free(v1_node_selector_requirement_t *v1_node_s
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_node_selector_requirement->key);
-    free(v1_node_selector_requirement->operator);
-    list_ForEach(listEntry, v1_node_selector_requirement->values) {
-        free(listEntry->data);
+    if (v1_node_selector_requirement->key) {
+        free(v1_node_selector_requirement->key);
+        v1_node_selector_requirement->key = NULL;
     }
-    list_free(v1_node_selector_requirement->values);
+    if (v1_node_selector_requirement->_operator) {
+        free(v1_node_selector_requirement->_operator);
+        v1_node_selector_requirement->_operator = NULL;
+    }
+    if (v1_node_selector_requirement->values) {
+        list_ForEach(listEntry, v1_node_selector_requirement->values) {
+            free(listEntry->data);
+        }
+        list_free(v1_node_selector_requirement->values);
+        v1_node_selector_requirement->values = NULL;
+    }
     free(v1_node_selector_requirement);
 }
 
@@ -49,12 +58,12 @@ cJSON *v1_node_selector_requirement_convertToJSON(v1_node_selector_requirement_t
     }
 
 
-    // v1_node_selector_requirement->operator
-    if (!v1_node_selector_requirement->operator) {
+    // v1_node_selector_requirement->_operator
+    if (!v1_node_selector_requirement->_operator) {
         goto fail;
     }
     
-    if(cJSON_AddStringToObject(item, "operator", v1_node_selector_requirement->operator) == NULL) {
+    if(cJSON_AddStringToObject(item, "operator", v1_node_selector_requirement->_operator) == NULL) {
     goto fail; //String
     }
 
@@ -99,14 +108,14 @@ v1_node_selector_requirement_t *v1_node_selector_requirement_parseFromJSON(cJSON
     goto end; //String
     }
 
-    // v1_node_selector_requirement->operator
-    cJSON *operator = cJSON_GetObjectItemCaseSensitive(v1_node_selector_requirementJSON, "operator");
-    if (!operator) {
+    // v1_node_selector_requirement->_operator
+    cJSON *_operator = cJSON_GetObjectItemCaseSensitive(v1_node_selector_requirementJSON, "operator");
+    if (!_operator) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(operator))
+    if(!cJSON_IsString(_operator))
     {
     goto end; //String
     }
@@ -134,7 +143,7 @@ v1_node_selector_requirement_t *v1_node_selector_requirement_parseFromJSON(cJSON
 
     v1_node_selector_requirement_local_var = v1_node_selector_requirement_create (
         strdup(key->valuestring),
-        strdup(operator->valuestring),
+        strdup(_operator->valuestring),
         values ? valuesList : NULL
         );
 

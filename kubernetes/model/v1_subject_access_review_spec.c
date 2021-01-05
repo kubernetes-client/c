@@ -33,21 +33,39 @@ void v1_subject_access_review_spec_free(v1_subject_access_review_spec_t *v1_subj
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_subject_access_review_spec->extra) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_subject_access_review_spec->extra) {
+        list_ForEach(listEntry, v1_subject_access_review_spec->extra) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_subject_access_review_spec->extra);
+        v1_subject_access_review_spec->extra = NULL;
     }
-    list_free(v1_subject_access_review_spec->extra);
-    list_ForEach(listEntry, v1_subject_access_review_spec->groups) {
-        free(listEntry->data);
+    if (v1_subject_access_review_spec->groups) {
+        list_ForEach(listEntry, v1_subject_access_review_spec->groups) {
+            free(listEntry->data);
+        }
+        list_free(v1_subject_access_review_spec->groups);
+        v1_subject_access_review_spec->groups = NULL;
     }
-    list_free(v1_subject_access_review_spec->groups);
-    v1_non_resource_attributes_free(v1_subject_access_review_spec->non_resource_attributes);
-    v1_resource_attributes_free(v1_subject_access_review_spec->resource_attributes);
-    free(v1_subject_access_review_spec->uid);
-    free(v1_subject_access_review_spec->user);
+    if (v1_subject_access_review_spec->non_resource_attributes) {
+        v1_non_resource_attributes_free(v1_subject_access_review_spec->non_resource_attributes);
+        v1_subject_access_review_spec->non_resource_attributes = NULL;
+    }
+    if (v1_subject_access_review_spec->resource_attributes) {
+        v1_resource_attributes_free(v1_subject_access_review_spec->resource_attributes);
+        v1_subject_access_review_spec->resource_attributes = NULL;
+    }
+    if (v1_subject_access_review_spec->uid) {
+        free(v1_subject_access_review_spec->uid);
+        v1_subject_access_review_spec->uid = NULL;
+    }
+    if (v1_subject_access_review_spec->user) {
+        free(v1_subject_access_review_spec->user);
+        v1_subject_access_review_spec->user = NULL;
+    }
     free(v1_subject_access_review_spec);
 }
 

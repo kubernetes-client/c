@@ -33,12 +33,30 @@ void v1beta2_deployment_condition_free(v1beta2_deployment_condition_t *v1beta2_d
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta2_deployment_condition->last_transition_time);
-    free(v1beta2_deployment_condition->last_update_time);
-    free(v1beta2_deployment_condition->message);
-    free(v1beta2_deployment_condition->reason);
-    free(v1beta2_deployment_condition->status);
-    free(v1beta2_deployment_condition->type);
+    if (v1beta2_deployment_condition->last_transition_time) {
+        free(v1beta2_deployment_condition->last_transition_time);
+        v1beta2_deployment_condition->last_transition_time = NULL;
+    }
+    if (v1beta2_deployment_condition->last_update_time) {
+        free(v1beta2_deployment_condition->last_update_time);
+        v1beta2_deployment_condition->last_update_time = NULL;
+    }
+    if (v1beta2_deployment_condition->message) {
+        free(v1beta2_deployment_condition->message);
+        v1beta2_deployment_condition->message = NULL;
+    }
+    if (v1beta2_deployment_condition->reason) {
+        free(v1beta2_deployment_condition->reason);
+        v1beta2_deployment_condition->reason = NULL;
+    }
+    if (v1beta2_deployment_condition->status) {
+        free(v1beta2_deployment_condition->status);
+        v1beta2_deployment_condition->status = NULL;
+    }
+    if (v1beta2_deployment_condition->type) {
+        free(v1beta2_deployment_condition->type);
+        v1beta2_deployment_condition->type = NULL;
+    }
     free(v1beta2_deployment_condition);
 }
 

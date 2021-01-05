@@ -27,18 +27,27 @@ void v1alpha1_policy_rules_with_subjects_free(v1alpha1_policy_rules_with_subject
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1alpha1_policy_rules_with_subjects->non_resource_rules) {
-        v1alpha1_non_resource_policy_rule_free(listEntry->data);
+    if (v1alpha1_policy_rules_with_subjects->non_resource_rules) {
+        list_ForEach(listEntry, v1alpha1_policy_rules_with_subjects->non_resource_rules) {
+            v1alpha1_non_resource_policy_rule_free(listEntry->data);
+        }
+        list_free(v1alpha1_policy_rules_with_subjects->non_resource_rules);
+        v1alpha1_policy_rules_with_subjects->non_resource_rules = NULL;
     }
-    list_free(v1alpha1_policy_rules_with_subjects->non_resource_rules);
-    list_ForEach(listEntry, v1alpha1_policy_rules_with_subjects->resource_rules) {
-        v1alpha1_resource_policy_rule_free(listEntry->data);
+    if (v1alpha1_policy_rules_with_subjects->resource_rules) {
+        list_ForEach(listEntry, v1alpha1_policy_rules_with_subjects->resource_rules) {
+            v1alpha1_resource_policy_rule_free(listEntry->data);
+        }
+        list_free(v1alpha1_policy_rules_with_subjects->resource_rules);
+        v1alpha1_policy_rules_with_subjects->resource_rules = NULL;
     }
-    list_free(v1alpha1_policy_rules_with_subjects->resource_rules);
-    list_ForEach(listEntry, v1alpha1_policy_rules_with_subjects->subjects) {
-        flowcontrol_v1alpha1_subject_free(listEntry->data);
+    if (v1alpha1_policy_rules_with_subjects->subjects) {
+        list_ForEach(listEntry, v1alpha1_policy_rules_with_subjects->subjects) {
+            flowcontrol_v1alpha1_subject_free(listEntry->data);
+        }
+        list_free(v1alpha1_policy_rules_with_subjects->subjects);
+        v1alpha1_policy_rules_with_subjects->subjects = NULL;
     }
-    list_free(v1alpha1_policy_rules_with_subjects->subjects);
     free(v1alpha1_policy_rules_with_subjects);
 }
 

@@ -29,13 +29,25 @@ void extensions_v1beta1_pod_security_policy_list_free(extensions_v1beta1_pod_sec
         return ;
     }
     listEntry_t *listEntry;
-    free(extensions_v1beta1_pod_security_policy_list->api_version);
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_list->items) {
-        extensions_v1beta1_pod_security_policy_free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_list->api_version) {
+        free(extensions_v1beta1_pod_security_policy_list->api_version);
+        extensions_v1beta1_pod_security_policy_list->api_version = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_list->items);
-    free(extensions_v1beta1_pod_security_policy_list->kind);
-    v1_list_meta_free(extensions_v1beta1_pod_security_policy_list->metadata);
+    if (extensions_v1beta1_pod_security_policy_list->items) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_list->items) {
+            extensions_v1beta1_pod_security_policy_free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_list->items);
+        extensions_v1beta1_pod_security_policy_list->items = NULL;
+    }
+    if (extensions_v1beta1_pod_security_policy_list->kind) {
+        free(extensions_v1beta1_pod_security_policy_list->kind);
+        extensions_v1beta1_pod_security_policy_list->kind = NULL;
+    }
+    if (extensions_v1beta1_pod_security_policy_list->metadata) {
+        v1_list_meta_free(extensions_v1beta1_pod_security_policy_list->metadata);
+        extensions_v1beta1_pod_security_policy_list->metadata = NULL;
+    }
     free(extensions_v1beta1_pod_security_policy_list);
 }
 

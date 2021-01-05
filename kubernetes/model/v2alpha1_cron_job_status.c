@@ -25,11 +25,17 @@ void v2alpha1_cron_job_status_free(v2alpha1_cron_job_status_t *v2alpha1_cron_job
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v2alpha1_cron_job_status->active) {
-        v1_object_reference_free(listEntry->data);
+    if (v2alpha1_cron_job_status->active) {
+        list_ForEach(listEntry, v2alpha1_cron_job_status->active) {
+            v1_object_reference_free(listEntry->data);
+        }
+        list_free(v2alpha1_cron_job_status->active);
+        v2alpha1_cron_job_status->active = NULL;
     }
-    list_free(v2alpha1_cron_job_status->active);
-    free(v2alpha1_cron_job_status->last_schedule_time);
+    if (v2alpha1_cron_job_status->last_schedule_time) {
+        free(v2alpha1_cron_job_status->last_schedule_time);
+        v2alpha1_cron_job_status->last_schedule_time = NULL;
+    }
     free(v2alpha1_cron_job_status);
 }
 

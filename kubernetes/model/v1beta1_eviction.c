@@ -29,10 +29,22 @@ void v1beta1_eviction_free(v1beta1_eviction_t *v1beta1_eviction) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_eviction->api_version);
-    v1_delete_options_free(v1beta1_eviction->delete_options);
-    free(v1beta1_eviction->kind);
-    v1_object_meta_free(v1beta1_eviction->metadata);
+    if (v1beta1_eviction->api_version) {
+        free(v1beta1_eviction->api_version);
+        v1beta1_eviction->api_version = NULL;
+    }
+    if (v1beta1_eviction->delete_options) {
+        v1_delete_options_free(v1beta1_eviction->delete_options);
+        v1beta1_eviction->delete_options = NULL;
+    }
+    if (v1beta1_eviction->kind) {
+        free(v1beta1_eviction->kind);
+        v1beta1_eviction->kind = NULL;
+    }
+    if (v1beta1_eviction->metadata) {
+        v1_object_meta_free(v1beta1_eviction->metadata);
+        v1beta1_eviction->metadata = NULL;
+    }
     free(v1beta1_eviction);
 }
 

@@ -23,7 +23,10 @@ void v1alpha1_flow_distinguisher_method_free(v1alpha1_flow_distinguisher_method_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_flow_distinguisher_method->type);
+    if (v1alpha1_flow_distinguisher_method->type) {
+        free(v1alpha1_flow_distinguisher_method->type);
+        v1alpha1_flow_distinguisher_method->type = NULL;
+    }
     free(v1alpha1_flow_distinguisher_method);
 }
 

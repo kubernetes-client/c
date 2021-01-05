@@ -23,7 +23,10 @@ void v1_node_daemon_endpoints_free(v1_node_daemon_endpoints_t *v1_node_daemon_en
         return ;
     }
     listEntry_t *listEntry;
-    v1_daemon_endpoint_free(v1_node_daemon_endpoints->kubelet_endpoint);
+    if (v1_node_daemon_endpoints->kubelet_endpoint) {
+        v1_daemon_endpoint_free(v1_node_daemon_endpoints->kubelet_endpoint);
+        v1_node_daemon_endpoints->kubelet_endpoint = NULL;
+    }
     free(v1_node_daemon_endpoints);
 }
 

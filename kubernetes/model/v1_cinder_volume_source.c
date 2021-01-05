@@ -29,9 +29,18 @@ void v1_cinder_volume_source_free(v1_cinder_volume_source_t *v1_cinder_volume_so
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_cinder_volume_source->fs_type);
-    v1_local_object_reference_free(v1_cinder_volume_source->secret_ref);
-    free(v1_cinder_volume_source->volume_id);
+    if (v1_cinder_volume_source->fs_type) {
+        free(v1_cinder_volume_source->fs_type);
+        v1_cinder_volume_source->fs_type = NULL;
+    }
+    if (v1_cinder_volume_source->secret_ref) {
+        v1_local_object_reference_free(v1_cinder_volume_source->secret_ref);
+        v1_cinder_volume_source->secret_ref = NULL;
+    }
+    if (v1_cinder_volume_source->volume_id) {
+        free(v1_cinder_volume_source->volume_id);
+        v1_cinder_volume_source->volume_id = NULL;
+    }
     free(v1_cinder_volume_source);
 }
 

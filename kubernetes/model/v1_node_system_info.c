@@ -41,16 +41,46 @@ void v1_node_system_info_free(v1_node_system_info_t *v1_node_system_info) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_node_system_info->architecture);
-    free(v1_node_system_info->boot_id);
-    free(v1_node_system_info->container_runtime_version);
-    free(v1_node_system_info->kernel_version);
-    free(v1_node_system_info->kube_proxy_version);
-    free(v1_node_system_info->kubelet_version);
-    free(v1_node_system_info->machine_id);
-    free(v1_node_system_info->operating_system);
-    free(v1_node_system_info->os_image);
-    free(v1_node_system_info->system_uuid);
+    if (v1_node_system_info->architecture) {
+        free(v1_node_system_info->architecture);
+        v1_node_system_info->architecture = NULL;
+    }
+    if (v1_node_system_info->boot_id) {
+        free(v1_node_system_info->boot_id);
+        v1_node_system_info->boot_id = NULL;
+    }
+    if (v1_node_system_info->container_runtime_version) {
+        free(v1_node_system_info->container_runtime_version);
+        v1_node_system_info->container_runtime_version = NULL;
+    }
+    if (v1_node_system_info->kernel_version) {
+        free(v1_node_system_info->kernel_version);
+        v1_node_system_info->kernel_version = NULL;
+    }
+    if (v1_node_system_info->kube_proxy_version) {
+        free(v1_node_system_info->kube_proxy_version);
+        v1_node_system_info->kube_proxy_version = NULL;
+    }
+    if (v1_node_system_info->kubelet_version) {
+        free(v1_node_system_info->kubelet_version);
+        v1_node_system_info->kubelet_version = NULL;
+    }
+    if (v1_node_system_info->machine_id) {
+        free(v1_node_system_info->machine_id);
+        v1_node_system_info->machine_id = NULL;
+    }
+    if (v1_node_system_info->operating_system) {
+        free(v1_node_system_info->operating_system);
+        v1_node_system_info->operating_system = NULL;
+    }
+    if (v1_node_system_info->os_image) {
+        free(v1_node_system_info->os_image);
+        v1_node_system_info->os_image = NULL;
+    }
+    if (v1_node_system_info->system_uuid) {
+        free(v1_node_system_info->system_uuid);
+        v1_node_system_info->system_uuid = NULL;
+    }
     free(v1_node_system_info);
 }
 

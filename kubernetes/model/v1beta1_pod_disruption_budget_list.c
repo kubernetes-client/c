@@ -29,13 +29,25 @@ void v1beta1_pod_disruption_budget_list_free(v1beta1_pod_disruption_budget_list_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_pod_disruption_budget_list->api_version);
-    list_ForEach(listEntry, v1beta1_pod_disruption_budget_list->items) {
-        v1beta1_pod_disruption_budget_free(listEntry->data);
+    if (v1beta1_pod_disruption_budget_list->api_version) {
+        free(v1beta1_pod_disruption_budget_list->api_version);
+        v1beta1_pod_disruption_budget_list->api_version = NULL;
     }
-    list_free(v1beta1_pod_disruption_budget_list->items);
-    free(v1beta1_pod_disruption_budget_list->kind);
-    v1_list_meta_free(v1beta1_pod_disruption_budget_list->metadata);
+    if (v1beta1_pod_disruption_budget_list->items) {
+        list_ForEach(listEntry, v1beta1_pod_disruption_budget_list->items) {
+            v1beta1_pod_disruption_budget_free(listEntry->data);
+        }
+        list_free(v1beta1_pod_disruption_budget_list->items);
+        v1beta1_pod_disruption_budget_list->items = NULL;
+    }
+    if (v1beta1_pod_disruption_budget_list->kind) {
+        free(v1beta1_pod_disruption_budget_list->kind);
+        v1beta1_pod_disruption_budget_list->kind = NULL;
+    }
+    if (v1beta1_pod_disruption_budget_list->metadata) {
+        v1_list_meta_free(v1beta1_pod_disruption_budget_list->metadata);
+        v1beta1_pod_disruption_budget_list->metadata = NULL;
+    }
     free(v1beta1_pod_disruption_budget_list);
 }
 

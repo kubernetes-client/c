@@ -23,10 +23,13 @@ void v1_load_balancer_status_free(v1_load_balancer_status_t *v1_load_balancer_st
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_load_balancer_status->ingress) {
-        v1_load_balancer_ingress_free(listEntry->data);
+    if (v1_load_balancer_status->ingress) {
+        list_ForEach(listEntry, v1_load_balancer_status->ingress) {
+            v1_load_balancer_ingress_free(listEntry->data);
+        }
+        list_free(v1_load_balancer_status->ingress);
+        v1_load_balancer_status->ingress = NULL;
     }
-    list_free(v1_load_balancer_status->ingress);
     free(v1_load_balancer_status);
 }
 

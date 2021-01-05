@@ -31,11 +31,26 @@ void v1_token_request_free(v1_token_request_t *v1_token_request) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_token_request->api_version);
-    free(v1_token_request->kind);
-    v1_object_meta_free(v1_token_request->metadata);
-    v1_token_request_spec_free(v1_token_request->spec);
-    v1_token_request_status_free(v1_token_request->status);
+    if (v1_token_request->api_version) {
+        free(v1_token_request->api_version);
+        v1_token_request->api_version = NULL;
+    }
+    if (v1_token_request->kind) {
+        free(v1_token_request->kind);
+        v1_token_request->kind = NULL;
+    }
+    if (v1_token_request->metadata) {
+        v1_object_meta_free(v1_token_request->metadata);
+        v1_token_request->metadata = NULL;
+    }
+    if (v1_token_request->spec) {
+        v1_token_request_spec_free(v1_token_request->spec);
+        v1_token_request->spec = NULL;
+    }
+    if (v1_token_request->status) {
+        v1_token_request_status_free(v1_token_request->status);
+        v1_token_request->status = NULL;
+    }
     free(v1_token_request);
 }
 

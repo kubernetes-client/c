@@ -31,11 +31,26 @@ void v1alpha1_flow_schema_condition_free(v1alpha1_flow_schema_condition_t *v1alp
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_flow_schema_condition->last_transition_time);
-    free(v1alpha1_flow_schema_condition->message);
-    free(v1alpha1_flow_schema_condition->reason);
-    free(v1alpha1_flow_schema_condition->status);
-    free(v1alpha1_flow_schema_condition->type);
+    if (v1alpha1_flow_schema_condition->last_transition_time) {
+        free(v1alpha1_flow_schema_condition->last_transition_time);
+        v1alpha1_flow_schema_condition->last_transition_time = NULL;
+    }
+    if (v1alpha1_flow_schema_condition->message) {
+        free(v1alpha1_flow_schema_condition->message);
+        v1alpha1_flow_schema_condition->message = NULL;
+    }
+    if (v1alpha1_flow_schema_condition->reason) {
+        free(v1alpha1_flow_schema_condition->reason);
+        v1alpha1_flow_schema_condition->reason = NULL;
+    }
+    if (v1alpha1_flow_schema_condition->status) {
+        free(v1alpha1_flow_schema_condition->status);
+        v1alpha1_flow_schema_condition->status = NULL;
+    }
+    if (v1alpha1_flow_schema_condition->type) {
+        free(v1alpha1_flow_schema_condition->type);
+        v1alpha1_flow_schema_condition->type = NULL;
+    }
     free(v1alpha1_flow_schema_condition);
 }
 

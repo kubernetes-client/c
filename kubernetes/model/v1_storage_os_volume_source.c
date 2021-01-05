@@ -31,10 +31,22 @@ void v1_storage_os_volume_source_free(v1_storage_os_volume_source_t *v1_storage_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_storage_os_volume_source->fs_type);
-    v1_local_object_reference_free(v1_storage_os_volume_source->secret_ref);
-    free(v1_storage_os_volume_source->volume_name);
-    free(v1_storage_os_volume_source->volume_namespace);
+    if (v1_storage_os_volume_source->fs_type) {
+        free(v1_storage_os_volume_source->fs_type);
+        v1_storage_os_volume_source->fs_type = NULL;
+    }
+    if (v1_storage_os_volume_source->secret_ref) {
+        v1_local_object_reference_free(v1_storage_os_volume_source->secret_ref);
+        v1_storage_os_volume_source->secret_ref = NULL;
+    }
+    if (v1_storage_os_volume_source->volume_name) {
+        free(v1_storage_os_volume_source->volume_name);
+        v1_storage_os_volume_source->volume_name = NULL;
+    }
+    if (v1_storage_os_volume_source->volume_namespace) {
+        free(v1_storage_os_volume_source->volume_namespace);
+        v1_storage_os_volume_source->volume_namespace = NULL;
+    }
     free(v1_storage_os_volume_source);
 }
 

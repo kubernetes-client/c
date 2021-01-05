@@ -25,8 +25,14 @@ void v1_event_source_free(v1_event_source_t *v1_event_source) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_event_source->component);
-    free(v1_event_source->host);
+    if (v1_event_source->component) {
+        free(v1_event_source->component);
+        v1_event_source->component = NULL;
+    }
+    if (v1_event_source->host) {
+        free(v1_event_source->host);
+        v1_event_source->host = NULL;
+    }
     free(v1_event_source);
 }
 

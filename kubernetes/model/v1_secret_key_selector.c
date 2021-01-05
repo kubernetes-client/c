@@ -27,8 +27,14 @@ void v1_secret_key_selector_free(v1_secret_key_selector_t *v1_secret_key_selecto
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_secret_key_selector->key);
-    free(v1_secret_key_selector->name);
+    if (v1_secret_key_selector->key) {
+        free(v1_secret_key_selector->key);
+        v1_secret_key_selector->key = NULL;
+    }
+    if (v1_secret_key_selector->name) {
+        free(v1_secret_key_selector->name);
+        v1_secret_key_selector->name = NULL;
+    }
     free(v1_secret_key_selector);
 }
 

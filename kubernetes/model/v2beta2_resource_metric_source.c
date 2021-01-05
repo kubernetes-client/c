@@ -25,8 +25,14 @@ void v2beta2_resource_metric_source_free(v2beta2_resource_metric_source_t *v2bet
         return ;
     }
     listEntry_t *listEntry;
-    free(v2beta2_resource_metric_source->name);
-    v2beta2_metric_target_free(v2beta2_resource_metric_source->target);
+    if (v2beta2_resource_metric_source->name) {
+        free(v2beta2_resource_metric_source->name);
+        v2beta2_resource_metric_source->name = NULL;
+    }
+    if (v2beta2_resource_metric_source->target) {
+        v2beta2_metric_target_free(v2beta2_resource_metric_source->target);
+        v2beta2_resource_metric_source->target = NULL;
+    }
     free(v2beta2_resource_metric_source);
 }
 

@@ -27,8 +27,14 @@ void apiextensions_v1beta1_webhook_client_config_free(apiextensions_v1beta1_webh
         return ;
     }
     listEntry_t *listEntry;
-    apiextensions_v1beta1_service_reference_free(apiextensions_v1beta1_webhook_client_config->service);
-    free(apiextensions_v1beta1_webhook_client_config->url);
+    if (apiextensions_v1beta1_webhook_client_config->service) {
+        apiextensions_v1beta1_service_reference_free(apiextensions_v1beta1_webhook_client_config->service);
+        apiextensions_v1beta1_webhook_client_config->service = NULL;
+    }
+    if (apiextensions_v1beta1_webhook_client_config->url) {
+        free(apiextensions_v1beta1_webhook_client_config->url);
+        apiextensions_v1beta1_webhook_client_config->url = NULL;
+    }
     free(apiextensions_v1beta1_webhook_client_config);
 }
 

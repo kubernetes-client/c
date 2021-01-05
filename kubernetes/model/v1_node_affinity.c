@@ -25,11 +25,17 @@ void v1_node_affinity_free(v1_node_affinity_t *v1_node_affinity) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_node_affinity->preferred_during_scheduling_ignored_during_execution) {
-        v1_preferred_scheduling_term_free(listEntry->data);
+    if (v1_node_affinity->preferred_during_scheduling_ignored_during_execution) {
+        list_ForEach(listEntry, v1_node_affinity->preferred_during_scheduling_ignored_during_execution) {
+            v1_preferred_scheduling_term_free(listEntry->data);
+        }
+        list_free(v1_node_affinity->preferred_during_scheduling_ignored_during_execution);
+        v1_node_affinity->preferred_during_scheduling_ignored_during_execution = NULL;
     }
-    list_free(v1_node_affinity->preferred_during_scheduling_ignored_during_execution);
-    v1_node_selector_free(v1_node_affinity->required_during_scheduling_ignored_during_execution);
+    if (v1_node_affinity->required_during_scheduling_ignored_during_execution) {
+        v1_node_selector_free(v1_node_affinity->required_during_scheduling_ignored_during_execution);
+        v1_node_affinity->required_during_scheduling_ignored_during_execution = NULL;
+    }
     free(v1_node_affinity);
 }
 

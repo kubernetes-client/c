@@ -29,16 +29,28 @@ void v1_api_versions_free(v1_api_versions_t *v1_api_versions) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_api_versions->api_version);
-    free(v1_api_versions->kind);
-    list_ForEach(listEntry, v1_api_versions->server_address_by_client_cid_rs) {
-        v1_server_address_by_client_cidr_free(listEntry->data);
+    if (v1_api_versions->api_version) {
+        free(v1_api_versions->api_version);
+        v1_api_versions->api_version = NULL;
     }
-    list_free(v1_api_versions->server_address_by_client_cid_rs);
-    list_ForEach(listEntry, v1_api_versions->versions) {
-        free(listEntry->data);
+    if (v1_api_versions->kind) {
+        free(v1_api_versions->kind);
+        v1_api_versions->kind = NULL;
     }
-    list_free(v1_api_versions->versions);
+    if (v1_api_versions->server_address_by_client_cid_rs) {
+        list_ForEach(listEntry, v1_api_versions->server_address_by_client_cid_rs) {
+            v1_server_address_by_client_cidr_free(listEntry->data);
+        }
+        list_free(v1_api_versions->server_address_by_client_cid_rs);
+        v1_api_versions->server_address_by_client_cid_rs = NULL;
+    }
+    if (v1_api_versions->versions) {
+        list_ForEach(listEntry, v1_api_versions->versions) {
+            free(listEntry->data);
+        }
+        list_free(v1_api_versions->versions);
+        v1_api_versions->versions = NULL;
+    }
     free(v1_api_versions);
 }
 

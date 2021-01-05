@@ -31,11 +31,26 @@ void v1_deployment_free(v1_deployment_t *v1_deployment) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_deployment->api_version);
-    free(v1_deployment->kind);
-    v1_object_meta_free(v1_deployment->metadata);
-    v1_deployment_spec_free(v1_deployment->spec);
-    v1_deployment_status_free(v1_deployment->status);
+    if (v1_deployment->api_version) {
+        free(v1_deployment->api_version);
+        v1_deployment->api_version = NULL;
+    }
+    if (v1_deployment->kind) {
+        free(v1_deployment->kind);
+        v1_deployment->kind = NULL;
+    }
+    if (v1_deployment->metadata) {
+        v1_object_meta_free(v1_deployment->metadata);
+        v1_deployment->metadata = NULL;
+    }
+    if (v1_deployment->spec) {
+        v1_deployment_spec_free(v1_deployment->spec);
+        v1_deployment->spec = NULL;
+    }
+    if (v1_deployment->status) {
+        v1_deployment_status_free(v1_deployment->status);
+        v1_deployment->status = NULL;
+    }
     free(v1_deployment);
 }
 

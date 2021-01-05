@@ -25,14 +25,20 @@ void v1_capabilities_free(v1_capabilities_t *v1_capabilities) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_capabilities->add) {
-        free(listEntry->data);
+    if (v1_capabilities->add) {
+        list_ForEach(listEntry, v1_capabilities->add) {
+            free(listEntry->data);
+        }
+        list_free(v1_capabilities->add);
+        v1_capabilities->add = NULL;
     }
-    list_free(v1_capabilities->add);
-    list_ForEach(listEntry, v1_capabilities->drop) {
-        free(listEntry->data);
+    if (v1_capabilities->drop) {
+        list_ForEach(listEntry, v1_capabilities->drop) {
+            free(listEntry->data);
+        }
+        list_free(v1_capabilities->drop);
+        v1_capabilities->drop = NULL;
     }
-    list_free(v1_capabilities->drop);
     free(v1_capabilities);
 }
 

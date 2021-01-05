@@ -25,11 +25,17 @@ void extensions_v1beta1_ingress_tls_free(extensions_v1beta1_ingress_tls_t *exten
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, extensions_v1beta1_ingress_tls->hosts) {
-        free(listEntry->data);
+    if (extensions_v1beta1_ingress_tls->hosts) {
+        list_ForEach(listEntry, extensions_v1beta1_ingress_tls->hosts) {
+            free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_ingress_tls->hosts);
+        extensions_v1beta1_ingress_tls->hosts = NULL;
     }
-    list_free(extensions_v1beta1_ingress_tls->hosts);
-    free(extensions_v1beta1_ingress_tls->secret_name);
+    if (extensions_v1beta1_ingress_tls->secret_name) {
+        free(extensions_v1beta1_ingress_tls->secret_name);
+        extensions_v1beta1_ingress_tls->secret_name = NULL;
+    }
     free(extensions_v1beta1_ingress_tls);
 }
 

@@ -31,11 +31,26 @@ void v1_scale_free(v1_scale_t *v1_scale) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_scale->api_version);
-    free(v1_scale->kind);
-    v1_object_meta_free(v1_scale->metadata);
-    v1_scale_spec_free(v1_scale->spec);
-    v1_scale_status_free(v1_scale->status);
+    if (v1_scale->api_version) {
+        free(v1_scale->api_version);
+        v1_scale->api_version = NULL;
+    }
+    if (v1_scale->kind) {
+        free(v1_scale->kind);
+        v1_scale->kind = NULL;
+    }
+    if (v1_scale->metadata) {
+        v1_object_meta_free(v1_scale->metadata);
+        v1_scale->metadata = NULL;
+    }
+    if (v1_scale->spec) {
+        v1_scale_spec_free(v1_scale->spec);
+        v1_scale->spec = NULL;
+    }
+    if (v1_scale->status) {
+        v1_scale_status_free(v1_scale->status);
+        v1_scale->status = NULL;
+    }
     free(v1_scale);
 }
 

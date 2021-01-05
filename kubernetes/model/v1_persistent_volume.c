@@ -31,11 +31,26 @@ void v1_persistent_volume_free(v1_persistent_volume_t *v1_persistent_volume) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_persistent_volume->api_version);
-    free(v1_persistent_volume->kind);
-    v1_object_meta_free(v1_persistent_volume->metadata);
-    v1_persistent_volume_spec_free(v1_persistent_volume->spec);
-    v1_persistent_volume_status_free(v1_persistent_volume->status);
+    if (v1_persistent_volume->api_version) {
+        free(v1_persistent_volume->api_version);
+        v1_persistent_volume->api_version = NULL;
+    }
+    if (v1_persistent_volume->kind) {
+        free(v1_persistent_volume->kind);
+        v1_persistent_volume->kind = NULL;
+    }
+    if (v1_persistent_volume->metadata) {
+        v1_object_meta_free(v1_persistent_volume->metadata);
+        v1_persistent_volume->metadata = NULL;
+    }
+    if (v1_persistent_volume->spec) {
+        v1_persistent_volume_spec_free(v1_persistent_volume->spec);
+        v1_persistent_volume->spec = NULL;
+    }
+    if (v1_persistent_volume->status) {
+        v1_persistent_volume_status_free(v1_persistent_volume->status);
+        v1_persistent_volume->status = NULL;
+    }
     free(v1_persistent_volume);
 }
 

@@ -25,11 +25,17 @@ void v1_namespace_status_free(v1_namespace_status_t *v1_namespace_status) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_namespace_status->conditions) {
-        v1_namespace_condition_free(listEntry->data);
+    if (v1_namespace_status->conditions) {
+        list_ForEach(listEntry, v1_namespace_status->conditions) {
+            v1_namespace_condition_free(listEntry->data);
+        }
+        list_free(v1_namespace_status->conditions);
+        v1_namespace_status->conditions = NULL;
     }
-    list_free(v1_namespace_status->conditions);
-    free(v1_namespace_status->phase);
+    if (v1_namespace_status->phase) {
+        free(v1_namespace_status->phase);
+        v1_namespace_status->phase = NULL;
+    }
     free(v1_namespace_status);
 }
 

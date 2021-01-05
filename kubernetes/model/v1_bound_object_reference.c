@@ -29,10 +29,22 @@ void v1_bound_object_reference_free(v1_bound_object_reference_t *v1_bound_object
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_bound_object_reference->api_version);
-    free(v1_bound_object_reference->kind);
-    free(v1_bound_object_reference->name);
-    free(v1_bound_object_reference->uid);
+    if (v1_bound_object_reference->api_version) {
+        free(v1_bound_object_reference->api_version);
+        v1_bound_object_reference->api_version = NULL;
+    }
+    if (v1_bound_object_reference->kind) {
+        free(v1_bound_object_reference->kind);
+        v1_bound_object_reference->kind = NULL;
+    }
+    if (v1_bound_object_reference->name) {
+        free(v1_bound_object_reference->name);
+        v1_bound_object_reference->name = NULL;
+    }
+    if (v1_bound_object_reference->uid) {
+        free(v1_bound_object_reference->uid);
+        v1_bound_object_reference->uid = NULL;
+    }
     free(v1_bound_object_reference);
 }
 

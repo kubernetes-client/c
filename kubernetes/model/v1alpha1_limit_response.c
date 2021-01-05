@@ -25,8 +25,14 @@ void v1alpha1_limit_response_free(v1alpha1_limit_response_t *v1alpha1_limit_resp
         return ;
     }
     listEntry_t *listEntry;
-    v1alpha1_queuing_configuration_free(v1alpha1_limit_response->queuing);
-    free(v1alpha1_limit_response->type);
+    if (v1alpha1_limit_response->queuing) {
+        v1alpha1_queuing_configuration_free(v1alpha1_limit_response->queuing);
+        v1alpha1_limit_response->queuing = NULL;
+    }
+    if (v1alpha1_limit_response->type) {
+        free(v1alpha1_limit_response->type);
+        v1alpha1_limit_response->type = NULL;
+    }
     free(v1alpha1_limit_response);
 }
 

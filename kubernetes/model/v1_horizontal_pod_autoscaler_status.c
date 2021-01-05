@@ -31,7 +31,10 @@ void v1_horizontal_pod_autoscaler_status_free(v1_horizontal_pod_autoscaler_statu
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_horizontal_pod_autoscaler_status->last_scale_time);
+    if (v1_horizontal_pod_autoscaler_status->last_scale_time) {
+        free(v1_horizontal_pod_autoscaler_status->last_scale_time);
+        v1_horizontal_pod_autoscaler_status->last_scale_time = NULL;
+    }
     free(v1_horizontal_pod_autoscaler_status);
 }
 

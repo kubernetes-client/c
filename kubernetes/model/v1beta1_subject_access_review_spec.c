@@ -33,21 +33,39 @@ void v1beta1_subject_access_review_spec_free(v1beta1_subject_access_review_spec_
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_subject_access_review_spec->extra) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta1_subject_access_review_spec->extra) {
+        list_ForEach(listEntry, v1beta1_subject_access_review_spec->extra) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta1_subject_access_review_spec->extra);
+        v1beta1_subject_access_review_spec->extra = NULL;
     }
-    list_free(v1beta1_subject_access_review_spec->extra);
-    list_ForEach(listEntry, v1beta1_subject_access_review_spec->group) {
-        free(listEntry->data);
+    if (v1beta1_subject_access_review_spec->group) {
+        list_ForEach(listEntry, v1beta1_subject_access_review_spec->group) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_subject_access_review_spec->group);
+        v1beta1_subject_access_review_spec->group = NULL;
     }
-    list_free(v1beta1_subject_access_review_spec->group);
-    v1beta1_non_resource_attributes_free(v1beta1_subject_access_review_spec->non_resource_attributes);
-    v1beta1_resource_attributes_free(v1beta1_subject_access_review_spec->resource_attributes);
-    free(v1beta1_subject_access_review_spec->uid);
-    free(v1beta1_subject_access_review_spec->user);
+    if (v1beta1_subject_access_review_spec->non_resource_attributes) {
+        v1beta1_non_resource_attributes_free(v1beta1_subject_access_review_spec->non_resource_attributes);
+        v1beta1_subject_access_review_spec->non_resource_attributes = NULL;
+    }
+    if (v1beta1_subject_access_review_spec->resource_attributes) {
+        v1beta1_resource_attributes_free(v1beta1_subject_access_review_spec->resource_attributes);
+        v1beta1_subject_access_review_spec->resource_attributes = NULL;
+    }
+    if (v1beta1_subject_access_review_spec->uid) {
+        free(v1beta1_subject_access_review_spec->uid);
+        v1beta1_subject_access_review_spec->uid = NULL;
+    }
+    if (v1beta1_subject_access_review_spec->user) {
+        free(v1beta1_subject_access_review_spec->user);
+        v1beta1_subject_access_review_spec->user = NULL;
+    }
     free(v1beta1_subject_access_review_spec);
 }
 

@@ -27,9 +27,18 @@ void v2beta2_object_metric_status_free(v2beta2_object_metric_status_t *v2beta2_o
         return ;
     }
     listEntry_t *listEntry;
-    v2beta2_metric_value_status_free(v2beta2_object_metric_status->current);
-    v2beta2_cross_version_object_reference_free(v2beta2_object_metric_status->described_object);
-    v2beta2_metric_identifier_free(v2beta2_object_metric_status->metric);
+    if (v2beta2_object_metric_status->current) {
+        v2beta2_metric_value_status_free(v2beta2_object_metric_status->current);
+        v2beta2_object_metric_status->current = NULL;
+    }
+    if (v2beta2_object_metric_status->described_object) {
+        v2beta2_cross_version_object_reference_free(v2beta2_object_metric_status->described_object);
+        v2beta2_object_metric_status->described_object = NULL;
+    }
+    if (v2beta2_object_metric_status->metric) {
+        v2beta2_metric_identifier_free(v2beta2_object_metric_status->metric);
+        v2beta2_object_metric_status->metric = NULL;
+    }
     free(v2beta2_object_metric_status);
 }
 

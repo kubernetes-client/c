@@ -33,14 +33,29 @@ void v1_status_details_free(v1_status_details_t *v1_status_details) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_status_details->causes) {
-        v1_status_cause_free(listEntry->data);
+    if (v1_status_details->causes) {
+        list_ForEach(listEntry, v1_status_details->causes) {
+            v1_status_cause_free(listEntry->data);
+        }
+        list_free(v1_status_details->causes);
+        v1_status_details->causes = NULL;
     }
-    list_free(v1_status_details->causes);
-    free(v1_status_details->group);
-    free(v1_status_details->kind);
-    free(v1_status_details->name);
-    free(v1_status_details->uid);
+    if (v1_status_details->group) {
+        free(v1_status_details->group);
+        v1_status_details->group = NULL;
+    }
+    if (v1_status_details->kind) {
+        free(v1_status_details->kind);
+        v1_status_details->kind = NULL;
+    }
+    if (v1_status_details->name) {
+        free(v1_status_details->name);
+        v1_status_details->name = NULL;
+    }
+    if (v1_status_details->uid) {
+        free(v1_status_details->uid);
+        v1_status_details->uid = NULL;
+    }
     free(v1_status_details);
 }
 

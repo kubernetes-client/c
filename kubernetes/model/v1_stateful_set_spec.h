@@ -28,7 +28,7 @@ typedef struct v1_stateful_set_spec_t {
     int revision_history_limit; //numeric
     struct v1_label_selector_t *selector; //model
     char *service_name; // string
-    struct v1_pod_template_spec_t *template; //model
+    struct v1_pod_template_spec_t *_template; //model
     struct v1_stateful_set_update_strategy_t *update_strategy; //model
     list_t *volume_claim_templates; //nonprimitive container
 
@@ -40,7 +40,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_create(
     int revision_history_limit,
     v1_label_selector_t *selector,
     char *service_name,
-    v1_pod_template_spec_t *template,
+    v1_pod_template_spec_t *_template,
     v1_stateful_set_update_strategy_t *update_strategy,
     list_t *volume_claim_templates
 );

@@ -7,7 +7,7 @@
 
 apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_create(
     char *name,
-    char *namespace,
+    char *_namespace,
     char *path,
     int port
     ) {
@@ -16,7 +16,7 @@ apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_create(
         return NULL;
     }
     apiextensions_v1_service_reference_local_var->name = name;
-    apiextensions_v1_service_reference_local_var->namespace = namespace;
+    apiextensions_v1_service_reference_local_var->_namespace = _namespace;
     apiextensions_v1_service_reference_local_var->path = path;
     apiextensions_v1_service_reference_local_var->port = port;
 
@@ -29,9 +29,18 @@ void apiextensions_v1_service_reference_free(apiextensions_v1_service_reference_
         return ;
     }
     listEntry_t *listEntry;
-    free(apiextensions_v1_service_reference->name);
-    free(apiextensions_v1_service_reference->namespace);
-    free(apiextensions_v1_service_reference->path);
+    if (apiextensions_v1_service_reference->name) {
+        free(apiextensions_v1_service_reference->name);
+        apiextensions_v1_service_reference->name = NULL;
+    }
+    if (apiextensions_v1_service_reference->_namespace) {
+        free(apiextensions_v1_service_reference->_namespace);
+        apiextensions_v1_service_reference->_namespace = NULL;
+    }
+    if (apiextensions_v1_service_reference->path) {
+        free(apiextensions_v1_service_reference->path);
+        apiextensions_v1_service_reference->path = NULL;
+    }
     free(apiextensions_v1_service_reference);
 }
 
@@ -48,12 +57,12 @@ cJSON *apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_service
     }
 
 
-    // apiextensions_v1_service_reference->namespace
-    if (!apiextensions_v1_service_reference->namespace) {
+    // apiextensions_v1_service_reference->_namespace
+    if (!apiextensions_v1_service_reference->_namespace) {
         goto fail;
     }
     
-    if(cJSON_AddStringToObject(item, "namespace", apiextensions_v1_service_reference->namespace) == NULL) {
+    if(cJSON_AddStringToObject(item, "namespace", apiextensions_v1_service_reference->_namespace) == NULL) {
     goto fail; //String
     }
 
@@ -97,14 +106,14 @@ apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFr
     goto end; //String
     }
 
-    // apiextensions_v1_service_reference->namespace
-    cJSON *namespace = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "namespace");
-    if (!namespace) {
+    // apiextensions_v1_service_reference->_namespace
+    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "namespace");
+    if (!_namespace) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(namespace))
+    if(!cJSON_IsString(_namespace))
     {
     goto end; //String
     }
@@ -130,7 +139,7 @@ apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFr
 
     apiextensions_v1_service_reference_local_var = apiextensions_v1_service_reference_create (
         strdup(name->valuestring),
-        strdup(namespace->valuestring),
+        strdup(_namespace->valuestring),
         path ? strdup(path->valuestring) : NULL,
         port ? port->valuedouble : 0
         );

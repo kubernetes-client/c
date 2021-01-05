@@ -27,9 +27,18 @@ void v1beta1_custom_resource_subresource_scale_free(v1beta1_custom_resource_subr
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_custom_resource_subresource_scale->label_selector_path);
-    free(v1beta1_custom_resource_subresource_scale->spec_replicas_path);
-    free(v1beta1_custom_resource_subresource_scale->status_replicas_path);
+    if (v1beta1_custom_resource_subresource_scale->label_selector_path) {
+        free(v1beta1_custom_resource_subresource_scale->label_selector_path);
+        v1beta1_custom_resource_subresource_scale->label_selector_path = NULL;
+    }
+    if (v1beta1_custom_resource_subresource_scale->spec_replicas_path) {
+        free(v1beta1_custom_resource_subresource_scale->spec_replicas_path);
+        v1beta1_custom_resource_subresource_scale->spec_replicas_path = NULL;
+    }
+    if (v1beta1_custom_resource_subresource_scale->status_replicas_path) {
+        free(v1beta1_custom_resource_subresource_scale->status_replicas_path);
+        v1beta1_custom_resource_subresource_scale->status_replicas_path = NULL;
+    }
     free(v1beta1_custom_resource_subresource_scale);
 }
 

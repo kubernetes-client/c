@@ -31,11 +31,26 @@ void v1beta1_api_service_free(v1beta1_api_service_t *v1beta1_api_service) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_api_service->api_version);
-    free(v1beta1_api_service->kind);
-    v1_object_meta_free(v1beta1_api_service->metadata);
-    v1beta1_api_service_spec_free(v1beta1_api_service->spec);
-    v1beta1_api_service_status_free(v1beta1_api_service->status);
+    if (v1beta1_api_service->api_version) {
+        free(v1beta1_api_service->api_version);
+        v1beta1_api_service->api_version = NULL;
+    }
+    if (v1beta1_api_service->kind) {
+        free(v1beta1_api_service->kind);
+        v1beta1_api_service->kind = NULL;
+    }
+    if (v1beta1_api_service->metadata) {
+        v1_object_meta_free(v1beta1_api_service->metadata);
+        v1beta1_api_service->metadata = NULL;
+    }
+    if (v1beta1_api_service->spec) {
+        v1beta1_api_service_spec_free(v1beta1_api_service->spec);
+        v1beta1_api_service->spec = NULL;
+    }
+    if (v1beta1_api_service->status) {
+        v1beta1_api_service_status_free(v1beta1_api_service->status);
+        v1beta1_api_service->status = NULL;
+    }
     free(v1beta1_api_service);
 }
 

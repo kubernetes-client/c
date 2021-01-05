@@ -9,7 +9,7 @@ v1beta1_daemon_set_spec_t *v1beta1_daemon_set_spec_create(
     int min_ready_seconds,
     int revision_history_limit,
     v1_label_selector_t *selector,
-    v1_pod_template_spec_t *template,
+    v1_pod_template_spec_t *_template,
     long template_generation,
     v1beta1_daemon_set_update_strategy_t *update_strategy
     ) {
@@ -20,7 +20,7 @@ v1beta1_daemon_set_spec_t *v1beta1_daemon_set_spec_create(
     v1beta1_daemon_set_spec_local_var->min_ready_seconds = min_ready_seconds;
     v1beta1_daemon_set_spec_local_var->revision_history_limit = revision_history_limit;
     v1beta1_daemon_set_spec_local_var->selector = selector;
-    v1beta1_daemon_set_spec_local_var->template = template;
+    v1beta1_daemon_set_spec_local_var->_template = _template;
     v1beta1_daemon_set_spec_local_var->template_generation = template_generation;
     v1beta1_daemon_set_spec_local_var->update_strategy = update_strategy;
 
@@ -33,9 +33,18 @@ void v1beta1_daemon_set_spec_free(v1beta1_daemon_set_spec_t *v1beta1_daemon_set_
         return ;
     }
     listEntry_t *listEntry;
-    v1_label_selector_free(v1beta1_daemon_set_spec->selector);
-    v1_pod_template_spec_free(v1beta1_daemon_set_spec->template);
-    v1beta1_daemon_set_update_strategy_free(v1beta1_daemon_set_spec->update_strategy);
+    if (v1beta1_daemon_set_spec->selector) {
+        v1_label_selector_free(v1beta1_daemon_set_spec->selector);
+        v1beta1_daemon_set_spec->selector = NULL;
+    }
+    if (v1beta1_daemon_set_spec->_template) {
+        v1_pod_template_spec_free(v1beta1_daemon_set_spec->_template);
+        v1beta1_daemon_set_spec->_template = NULL;
+    }
+    if (v1beta1_daemon_set_spec->update_strategy) {
+        v1beta1_daemon_set_update_strategy_free(v1beta1_daemon_set_spec->update_strategy);
+        v1beta1_daemon_set_spec->update_strategy = NULL;
+    }
     free(v1beta1_daemon_set_spec);
 }
 
@@ -71,16 +80,16 @@ cJSON *v1beta1_daemon_set_spec_convertToJSON(v1beta1_daemon_set_spec_t *v1beta1_
      } 
 
 
-    // v1beta1_daemon_set_spec->template
-    if (!v1beta1_daemon_set_spec->template) {
+    // v1beta1_daemon_set_spec->_template
+    if (!v1beta1_daemon_set_spec->_template) {
         goto fail;
     }
     
-    cJSON *template_local_JSON = v1_pod_template_spec_convertToJSON(v1beta1_daemon_set_spec->template);
-    if(template_local_JSON == NULL) {
+    cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1beta1_daemon_set_spec->_template);
+    if(_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "template", template_local_JSON);
+    cJSON_AddItemToObject(item, "template", _template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -143,15 +152,15 @@ v1beta1_daemon_set_spec_t *v1beta1_daemon_set_spec_parseFromJSON(cJSON *v1beta1_
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
-    // v1beta1_daemon_set_spec->template
-    cJSON *template = cJSON_GetObjectItemCaseSensitive(v1beta1_daemon_set_specJSON, "template");
-    if (!template) {
+    // v1beta1_daemon_set_spec->_template
+    cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1beta1_daemon_set_specJSON, "template");
+    if (!_template) {
         goto end;
     }
 
-    v1_pod_template_spec_t *template_local_nonprim = NULL;
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     
-    template_local_nonprim = v1_pod_template_spec_parseFromJSON(template); //nonprimitive
+    _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 
     // v1beta1_daemon_set_spec->template_generation
     cJSON *template_generation = cJSON_GetObjectItemCaseSensitive(v1beta1_daemon_set_specJSON, "templateGeneration");
@@ -174,7 +183,7 @@ v1beta1_daemon_set_spec_t *v1beta1_daemon_set_spec_parseFromJSON(cJSON *v1beta1_
         min_ready_seconds ? min_ready_seconds->valuedouble : 0,
         revision_history_limit ? revision_history_limit->valuedouble : 0,
         selector ? selector_local_nonprim : NULL,
-        template_local_nonprim,
+        _template_local_nonprim,
         template_generation ? template_generation->valuedouble : 0,
         update_strategy ? update_strategy_local_nonprim : NULL
         );

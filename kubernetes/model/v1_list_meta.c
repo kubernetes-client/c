@@ -29,9 +29,18 @@ void v1_list_meta_free(v1_list_meta_t *v1_list_meta) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_list_meta->_continue);
-    free(v1_list_meta->resource_version);
-    free(v1_list_meta->self_link);
+    if (v1_list_meta->_continue) {
+        free(v1_list_meta->_continue);
+        v1_list_meta->_continue = NULL;
+    }
+    if (v1_list_meta->resource_version) {
+        free(v1_list_meta->resource_version);
+        v1_list_meta->resource_version = NULL;
+    }
+    if (v1_list_meta->self_link) {
+        free(v1_list_meta->self_link);
+        v1_list_meta->self_link = NULL;
+    }
     free(v1_list_meta);
 }
 

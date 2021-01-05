@@ -35,9 +35,18 @@ void v1beta1_cron_job_spec_free(v1beta1_cron_job_spec_t *v1beta1_cron_job_spec) 
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_cron_job_spec->concurrency_policy);
-    v1beta1_job_template_spec_free(v1beta1_cron_job_spec->job_template);
-    free(v1beta1_cron_job_spec->schedule);
+    if (v1beta1_cron_job_spec->concurrency_policy) {
+        free(v1beta1_cron_job_spec->concurrency_policy);
+        v1beta1_cron_job_spec->concurrency_policy = NULL;
+    }
+    if (v1beta1_cron_job_spec->job_template) {
+        v1beta1_job_template_spec_free(v1beta1_cron_job_spec->job_template);
+        v1beta1_cron_job_spec->job_template = NULL;
+    }
+    if (v1beta1_cron_job_spec->schedule) {
+        free(v1beta1_cron_job_spec->schedule);
+        v1beta1_cron_job_spec->schedule = NULL;
+    }
     free(v1beta1_cron_job_spec);
 }
 

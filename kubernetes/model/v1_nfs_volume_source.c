@@ -27,8 +27,14 @@ void v1_nfs_volume_source_free(v1_nfs_volume_source_t *v1_nfs_volume_source) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_nfs_volume_source->path);
-    free(v1_nfs_volume_source->server);
+    if (v1_nfs_volume_source->path) {
+        free(v1_nfs_volume_source->path);
+        v1_nfs_volume_source->path = NULL;
+    }
+    if (v1_nfs_volume_source->server) {
+        free(v1_nfs_volume_source->server);
+        v1_nfs_volume_source->server = NULL;
+    }
     free(v1_nfs_volume_source);
 }
 

@@ -29,19 +29,31 @@ void v1_network_policy_spec_free(v1_network_policy_spec_t *v1_network_policy_spe
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_network_policy_spec->egress) {
-        v1_network_policy_egress_rule_free(listEntry->data);
+    if (v1_network_policy_spec->egress) {
+        list_ForEach(listEntry, v1_network_policy_spec->egress) {
+            v1_network_policy_egress_rule_free(listEntry->data);
+        }
+        list_free(v1_network_policy_spec->egress);
+        v1_network_policy_spec->egress = NULL;
     }
-    list_free(v1_network_policy_spec->egress);
-    list_ForEach(listEntry, v1_network_policy_spec->ingress) {
-        v1_network_policy_ingress_rule_free(listEntry->data);
+    if (v1_network_policy_spec->ingress) {
+        list_ForEach(listEntry, v1_network_policy_spec->ingress) {
+            v1_network_policy_ingress_rule_free(listEntry->data);
+        }
+        list_free(v1_network_policy_spec->ingress);
+        v1_network_policy_spec->ingress = NULL;
     }
-    list_free(v1_network_policy_spec->ingress);
-    v1_label_selector_free(v1_network_policy_spec->pod_selector);
-    list_ForEach(listEntry, v1_network_policy_spec->policy_types) {
-        free(listEntry->data);
+    if (v1_network_policy_spec->pod_selector) {
+        v1_label_selector_free(v1_network_policy_spec->pod_selector);
+        v1_network_policy_spec->pod_selector = NULL;
     }
-    list_free(v1_network_policy_spec->policy_types);
+    if (v1_network_policy_spec->policy_types) {
+        list_ForEach(listEntry, v1_network_policy_spec->policy_types) {
+            free(listEntry->data);
+        }
+        list_free(v1_network_policy_spec->policy_types);
+        v1_network_policy_spec->policy_types = NULL;
+    }
     free(v1_network_policy_spec);
 }
 

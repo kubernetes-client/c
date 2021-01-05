@@ -31,10 +31,22 @@ void v1beta1_controller_revision_free(v1beta1_controller_revision_t *v1beta1_con
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_controller_revision->api_version);
-    object_free(v1beta1_controller_revision->data);
-    free(v1beta1_controller_revision->kind);
-    v1_object_meta_free(v1beta1_controller_revision->metadata);
+    if (v1beta1_controller_revision->api_version) {
+        free(v1beta1_controller_revision->api_version);
+        v1beta1_controller_revision->api_version = NULL;
+    }
+    if (v1beta1_controller_revision->data) {
+        object_free(v1beta1_controller_revision->data);
+        v1beta1_controller_revision->data = NULL;
+    }
+    if (v1beta1_controller_revision->kind) {
+        free(v1beta1_controller_revision->kind);
+        v1beta1_controller_revision->kind = NULL;
+    }
+    if (v1beta1_controller_revision->metadata) {
+        v1_object_meta_free(v1beta1_controller_revision->metadata);
+        v1beta1_controller_revision->metadata = NULL;
+    }
     free(v1beta1_controller_revision);
 }
 

@@ -25,8 +25,14 @@ void networking_v1beta1_ingress_backend_free(networking_v1beta1_ingress_backend_
         return ;
     }
     listEntry_t *listEntry;
-    free(networking_v1beta1_ingress_backend->service_name);
-    object_free(networking_v1beta1_ingress_backend->service_port);
+    if (networking_v1beta1_ingress_backend->service_name) {
+        free(networking_v1beta1_ingress_backend->service_name);
+        networking_v1beta1_ingress_backend->service_name = NULL;
+    }
+    if (networking_v1beta1_ingress_backend->service_port) {
+        object_free(networking_v1beta1_ingress_backend->service_port);
+        networking_v1beta1_ingress_backend->service_port = NULL;
+    }
     free(networking_v1beta1_ingress_backend);
 }
 

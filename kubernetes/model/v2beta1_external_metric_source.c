@@ -29,10 +29,22 @@ void v2beta1_external_metric_source_free(v2beta1_external_metric_source_t *v2bet
         return ;
     }
     listEntry_t *listEntry;
-    free(v2beta1_external_metric_source->metric_name);
-    v1_label_selector_free(v2beta1_external_metric_source->metric_selector);
-    free(v2beta1_external_metric_source->target_average_value);
-    free(v2beta1_external_metric_source->target_value);
+    if (v2beta1_external_metric_source->metric_name) {
+        free(v2beta1_external_metric_source->metric_name);
+        v2beta1_external_metric_source->metric_name = NULL;
+    }
+    if (v2beta1_external_metric_source->metric_selector) {
+        v1_label_selector_free(v2beta1_external_metric_source->metric_selector);
+        v2beta1_external_metric_source->metric_selector = NULL;
+    }
+    if (v2beta1_external_metric_source->target_average_value) {
+        free(v2beta1_external_metric_source->target_average_value);
+        v2beta1_external_metric_source->target_average_value = NULL;
+    }
+    if (v2beta1_external_metric_source->target_value) {
+        free(v2beta1_external_metric_source->target_value);
+        v2beta1_external_metric_source->target_value = NULL;
+    }
     free(v2beta1_external_metric_source);
 }
 

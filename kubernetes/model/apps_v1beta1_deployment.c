@@ -31,11 +31,26 @@ void apps_v1beta1_deployment_free(apps_v1beta1_deployment_t *apps_v1beta1_deploy
         return ;
     }
     listEntry_t *listEntry;
-    free(apps_v1beta1_deployment->api_version);
-    free(apps_v1beta1_deployment->kind);
-    v1_object_meta_free(apps_v1beta1_deployment->metadata);
-    apps_v1beta1_deployment_spec_free(apps_v1beta1_deployment->spec);
-    apps_v1beta1_deployment_status_free(apps_v1beta1_deployment->status);
+    if (apps_v1beta1_deployment->api_version) {
+        free(apps_v1beta1_deployment->api_version);
+        apps_v1beta1_deployment->api_version = NULL;
+    }
+    if (apps_v1beta1_deployment->kind) {
+        free(apps_v1beta1_deployment->kind);
+        apps_v1beta1_deployment->kind = NULL;
+    }
+    if (apps_v1beta1_deployment->metadata) {
+        v1_object_meta_free(apps_v1beta1_deployment->metadata);
+        apps_v1beta1_deployment->metadata = NULL;
+    }
+    if (apps_v1beta1_deployment->spec) {
+        apps_v1beta1_deployment_spec_free(apps_v1beta1_deployment->spec);
+        apps_v1beta1_deployment->spec = NULL;
+    }
+    if (apps_v1beta1_deployment->status) {
+        apps_v1beta1_deployment_status_free(apps_v1beta1_deployment->status);
+        apps_v1beta1_deployment->status = NULL;
+    }
     free(apps_v1beta1_deployment);
 }
 

@@ -7,7 +7,7 @@
 
 v1alpha1_service_reference_t *v1alpha1_service_reference_create(
     char *name,
-    char *namespace,
+    char *_namespace,
     char *path,
     int port
     ) {
@@ -16,7 +16,7 @@ v1alpha1_service_reference_t *v1alpha1_service_reference_create(
         return NULL;
     }
     v1alpha1_service_reference_local_var->name = name;
-    v1alpha1_service_reference_local_var->namespace = namespace;
+    v1alpha1_service_reference_local_var->_namespace = _namespace;
     v1alpha1_service_reference_local_var->path = path;
     v1alpha1_service_reference_local_var->port = port;
 
@@ -29,9 +29,18 @@ void v1alpha1_service_reference_free(v1alpha1_service_reference_t *v1alpha1_serv
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_service_reference->name);
-    free(v1alpha1_service_reference->namespace);
-    free(v1alpha1_service_reference->path);
+    if (v1alpha1_service_reference->name) {
+        free(v1alpha1_service_reference->name);
+        v1alpha1_service_reference->name = NULL;
+    }
+    if (v1alpha1_service_reference->_namespace) {
+        free(v1alpha1_service_reference->_namespace);
+        v1alpha1_service_reference->_namespace = NULL;
+    }
+    if (v1alpha1_service_reference->path) {
+        free(v1alpha1_service_reference->path);
+        v1alpha1_service_reference->path = NULL;
+    }
     free(v1alpha1_service_reference);
 }
 
@@ -48,12 +57,12 @@ cJSON *v1alpha1_service_reference_convertToJSON(v1alpha1_service_reference_t *v1
     }
 
 
-    // v1alpha1_service_reference->namespace
-    if (!v1alpha1_service_reference->namespace) {
+    // v1alpha1_service_reference->_namespace
+    if (!v1alpha1_service_reference->_namespace) {
         goto fail;
     }
     
-    if(cJSON_AddStringToObject(item, "namespace", v1alpha1_service_reference->namespace) == NULL) {
+    if(cJSON_AddStringToObject(item, "namespace", v1alpha1_service_reference->_namespace) == NULL) {
     goto fail; //String
     }
 
@@ -97,14 +106,14 @@ v1alpha1_service_reference_t *v1alpha1_service_reference_parseFromJSON(cJSON *v1
     goto end; //String
     }
 
-    // v1alpha1_service_reference->namespace
-    cJSON *namespace = cJSON_GetObjectItemCaseSensitive(v1alpha1_service_referenceJSON, "namespace");
-    if (!namespace) {
+    // v1alpha1_service_reference->_namespace
+    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1alpha1_service_referenceJSON, "namespace");
+    if (!_namespace) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(namespace))
+    if(!cJSON_IsString(_namespace))
     {
     goto end; //String
     }
@@ -130,7 +139,7 @@ v1alpha1_service_reference_t *v1alpha1_service_reference_parseFromJSON(cJSON *v1
 
     v1alpha1_service_reference_local_var = v1alpha1_service_reference_create (
         strdup(name->valuestring),
-        strdup(namespace->valuestring),
+        strdup(_namespace->valuestring),
         path ? strdup(path->valuestring) : NULL,
         port ? port->valuedouble : 0
         );

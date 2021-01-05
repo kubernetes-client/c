@@ -23,10 +23,13 @@ void v1_downward_api_projection_free(v1_downward_api_projection_t *v1_downward_a
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_downward_api_projection->items) {
-        v1_downward_api_volume_file_free(listEntry->data);
+    if (v1_downward_api_projection->items) {
+        list_ForEach(listEntry, v1_downward_api_projection->items) {
+            v1_downward_api_volume_file_free(listEntry->data);
+        }
+        list_free(v1_downward_api_projection->items);
+        v1_downward_api_projection->items = NULL;
     }
-    list_free(v1_downward_api_projection->items);
     free(v1_downward_api_projection);
 }
 

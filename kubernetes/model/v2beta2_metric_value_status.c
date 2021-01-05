@@ -27,8 +27,14 @@ void v2beta2_metric_value_status_free(v2beta2_metric_value_status_t *v2beta2_met
         return ;
     }
     listEntry_t *listEntry;
-    free(v2beta2_metric_value_status->average_value);
-    free(v2beta2_metric_value_status->value);
+    if (v2beta2_metric_value_status->average_value) {
+        free(v2beta2_metric_value_status->average_value);
+        v2beta2_metric_value_status->average_value = NULL;
+    }
+    if (v2beta2_metric_value_status->value) {
+        free(v2beta2_metric_value_status->value);
+        v2beta2_metric_value_status->value = NULL;
+    }
     free(v2beta2_metric_value_status);
 }
 

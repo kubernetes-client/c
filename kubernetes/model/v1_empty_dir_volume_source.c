@@ -25,8 +25,14 @@ void v1_empty_dir_volume_source_free(v1_empty_dir_volume_source_t *v1_empty_dir_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_empty_dir_volume_source->medium);
-    free(v1_empty_dir_volume_source->size_limit);
+    if (v1_empty_dir_volume_source->medium) {
+        free(v1_empty_dir_volume_source->medium);
+        v1_empty_dir_volume_source->medium = NULL;
+    }
+    if (v1_empty_dir_volume_source->size_limit) {
+        free(v1_empty_dir_volume_source->size_limit);
+        v1_empty_dir_volume_source->size_limit = NULL;
+    }
     free(v1_empty_dir_volume_source);
 }
 

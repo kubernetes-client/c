@@ -35,11 +35,26 @@ void v1_container_state_terminated_free(v1_container_state_terminated_t *v1_cont
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_container_state_terminated->container_id);
-    free(v1_container_state_terminated->finished_at);
-    free(v1_container_state_terminated->message);
-    free(v1_container_state_terminated->reason);
-    free(v1_container_state_terminated->started_at);
+    if (v1_container_state_terminated->container_id) {
+        free(v1_container_state_terminated->container_id);
+        v1_container_state_terminated->container_id = NULL;
+    }
+    if (v1_container_state_terminated->finished_at) {
+        free(v1_container_state_terminated->finished_at);
+        v1_container_state_terminated->finished_at = NULL;
+    }
+    if (v1_container_state_terminated->message) {
+        free(v1_container_state_terminated->message);
+        v1_container_state_terminated->message = NULL;
+    }
+    if (v1_container_state_terminated->reason) {
+        free(v1_container_state_terminated->reason);
+        v1_container_state_terminated->reason = NULL;
+    }
+    if (v1_container_state_terminated->started_at) {
+        free(v1_container_state_terminated->started_at);
+        v1_container_state_terminated->started_at = NULL;
+    }
     free(v1_container_state_terminated);
 }
 

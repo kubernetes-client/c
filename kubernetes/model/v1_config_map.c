@@ -31,23 +31,38 @@ void v1_config_map_free(v1_config_map_t *v1_config_map) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_config_map->api_version);
-    list_ForEach(listEntry, v1_config_map->binary_data) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_config_map->api_version) {
+        free(v1_config_map->api_version);
+        v1_config_map->api_version = NULL;
     }
-    list_free(v1_config_map->binary_data);
-    list_ForEach(listEntry, v1_config_map->data) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_config_map->binary_data) {
+        list_ForEach(listEntry, v1_config_map->binary_data) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_config_map->binary_data);
+        v1_config_map->binary_data = NULL;
     }
-    list_free(v1_config_map->data);
-    free(v1_config_map->kind);
-    v1_object_meta_free(v1_config_map->metadata);
+    if (v1_config_map->data) {
+        list_ForEach(listEntry, v1_config_map->data) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_config_map->data);
+        v1_config_map->data = NULL;
+    }
+    if (v1_config_map->kind) {
+        free(v1_config_map->kind);
+        v1_config_map->kind = NULL;
+    }
+    if (v1_config_map->metadata) {
+        v1_object_meta_free(v1_config_map->metadata);
+        v1_config_map->metadata = NULL;
+    }
     free(v1_config_map);
 }
 

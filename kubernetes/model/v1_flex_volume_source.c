@@ -31,16 +31,28 @@ void v1_flex_volume_source_free(v1_flex_volume_source_t *v1_flex_volume_source) 
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_flex_volume_source->driver);
-    free(v1_flex_volume_source->fs_type);
-    list_ForEach(listEntry, v1_flex_volume_source->options) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_flex_volume_source->driver) {
+        free(v1_flex_volume_source->driver);
+        v1_flex_volume_source->driver = NULL;
     }
-    list_free(v1_flex_volume_source->options);
-    v1_local_object_reference_free(v1_flex_volume_source->secret_ref);
+    if (v1_flex_volume_source->fs_type) {
+        free(v1_flex_volume_source->fs_type);
+        v1_flex_volume_source->fs_type = NULL;
+    }
+    if (v1_flex_volume_source->options) {
+        list_ForEach(listEntry, v1_flex_volume_source->options) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_flex_volume_source->options);
+        v1_flex_volume_source->options = NULL;
+    }
+    if (v1_flex_volume_source->secret_ref) {
+        v1_local_object_reference_free(v1_flex_volume_source->secret_ref);
+        v1_flex_volume_source->secret_ref = NULL;
+    }
     free(v1_flex_volume_source);
 }
 

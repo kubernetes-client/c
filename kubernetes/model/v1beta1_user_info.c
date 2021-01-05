@@ -29,19 +29,31 @@ void v1beta1_user_info_free(v1beta1_user_info_t *v1beta1_user_info) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_user_info->extra) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta1_user_info->extra) {
+        list_ForEach(listEntry, v1beta1_user_info->extra) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta1_user_info->extra);
+        v1beta1_user_info->extra = NULL;
     }
-    list_free(v1beta1_user_info->extra);
-    list_ForEach(listEntry, v1beta1_user_info->groups) {
-        free(listEntry->data);
+    if (v1beta1_user_info->groups) {
+        list_ForEach(listEntry, v1beta1_user_info->groups) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_user_info->groups);
+        v1beta1_user_info->groups = NULL;
     }
-    list_free(v1beta1_user_info->groups);
-    free(v1beta1_user_info->uid);
-    free(v1beta1_user_info->username);
+    if (v1beta1_user_info->uid) {
+        free(v1beta1_user_info->uid);
+        v1beta1_user_info->uid = NULL;
+    }
+    if (v1beta1_user_info->username) {
+        free(v1beta1_user_info->username);
+        v1beta1_user_info->username = NULL;
+    }
     free(v1beta1_user_info);
 }
 

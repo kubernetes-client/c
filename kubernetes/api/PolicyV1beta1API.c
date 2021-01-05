@@ -15,7 +15,7 @@
 // create a PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager )
+PolicyV1beta1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -31,14 +31,14 @@ PolicyV1beta1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, cha
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -131,7 +131,7 @@ PolicyV1beta1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, cha
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -340,7 +340,7 @@ end:
 // delete collection of PodDisruptionBudget
 //
 v1_status_t*
-PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -356,14 +356,14 @@ PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiC
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -550,7 +550,7 @@ PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiC
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -1045,7 +1045,7 @@ end:
 // delete a PodDisruptionBudget
 //
 v1_status_t*
-PolicyV1beta1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+PolicyV1beta1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1061,7 +1061,7 @@ PolicyV1beta1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, cha
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -1071,14 +1071,14 @@ PolicyV1beta1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -1195,7 +1195,7 @@ PolicyV1beta1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, cha
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -1551,7 +1551,7 @@ end:
 // list or watch objects of kind PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_list_t*
-PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1567,14 +1567,14 @@ PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -1730,7 +1730,7 @@ PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -2423,7 +2423,7 @@ end:
 // partially update the specified PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+PolicyV1beta1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2439,7 +2439,7 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -2449,14 +2449,14 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -2561,7 +2561,7 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -2625,7 +2625,7 @@ end:
 // partially update status of the specified PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2641,7 +2641,7 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -2651,14 +2651,14 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -2763,7 +2763,7 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -3018,7 +3018,7 @@ end:
 // read the specified PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export )
+PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3034,7 +3034,7 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -3044,14 +3044,14 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -3081,16 +3081,16 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
     }
 
     // query parameters
-    char *keyQuery_export = NULL;
-    char * valueQuery_export = NULL;
-    keyValuePair_t *keyPairQuery_export = 0;
-    if (export)
+    char *keyQuery__export = NULL;
+    char * valueQuery__export = NULL;
+    keyValuePair_t *keyPairQuery__export = 0;
+    if (_export)
     {
-        keyQuery_export = strdup("export");
-        valueQuery_export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_export, MAX_NUMBER_LENGTH, "%d", export);
-        keyPairQuery_export = keyValuePair_create(keyQuery_export, valueQuery_export);
-        list_addElement(localVarQueryParameters,keyPairQuery_export);
+        keyQuery__export = strdup("export");
+        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
+        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
+        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3132,7 +3132,7 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -3157,17 +3157,17 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
     }
-    if(keyQuery_export){
-        free(keyQuery_export);
-        keyQuery_export = NULL;
+    if(keyQuery__export){
+        free(keyQuery__export);
+        keyQuery__export = NULL;
     }
-    if(valueQuery_export){
-        free(valueQuery_export);
-        valueQuery_export = NULL;
+    if(valueQuery__export){
+        free(valueQuery__export);
+        valueQuery__export = NULL;
     }
-    if(keyPairQuery_export){
-        keyValuePair_free(keyPairQuery_export);
-        keyPairQuery_export = NULL;
+    if(keyPairQuery__export){
+        keyValuePair_free(keyPairQuery__export);
+        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -3179,7 +3179,7 @@ end:
 // read status of the specified PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * namespace , char * pretty )
+PolicyV1beta1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3195,7 +3195,7 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient,
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -3205,14 +3205,14 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -3267,7 +3267,7 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient,
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -3290,7 +3290,7 @@ end:
 // read the specified PodSecurityPolicy
 //
 policy_v1beta1_pod_security_policy_t*
-PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , char * pretty , int exact , int export )
+PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3343,16 +3343,16 @@ PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , cha
     }
 
     // query parameters
-    char *keyQuery_export = NULL;
-    char * valueQuery_export = NULL;
-    keyValuePair_t *keyPairQuery_export = 0;
-    if (export)
+    char *keyQuery__export = NULL;
+    char * valueQuery__export = NULL;
+    keyValuePair_t *keyPairQuery__export = 0;
+    if (_export)
     {
-        keyQuery_export = strdup("export");
-        valueQuery_export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_export, MAX_NUMBER_LENGTH, "%d", export);
-        keyPairQuery_export = keyValuePair_create(keyQuery_export, valueQuery_export);
-        list_addElement(localVarQueryParameters,keyPairQuery_export);
+        keyQuery__export = strdup("export");
+        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
+        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
+        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3418,17 +3418,17 @@ PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , cha
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
     }
-    if(keyQuery_export){
-        free(keyQuery_export);
-        keyQuery_export = NULL;
+    if(keyQuery__export){
+        free(keyQuery__export);
+        keyQuery__export = NULL;
     }
-    if(valueQuery_export){
-        free(valueQuery_export);
-        valueQuery_export = NULL;
+    if(valueQuery__export){
+        free(valueQuery__export);
+        valueQuery__export = NULL;
     }
-    if(keyPairQuery_export){
-        keyValuePair_free(keyPairQuery_export);
-        keyPairQuery_export = NULL;
+    if(keyPairQuery__export){
+        keyValuePair_free(keyPairQuery__export);
+        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -3440,7 +3440,7 @@ end:
 // replace the specified PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager )
+PolicyV1beta1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3456,7 +3456,7 @@ PolicyV1beta1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, ch
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -3466,14 +3466,14 @@ PolicyV1beta1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, ch
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -3564,7 +3564,7 @@ PolicyV1beta1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, ch
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -3616,7 +3616,7 @@ end:
 // replace status of the specified PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager )
+PolicyV1beta1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3632,7 +3632,7 @@ PolicyV1beta1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClie
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -3642,14 +3642,14 @@ PolicyV1beta1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClie
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -3740,7 +3740,7 @@ PolicyV1beta1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClie
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;

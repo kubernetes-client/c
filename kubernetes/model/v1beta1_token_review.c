@@ -31,11 +31,26 @@ void v1beta1_token_review_free(v1beta1_token_review_t *v1beta1_token_review) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_token_review->api_version);
-    free(v1beta1_token_review->kind);
-    v1_object_meta_free(v1beta1_token_review->metadata);
-    v1beta1_token_review_spec_free(v1beta1_token_review->spec);
-    v1beta1_token_review_status_free(v1beta1_token_review->status);
+    if (v1beta1_token_review->api_version) {
+        free(v1beta1_token_review->api_version);
+        v1beta1_token_review->api_version = NULL;
+    }
+    if (v1beta1_token_review->kind) {
+        free(v1beta1_token_review->kind);
+        v1beta1_token_review->kind = NULL;
+    }
+    if (v1beta1_token_review->metadata) {
+        v1_object_meta_free(v1beta1_token_review->metadata);
+        v1beta1_token_review->metadata = NULL;
+    }
+    if (v1beta1_token_review->spec) {
+        v1beta1_token_review_spec_free(v1beta1_token_review->spec);
+        v1beta1_token_review->spec = NULL;
+    }
+    if (v1beta1_token_review->status) {
+        v1beta1_token_review_status_free(v1beta1_token_review->status);
+        v1beta1_token_review->status = NULL;
+    }
     free(v1beta1_token_review);
 }
 

@@ -25,8 +25,14 @@ void v1_non_resource_attributes_free(v1_non_resource_attributes_t *v1_non_resour
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_non_resource_attributes->path);
-    free(v1_non_resource_attributes->verb);
+    if (v1_non_resource_attributes->path) {
+        free(v1_non_resource_attributes->path);
+        v1_non_resource_attributes->path = NULL;
+    }
+    if (v1_non_resource_attributes->verb) {
+        free(v1_non_resource_attributes->verb);
+        v1_non_resource_attributes->verb = NULL;
+    }
     free(v1_non_resource_attributes);
 }
 

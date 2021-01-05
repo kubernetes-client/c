@@ -23,7 +23,10 @@ void v1_service_status_free(v1_service_status_t *v1_service_status) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_load_balancer_status_free(v1_service_status->load_balancer);
+    if (v1_service_status->load_balancer) {
+        v1_load_balancer_status_free(v1_service_status->load_balancer);
+        v1_service_status->load_balancer = NULL;
+    }
     free(v1_service_status);
 }
 

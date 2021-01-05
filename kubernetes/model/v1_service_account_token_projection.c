@@ -27,8 +27,14 @@ void v1_service_account_token_projection_free(v1_service_account_token_projectio
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_service_account_token_projection->audience);
-    free(v1_service_account_token_projection->path);
+    if (v1_service_account_token_projection->audience) {
+        free(v1_service_account_token_projection->audience);
+        v1_service_account_token_projection->audience = NULL;
+    }
+    if (v1_service_account_token_projection->path) {
+        free(v1_service_account_token_projection->path);
+        v1_service_account_token_projection->path = NULL;
+    }
     free(v1_service_account_token_projection);
 }
 

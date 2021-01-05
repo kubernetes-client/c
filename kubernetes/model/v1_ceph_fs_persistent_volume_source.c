@@ -33,14 +33,29 @@ void v1_ceph_fs_persistent_volume_source_free(v1_ceph_fs_persistent_volume_sourc
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_ceph_fs_persistent_volume_source->monitors) {
-        free(listEntry->data);
+    if (v1_ceph_fs_persistent_volume_source->monitors) {
+        list_ForEach(listEntry, v1_ceph_fs_persistent_volume_source->monitors) {
+            free(listEntry->data);
+        }
+        list_free(v1_ceph_fs_persistent_volume_source->monitors);
+        v1_ceph_fs_persistent_volume_source->monitors = NULL;
     }
-    list_free(v1_ceph_fs_persistent_volume_source->monitors);
-    free(v1_ceph_fs_persistent_volume_source->path);
-    free(v1_ceph_fs_persistent_volume_source->secret_file);
-    v1_secret_reference_free(v1_ceph_fs_persistent_volume_source->secret_ref);
-    free(v1_ceph_fs_persistent_volume_source->user);
+    if (v1_ceph_fs_persistent_volume_source->path) {
+        free(v1_ceph_fs_persistent_volume_source->path);
+        v1_ceph_fs_persistent_volume_source->path = NULL;
+    }
+    if (v1_ceph_fs_persistent_volume_source->secret_file) {
+        free(v1_ceph_fs_persistent_volume_source->secret_file);
+        v1_ceph_fs_persistent_volume_source->secret_file = NULL;
+    }
+    if (v1_ceph_fs_persistent_volume_source->secret_ref) {
+        v1_secret_reference_free(v1_ceph_fs_persistent_volume_source->secret_ref);
+        v1_ceph_fs_persistent_volume_source->secret_ref = NULL;
+    }
+    if (v1_ceph_fs_persistent_volume_source->user) {
+        free(v1_ceph_fs_persistent_volume_source->user);
+        v1_ceph_fs_persistent_volume_source->user = NULL;
+    }
     free(v1_ceph_fs_persistent_volume_source);
 }
 

@@ -29,13 +29,25 @@ void v1_horizontal_pod_autoscaler_list_free(v1_horizontal_pod_autoscaler_list_t 
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_horizontal_pod_autoscaler_list->api_version);
-    list_ForEach(listEntry, v1_horizontal_pod_autoscaler_list->items) {
-        v1_horizontal_pod_autoscaler_free(listEntry->data);
+    if (v1_horizontal_pod_autoscaler_list->api_version) {
+        free(v1_horizontal_pod_autoscaler_list->api_version);
+        v1_horizontal_pod_autoscaler_list->api_version = NULL;
     }
-    list_free(v1_horizontal_pod_autoscaler_list->items);
-    free(v1_horizontal_pod_autoscaler_list->kind);
-    v1_list_meta_free(v1_horizontal_pod_autoscaler_list->metadata);
+    if (v1_horizontal_pod_autoscaler_list->items) {
+        list_ForEach(listEntry, v1_horizontal_pod_autoscaler_list->items) {
+            v1_horizontal_pod_autoscaler_free(listEntry->data);
+        }
+        list_free(v1_horizontal_pod_autoscaler_list->items);
+        v1_horizontal_pod_autoscaler_list->items = NULL;
+    }
+    if (v1_horizontal_pod_autoscaler_list->kind) {
+        free(v1_horizontal_pod_autoscaler_list->kind);
+        v1_horizontal_pod_autoscaler_list->kind = NULL;
+    }
+    if (v1_horizontal_pod_autoscaler_list->metadata) {
+        v1_list_meta_free(v1_horizontal_pod_autoscaler_list->metadata);
+        v1_horizontal_pod_autoscaler_list->metadata = NULL;
+    }
     free(v1_horizontal_pod_autoscaler_list);
 }
 

@@ -31,11 +31,26 @@ void networking_v1beta1_ingress_free(networking_v1beta1_ingress_t *networking_v1
         return ;
     }
     listEntry_t *listEntry;
-    free(networking_v1beta1_ingress->api_version);
-    free(networking_v1beta1_ingress->kind);
-    v1_object_meta_free(networking_v1beta1_ingress->metadata);
-    networking_v1beta1_ingress_spec_free(networking_v1beta1_ingress->spec);
-    networking_v1beta1_ingress_status_free(networking_v1beta1_ingress->status);
+    if (networking_v1beta1_ingress->api_version) {
+        free(networking_v1beta1_ingress->api_version);
+        networking_v1beta1_ingress->api_version = NULL;
+    }
+    if (networking_v1beta1_ingress->kind) {
+        free(networking_v1beta1_ingress->kind);
+        networking_v1beta1_ingress->kind = NULL;
+    }
+    if (networking_v1beta1_ingress->metadata) {
+        v1_object_meta_free(networking_v1beta1_ingress->metadata);
+        networking_v1beta1_ingress->metadata = NULL;
+    }
+    if (networking_v1beta1_ingress->spec) {
+        networking_v1beta1_ingress_spec_free(networking_v1beta1_ingress->spec);
+        networking_v1beta1_ingress->spec = NULL;
+    }
+    if (networking_v1beta1_ingress->status) {
+        networking_v1beta1_ingress_status_free(networking_v1beta1_ingress->status);
+        networking_v1beta1_ingress->status = NULL;
+    }
     free(networking_v1beta1_ingress);
 }
 

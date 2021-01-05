@@ -25,8 +25,14 @@ void v1beta1_self_subject_access_review_spec_free(v1beta1_self_subject_access_re
         return ;
     }
     listEntry_t *listEntry;
-    v1beta1_non_resource_attributes_free(v1beta1_self_subject_access_review_spec->non_resource_attributes);
-    v1beta1_resource_attributes_free(v1beta1_self_subject_access_review_spec->resource_attributes);
+    if (v1beta1_self_subject_access_review_spec->non_resource_attributes) {
+        v1beta1_non_resource_attributes_free(v1beta1_self_subject_access_review_spec->non_resource_attributes);
+        v1beta1_self_subject_access_review_spec->non_resource_attributes = NULL;
+    }
+    if (v1beta1_self_subject_access_review_spec->resource_attributes) {
+        v1beta1_resource_attributes_free(v1beta1_self_subject_access_review_spec->resource_attributes);
+        v1beta1_self_subject_access_review_spec->resource_attributes = NULL;
+    }
     free(v1beta1_self_subject_access_review_spec);
 }
 

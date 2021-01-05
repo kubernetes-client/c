@@ -23,7 +23,10 @@ void v1alpha1_group_subject_free(v1alpha1_group_subject_t *v1alpha1_group_subjec
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_group_subject->name);
+    if (v1alpha1_group_subject->name) {
+        free(v1alpha1_group_subject->name);
+        v1alpha1_group_subject->name = NULL;
+    }
     free(v1alpha1_group_subject);
 }
 

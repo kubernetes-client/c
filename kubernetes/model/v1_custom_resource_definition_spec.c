@@ -33,14 +33,29 @@ void v1_custom_resource_definition_spec_free(v1_custom_resource_definition_spec_
         return ;
     }
     listEntry_t *listEntry;
-    v1_custom_resource_conversion_free(v1_custom_resource_definition_spec->conversion);
-    free(v1_custom_resource_definition_spec->group);
-    v1_custom_resource_definition_names_free(v1_custom_resource_definition_spec->names);
-    free(v1_custom_resource_definition_spec->scope);
-    list_ForEach(listEntry, v1_custom_resource_definition_spec->versions) {
-        v1_custom_resource_definition_version_free(listEntry->data);
+    if (v1_custom_resource_definition_spec->conversion) {
+        v1_custom_resource_conversion_free(v1_custom_resource_definition_spec->conversion);
+        v1_custom_resource_definition_spec->conversion = NULL;
     }
-    list_free(v1_custom_resource_definition_spec->versions);
+    if (v1_custom_resource_definition_spec->group) {
+        free(v1_custom_resource_definition_spec->group);
+        v1_custom_resource_definition_spec->group = NULL;
+    }
+    if (v1_custom_resource_definition_spec->names) {
+        v1_custom_resource_definition_names_free(v1_custom_resource_definition_spec->names);
+        v1_custom_resource_definition_spec->names = NULL;
+    }
+    if (v1_custom_resource_definition_spec->scope) {
+        free(v1_custom_resource_definition_spec->scope);
+        v1_custom_resource_definition_spec->scope = NULL;
+    }
+    if (v1_custom_resource_definition_spec->versions) {
+        list_ForEach(listEntry, v1_custom_resource_definition_spec->versions) {
+            v1_custom_resource_definition_version_free(listEntry->data);
+        }
+        list_free(v1_custom_resource_definition_spec->versions);
+        v1_custom_resource_definition_spec->versions = NULL;
+    }
     free(v1_custom_resource_definition_spec);
 }
 

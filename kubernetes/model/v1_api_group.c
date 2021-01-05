@@ -33,18 +33,36 @@ void v1_api_group_free(v1_api_group_t *v1_api_group) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_api_group->api_version);
-    free(v1_api_group->kind);
-    free(v1_api_group->name);
-    v1_group_version_for_discovery_free(v1_api_group->preferred_version);
-    list_ForEach(listEntry, v1_api_group->server_address_by_client_cid_rs) {
-        v1_server_address_by_client_cidr_free(listEntry->data);
+    if (v1_api_group->api_version) {
+        free(v1_api_group->api_version);
+        v1_api_group->api_version = NULL;
     }
-    list_free(v1_api_group->server_address_by_client_cid_rs);
-    list_ForEach(listEntry, v1_api_group->versions) {
-        v1_group_version_for_discovery_free(listEntry->data);
+    if (v1_api_group->kind) {
+        free(v1_api_group->kind);
+        v1_api_group->kind = NULL;
     }
-    list_free(v1_api_group->versions);
+    if (v1_api_group->name) {
+        free(v1_api_group->name);
+        v1_api_group->name = NULL;
+    }
+    if (v1_api_group->preferred_version) {
+        v1_group_version_for_discovery_free(v1_api_group->preferred_version);
+        v1_api_group->preferred_version = NULL;
+    }
+    if (v1_api_group->server_address_by_client_cid_rs) {
+        list_ForEach(listEntry, v1_api_group->server_address_by_client_cid_rs) {
+            v1_server_address_by_client_cidr_free(listEntry->data);
+        }
+        list_free(v1_api_group->server_address_by_client_cid_rs);
+        v1_api_group->server_address_by_client_cid_rs = NULL;
+    }
+    if (v1_api_group->versions) {
+        list_ForEach(listEntry, v1_api_group->versions) {
+            v1_group_version_for_discovery_free(listEntry->data);
+        }
+        list_free(v1_api_group->versions);
+        v1_api_group->versions = NULL;
+    }
     free(v1_api_group);
 }
 

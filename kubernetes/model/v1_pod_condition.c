@@ -33,12 +33,30 @@ void v1_pod_condition_free(v1_pod_condition_t *v1_pod_condition) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_pod_condition->last_probe_time);
-    free(v1_pod_condition->last_transition_time);
-    free(v1_pod_condition->message);
-    free(v1_pod_condition->reason);
-    free(v1_pod_condition->status);
-    free(v1_pod_condition->type);
+    if (v1_pod_condition->last_probe_time) {
+        free(v1_pod_condition->last_probe_time);
+        v1_pod_condition->last_probe_time = NULL;
+    }
+    if (v1_pod_condition->last_transition_time) {
+        free(v1_pod_condition->last_transition_time);
+        v1_pod_condition->last_transition_time = NULL;
+    }
+    if (v1_pod_condition->message) {
+        free(v1_pod_condition->message);
+        v1_pod_condition->message = NULL;
+    }
+    if (v1_pod_condition->reason) {
+        free(v1_pod_condition->reason);
+        v1_pod_condition->reason = NULL;
+    }
+    if (v1_pod_condition->status) {
+        free(v1_pod_condition->status);
+        v1_pod_condition->status = NULL;
+    }
+    if (v1_pod_condition->type) {
+        free(v1_pod_condition->type);
+        v1_pod_condition->type = NULL;
+    }
     free(v1_pod_condition);
 }
 

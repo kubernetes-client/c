@@ -25,8 +25,14 @@ void v1_group_version_for_discovery_free(v1_group_version_for_discovery_t *v1_gr
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_group_version_for_discovery->group_version);
-    free(v1_group_version_for_discovery->version);
+    if (v1_group_version_for_discovery->group_version) {
+        free(v1_group_version_for_discovery->group_version);
+        v1_group_version_for_discovery->group_version = NULL;
+    }
+    if (v1_group_version_for_discovery->version) {
+        free(v1_group_version_for_discovery->version);
+        v1_group_version_for_discovery->version = NULL;
+    }
     free(v1_group_version_for_discovery);
 }
 

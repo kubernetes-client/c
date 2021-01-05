@@ -25,8 +25,14 @@ void v1beta1_external_documentation_free(v1beta1_external_documentation_t *v1bet
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_external_documentation->description);
-    free(v1beta1_external_documentation->url);
+    if (v1beta1_external_documentation->description) {
+        free(v1beta1_external_documentation->description);
+        v1beta1_external_documentation->description = NULL;
+    }
+    if (v1beta1_external_documentation->url) {
+        free(v1beta1_external_documentation->url);
+        v1beta1_external_documentation->url = NULL;
+    }
     free(v1beta1_external_documentation);
 }
 

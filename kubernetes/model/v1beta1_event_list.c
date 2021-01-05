@@ -29,13 +29,25 @@ void v1beta1_event_list_free(v1beta1_event_list_t *v1beta1_event_list) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_event_list->api_version);
-    list_ForEach(listEntry, v1beta1_event_list->items) {
-        v1beta1_event_free(listEntry->data);
+    if (v1beta1_event_list->api_version) {
+        free(v1beta1_event_list->api_version);
+        v1beta1_event_list->api_version = NULL;
     }
-    list_free(v1beta1_event_list->items);
-    free(v1beta1_event_list->kind);
-    v1_list_meta_free(v1beta1_event_list->metadata);
+    if (v1beta1_event_list->items) {
+        list_ForEach(listEntry, v1beta1_event_list->items) {
+            v1beta1_event_free(listEntry->data);
+        }
+        list_free(v1beta1_event_list->items);
+        v1beta1_event_list->items = NULL;
+    }
+    if (v1beta1_event_list->kind) {
+        free(v1beta1_event_list->kind);
+        v1beta1_event_list->kind = NULL;
+    }
+    if (v1beta1_event_list->metadata) {
+        v1_list_meta_free(v1beta1_event_list->metadata);
+        v1beta1_event_list->metadata = NULL;
+    }
     free(v1beta1_event_list);
 }
 

@@ -37,10 +37,13 @@ void apps_v1beta1_deployment_status_free(apps_v1beta1_deployment_status_t *apps_
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, apps_v1beta1_deployment_status->conditions) {
-        apps_v1beta1_deployment_condition_free(listEntry->data);
+    if (apps_v1beta1_deployment_status->conditions) {
+        list_ForEach(listEntry, apps_v1beta1_deployment_status->conditions) {
+            apps_v1beta1_deployment_condition_free(listEntry->data);
+        }
+        list_free(apps_v1beta1_deployment_status->conditions);
+        apps_v1beta1_deployment_status->conditions = NULL;
     }
-    list_free(apps_v1beta1_deployment_status->conditions);
     free(apps_v1beta1_deployment_status);
 }
 

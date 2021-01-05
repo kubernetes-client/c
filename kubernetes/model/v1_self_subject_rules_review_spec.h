@@ -19,12 +19,12 @@ typedef struct v1_self_subject_rules_review_spec_t v1_self_subject_rules_review_
 
 
 typedef struct v1_self_subject_rules_review_spec_t {
-    char *namespace; // string
+    char *_namespace; // string
 
 } v1_self_subject_rules_review_spec_t;
 
 v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_create(
-    char *namespace
+    char *_namespace
 );
 
 void v1_self_subject_rules_review_spec_free(v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec);

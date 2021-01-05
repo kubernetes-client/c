@@ -31,11 +31,26 @@ void v1_custom_resource_definition_condition_free(v1_custom_resource_definition_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_custom_resource_definition_condition->last_transition_time);
-    free(v1_custom_resource_definition_condition->message);
-    free(v1_custom_resource_definition_condition->reason);
-    free(v1_custom_resource_definition_condition->status);
-    free(v1_custom_resource_definition_condition->type);
+    if (v1_custom_resource_definition_condition->last_transition_time) {
+        free(v1_custom_resource_definition_condition->last_transition_time);
+        v1_custom_resource_definition_condition->last_transition_time = NULL;
+    }
+    if (v1_custom_resource_definition_condition->message) {
+        free(v1_custom_resource_definition_condition->message);
+        v1_custom_resource_definition_condition->message = NULL;
+    }
+    if (v1_custom_resource_definition_condition->reason) {
+        free(v1_custom_resource_definition_condition->reason);
+        v1_custom_resource_definition_condition->reason = NULL;
+    }
+    if (v1_custom_resource_definition_condition->status) {
+        free(v1_custom_resource_definition_condition->status);
+        v1_custom_resource_definition_condition->status = NULL;
+    }
+    if (v1_custom_resource_definition_condition->type) {
+        free(v1_custom_resource_definition_condition->type);
+        v1_custom_resource_definition_condition->type = NULL;
+    }
     free(v1_custom_resource_definition_condition);
 }
 

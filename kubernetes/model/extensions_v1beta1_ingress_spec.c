@@ -27,15 +27,24 @@ void extensions_v1beta1_ingress_spec_free(extensions_v1beta1_ingress_spec_t *ext
         return ;
     }
     listEntry_t *listEntry;
-    extensions_v1beta1_ingress_backend_free(extensions_v1beta1_ingress_spec->backend);
-    list_ForEach(listEntry, extensions_v1beta1_ingress_spec->rules) {
-        extensions_v1beta1_ingress_rule_free(listEntry->data);
+    if (extensions_v1beta1_ingress_spec->backend) {
+        extensions_v1beta1_ingress_backend_free(extensions_v1beta1_ingress_spec->backend);
+        extensions_v1beta1_ingress_spec->backend = NULL;
     }
-    list_free(extensions_v1beta1_ingress_spec->rules);
-    list_ForEach(listEntry, extensions_v1beta1_ingress_spec->tls) {
-        extensions_v1beta1_ingress_tls_free(listEntry->data);
+    if (extensions_v1beta1_ingress_spec->rules) {
+        list_ForEach(listEntry, extensions_v1beta1_ingress_spec->rules) {
+            extensions_v1beta1_ingress_rule_free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_ingress_spec->rules);
+        extensions_v1beta1_ingress_spec->rules = NULL;
     }
-    list_free(extensions_v1beta1_ingress_spec->tls);
+    if (extensions_v1beta1_ingress_spec->tls) {
+        list_ForEach(listEntry, extensions_v1beta1_ingress_spec->tls) {
+            extensions_v1beta1_ingress_tls_free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_ingress_spec->tls);
+        extensions_v1beta1_ingress_spec->tls = NULL;
+    }
     free(extensions_v1beta1_ingress_spec);
 }
 

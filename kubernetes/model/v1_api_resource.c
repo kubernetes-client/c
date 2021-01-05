@@ -41,24 +41,51 @@ void v1_api_resource_free(v1_api_resource_t *v1_api_resource) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_api_resource->categories) {
-        free(listEntry->data);
+    if (v1_api_resource->categories) {
+        list_ForEach(listEntry, v1_api_resource->categories) {
+            free(listEntry->data);
+        }
+        list_free(v1_api_resource->categories);
+        v1_api_resource->categories = NULL;
     }
-    list_free(v1_api_resource->categories);
-    free(v1_api_resource->group);
-    free(v1_api_resource->kind);
-    free(v1_api_resource->name);
-    list_ForEach(listEntry, v1_api_resource->short_names) {
-        free(listEntry->data);
+    if (v1_api_resource->group) {
+        free(v1_api_resource->group);
+        v1_api_resource->group = NULL;
     }
-    list_free(v1_api_resource->short_names);
-    free(v1_api_resource->singular_name);
-    free(v1_api_resource->storage_version_hash);
-    list_ForEach(listEntry, v1_api_resource->verbs) {
-        free(listEntry->data);
+    if (v1_api_resource->kind) {
+        free(v1_api_resource->kind);
+        v1_api_resource->kind = NULL;
     }
-    list_free(v1_api_resource->verbs);
-    free(v1_api_resource->version);
+    if (v1_api_resource->name) {
+        free(v1_api_resource->name);
+        v1_api_resource->name = NULL;
+    }
+    if (v1_api_resource->short_names) {
+        list_ForEach(listEntry, v1_api_resource->short_names) {
+            free(listEntry->data);
+        }
+        list_free(v1_api_resource->short_names);
+        v1_api_resource->short_names = NULL;
+    }
+    if (v1_api_resource->singular_name) {
+        free(v1_api_resource->singular_name);
+        v1_api_resource->singular_name = NULL;
+    }
+    if (v1_api_resource->storage_version_hash) {
+        free(v1_api_resource->storage_version_hash);
+        v1_api_resource->storage_version_hash = NULL;
+    }
+    if (v1_api_resource->verbs) {
+        list_ForEach(listEntry, v1_api_resource->verbs) {
+            free(listEntry->data);
+        }
+        list_free(v1_api_resource->verbs);
+        v1_api_resource->verbs = NULL;
+    }
+    if (v1_api_resource->version) {
+        free(v1_api_resource->version);
+        v1_api_resource->version = NULL;
+    }
     free(v1_api_resource);
 }
 

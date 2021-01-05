@@ -9,7 +9,7 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_create(
     int min_ready_seconds,
     int replicas,
     list_t* selector,
-    v1_pod_template_spec_t *template
+    v1_pod_template_spec_t *_template
     ) {
     v1_replication_controller_spec_t *v1_replication_controller_spec_local_var = malloc(sizeof(v1_replication_controller_spec_t));
     if (!v1_replication_controller_spec_local_var) {
@@ -18,7 +18,7 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_create(
     v1_replication_controller_spec_local_var->min_ready_seconds = min_ready_seconds;
     v1_replication_controller_spec_local_var->replicas = replicas;
     v1_replication_controller_spec_local_var->selector = selector;
-    v1_replication_controller_spec_local_var->template = template;
+    v1_replication_controller_spec_local_var->_template = _template;
 
     return v1_replication_controller_spec_local_var;
 }
@@ -29,14 +29,20 @@ void v1_replication_controller_spec_free(v1_replication_controller_spec_t *v1_re
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_replication_controller_spec->selector) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_replication_controller_spec->selector) {
+        list_ForEach(listEntry, v1_replication_controller_spec->selector) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_replication_controller_spec->selector);
+        v1_replication_controller_spec->selector = NULL;
     }
-    list_free(v1_replication_controller_spec->selector);
-    v1_pod_template_spec_free(v1_replication_controller_spec->template);
+    if (v1_replication_controller_spec->_template) {
+        v1_pod_template_spec_free(v1_replication_controller_spec->_template);
+        v1_replication_controller_spec->_template = NULL;
+    }
     free(v1_replication_controller_spec);
 }
 
@@ -79,13 +85,13 @@ cJSON *v1_replication_controller_spec_convertToJSON(v1_replication_controller_sp
      } 
 
 
-    // v1_replication_controller_spec->template
-    if(v1_replication_controller_spec->template) { 
-    cJSON *template_local_JSON = v1_pod_template_spec_convertToJSON(v1_replication_controller_spec->template);
-    if(template_local_JSON == NULL) {
+    // v1_replication_controller_spec->_template
+    if(v1_replication_controller_spec->_template) { 
+    cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_replication_controller_spec->_template);
+    if(_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "template", template_local_JSON);
+    cJSON_AddItemToObject(item, "template", _template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -143,11 +149,11 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
     }
     }
 
-    // v1_replication_controller_spec->template
-    cJSON *template = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_specJSON, "template");
-    v1_pod_template_spec_t *template_local_nonprim = NULL;
-    if (template) { 
-    template_local_nonprim = v1_pod_template_spec_parseFromJSON(template); //nonprimitive
+    // v1_replication_controller_spec->_template
+    cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_specJSON, "template");
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
+    if (_template) { 
+    _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
     }
 
 
@@ -155,7 +161,7 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
         min_ready_seconds ? min_ready_seconds->valuedouble : 0,
         replicas ? replicas->valuedouble : 0,
         selector ? selectorList : NULL,
-        template ? template_local_nonprim : NULL
+        _template ? _template_local_nonprim : NULL
         );
 
     return v1_replication_controller_spec_local_var;

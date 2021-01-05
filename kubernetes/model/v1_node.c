@@ -31,11 +31,26 @@ void v1_node_free(v1_node_t *v1_node) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_node->api_version);
-    free(v1_node->kind);
-    v1_object_meta_free(v1_node->metadata);
-    v1_node_spec_free(v1_node->spec);
-    v1_node_status_free(v1_node->status);
+    if (v1_node->api_version) {
+        free(v1_node->api_version);
+        v1_node->api_version = NULL;
+    }
+    if (v1_node->kind) {
+        free(v1_node->kind);
+        v1_node->kind = NULL;
+    }
+    if (v1_node->metadata) {
+        v1_object_meta_free(v1_node->metadata);
+        v1_node->metadata = NULL;
+    }
+    if (v1_node->spec) {
+        v1_node_spec_free(v1_node->spec);
+        v1_node->spec = NULL;
+    }
+    if (v1_node->status) {
+        v1_node_status_free(v1_node->status);
+        v1_node->status = NULL;
+    }
     free(v1_node);
 }
 

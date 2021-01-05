@@ -29,9 +29,18 @@ void v1_downward_api_volume_file_free(v1_downward_api_volume_file_t *v1_downward
         return ;
     }
     listEntry_t *listEntry;
-    v1_object_field_selector_free(v1_downward_api_volume_file->field_ref);
-    free(v1_downward_api_volume_file->path);
-    v1_resource_field_selector_free(v1_downward_api_volume_file->resource_field_ref);
+    if (v1_downward_api_volume_file->field_ref) {
+        v1_object_field_selector_free(v1_downward_api_volume_file->field_ref);
+        v1_downward_api_volume_file->field_ref = NULL;
+    }
+    if (v1_downward_api_volume_file->path) {
+        free(v1_downward_api_volume_file->path);
+        v1_downward_api_volume_file->path = NULL;
+    }
+    if (v1_downward_api_volume_file->resource_field_ref) {
+        v1_resource_field_selector_free(v1_downward_api_volume_file->resource_field_ref);
+        v1_downward_api_volume_file->resource_field_ref = NULL;
+    }
     free(v1_downward_api_volume_file);
 }
 

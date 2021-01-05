@@ -31,11 +31,26 @@ void v1_replication_controller_condition_free(v1_replication_controller_conditio
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_replication_controller_condition->last_transition_time);
-    free(v1_replication_controller_condition->message);
-    free(v1_replication_controller_condition->reason);
-    free(v1_replication_controller_condition->status);
-    free(v1_replication_controller_condition->type);
+    if (v1_replication_controller_condition->last_transition_time) {
+        free(v1_replication_controller_condition->last_transition_time);
+        v1_replication_controller_condition->last_transition_time = NULL;
+    }
+    if (v1_replication_controller_condition->message) {
+        free(v1_replication_controller_condition->message);
+        v1_replication_controller_condition->message = NULL;
+    }
+    if (v1_replication_controller_condition->reason) {
+        free(v1_replication_controller_condition->reason);
+        v1_replication_controller_condition->reason = NULL;
+    }
+    if (v1_replication_controller_condition->status) {
+        free(v1_replication_controller_condition->status);
+        v1_replication_controller_condition->status = NULL;
+    }
+    if (v1_replication_controller_condition->type) {
+        free(v1_replication_controller_condition->type);
+        v1_replication_controller_condition->type = NULL;
+    }
     free(v1_replication_controller_condition);
 }
 

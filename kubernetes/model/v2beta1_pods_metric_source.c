@@ -27,9 +27,18 @@ void v2beta1_pods_metric_source_free(v2beta1_pods_metric_source_t *v2beta1_pods_
         return ;
     }
     listEntry_t *listEntry;
-    free(v2beta1_pods_metric_source->metric_name);
-    v1_label_selector_free(v2beta1_pods_metric_source->selector);
-    free(v2beta1_pods_metric_source->target_average_value);
+    if (v2beta1_pods_metric_source->metric_name) {
+        free(v2beta1_pods_metric_source->metric_name);
+        v2beta1_pods_metric_source->metric_name = NULL;
+    }
+    if (v2beta1_pods_metric_source->selector) {
+        v1_label_selector_free(v2beta1_pods_metric_source->selector);
+        v2beta1_pods_metric_source->selector = NULL;
+    }
+    if (v2beta1_pods_metric_source->target_average_value) {
+        free(v2beta1_pods_metric_source->target_average_value);
+        v2beta1_pods_metric_source->target_average_value = NULL;
+    }
     free(v2beta1_pods_metric_source);
 }
 

@@ -31,11 +31,26 @@ void v2beta1_metric_spec_free(v2beta1_metric_spec_t *v2beta1_metric_spec) {
         return ;
     }
     listEntry_t *listEntry;
-    v2beta1_external_metric_source_free(v2beta1_metric_spec->external);
-    v2beta1_object_metric_source_free(v2beta1_metric_spec->object);
-    v2beta1_pods_metric_source_free(v2beta1_metric_spec->pods);
-    v2beta1_resource_metric_source_free(v2beta1_metric_spec->resource);
-    free(v2beta1_metric_spec->type);
+    if (v2beta1_metric_spec->external) {
+        v2beta1_external_metric_source_free(v2beta1_metric_spec->external);
+        v2beta1_metric_spec->external = NULL;
+    }
+    if (v2beta1_metric_spec->object) {
+        v2beta1_object_metric_source_free(v2beta1_metric_spec->object);
+        v2beta1_metric_spec->object = NULL;
+    }
+    if (v2beta1_metric_spec->pods) {
+        v2beta1_pods_metric_source_free(v2beta1_metric_spec->pods);
+        v2beta1_metric_spec->pods = NULL;
+    }
+    if (v2beta1_metric_spec->resource) {
+        v2beta1_resource_metric_source_free(v2beta1_metric_spec->resource);
+        v2beta1_metric_spec->resource = NULL;
+    }
+    if (v2beta1_metric_spec->type) {
+        free(v2beta1_metric_spec->type);
+        v2beta1_metric_spec->type = NULL;
+    }
     free(v2beta1_metric_spec);
 }
 

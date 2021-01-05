@@ -29,13 +29,25 @@ void v1_endpoints_list_free(v1_endpoints_list_t *v1_endpoints_list) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_endpoints_list->api_version);
-    list_ForEach(listEntry, v1_endpoints_list->items) {
-        v1_endpoints_free(listEntry->data);
+    if (v1_endpoints_list->api_version) {
+        free(v1_endpoints_list->api_version);
+        v1_endpoints_list->api_version = NULL;
     }
-    list_free(v1_endpoints_list->items);
-    free(v1_endpoints_list->kind);
-    v1_list_meta_free(v1_endpoints_list->metadata);
+    if (v1_endpoints_list->items) {
+        list_ForEach(listEntry, v1_endpoints_list->items) {
+            v1_endpoints_free(listEntry->data);
+        }
+        list_free(v1_endpoints_list->items);
+        v1_endpoints_list->items = NULL;
+    }
+    if (v1_endpoints_list->kind) {
+        free(v1_endpoints_list->kind);
+        v1_endpoints_list->kind = NULL;
+    }
+    if (v1_endpoints_list->metadata) {
+        v1_list_meta_free(v1_endpoints_list->metadata);
+        v1_endpoints_list->metadata = NULL;
+    }
     free(v1_endpoints_list);
 }
 

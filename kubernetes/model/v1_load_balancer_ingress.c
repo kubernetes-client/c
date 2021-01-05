@@ -25,8 +25,14 @@ void v1_load_balancer_ingress_free(v1_load_balancer_ingress_t *v1_load_balancer_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_load_balancer_ingress->hostname);
-    free(v1_load_balancer_ingress->ip);
+    if (v1_load_balancer_ingress->hostname) {
+        free(v1_load_balancer_ingress->hostname);
+        v1_load_balancer_ingress->hostname = NULL;
+    }
+    if (v1_load_balancer_ingress->ip) {
+        free(v1_load_balancer_ingress->ip);
+        v1_load_balancer_ingress->ip = NULL;
+    }
     free(v1_load_balancer_ingress);
 }
 

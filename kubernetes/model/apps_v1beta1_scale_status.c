@@ -27,14 +27,20 @@ void apps_v1beta1_scale_status_free(apps_v1beta1_scale_status_t *apps_v1beta1_sc
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, apps_v1beta1_scale_status->selector) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (apps_v1beta1_scale_status->selector) {
+        list_ForEach(listEntry, apps_v1beta1_scale_status->selector) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(apps_v1beta1_scale_status->selector);
+        apps_v1beta1_scale_status->selector = NULL;
     }
-    list_free(apps_v1beta1_scale_status->selector);
-    free(apps_v1beta1_scale_status->target_selector);
+    if (apps_v1beta1_scale_status->target_selector) {
+        free(apps_v1beta1_scale_status->target_selector);
+        apps_v1beta1_scale_status->target_selector = NULL;
+    }
     free(apps_v1beta1_scale_status);
 }
 

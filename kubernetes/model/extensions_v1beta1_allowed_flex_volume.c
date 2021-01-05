@@ -23,7 +23,10 @@ void extensions_v1beta1_allowed_flex_volume_free(extensions_v1beta1_allowed_flex
         return ;
     }
     listEntry_t *listEntry;
-    free(extensions_v1beta1_allowed_flex_volume->driver);
+    if (extensions_v1beta1_allowed_flex_volume->driver) {
+        free(extensions_v1beta1_allowed_flex_volume->driver);
+        extensions_v1beta1_allowed_flex_volume->driver = NULL;
+    }
     free(extensions_v1beta1_allowed_flex_volume);
 }
 

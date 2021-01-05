@@ -23,7 +23,10 @@ void v1_local_object_reference_free(v1_local_object_reference_t *v1_local_object
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_local_object_reference->name);
+    if (v1_local_object_reference->name) {
+        free(v1_local_object_reference->name);
+        v1_local_object_reference->name = NULL;
+    }
     free(v1_local_object_reference);
 }
 

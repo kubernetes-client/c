@@ -27,15 +27,24 @@ void networking_v1beta1_ingress_spec_free(networking_v1beta1_ingress_spec_t *net
         return ;
     }
     listEntry_t *listEntry;
-    networking_v1beta1_ingress_backend_free(networking_v1beta1_ingress_spec->backend);
-    list_ForEach(listEntry, networking_v1beta1_ingress_spec->rules) {
-        networking_v1beta1_ingress_rule_free(listEntry->data);
+    if (networking_v1beta1_ingress_spec->backend) {
+        networking_v1beta1_ingress_backend_free(networking_v1beta1_ingress_spec->backend);
+        networking_v1beta1_ingress_spec->backend = NULL;
     }
-    list_free(networking_v1beta1_ingress_spec->rules);
-    list_ForEach(listEntry, networking_v1beta1_ingress_spec->tls) {
-        networking_v1beta1_ingress_tls_free(listEntry->data);
+    if (networking_v1beta1_ingress_spec->rules) {
+        list_ForEach(listEntry, networking_v1beta1_ingress_spec->rules) {
+            networking_v1beta1_ingress_rule_free(listEntry->data);
+        }
+        list_free(networking_v1beta1_ingress_spec->rules);
+        networking_v1beta1_ingress_spec->rules = NULL;
     }
-    list_free(networking_v1beta1_ingress_spec->tls);
+    if (networking_v1beta1_ingress_spec->tls) {
+        list_ForEach(listEntry, networking_v1beta1_ingress_spec->tls) {
+            networking_v1beta1_ingress_tls_free(listEntry->data);
+        }
+        list_free(networking_v1beta1_ingress_spec->tls);
+        networking_v1beta1_ingress_spec->tls = NULL;
+    }
     free(networking_v1beta1_ingress_spec);
 }
 

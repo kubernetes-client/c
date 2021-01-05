@@ -25,8 +25,14 @@ void v1_local_volume_source_free(v1_local_volume_source_t *v1_local_volume_sourc
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_local_volume_source->fs_type);
-    free(v1_local_volume_source->path);
+    if (v1_local_volume_source->fs_type) {
+        free(v1_local_volume_source->fs_type);
+        v1_local_volume_source->fs_type = NULL;
+    }
+    if (v1_local_volume_source->path) {
+        free(v1_local_volume_source->path);
+        v1_local_volume_source->path = NULL;
+    }
     free(v1_local_volume_source);
 }
 

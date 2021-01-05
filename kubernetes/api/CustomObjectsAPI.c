@@ -197,7 +197,7 @@ end:
 // Creates a namespace scoped Custom object
 //
 object_t*
-CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , object_t * body , char * pretty , char * dryRun , char * fieldManager )
+CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , object_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -213,7 +213,7 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char * gro
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -223,7 +223,7 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char * gro
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -233,17 +233,17 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char * gro
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -337,7 +337,7 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char * gro
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
@@ -841,7 +841,7 @@ end:
 // Delete collection of namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * pretty , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body )
+CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * pretty , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -857,7 +857,7 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -867,7 +867,7 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -877,17 +877,17 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -1007,7 +1007,7 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
@@ -1084,7 +1084,7 @@ end:
 // Deletes the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body )
+CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1100,7 +1100,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * gro
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -1110,7 +1110,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * gro
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -1120,17 +1120,17 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * gro
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -1140,7 +1140,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * gro
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -1248,7 +1248,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * gro
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
@@ -1639,7 +1639,7 @@ end:
 // Returns a namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name )
+CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name )
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1655,7 +1655,7 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char * group 
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -1665,7 +1665,7 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char * group 
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -1675,17 +1675,17 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char * group 
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -1695,7 +1695,7 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char * group 
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -1744,7 +1744,7 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char * group 
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     free(localVarToReplace_name);
     return elementToReturn;
@@ -1757,7 +1757,7 @@ end:
 // read scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name )
+CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name )
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1773,7 +1773,7 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char * g
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -1783,7 +1783,7 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char * g
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -1793,17 +1793,17 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char * g
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -1813,7 +1813,7 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char * g
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -1864,7 +1864,7 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char * g
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     free(localVarToReplace_name);
     return elementToReturn;
@@ -1877,7 +1877,7 @@ end:
 // read status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name )
+CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name )
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1893,7 +1893,7 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char * 
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -1903,7 +1903,7 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char * 
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -1913,17 +1913,17 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char * 
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -1933,7 +1933,7 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char * 
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -1984,7 +1984,7 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char * 
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     free(localVarToReplace_name);
     return elementToReturn;
@@ -2289,7 +2289,7 @@ end:
 // list or watch namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * pretty , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * pretty , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2305,7 +2305,7 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -2315,7 +2315,7 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -2325,17 +2325,17 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -2484,7 +2484,7 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -3184,7 +3184,7 @@ end:
 // patch the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
+CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3200,7 +3200,7 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * grou
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -3210,7 +3210,7 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * grou
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -3220,17 +3220,17 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * grou
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -3240,7 +3240,7 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * grou
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -3337,7 +3337,7 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * grou
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
@@ -3391,7 +3391,7 @@ end:
 // partially update scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
+CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3407,7 +3407,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -3417,7 +3417,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -3427,17 +3427,17 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -3447,7 +3447,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -3547,7 +3547,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
@@ -3601,7 +3601,7 @@ end:
 // partially update status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
+CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3617,7 +3617,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -3627,7 +3627,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -3637,17 +3637,17 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -3657,7 +3657,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -3757,7 +3757,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
@@ -4328,7 +4328,7 @@ end:
 // replace the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
+CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -4344,7 +4344,7 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char * gr
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -4354,7 +4354,7 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char * gr
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -4364,17 +4364,17 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char * gr
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -4384,7 +4384,7 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char * gr
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -4466,7 +4466,7 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char * gr
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
@@ -4508,7 +4508,7 @@ end:
 // replace scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
+CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -4524,7 +4524,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -4534,7 +4534,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -4544,17 +4544,17 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -4564,7 +4564,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -4651,7 +4651,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
@@ -4693,7 +4693,7 @@ end:
 // replace status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
+CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -4709,7 +4709,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
     if(group == NULL) {
         goto end;
     }
@@ -4719,7 +4719,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
     if(version == NULL) {
         goto end;
     }
@@ -4729,17 +4729,17 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
     if(plural == NULL) {
         goto end;
     }
@@ -4749,7 +4749,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -4836,7 +4836,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     free(localVarToReplace_plural);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {

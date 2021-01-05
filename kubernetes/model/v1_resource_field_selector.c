@@ -27,9 +27,18 @@ void v1_resource_field_selector_free(v1_resource_field_selector_t *v1_resource_f
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_resource_field_selector->container_name);
-    free(v1_resource_field_selector->divisor);
-    free(v1_resource_field_selector->resource);
+    if (v1_resource_field_selector->container_name) {
+        free(v1_resource_field_selector->container_name);
+        v1_resource_field_selector->container_name = NULL;
+    }
+    if (v1_resource_field_selector->divisor) {
+        free(v1_resource_field_selector->divisor);
+        v1_resource_field_selector->divisor = NULL;
+    }
+    if (v1_resource_field_selector->resource) {
+        free(v1_resource_field_selector->resource);
+        v1_resource_field_selector->resource = NULL;
+    }
     free(v1_resource_field_selector);
 }
 

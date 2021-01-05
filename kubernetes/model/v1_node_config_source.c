@@ -23,7 +23,10 @@ void v1_node_config_source_free(v1_node_config_source_t *v1_node_config_source) 
         return ;
     }
     listEntry_t *listEntry;
-    v1_config_map_node_config_source_free(v1_node_config_source->config_map);
+    if (v1_node_config_source->config_map) {
+        v1_config_map_node_config_source_free(v1_node_config_source->config_map);
+        v1_node_config_source->config_map = NULL;
+    }
     free(v1_node_config_source);
 }
 

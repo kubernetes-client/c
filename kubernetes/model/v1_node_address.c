@@ -25,8 +25,14 @@ void v1_node_address_free(v1_node_address_t *v1_node_address) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_node_address->address);
-    free(v1_node_address->type);
+    if (v1_node_address->address) {
+        free(v1_node_address->address);
+        v1_node_address->address = NULL;
+    }
+    if (v1_node_address->type) {
+        free(v1_node_address->type);
+        v1_node_address->type = NULL;
+    }
     free(v1_node_address);
 }
 

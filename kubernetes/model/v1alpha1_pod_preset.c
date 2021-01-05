@@ -29,10 +29,22 @@ void v1alpha1_pod_preset_free(v1alpha1_pod_preset_t *v1alpha1_pod_preset) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_pod_preset->api_version);
-    free(v1alpha1_pod_preset->kind);
-    v1_object_meta_free(v1alpha1_pod_preset->metadata);
-    v1alpha1_pod_preset_spec_free(v1alpha1_pod_preset->spec);
+    if (v1alpha1_pod_preset->api_version) {
+        free(v1alpha1_pod_preset->api_version);
+        v1alpha1_pod_preset->api_version = NULL;
+    }
+    if (v1alpha1_pod_preset->kind) {
+        free(v1alpha1_pod_preset->kind);
+        v1alpha1_pod_preset->kind = NULL;
+    }
+    if (v1alpha1_pod_preset->metadata) {
+        v1_object_meta_free(v1alpha1_pod_preset->metadata);
+        v1alpha1_pod_preset->metadata = NULL;
+    }
+    if (v1alpha1_pod_preset->spec) {
+        v1alpha1_pod_preset_spec_free(v1alpha1_pod_preset->spec);
+        v1alpha1_pod_preset->spec = NULL;
+    }
     free(v1alpha1_pod_preset);
 }
 

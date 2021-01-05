@@ -1468,7 +1468,7 @@ end:
 // read the specified APIService
 //
 v1_api_service_t*
-ApiregistrationV1API_readAPIService(apiClient_t *apiClient, char * name , char * pretty , int exact , int export )
+ApiregistrationV1API_readAPIService(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1521,16 +1521,16 @@ ApiregistrationV1API_readAPIService(apiClient_t *apiClient, char * name , char *
     }
 
     // query parameters
-    char *keyQuery_export = NULL;
-    char * valueQuery_export = NULL;
-    keyValuePair_t *keyPairQuery_export = 0;
-    if (export)
+    char *keyQuery__export = NULL;
+    char * valueQuery__export = NULL;
+    keyValuePair_t *keyPairQuery__export = 0;
+    if (_export)
     {
-        keyQuery_export = strdup("export");
-        valueQuery_export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_export, MAX_NUMBER_LENGTH, "%d", export);
-        keyPairQuery_export = keyValuePair_create(keyQuery_export, valueQuery_export);
-        list_addElement(localVarQueryParameters,keyPairQuery_export);
+        keyQuery__export = strdup("export");
+        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
+        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
+        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1596,17 +1596,17 @@ ApiregistrationV1API_readAPIService(apiClient_t *apiClient, char * name , char *
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
     }
-    if(keyQuery_export){
-        free(keyQuery_export);
-        keyQuery_export = NULL;
+    if(keyQuery__export){
+        free(keyQuery__export);
+        keyQuery__export = NULL;
     }
-    if(valueQuery_export){
-        free(valueQuery_export);
-        valueQuery_export = NULL;
+    if(valueQuery__export){
+        free(valueQuery__export);
+        valueQuery__export = NULL;
     }
-    if(keyPairQuery_export){
-        keyValuePair_free(keyPairQuery_export);
-        keyPairQuery_export = NULL;
+    if(keyPairQuery__export){
+        keyValuePair_free(keyPairQuery__export);
+        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:

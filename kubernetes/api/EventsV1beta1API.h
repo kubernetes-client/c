@@ -15,19 +15,19 @@
 // create an Event
 //
 v1beta1_event_t*
-EventsV1beta1API_createNamespacedEvent(apiClient_t *apiClient, char * namespace , v1beta1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
+EventsV1beta1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , v1beta1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // delete collection of Event
 //
 v1_status_t*
-EventsV1beta1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+EventsV1beta1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete an Event
 //
 v1_status_t*
-EventsV1beta1API_deleteNamespacedEvent(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
+EventsV1beta1API_deleteNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
 // get available resources
@@ -45,24 +45,24 @@ EventsV1beta1API_listEventForAllNamespaces(apiClient_t *apiClient, int allowWatc
 // list or watch objects of kind Event
 //
 v1beta1_event_list_t*
-EventsV1beta1API_listNamespacedEvent(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+EventsV1beta1API_listNamespacedEvent(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // partially update the specified Event
 //
 v1beta1_event_t*
-EventsV1beta1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+EventsV1beta1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
 
 
 // read the specified Event
 //
 v1beta1_event_t*
-EventsV1beta1API_readNamespacedEvent(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export );
+EventsV1beta1API_readNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
 
 
 // replace the specified Event
 //
 v1beta1_event_t*
-EventsV1beta1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * namespace , v1beta1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
+EventsV1beta1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 

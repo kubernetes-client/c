@@ -25,8 +25,14 @@ void v1beta2_rolling_update_deployment_free(v1beta2_rolling_update_deployment_t 
         return ;
     }
     listEntry_t *listEntry;
-    object_free(v1beta2_rolling_update_deployment->max_surge);
-    object_free(v1beta2_rolling_update_deployment->max_unavailable);
+    if (v1beta2_rolling_update_deployment->max_surge) {
+        object_free(v1beta2_rolling_update_deployment->max_surge);
+        v1beta2_rolling_update_deployment->max_surge = NULL;
+    }
+    if (v1beta2_rolling_update_deployment->max_unavailable) {
+        object_free(v1beta2_rolling_update_deployment->max_unavailable);
+        v1beta2_rolling_update_deployment->max_unavailable = NULL;
+    }
     free(v1beta2_rolling_update_deployment);
 }
 

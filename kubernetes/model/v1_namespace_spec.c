@@ -23,10 +23,13 @@ void v1_namespace_spec_free(v1_namespace_spec_t *v1_namespace_spec) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_namespace_spec->finalizers) {
-        free(listEntry->data);
+    if (v1_namespace_spec->finalizers) {
+        list_ForEach(listEntry, v1_namespace_spec->finalizers) {
+            free(listEntry->data);
+        }
+        list_free(v1_namespace_spec->finalizers);
+        v1_namespace_spec->finalizers = NULL;
     }
-    list_free(v1_namespace_spec->finalizers);
     free(v1_namespace_spec);
 }
 

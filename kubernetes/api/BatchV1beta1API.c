@@ -15,7 +15,7 @@
 // create a CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_createNamespacedCronJob(apiClient_t *apiClient, char * namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager )
+BatchV1beta1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -31,14 +31,14 @@ BatchV1beta1API_createNamespacedCronJob(apiClient_t *apiClient, char * namespace
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -131,7 +131,7 @@ BatchV1beta1API_createNamespacedCronJob(apiClient_t *apiClient, char * namespace
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -183,7 +183,7 @@ end:
 // delete collection of CronJob
 //
 v1_status_t*
-BatchV1beta1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+BatchV1beta1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -199,14 +199,14 @@ BatchV1beta1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -393,7 +393,7 @@ BatchV1beta1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -541,7 +541,7 @@ end:
 // delete a CronJob
 //
 v1_status_t*
-BatchV1beta1API_deleteNamespacedCronJob(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+BatchV1beta1API_deleteNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -557,7 +557,7 @@ BatchV1beta1API_deleteNamespacedCronJob(apiClient_t *apiClient, char * name , ch
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -567,14 +567,14 @@ BatchV1beta1API_deleteNamespacedCronJob(apiClient_t *apiClient, char * name , ch
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -691,7 +691,7 @@ BatchV1beta1API_deleteNamespacedCronJob(apiClient_t *apiClient, char * name , ch
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -1119,7 +1119,7 @@ end:
 // list or watch objects of kind CronJob
 //
 v1beta1_cron_job_list_t*
-BatchV1beta1API_listNamespacedCronJob(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+BatchV1beta1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1135,14 +1135,14 @@ BatchV1beta1API_listNamespacedCronJob(apiClient_t *apiClient, char * namespace ,
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -1298,7 +1298,7 @@ BatchV1beta1API_listNamespacedCronJob(apiClient_t *apiClient, char * namespace ,
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -1417,7 +1417,7 @@ end:
 // partially update the specified CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+BatchV1beta1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1433,7 +1433,7 @@ BatchV1beta1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , cha
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -1443,14 +1443,14 @@ BatchV1beta1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -1555,7 +1555,7 @@ BatchV1beta1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , cha
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -1619,7 +1619,7 @@ end:
 // partially update status of the specified CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+BatchV1beta1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1635,7 +1635,7 @@ BatchV1beta1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -1645,14 +1645,14 @@ BatchV1beta1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -1757,7 +1757,7 @@ BatchV1beta1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -1821,7 +1821,7 @@ end:
 // read the specified CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export )
+BatchV1beta1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1837,7 +1837,7 @@ BatchV1beta1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -1847,14 +1847,14 @@ BatchV1beta1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -1884,16 +1884,16 @@ BatchV1beta1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char
     }
 
     // query parameters
-    char *keyQuery_export = NULL;
-    char * valueQuery_export = NULL;
-    keyValuePair_t *keyPairQuery_export = 0;
-    if (export)
+    char *keyQuery__export = NULL;
+    char * valueQuery__export = NULL;
+    keyValuePair_t *keyPairQuery__export = 0;
+    if (_export)
     {
-        keyQuery_export = strdup("export");
-        valueQuery_export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_export, MAX_NUMBER_LENGTH, "%d", export);
-        keyPairQuery_export = keyValuePair_create(keyQuery_export, valueQuery_export);
-        list_addElement(localVarQueryParameters,keyPairQuery_export);
+        keyQuery__export = strdup("export");
+        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
+        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
+        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1935,7 +1935,7 @@ BatchV1beta1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -1960,17 +1960,17 @@ BatchV1beta1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
     }
-    if(keyQuery_export){
-        free(keyQuery_export);
-        keyQuery_export = NULL;
+    if(keyQuery__export){
+        free(keyQuery__export);
+        keyQuery__export = NULL;
     }
-    if(valueQuery_export){
-        free(valueQuery_export);
-        valueQuery_export = NULL;
+    if(valueQuery__export){
+        free(valueQuery__export);
+        valueQuery__export = NULL;
     }
-    if(keyPairQuery_export){
-        keyValuePair_free(keyPairQuery_export);
-        keyPairQuery_export = NULL;
+    if(keyPairQuery__export){
+        keyValuePair_free(keyPairQuery__export);
+        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -1982,7 +1982,7 @@ end:
 // read status of the specified CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * namespace , char * pretty )
+BatchV1beta1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1998,7 +1998,7 @@ BatchV1beta1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char * name 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -2008,14 +2008,14 @@ BatchV1beta1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char * name 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -2070,7 +2070,7 @@ BatchV1beta1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char * name 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -2093,7 +2093,7 @@ end:
 // replace the specified CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char * namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager )
+BatchV1beta1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2109,7 +2109,7 @@ BatchV1beta1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , c
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -2119,14 +2119,14 @@ BatchV1beta1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -2217,7 +2217,7 @@ BatchV1beta1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , c
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -2269,7 +2269,7 @@ end:
 // replace status of the specified CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager )
+BatchV1beta1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2285,7 +2285,7 @@ BatchV1beta1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * na
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -2295,14 +2295,14 @@ BatchV1beta1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -2393,7 +2393,7 @@ BatchV1beta1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * na
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;

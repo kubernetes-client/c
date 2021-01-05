@@ -25,7 +25,10 @@ void policy_v1beta1_allowed_host_path_free(policy_v1beta1_allowed_host_path_t *p
         return ;
     }
     listEntry_t *listEntry;
-    free(policy_v1beta1_allowed_host_path->path_prefix);
+    if (policy_v1beta1_allowed_host_path->path_prefix) {
+        free(policy_v1beta1_allowed_host_path->path_prefix);
+        policy_v1beta1_allowed_host_path->path_prefix = NULL;
+    }
     free(policy_v1beta1_allowed_host_path);
 }
 

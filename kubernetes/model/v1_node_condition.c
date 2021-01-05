@@ -33,12 +33,30 @@ void v1_node_condition_free(v1_node_condition_t *v1_node_condition) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_node_condition->last_heartbeat_time);
-    free(v1_node_condition->last_transition_time);
-    free(v1_node_condition->message);
-    free(v1_node_condition->reason);
-    free(v1_node_condition->status);
-    free(v1_node_condition->type);
+    if (v1_node_condition->last_heartbeat_time) {
+        free(v1_node_condition->last_heartbeat_time);
+        v1_node_condition->last_heartbeat_time = NULL;
+    }
+    if (v1_node_condition->last_transition_time) {
+        free(v1_node_condition->last_transition_time);
+        v1_node_condition->last_transition_time = NULL;
+    }
+    if (v1_node_condition->message) {
+        free(v1_node_condition->message);
+        v1_node_condition->message = NULL;
+    }
+    if (v1_node_condition->reason) {
+        free(v1_node_condition->reason);
+        v1_node_condition->reason = NULL;
+    }
+    if (v1_node_condition->status) {
+        free(v1_node_condition->status);
+        v1_node_condition->status = NULL;
+    }
+    if (v1_node_condition->type) {
+        free(v1_node_condition->type);
+        v1_node_condition->type = NULL;
+    }
     free(v1_node_condition);
 }
 

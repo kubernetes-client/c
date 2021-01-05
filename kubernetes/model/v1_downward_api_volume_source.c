@@ -25,10 +25,13 @@ void v1_downward_api_volume_source_free(v1_downward_api_volume_source_t *v1_down
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_downward_api_volume_source->items) {
-        v1_downward_api_volume_file_free(listEntry->data);
+    if (v1_downward_api_volume_source->items) {
+        list_ForEach(listEntry, v1_downward_api_volume_source->items) {
+            v1_downward_api_volume_file_free(listEntry->data);
+        }
+        list_free(v1_downward_api_volume_source->items);
+        v1_downward_api_volume_source->items = NULL;
     }
-    list_free(v1_downward_api_volume_source->items);
     free(v1_downward_api_volume_source);
 }
 

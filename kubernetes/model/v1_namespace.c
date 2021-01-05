@@ -31,11 +31,26 @@ void v1_namespace_free(v1_namespace_t *v1_namespace) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_namespace->api_version);
-    free(v1_namespace->kind);
-    v1_object_meta_free(v1_namespace->metadata);
-    v1_namespace_spec_free(v1_namespace->spec);
-    v1_namespace_status_free(v1_namespace->status);
+    if (v1_namespace->api_version) {
+        free(v1_namespace->api_version);
+        v1_namespace->api_version = NULL;
+    }
+    if (v1_namespace->kind) {
+        free(v1_namespace->kind);
+        v1_namespace->kind = NULL;
+    }
+    if (v1_namespace->metadata) {
+        v1_object_meta_free(v1_namespace->metadata);
+        v1_namespace->metadata = NULL;
+    }
+    if (v1_namespace->spec) {
+        v1_namespace_spec_free(v1_namespace->spec);
+        v1_namespace->spec = NULL;
+    }
+    if (v1_namespace->status) {
+        v1_namespace_status_free(v1_namespace->status);
+        v1_namespace->status = NULL;
+    }
     free(v1_namespace);
 }
 

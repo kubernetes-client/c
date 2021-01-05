@@ -65,46 +65,103 @@ void v1_container_free(v1_container_t *v1_container) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_container->args) {
-        free(listEntry->data);
+    if (v1_container->args) {
+        list_ForEach(listEntry, v1_container->args) {
+            free(listEntry->data);
+        }
+        list_free(v1_container->args);
+        v1_container->args = NULL;
     }
-    list_free(v1_container->args);
-    list_ForEach(listEntry, v1_container->command) {
-        free(listEntry->data);
+    if (v1_container->command) {
+        list_ForEach(listEntry, v1_container->command) {
+            free(listEntry->data);
+        }
+        list_free(v1_container->command);
+        v1_container->command = NULL;
     }
-    list_free(v1_container->command);
-    list_ForEach(listEntry, v1_container->env) {
-        v1_env_var_free(listEntry->data);
+    if (v1_container->env) {
+        list_ForEach(listEntry, v1_container->env) {
+            v1_env_var_free(listEntry->data);
+        }
+        list_free(v1_container->env);
+        v1_container->env = NULL;
     }
-    list_free(v1_container->env);
-    list_ForEach(listEntry, v1_container->env_from) {
-        v1_env_from_source_free(listEntry->data);
+    if (v1_container->env_from) {
+        list_ForEach(listEntry, v1_container->env_from) {
+            v1_env_from_source_free(listEntry->data);
+        }
+        list_free(v1_container->env_from);
+        v1_container->env_from = NULL;
     }
-    list_free(v1_container->env_from);
-    free(v1_container->image);
-    free(v1_container->image_pull_policy);
-    v1_lifecycle_free(v1_container->lifecycle);
-    v1_probe_free(v1_container->liveness_probe);
-    free(v1_container->name);
-    list_ForEach(listEntry, v1_container->ports) {
-        v1_container_port_free(listEntry->data);
+    if (v1_container->image) {
+        free(v1_container->image);
+        v1_container->image = NULL;
     }
-    list_free(v1_container->ports);
-    v1_probe_free(v1_container->readiness_probe);
-    v1_resource_requirements_free(v1_container->resources);
-    v1_security_context_free(v1_container->security_context);
-    v1_probe_free(v1_container->startup_probe);
-    free(v1_container->termination_message_path);
-    free(v1_container->termination_message_policy);
-    list_ForEach(listEntry, v1_container->volume_devices) {
-        v1_volume_device_free(listEntry->data);
+    if (v1_container->image_pull_policy) {
+        free(v1_container->image_pull_policy);
+        v1_container->image_pull_policy = NULL;
     }
-    list_free(v1_container->volume_devices);
-    list_ForEach(listEntry, v1_container->volume_mounts) {
-        v1_volume_mount_free(listEntry->data);
+    if (v1_container->lifecycle) {
+        v1_lifecycle_free(v1_container->lifecycle);
+        v1_container->lifecycle = NULL;
     }
-    list_free(v1_container->volume_mounts);
-    free(v1_container->working_dir);
+    if (v1_container->liveness_probe) {
+        v1_probe_free(v1_container->liveness_probe);
+        v1_container->liveness_probe = NULL;
+    }
+    if (v1_container->name) {
+        free(v1_container->name);
+        v1_container->name = NULL;
+    }
+    if (v1_container->ports) {
+        list_ForEach(listEntry, v1_container->ports) {
+            v1_container_port_free(listEntry->data);
+        }
+        list_free(v1_container->ports);
+        v1_container->ports = NULL;
+    }
+    if (v1_container->readiness_probe) {
+        v1_probe_free(v1_container->readiness_probe);
+        v1_container->readiness_probe = NULL;
+    }
+    if (v1_container->resources) {
+        v1_resource_requirements_free(v1_container->resources);
+        v1_container->resources = NULL;
+    }
+    if (v1_container->security_context) {
+        v1_security_context_free(v1_container->security_context);
+        v1_container->security_context = NULL;
+    }
+    if (v1_container->startup_probe) {
+        v1_probe_free(v1_container->startup_probe);
+        v1_container->startup_probe = NULL;
+    }
+    if (v1_container->termination_message_path) {
+        free(v1_container->termination_message_path);
+        v1_container->termination_message_path = NULL;
+    }
+    if (v1_container->termination_message_policy) {
+        free(v1_container->termination_message_policy);
+        v1_container->termination_message_policy = NULL;
+    }
+    if (v1_container->volume_devices) {
+        list_ForEach(listEntry, v1_container->volume_devices) {
+            v1_volume_device_free(listEntry->data);
+        }
+        list_free(v1_container->volume_devices);
+        v1_container->volume_devices = NULL;
+    }
+    if (v1_container->volume_mounts) {
+        list_ForEach(listEntry, v1_container->volume_mounts) {
+            v1_volume_mount_free(listEntry->data);
+        }
+        list_free(v1_container->volume_mounts);
+        v1_container->volume_mounts = NULL;
+    }
+    if (v1_container->working_dir) {
+        free(v1_container->working_dir);
+        v1_container->working_dir = NULL;
+    }
     free(v1_container);
 }
 

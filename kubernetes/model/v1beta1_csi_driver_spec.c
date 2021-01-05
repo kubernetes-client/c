@@ -27,10 +27,13 @@ void v1beta1_csi_driver_spec_free(v1beta1_csi_driver_spec_t *v1beta1_csi_driver_
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_csi_driver_spec->volume_lifecycle_modes) {
-        free(listEntry->data);
+    if (v1beta1_csi_driver_spec->volume_lifecycle_modes) {
+        list_ForEach(listEntry, v1beta1_csi_driver_spec->volume_lifecycle_modes) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_csi_driver_spec->volume_lifecycle_modes);
+        v1beta1_csi_driver_spec->volume_lifecycle_modes = NULL;
     }
-    list_free(v1beta1_csi_driver_spec->volume_lifecycle_modes);
     free(v1beta1_csi_driver_spec);
 }
 

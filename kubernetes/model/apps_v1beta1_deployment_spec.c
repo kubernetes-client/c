@@ -14,7 +14,7 @@ apps_v1beta1_deployment_spec_t *apps_v1beta1_deployment_spec_create(
     apps_v1beta1_rollback_config_t *rollback_to,
     v1_label_selector_t *selector,
     apps_v1beta1_deployment_strategy_t *strategy,
-    v1_pod_template_spec_t *template
+    v1_pod_template_spec_t *_template
     ) {
     apps_v1beta1_deployment_spec_t *apps_v1beta1_deployment_spec_local_var = malloc(sizeof(apps_v1beta1_deployment_spec_t));
     if (!apps_v1beta1_deployment_spec_local_var) {
@@ -28,7 +28,7 @@ apps_v1beta1_deployment_spec_t *apps_v1beta1_deployment_spec_create(
     apps_v1beta1_deployment_spec_local_var->rollback_to = rollback_to;
     apps_v1beta1_deployment_spec_local_var->selector = selector;
     apps_v1beta1_deployment_spec_local_var->strategy = strategy;
-    apps_v1beta1_deployment_spec_local_var->template = template;
+    apps_v1beta1_deployment_spec_local_var->_template = _template;
 
     return apps_v1beta1_deployment_spec_local_var;
 }
@@ -39,10 +39,22 @@ void apps_v1beta1_deployment_spec_free(apps_v1beta1_deployment_spec_t *apps_v1be
         return ;
     }
     listEntry_t *listEntry;
-    apps_v1beta1_rollback_config_free(apps_v1beta1_deployment_spec->rollback_to);
-    v1_label_selector_free(apps_v1beta1_deployment_spec->selector);
-    apps_v1beta1_deployment_strategy_free(apps_v1beta1_deployment_spec->strategy);
-    v1_pod_template_spec_free(apps_v1beta1_deployment_spec->template);
+    if (apps_v1beta1_deployment_spec->rollback_to) {
+        apps_v1beta1_rollback_config_free(apps_v1beta1_deployment_spec->rollback_to);
+        apps_v1beta1_deployment_spec->rollback_to = NULL;
+    }
+    if (apps_v1beta1_deployment_spec->selector) {
+        v1_label_selector_free(apps_v1beta1_deployment_spec->selector);
+        apps_v1beta1_deployment_spec->selector = NULL;
+    }
+    if (apps_v1beta1_deployment_spec->strategy) {
+        apps_v1beta1_deployment_strategy_free(apps_v1beta1_deployment_spec->strategy);
+        apps_v1beta1_deployment_spec->strategy = NULL;
+    }
+    if (apps_v1beta1_deployment_spec->_template) {
+        v1_pod_template_spec_free(apps_v1beta1_deployment_spec->_template);
+        apps_v1beta1_deployment_spec->_template = NULL;
+    }
     free(apps_v1beta1_deployment_spec);
 }
 
@@ -128,16 +140,16 @@ cJSON *apps_v1beta1_deployment_spec_convertToJSON(apps_v1beta1_deployment_spec_t
      } 
 
 
-    // apps_v1beta1_deployment_spec->template
-    if (!apps_v1beta1_deployment_spec->template) {
+    // apps_v1beta1_deployment_spec->_template
+    if (!apps_v1beta1_deployment_spec->_template) {
         goto fail;
     }
     
-    cJSON *template_local_JSON = v1_pod_template_spec_convertToJSON(apps_v1beta1_deployment_spec->template);
-    if(template_local_JSON == NULL) {
+    cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(apps_v1beta1_deployment_spec->_template);
+    if(_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "template", template_local_JSON);
+    cJSON_AddItemToObject(item, "template", _template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -220,15 +232,15 @@ apps_v1beta1_deployment_spec_t *apps_v1beta1_deployment_spec_parseFromJSON(cJSON
     strategy_local_nonprim = apps_v1beta1_deployment_strategy_parseFromJSON(strategy); //nonprimitive
     }
 
-    // apps_v1beta1_deployment_spec->template
-    cJSON *template = cJSON_GetObjectItemCaseSensitive(apps_v1beta1_deployment_specJSON, "template");
-    if (!template) {
+    // apps_v1beta1_deployment_spec->_template
+    cJSON *_template = cJSON_GetObjectItemCaseSensitive(apps_v1beta1_deployment_specJSON, "template");
+    if (!_template) {
         goto end;
     }
 
-    v1_pod_template_spec_t *template_local_nonprim = NULL;
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     
-    template_local_nonprim = v1_pod_template_spec_parseFromJSON(template); //nonprimitive
+    _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 
 
     apps_v1beta1_deployment_spec_local_var = apps_v1beta1_deployment_spec_create (
@@ -240,7 +252,7 @@ apps_v1beta1_deployment_spec_t *apps_v1beta1_deployment_spec_parseFromJSON(cJSON
         rollback_to ? rollback_to_local_nonprim : NULL,
         selector ? selector_local_nonprim : NULL,
         strategy ? strategy_local_nonprim : NULL,
-        template_local_nonprim
+        _template_local_nonprim
         );
 
     return apps_v1beta1_deployment_spec_local_var;

@@ -121,19 +121,19 @@ StorageV1API_patchVolumeAttachmentStatus(apiClient_t *apiClient, char * name , o
 // read the specified CSINode
 //
 v1_csi_node_t*
-StorageV1API_readCSINode(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+StorageV1API_readCSINode(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read the specified StorageClass
 //
 v1_storage_class_t*
-StorageV1API_readStorageClass(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+StorageV1API_readStorageClass(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read the specified VolumeAttachment
 //
 v1_volume_attachment_t*
-StorageV1API_readVolumeAttachment(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+StorageV1API_readVolumeAttachment(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read status of the specified VolumeAttachment

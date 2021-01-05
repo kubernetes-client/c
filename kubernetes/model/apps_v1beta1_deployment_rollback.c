@@ -31,17 +31,32 @@ void apps_v1beta1_deployment_rollback_free(apps_v1beta1_deployment_rollback_t *a
         return ;
     }
     listEntry_t *listEntry;
-    free(apps_v1beta1_deployment_rollback->api_version);
-    free(apps_v1beta1_deployment_rollback->kind);
-    free(apps_v1beta1_deployment_rollback->name);
-    apps_v1beta1_rollback_config_free(apps_v1beta1_deployment_rollback->rollback_to);
-    list_ForEach(listEntry, apps_v1beta1_deployment_rollback->updated_annotations) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (apps_v1beta1_deployment_rollback->api_version) {
+        free(apps_v1beta1_deployment_rollback->api_version);
+        apps_v1beta1_deployment_rollback->api_version = NULL;
     }
-    list_free(apps_v1beta1_deployment_rollback->updated_annotations);
+    if (apps_v1beta1_deployment_rollback->kind) {
+        free(apps_v1beta1_deployment_rollback->kind);
+        apps_v1beta1_deployment_rollback->kind = NULL;
+    }
+    if (apps_v1beta1_deployment_rollback->name) {
+        free(apps_v1beta1_deployment_rollback->name);
+        apps_v1beta1_deployment_rollback->name = NULL;
+    }
+    if (apps_v1beta1_deployment_rollback->rollback_to) {
+        apps_v1beta1_rollback_config_free(apps_v1beta1_deployment_rollback->rollback_to);
+        apps_v1beta1_deployment_rollback->rollback_to = NULL;
+    }
+    if (apps_v1beta1_deployment_rollback->updated_annotations) {
+        list_ForEach(listEntry, apps_v1beta1_deployment_rollback->updated_annotations) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(apps_v1beta1_deployment_rollback->updated_annotations);
+        apps_v1beta1_deployment_rollback->updated_annotations = NULL;
+    }
     free(apps_v1beta1_deployment_rollback);
 }
 

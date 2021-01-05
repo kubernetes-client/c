@@ -23,13 +23,16 @@ void v1alpha1_overhead_free(v1alpha1_overhead_t *v1alpha1_overhead) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1alpha1_overhead->pod_fixed) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1alpha1_overhead->pod_fixed) {
+        list_ForEach(listEntry, v1alpha1_overhead->pod_fixed) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1alpha1_overhead->pod_fixed);
+        v1alpha1_overhead->pod_fixed = NULL;
     }
-    list_free(v1alpha1_overhead->pod_fixed);
     free(v1alpha1_overhead);
 }
 

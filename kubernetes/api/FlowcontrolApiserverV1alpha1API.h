@@ -95,7 +95,7 @@ FlowcontrolApiserverV1alpha1API_patchPriorityLevelConfigurationStatus(apiClient_
 // read the specified FlowSchema
 //
 v1alpha1_flow_schema_t*
-FlowcontrolApiserverV1alpha1API_readFlowSchema(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+FlowcontrolApiserverV1alpha1API_readFlowSchema(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read status of the specified FlowSchema
@@ -107,7 +107,7 @@ FlowcontrolApiserverV1alpha1API_readFlowSchemaStatus(apiClient_t *apiClient, cha
 // read the specified PriorityLevelConfiguration
 //
 v1alpha1_priority_level_configuration_t*
-FlowcontrolApiserverV1alpha1API_readPriorityLevelConfiguration(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+FlowcontrolApiserverV1alpha1API_readPriorityLevelConfiguration(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read status of the specified PriorityLevelConfiguration

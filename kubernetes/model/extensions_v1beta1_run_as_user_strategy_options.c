@@ -25,11 +25,17 @@ void extensions_v1beta1_run_as_user_strategy_options_free(extensions_v1beta1_run
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, extensions_v1beta1_run_as_user_strategy_options->ranges) {
-        extensions_v1beta1_id_range_free(listEntry->data);
+    if (extensions_v1beta1_run_as_user_strategy_options->ranges) {
+        list_ForEach(listEntry, extensions_v1beta1_run_as_user_strategy_options->ranges) {
+            extensions_v1beta1_id_range_free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_run_as_user_strategy_options->ranges);
+        extensions_v1beta1_run_as_user_strategy_options->ranges = NULL;
     }
-    list_free(extensions_v1beta1_run_as_user_strategy_options->ranges);
-    free(extensions_v1beta1_run_as_user_strategy_options->rule);
+    if (extensions_v1beta1_run_as_user_strategy_options->rule) {
+        free(extensions_v1beta1_run_as_user_strategy_options->rule);
+        extensions_v1beta1_run_as_user_strategy_options->rule = NULL;
+    }
     free(extensions_v1beta1_run_as_user_strategy_options);
 }
 

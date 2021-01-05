@@ -31,11 +31,26 @@ void extensions_v1beta1_scale_free(extensions_v1beta1_scale_t *extensions_v1beta
         return ;
     }
     listEntry_t *listEntry;
-    free(extensions_v1beta1_scale->api_version);
-    free(extensions_v1beta1_scale->kind);
-    v1_object_meta_free(extensions_v1beta1_scale->metadata);
-    extensions_v1beta1_scale_spec_free(extensions_v1beta1_scale->spec);
-    extensions_v1beta1_scale_status_free(extensions_v1beta1_scale->status);
+    if (extensions_v1beta1_scale->api_version) {
+        free(extensions_v1beta1_scale->api_version);
+        extensions_v1beta1_scale->api_version = NULL;
+    }
+    if (extensions_v1beta1_scale->kind) {
+        free(extensions_v1beta1_scale->kind);
+        extensions_v1beta1_scale->kind = NULL;
+    }
+    if (extensions_v1beta1_scale->metadata) {
+        v1_object_meta_free(extensions_v1beta1_scale->metadata);
+        extensions_v1beta1_scale->metadata = NULL;
+    }
+    if (extensions_v1beta1_scale->spec) {
+        extensions_v1beta1_scale_spec_free(extensions_v1beta1_scale->spec);
+        extensions_v1beta1_scale->spec = NULL;
+    }
+    if (extensions_v1beta1_scale->status) {
+        extensions_v1beta1_scale_status_free(extensions_v1beta1_scale->status);
+        extensions_v1beta1_scale->status = NULL;
+    }
     free(extensions_v1beta1_scale);
 }
 

@@ -23,7 +23,10 @@ void v1_container_state_running_free(v1_container_state_running_t *v1_container_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_container_state_running->started_at);
+    if (v1_container_state_running->started_at) {
+        free(v1_container_state_running->started_at);
+        v1_container_state_running->started_at = NULL;
+    }
     free(v1_container_state_running);
 }
 

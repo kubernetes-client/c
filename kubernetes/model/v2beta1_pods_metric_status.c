@@ -27,9 +27,18 @@ void v2beta1_pods_metric_status_free(v2beta1_pods_metric_status_t *v2beta1_pods_
         return ;
     }
     listEntry_t *listEntry;
-    free(v2beta1_pods_metric_status->current_average_value);
-    free(v2beta1_pods_metric_status->metric_name);
-    v1_label_selector_free(v2beta1_pods_metric_status->selector);
+    if (v2beta1_pods_metric_status->current_average_value) {
+        free(v2beta1_pods_metric_status->current_average_value);
+        v2beta1_pods_metric_status->current_average_value = NULL;
+    }
+    if (v2beta1_pods_metric_status->metric_name) {
+        free(v2beta1_pods_metric_status->metric_name);
+        v2beta1_pods_metric_status->metric_name = NULL;
+    }
+    if (v2beta1_pods_metric_status->selector) {
+        v1_label_selector_free(v2beta1_pods_metric_status->selector);
+        v2beta1_pods_metric_status->selector = NULL;
+    }
     free(v2beta1_pods_metric_status);
 }
 

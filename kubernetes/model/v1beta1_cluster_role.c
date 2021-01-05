@@ -31,14 +31,29 @@ void v1beta1_cluster_role_free(v1beta1_cluster_role_t *v1beta1_cluster_role) {
         return ;
     }
     listEntry_t *listEntry;
-    v1beta1_aggregation_rule_free(v1beta1_cluster_role->aggregation_rule);
-    free(v1beta1_cluster_role->api_version);
-    free(v1beta1_cluster_role->kind);
-    v1_object_meta_free(v1beta1_cluster_role->metadata);
-    list_ForEach(listEntry, v1beta1_cluster_role->rules) {
-        v1beta1_policy_rule_free(listEntry->data);
+    if (v1beta1_cluster_role->aggregation_rule) {
+        v1beta1_aggregation_rule_free(v1beta1_cluster_role->aggregation_rule);
+        v1beta1_cluster_role->aggregation_rule = NULL;
     }
-    list_free(v1beta1_cluster_role->rules);
+    if (v1beta1_cluster_role->api_version) {
+        free(v1beta1_cluster_role->api_version);
+        v1beta1_cluster_role->api_version = NULL;
+    }
+    if (v1beta1_cluster_role->kind) {
+        free(v1beta1_cluster_role->kind);
+        v1beta1_cluster_role->kind = NULL;
+    }
+    if (v1beta1_cluster_role->metadata) {
+        v1_object_meta_free(v1beta1_cluster_role->metadata);
+        v1beta1_cluster_role->metadata = NULL;
+    }
+    if (v1beta1_cluster_role->rules) {
+        list_ForEach(listEntry, v1beta1_cluster_role->rules) {
+            v1beta1_policy_rule_free(listEntry->data);
+        }
+        list_free(v1beta1_cluster_role->rules);
+        v1beta1_cluster_role->rules = NULL;
+    }
     free(v1beta1_cluster_role);
 }
 

@@ -25,8 +25,14 @@ void v1_watch_event_free(v1_watch_event_t *v1_watch_event) {
         return ;
     }
     listEntry_t *listEntry;
-    object_free(v1_watch_event->object);
-    free(v1_watch_event->type);
+    if (v1_watch_event->object) {
+        object_free(v1_watch_event->object);
+        v1_watch_event->object = NULL;
+    }
+    if (v1_watch_event->type) {
+        free(v1_watch_event->type);
+        v1_watch_event->type = NULL;
+    }
     free(v1_watch_event);
 }
 

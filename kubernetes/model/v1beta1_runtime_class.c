@@ -33,12 +33,30 @@ void v1beta1_runtime_class_free(v1beta1_runtime_class_t *v1beta1_runtime_class) 
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_runtime_class->api_version);
-    free(v1beta1_runtime_class->handler);
-    free(v1beta1_runtime_class->kind);
-    v1_object_meta_free(v1beta1_runtime_class->metadata);
-    v1beta1_overhead_free(v1beta1_runtime_class->overhead);
-    v1beta1_scheduling_free(v1beta1_runtime_class->scheduling);
+    if (v1beta1_runtime_class->api_version) {
+        free(v1beta1_runtime_class->api_version);
+        v1beta1_runtime_class->api_version = NULL;
+    }
+    if (v1beta1_runtime_class->handler) {
+        free(v1beta1_runtime_class->handler);
+        v1beta1_runtime_class->handler = NULL;
+    }
+    if (v1beta1_runtime_class->kind) {
+        free(v1beta1_runtime_class->kind);
+        v1beta1_runtime_class->kind = NULL;
+    }
+    if (v1beta1_runtime_class->metadata) {
+        v1_object_meta_free(v1beta1_runtime_class->metadata);
+        v1beta1_runtime_class->metadata = NULL;
+    }
+    if (v1beta1_runtime_class->overhead) {
+        v1beta1_overhead_free(v1beta1_runtime_class->overhead);
+        v1beta1_runtime_class->overhead = NULL;
+    }
+    if (v1beta1_runtime_class->scheduling) {
+        v1beta1_scheduling_free(v1beta1_runtime_class->scheduling);
+        v1beta1_runtime_class->scheduling = NULL;
+    }
     free(v1beta1_runtime_class);
 }
 

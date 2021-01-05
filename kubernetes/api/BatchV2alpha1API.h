@@ -15,19 +15,19 @@
 // create a CronJob
 //
 v2alpha1_cron_job_t*
-BatchV2alpha1API_createNamespacedCronJob(apiClient_t *apiClient, char * namespace , v2alpha1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV2alpha1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace , v2alpha1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // delete collection of CronJob
 //
 v1_status_t*
-BatchV2alpha1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+BatchV2alpha1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a CronJob
 //
 v1_status_t*
-BatchV2alpha1API_deleteNamespacedCronJob(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
+BatchV2alpha1API_deleteNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
 // get available resources
@@ -45,42 +45,42 @@ BatchV2alpha1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int allowWa
 // list or watch objects of kind CronJob
 //
 v2alpha1_cron_job_list_t*
-BatchV2alpha1API_listNamespacedCronJob(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+BatchV2alpha1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // partially update the specified CronJob
 //
 v2alpha1_cron_job_t*
-BatchV2alpha1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+BatchV2alpha1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
 
 
 // partially update status of the specified CronJob
 //
 v2alpha1_cron_job_t*
-BatchV2alpha1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+BatchV2alpha1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
 
 
 // read the specified CronJob
 //
 v2alpha1_cron_job_t*
-BatchV2alpha1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export );
+BatchV2alpha1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
 
 
 // read status of the specified CronJob
 //
 v2alpha1_cron_job_t*
-BatchV2alpha1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * namespace , char * pretty );
+BatchV2alpha1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // replace the specified CronJob
 //
 v2alpha1_cron_job_t*
-BatchV2alpha1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char * namespace , v2alpha1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV2alpha1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , v2alpha1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // replace status of the specified CronJob
 //
 v2alpha1_cron_job_t*
-BatchV2alpha1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * namespace , v2alpha1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV2alpha1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v2alpha1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 

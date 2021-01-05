@@ -37,16 +37,37 @@ void v1_rbd_volume_source_free(v1_rbd_volume_source_t *v1_rbd_volume_source) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_rbd_volume_source->fs_type);
-    free(v1_rbd_volume_source->image);
-    free(v1_rbd_volume_source->keyring);
-    list_ForEach(listEntry, v1_rbd_volume_source->monitors) {
-        free(listEntry->data);
+    if (v1_rbd_volume_source->fs_type) {
+        free(v1_rbd_volume_source->fs_type);
+        v1_rbd_volume_source->fs_type = NULL;
     }
-    list_free(v1_rbd_volume_source->monitors);
-    free(v1_rbd_volume_source->pool);
-    v1_local_object_reference_free(v1_rbd_volume_source->secret_ref);
-    free(v1_rbd_volume_source->user);
+    if (v1_rbd_volume_source->image) {
+        free(v1_rbd_volume_source->image);
+        v1_rbd_volume_source->image = NULL;
+    }
+    if (v1_rbd_volume_source->keyring) {
+        free(v1_rbd_volume_source->keyring);
+        v1_rbd_volume_source->keyring = NULL;
+    }
+    if (v1_rbd_volume_source->monitors) {
+        list_ForEach(listEntry, v1_rbd_volume_source->monitors) {
+            free(listEntry->data);
+        }
+        list_free(v1_rbd_volume_source->monitors);
+        v1_rbd_volume_source->monitors = NULL;
+    }
+    if (v1_rbd_volume_source->pool) {
+        free(v1_rbd_volume_source->pool);
+        v1_rbd_volume_source->pool = NULL;
+    }
+    if (v1_rbd_volume_source->secret_ref) {
+        v1_local_object_reference_free(v1_rbd_volume_source->secret_ref);
+        v1_rbd_volume_source->secret_ref = NULL;
+    }
+    if (v1_rbd_volume_source->user) {
+        free(v1_rbd_volume_source->user);
+        v1_rbd_volume_source->user = NULL;
+    }
     free(v1_rbd_volume_source);
 }
 

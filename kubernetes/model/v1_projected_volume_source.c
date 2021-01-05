@@ -25,10 +25,13 @@ void v1_projected_volume_source_free(v1_projected_volume_source_t *v1_projected_
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_projected_volume_source->sources) {
-        v1_volume_projection_free(listEntry->data);
+    if (v1_projected_volume_source->sources) {
+        list_ForEach(listEntry, v1_projected_volume_source->sources) {
+            v1_volume_projection_free(listEntry->data);
+        }
+        list_free(v1_projected_volume_source->sources);
+        v1_projected_volume_source->sources = NULL;
     }
-    list_free(v1_projected_volume_source->sources);
     free(v1_projected_volume_source);
 }
 

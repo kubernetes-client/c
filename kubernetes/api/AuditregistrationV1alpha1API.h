@@ -51,7 +51,7 @@ AuditregistrationV1alpha1API_patchAuditSink(apiClient_t *apiClient, char * name 
 // read the specified AuditSink
 //
 v1alpha1_audit_sink_t*
-AuditregistrationV1alpha1API_readAuditSink(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+AuditregistrationV1alpha1API_readAuditSink(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // replace the specified AuditSink

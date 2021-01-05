@@ -25,11 +25,17 @@ void v1_webhook_conversion_free(v1_webhook_conversion_t *v1_webhook_conversion) 
         return ;
     }
     listEntry_t *listEntry;
-    apiextensions_v1_webhook_client_config_free(v1_webhook_conversion->client_config);
-    list_ForEach(listEntry, v1_webhook_conversion->conversion_review_versions) {
-        free(listEntry->data);
+    if (v1_webhook_conversion->client_config) {
+        apiextensions_v1_webhook_client_config_free(v1_webhook_conversion->client_config);
+        v1_webhook_conversion->client_config = NULL;
     }
-    list_free(v1_webhook_conversion->conversion_review_versions);
+    if (v1_webhook_conversion->conversion_review_versions) {
+        list_ForEach(listEntry, v1_webhook_conversion->conversion_review_versions) {
+            free(listEntry->data);
+        }
+        list_free(v1_webhook_conversion->conversion_review_versions);
+        v1_webhook_conversion->conversion_review_versions = NULL;
+    }
     free(v1_webhook_conversion);
 }
 

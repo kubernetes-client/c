@@ -33,18 +33,36 @@ void v1beta1_endpoint_slice_free(v1beta1_endpoint_slice_t *v1beta1_endpoint_slic
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_endpoint_slice->address_type);
-    free(v1beta1_endpoint_slice->api_version);
-    list_ForEach(listEntry, v1beta1_endpoint_slice->endpoints) {
-        v1beta1_endpoint_free(listEntry->data);
+    if (v1beta1_endpoint_slice->address_type) {
+        free(v1beta1_endpoint_slice->address_type);
+        v1beta1_endpoint_slice->address_type = NULL;
     }
-    list_free(v1beta1_endpoint_slice->endpoints);
-    free(v1beta1_endpoint_slice->kind);
-    v1_object_meta_free(v1beta1_endpoint_slice->metadata);
-    list_ForEach(listEntry, v1beta1_endpoint_slice->ports) {
-        v1beta1_endpoint_port_free(listEntry->data);
+    if (v1beta1_endpoint_slice->api_version) {
+        free(v1beta1_endpoint_slice->api_version);
+        v1beta1_endpoint_slice->api_version = NULL;
     }
-    list_free(v1beta1_endpoint_slice->ports);
+    if (v1beta1_endpoint_slice->endpoints) {
+        list_ForEach(listEntry, v1beta1_endpoint_slice->endpoints) {
+            v1beta1_endpoint_free(listEntry->data);
+        }
+        list_free(v1beta1_endpoint_slice->endpoints);
+        v1beta1_endpoint_slice->endpoints = NULL;
+    }
+    if (v1beta1_endpoint_slice->kind) {
+        free(v1beta1_endpoint_slice->kind);
+        v1beta1_endpoint_slice->kind = NULL;
+    }
+    if (v1beta1_endpoint_slice->metadata) {
+        v1_object_meta_free(v1beta1_endpoint_slice->metadata);
+        v1beta1_endpoint_slice->metadata = NULL;
+    }
+    if (v1beta1_endpoint_slice->ports) {
+        list_ForEach(listEntry, v1beta1_endpoint_slice->ports) {
+            v1beta1_endpoint_port_free(listEntry->data);
+        }
+        list_free(v1beta1_endpoint_slice->ports);
+        v1beta1_endpoint_slice->ports = NULL;
+    }
     free(v1beta1_endpoint_slice);
 }
 

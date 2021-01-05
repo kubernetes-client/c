@@ -29,10 +29,22 @@ void v1beta1_csi_node_free(v1beta1_csi_node_t *v1beta1_csi_node) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_csi_node->api_version);
-    free(v1beta1_csi_node->kind);
-    v1_object_meta_free(v1beta1_csi_node->metadata);
-    v1beta1_csi_node_spec_free(v1beta1_csi_node->spec);
+    if (v1beta1_csi_node->api_version) {
+        free(v1beta1_csi_node->api_version);
+        v1beta1_csi_node->api_version = NULL;
+    }
+    if (v1beta1_csi_node->kind) {
+        free(v1beta1_csi_node->kind);
+        v1beta1_csi_node->kind = NULL;
+    }
+    if (v1beta1_csi_node->metadata) {
+        v1_object_meta_free(v1beta1_csi_node->metadata);
+        v1beta1_csi_node->metadata = NULL;
+    }
+    if (v1beta1_csi_node->spec) {
+        v1beta1_csi_node_spec_free(v1beta1_csi_node->spec);
+        v1beta1_csi_node->spec = NULL;
+    }
     free(v1beta1_csi_node);
 }
 

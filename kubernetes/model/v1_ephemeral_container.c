@@ -67,47 +67,107 @@ void v1_ephemeral_container_free(v1_ephemeral_container_t *v1_ephemeral_containe
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_ephemeral_container->args) {
-        free(listEntry->data);
+    if (v1_ephemeral_container->args) {
+        list_ForEach(listEntry, v1_ephemeral_container->args) {
+            free(listEntry->data);
+        }
+        list_free(v1_ephemeral_container->args);
+        v1_ephemeral_container->args = NULL;
     }
-    list_free(v1_ephemeral_container->args);
-    list_ForEach(listEntry, v1_ephemeral_container->command) {
-        free(listEntry->data);
+    if (v1_ephemeral_container->command) {
+        list_ForEach(listEntry, v1_ephemeral_container->command) {
+            free(listEntry->data);
+        }
+        list_free(v1_ephemeral_container->command);
+        v1_ephemeral_container->command = NULL;
     }
-    list_free(v1_ephemeral_container->command);
-    list_ForEach(listEntry, v1_ephemeral_container->env) {
-        v1_env_var_free(listEntry->data);
+    if (v1_ephemeral_container->env) {
+        list_ForEach(listEntry, v1_ephemeral_container->env) {
+            v1_env_var_free(listEntry->data);
+        }
+        list_free(v1_ephemeral_container->env);
+        v1_ephemeral_container->env = NULL;
     }
-    list_free(v1_ephemeral_container->env);
-    list_ForEach(listEntry, v1_ephemeral_container->env_from) {
-        v1_env_from_source_free(listEntry->data);
+    if (v1_ephemeral_container->env_from) {
+        list_ForEach(listEntry, v1_ephemeral_container->env_from) {
+            v1_env_from_source_free(listEntry->data);
+        }
+        list_free(v1_ephemeral_container->env_from);
+        v1_ephemeral_container->env_from = NULL;
     }
-    list_free(v1_ephemeral_container->env_from);
-    free(v1_ephemeral_container->image);
-    free(v1_ephemeral_container->image_pull_policy);
-    v1_lifecycle_free(v1_ephemeral_container->lifecycle);
-    v1_probe_free(v1_ephemeral_container->liveness_probe);
-    free(v1_ephemeral_container->name);
-    list_ForEach(listEntry, v1_ephemeral_container->ports) {
-        v1_container_port_free(listEntry->data);
+    if (v1_ephemeral_container->image) {
+        free(v1_ephemeral_container->image);
+        v1_ephemeral_container->image = NULL;
     }
-    list_free(v1_ephemeral_container->ports);
-    v1_probe_free(v1_ephemeral_container->readiness_probe);
-    v1_resource_requirements_free(v1_ephemeral_container->resources);
-    v1_security_context_free(v1_ephemeral_container->security_context);
-    v1_probe_free(v1_ephemeral_container->startup_probe);
-    free(v1_ephemeral_container->target_container_name);
-    free(v1_ephemeral_container->termination_message_path);
-    free(v1_ephemeral_container->termination_message_policy);
-    list_ForEach(listEntry, v1_ephemeral_container->volume_devices) {
-        v1_volume_device_free(listEntry->data);
+    if (v1_ephemeral_container->image_pull_policy) {
+        free(v1_ephemeral_container->image_pull_policy);
+        v1_ephemeral_container->image_pull_policy = NULL;
     }
-    list_free(v1_ephemeral_container->volume_devices);
-    list_ForEach(listEntry, v1_ephemeral_container->volume_mounts) {
-        v1_volume_mount_free(listEntry->data);
+    if (v1_ephemeral_container->lifecycle) {
+        v1_lifecycle_free(v1_ephemeral_container->lifecycle);
+        v1_ephemeral_container->lifecycle = NULL;
     }
-    list_free(v1_ephemeral_container->volume_mounts);
-    free(v1_ephemeral_container->working_dir);
+    if (v1_ephemeral_container->liveness_probe) {
+        v1_probe_free(v1_ephemeral_container->liveness_probe);
+        v1_ephemeral_container->liveness_probe = NULL;
+    }
+    if (v1_ephemeral_container->name) {
+        free(v1_ephemeral_container->name);
+        v1_ephemeral_container->name = NULL;
+    }
+    if (v1_ephemeral_container->ports) {
+        list_ForEach(listEntry, v1_ephemeral_container->ports) {
+            v1_container_port_free(listEntry->data);
+        }
+        list_free(v1_ephemeral_container->ports);
+        v1_ephemeral_container->ports = NULL;
+    }
+    if (v1_ephemeral_container->readiness_probe) {
+        v1_probe_free(v1_ephemeral_container->readiness_probe);
+        v1_ephemeral_container->readiness_probe = NULL;
+    }
+    if (v1_ephemeral_container->resources) {
+        v1_resource_requirements_free(v1_ephemeral_container->resources);
+        v1_ephemeral_container->resources = NULL;
+    }
+    if (v1_ephemeral_container->security_context) {
+        v1_security_context_free(v1_ephemeral_container->security_context);
+        v1_ephemeral_container->security_context = NULL;
+    }
+    if (v1_ephemeral_container->startup_probe) {
+        v1_probe_free(v1_ephemeral_container->startup_probe);
+        v1_ephemeral_container->startup_probe = NULL;
+    }
+    if (v1_ephemeral_container->target_container_name) {
+        free(v1_ephemeral_container->target_container_name);
+        v1_ephemeral_container->target_container_name = NULL;
+    }
+    if (v1_ephemeral_container->termination_message_path) {
+        free(v1_ephemeral_container->termination_message_path);
+        v1_ephemeral_container->termination_message_path = NULL;
+    }
+    if (v1_ephemeral_container->termination_message_policy) {
+        free(v1_ephemeral_container->termination_message_policy);
+        v1_ephemeral_container->termination_message_policy = NULL;
+    }
+    if (v1_ephemeral_container->volume_devices) {
+        list_ForEach(listEntry, v1_ephemeral_container->volume_devices) {
+            v1_volume_device_free(listEntry->data);
+        }
+        list_free(v1_ephemeral_container->volume_devices);
+        v1_ephemeral_container->volume_devices = NULL;
+    }
+    if (v1_ephemeral_container->volume_mounts) {
+        list_ForEach(listEntry, v1_ephemeral_container->volume_mounts) {
+            v1_volume_mount_free(listEntry->data);
+        }
+        list_free(v1_ephemeral_container->volume_mounts);
+        v1_ephemeral_container->volume_mounts = NULL;
+    }
+    if (v1_ephemeral_container->working_dir) {
+        free(v1_ephemeral_container->working_dir);
+        v1_ephemeral_container->working_dir = NULL;
+    }
     free(v1_ephemeral_container);
 }
 

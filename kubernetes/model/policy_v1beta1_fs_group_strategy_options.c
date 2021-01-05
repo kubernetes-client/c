@@ -25,11 +25,17 @@ void policy_v1beta1_fs_group_strategy_options_free(policy_v1beta1_fs_group_strat
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, policy_v1beta1_fs_group_strategy_options->ranges) {
-        policy_v1beta1_id_range_free(listEntry->data);
+    if (policy_v1beta1_fs_group_strategy_options->ranges) {
+        list_ForEach(listEntry, policy_v1beta1_fs_group_strategy_options->ranges) {
+            policy_v1beta1_id_range_free(listEntry->data);
+        }
+        list_free(policy_v1beta1_fs_group_strategy_options->ranges);
+        policy_v1beta1_fs_group_strategy_options->ranges = NULL;
     }
-    list_free(policy_v1beta1_fs_group_strategy_options->ranges);
-    free(policy_v1beta1_fs_group_strategy_options->rule);
+    if (policy_v1beta1_fs_group_strategy_options->rule) {
+        free(policy_v1beta1_fs_group_strategy_options->rule);
+        policy_v1beta1_fs_group_strategy_options->rule = NULL;
+    }
     free(policy_v1beta1_fs_group_strategy_options);
 }
 

@@ -29,13 +29,25 @@ void extensions_v1beta1_ingress_list_free(extensions_v1beta1_ingress_list_t *ext
         return ;
     }
     listEntry_t *listEntry;
-    free(extensions_v1beta1_ingress_list->api_version);
-    list_ForEach(listEntry, extensions_v1beta1_ingress_list->items) {
-        extensions_v1beta1_ingress_free(listEntry->data);
+    if (extensions_v1beta1_ingress_list->api_version) {
+        free(extensions_v1beta1_ingress_list->api_version);
+        extensions_v1beta1_ingress_list->api_version = NULL;
     }
-    list_free(extensions_v1beta1_ingress_list->items);
-    free(extensions_v1beta1_ingress_list->kind);
-    v1_list_meta_free(extensions_v1beta1_ingress_list->metadata);
+    if (extensions_v1beta1_ingress_list->items) {
+        list_ForEach(listEntry, extensions_v1beta1_ingress_list->items) {
+            extensions_v1beta1_ingress_free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_ingress_list->items);
+        extensions_v1beta1_ingress_list->items = NULL;
+    }
+    if (extensions_v1beta1_ingress_list->kind) {
+        free(extensions_v1beta1_ingress_list->kind);
+        extensions_v1beta1_ingress_list->kind = NULL;
+    }
+    if (extensions_v1beta1_ingress_list->metadata) {
+        v1_list_meta_free(extensions_v1beta1_ingress_list->metadata);
+        extensions_v1beta1_ingress_list->metadata = NULL;
+    }
     free(extensions_v1beta1_ingress_list);
 }
 

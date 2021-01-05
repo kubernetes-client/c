@@ -27,8 +27,14 @@ void v2beta1_resource_metric_status_free(v2beta1_resource_metric_status_t *v2bet
         return ;
     }
     listEntry_t *listEntry;
-    free(v2beta1_resource_metric_status->current_average_value);
-    free(v2beta1_resource_metric_status->name);
+    if (v2beta1_resource_metric_status->current_average_value) {
+        free(v2beta1_resource_metric_status->current_average_value);
+        v2beta1_resource_metric_status->current_average_value = NULL;
+    }
+    if (v2beta1_resource_metric_status->name) {
+        free(v2beta1_resource_metric_status->name);
+        v2beta1_resource_metric_status->name = NULL;
+    }
     free(v2beta1_resource_metric_status);
 }
 

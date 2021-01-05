@@ -27,9 +27,18 @@ void v1_role_ref_free(v1_role_ref_t *v1_role_ref) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_role_ref->api_group);
-    free(v1_role_ref->kind);
-    free(v1_role_ref->name);
+    if (v1_role_ref->api_group) {
+        free(v1_role_ref->api_group);
+        v1_role_ref->api_group = NULL;
+    }
+    if (v1_role_ref->kind) {
+        free(v1_role_ref->kind);
+        v1_role_ref->kind = NULL;
+    }
+    if (v1_role_ref->name) {
+        free(v1_role_ref->name);
+        v1_role_ref->name = NULL;
+    }
     free(v1_role_ref);
 }
 

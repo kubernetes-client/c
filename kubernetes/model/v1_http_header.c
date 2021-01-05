@@ -25,8 +25,14 @@ void v1_http_header_free(v1_http_header_t *v1_http_header) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_http_header->name);
-    free(v1_http_header->value);
+    if (v1_http_header->name) {
+        free(v1_http_header->name);
+        v1_http_header->name = NULL;
+    }
+    if (v1_http_header->value) {
+        free(v1_http_header->value);
+        v1_http_header->value = NULL;
+    }
     free(v1_http_header);
 }
 

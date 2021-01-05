@@ -29,13 +29,25 @@ void v1beta1_certificate_signing_request_list_free(v1beta1_certificate_signing_r
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_certificate_signing_request_list->api_version);
-    list_ForEach(listEntry, v1beta1_certificate_signing_request_list->items) {
-        v1beta1_certificate_signing_request_free(listEntry->data);
+    if (v1beta1_certificate_signing_request_list->api_version) {
+        free(v1beta1_certificate_signing_request_list->api_version);
+        v1beta1_certificate_signing_request_list->api_version = NULL;
     }
-    list_free(v1beta1_certificate_signing_request_list->items);
-    free(v1beta1_certificate_signing_request_list->kind);
-    v1_list_meta_free(v1beta1_certificate_signing_request_list->metadata);
+    if (v1beta1_certificate_signing_request_list->items) {
+        list_ForEach(listEntry, v1beta1_certificate_signing_request_list->items) {
+            v1beta1_certificate_signing_request_free(listEntry->data);
+        }
+        list_free(v1beta1_certificate_signing_request_list->items);
+        v1beta1_certificate_signing_request_list->items = NULL;
+    }
+    if (v1beta1_certificate_signing_request_list->kind) {
+        free(v1beta1_certificate_signing_request_list->kind);
+        v1beta1_certificate_signing_request_list->kind = NULL;
+    }
+    if (v1beta1_certificate_signing_request_list->metadata) {
+        v1_list_meta_free(v1beta1_certificate_signing_request_list->metadata);
+        v1beta1_certificate_signing_request_list->metadata = NULL;
+    }
     free(v1beta1_certificate_signing_request_list);
 }
 

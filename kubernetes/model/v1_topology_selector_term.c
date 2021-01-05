@@ -23,10 +23,13 @@ void v1_topology_selector_term_free(v1_topology_selector_term_t *v1_topology_sel
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_topology_selector_term->match_label_expressions) {
-        v1_topology_selector_label_requirement_free(listEntry->data);
+    if (v1_topology_selector_term->match_label_expressions) {
+        list_ForEach(listEntry, v1_topology_selector_term->match_label_expressions) {
+            v1_topology_selector_label_requirement_free(listEntry->data);
+        }
+        list_free(v1_topology_selector_term->match_label_expressions);
+        v1_topology_selector_term->match_label_expressions = NULL;
     }
-    list_free(v1_topology_selector_term->match_label_expressions);
     free(v1_topology_selector_term);
 }
 

@@ -25,7 +25,10 @@ void v1_persistent_volume_claim_volume_source_free(v1_persistent_volume_claim_vo
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_persistent_volume_claim_volume_source->claim_name);
+    if (v1_persistent_volume_claim_volume_source->claim_name) {
+        free(v1_persistent_volume_claim_volume_source->claim_name);
+        v1_persistent_volume_claim_volume_source->claim_name = NULL;
+    }
     free(v1_persistent_volume_claim_volume_source);
 }
 

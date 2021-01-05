@@ -27,11 +27,17 @@ void v1_config_map_projection_free(v1_config_map_projection_t *v1_config_map_pro
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_config_map_projection->items) {
-        v1_key_to_path_free(listEntry->data);
+    if (v1_config_map_projection->items) {
+        list_ForEach(listEntry, v1_config_map_projection->items) {
+            v1_key_to_path_free(listEntry->data);
+        }
+        list_free(v1_config_map_projection->items);
+        v1_config_map_projection->items = NULL;
     }
-    list_free(v1_config_map_projection->items);
-    free(v1_config_map_projection->name);
+    if (v1_config_map_projection->name) {
+        free(v1_config_map_projection->name);
+        v1_config_map_projection->name = NULL;
+    }
     free(v1_config_map_projection);
 }
 

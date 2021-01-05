@@ -10,7 +10,7 @@ v1_object_reference_t *v1_object_reference_create(
     char *field_path,
     char *kind,
     char *name,
-    char *namespace,
+    char *_namespace,
     char *resource_version,
     char *uid
     ) {
@@ -22,7 +22,7 @@ v1_object_reference_t *v1_object_reference_create(
     v1_object_reference_local_var->field_path = field_path;
     v1_object_reference_local_var->kind = kind;
     v1_object_reference_local_var->name = name;
-    v1_object_reference_local_var->namespace = namespace;
+    v1_object_reference_local_var->_namespace = _namespace;
     v1_object_reference_local_var->resource_version = resource_version;
     v1_object_reference_local_var->uid = uid;
 
@@ -35,13 +35,34 @@ void v1_object_reference_free(v1_object_reference_t *v1_object_reference) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_object_reference->api_version);
-    free(v1_object_reference->field_path);
-    free(v1_object_reference->kind);
-    free(v1_object_reference->name);
-    free(v1_object_reference->namespace);
-    free(v1_object_reference->resource_version);
-    free(v1_object_reference->uid);
+    if (v1_object_reference->api_version) {
+        free(v1_object_reference->api_version);
+        v1_object_reference->api_version = NULL;
+    }
+    if (v1_object_reference->field_path) {
+        free(v1_object_reference->field_path);
+        v1_object_reference->field_path = NULL;
+    }
+    if (v1_object_reference->kind) {
+        free(v1_object_reference->kind);
+        v1_object_reference->kind = NULL;
+    }
+    if (v1_object_reference->name) {
+        free(v1_object_reference->name);
+        v1_object_reference->name = NULL;
+    }
+    if (v1_object_reference->_namespace) {
+        free(v1_object_reference->_namespace);
+        v1_object_reference->_namespace = NULL;
+    }
+    if (v1_object_reference->resource_version) {
+        free(v1_object_reference->resource_version);
+        v1_object_reference->resource_version = NULL;
+    }
+    if (v1_object_reference->uid) {
+        free(v1_object_reference->uid);
+        v1_object_reference->uid = NULL;
+    }
     free(v1_object_reference);
 }
 
@@ -80,9 +101,9 @@ cJSON *v1_object_reference_convertToJSON(v1_object_reference_t *v1_object_refere
      } 
 
 
-    // v1_object_reference->namespace
-    if(v1_object_reference->namespace) { 
-    if(cJSON_AddStringToObject(item, "namespace", v1_object_reference->namespace) == NULL) {
+    // v1_object_reference->_namespace
+    if(v1_object_reference->_namespace) { 
+    if(cJSON_AddStringToObject(item, "namespace", v1_object_reference->_namespace) == NULL) {
     goto fail; //String
     }
      } 
@@ -151,10 +172,10 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
     }
     }
 
-    // v1_object_reference->namespace
-    cJSON *namespace = cJSON_GetObjectItemCaseSensitive(v1_object_referenceJSON, "namespace");
-    if (namespace) { 
-    if(!cJSON_IsString(namespace))
+    // v1_object_reference->_namespace
+    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_object_referenceJSON, "namespace");
+    if (_namespace) { 
+    if(!cJSON_IsString(_namespace))
     {
     goto end; //String
     }
@@ -184,7 +205,7 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
         field_path ? strdup(field_path->valuestring) : NULL,
         kind ? strdup(kind->valuestring) : NULL,
         name ? strdup(name->valuestring) : NULL,
-        namespace ? strdup(namespace->valuestring) : NULL,
+        _namespace ? strdup(_namespace->valuestring) : NULL,
         resource_version ? strdup(resource_version->valuestring) : NULL,
         uid ? strdup(uid->valuestring) : NULL
         );

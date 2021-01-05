@@ -29,8 +29,14 @@ void v1_gce_persistent_disk_volume_source_free(v1_gce_persistent_disk_volume_sou
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_gce_persistent_disk_volume_source->fs_type);
-    free(v1_gce_persistent_disk_volume_source->pd_name);
+    if (v1_gce_persistent_disk_volume_source->fs_type) {
+        free(v1_gce_persistent_disk_volume_source->fs_type);
+        v1_gce_persistent_disk_volume_source->fs_type = NULL;
+    }
+    if (v1_gce_persistent_disk_volume_source->pd_name) {
+        free(v1_gce_persistent_disk_volume_source->pd_name);
+        v1_gce_persistent_disk_volume_source->pd_name = NULL;
+    }
     free(v1_gce_persistent_disk_volume_source);
 }
 

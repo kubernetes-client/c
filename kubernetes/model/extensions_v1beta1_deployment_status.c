@@ -37,10 +37,13 @@ void extensions_v1beta1_deployment_status_free(extensions_v1beta1_deployment_sta
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, extensions_v1beta1_deployment_status->conditions) {
-        extensions_v1beta1_deployment_condition_free(listEntry->data);
+    if (extensions_v1beta1_deployment_status->conditions) {
+        list_ForEach(listEntry, extensions_v1beta1_deployment_status->conditions) {
+            extensions_v1beta1_deployment_condition_free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_deployment_status->conditions);
+        extensions_v1beta1_deployment_status->conditions = NULL;
     }
-    list_free(extensions_v1beta1_deployment_status->conditions);
     free(extensions_v1beta1_deployment_status);
 }
 

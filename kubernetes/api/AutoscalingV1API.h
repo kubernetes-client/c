@@ -15,19 +15,19 @@
 // create a HorizontalPodAutoscaler
 //
 v1_horizontal_pod_autoscaler_t*
-AutoscalingV1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * namespace , v1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager );
+AutoscalingV1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , v1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // delete collection of HorizontalPodAutoscaler
 //
 v1_status_t*
-AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a HorizontalPodAutoscaler
 //
 v1_status_t*
-AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
+AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
 // get available resources
@@ -45,42 +45,42 @@ AutoscalingV1API_listHorizontalPodAutoscalerForAllNamespaces(apiClient_t *apiCli
 // list or watch objects of kind HorizontalPodAutoscaler
 //
 v1_horizontal_pod_autoscaler_list_t*
-AutoscalingV1API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+AutoscalingV1API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // partially update the specified HorizontalPodAutoscaler
 //
 v1_horizontal_pod_autoscaler_t*
-AutoscalingV1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AutoscalingV1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
 
 
 // partially update status of the specified HorizontalPodAutoscaler
 //
 v1_horizontal_pod_autoscaler_t*
-AutoscalingV1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AutoscalingV1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
 
 
 // read the specified HorizontalPodAutoscaler
 //
 v1_horizontal_pod_autoscaler_t*
-AutoscalingV1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export );
+AutoscalingV1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
 
 
 // read status of the specified HorizontalPodAutoscaler
 //
 v1_horizontal_pod_autoscaler_t*
-AutoscalingV1API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * namespace , char * pretty );
+AutoscalingV1API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // replace the specified HorizontalPodAutoscaler
 //
 v1_horizontal_pod_autoscaler_t*
-AutoscalingV1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * namespace , v1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager );
+AutoscalingV1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , v1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // replace status of the specified HorizontalPodAutoscaler
 //
 v1_horizontal_pod_autoscaler_t*
-AutoscalingV1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * namespace , v1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager );
+AutoscalingV1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 

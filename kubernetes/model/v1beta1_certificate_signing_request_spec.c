@@ -33,23 +33,38 @@ void v1beta1_certificate_signing_request_spec_free(v1beta1_certificate_signing_r
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_certificate_signing_request_spec->extra) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta1_certificate_signing_request_spec->extra) {
+        list_ForEach(listEntry, v1beta1_certificate_signing_request_spec->extra) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta1_certificate_signing_request_spec->extra);
+        v1beta1_certificate_signing_request_spec->extra = NULL;
     }
-    list_free(v1beta1_certificate_signing_request_spec->extra);
-    list_ForEach(listEntry, v1beta1_certificate_signing_request_spec->groups) {
-        free(listEntry->data);
+    if (v1beta1_certificate_signing_request_spec->groups) {
+        list_ForEach(listEntry, v1beta1_certificate_signing_request_spec->groups) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_certificate_signing_request_spec->groups);
+        v1beta1_certificate_signing_request_spec->groups = NULL;
     }
-    list_free(v1beta1_certificate_signing_request_spec->groups);
-    free(v1beta1_certificate_signing_request_spec->uid);
-    list_ForEach(listEntry, v1beta1_certificate_signing_request_spec->usages) {
-        free(listEntry->data);
+    if (v1beta1_certificate_signing_request_spec->uid) {
+        free(v1beta1_certificate_signing_request_spec->uid);
+        v1beta1_certificate_signing_request_spec->uid = NULL;
     }
-    list_free(v1beta1_certificate_signing_request_spec->usages);
-    free(v1beta1_certificate_signing_request_spec->username);
+    if (v1beta1_certificate_signing_request_spec->usages) {
+        list_ForEach(listEntry, v1beta1_certificate_signing_request_spec->usages) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_certificate_signing_request_spec->usages);
+        v1beta1_certificate_signing_request_spec->usages = NULL;
+    }
+    if (v1beta1_certificate_signing_request_spec->username) {
+        free(v1beta1_certificate_signing_request_spec->username);
+        v1beta1_certificate_signing_request_spec->username = NULL;
+    }
     free(v1beta1_certificate_signing_request_spec);
 }
 

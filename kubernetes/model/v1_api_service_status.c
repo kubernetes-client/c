@@ -23,10 +23,13 @@ void v1_api_service_status_free(v1_api_service_status_t *v1_api_service_status) 
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_api_service_status->conditions) {
-        v1_api_service_condition_free(listEntry->data);
+    if (v1_api_service_status->conditions) {
+        list_ForEach(listEntry, v1_api_service_status->conditions) {
+            v1_api_service_condition_free(listEntry->data);
+        }
+        list_free(v1_api_service_status->conditions);
+        v1_api_service_status->conditions = NULL;
     }
-    list_free(v1_api_service_status->conditions);
     free(v1_api_service_status);
 }
 

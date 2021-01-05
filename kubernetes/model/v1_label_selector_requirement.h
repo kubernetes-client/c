@@ -20,14 +20,14 @@ typedef struct v1_label_selector_requirement_t v1_label_selector_requirement_t;
 
 typedef struct v1_label_selector_requirement_t {
     char *key; // string
-    char *operator; // string
+    char *_operator; // string
     list_t *values; //primitive container
 
 } v1_label_selector_requirement_t;
 
 v1_label_selector_requirement_t *v1_label_selector_requirement_create(
     char *key,
-    char *operator,
+    char *_operator,
     list_t *values
 );
 

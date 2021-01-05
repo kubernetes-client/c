@@ -25,8 +25,14 @@ void v1alpha1_audit_sink_spec_free(v1alpha1_audit_sink_spec_t *v1alpha1_audit_si
         return ;
     }
     listEntry_t *listEntry;
-    v1alpha1_policy_free(v1alpha1_audit_sink_spec->policy);
-    v1alpha1_webhook_free(v1alpha1_audit_sink_spec->webhook);
+    if (v1alpha1_audit_sink_spec->policy) {
+        v1alpha1_policy_free(v1alpha1_audit_sink_spec->policy);
+        v1alpha1_audit_sink_spec->policy = NULL;
+    }
+    if (v1alpha1_audit_sink_spec->webhook) {
+        v1alpha1_webhook_free(v1alpha1_audit_sink_spec->webhook);
+        v1alpha1_audit_sink_spec->webhook = NULL;
+    }
     free(v1alpha1_audit_sink_spec);
 }
 

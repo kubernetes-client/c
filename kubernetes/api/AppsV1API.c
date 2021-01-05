@@ -15,7 +15,7 @@
 // create a ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_createNamespacedControllerRevision(apiClient_t *apiClient, char * namespace , v1_controller_revision_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_createNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , v1_controller_revision_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -31,14 +31,14 @@ AppsV1API_createNamespacedControllerRevision(apiClient_t *apiClient, char * name
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -131,7 +131,7 @@ AppsV1API_createNamespacedControllerRevision(apiClient_t *apiClient, char * name
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -183,7 +183,7 @@ end:
 // create a DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -199,14 +199,14 @@ AppsV1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , v
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -299,7 +299,7 @@ AppsV1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , v
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -351,7 +351,7 @@ end:
 // create a Deployment
 //
 v1_deployment_t*
-AppsV1API_createNamespacedDeployment(apiClient_t *apiClient, char * namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_createNamespacedDeployment(apiClient_t *apiClient, char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -367,14 +367,14 @@ AppsV1API_createNamespacedDeployment(apiClient_t *apiClient, char * namespace , 
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -467,7 +467,7 @@ AppsV1API_createNamespacedDeployment(apiClient_t *apiClient, char * namespace , 
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -519,7 +519,7 @@ end:
 // create a ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -535,14 +535,14 @@ AppsV1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , 
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -635,7 +635,7 @@ AppsV1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , 
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -687,7 +687,7 @@ end:
 // create a StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_createNamespacedStatefulSet(apiClient_t *apiClient, char * namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_createNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -703,14 +703,14 @@ AppsV1API_createNamespacedStatefulSet(apiClient_t *apiClient, char * namespace ,
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -803,7 +803,7 @@ AppsV1API_createNamespacedStatefulSet(apiClient_t *apiClient, char * namespace ,
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -855,7 +855,7 @@ end:
 // delete collection of ControllerRevision
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -871,14 +871,14 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -1065,7 +1065,7 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -1213,7 +1213,7 @@ end:
 // delete collection of DaemonSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1229,14 +1229,14 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * nam
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -1423,7 +1423,7 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * nam
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -1571,7 +1571,7 @@ end:
 // delete collection of Deployment
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1587,14 +1587,14 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * na
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -1781,7 +1781,7 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * na
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -1929,7 +1929,7 @@ end:
 // delete collection of ReplicaSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1945,14 +1945,14 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * na
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -2139,7 +2139,7 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * na
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -2287,7 +2287,7 @@ end:
 // delete collection of StatefulSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2303,14 +2303,14 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * n
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -2497,7 +2497,7 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * n
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -2645,7 +2645,7 @@ end:
 // delete a ControllerRevision
 //
 v1_status_t*
-AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2661,7 +2661,7 @@ AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -2671,14 +2671,14 @@ AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -2795,7 +2795,7 @@ AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -2871,7 +2871,7 @@ end:
 // delete a DaemonSet
 //
 v1_status_t*
-AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2887,7 +2887,7 @@ AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char *
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -2897,14 +2897,14 @@ AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -3021,7 +3021,7 @@ AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char *
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -3097,7 +3097,7 @@ end:
 // delete a Deployment
 //
 v1_status_t*
-AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3113,7 +3113,7 @@ AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -3123,14 +3123,14 @@ AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -3247,7 +3247,7 @@ AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -3323,7 +3323,7 @@ end:
 // delete a ReplicaSet
 //
 v1_status_t*
-AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3339,7 +3339,7 @@ AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -3349,14 +3349,14 @@ AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -3473,7 +3473,7 @@ AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -3549,7 +3549,7 @@ end:
 // delete a StatefulSet
 //
 v1_status_t*
-AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3565,7 +3565,7 @@ AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -3575,14 +3575,14 @@ AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -3699,7 +3699,7 @@ AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -4701,7 +4701,7 @@ end:
 // list or watch objects of kind ControllerRevision
 //
 v1_controller_revision_list_t*
-AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -4717,14 +4717,14 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * namesp
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -4880,7 +4880,7 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * namesp
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -4999,7 +4999,7 @@ end:
 // list or watch objects of kind DaemonSet
 //
 v1_daemon_set_list_t*
-AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -5015,14 +5015,14 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , cha
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -5178,7 +5178,7 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * namespace , cha
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -5297,7 +5297,7 @@ end:
 // list or watch objects of kind Deployment
 //
 v1_deployment_list_t*
-AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -5313,14 +5313,14 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * namespace , ch
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -5476,7 +5476,7 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * namespace , ch
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -5595,7 +5595,7 @@ end:
 // list or watch objects of kind ReplicaSet
 //
 v1_replica_set_list_t*
-AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -5611,14 +5611,14 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , ch
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -5774,7 +5774,7 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * namespace , ch
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -5893,7 +5893,7 @@ end:
 // list or watch objects of kind StatefulSet
 //
 v1_stateful_set_list_t*
-AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -5909,14 +5909,14 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * namespace , c
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -6072,7 +6072,7 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * namespace , c
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -6765,7 +6765,7 @@ end:
 // partially update the specified ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -6781,7 +6781,7 @@ AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -6791,14 +6791,14 @@ AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -6903,7 +6903,7 @@ AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name 
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -6967,7 +6967,7 @@ end:
 // partially update the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -6983,7 +6983,7 @@ AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -6993,14 +6993,14 @@ AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -7105,7 +7105,7 @@ AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * 
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -7169,7 +7169,7 @@ end:
 // partially update status of the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -7185,7 +7185,7 @@ AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , c
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -7195,14 +7195,14 @@ AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -7307,7 +7307,7 @@ AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , c
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -7371,7 +7371,7 @@ end:
 // partially update the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -7387,7 +7387,7 @@ AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char *
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -7397,14 +7397,14 @@ AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -7509,7 +7509,7 @@ AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char *
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -7573,7 +7573,7 @@ end:
 // partially update scale of the specified Deployment
 //
 v1_scale_t*
-AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -7589,7 +7589,7 @@ AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , c
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -7599,14 +7599,14 @@ AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -7711,7 +7711,7 @@ AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , c
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -7775,7 +7775,7 @@ end:
 // partially update status of the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -7791,7 +7791,7 @@ AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -7801,14 +7801,14 @@ AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -7913,7 +7913,7 @@ AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , 
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -7977,7 +7977,7 @@ end:
 // partially update the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -7993,7 +7993,7 @@ AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char *
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -8003,14 +8003,14 @@ AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -8115,7 +8115,7 @@ AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char *
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -8179,7 +8179,7 @@ end:
 // partially update scale of the specified ReplicaSet
 //
 v1_scale_t*
-AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -8195,7 +8195,7 @@ AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , c
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -8205,14 +8205,14 @@ AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -8317,7 +8317,7 @@ AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , c
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -8381,7 +8381,7 @@ end:
 // partially update status of the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -8397,7 +8397,7 @@ AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -8407,14 +8407,14 @@ AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -8519,7 +8519,7 @@ AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , 
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -8583,7 +8583,7 @@ end:
 // partially update the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -8599,7 +8599,7 @@ AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -8609,14 +8609,14 @@ AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -8721,7 +8721,7 @@ AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char 
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -8785,7 +8785,7 @@ end:
 // partially update scale of the specified StatefulSet
 //
 v1_scale_t*
-AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -8801,7 +8801,7 @@ AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -8811,14 +8811,14 @@ AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -8923,7 +8923,7 @@ AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , 
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -8987,7 +8987,7 @@ end:
 // partially update status of the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -9003,7 +9003,7 @@ AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name ,
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -9013,14 +9013,14 @@ AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name ,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -9125,7 +9125,7 @@ AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name ,
     list_free(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -9189,7 +9189,7 @@ end:
 // read the specified ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export )
+AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -9205,7 +9205,7 @@ AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name ,
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -9215,14 +9215,14 @@ AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name ,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -9252,16 +9252,16 @@ AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name ,
     }
 
     // query parameters
-    char *keyQuery_export = NULL;
-    char * valueQuery_export = NULL;
-    keyValuePair_t *keyPairQuery_export = 0;
-    if (export)
+    char *keyQuery__export = NULL;
+    char * valueQuery__export = NULL;
+    keyValuePair_t *keyPairQuery__export = 0;
+    if (_export)
     {
-        keyQuery_export = strdup("export");
-        valueQuery_export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_export, MAX_NUMBER_LENGTH, "%d", export);
-        keyPairQuery_export = keyValuePair_create(keyQuery_export, valueQuery_export);
-        list_addElement(localVarQueryParameters,keyPairQuery_export);
+        keyQuery__export = strdup("export");
+        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
+        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
+        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -9303,7 +9303,7 @@ AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name ,
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -9328,17 +9328,17 @@ AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name ,
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
     }
-    if(keyQuery_export){
-        free(keyQuery_export);
-        keyQuery_export = NULL;
+    if(keyQuery__export){
+        free(keyQuery__export);
+        keyQuery__export = NULL;
     }
-    if(valueQuery_export){
-        free(valueQuery_export);
-        valueQuery_export = NULL;
+    if(valueQuery__export){
+        free(valueQuery__export);
+        valueQuery__export = NULL;
     }
-    if(keyPairQuery_export){
-        keyValuePair_free(keyPairQuery_export);
-        keyPairQuery_export = NULL;
+    if(keyPairQuery__export){
+        keyValuePair_free(keyPairQuery__export);
+        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -9350,7 +9350,7 @@ end:
 // read the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export )
+AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -9366,7 +9366,7 @@ AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * n
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -9376,14 +9376,14 @@ AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * n
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -9413,16 +9413,16 @@ AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * n
     }
 
     // query parameters
-    char *keyQuery_export = NULL;
-    char * valueQuery_export = NULL;
-    keyValuePair_t *keyPairQuery_export = 0;
-    if (export)
+    char *keyQuery__export = NULL;
+    char * valueQuery__export = NULL;
+    keyValuePair_t *keyPairQuery__export = 0;
+    if (_export)
     {
-        keyQuery_export = strdup("export");
-        valueQuery_export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_export, MAX_NUMBER_LENGTH, "%d", export);
-        keyPairQuery_export = keyValuePair_create(keyQuery_export, valueQuery_export);
-        list_addElement(localVarQueryParameters,keyPairQuery_export);
+        keyQuery__export = strdup("export");
+        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
+        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
+        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -9464,7 +9464,7 @@ AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * n
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -9489,17 +9489,17 @@ AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * n
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
     }
-    if(keyQuery_export){
-        free(keyQuery_export);
-        keyQuery_export = NULL;
+    if(keyQuery__export){
+        free(keyQuery__export);
+        keyQuery__export = NULL;
     }
-    if(valueQuery_export){
-        free(valueQuery_export);
-        valueQuery_export = NULL;
+    if(valueQuery__export){
+        free(valueQuery__export);
+        valueQuery__export = NULL;
     }
-    if(keyPairQuery_export){
-        keyValuePair_free(keyPairQuery_export);
-        keyPairQuery_export = NULL;
+    if(keyPairQuery__export){
+        keyValuePair_free(keyPairQuery__export);
+        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -9511,7 +9511,7 @@ end:
 // read status of the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_readNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * namespace , char * pretty )
+AppsV1API_readNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -9527,7 +9527,7 @@ AppsV1API_readNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , ch
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -9537,14 +9537,14 @@ AppsV1API_readNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , ch
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -9599,7 +9599,7 @@ AppsV1API_readNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , ch
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -9622,7 +9622,7 @@ end:
 // read the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export )
+AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -9638,7 +9638,7 @@ AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -9648,14 +9648,14 @@ AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -9685,16 +9685,16 @@ AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * 
     }
 
     // query parameters
-    char *keyQuery_export = NULL;
-    char * valueQuery_export = NULL;
-    keyValuePair_t *keyPairQuery_export = 0;
-    if (export)
+    char *keyQuery__export = NULL;
+    char * valueQuery__export = NULL;
+    keyValuePair_t *keyPairQuery__export = 0;
+    if (_export)
     {
-        keyQuery_export = strdup("export");
-        valueQuery_export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_export, MAX_NUMBER_LENGTH, "%d", export);
-        keyPairQuery_export = keyValuePair_create(keyQuery_export, valueQuery_export);
-        list_addElement(localVarQueryParameters,keyPairQuery_export);
+        keyQuery__export = strdup("export");
+        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
+        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
+        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -9736,7 +9736,7 @@ AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -9761,17 +9761,17 @@ AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * 
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
     }
-    if(keyQuery_export){
-        free(keyQuery_export);
-        keyQuery_export = NULL;
+    if(keyQuery__export){
+        free(keyQuery__export);
+        keyQuery__export = NULL;
     }
-    if(valueQuery_export){
-        free(valueQuery_export);
-        valueQuery_export = NULL;
+    if(valueQuery__export){
+        free(valueQuery__export);
+        valueQuery__export = NULL;
     }
-    if(keyPairQuery_export){
-        keyValuePair_free(keyPairQuery_export);
-        keyPairQuery_export = NULL;
+    if(keyPairQuery__export){
+        keyValuePair_free(keyPairQuery__export);
+        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -9783,7 +9783,7 @@ end:
 // read scale of the specified Deployment
 //
 v1_scale_t*
-AppsV1API_readNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * namespace , char * pretty )
+AppsV1API_readNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -9799,7 +9799,7 @@ AppsV1API_readNamespacedDeploymentScale(apiClient_t *apiClient, char * name , ch
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -9809,14 +9809,14 @@ AppsV1API_readNamespacedDeploymentScale(apiClient_t *apiClient, char * name , ch
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -9871,7 +9871,7 @@ AppsV1API_readNamespacedDeploymentScale(apiClient_t *apiClient, char * name , ch
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -9894,7 +9894,7 @@ end:
 // read status of the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_readNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * namespace , char * pretty )
+AppsV1API_readNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -9910,7 +9910,7 @@ AppsV1API_readNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , c
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -9920,14 +9920,14 @@ AppsV1API_readNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -9982,7 +9982,7 @@ AppsV1API_readNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , c
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -10005,7 +10005,7 @@ end:
 // read the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export )
+AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10021,7 +10021,7 @@ AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -10031,14 +10031,14 @@ AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -10068,16 +10068,16 @@ AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * 
     }
 
     // query parameters
-    char *keyQuery_export = NULL;
-    char * valueQuery_export = NULL;
-    keyValuePair_t *keyPairQuery_export = 0;
-    if (export)
+    char *keyQuery__export = NULL;
+    char * valueQuery__export = NULL;
+    keyValuePair_t *keyPairQuery__export = 0;
+    if (_export)
     {
-        keyQuery_export = strdup("export");
-        valueQuery_export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_export, MAX_NUMBER_LENGTH, "%d", export);
-        keyPairQuery_export = keyValuePair_create(keyQuery_export, valueQuery_export);
-        list_addElement(localVarQueryParameters,keyPairQuery_export);
+        keyQuery__export = strdup("export");
+        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
+        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
+        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -10119,7 +10119,7 @@ AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -10144,17 +10144,17 @@ AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * 
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
     }
-    if(keyQuery_export){
-        free(keyQuery_export);
-        keyQuery_export = NULL;
+    if(keyQuery__export){
+        free(keyQuery__export);
+        keyQuery__export = NULL;
     }
-    if(valueQuery_export){
-        free(valueQuery_export);
-        valueQuery_export = NULL;
+    if(valueQuery__export){
+        free(valueQuery__export);
+        valueQuery__export = NULL;
     }
-    if(keyPairQuery_export){
-        keyValuePair_free(keyPairQuery_export);
-        keyPairQuery_export = NULL;
+    if(keyPairQuery__export){
+        keyValuePair_free(keyPairQuery__export);
+        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -10166,7 +10166,7 @@ end:
 // read scale of the specified ReplicaSet
 //
 v1_scale_t*
-AppsV1API_readNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * namespace , char * pretty )
+AppsV1API_readNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10182,7 +10182,7 @@ AppsV1API_readNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , ch
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -10192,14 +10192,14 @@ AppsV1API_readNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , ch
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -10254,7 +10254,7 @@ AppsV1API_readNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , ch
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -10277,7 +10277,7 @@ end:
 // read status of the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_readNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * namespace , char * pretty )
+AppsV1API_readNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10293,7 +10293,7 @@ AppsV1API_readNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , c
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -10303,14 +10303,14 @@ AppsV1API_readNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -10365,7 +10365,7 @@ AppsV1API_readNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , c
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -10388,7 +10388,7 @@ end:
 // read the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * namespace , char * pretty , int exact , int export )
+AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10404,7 +10404,7 @@ AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char *
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -10414,14 +10414,14 @@ AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -10451,16 +10451,16 @@ AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char *
     }
 
     // query parameters
-    char *keyQuery_export = NULL;
-    char * valueQuery_export = NULL;
-    keyValuePair_t *keyPairQuery_export = 0;
-    if (export)
+    char *keyQuery__export = NULL;
+    char * valueQuery__export = NULL;
+    keyValuePair_t *keyPairQuery__export = 0;
+    if (_export)
     {
-        keyQuery_export = strdup("export");
-        valueQuery_export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_export, MAX_NUMBER_LENGTH, "%d", export);
-        keyPairQuery_export = keyValuePair_create(keyQuery_export, valueQuery_export);
-        list_addElement(localVarQueryParameters,keyPairQuery_export);
+        keyQuery__export = strdup("export");
+        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
+        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
+        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -10502,7 +10502,7 @@ AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char *
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -10527,17 +10527,17 @@ AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char *
         keyValuePair_free(keyPairQuery_exact);
         keyPairQuery_exact = NULL;
     }
-    if(keyQuery_export){
-        free(keyQuery_export);
-        keyQuery_export = NULL;
+    if(keyQuery__export){
+        free(keyQuery__export);
+        keyQuery__export = NULL;
     }
-    if(valueQuery_export){
-        free(valueQuery_export);
-        valueQuery_export = NULL;
+    if(valueQuery__export){
+        free(valueQuery__export);
+        valueQuery__export = NULL;
     }
-    if(keyPairQuery_export){
-        keyValuePair_free(keyPairQuery_export);
-        keyPairQuery_export = NULL;
+    if(keyPairQuery__export){
+        keyValuePair_free(keyPairQuery__export);
+        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -10549,7 +10549,7 @@ end:
 // read scale of the specified StatefulSet
 //
 v1_scale_t*
-AppsV1API_readNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * namespace , char * pretty )
+AppsV1API_readNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10565,7 +10565,7 @@ AppsV1API_readNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , c
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -10575,14 +10575,14 @@ AppsV1API_readNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -10637,7 +10637,7 @@ AppsV1API_readNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , c
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -10660,7 +10660,7 @@ end:
 // read status of the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_readNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * namespace , char * pretty )
+AppsV1API_readNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10676,7 +10676,7 @@ AppsV1API_readNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -10686,14 +10686,14 @@ AppsV1API_readNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -10748,7 +10748,7 @@ AppsV1API_readNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -10771,7 +10771,7 @@ end:
 // replace the specified ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_replaceNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * namespace , v1_controller_revision_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , v1_controller_revision_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10787,7 +10787,7 @@ AppsV1API_replaceNamespacedControllerRevision(apiClient_t *apiClient, char * nam
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -10797,14 +10797,14 @@ AppsV1API_replaceNamespacedControllerRevision(apiClient_t *apiClient, char * nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -10895,7 +10895,7 @@ AppsV1API_replaceNamespacedControllerRevision(apiClient_t *apiClient, char * nam
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -10947,7 +10947,7 @@ end:
 // replace the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10963,7 +10963,7 @@ AppsV1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * name , char 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -10973,14 +10973,14 @@ AppsV1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * name , char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -11071,7 +11071,7 @@ AppsV1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * name , char 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -11123,7 +11123,7 @@ end:
 // replace status of the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -11139,7 +11139,7 @@ AppsV1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name ,
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -11149,14 +11149,14 @@ AppsV1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name ,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -11247,7 +11247,7 @@ AppsV1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name ,
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -11299,7 +11299,7 @@ end:
 // replace the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * name , char * namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -11315,7 +11315,7 @@ AppsV1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * name , char
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -11325,14 +11325,14 @@ AppsV1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * name , char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -11423,7 +11423,7 @@ AppsV1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * name , char
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -11475,7 +11475,7 @@ end:
 // replace scale of the specified Deployment
 //
 v1_scale_t*
-AppsV1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -11491,7 +11491,7 @@ AppsV1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, char * name ,
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -11501,14 +11501,14 @@ AppsV1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, char * name ,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -11599,7 +11599,7 @@ AppsV1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, char * name ,
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -11651,7 +11651,7 @@ end:
 // replace status of the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -11667,7 +11667,7 @@ AppsV1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, char * name 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -11677,14 +11677,14 @@ AppsV1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, char * name 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -11775,7 +11775,7 @@ AppsV1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, char * name 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -11827,7 +11827,7 @@ end:
 // replace the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -11843,7 +11843,7 @@ AppsV1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * name , char
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -11853,14 +11853,14 @@ AppsV1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * name , char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -11951,7 +11951,7 @@ AppsV1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * name , char
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -12003,7 +12003,7 @@ end:
 // replace scale of the specified ReplicaSet
 //
 v1_scale_t*
-AppsV1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -12019,7 +12019,7 @@ AppsV1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, char * name ,
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -12029,14 +12029,14 @@ AppsV1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, char * name ,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -12127,7 +12127,7 @@ AppsV1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, char * name ,
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -12179,7 +12179,7 @@ end:
 // replace status of the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -12195,7 +12195,7 @@ AppsV1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -12205,14 +12205,14 @@ AppsV1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -12303,7 +12303,7 @@ AppsV1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -12355,7 +12355,7 @@ end:
 // replace the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_replaceNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -12371,7 +12371,7 @@ AppsV1API_replaceNamespacedStatefulSet(apiClient_t *apiClient, char * name , cha
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -12381,14 +12381,14 @@ AppsV1API_replaceNamespacedStatefulSet(apiClient_t *apiClient, char * name , cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -12479,7 +12479,7 @@ AppsV1API_replaceNamespacedStatefulSet(apiClient_t *apiClient, char * name , cha
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -12531,7 +12531,7 @@ end:
 // replace scale of the specified StatefulSet
 //
 v1_scale_t*
-AppsV1API_replaceNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -12547,7 +12547,7 @@ AppsV1API_replaceNamespacedStatefulSetScale(apiClient_t *apiClient, char * name 
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -12557,14 +12557,14 @@ AppsV1API_replaceNamespacedStatefulSetScale(apiClient_t *apiClient, char * name 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -12655,7 +12655,7 @@ AppsV1API_replaceNamespacedStatefulSetScale(apiClient_t *apiClient, char * name 
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
@@ -12707,7 +12707,7 @@ end:
 // replace status of the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_replaceNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager )
+AppsV1API_replaceNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -12723,7 +12723,7 @@ AppsV1API_replaceNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
     if(name == NULL) {
         goto end;
     }
@@ -12733,14 +12733,14 @@ AppsV1API_replaceNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(name)+3 + strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -12831,7 +12831,7 @@ AppsV1API_replaceNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name
     
     free(localVarPath);
     free(localVarToReplace_name);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;

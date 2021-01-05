@@ -25,8 +25,14 @@ void extensions_v1beta1_ingress_backend_free(extensions_v1beta1_ingress_backend_
         return ;
     }
     listEntry_t *listEntry;
-    free(extensions_v1beta1_ingress_backend->service_name);
-    object_free(extensions_v1beta1_ingress_backend->service_port);
+    if (extensions_v1beta1_ingress_backend->service_name) {
+        free(extensions_v1beta1_ingress_backend->service_name);
+        extensions_v1beta1_ingress_backend->service_name = NULL;
+    }
+    if (extensions_v1beta1_ingress_backend->service_port) {
+        object_free(extensions_v1beta1_ingress_backend->service_port);
+        extensions_v1beta1_ingress_backend->service_port = NULL;
+    }
     free(extensions_v1beta1_ingress_backend);
 }
 

@@ -51,7 +51,7 @@ StorageV1alpha1API_patchVolumeAttachment(apiClient_t *apiClient, char * name , o
 // read the specified VolumeAttachment
 //
 v1alpha1_volume_attachment_t*
-StorageV1alpha1API_readVolumeAttachment(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+StorageV1alpha1API_readVolumeAttachment(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // replace the specified VolumeAttachment

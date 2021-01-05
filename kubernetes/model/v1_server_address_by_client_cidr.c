@@ -25,8 +25,14 @@ void v1_server_address_by_client_cidr_free(v1_server_address_by_client_cidr_t *v
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_server_address_by_client_cidr->client_cidr);
-    free(v1_server_address_by_client_cidr->server_address);
+    if (v1_server_address_by_client_cidr->client_cidr) {
+        free(v1_server_address_by_client_cidr->client_cidr);
+        v1_server_address_by_client_cidr->client_cidr = NULL;
+    }
+    if (v1_server_address_by_client_cidr->server_address) {
+        free(v1_server_address_by_client_cidr->server_address);
+        v1_server_address_by_client_cidr->server_address = NULL;
+    }
     free(v1_server_address_by_client_cidr);
 }
 

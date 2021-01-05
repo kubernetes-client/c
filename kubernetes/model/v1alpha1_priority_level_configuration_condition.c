@@ -31,11 +31,26 @@ void v1alpha1_priority_level_configuration_condition_free(v1alpha1_priority_leve
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_priority_level_configuration_condition->last_transition_time);
-    free(v1alpha1_priority_level_configuration_condition->message);
-    free(v1alpha1_priority_level_configuration_condition->reason);
-    free(v1alpha1_priority_level_configuration_condition->status);
-    free(v1alpha1_priority_level_configuration_condition->type);
+    if (v1alpha1_priority_level_configuration_condition->last_transition_time) {
+        free(v1alpha1_priority_level_configuration_condition->last_transition_time);
+        v1alpha1_priority_level_configuration_condition->last_transition_time = NULL;
+    }
+    if (v1alpha1_priority_level_configuration_condition->message) {
+        free(v1alpha1_priority_level_configuration_condition->message);
+        v1alpha1_priority_level_configuration_condition->message = NULL;
+    }
+    if (v1alpha1_priority_level_configuration_condition->reason) {
+        free(v1alpha1_priority_level_configuration_condition->reason);
+        v1alpha1_priority_level_configuration_condition->reason = NULL;
+    }
+    if (v1alpha1_priority_level_configuration_condition->status) {
+        free(v1alpha1_priority_level_configuration_condition->status);
+        v1alpha1_priority_level_configuration_condition->status = NULL;
+    }
+    if (v1alpha1_priority_level_configuration_condition->type) {
+        free(v1alpha1_priority_level_configuration_condition->type);
+        v1alpha1_priority_level_configuration_condition->type = NULL;
+    }
     free(v1alpha1_priority_level_configuration_condition);
 }
 

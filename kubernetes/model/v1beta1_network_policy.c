@@ -29,10 +29,22 @@ void v1beta1_network_policy_free(v1beta1_network_policy_t *v1beta1_network_polic
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_network_policy->api_version);
-    free(v1beta1_network_policy->kind);
-    v1_object_meta_free(v1beta1_network_policy->metadata);
-    v1beta1_network_policy_spec_free(v1beta1_network_policy->spec);
+    if (v1beta1_network_policy->api_version) {
+        free(v1beta1_network_policy->api_version);
+        v1beta1_network_policy->api_version = NULL;
+    }
+    if (v1beta1_network_policy->kind) {
+        free(v1beta1_network_policy->kind);
+        v1beta1_network_policy->kind = NULL;
+    }
+    if (v1beta1_network_policy->metadata) {
+        v1_object_meta_free(v1beta1_network_policy->metadata);
+        v1beta1_network_policy->metadata = NULL;
+    }
+    if (v1beta1_network_policy->spec) {
+        v1beta1_network_policy_spec_free(v1beta1_network_policy->spec);
+        v1beta1_network_policy->spec = NULL;
+    }
     free(v1beta1_network_policy);
 }
 

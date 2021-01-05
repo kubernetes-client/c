@@ -29,13 +29,25 @@ void v1_replication_controller_list_free(v1_replication_controller_list_t *v1_re
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_replication_controller_list->api_version);
-    list_ForEach(listEntry, v1_replication_controller_list->items) {
-        v1_replication_controller_free(listEntry->data);
+    if (v1_replication_controller_list->api_version) {
+        free(v1_replication_controller_list->api_version);
+        v1_replication_controller_list->api_version = NULL;
     }
-    list_free(v1_replication_controller_list->items);
-    free(v1_replication_controller_list->kind);
-    v1_list_meta_free(v1_replication_controller_list->metadata);
+    if (v1_replication_controller_list->items) {
+        list_ForEach(listEntry, v1_replication_controller_list->items) {
+            v1_replication_controller_free(listEntry->data);
+        }
+        list_free(v1_replication_controller_list->items);
+        v1_replication_controller_list->items = NULL;
+    }
+    if (v1_replication_controller_list->kind) {
+        free(v1_replication_controller_list->kind);
+        v1_replication_controller_list->kind = NULL;
+    }
+    if (v1_replication_controller_list->metadata) {
+        v1_list_meta_free(v1_replication_controller_list->metadata);
+        v1_replication_controller_list->metadata = NULL;
+    }
     free(v1_replication_controller_list);
 }
 

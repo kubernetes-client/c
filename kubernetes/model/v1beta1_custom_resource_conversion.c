@@ -27,12 +27,21 @@ void v1beta1_custom_resource_conversion_free(v1beta1_custom_resource_conversion_
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_custom_resource_conversion->conversion_review_versions) {
-        free(listEntry->data);
+    if (v1beta1_custom_resource_conversion->conversion_review_versions) {
+        list_ForEach(listEntry, v1beta1_custom_resource_conversion->conversion_review_versions) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_custom_resource_conversion->conversion_review_versions);
+        v1beta1_custom_resource_conversion->conversion_review_versions = NULL;
     }
-    list_free(v1beta1_custom_resource_conversion->conversion_review_versions);
-    free(v1beta1_custom_resource_conversion->strategy);
-    apiextensions_v1beta1_webhook_client_config_free(v1beta1_custom_resource_conversion->webhook_client_config);
+    if (v1beta1_custom_resource_conversion->strategy) {
+        free(v1beta1_custom_resource_conversion->strategy);
+        v1beta1_custom_resource_conversion->strategy = NULL;
+    }
+    if (v1beta1_custom_resource_conversion->webhook_client_config) {
+        apiextensions_v1beta1_webhook_client_config_free(v1beta1_custom_resource_conversion->webhook_client_config);
+        v1beta1_custom_resource_conversion->webhook_client_config = NULL;
+    }
     free(v1beta1_custom_resource_conversion);
 }
 

@@ -23,10 +23,13 @@ void v1alpha1_aggregation_rule_free(v1alpha1_aggregation_rule_t *v1alpha1_aggreg
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1alpha1_aggregation_rule->cluster_role_selectors) {
-        v1_label_selector_free(listEntry->data);
+    if (v1alpha1_aggregation_rule->cluster_role_selectors) {
+        list_ForEach(listEntry, v1alpha1_aggregation_rule->cluster_role_selectors) {
+            v1_label_selector_free(listEntry->data);
+        }
+        list_free(v1alpha1_aggregation_rule->cluster_role_selectors);
+        v1alpha1_aggregation_rule->cluster_role_selectors = NULL;
     }
-    list_free(v1alpha1_aggregation_rule->cluster_role_selectors);
     free(v1alpha1_aggregation_rule);
 }
 
