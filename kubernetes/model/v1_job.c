@@ -31,11 +31,26 @@ void v1_job_free(v1_job_t *v1_job) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_job->api_version);
-    free(v1_job->kind);
-    v1_object_meta_free(v1_job->metadata);
-    v1_job_spec_free(v1_job->spec);
-    v1_job_status_free(v1_job->status);
+    if (v1_job->api_version) {
+        free(v1_job->api_version);
+        v1_job->api_version = NULL;
+    }
+    if (v1_job->kind) {
+        free(v1_job->kind);
+        v1_job->kind = NULL;
+    }
+    if (v1_job->metadata) {
+        v1_object_meta_free(v1_job->metadata);
+        v1_job->metadata = NULL;
+    }
+    if (v1_job->spec) {
+        v1_job_spec_free(v1_job->spec);
+        v1_job->spec = NULL;
+    }
+    if (v1_job->status) {
+        v1_job_status_free(v1_job->status);
+        v1_job->status = NULL;
+    }
     free(v1_job);
 }
 

@@ -33,10 +33,13 @@ void v1_replication_controller_status_free(v1_replication_controller_status_t *v
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_replication_controller_status->conditions) {
-        v1_replication_controller_condition_free(listEntry->data);
+    if (v1_replication_controller_status->conditions) {
+        list_ForEach(listEntry, v1_replication_controller_status->conditions) {
+            v1_replication_controller_condition_free(listEntry->data);
+        }
+        list_free(v1_replication_controller_status->conditions);
+        v1_replication_controller_status->conditions = NULL;
     }
-    list_free(v1_replication_controller_status->conditions);
     free(v1_replication_controller_status);
 }
 

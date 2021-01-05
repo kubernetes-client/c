@@ -29,12 +29,21 @@ void v1_token_review_status_free(v1_token_review_status_t *v1_token_review_statu
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_token_review_status->audiences) {
-        free(listEntry->data);
+    if (v1_token_review_status->audiences) {
+        list_ForEach(listEntry, v1_token_review_status->audiences) {
+            free(listEntry->data);
+        }
+        list_free(v1_token_review_status->audiences);
+        v1_token_review_status->audiences = NULL;
     }
-    list_free(v1_token_review_status->audiences);
-    free(v1_token_review_status->error);
-    v1_user_info_free(v1_token_review_status->user);
+    if (v1_token_review_status->error) {
+        free(v1_token_review_status->error);
+        v1_token_review_status->error = NULL;
+    }
+    if (v1_token_review_status->user) {
+        v1_user_info_free(v1_token_review_status->user);
+        v1_token_review_status->user = NULL;
+    }
     free(v1_token_review_status);
 }
 

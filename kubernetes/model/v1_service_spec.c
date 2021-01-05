@@ -51,37 +51,76 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_service_spec->cluster_ip);
-    list_ForEach(listEntry, v1_service_spec->external_i_ps) {
-        free(listEntry->data);
+    if (v1_service_spec->cluster_ip) {
+        free(v1_service_spec->cluster_ip);
+        v1_service_spec->cluster_ip = NULL;
     }
-    list_free(v1_service_spec->external_i_ps);
-    free(v1_service_spec->external_name);
-    free(v1_service_spec->external_traffic_policy);
-    free(v1_service_spec->ip_family);
-    free(v1_service_spec->load_balancer_ip);
-    list_ForEach(listEntry, v1_service_spec->load_balancer_source_ranges) {
-        free(listEntry->data);
+    if (v1_service_spec->external_i_ps) {
+        list_ForEach(listEntry, v1_service_spec->external_i_ps) {
+            free(listEntry->data);
+        }
+        list_free(v1_service_spec->external_i_ps);
+        v1_service_spec->external_i_ps = NULL;
     }
-    list_free(v1_service_spec->load_balancer_source_ranges);
-    list_ForEach(listEntry, v1_service_spec->ports) {
-        v1_service_port_free(listEntry->data);
+    if (v1_service_spec->external_name) {
+        free(v1_service_spec->external_name);
+        v1_service_spec->external_name = NULL;
     }
-    list_free(v1_service_spec->ports);
-    list_ForEach(listEntry, v1_service_spec->selector) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_service_spec->external_traffic_policy) {
+        free(v1_service_spec->external_traffic_policy);
+        v1_service_spec->external_traffic_policy = NULL;
     }
-    list_free(v1_service_spec->selector);
-    free(v1_service_spec->session_affinity);
-    v1_session_affinity_config_free(v1_service_spec->session_affinity_config);
-    list_ForEach(listEntry, v1_service_spec->topology_keys) {
-        free(listEntry->data);
+    if (v1_service_spec->ip_family) {
+        free(v1_service_spec->ip_family);
+        v1_service_spec->ip_family = NULL;
     }
-    list_free(v1_service_spec->topology_keys);
-    free(v1_service_spec->type);
+    if (v1_service_spec->load_balancer_ip) {
+        free(v1_service_spec->load_balancer_ip);
+        v1_service_spec->load_balancer_ip = NULL;
+    }
+    if (v1_service_spec->load_balancer_source_ranges) {
+        list_ForEach(listEntry, v1_service_spec->load_balancer_source_ranges) {
+            free(listEntry->data);
+        }
+        list_free(v1_service_spec->load_balancer_source_ranges);
+        v1_service_spec->load_balancer_source_ranges = NULL;
+    }
+    if (v1_service_spec->ports) {
+        list_ForEach(listEntry, v1_service_spec->ports) {
+            v1_service_port_free(listEntry->data);
+        }
+        list_free(v1_service_spec->ports);
+        v1_service_spec->ports = NULL;
+    }
+    if (v1_service_spec->selector) {
+        list_ForEach(listEntry, v1_service_spec->selector) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_service_spec->selector);
+        v1_service_spec->selector = NULL;
+    }
+    if (v1_service_spec->session_affinity) {
+        free(v1_service_spec->session_affinity);
+        v1_service_spec->session_affinity = NULL;
+    }
+    if (v1_service_spec->session_affinity_config) {
+        v1_session_affinity_config_free(v1_service_spec->session_affinity_config);
+        v1_service_spec->session_affinity_config = NULL;
+    }
+    if (v1_service_spec->topology_keys) {
+        list_ForEach(listEntry, v1_service_spec->topology_keys) {
+            free(listEntry->data);
+        }
+        list_free(v1_service_spec->topology_keys);
+        v1_service_spec->topology_keys = NULL;
+    }
+    if (v1_service_spec->type) {
+        free(v1_service_spec->type);
+        v1_service_spec->type = NULL;
+    }
     free(v1_service_spec);
 }
 

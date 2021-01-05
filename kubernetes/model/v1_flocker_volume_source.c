@@ -25,8 +25,14 @@ void v1_flocker_volume_source_free(v1_flocker_volume_source_t *v1_flocker_volume
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_flocker_volume_source->dataset_name);
-    free(v1_flocker_volume_source->dataset_uuid);
+    if (v1_flocker_volume_source->dataset_name) {
+        free(v1_flocker_volume_source->dataset_name);
+        v1_flocker_volume_source->dataset_name = NULL;
+    }
+    if (v1_flocker_volume_source->dataset_uuid) {
+        free(v1_flocker_volume_source->dataset_uuid);
+        v1_flocker_volume_source->dataset_uuid = NULL;
+    }
     free(v1_flocker_volume_source);
 }
 

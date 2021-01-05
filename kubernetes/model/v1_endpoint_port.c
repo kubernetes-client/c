@@ -27,8 +27,14 @@ void v1_endpoint_port_free(v1_endpoint_port_t *v1_endpoint_port) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_endpoint_port->name);
-    free(v1_endpoint_port->protocol);
+    if (v1_endpoint_port->name) {
+        free(v1_endpoint_port->name);
+        v1_endpoint_port->name = NULL;
+    }
+    if (v1_endpoint_port->protocol) {
+        free(v1_endpoint_port->protocol);
+        v1_endpoint_port->protocol = NULL;
+    }
     free(v1_endpoint_port);
 }
 

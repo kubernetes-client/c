@@ -25,8 +25,14 @@ void v1_object_field_selector_free(v1_object_field_selector_t *v1_object_field_s
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_object_field_selector->api_version);
-    free(v1_object_field_selector->field_path);
+    if (v1_object_field_selector->api_version) {
+        free(v1_object_field_selector->api_version);
+        v1_object_field_selector->api_version = NULL;
+    }
+    if (v1_object_field_selector->field_path) {
+        free(v1_object_field_selector->field_path);
+        v1_object_field_selector->field_path = NULL;
+    }
     free(v1_object_field_selector);
 }
 

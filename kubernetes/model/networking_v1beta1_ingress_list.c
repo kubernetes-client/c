@@ -29,13 +29,25 @@ void networking_v1beta1_ingress_list_free(networking_v1beta1_ingress_list_t *net
         return ;
     }
     listEntry_t *listEntry;
-    free(networking_v1beta1_ingress_list->api_version);
-    list_ForEach(listEntry, networking_v1beta1_ingress_list->items) {
-        networking_v1beta1_ingress_free(listEntry->data);
+    if (networking_v1beta1_ingress_list->api_version) {
+        free(networking_v1beta1_ingress_list->api_version);
+        networking_v1beta1_ingress_list->api_version = NULL;
     }
-    list_free(networking_v1beta1_ingress_list->items);
-    free(networking_v1beta1_ingress_list->kind);
-    v1_list_meta_free(networking_v1beta1_ingress_list->metadata);
+    if (networking_v1beta1_ingress_list->items) {
+        list_ForEach(listEntry, networking_v1beta1_ingress_list->items) {
+            networking_v1beta1_ingress_free(listEntry->data);
+        }
+        list_free(networking_v1beta1_ingress_list->items);
+        networking_v1beta1_ingress_list->items = NULL;
+    }
+    if (networking_v1beta1_ingress_list->kind) {
+        free(networking_v1beta1_ingress_list->kind);
+        networking_v1beta1_ingress_list->kind = NULL;
+    }
+    if (networking_v1beta1_ingress_list->metadata) {
+        v1_list_meta_free(networking_v1beta1_ingress_list->metadata);
+        networking_v1beta1_ingress_list->metadata = NULL;
+    }
     free(networking_v1beta1_ingress_list);
 }
 

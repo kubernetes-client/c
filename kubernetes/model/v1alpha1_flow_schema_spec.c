@@ -29,12 +29,21 @@ void v1alpha1_flow_schema_spec_free(v1alpha1_flow_schema_spec_t *v1alpha1_flow_s
         return ;
     }
     listEntry_t *listEntry;
-    v1alpha1_flow_distinguisher_method_free(v1alpha1_flow_schema_spec->distinguisher_method);
-    v1alpha1_priority_level_configuration_reference_free(v1alpha1_flow_schema_spec->priority_level_configuration);
-    list_ForEach(listEntry, v1alpha1_flow_schema_spec->rules) {
-        v1alpha1_policy_rules_with_subjects_free(listEntry->data);
+    if (v1alpha1_flow_schema_spec->distinguisher_method) {
+        v1alpha1_flow_distinguisher_method_free(v1alpha1_flow_schema_spec->distinguisher_method);
+        v1alpha1_flow_schema_spec->distinguisher_method = NULL;
     }
-    list_free(v1alpha1_flow_schema_spec->rules);
+    if (v1alpha1_flow_schema_spec->priority_level_configuration) {
+        v1alpha1_priority_level_configuration_reference_free(v1alpha1_flow_schema_spec->priority_level_configuration);
+        v1alpha1_flow_schema_spec->priority_level_configuration = NULL;
+    }
+    if (v1alpha1_flow_schema_spec->rules) {
+        list_ForEach(listEntry, v1alpha1_flow_schema_spec->rules) {
+            v1alpha1_policy_rules_with_subjects_free(listEntry->data);
+        }
+        list_free(v1alpha1_flow_schema_spec->rules);
+        v1alpha1_flow_schema_spec->rules = NULL;
+    }
     free(v1alpha1_flow_schema_spec);
 }
 

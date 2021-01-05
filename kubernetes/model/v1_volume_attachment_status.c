@@ -29,15 +29,24 @@ void v1_volume_attachment_status_free(v1_volume_attachment_status_t *v1_volume_a
         return ;
     }
     listEntry_t *listEntry;
-    v1_volume_error_free(v1_volume_attachment_status->attach_error);
-    list_ForEach(listEntry, v1_volume_attachment_status->attachment_metadata) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_volume_attachment_status->attach_error) {
+        v1_volume_error_free(v1_volume_attachment_status->attach_error);
+        v1_volume_attachment_status->attach_error = NULL;
     }
-    list_free(v1_volume_attachment_status->attachment_metadata);
-    v1_volume_error_free(v1_volume_attachment_status->detach_error);
+    if (v1_volume_attachment_status->attachment_metadata) {
+        list_ForEach(listEntry, v1_volume_attachment_status->attachment_metadata) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_volume_attachment_status->attachment_metadata);
+        v1_volume_attachment_status->attachment_metadata = NULL;
+    }
+    if (v1_volume_attachment_status->detach_error) {
+        v1_volume_error_free(v1_volume_attachment_status->detach_error);
+        v1_volume_attachment_status->detach_error = NULL;
+    }
     free(v1_volume_attachment_status);
 }
 

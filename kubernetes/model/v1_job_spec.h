@@ -27,7 +27,7 @@ typedef struct v1_job_spec_t {
     int manual_selector; //boolean
     int parallelism; //numeric
     struct v1_label_selector_t *selector; //model
-    struct v1_pod_template_spec_t *template; //model
+    struct v1_pod_template_spec_t *_template; //model
     int ttl_seconds_after_finished; //numeric
 
 } v1_job_spec_t;
@@ -39,7 +39,7 @@ v1_job_spec_t *v1_job_spec_create(
     int manual_selector,
     int parallelism,
     v1_label_selector_t *selector,
-    v1_pod_template_spec_t *template,
+    v1_pod_template_spec_t *_template,
     int ttl_seconds_after_finished
 );
 

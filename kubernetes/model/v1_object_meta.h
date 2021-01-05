@@ -32,7 +32,7 @@ typedef struct v1_object_meta_t {
     list_t* labels; //map
     list_t *managed_fields; //nonprimitive container
     char *name; // string
-    char *namespace; // string
+    char *_namespace; // string
     list_t *owner_references; //nonprimitive container
     char *resource_version; // string
     char *self_link; // string
@@ -52,7 +52,7 @@ v1_object_meta_t *v1_object_meta_create(
     list_t* labels,
     list_t *managed_fields,
     char *name,
-    char *namespace,
+    char *_namespace,
     list_t *owner_references,
     char *resource_version,
     char *self_link,

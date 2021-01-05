@@ -25,8 +25,14 @@ void v1_photon_persistent_disk_volume_source_free(v1_photon_persistent_disk_volu
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_photon_persistent_disk_volume_source->fs_type);
-    free(v1_photon_persistent_disk_volume_source->pd_id);
+    if (v1_photon_persistent_disk_volume_source->fs_type) {
+        free(v1_photon_persistent_disk_volume_source->fs_type);
+        v1_photon_persistent_disk_volume_source->fs_type = NULL;
+    }
+    if (v1_photon_persistent_disk_volume_source->pd_id) {
+        free(v1_photon_persistent_disk_volume_source->pd_id);
+        v1_photon_persistent_disk_volume_source->pd_id = NULL;
+    }
     free(v1_photon_persistent_disk_volume_source);
 }
 

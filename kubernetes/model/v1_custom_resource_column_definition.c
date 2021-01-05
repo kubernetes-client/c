@@ -33,11 +33,26 @@ void v1_custom_resource_column_definition_free(v1_custom_resource_column_definit
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_custom_resource_column_definition->description);
-    free(v1_custom_resource_column_definition->format);
-    free(v1_custom_resource_column_definition->json_path);
-    free(v1_custom_resource_column_definition->name);
-    free(v1_custom_resource_column_definition->type);
+    if (v1_custom_resource_column_definition->description) {
+        free(v1_custom_resource_column_definition->description);
+        v1_custom_resource_column_definition->description = NULL;
+    }
+    if (v1_custom_resource_column_definition->format) {
+        free(v1_custom_resource_column_definition->format);
+        v1_custom_resource_column_definition->format = NULL;
+    }
+    if (v1_custom_resource_column_definition->json_path) {
+        free(v1_custom_resource_column_definition->json_path);
+        v1_custom_resource_column_definition->json_path = NULL;
+    }
+    if (v1_custom_resource_column_definition->name) {
+        free(v1_custom_resource_column_definition->name);
+        v1_custom_resource_column_definition->name = NULL;
+    }
+    if (v1_custom_resource_column_definition->type) {
+        free(v1_custom_resource_column_definition->type);
+        v1_custom_resource_column_definition->type = NULL;
+    }
     free(v1_custom_resource_column_definition);
 }
 

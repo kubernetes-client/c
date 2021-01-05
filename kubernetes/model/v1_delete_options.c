@@ -35,14 +35,29 @@ void v1_delete_options_free(v1_delete_options_t *v1_delete_options) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_delete_options->api_version);
-    list_ForEach(listEntry, v1_delete_options->dry_run) {
-        free(listEntry->data);
+    if (v1_delete_options->api_version) {
+        free(v1_delete_options->api_version);
+        v1_delete_options->api_version = NULL;
     }
-    list_free(v1_delete_options->dry_run);
-    free(v1_delete_options->kind);
-    v1_preconditions_free(v1_delete_options->preconditions);
-    free(v1_delete_options->propagation_policy);
+    if (v1_delete_options->dry_run) {
+        list_ForEach(listEntry, v1_delete_options->dry_run) {
+            free(listEntry->data);
+        }
+        list_free(v1_delete_options->dry_run);
+        v1_delete_options->dry_run = NULL;
+    }
+    if (v1_delete_options->kind) {
+        free(v1_delete_options->kind);
+        v1_delete_options->kind = NULL;
+    }
+    if (v1_delete_options->preconditions) {
+        v1_preconditions_free(v1_delete_options->preconditions);
+        v1_delete_options->preconditions = NULL;
+    }
+    if (v1_delete_options->propagation_policy) {
+        free(v1_delete_options->propagation_policy);
+        v1_delete_options->propagation_policy = NULL;
+    }
     free(v1_delete_options);
 }
 

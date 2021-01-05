@@ -35,18 +35,36 @@ void v1_node_spec_free(v1_node_spec_t *v1_node_spec) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_node_config_source_free(v1_node_spec->config_source);
-    free(v1_node_spec->external_id);
-    free(v1_node_spec->pod_cidr);
-    list_ForEach(listEntry, v1_node_spec->pod_cid_rs) {
-        free(listEntry->data);
+    if (v1_node_spec->config_source) {
+        v1_node_config_source_free(v1_node_spec->config_source);
+        v1_node_spec->config_source = NULL;
     }
-    list_free(v1_node_spec->pod_cid_rs);
-    free(v1_node_spec->provider_id);
-    list_ForEach(listEntry, v1_node_spec->taints) {
-        v1_taint_free(listEntry->data);
+    if (v1_node_spec->external_id) {
+        free(v1_node_spec->external_id);
+        v1_node_spec->external_id = NULL;
     }
-    list_free(v1_node_spec->taints);
+    if (v1_node_spec->pod_cidr) {
+        free(v1_node_spec->pod_cidr);
+        v1_node_spec->pod_cidr = NULL;
+    }
+    if (v1_node_spec->pod_cid_rs) {
+        list_ForEach(listEntry, v1_node_spec->pod_cid_rs) {
+            free(listEntry->data);
+        }
+        list_free(v1_node_spec->pod_cid_rs);
+        v1_node_spec->pod_cid_rs = NULL;
+    }
+    if (v1_node_spec->provider_id) {
+        free(v1_node_spec->provider_id);
+        v1_node_spec->provider_id = NULL;
+    }
+    if (v1_node_spec->taints) {
+        list_ForEach(listEntry, v1_node_spec->taints) {
+            v1_taint_free(listEntry->data);
+        }
+        list_free(v1_node_spec->taints);
+        v1_node_spec->taints = NULL;
+    }
     free(v1_node_spec);
 }
 

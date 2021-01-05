@@ -25,17 +25,23 @@ void v1beta1_scheduling_free(v1beta1_scheduling_t *v1beta1_scheduling) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_scheduling->node_selector) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta1_scheduling->node_selector) {
+        list_ForEach(listEntry, v1beta1_scheduling->node_selector) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta1_scheduling->node_selector);
+        v1beta1_scheduling->node_selector = NULL;
     }
-    list_free(v1beta1_scheduling->node_selector);
-    list_ForEach(listEntry, v1beta1_scheduling->tolerations) {
-        v1_toleration_free(listEntry->data);
+    if (v1beta1_scheduling->tolerations) {
+        list_ForEach(listEntry, v1beta1_scheduling->tolerations) {
+            v1_toleration_free(listEntry->data);
+        }
+        list_free(v1beta1_scheduling->tolerations);
+        v1beta1_scheduling->tolerations = NULL;
     }
-    list_free(v1beta1_scheduling->tolerations);
     free(v1beta1_scheduling);
 }
 

@@ -8,7 +8,7 @@
 v1_toleration_t *v1_toleration_create(
     char *effect,
     char *key,
-    char *operator,
+    char *_operator,
     long toleration_seconds,
     char *value
     ) {
@@ -18,7 +18,7 @@ v1_toleration_t *v1_toleration_create(
     }
     v1_toleration_local_var->effect = effect;
     v1_toleration_local_var->key = key;
-    v1_toleration_local_var->operator = operator;
+    v1_toleration_local_var->_operator = _operator;
     v1_toleration_local_var->toleration_seconds = toleration_seconds;
     v1_toleration_local_var->value = value;
 
@@ -31,10 +31,22 @@ void v1_toleration_free(v1_toleration_t *v1_toleration) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_toleration->effect);
-    free(v1_toleration->key);
-    free(v1_toleration->operator);
-    free(v1_toleration->value);
+    if (v1_toleration->effect) {
+        free(v1_toleration->effect);
+        v1_toleration->effect = NULL;
+    }
+    if (v1_toleration->key) {
+        free(v1_toleration->key);
+        v1_toleration->key = NULL;
+    }
+    if (v1_toleration->_operator) {
+        free(v1_toleration->_operator);
+        v1_toleration->_operator = NULL;
+    }
+    if (v1_toleration->value) {
+        free(v1_toleration->value);
+        v1_toleration->value = NULL;
+    }
     free(v1_toleration);
 }
 
@@ -57,9 +69,9 @@ cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration) {
      } 
 
 
-    // v1_toleration->operator
-    if(v1_toleration->operator) { 
-    if(cJSON_AddStringToObject(item, "operator", v1_toleration->operator) == NULL) {
+    // v1_toleration->_operator
+    if(v1_toleration->_operator) { 
+    if(cJSON_AddStringToObject(item, "operator", v1_toleration->_operator) == NULL) {
     goto fail; //String
     }
      } 
@@ -110,10 +122,10 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
     }
     }
 
-    // v1_toleration->operator
-    cJSON *operator = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "operator");
-    if (operator) { 
-    if(!cJSON_IsString(operator))
+    // v1_toleration->_operator
+    cJSON *_operator = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "operator");
+    if (_operator) { 
+    if(!cJSON_IsString(_operator))
     {
     goto end; //String
     }
@@ -141,7 +153,7 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
     v1_toleration_local_var = v1_toleration_create (
         effect ? strdup(effect->valuestring) : NULL,
         key ? strdup(key->valuestring) : NULL,
-        operator ? strdup(operator->valuestring) : NULL,
+        _operator ? strdup(_operator->valuestring) : NULL,
         toleration_seconds ? toleration_seconds->valuedouble : 0,
         value ? strdup(value->valuestring) : NULL
         );

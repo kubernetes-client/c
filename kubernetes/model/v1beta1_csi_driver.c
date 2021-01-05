@@ -29,10 +29,22 @@ void v1beta1_csi_driver_free(v1beta1_csi_driver_t *v1beta1_csi_driver) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_csi_driver->api_version);
-    free(v1beta1_csi_driver->kind);
-    v1_object_meta_free(v1beta1_csi_driver->metadata);
-    v1beta1_csi_driver_spec_free(v1beta1_csi_driver->spec);
+    if (v1beta1_csi_driver->api_version) {
+        free(v1beta1_csi_driver->api_version);
+        v1beta1_csi_driver->api_version = NULL;
+    }
+    if (v1beta1_csi_driver->kind) {
+        free(v1beta1_csi_driver->kind);
+        v1beta1_csi_driver->kind = NULL;
+    }
+    if (v1beta1_csi_driver->metadata) {
+        v1_object_meta_free(v1beta1_csi_driver->metadata);
+        v1beta1_csi_driver->metadata = NULL;
+    }
+    if (v1beta1_csi_driver->spec) {
+        v1beta1_csi_driver_spec_free(v1beta1_csi_driver->spec);
+        v1beta1_csi_driver->spec = NULL;
+    }
     free(v1beta1_csi_driver);
 }
 

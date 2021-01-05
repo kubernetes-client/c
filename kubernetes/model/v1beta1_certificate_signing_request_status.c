@@ -25,10 +25,13 @@ void v1beta1_certificate_signing_request_status_free(v1beta1_certificate_signing
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_certificate_signing_request_status->conditions) {
-        v1beta1_certificate_signing_request_condition_free(listEntry->data);
+    if (v1beta1_certificate_signing_request_status->conditions) {
+        list_ForEach(listEntry, v1beta1_certificate_signing_request_status->conditions) {
+            v1beta1_certificate_signing_request_condition_free(listEntry->data);
+        }
+        list_free(v1beta1_certificate_signing_request_status->conditions);
+        v1beta1_certificate_signing_request_status->conditions = NULL;
     }
-    list_free(v1beta1_certificate_signing_request_status->conditions);
     free(v1beta1_certificate_signing_request_status);
 }
 

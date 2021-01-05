@@ -23,10 +23,13 @@ void v1alpha1_flow_schema_status_free(v1alpha1_flow_schema_status_t *v1alpha1_fl
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1alpha1_flow_schema_status->conditions) {
-        v1alpha1_flow_schema_condition_free(listEntry->data);
+    if (v1alpha1_flow_schema_status->conditions) {
+        list_ForEach(listEntry, v1alpha1_flow_schema_status->conditions) {
+            v1alpha1_flow_schema_condition_free(listEntry->data);
+        }
+        list_free(v1alpha1_flow_schema_status->conditions);
+        v1alpha1_flow_schema_status->conditions = NULL;
     }
-    list_free(v1alpha1_flow_schema_status->conditions);
     free(v1alpha1_flow_schema_status);
 }
 

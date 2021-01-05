@@ -25,8 +25,14 @@ void v2beta2_pods_metric_source_free(v2beta2_pods_metric_source_t *v2beta2_pods_
         return ;
     }
     listEntry_t *listEntry;
-    v2beta2_metric_identifier_free(v2beta2_pods_metric_source->metric);
-    v2beta2_metric_target_free(v2beta2_pods_metric_source->target);
+    if (v2beta2_pods_metric_source->metric) {
+        v2beta2_metric_identifier_free(v2beta2_pods_metric_source->metric);
+        v2beta2_pods_metric_source->metric = NULL;
+    }
+    if (v2beta2_pods_metric_source->target) {
+        v2beta2_metric_target_free(v2beta2_pods_metric_source->target);
+        v2beta2_pods_metric_source->target = NULL;
+    }
     free(v2beta2_pods_metric_source);
 }
 

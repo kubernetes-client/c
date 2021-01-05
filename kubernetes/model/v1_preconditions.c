@@ -25,8 +25,14 @@ void v1_preconditions_free(v1_preconditions_t *v1_preconditions) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_preconditions->resource_version);
-    free(v1_preconditions->uid);
+    if (v1_preconditions->resource_version) {
+        free(v1_preconditions->resource_version);
+        v1_preconditions->resource_version = NULL;
+    }
+    if (v1_preconditions->uid) {
+        free(v1_preconditions->uid);
+        v1_preconditions->uid = NULL;
+    }
     free(v1_preconditions);
 }
 

@@ -31,11 +31,26 @@ void v1_replica_set_free(v1_replica_set_t *v1_replica_set) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_replica_set->api_version);
-    free(v1_replica_set->kind);
-    v1_object_meta_free(v1_replica_set->metadata);
-    v1_replica_set_spec_free(v1_replica_set->spec);
-    v1_replica_set_status_free(v1_replica_set->status);
+    if (v1_replica_set->api_version) {
+        free(v1_replica_set->api_version);
+        v1_replica_set->api_version = NULL;
+    }
+    if (v1_replica_set->kind) {
+        free(v1_replica_set->kind);
+        v1_replica_set->kind = NULL;
+    }
+    if (v1_replica_set->metadata) {
+        v1_object_meta_free(v1_replica_set->metadata);
+        v1_replica_set->metadata = NULL;
+    }
+    if (v1_replica_set->spec) {
+        v1_replica_set_spec_free(v1_replica_set->spec);
+        v1_replica_set->spec = NULL;
+    }
+    if (v1_replica_set->status) {
+        v1_replica_set_status_free(v1_replica_set->status);
+        v1_replica_set->status = NULL;
+    }
     free(v1_replica_set);
 }
 

@@ -27,14 +27,20 @@ void v1beta2_scale_status_free(v1beta2_scale_status_t *v1beta2_scale_status) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta2_scale_status->selector) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta2_scale_status->selector) {
+        list_ForEach(listEntry, v1beta2_scale_status->selector) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta2_scale_status->selector);
+        v1beta2_scale_status->selector = NULL;
     }
-    list_free(v1beta2_scale_status->selector);
-    free(v1beta2_scale_status->target_selector);
+    if (v1beta2_scale_status->target_selector) {
+        free(v1beta2_scale_status->target_selector);
+        v1beta2_scale_status->target_selector = NULL;
+    }
     free(v1beta2_scale_status);
 }
 

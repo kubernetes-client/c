@@ -31,11 +31,26 @@ void apps_v1beta1_scale_free(apps_v1beta1_scale_t *apps_v1beta1_scale) {
         return ;
     }
     listEntry_t *listEntry;
-    free(apps_v1beta1_scale->api_version);
-    free(apps_v1beta1_scale->kind);
-    v1_object_meta_free(apps_v1beta1_scale->metadata);
-    apps_v1beta1_scale_spec_free(apps_v1beta1_scale->spec);
-    apps_v1beta1_scale_status_free(apps_v1beta1_scale->status);
+    if (apps_v1beta1_scale->api_version) {
+        free(apps_v1beta1_scale->api_version);
+        apps_v1beta1_scale->api_version = NULL;
+    }
+    if (apps_v1beta1_scale->kind) {
+        free(apps_v1beta1_scale->kind);
+        apps_v1beta1_scale->kind = NULL;
+    }
+    if (apps_v1beta1_scale->metadata) {
+        v1_object_meta_free(apps_v1beta1_scale->metadata);
+        apps_v1beta1_scale->metadata = NULL;
+    }
+    if (apps_v1beta1_scale->spec) {
+        apps_v1beta1_scale_spec_free(apps_v1beta1_scale->spec);
+        apps_v1beta1_scale->spec = NULL;
+    }
+    if (apps_v1beta1_scale->status) {
+        apps_v1beta1_scale_status_free(apps_v1beta1_scale->status);
+        apps_v1beta1_scale->status = NULL;
+    }
     free(apps_v1beta1_scale);
 }
 

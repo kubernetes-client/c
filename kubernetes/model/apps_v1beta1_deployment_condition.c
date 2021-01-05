@@ -33,12 +33,30 @@ void apps_v1beta1_deployment_condition_free(apps_v1beta1_deployment_condition_t 
         return ;
     }
     listEntry_t *listEntry;
-    free(apps_v1beta1_deployment_condition->last_transition_time);
-    free(apps_v1beta1_deployment_condition->last_update_time);
-    free(apps_v1beta1_deployment_condition->message);
-    free(apps_v1beta1_deployment_condition->reason);
-    free(apps_v1beta1_deployment_condition->status);
-    free(apps_v1beta1_deployment_condition->type);
+    if (apps_v1beta1_deployment_condition->last_transition_time) {
+        free(apps_v1beta1_deployment_condition->last_transition_time);
+        apps_v1beta1_deployment_condition->last_transition_time = NULL;
+    }
+    if (apps_v1beta1_deployment_condition->last_update_time) {
+        free(apps_v1beta1_deployment_condition->last_update_time);
+        apps_v1beta1_deployment_condition->last_update_time = NULL;
+    }
+    if (apps_v1beta1_deployment_condition->message) {
+        free(apps_v1beta1_deployment_condition->message);
+        apps_v1beta1_deployment_condition->message = NULL;
+    }
+    if (apps_v1beta1_deployment_condition->reason) {
+        free(apps_v1beta1_deployment_condition->reason);
+        apps_v1beta1_deployment_condition->reason = NULL;
+    }
+    if (apps_v1beta1_deployment_condition->status) {
+        free(apps_v1beta1_deployment_condition->status);
+        apps_v1beta1_deployment_condition->status = NULL;
+    }
+    if (apps_v1beta1_deployment_condition->type) {
+        free(apps_v1beta1_deployment_condition->type);
+        apps_v1beta1_deployment_condition->type = NULL;
+    }
     free(apps_v1beta1_deployment_condition);
 }
 

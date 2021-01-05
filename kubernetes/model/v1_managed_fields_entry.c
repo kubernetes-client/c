@@ -33,12 +33,30 @@ void v1_managed_fields_entry_free(v1_managed_fields_entry_t *v1_managed_fields_e
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_managed_fields_entry->api_version);
-    free(v1_managed_fields_entry->fields_type);
-    object_free(v1_managed_fields_entry->fields_v1);
-    free(v1_managed_fields_entry->manager);
-    free(v1_managed_fields_entry->operation);
-    free(v1_managed_fields_entry->time);
+    if (v1_managed_fields_entry->api_version) {
+        free(v1_managed_fields_entry->api_version);
+        v1_managed_fields_entry->api_version = NULL;
+    }
+    if (v1_managed_fields_entry->fields_type) {
+        free(v1_managed_fields_entry->fields_type);
+        v1_managed_fields_entry->fields_type = NULL;
+    }
+    if (v1_managed_fields_entry->fields_v1) {
+        object_free(v1_managed_fields_entry->fields_v1);
+        v1_managed_fields_entry->fields_v1 = NULL;
+    }
+    if (v1_managed_fields_entry->manager) {
+        free(v1_managed_fields_entry->manager);
+        v1_managed_fields_entry->manager = NULL;
+    }
+    if (v1_managed_fields_entry->operation) {
+        free(v1_managed_fields_entry->operation);
+        v1_managed_fields_entry->operation = NULL;
+    }
+    if (v1_managed_fields_entry->time) {
+        free(v1_managed_fields_entry->time);
+        v1_managed_fields_entry->time = NULL;
+    }
     free(v1_managed_fields_entry);
 }
 

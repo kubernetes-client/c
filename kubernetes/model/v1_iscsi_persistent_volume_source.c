@@ -43,16 +43,37 @@ void v1_iscsi_persistent_volume_source_free(v1_iscsi_persistent_volume_source_t 
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_iscsi_persistent_volume_source->fs_type);
-    free(v1_iscsi_persistent_volume_source->initiator_name);
-    free(v1_iscsi_persistent_volume_source->iqn);
-    free(v1_iscsi_persistent_volume_source->iscsi_interface);
-    list_ForEach(listEntry, v1_iscsi_persistent_volume_source->portals) {
-        free(listEntry->data);
+    if (v1_iscsi_persistent_volume_source->fs_type) {
+        free(v1_iscsi_persistent_volume_source->fs_type);
+        v1_iscsi_persistent_volume_source->fs_type = NULL;
     }
-    list_free(v1_iscsi_persistent_volume_source->portals);
-    v1_secret_reference_free(v1_iscsi_persistent_volume_source->secret_ref);
-    free(v1_iscsi_persistent_volume_source->target_portal);
+    if (v1_iscsi_persistent_volume_source->initiator_name) {
+        free(v1_iscsi_persistent_volume_source->initiator_name);
+        v1_iscsi_persistent_volume_source->initiator_name = NULL;
+    }
+    if (v1_iscsi_persistent_volume_source->iqn) {
+        free(v1_iscsi_persistent_volume_source->iqn);
+        v1_iscsi_persistent_volume_source->iqn = NULL;
+    }
+    if (v1_iscsi_persistent_volume_source->iscsi_interface) {
+        free(v1_iscsi_persistent_volume_source->iscsi_interface);
+        v1_iscsi_persistent_volume_source->iscsi_interface = NULL;
+    }
+    if (v1_iscsi_persistent_volume_source->portals) {
+        list_ForEach(listEntry, v1_iscsi_persistent_volume_source->portals) {
+            free(listEntry->data);
+        }
+        list_free(v1_iscsi_persistent_volume_source->portals);
+        v1_iscsi_persistent_volume_source->portals = NULL;
+    }
+    if (v1_iscsi_persistent_volume_source->secret_ref) {
+        v1_secret_reference_free(v1_iscsi_persistent_volume_source->secret_ref);
+        v1_iscsi_persistent_volume_source->secret_ref = NULL;
+    }
+    if (v1_iscsi_persistent_volume_source->target_portal) {
+        free(v1_iscsi_persistent_volume_source->target_portal);
+        v1_iscsi_persistent_volume_source->target_portal = NULL;
+    }
     free(v1_iscsi_persistent_volume_source);
 }
 

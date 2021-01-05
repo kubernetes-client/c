@@ -29,22 +29,34 @@ void v1_resource_rule_free(v1_resource_rule_t *v1_resource_rule) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_resource_rule->api_groups) {
-        free(listEntry->data);
+    if (v1_resource_rule->api_groups) {
+        list_ForEach(listEntry, v1_resource_rule->api_groups) {
+            free(listEntry->data);
+        }
+        list_free(v1_resource_rule->api_groups);
+        v1_resource_rule->api_groups = NULL;
     }
-    list_free(v1_resource_rule->api_groups);
-    list_ForEach(listEntry, v1_resource_rule->resource_names) {
-        free(listEntry->data);
+    if (v1_resource_rule->resource_names) {
+        list_ForEach(listEntry, v1_resource_rule->resource_names) {
+            free(listEntry->data);
+        }
+        list_free(v1_resource_rule->resource_names);
+        v1_resource_rule->resource_names = NULL;
     }
-    list_free(v1_resource_rule->resource_names);
-    list_ForEach(listEntry, v1_resource_rule->resources) {
-        free(listEntry->data);
+    if (v1_resource_rule->resources) {
+        list_ForEach(listEntry, v1_resource_rule->resources) {
+            free(listEntry->data);
+        }
+        list_free(v1_resource_rule->resources);
+        v1_resource_rule->resources = NULL;
     }
-    list_free(v1_resource_rule->resources);
-    list_ForEach(listEntry, v1_resource_rule->verbs) {
-        free(listEntry->data);
+    if (v1_resource_rule->verbs) {
+        list_ForEach(listEntry, v1_resource_rule->verbs) {
+            free(listEntry->data);
+        }
+        list_free(v1_resource_rule->verbs);
+        v1_resource_rule->verbs = NULL;
     }
-    list_free(v1_resource_rule->verbs);
     free(v1_resource_rule);
 }
 

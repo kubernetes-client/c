@@ -27,9 +27,18 @@ void v1_typed_local_object_reference_free(v1_typed_local_object_reference_t *v1_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_typed_local_object_reference->api_group);
-    free(v1_typed_local_object_reference->kind);
-    free(v1_typed_local_object_reference->name);
+    if (v1_typed_local_object_reference->api_group) {
+        free(v1_typed_local_object_reference->api_group);
+        v1_typed_local_object_reference->api_group = NULL;
+    }
+    if (v1_typed_local_object_reference->kind) {
+        free(v1_typed_local_object_reference->kind);
+        v1_typed_local_object_reference->kind = NULL;
+    }
+    if (v1_typed_local_object_reference->name) {
+        free(v1_typed_local_object_reference->name);
+        v1_typed_local_object_reference->name = NULL;
+    }
     free(v1_typed_local_object_reference);
 }
 

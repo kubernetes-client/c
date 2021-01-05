@@ -31,11 +31,26 @@ void v1_horizontal_pod_autoscaler_free(v1_horizontal_pod_autoscaler_t *v1_horizo
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_horizontal_pod_autoscaler->api_version);
-    free(v1_horizontal_pod_autoscaler->kind);
-    v1_object_meta_free(v1_horizontal_pod_autoscaler->metadata);
-    v1_horizontal_pod_autoscaler_spec_free(v1_horizontal_pod_autoscaler->spec);
-    v1_horizontal_pod_autoscaler_status_free(v1_horizontal_pod_autoscaler->status);
+    if (v1_horizontal_pod_autoscaler->api_version) {
+        free(v1_horizontal_pod_autoscaler->api_version);
+        v1_horizontal_pod_autoscaler->api_version = NULL;
+    }
+    if (v1_horizontal_pod_autoscaler->kind) {
+        free(v1_horizontal_pod_autoscaler->kind);
+        v1_horizontal_pod_autoscaler->kind = NULL;
+    }
+    if (v1_horizontal_pod_autoscaler->metadata) {
+        v1_object_meta_free(v1_horizontal_pod_autoscaler->metadata);
+        v1_horizontal_pod_autoscaler->metadata = NULL;
+    }
+    if (v1_horizontal_pod_autoscaler->spec) {
+        v1_horizontal_pod_autoscaler_spec_free(v1_horizontal_pod_autoscaler->spec);
+        v1_horizontal_pod_autoscaler->spec = NULL;
+    }
+    if (v1_horizontal_pod_autoscaler->status) {
+        v1_horizontal_pod_autoscaler_status_free(v1_horizontal_pod_autoscaler->status);
+        v1_horizontal_pod_autoscaler->status = NULL;
+    }
     free(v1_horizontal_pod_autoscaler);
 }
 

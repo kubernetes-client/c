@@ -29,10 +29,22 @@ void v1_node_config_status_free(v1_node_config_status_t *v1_node_config_status) 
         return ;
     }
     listEntry_t *listEntry;
-    v1_node_config_source_free(v1_node_config_status->active);
-    v1_node_config_source_free(v1_node_config_status->assigned);
-    free(v1_node_config_status->error);
-    v1_node_config_source_free(v1_node_config_status->last_known_good);
+    if (v1_node_config_status->active) {
+        v1_node_config_source_free(v1_node_config_status->active);
+        v1_node_config_status->active = NULL;
+    }
+    if (v1_node_config_status->assigned) {
+        v1_node_config_source_free(v1_node_config_status->assigned);
+        v1_node_config_status->assigned = NULL;
+    }
+    if (v1_node_config_status->error) {
+        free(v1_node_config_status->error);
+        v1_node_config_status->error = NULL;
+    }
+    if (v1_node_config_status->last_known_good) {
+        v1_node_config_source_free(v1_node_config_status->last_known_good);
+        v1_node_config_status->last_known_good = NULL;
+    }
     free(v1_node_config_status);
 }
 

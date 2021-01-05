@@ -31,10 +31,22 @@ void v1_controller_revision_free(v1_controller_revision_t *v1_controller_revisio
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_controller_revision->api_version);
-    object_free(v1_controller_revision->data);
-    free(v1_controller_revision->kind);
-    v1_object_meta_free(v1_controller_revision->metadata);
+    if (v1_controller_revision->api_version) {
+        free(v1_controller_revision->api_version);
+        v1_controller_revision->api_version = NULL;
+    }
+    if (v1_controller_revision->data) {
+        object_free(v1_controller_revision->data);
+        v1_controller_revision->data = NULL;
+    }
+    if (v1_controller_revision->kind) {
+        free(v1_controller_revision->kind);
+        v1_controller_revision->kind = NULL;
+    }
+    if (v1_controller_revision->metadata) {
+        v1_object_meta_free(v1_controller_revision->metadata);
+        v1_controller_revision->metadata = NULL;
+    }
     free(v1_controller_revision);
 }
 

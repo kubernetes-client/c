@@ -27,9 +27,18 @@ void v1_volume_attachment_spec_free(v1_volume_attachment_spec_t *v1_volume_attac
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_volume_attachment_spec->attacher);
-    free(v1_volume_attachment_spec->node_name);
-    v1_volume_attachment_source_free(v1_volume_attachment_spec->source);
+    if (v1_volume_attachment_spec->attacher) {
+        free(v1_volume_attachment_spec->attacher);
+        v1_volume_attachment_spec->attacher = NULL;
+    }
+    if (v1_volume_attachment_spec->node_name) {
+        free(v1_volume_attachment_spec->node_name);
+        v1_volume_attachment_spec->node_name = NULL;
+    }
+    if (v1_volume_attachment_spec->source) {
+        v1_volume_attachment_source_free(v1_volume_attachment_spec->source);
+        v1_volume_attachment_spec->source = NULL;
+    }
     free(v1_volume_attachment_spec);
 }
 

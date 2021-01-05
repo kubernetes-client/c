@@ -25,8 +25,14 @@ void v1beta1_custom_resource_subresources_free(v1beta1_custom_resource_subresour
         return ;
     }
     listEntry_t *listEntry;
-    v1beta1_custom_resource_subresource_scale_free(v1beta1_custom_resource_subresources->scale);
-    object_free(v1beta1_custom_resource_subresources->status);
+    if (v1beta1_custom_resource_subresources->scale) {
+        v1beta1_custom_resource_subresource_scale_free(v1beta1_custom_resource_subresources->scale);
+        v1beta1_custom_resource_subresources->scale = NULL;
+    }
+    if (v1beta1_custom_resource_subresources->status) {
+        object_free(v1beta1_custom_resource_subresources->status);
+        v1beta1_custom_resource_subresources->status = NULL;
+    }
     free(v1beta1_custom_resource_subresources);
 }
 

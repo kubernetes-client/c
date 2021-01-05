@@ -22,7 +22,7 @@ typedef struct v1_subject_t {
     char *api_group; // string
     char *kind; // string
     char *name; // string
-    char *namespace; // string
+    char *_namespace; // string
 
 } v1_subject_t;
 
@@ -30,7 +30,7 @@ v1_subject_t *v1_subject_create(
     char *api_group,
     char *kind,
     char *name,
-    char *namespace
+    char *_namespace
 );
 
 void v1_subject_free(v1_subject_t *v1_subject);

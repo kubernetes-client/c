@@ -31,11 +31,26 @@ void v1_custom_resource_definition_free(v1_custom_resource_definition_t *v1_cust
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_custom_resource_definition->api_version);
-    free(v1_custom_resource_definition->kind);
-    v1_object_meta_free(v1_custom_resource_definition->metadata);
-    v1_custom_resource_definition_spec_free(v1_custom_resource_definition->spec);
-    v1_custom_resource_definition_status_free(v1_custom_resource_definition->status);
+    if (v1_custom_resource_definition->api_version) {
+        free(v1_custom_resource_definition->api_version);
+        v1_custom_resource_definition->api_version = NULL;
+    }
+    if (v1_custom_resource_definition->kind) {
+        free(v1_custom_resource_definition->kind);
+        v1_custom_resource_definition->kind = NULL;
+    }
+    if (v1_custom_resource_definition->metadata) {
+        v1_object_meta_free(v1_custom_resource_definition->metadata);
+        v1_custom_resource_definition->metadata = NULL;
+    }
+    if (v1_custom_resource_definition->spec) {
+        v1_custom_resource_definition_spec_free(v1_custom_resource_definition->spec);
+        v1_custom_resource_definition->spec = NULL;
+    }
+    if (v1_custom_resource_definition->status) {
+        v1_custom_resource_definition_status_free(v1_custom_resource_definition->status);
+        v1_custom_resource_definition->status = NULL;
+    }
     free(v1_custom_resource_definition);
 }
 

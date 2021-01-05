@@ -31,11 +31,26 @@ void v1_resource_quota_free(v1_resource_quota_t *v1_resource_quota) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_resource_quota->api_version);
-    free(v1_resource_quota->kind);
-    v1_object_meta_free(v1_resource_quota->metadata);
-    v1_resource_quota_spec_free(v1_resource_quota->spec);
-    v1_resource_quota_status_free(v1_resource_quota->status);
+    if (v1_resource_quota->api_version) {
+        free(v1_resource_quota->api_version);
+        v1_resource_quota->api_version = NULL;
+    }
+    if (v1_resource_quota->kind) {
+        free(v1_resource_quota->kind);
+        v1_resource_quota->kind = NULL;
+    }
+    if (v1_resource_quota->metadata) {
+        v1_object_meta_free(v1_resource_quota->metadata);
+        v1_resource_quota->metadata = NULL;
+    }
+    if (v1_resource_quota->spec) {
+        v1_resource_quota_spec_free(v1_resource_quota->spec);
+        v1_resource_quota->spec = NULL;
+    }
+    if (v1_resource_quota->status) {
+        v1_resource_quota_status_free(v1_resource_quota->status);
+        v1_resource_quota->status = NULL;
+    }
     free(v1_resource_quota);
 }
 

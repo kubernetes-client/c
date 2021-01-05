@@ -29,13 +29,25 @@ void v1alpha1_flow_schema_list_free(v1alpha1_flow_schema_list_t *v1alpha1_flow_s
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_flow_schema_list->api_version);
-    list_ForEach(listEntry, v1alpha1_flow_schema_list->items) {
-        v1alpha1_flow_schema_free(listEntry->data);
+    if (v1alpha1_flow_schema_list->api_version) {
+        free(v1alpha1_flow_schema_list->api_version);
+        v1alpha1_flow_schema_list->api_version = NULL;
     }
-    list_free(v1alpha1_flow_schema_list->items);
-    free(v1alpha1_flow_schema_list->kind);
-    v1_list_meta_free(v1alpha1_flow_schema_list->metadata);
+    if (v1alpha1_flow_schema_list->items) {
+        list_ForEach(listEntry, v1alpha1_flow_schema_list->items) {
+            v1alpha1_flow_schema_free(listEntry->data);
+        }
+        list_free(v1alpha1_flow_schema_list->items);
+        v1alpha1_flow_schema_list->items = NULL;
+    }
+    if (v1alpha1_flow_schema_list->kind) {
+        free(v1alpha1_flow_schema_list->kind);
+        v1alpha1_flow_schema_list->kind = NULL;
+    }
+    if (v1alpha1_flow_schema_list->metadata) {
+        v1_list_meta_free(v1alpha1_flow_schema_list->metadata);
+        v1alpha1_flow_schema_list->metadata = NULL;
+    }
     free(v1alpha1_flow_schema_list);
 }
 

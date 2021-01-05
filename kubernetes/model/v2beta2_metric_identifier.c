@@ -25,8 +25,14 @@ void v2beta2_metric_identifier_free(v2beta2_metric_identifier_t *v2beta2_metric_
         return ;
     }
     listEntry_t *listEntry;
-    free(v2beta2_metric_identifier->name);
-    v1_label_selector_free(v2beta2_metric_identifier->selector);
+    if (v2beta2_metric_identifier->name) {
+        free(v2beta2_metric_identifier->name);
+        v2beta2_metric_identifier->name = NULL;
+    }
+    if (v2beta2_metric_identifier->selector) {
+        v1_label_selector_free(v2beta2_metric_identifier->selector);
+        v2beta2_metric_identifier->selector = NULL;
+    }
     free(v2beta2_metric_identifier);
 }
 

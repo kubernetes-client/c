@@ -8,7 +8,7 @@
 v1beta1_resource_attributes_t *v1beta1_resource_attributes_create(
     char *group,
     char *name,
-    char *namespace,
+    char *_namespace,
     char *resource,
     char *subresource,
     char *verb,
@@ -20,7 +20,7 @@ v1beta1_resource_attributes_t *v1beta1_resource_attributes_create(
     }
     v1beta1_resource_attributes_local_var->group = group;
     v1beta1_resource_attributes_local_var->name = name;
-    v1beta1_resource_attributes_local_var->namespace = namespace;
+    v1beta1_resource_attributes_local_var->_namespace = _namespace;
     v1beta1_resource_attributes_local_var->resource = resource;
     v1beta1_resource_attributes_local_var->subresource = subresource;
     v1beta1_resource_attributes_local_var->verb = verb;
@@ -35,13 +35,34 @@ void v1beta1_resource_attributes_free(v1beta1_resource_attributes_t *v1beta1_res
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_resource_attributes->group);
-    free(v1beta1_resource_attributes->name);
-    free(v1beta1_resource_attributes->namespace);
-    free(v1beta1_resource_attributes->resource);
-    free(v1beta1_resource_attributes->subresource);
-    free(v1beta1_resource_attributes->verb);
-    free(v1beta1_resource_attributes->version);
+    if (v1beta1_resource_attributes->group) {
+        free(v1beta1_resource_attributes->group);
+        v1beta1_resource_attributes->group = NULL;
+    }
+    if (v1beta1_resource_attributes->name) {
+        free(v1beta1_resource_attributes->name);
+        v1beta1_resource_attributes->name = NULL;
+    }
+    if (v1beta1_resource_attributes->_namespace) {
+        free(v1beta1_resource_attributes->_namespace);
+        v1beta1_resource_attributes->_namespace = NULL;
+    }
+    if (v1beta1_resource_attributes->resource) {
+        free(v1beta1_resource_attributes->resource);
+        v1beta1_resource_attributes->resource = NULL;
+    }
+    if (v1beta1_resource_attributes->subresource) {
+        free(v1beta1_resource_attributes->subresource);
+        v1beta1_resource_attributes->subresource = NULL;
+    }
+    if (v1beta1_resource_attributes->verb) {
+        free(v1beta1_resource_attributes->verb);
+        v1beta1_resource_attributes->verb = NULL;
+    }
+    if (v1beta1_resource_attributes->version) {
+        free(v1beta1_resource_attributes->version);
+        v1beta1_resource_attributes->version = NULL;
+    }
     free(v1beta1_resource_attributes);
 }
 
@@ -64,9 +85,9 @@ cJSON *v1beta1_resource_attributes_convertToJSON(v1beta1_resource_attributes_t *
      } 
 
 
-    // v1beta1_resource_attributes->namespace
-    if(v1beta1_resource_attributes->namespace) { 
-    if(cJSON_AddStringToObject(item, "namespace", v1beta1_resource_attributes->namespace) == NULL) {
+    // v1beta1_resource_attributes->_namespace
+    if(v1beta1_resource_attributes->_namespace) { 
+    if(cJSON_AddStringToObject(item, "namespace", v1beta1_resource_attributes->_namespace) == NULL) {
     goto fail; //String
     }
      } 
@@ -133,10 +154,10 @@ v1beta1_resource_attributes_t *v1beta1_resource_attributes_parseFromJSON(cJSON *
     }
     }
 
-    // v1beta1_resource_attributes->namespace
-    cJSON *namespace = cJSON_GetObjectItemCaseSensitive(v1beta1_resource_attributesJSON, "namespace");
-    if (namespace) { 
-    if(!cJSON_IsString(namespace))
+    // v1beta1_resource_attributes->_namespace
+    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1beta1_resource_attributesJSON, "namespace");
+    if (_namespace) { 
+    if(!cJSON_IsString(_namespace))
     {
     goto end; //String
     }
@@ -182,7 +203,7 @@ v1beta1_resource_attributes_t *v1beta1_resource_attributes_parseFromJSON(cJSON *
     v1beta1_resource_attributes_local_var = v1beta1_resource_attributes_create (
         group ? strdup(group->valuestring) : NULL,
         name ? strdup(name->valuestring) : NULL,
-        namespace ? strdup(namespace->valuestring) : NULL,
+        _namespace ? strdup(_namespace->valuestring) : NULL,
         resource ? strdup(resource->valuestring) : NULL,
         subresource ? strdup(subresource->valuestring) : NULL,
         verb ? strdup(verb->valuestring) : NULL,

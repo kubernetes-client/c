@@ -43,22 +43,52 @@ void v1_mutating_webhook_free(v1_mutating_webhook_t *v1_mutating_webhook) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_mutating_webhook->admission_review_versions) {
-        free(listEntry->data);
+    if (v1_mutating_webhook->admission_review_versions) {
+        list_ForEach(listEntry, v1_mutating_webhook->admission_review_versions) {
+            free(listEntry->data);
+        }
+        list_free(v1_mutating_webhook->admission_review_versions);
+        v1_mutating_webhook->admission_review_versions = NULL;
     }
-    list_free(v1_mutating_webhook->admission_review_versions);
-    admissionregistration_v1_webhook_client_config_free(v1_mutating_webhook->client_config);
-    free(v1_mutating_webhook->failure_policy);
-    free(v1_mutating_webhook->match_policy);
-    free(v1_mutating_webhook->name);
-    v1_label_selector_free(v1_mutating_webhook->namespace_selector);
-    v1_label_selector_free(v1_mutating_webhook->object_selector);
-    free(v1_mutating_webhook->reinvocation_policy);
-    list_ForEach(listEntry, v1_mutating_webhook->rules) {
-        v1_rule_with_operations_free(listEntry->data);
+    if (v1_mutating_webhook->client_config) {
+        admissionregistration_v1_webhook_client_config_free(v1_mutating_webhook->client_config);
+        v1_mutating_webhook->client_config = NULL;
     }
-    list_free(v1_mutating_webhook->rules);
-    free(v1_mutating_webhook->side_effects);
+    if (v1_mutating_webhook->failure_policy) {
+        free(v1_mutating_webhook->failure_policy);
+        v1_mutating_webhook->failure_policy = NULL;
+    }
+    if (v1_mutating_webhook->match_policy) {
+        free(v1_mutating_webhook->match_policy);
+        v1_mutating_webhook->match_policy = NULL;
+    }
+    if (v1_mutating_webhook->name) {
+        free(v1_mutating_webhook->name);
+        v1_mutating_webhook->name = NULL;
+    }
+    if (v1_mutating_webhook->namespace_selector) {
+        v1_label_selector_free(v1_mutating_webhook->namespace_selector);
+        v1_mutating_webhook->namespace_selector = NULL;
+    }
+    if (v1_mutating_webhook->object_selector) {
+        v1_label_selector_free(v1_mutating_webhook->object_selector);
+        v1_mutating_webhook->object_selector = NULL;
+    }
+    if (v1_mutating_webhook->reinvocation_policy) {
+        free(v1_mutating_webhook->reinvocation_policy);
+        v1_mutating_webhook->reinvocation_policy = NULL;
+    }
+    if (v1_mutating_webhook->rules) {
+        list_ForEach(listEntry, v1_mutating_webhook->rules) {
+            v1_rule_with_operations_free(listEntry->data);
+        }
+        list_free(v1_mutating_webhook->rules);
+        v1_mutating_webhook->rules = NULL;
+    }
+    if (v1_mutating_webhook->side_effects) {
+        free(v1_mutating_webhook->side_effects);
+        v1_mutating_webhook->side_effects = NULL;
+    }
     free(v1_mutating_webhook);
 }
 

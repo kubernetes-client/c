@@ -33,11 +33,26 @@ void v1_quobyte_volume_source_free(v1_quobyte_volume_source_t *v1_quobyte_volume
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_quobyte_volume_source->group);
-    free(v1_quobyte_volume_source->registry);
-    free(v1_quobyte_volume_source->tenant);
-    free(v1_quobyte_volume_source->user);
-    free(v1_quobyte_volume_source->volume);
+    if (v1_quobyte_volume_source->group) {
+        free(v1_quobyte_volume_source->group);
+        v1_quobyte_volume_source->group = NULL;
+    }
+    if (v1_quobyte_volume_source->registry) {
+        free(v1_quobyte_volume_source->registry);
+        v1_quobyte_volume_source->registry = NULL;
+    }
+    if (v1_quobyte_volume_source->tenant) {
+        free(v1_quobyte_volume_source->tenant);
+        v1_quobyte_volume_source->tenant = NULL;
+    }
+    if (v1_quobyte_volume_source->user) {
+        free(v1_quobyte_volume_source->user);
+        v1_quobyte_volume_source->user = NULL;
+    }
+    if (v1_quobyte_volume_source->volume) {
+        free(v1_quobyte_volume_source->volume);
+        v1_quobyte_volume_source->volume = NULL;
+    }
     free(v1_quobyte_volume_source);
 }
 

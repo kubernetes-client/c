@@ -29,11 +29,17 @@ void v1_secret_volume_source_free(v1_secret_volume_source_t *v1_secret_volume_so
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_secret_volume_source->items) {
-        v1_key_to_path_free(listEntry->data);
+    if (v1_secret_volume_source->items) {
+        list_ForEach(listEntry, v1_secret_volume_source->items) {
+            v1_key_to_path_free(listEntry->data);
+        }
+        list_free(v1_secret_volume_source->items);
+        v1_secret_volume_source->items = NULL;
     }
-    list_free(v1_secret_volume_source->items);
-    free(v1_secret_volume_source->secret_name);
+    if (v1_secret_volume_source->secret_name) {
+        free(v1_secret_volume_source->secret_name);
+        v1_secret_volume_source->secret_name = NULL;
+    }
     free(v1_secret_volume_source);
 }
 

@@ -23,7 +23,10 @@ void v1_session_affinity_config_free(v1_session_affinity_config_t *v1_session_af
         return ;
     }
     listEntry_t *listEntry;
-    v1_client_ip_config_free(v1_session_affinity_config->client_ip);
+    if (v1_session_affinity_config->client_ip) {
+        v1_client_ip_config_free(v1_session_affinity_config->client_ip);
+        v1_session_affinity_config->client_ip = NULL;
+    }
     free(v1_session_affinity_config);
 }
 

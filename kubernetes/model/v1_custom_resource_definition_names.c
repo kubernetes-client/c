@@ -33,18 +33,36 @@ void v1_custom_resource_definition_names_free(v1_custom_resource_definition_name
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_custom_resource_definition_names->categories) {
-        free(listEntry->data);
+    if (v1_custom_resource_definition_names->categories) {
+        list_ForEach(listEntry, v1_custom_resource_definition_names->categories) {
+            free(listEntry->data);
+        }
+        list_free(v1_custom_resource_definition_names->categories);
+        v1_custom_resource_definition_names->categories = NULL;
     }
-    list_free(v1_custom_resource_definition_names->categories);
-    free(v1_custom_resource_definition_names->kind);
-    free(v1_custom_resource_definition_names->list_kind);
-    free(v1_custom_resource_definition_names->plural);
-    list_ForEach(listEntry, v1_custom_resource_definition_names->short_names) {
-        free(listEntry->data);
+    if (v1_custom_resource_definition_names->kind) {
+        free(v1_custom_resource_definition_names->kind);
+        v1_custom_resource_definition_names->kind = NULL;
     }
-    list_free(v1_custom_resource_definition_names->short_names);
-    free(v1_custom_resource_definition_names->singular);
+    if (v1_custom_resource_definition_names->list_kind) {
+        free(v1_custom_resource_definition_names->list_kind);
+        v1_custom_resource_definition_names->list_kind = NULL;
+    }
+    if (v1_custom_resource_definition_names->plural) {
+        free(v1_custom_resource_definition_names->plural);
+        v1_custom_resource_definition_names->plural = NULL;
+    }
+    if (v1_custom_resource_definition_names->short_names) {
+        list_ForEach(listEntry, v1_custom_resource_definition_names->short_names) {
+            free(listEntry->data);
+        }
+        list_free(v1_custom_resource_definition_names->short_names);
+        v1_custom_resource_definition_names->short_names = NULL;
+    }
+    if (v1_custom_resource_definition_names->singular) {
+        free(v1_custom_resource_definition_names->singular);
+        v1_custom_resource_definition_names->singular = NULL;
+    }
     free(v1_custom_resource_definition_names);
 }
 

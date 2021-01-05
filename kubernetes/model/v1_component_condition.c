@@ -29,10 +29,22 @@ void v1_component_condition_free(v1_component_condition_t *v1_component_conditio
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_component_condition->error);
-    free(v1_component_condition->message);
-    free(v1_component_condition->status);
-    free(v1_component_condition->type);
+    if (v1_component_condition->error) {
+        free(v1_component_condition->error);
+        v1_component_condition->error = NULL;
+    }
+    if (v1_component_condition->message) {
+        free(v1_component_condition->message);
+        v1_component_condition->message = NULL;
+    }
+    if (v1_component_condition->status) {
+        free(v1_component_condition->status);
+        v1_component_condition->status = NULL;
+    }
+    if (v1_component_condition->type) {
+        free(v1_component_condition->type);
+        v1_component_condition->type = NULL;
+    }
     free(v1_component_condition);
 }
 

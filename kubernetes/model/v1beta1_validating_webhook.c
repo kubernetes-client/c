@@ -41,21 +41,48 @@ void v1beta1_validating_webhook_free(v1beta1_validating_webhook_t *v1beta1_valid
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_validating_webhook->admission_review_versions) {
-        free(listEntry->data);
+    if (v1beta1_validating_webhook->admission_review_versions) {
+        list_ForEach(listEntry, v1beta1_validating_webhook->admission_review_versions) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_validating_webhook->admission_review_versions);
+        v1beta1_validating_webhook->admission_review_versions = NULL;
     }
-    list_free(v1beta1_validating_webhook->admission_review_versions);
-    admissionregistration_v1beta1_webhook_client_config_free(v1beta1_validating_webhook->client_config);
-    free(v1beta1_validating_webhook->failure_policy);
-    free(v1beta1_validating_webhook->match_policy);
-    free(v1beta1_validating_webhook->name);
-    v1_label_selector_free(v1beta1_validating_webhook->namespace_selector);
-    v1_label_selector_free(v1beta1_validating_webhook->object_selector);
-    list_ForEach(listEntry, v1beta1_validating_webhook->rules) {
-        v1beta1_rule_with_operations_free(listEntry->data);
+    if (v1beta1_validating_webhook->client_config) {
+        admissionregistration_v1beta1_webhook_client_config_free(v1beta1_validating_webhook->client_config);
+        v1beta1_validating_webhook->client_config = NULL;
     }
-    list_free(v1beta1_validating_webhook->rules);
-    free(v1beta1_validating_webhook->side_effects);
+    if (v1beta1_validating_webhook->failure_policy) {
+        free(v1beta1_validating_webhook->failure_policy);
+        v1beta1_validating_webhook->failure_policy = NULL;
+    }
+    if (v1beta1_validating_webhook->match_policy) {
+        free(v1beta1_validating_webhook->match_policy);
+        v1beta1_validating_webhook->match_policy = NULL;
+    }
+    if (v1beta1_validating_webhook->name) {
+        free(v1beta1_validating_webhook->name);
+        v1beta1_validating_webhook->name = NULL;
+    }
+    if (v1beta1_validating_webhook->namespace_selector) {
+        v1_label_selector_free(v1beta1_validating_webhook->namespace_selector);
+        v1beta1_validating_webhook->namespace_selector = NULL;
+    }
+    if (v1beta1_validating_webhook->object_selector) {
+        v1_label_selector_free(v1beta1_validating_webhook->object_selector);
+        v1beta1_validating_webhook->object_selector = NULL;
+    }
+    if (v1beta1_validating_webhook->rules) {
+        list_ForEach(listEntry, v1beta1_validating_webhook->rules) {
+            v1beta1_rule_with_operations_free(listEntry->data);
+        }
+        list_free(v1beta1_validating_webhook->rules);
+        v1beta1_validating_webhook->rules = NULL;
+    }
+    if (v1beta1_validating_webhook->side_effects) {
+        free(v1beta1_validating_webhook->side_effects);
+        v1beta1_validating_webhook->side_effects = NULL;
+    }
     free(v1beta1_validating_webhook);
 }
 

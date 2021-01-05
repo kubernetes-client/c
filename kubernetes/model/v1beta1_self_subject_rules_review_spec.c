@@ -6,13 +6,13 @@
 
 
 v1beta1_self_subject_rules_review_spec_t *v1beta1_self_subject_rules_review_spec_create(
-    char *namespace
+    char *_namespace
     ) {
     v1beta1_self_subject_rules_review_spec_t *v1beta1_self_subject_rules_review_spec_local_var = malloc(sizeof(v1beta1_self_subject_rules_review_spec_t));
     if (!v1beta1_self_subject_rules_review_spec_local_var) {
         return NULL;
     }
-    v1beta1_self_subject_rules_review_spec_local_var->namespace = namespace;
+    v1beta1_self_subject_rules_review_spec_local_var->_namespace = _namespace;
 
     return v1beta1_self_subject_rules_review_spec_local_var;
 }
@@ -23,16 +23,19 @@ void v1beta1_self_subject_rules_review_spec_free(v1beta1_self_subject_rules_revi
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_self_subject_rules_review_spec->namespace);
+    if (v1beta1_self_subject_rules_review_spec->_namespace) {
+        free(v1beta1_self_subject_rules_review_spec->_namespace);
+        v1beta1_self_subject_rules_review_spec->_namespace = NULL;
+    }
     free(v1beta1_self_subject_rules_review_spec);
 }
 
 cJSON *v1beta1_self_subject_rules_review_spec_convertToJSON(v1beta1_self_subject_rules_review_spec_t *v1beta1_self_subject_rules_review_spec) {
     cJSON *item = cJSON_CreateObject();
 
-    // v1beta1_self_subject_rules_review_spec->namespace
-    if(v1beta1_self_subject_rules_review_spec->namespace) { 
-    if(cJSON_AddStringToObject(item, "namespace", v1beta1_self_subject_rules_review_spec->namespace) == NULL) {
+    // v1beta1_self_subject_rules_review_spec->_namespace
+    if(v1beta1_self_subject_rules_review_spec->_namespace) { 
+    if(cJSON_AddStringToObject(item, "namespace", v1beta1_self_subject_rules_review_spec->_namespace) == NULL) {
     goto fail; //String
     }
      } 
@@ -49,10 +52,10 @@ v1beta1_self_subject_rules_review_spec_t *v1beta1_self_subject_rules_review_spec
 
     v1beta1_self_subject_rules_review_spec_t *v1beta1_self_subject_rules_review_spec_local_var = NULL;
 
-    // v1beta1_self_subject_rules_review_spec->namespace
-    cJSON *namespace = cJSON_GetObjectItemCaseSensitive(v1beta1_self_subject_rules_review_specJSON, "namespace");
-    if (namespace) { 
-    if(!cJSON_IsString(namespace))
+    // v1beta1_self_subject_rules_review_spec->_namespace
+    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1beta1_self_subject_rules_review_specJSON, "namespace");
+    if (_namespace) { 
+    if(!cJSON_IsString(_namespace))
     {
     goto end; //String
     }
@@ -60,7 +63,7 @@ v1beta1_self_subject_rules_review_spec_t *v1beta1_self_subject_rules_review_spec
 
 
     v1beta1_self_subject_rules_review_spec_local_var = v1beta1_self_subject_rules_review_spec_create (
-        namespace ? strdup(namespace->valuestring) : NULL
+        _namespace ? strdup(_namespace->valuestring) : NULL
         );
 
     return v1beta1_self_subject_rules_review_spec_local_var;

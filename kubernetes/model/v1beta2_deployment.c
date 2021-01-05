@@ -31,11 +31,26 @@ void v1beta2_deployment_free(v1beta2_deployment_t *v1beta2_deployment) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta2_deployment->api_version);
-    free(v1beta2_deployment->kind);
-    v1_object_meta_free(v1beta2_deployment->metadata);
-    v1beta2_deployment_spec_free(v1beta2_deployment->spec);
-    v1beta2_deployment_status_free(v1beta2_deployment->status);
+    if (v1beta2_deployment->api_version) {
+        free(v1beta2_deployment->api_version);
+        v1beta2_deployment->api_version = NULL;
+    }
+    if (v1beta2_deployment->kind) {
+        free(v1beta2_deployment->kind);
+        v1beta2_deployment->kind = NULL;
+    }
+    if (v1beta2_deployment->metadata) {
+        v1_object_meta_free(v1beta2_deployment->metadata);
+        v1beta2_deployment->metadata = NULL;
+    }
+    if (v1beta2_deployment->spec) {
+        v1beta2_deployment_spec_free(v1beta2_deployment->spec);
+        v1beta2_deployment->spec = NULL;
+    }
+    if (v1beta2_deployment->status) {
+        v1beta2_deployment_status_free(v1beta2_deployment->status);
+        v1beta2_deployment->status = NULL;
+    }
     free(v1beta2_deployment);
 }
 

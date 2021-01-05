@@ -25,8 +25,14 @@ void v1_network_policy_port_free(v1_network_policy_port_t *v1_network_policy_por
         return ;
     }
     listEntry_t *listEntry;
-    object_free(v1_network_policy_port->port);
-    free(v1_network_policy_port->protocol);
+    if (v1_network_policy_port->port) {
+        object_free(v1_network_policy_port->port);
+        v1_network_policy_port->port = NULL;
+    }
+    if (v1_network_policy_port->protocol) {
+        free(v1_network_policy_port->protocol);
+        v1_network_policy_port->protocol = NULL;
+    }
     free(v1_network_policy_port);
 }
 

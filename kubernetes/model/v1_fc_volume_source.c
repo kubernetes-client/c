@@ -31,15 +31,24 @@ void v1_fc_volume_source_free(v1_fc_volume_source_t *v1_fc_volume_source) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_fc_volume_source->fs_type);
-    list_ForEach(listEntry, v1_fc_volume_source->target_ww_ns) {
-        free(listEntry->data);
+    if (v1_fc_volume_source->fs_type) {
+        free(v1_fc_volume_source->fs_type);
+        v1_fc_volume_source->fs_type = NULL;
     }
-    list_free(v1_fc_volume_source->target_ww_ns);
-    list_ForEach(listEntry, v1_fc_volume_source->wwids) {
-        free(listEntry->data);
+    if (v1_fc_volume_source->target_ww_ns) {
+        list_ForEach(listEntry, v1_fc_volume_source->target_ww_ns) {
+            free(listEntry->data);
+        }
+        list_free(v1_fc_volume_source->target_ww_ns);
+        v1_fc_volume_source->target_ww_ns = NULL;
     }
-    list_free(v1_fc_volume_source->wwids);
+    if (v1_fc_volume_source->wwids) {
+        list_ForEach(listEntry, v1_fc_volume_source->wwids) {
+            free(listEntry->data);
+        }
+        list_free(v1_fc_volume_source->wwids);
+        v1_fc_volume_source->wwids = NULL;
+    }
     free(v1_fc_volume_source);
 }
 

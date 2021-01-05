@@ -25,8 +25,14 @@ void v1_custom_resource_conversion_free(v1_custom_resource_conversion_t *v1_cust
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_custom_resource_conversion->strategy);
-    v1_webhook_conversion_free(v1_custom_resource_conversion->webhook);
+    if (v1_custom_resource_conversion->strategy) {
+        free(v1_custom_resource_conversion->strategy);
+        v1_custom_resource_conversion->strategy = NULL;
+    }
+    if (v1_custom_resource_conversion->webhook) {
+        v1_webhook_conversion_free(v1_custom_resource_conversion->webhook);
+        v1_custom_resource_conversion->webhook = NULL;
+    }
     free(v1_custom_resource_conversion);
 }
 

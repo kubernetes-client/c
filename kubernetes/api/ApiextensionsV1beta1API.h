@@ -57,7 +57,7 @@ ApiextensionsV1beta1API_patchCustomResourceDefinitionStatus(apiClient_t *apiClie
 // read the specified CustomResourceDefinition
 //
 v1beta1_custom_resource_definition_t*
-ApiextensionsV1beta1API_readCustomResourceDefinition(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+ApiextensionsV1beta1API_readCustomResourceDefinition(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read status of the specified CustomResourceDefinition

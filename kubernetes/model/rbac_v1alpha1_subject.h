@@ -22,7 +22,7 @@ typedef struct rbac_v1alpha1_subject_t {
     char *api_version; // string
     char *kind; // string
     char *name; // string
-    char *namespace; // string
+    char *_namespace; // string
 
 } rbac_v1alpha1_subject_t;
 
@@ -30,7 +30,7 @@ rbac_v1alpha1_subject_t *rbac_v1alpha1_subject_create(
     char *api_version,
     char *kind,
     char *name,
-    char *namespace
+    char *_namespace
 );
 
 void rbac_v1alpha1_subject_free(rbac_v1alpha1_subject_t *rbac_v1alpha1_subject);

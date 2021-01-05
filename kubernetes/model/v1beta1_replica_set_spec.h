@@ -24,7 +24,7 @@ typedef struct v1beta1_replica_set_spec_t {
     int min_ready_seconds; //numeric
     int replicas; //numeric
     struct v1_label_selector_t *selector; //model
-    struct v1_pod_template_spec_t *template; //model
+    struct v1_pod_template_spec_t *_template; //model
 
 } v1beta1_replica_set_spec_t;
 
@@ -32,7 +32,7 @@ v1beta1_replica_set_spec_t *v1beta1_replica_set_spec_create(
     int min_ready_seconds,
     int replicas,
     v1_label_selector_t *selector,
-    v1_pod_template_spec_t *template
+    v1_pod_template_spec_t *_template
 );
 
 void v1beta1_replica_set_spec_free(v1beta1_replica_set_spec_t *v1beta1_replica_set_spec);

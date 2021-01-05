@@ -29,10 +29,22 @@ void v1beta1_certificate_signing_request_condition_free(v1beta1_certificate_sign
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_certificate_signing_request_condition->last_update_time);
-    free(v1beta1_certificate_signing_request_condition->message);
-    free(v1beta1_certificate_signing_request_condition->reason);
-    free(v1beta1_certificate_signing_request_condition->type);
+    if (v1beta1_certificate_signing_request_condition->last_update_time) {
+        free(v1beta1_certificate_signing_request_condition->last_update_time);
+        v1beta1_certificate_signing_request_condition->last_update_time = NULL;
+    }
+    if (v1beta1_certificate_signing_request_condition->message) {
+        free(v1beta1_certificate_signing_request_condition->message);
+        v1beta1_certificate_signing_request_condition->message = NULL;
+    }
+    if (v1beta1_certificate_signing_request_condition->reason) {
+        free(v1beta1_certificate_signing_request_condition->reason);
+        v1beta1_certificate_signing_request_condition->reason = NULL;
+    }
+    if (v1beta1_certificate_signing_request_condition->type) {
+        free(v1beta1_certificate_signing_request_condition->type);
+        v1beta1_certificate_signing_request_condition->type = NULL;
+    }
     free(v1beta1_certificate_signing_request_condition);
 }
 

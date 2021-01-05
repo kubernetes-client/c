@@ -35,16 +35,37 @@ void v1_persistent_volume_claim_spec_free(v1_persistent_volume_claim_spec_t *v1_
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_persistent_volume_claim_spec->access_modes) {
-        free(listEntry->data);
+    if (v1_persistent_volume_claim_spec->access_modes) {
+        list_ForEach(listEntry, v1_persistent_volume_claim_spec->access_modes) {
+            free(listEntry->data);
+        }
+        list_free(v1_persistent_volume_claim_spec->access_modes);
+        v1_persistent_volume_claim_spec->access_modes = NULL;
     }
-    list_free(v1_persistent_volume_claim_spec->access_modes);
-    v1_typed_local_object_reference_free(v1_persistent_volume_claim_spec->data_source);
-    v1_resource_requirements_free(v1_persistent_volume_claim_spec->resources);
-    v1_label_selector_free(v1_persistent_volume_claim_spec->selector);
-    free(v1_persistent_volume_claim_spec->storage_class_name);
-    free(v1_persistent_volume_claim_spec->volume_mode);
-    free(v1_persistent_volume_claim_spec->volume_name);
+    if (v1_persistent_volume_claim_spec->data_source) {
+        v1_typed_local_object_reference_free(v1_persistent_volume_claim_spec->data_source);
+        v1_persistent_volume_claim_spec->data_source = NULL;
+    }
+    if (v1_persistent_volume_claim_spec->resources) {
+        v1_resource_requirements_free(v1_persistent_volume_claim_spec->resources);
+        v1_persistent_volume_claim_spec->resources = NULL;
+    }
+    if (v1_persistent_volume_claim_spec->selector) {
+        v1_label_selector_free(v1_persistent_volume_claim_spec->selector);
+        v1_persistent_volume_claim_spec->selector = NULL;
+    }
+    if (v1_persistent_volume_claim_spec->storage_class_name) {
+        free(v1_persistent_volume_claim_spec->storage_class_name);
+        v1_persistent_volume_claim_spec->storage_class_name = NULL;
+    }
+    if (v1_persistent_volume_claim_spec->volume_mode) {
+        free(v1_persistent_volume_claim_spec->volume_mode);
+        v1_persistent_volume_claim_spec->volume_mode = NULL;
+    }
+    if (v1_persistent_volume_claim_spec->volume_name) {
+        free(v1_persistent_volume_claim_spec->volume_name);
+        v1_persistent_volume_claim_spec->volume_name = NULL;
+    }
     free(v1_persistent_volume_claim_spec);
 }
 

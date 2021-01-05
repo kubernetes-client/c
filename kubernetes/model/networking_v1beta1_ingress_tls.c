@@ -25,11 +25,17 @@ void networking_v1beta1_ingress_tls_free(networking_v1beta1_ingress_tls_t *netwo
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, networking_v1beta1_ingress_tls->hosts) {
-        free(listEntry->data);
+    if (networking_v1beta1_ingress_tls->hosts) {
+        list_ForEach(listEntry, networking_v1beta1_ingress_tls->hosts) {
+            free(listEntry->data);
+        }
+        list_free(networking_v1beta1_ingress_tls->hosts);
+        networking_v1beta1_ingress_tls->hosts = NULL;
     }
-    list_free(networking_v1beta1_ingress_tls->hosts);
-    free(networking_v1beta1_ingress_tls->secret_name);
+    if (networking_v1beta1_ingress_tls->secret_name) {
+        free(networking_v1beta1_ingress_tls->secret_name);
+        networking_v1beta1_ingress_tls->secret_name = NULL;
+    }
     free(networking_v1beta1_ingress_tls);
 }
 

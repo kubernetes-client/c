@@ -29,10 +29,22 @@ void v1alpha1_runtime_class_free(v1alpha1_runtime_class_t *v1alpha1_runtime_clas
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_runtime_class->api_version);
-    free(v1alpha1_runtime_class->kind);
-    v1_object_meta_free(v1alpha1_runtime_class->metadata);
-    v1alpha1_runtime_class_spec_free(v1alpha1_runtime_class->spec);
+    if (v1alpha1_runtime_class->api_version) {
+        free(v1alpha1_runtime_class->api_version);
+        v1alpha1_runtime_class->api_version = NULL;
+    }
+    if (v1alpha1_runtime_class->kind) {
+        free(v1alpha1_runtime_class->kind);
+        v1alpha1_runtime_class->kind = NULL;
+    }
+    if (v1alpha1_runtime_class->metadata) {
+        v1_object_meta_free(v1alpha1_runtime_class->metadata);
+        v1alpha1_runtime_class->metadata = NULL;
+    }
+    if (v1alpha1_runtime_class->spec) {
+        v1alpha1_runtime_class_spec_free(v1alpha1_runtime_class->spec);
+        v1alpha1_runtime_class->spec = NULL;
+    }
     free(v1alpha1_runtime_class);
 }
 

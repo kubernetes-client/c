@@ -79,35 +79,122 @@ void v1_volume_free(v1_volume_t *v1_volume) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_aws_elastic_block_store_volume_source_free(v1_volume->aws_elastic_block_store);
-    v1_azure_disk_volume_source_free(v1_volume->azure_disk);
-    v1_azure_file_volume_source_free(v1_volume->azure_file);
-    v1_ceph_fs_volume_source_free(v1_volume->cephfs);
-    v1_cinder_volume_source_free(v1_volume->cinder);
-    v1_config_map_volume_source_free(v1_volume->config_map);
-    v1_csi_volume_source_free(v1_volume->csi);
-    v1_downward_api_volume_source_free(v1_volume->downward_api);
-    v1_empty_dir_volume_source_free(v1_volume->empty_dir);
-    v1_fc_volume_source_free(v1_volume->fc);
-    v1_flex_volume_source_free(v1_volume->flex_volume);
-    v1_flocker_volume_source_free(v1_volume->flocker);
-    v1_gce_persistent_disk_volume_source_free(v1_volume->gce_persistent_disk);
-    v1_git_repo_volume_source_free(v1_volume->git_repo);
-    v1_glusterfs_volume_source_free(v1_volume->glusterfs);
-    v1_host_path_volume_source_free(v1_volume->host_path);
-    v1_iscsi_volume_source_free(v1_volume->iscsi);
-    free(v1_volume->name);
-    v1_nfs_volume_source_free(v1_volume->nfs);
-    v1_persistent_volume_claim_volume_source_free(v1_volume->persistent_volume_claim);
-    v1_photon_persistent_disk_volume_source_free(v1_volume->photon_persistent_disk);
-    v1_portworx_volume_source_free(v1_volume->portworx_volume);
-    v1_projected_volume_source_free(v1_volume->projected);
-    v1_quobyte_volume_source_free(v1_volume->quobyte);
-    v1_rbd_volume_source_free(v1_volume->rbd);
-    v1_scale_io_volume_source_free(v1_volume->scale_io);
-    v1_secret_volume_source_free(v1_volume->secret);
-    v1_storage_os_volume_source_free(v1_volume->storageos);
-    v1_vsphere_virtual_disk_volume_source_free(v1_volume->vsphere_volume);
+    if (v1_volume->aws_elastic_block_store) {
+        v1_aws_elastic_block_store_volume_source_free(v1_volume->aws_elastic_block_store);
+        v1_volume->aws_elastic_block_store = NULL;
+    }
+    if (v1_volume->azure_disk) {
+        v1_azure_disk_volume_source_free(v1_volume->azure_disk);
+        v1_volume->azure_disk = NULL;
+    }
+    if (v1_volume->azure_file) {
+        v1_azure_file_volume_source_free(v1_volume->azure_file);
+        v1_volume->azure_file = NULL;
+    }
+    if (v1_volume->cephfs) {
+        v1_ceph_fs_volume_source_free(v1_volume->cephfs);
+        v1_volume->cephfs = NULL;
+    }
+    if (v1_volume->cinder) {
+        v1_cinder_volume_source_free(v1_volume->cinder);
+        v1_volume->cinder = NULL;
+    }
+    if (v1_volume->config_map) {
+        v1_config_map_volume_source_free(v1_volume->config_map);
+        v1_volume->config_map = NULL;
+    }
+    if (v1_volume->csi) {
+        v1_csi_volume_source_free(v1_volume->csi);
+        v1_volume->csi = NULL;
+    }
+    if (v1_volume->downward_api) {
+        v1_downward_api_volume_source_free(v1_volume->downward_api);
+        v1_volume->downward_api = NULL;
+    }
+    if (v1_volume->empty_dir) {
+        v1_empty_dir_volume_source_free(v1_volume->empty_dir);
+        v1_volume->empty_dir = NULL;
+    }
+    if (v1_volume->fc) {
+        v1_fc_volume_source_free(v1_volume->fc);
+        v1_volume->fc = NULL;
+    }
+    if (v1_volume->flex_volume) {
+        v1_flex_volume_source_free(v1_volume->flex_volume);
+        v1_volume->flex_volume = NULL;
+    }
+    if (v1_volume->flocker) {
+        v1_flocker_volume_source_free(v1_volume->flocker);
+        v1_volume->flocker = NULL;
+    }
+    if (v1_volume->gce_persistent_disk) {
+        v1_gce_persistent_disk_volume_source_free(v1_volume->gce_persistent_disk);
+        v1_volume->gce_persistent_disk = NULL;
+    }
+    if (v1_volume->git_repo) {
+        v1_git_repo_volume_source_free(v1_volume->git_repo);
+        v1_volume->git_repo = NULL;
+    }
+    if (v1_volume->glusterfs) {
+        v1_glusterfs_volume_source_free(v1_volume->glusterfs);
+        v1_volume->glusterfs = NULL;
+    }
+    if (v1_volume->host_path) {
+        v1_host_path_volume_source_free(v1_volume->host_path);
+        v1_volume->host_path = NULL;
+    }
+    if (v1_volume->iscsi) {
+        v1_iscsi_volume_source_free(v1_volume->iscsi);
+        v1_volume->iscsi = NULL;
+    }
+    if (v1_volume->name) {
+        free(v1_volume->name);
+        v1_volume->name = NULL;
+    }
+    if (v1_volume->nfs) {
+        v1_nfs_volume_source_free(v1_volume->nfs);
+        v1_volume->nfs = NULL;
+    }
+    if (v1_volume->persistent_volume_claim) {
+        v1_persistent_volume_claim_volume_source_free(v1_volume->persistent_volume_claim);
+        v1_volume->persistent_volume_claim = NULL;
+    }
+    if (v1_volume->photon_persistent_disk) {
+        v1_photon_persistent_disk_volume_source_free(v1_volume->photon_persistent_disk);
+        v1_volume->photon_persistent_disk = NULL;
+    }
+    if (v1_volume->portworx_volume) {
+        v1_portworx_volume_source_free(v1_volume->portworx_volume);
+        v1_volume->portworx_volume = NULL;
+    }
+    if (v1_volume->projected) {
+        v1_projected_volume_source_free(v1_volume->projected);
+        v1_volume->projected = NULL;
+    }
+    if (v1_volume->quobyte) {
+        v1_quobyte_volume_source_free(v1_volume->quobyte);
+        v1_volume->quobyte = NULL;
+    }
+    if (v1_volume->rbd) {
+        v1_rbd_volume_source_free(v1_volume->rbd);
+        v1_volume->rbd = NULL;
+    }
+    if (v1_volume->scale_io) {
+        v1_scale_io_volume_source_free(v1_volume->scale_io);
+        v1_volume->scale_io = NULL;
+    }
+    if (v1_volume->secret) {
+        v1_secret_volume_source_free(v1_volume->secret);
+        v1_volume->secret = NULL;
+    }
+    if (v1_volume->storageos) {
+        v1_storage_os_volume_source_free(v1_volume->storageos);
+        v1_volume->storageos = NULL;
+    }
+    if (v1_volume->vsphere_volume) {
+        v1_vsphere_virtual_disk_volume_source_free(v1_volume->vsphere_volume);
+        v1_volume->vsphere_volume = NULL;
+    }
     free(v1_volume);
 }
 

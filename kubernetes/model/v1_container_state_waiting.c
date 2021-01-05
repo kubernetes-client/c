@@ -25,8 +25,14 @@ void v1_container_state_waiting_free(v1_container_state_waiting_t *v1_container_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_container_state_waiting->message);
-    free(v1_container_state_waiting->reason);
+    if (v1_container_state_waiting->message) {
+        free(v1_container_state_waiting->message);
+        v1_container_state_waiting->message = NULL;
+    }
+    if (v1_container_state_waiting->reason) {
+        free(v1_container_state_waiting->reason);
+        v1_container_state_waiting->reason = NULL;
+    }
     free(v1_container_state_waiting);
 }
 

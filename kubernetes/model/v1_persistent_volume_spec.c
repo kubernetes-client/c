@@ -81,48 +81,138 @@ void v1_persistent_volume_spec_free(v1_persistent_volume_spec_t *v1_persistent_v
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_persistent_volume_spec->access_modes) {
-        free(listEntry->data);
+    if (v1_persistent_volume_spec->access_modes) {
+        list_ForEach(listEntry, v1_persistent_volume_spec->access_modes) {
+            free(listEntry->data);
+        }
+        list_free(v1_persistent_volume_spec->access_modes);
+        v1_persistent_volume_spec->access_modes = NULL;
     }
-    list_free(v1_persistent_volume_spec->access_modes);
-    v1_aws_elastic_block_store_volume_source_free(v1_persistent_volume_spec->aws_elastic_block_store);
-    v1_azure_disk_volume_source_free(v1_persistent_volume_spec->azure_disk);
-    v1_azure_file_persistent_volume_source_free(v1_persistent_volume_spec->azure_file);
-    list_ForEach(listEntry, v1_persistent_volume_spec->capacity) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_persistent_volume_spec->aws_elastic_block_store) {
+        v1_aws_elastic_block_store_volume_source_free(v1_persistent_volume_spec->aws_elastic_block_store);
+        v1_persistent_volume_spec->aws_elastic_block_store = NULL;
     }
-    list_free(v1_persistent_volume_spec->capacity);
-    v1_ceph_fs_persistent_volume_source_free(v1_persistent_volume_spec->cephfs);
-    v1_cinder_persistent_volume_source_free(v1_persistent_volume_spec->cinder);
-    v1_object_reference_free(v1_persistent_volume_spec->claim_ref);
-    v1_csi_persistent_volume_source_free(v1_persistent_volume_spec->csi);
-    v1_fc_volume_source_free(v1_persistent_volume_spec->fc);
-    v1_flex_persistent_volume_source_free(v1_persistent_volume_spec->flex_volume);
-    v1_flocker_volume_source_free(v1_persistent_volume_spec->flocker);
-    v1_gce_persistent_disk_volume_source_free(v1_persistent_volume_spec->gce_persistent_disk);
-    v1_glusterfs_persistent_volume_source_free(v1_persistent_volume_spec->glusterfs);
-    v1_host_path_volume_source_free(v1_persistent_volume_spec->host_path);
-    v1_iscsi_persistent_volume_source_free(v1_persistent_volume_spec->iscsi);
-    v1_local_volume_source_free(v1_persistent_volume_spec->local);
-    list_ForEach(listEntry, v1_persistent_volume_spec->mount_options) {
-        free(listEntry->data);
+    if (v1_persistent_volume_spec->azure_disk) {
+        v1_azure_disk_volume_source_free(v1_persistent_volume_spec->azure_disk);
+        v1_persistent_volume_spec->azure_disk = NULL;
     }
-    list_free(v1_persistent_volume_spec->mount_options);
-    v1_nfs_volume_source_free(v1_persistent_volume_spec->nfs);
-    v1_volume_node_affinity_free(v1_persistent_volume_spec->node_affinity);
-    free(v1_persistent_volume_spec->persistent_volume_reclaim_policy);
-    v1_photon_persistent_disk_volume_source_free(v1_persistent_volume_spec->photon_persistent_disk);
-    v1_portworx_volume_source_free(v1_persistent_volume_spec->portworx_volume);
-    v1_quobyte_volume_source_free(v1_persistent_volume_spec->quobyte);
-    v1_rbd_persistent_volume_source_free(v1_persistent_volume_spec->rbd);
-    v1_scale_io_persistent_volume_source_free(v1_persistent_volume_spec->scale_io);
-    free(v1_persistent_volume_spec->storage_class_name);
-    v1_storage_os_persistent_volume_source_free(v1_persistent_volume_spec->storageos);
-    free(v1_persistent_volume_spec->volume_mode);
-    v1_vsphere_virtual_disk_volume_source_free(v1_persistent_volume_spec->vsphere_volume);
+    if (v1_persistent_volume_spec->azure_file) {
+        v1_azure_file_persistent_volume_source_free(v1_persistent_volume_spec->azure_file);
+        v1_persistent_volume_spec->azure_file = NULL;
+    }
+    if (v1_persistent_volume_spec->capacity) {
+        list_ForEach(listEntry, v1_persistent_volume_spec->capacity) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_persistent_volume_spec->capacity);
+        v1_persistent_volume_spec->capacity = NULL;
+    }
+    if (v1_persistent_volume_spec->cephfs) {
+        v1_ceph_fs_persistent_volume_source_free(v1_persistent_volume_spec->cephfs);
+        v1_persistent_volume_spec->cephfs = NULL;
+    }
+    if (v1_persistent_volume_spec->cinder) {
+        v1_cinder_persistent_volume_source_free(v1_persistent_volume_spec->cinder);
+        v1_persistent_volume_spec->cinder = NULL;
+    }
+    if (v1_persistent_volume_spec->claim_ref) {
+        v1_object_reference_free(v1_persistent_volume_spec->claim_ref);
+        v1_persistent_volume_spec->claim_ref = NULL;
+    }
+    if (v1_persistent_volume_spec->csi) {
+        v1_csi_persistent_volume_source_free(v1_persistent_volume_spec->csi);
+        v1_persistent_volume_spec->csi = NULL;
+    }
+    if (v1_persistent_volume_spec->fc) {
+        v1_fc_volume_source_free(v1_persistent_volume_spec->fc);
+        v1_persistent_volume_spec->fc = NULL;
+    }
+    if (v1_persistent_volume_spec->flex_volume) {
+        v1_flex_persistent_volume_source_free(v1_persistent_volume_spec->flex_volume);
+        v1_persistent_volume_spec->flex_volume = NULL;
+    }
+    if (v1_persistent_volume_spec->flocker) {
+        v1_flocker_volume_source_free(v1_persistent_volume_spec->flocker);
+        v1_persistent_volume_spec->flocker = NULL;
+    }
+    if (v1_persistent_volume_spec->gce_persistent_disk) {
+        v1_gce_persistent_disk_volume_source_free(v1_persistent_volume_spec->gce_persistent_disk);
+        v1_persistent_volume_spec->gce_persistent_disk = NULL;
+    }
+    if (v1_persistent_volume_spec->glusterfs) {
+        v1_glusterfs_persistent_volume_source_free(v1_persistent_volume_spec->glusterfs);
+        v1_persistent_volume_spec->glusterfs = NULL;
+    }
+    if (v1_persistent_volume_spec->host_path) {
+        v1_host_path_volume_source_free(v1_persistent_volume_spec->host_path);
+        v1_persistent_volume_spec->host_path = NULL;
+    }
+    if (v1_persistent_volume_spec->iscsi) {
+        v1_iscsi_persistent_volume_source_free(v1_persistent_volume_spec->iscsi);
+        v1_persistent_volume_spec->iscsi = NULL;
+    }
+    if (v1_persistent_volume_spec->local) {
+        v1_local_volume_source_free(v1_persistent_volume_spec->local);
+        v1_persistent_volume_spec->local = NULL;
+    }
+    if (v1_persistent_volume_spec->mount_options) {
+        list_ForEach(listEntry, v1_persistent_volume_spec->mount_options) {
+            free(listEntry->data);
+        }
+        list_free(v1_persistent_volume_spec->mount_options);
+        v1_persistent_volume_spec->mount_options = NULL;
+    }
+    if (v1_persistent_volume_spec->nfs) {
+        v1_nfs_volume_source_free(v1_persistent_volume_spec->nfs);
+        v1_persistent_volume_spec->nfs = NULL;
+    }
+    if (v1_persistent_volume_spec->node_affinity) {
+        v1_volume_node_affinity_free(v1_persistent_volume_spec->node_affinity);
+        v1_persistent_volume_spec->node_affinity = NULL;
+    }
+    if (v1_persistent_volume_spec->persistent_volume_reclaim_policy) {
+        free(v1_persistent_volume_spec->persistent_volume_reclaim_policy);
+        v1_persistent_volume_spec->persistent_volume_reclaim_policy = NULL;
+    }
+    if (v1_persistent_volume_spec->photon_persistent_disk) {
+        v1_photon_persistent_disk_volume_source_free(v1_persistent_volume_spec->photon_persistent_disk);
+        v1_persistent_volume_spec->photon_persistent_disk = NULL;
+    }
+    if (v1_persistent_volume_spec->portworx_volume) {
+        v1_portworx_volume_source_free(v1_persistent_volume_spec->portworx_volume);
+        v1_persistent_volume_spec->portworx_volume = NULL;
+    }
+    if (v1_persistent_volume_spec->quobyte) {
+        v1_quobyte_volume_source_free(v1_persistent_volume_spec->quobyte);
+        v1_persistent_volume_spec->quobyte = NULL;
+    }
+    if (v1_persistent_volume_spec->rbd) {
+        v1_rbd_persistent_volume_source_free(v1_persistent_volume_spec->rbd);
+        v1_persistent_volume_spec->rbd = NULL;
+    }
+    if (v1_persistent_volume_spec->scale_io) {
+        v1_scale_io_persistent_volume_source_free(v1_persistent_volume_spec->scale_io);
+        v1_persistent_volume_spec->scale_io = NULL;
+    }
+    if (v1_persistent_volume_spec->storage_class_name) {
+        free(v1_persistent_volume_spec->storage_class_name);
+        v1_persistent_volume_spec->storage_class_name = NULL;
+    }
+    if (v1_persistent_volume_spec->storageos) {
+        v1_storage_os_persistent_volume_source_free(v1_persistent_volume_spec->storageos);
+        v1_persistent_volume_spec->storageos = NULL;
+    }
+    if (v1_persistent_volume_spec->volume_mode) {
+        free(v1_persistent_volume_spec->volume_mode);
+        v1_persistent_volume_spec->volume_mode = NULL;
+    }
+    if (v1_persistent_volume_spec->vsphere_volume) {
+        v1_vsphere_virtual_disk_volume_source_free(v1_persistent_volume_spec->vsphere_volume);
+        v1_persistent_volume_spec->vsphere_volume = NULL;
+    }
     free(v1_persistent_volume_spec);
 }
 

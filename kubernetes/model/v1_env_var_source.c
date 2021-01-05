@@ -29,10 +29,22 @@ void v1_env_var_source_free(v1_env_var_source_t *v1_env_var_source) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_config_map_key_selector_free(v1_env_var_source->config_map_key_ref);
-    v1_object_field_selector_free(v1_env_var_source->field_ref);
-    v1_resource_field_selector_free(v1_env_var_source->resource_field_ref);
-    v1_secret_key_selector_free(v1_env_var_source->secret_key_ref);
+    if (v1_env_var_source->config_map_key_ref) {
+        v1_config_map_key_selector_free(v1_env_var_source->config_map_key_ref);
+        v1_env_var_source->config_map_key_ref = NULL;
+    }
+    if (v1_env_var_source->field_ref) {
+        v1_object_field_selector_free(v1_env_var_source->field_ref);
+        v1_env_var_source->field_ref = NULL;
+    }
+    if (v1_env_var_source->resource_field_ref) {
+        v1_resource_field_selector_free(v1_env_var_source->resource_field_ref);
+        v1_env_var_source->resource_field_ref = NULL;
+    }
+    if (v1_env_var_source->secret_key_ref) {
+        v1_secret_key_selector_free(v1_env_var_source->secret_key_ref);
+        v1_env_var_source->secret_key_ref = NULL;
+    }
     free(v1_env_var_source);
 }
 

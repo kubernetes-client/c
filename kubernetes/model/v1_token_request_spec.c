@@ -27,11 +27,17 @@ void v1_token_request_spec_free(v1_token_request_spec_t *v1_token_request_spec) 
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_token_request_spec->audiences) {
-        free(listEntry->data);
+    if (v1_token_request_spec->audiences) {
+        list_ForEach(listEntry, v1_token_request_spec->audiences) {
+            free(listEntry->data);
+        }
+        list_free(v1_token_request_spec->audiences);
+        v1_token_request_spec->audiences = NULL;
     }
-    list_free(v1_token_request_spec->audiences);
-    v1_bound_object_reference_free(v1_token_request_spec->bound_object_ref);
+    if (v1_token_request_spec->bound_object_ref) {
+        v1_bound_object_reference_free(v1_token_request_spec->bound_object_ref);
+        v1_token_request_spec->bound_object_ref = NULL;
+    }
     free(v1_token_request_spec);
 }
 

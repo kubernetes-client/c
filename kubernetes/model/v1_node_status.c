@@ -43,44 +43,77 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_node_status->addresses) {
-        v1_node_address_free(listEntry->data);
+    if (v1_node_status->addresses) {
+        list_ForEach(listEntry, v1_node_status->addresses) {
+            v1_node_address_free(listEntry->data);
+        }
+        list_free(v1_node_status->addresses);
+        v1_node_status->addresses = NULL;
     }
-    list_free(v1_node_status->addresses);
-    list_ForEach(listEntry, v1_node_status->allocatable) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_node_status->allocatable) {
+        list_ForEach(listEntry, v1_node_status->allocatable) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_node_status->allocatable);
+        v1_node_status->allocatable = NULL;
     }
-    list_free(v1_node_status->allocatable);
-    list_ForEach(listEntry, v1_node_status->capacity) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_node_status->capacity) {
+        list_ForEach(listEntry, v1_node_status->capacity) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_node_status->capacity);
+        v1_node_status->capacity = NULL;
     }
-    list_free(v1_node_status->capacity);
-    list_ForEach(listEntry, v1_node_status->conditions) {
-        v1_node_condition_free(listEntry->data);
+    if (v1_node_status->conditions) {
+        list_ForEach(listEntry, v1_node_status->conditions) {
+            v1_node_condition_free(listEntry->data);
+        }
+        list_free(v1_node_status->conditions);
+        v1_node_status->conditions = NULL;
     }
-    list_free(v1_node_status->conditions);
-    v1_node_config_status_free(v1_node_status->config);
-    v1_node_daemon_endpoints_free(v1_node_status->daemon_endpoints);
-    list_ForEach(listEntry, v1_node_status->images) {
-        v1_container_image_free(listEntry->data);
+    if (v1_node_status->config) {
+        v1_node_config_status_free(v1_node_status->config);
+        v1_node_status->config = NULL;
     }
-    list_free(v1_node_status->images);
-    v1_node_system_info_free(v1_node_status->node_info);
-    free(v1_node_status->phase);
-    list_ForEach(listEntry, v1_node_status->volumes_attached) {
-        v1_attached_volume_free(listEntry->data);
+    if (v1_node_status->daemon_endpoints) {
+        v1_node_daemon_endpoints_free(v1_node_status->daemon_endpoints);
+        v1_node_status->daemon_endpoints = NULL;
     }
-    list_free(v1_node_status->volumes_attached);
-    list_ForEach(listEntry, v1_node_status->volumes_in_use) {
-        free(listEntry->data);
+    if (v1_node_status->images) {
+        list_ForEach(listEntry, v1_node_status->images) {
+            v1_container_image_free(listEntry->data);
+        }
+        list_free(v1_node_status->images);
+        v1_node_status->images = NULL;
     }
-    list_free(v1_node_status->volumes_in_use);
+    if (v1_node_status->node_info) {
+        v1_node_system_info_free(v1_node_status->node_info);
+        v1_node_status->node_info = NULL;
+    }
+    if (v1_node_status->phase) {
+        free(v1_node_status->phase);
+        v1_node_status->phase = NULL;
+    }
+    if (v1_node_status->volumes_attached) {
+        list_ForEach(listEntry, v1_node_status->volumes_attached) {
+            v1_attached_volume_free(listEntry->data);
+        }
+        list_free(v1_node_status->volumes_attached);
+        v1_node_status->volumes_attached = NULL;
+    }
+    if (v1_node_status->volumes_in_use) {
+        list_ForEach(listEntry, v1_node_status->volumes_in_use) {
+            free(listEntry->data);
+        }
+        list_free(v1_node_status->volumes_in_use);
+        v1_node_status->volumes_in_use = NULL;
+    }
     free(v1_node_status);
 }
 

@@ -23,10 +23,13 @@ void v1_node_selector_free(v1_node_selector_t *v1_node_selector) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_node_selector->node_selector_terms) {
-        v1_node_selector_term_free(listEntry->data);
+    if (v1_node_selector->node_selector_terms) {
+        list_ForEach(listEntry, v1_node_selector->node_selector_terms) {
+            v1_node_selector_term_free(listEntry->data);
+        }
+        list_free(v1_node_selector->node_selector_terms);
+        v1_node_selector->node_selector_terms = NULL;
     }
-    list_free(v1_node_selector->node_selector_terms);
     free(v1_node_selector);
 }
 

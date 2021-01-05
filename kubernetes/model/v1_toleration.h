@@ -21,7 +21,7 @@ typedef struct v1_toleration_t v1_toleration_t;
 typedef struct v1_toleration_t {
     char *effect; // string
     char *key; // string
-    char *operator; // string
+    char *_operator; // string
     long toleration_seconds; //numeric
     char *value; // string
 
@@ -30,7 +30,7 @@ typedef struct v1_toleration_t {
 v1_toleration_t *v1_toleration_create(
     char *effect,
     char *key,
-    char *operator,
+    char *_operator,
     long toleration_seconds,
     char *value
 );

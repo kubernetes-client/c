@@ -24,7 +24,7 @@ typedef struct v1_pod_template_t {
     char *api_version; // string
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
-    struct v1_pod_template_spec_t *template; //model
+    struct v1_pod_template_spec_t *_template; //model
 
 } v1_pod_template_t;
 
@@ -32,7 +32,7 @@ v1_pod_template_t *v1_pod_template_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
-    v1_pod_template_spec_t *template
+    v1_pod_template_spec_t *_template
 );
 
 void v1_pod_template_free(v1_pod_template_t *v1_pod_template);

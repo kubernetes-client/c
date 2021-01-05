@@ -18,7 +18,7 @@ CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char * group 
 // Creates a namespace scoped Custom object
 //
 object_t*
-CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , object_t * body , char * pretty , char * dryRun , char * fieldManager );
+CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , object_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // Deletes the specified cluster scoped custom object
@@ -36,13 +36,13 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
 // Delete collection of namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * pretty , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body );
+CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * pretty , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body );
 
 
 // Deletes the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body );
+CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body );
 
 
 // Returns a cluster scoped custom object
@@ -66,19 +66,19 @@ CustomObjectsAPI_getClusterCustomObjectStatus(apiClient_t *apiClient, char * gro
 // Returns a namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name );
+CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name );
 
 
 // read scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name );
+CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name );
 
 
 // read status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name );
+CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name );
 
 
 // list or watch cluster scoped custom objects
@@ -90,7 +90,7 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
 // list or watch namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * pretty , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * pretty , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // patch the specified cluster scoped custom object
@@ -114,19 +114,19 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char * g
 // patch the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force );
+CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force );
 
 
 // partially update scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force );
+CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force );
 
 
 // partially update status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force );
+CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force );
 
 
 // replace the specified cluster scoped custom object
@@ -150,18 +150,18 @@ CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *
 // replace the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager );
+CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager );
 
 
 // replace scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager );
+CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager );
 
 
 // replace status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager );
+CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager );
 
 

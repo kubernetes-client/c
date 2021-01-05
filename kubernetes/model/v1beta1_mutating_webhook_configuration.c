@@ -29,13 +29,25 @@ void v1beta1_mutating_webhook_configuration_free(v1beta1_mutating_webhook_config
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_mutating_webhook_configuration->api_version);
-    free(v1beta1_mutating_webhook_configuration->kind);
-    v1_object_meta_free(v1beta1_mutating_webhook_configuration->metadata);
-    list_ForEach(listEntry, v1beta1_mutating_webhook_configuration->webhooks) {
-        v1beta1_mutating_webhook_free(listEntry->data);
+    if (v1beta1_mutating_webhook_configuration->api_version) {
+        free(v1beta1_mutating_webhook_configuration->api_version);
+        v1beta1_mutating_webhook_configuration->api_version = NULL;
     }
-    list_free(v1beta1_mutating_webhook_configuration->webhooks);
+    if (v1beta1_mutating_webhook_configuration->kind) {
+        free(v1beta1_mutating_webhook_configuration->kind);
+        v1beta1_mutating_webhook_configuration->kind = NULL;
+    }
+    if (v1beta1_mutating_webhook_configuration->metadata) {
+        v1_object_meta_free(v1beta1_mutating_webhook_configuration->metadata);
+        v1beta1_mutating_webhook_configuration->metadata = NULL;
+    }
+    if (v1beta1_mutating_webhook_configuration->webhooks) {
+        list_ForEach(listEntry, v1beta1_mutating_webhook_configuration->webhooks) {
+            v1beta1_mutating_webhook_free(listEntry->data);
+        }
+        list_free(v1beta1_mutating_webhook_configuration->webhooks);
+        v1beta1_mutating_webhook_configuration->webhooks = NULL;
+    }
     free(v1beta1_mutating_webhook_configuration);
 }
 

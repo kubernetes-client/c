@@ -29,13 +29,25 @@ void v1_csi_node_driver_free(v1_csi_node_driver_t *v1_csi_node_driver) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_volume_node_resources_free(v1_csi_node_driver->allocatable);
-    free(v1_csi_node_driver->name);
-    free(v1_csi_node_driver->node_id);
-    list_ForEach(listEntry, v1_csi_node_driver->topology_keys) {
-        free(listEntry->data);
+    if (v1_csi_node_driver->allocatable) {
+        v1_volume_node_resources_free(v1_csi_node_driver->allocatable);
+        v1_csi_node_driver->allocatable = NULL;
     }
-    list_free(v1_csi_node_driver->topology_keys);
+    if (v1_csi_node_driver->name) {
+        free(v1_csi_node_driver->name);
+        v1_csi_node_driver->name = NULL;
+    }
+    if (v1_csi_node_driver->node_id) {
+        free(v1_csi_node_driver->node_id);
+        v1_csi_node_driver->node_id = NULL;
+    }
+    if (v1_csi_node_driver->topology_keys) {
+        list_ForEach(listEntry, v1_csi_node_driver->topology_keys) {
+            free(listEntry->data);
+        }
+        list_free(v1_csi_node_driver->topology_keys);
+        v1_csi_node_driver->topology_keys = NULL;
+    }
     free(v1_csi_node_driver);
 }
 

@@ -31,22 +31,34 @@ void v1alpha1_resource_policy_rule_free(v1alpha1_resource_policy_rule_t *v1alpha
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1alpha1_resource_policy_rule->api_groups) {
-        free(listEntry->data);
+    if (v1alpha1_resource_policy_rule->api_groups) {
+        list_ForEach(listEntry, v1alpha1_resource_policy_rule->api_groups) {
+            free(listEntry->data);
+        }
+        list_free(v1alpha1_resource_policy_rule->api_groups);
+        v1alpha1_resource_policy_rule->api_groups = NULL;
     }
-    list_free(v1alpha1_resource_policy_rule->api_groups);
-    list_ForEach(listEntry, v1alpha1_resource_policy_rule->namespaces) {
-        free(listEntry->data);
+    if (v1alpha1_resource_policy_rule->namespaces) {
+        list_ForEach(listEntry, v1alpha1_resource_policy_rule->namespaces) {
+            free(listEntry->data);
+        }
+        list_free(v1alpha1_resource_policy_rule->namespaces);
+        v1alpha1_resource_policy_rule->namespaces = NULL;
     }
-    list_free(v1alpha1_resource_policy_rule->namespaces);
-    list_ForEach(listEntry, v1alpha1_resource_policy_rule->resources) {
-        free(listEntry->data);
+    if (v1alpha1_resource_policy_rule->resources) {
+        list_ForEach(listEntry, v1alpha1_resource_policy_rule->resources) {
+            free(listEntry->data);
+        }
+        list_free(v1alpha1_resource_policy_rule->resources);
+        v1alpha1_resource_policy_rule->resources = NULL;
     }
-    list_free(v1alpha1_resource_policy_rule->resources);
-    list_ForEach(listEntry, v1alpha1_resource_policy_rule->verbs) {
-        free(listEntry->data);
+    if (v1alpha1_resource_policy_rule->verbs) {
+        list_ForEach(listEntry, v1alpha1_resource_policy_rule->verbs) {
+            free(listEntry->data);
+        }
+        list_free(v1alpha1_resource_policy_rule->verbs);
+        v1alpha1_resource_policy_rule->verbs = NULL;
     }
-    list_free(v1alpha1_resource_policy_rule->verbs);
     free(v1alpha1_resource_policy_rule);
 }
 

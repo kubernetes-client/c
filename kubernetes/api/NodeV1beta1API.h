@@ -51,7 +51,7 @@ NodeV1beta1API_patchRuntimeClass(apiClient_t *apiClient, char * name , object_t 
 // read the specified RuntimeClass
 //
 v1beta1_runtime_class_t*
-NodeV1beta1API_readRuntimeClass(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+NodeV1beta1API_readRuntimeClass(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // replace the specified RuntimeClass

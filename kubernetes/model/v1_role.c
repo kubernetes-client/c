@@ -29,13 +29,25 @@ void v1_role_free(v1_role_t *v1_role) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_role->api_version);
-    free(v1_role->kind);
-    v1_object_meta_free(v1_role->metadata);
-    list_ForEach(listEntry, v1_role->rules) {
-        v1_policy_rule_free(listEntry->data);
+    if (v1_role->api_version) {
+        free(v1_role->api_version);
+        v1_role->api_version = NULL;
     }
-    list_free(v1_role->rules);
+    if (v1_role->kind) {
+        free(v1_role->kind);
+        v1_role->kind = NULL;
+    }
+    if (v1_role->metadata) {
+        v1_object_meta_free(v1_role->metadata);
+        v1_role->metadata = NULL;
+    }
+    if (v1_role->rules) {
+        list_ForEach(listEntry, v1_role->rules) {
+            v1_policy_rule_free(listEntry->data);
+        }
+        list_free(v1_role->rules);
+        v1_role->rules = NULL;
+    }
     free(v1_role);
 }
 

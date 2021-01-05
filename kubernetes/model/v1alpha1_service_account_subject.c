@@ -7,14 +7,14 @@
 
 v1alpha1_service_account_subject_t *v1alpha1_service_account_subject_create(
     char *name,
-    char *namespace
+    char *_namespace
     ) {
     v1alpha1_service_account_subject_t *v1alpha1_service_account_subject_local_var = malloc(sizeof(v1alpha1_service_account_subject_t));
     if (!v1alpha1_service_account_subject_local_var) {
         return NULL;
     }
     v1alpha1_service_account_subject_local_var->name = name;
-    v1alpha1_service_account_subject_local_var->namespace = namespace;
+    v1alpha1_service_account_subject_local_var->_namespace = _namespace;
 
     return v1alpha1_service_account_subject_local_var;
 }
@@ -25,8 +25,14 @@ void v1alpha1_service_account_subject_free(v1alpha1_service_account_subject_t *v
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_service_account_subject->name);
-    free(v1alpha1_service_account_subject->namespace);
+    if (v1alpha1_service_account_subject->name) {
+        free(v1alpha1_service_account_subject->name);
+        v1alpha1_service_account_subject->name = NULL;
+    }
+    if (v1alpha1_service_account_subject->_namespace) {
+        free(v1alpha1_service_account_subject->_namespace);
+        v1alpha1_service_account_subject->_namespace = NULL;
+    }
     free(v1alpha1_service_account_subject);
 }
 
@@ -43,12 +49,12 @@ cJSON *v1alpha1_service_account_subject_convertToJSON(v1alpha1_service_account_s
     }
 
 
-    // v1alpha1_service_account_subject->namespace
-    if (!v1alpha1_service_account_subject->namespace) {
+    // v1alpha1_service_account_subject->_namespace
+    if (!v1alpha1_service_account_subject->_namespace) {
         goto fail;
     }
     
-    if(cJSON_AddStringToObject(item, "namespace", v1alpha1_service_account_subject->namespace) == NULL) {
+    if(cJSON_AddStringToObject(item, "namespace", v1alpha1_service_account_subject->_namespace) == NULL) {
     goto fail; //String
     }
 
@@ -76,14 +82,14 @@ v1alpha1_service_account_subject_t *v1alpha1_service_account_subject_parseFromJS
     goto end; //String
     }
 
-    // v1alpha1_service_account_subject->namespace
-    cJSON *namespace = cJSON_GetObjectItemCaseSensitive(v1alpha1_service_account_subjectJSON, "namespace");
-    if (!namespace) {
+    // v1alpha1_service_account_subject->_namespace
+    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1alpha1_service_account_subjectJSON, "namespace");
+    if (!_namespace) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(namespace))
+    if(!cJSON_IsString(_namespace))
     {
     goto end; //String
     }
@@ -91,7 +97,7 @@ v1alpha1_service_account_subject_t *v1alpha1_service_account_subject_parseFromJS
 
     v1alpha1_service_account_subject_local_var = v1alpha1_service_account_subject_create (
         strdup(name->valuestring),
-        strdup(namespace->valuestring)
+        strdup(_namespace->valuestring)
         );
 
     return v1alpha1_service_account_subject_local_var;

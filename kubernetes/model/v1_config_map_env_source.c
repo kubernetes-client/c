@@ -25,7 +25,10 @@ void v1_config_map_env_source_free(v1_config_map_env_source_t *v1_config_map_env
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_config_map_env_source->name);
+    if (v1_config_map_env_source->name) {
+        free(v1_config_map_env_source->name);
+        v1_config_map_env_source->name = NULL;
+    }
     free(v1_config_map_env_source);
 }
 

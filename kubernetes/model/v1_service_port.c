@@ -31,9 +31,18 @@ void v1_service_port_free(v1_service_port_t *v1_service_port) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_service_port->name);
-    free(v1_service_port->protocol);
-    object_free(v1_service_port->target_port);
+    if (v1_service_port->name) {
+        free(v1_service_port->name);
+        v1_service_port->name = NULL;
+    }
+    if (v1_service_port->protocol) {
+        free(v1_service_port->protocol);
+        v1_service_port->protocol = NULL;
+    }
+    if (v1_service_port->target_port) {
+        object_free(v1_service_port->target_port);
+        v1_service_port->target_port = NULL;
+    }
     free(v1_service_port);
 }
 

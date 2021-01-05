@@ -55,22 +55,70 @@ void v1_event_free(v1_event_t *v1_event) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_event->action);
-    free(v1_event->api_version);
-    free(v1_event->event_time);
-    free(v1_event->first_timestamp);
-    v1_object_reference_free(v1_event->involved_object);
-    free(v1_event->kind);
-    free(v1_event->last_timestamp);
-    free(v1_event->message);
-    v1_object_meta_free(v1_event->metadata);
-    free(v1_event->reason);
-    v1_object_reference_free(v1_event->related);
-    free(v1_event->reporting_component);
-    free(v1_event->reporting_instance);
-    v1_event_series_free(v1_event->series);
-    v1_event_source_free(v1_event->source);
-    free(v1_event->type);
+    if (v1_event->action) {
+        free(v1_event->action);
+        v1_event->action = NULL;
+    }
+    if (v1_event->api_version) {
+        free(v1_event->api_version);
+        v1_event->api_version = NULL;
+    }
+    if (v1_event->event_time) {
+        free(v1_event->event_time);
+        v1_event->event_time = NULL;
+    }
+    if (v1_event->first_timestamp) {
+        free(v1_event->first_timestamp);
+        v1_event->first_timestamp = NULL;
+    }
+    if (v1_event->involved_object) {
+        v1_object_reference_free(v1_event->involved_object);
+        v1_event->involved_object = NULL;
+    }
+    if (v1_event->kind) {
+        free(v1_event->kind);
+        v1_event->kind = NULL;
+    }
+    if (v1_event->last_timestamp) {
+        free(v1_event->last_timestamp);
+        v1_event->last_timestamp = NULL;
+    }
+    if (v1_event->message) {
+        free(v1_event->message);
+        v1_event->message = NULL;
+    }
+    if (v1_event->metadata) {
+        v1_object_meta_free(v1_event->metadata);
+        v1_event->metadata = NULL;
+    }
+    if (v1_event->reason) {
+        free(v1_event->reason);
+        v1_event->reason = NULL;
+    }
+    if (v1_event->related) {
+        v1_object_reference_free(v1_event->related);
+        v1_event->related = NULL;
+    }
+    if (v1_event->reporting_component) {
+        free(v1_event->reporting_component);
+        v1_event->reporting_component = NULL;
+    }
+    if (v1_event->reporting_instance) {
+        free(v1_event->reporting_instance);
+        v1_event->reporting_instance = NULL;
+    }
+    if (v1_event->series) {
+        v1_event_series_free(v1_event->series);
+        v1_event->series = NULL;
+    }
+    if (v1_event->source) {
+        v1_event_source_free(v1_event->source);
+        v1_event->source = NULL;
+    }
+    if (v1_event->type) {
+        free(v1_event->type);
+        v1_event->type = NULL;
+    }
     free(v1_event);
 }
 

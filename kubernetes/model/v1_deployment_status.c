@@ -37,10 +37,13 @@ void v1_deployment_status_free(v1_deployment_status_t *v1_deployment_status) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_deployment_status->conditions) {
-        v1_deployment_condition_free(listEntry->data);
+    if (v1_deployment_status->conditions) {
+        list_ForEach(listEntry, v1_deployment_status->conditions) {
+            v1_deployment_condition_free(listEntry->data);
+        }
+        list_free(v1_deployment_status->conditions);
+        v1_deployment_status->conditions = NULL;
     }
-    list_free(v1_deployment_status->conditions);
     free(v1_deployment_status);
 }
 

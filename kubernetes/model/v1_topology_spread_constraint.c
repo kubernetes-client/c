@@ -29,9 +29,18 @@ void v1_topology_spread_constraint_free(v1_topology_spread_constraint_t *v1_topo
         return ;
     }
     listEntry_t *listEntry;
-    v1_label_selector_free(v1_topology_spread_constraint->label_selector);
-    free(v1_topology_spread_constraint->topology_key);
-    free(v1_topology_spread_constraint->when_unsatisfiable);
+    if (v1_topology_spread_constraint->label_selector) {
+        v1_label_selector_free(v1_topology_spread_constraint->label_selector);
+        v1_topology_spread_constraint->label_selector = NULL;
+    }
+    if (v1_topology_spread_constraint->topology_key) {
+        free(v1_topology_spread_constraint->topology_key);
+        v1_topology_spread_constraint->topology_key = NULL;
+    }
+    if (v1_topology_spread_constraint->when_unsatisfiable) {
+        free(v1_topology_spread_constraint->when_unsatisfiable);
+        v1_topology_spread_constraint->when_unsatisfiable = NULL;
+    }
     free(v1_topology_spread_constraint);
 }
 

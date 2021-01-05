@@ -25,8 +25,14 @@ void v1beta1_daemon_set_update_strategy_free(v1beta1_daemon_set_update_strategy_
         return ;
     }
     listEntry_t *listEntry;
-    v1beta1_rolling_update_daemon_set_free(v1beta1_daemon_set_update_strategy->rolling_update);
-    free(v1beta1_daemon_set_update_strategy->type);
+    if (v1beta1_daemon_set_update_strategy->rolling_update) {
+        v1beta1_rolling_update_daemon_set_free(v1beta1_daemon_set_update_strategy->rolling_update);
+        v1beta1_daemon_set_update_strategy->rolling_update = NULL;
+    }
+    if (v1beta1_daemon_set_update_strategy->type) {
+        free(v1beta1_daemon_set_update_strategy->type);
+        v1beta1_daemon_set_update_strategy->type = NULL;
+    }
     free(v1beta1_daemon_set_update_strategy);
 }
 

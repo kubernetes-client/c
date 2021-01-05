@@ -33,12 +33,30 @@ void v1_deployment_condition_free(v1_deployment_condition_t *v1_deployment_condi
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_deployment_condition->last_transition_time);
-    free(v1_deployment_condition->last_update_time);
-    free(v1_deployment_condition->message);
-    free(v1_deployment_condition->reason);
-    free(v1_deployment_condition->status);
-    free(v1_deployment_condition->type);
+    if (v1_deployment_condition->last_transition_time) {
+        free(v1_deployment_condition->last_transition_time);
+        v1_deployment_condition->last_transition_time = NULL;
+    }
+    if (v1_deployment_condition->last_update_time) {
+        free(v1_deployment_condition->last_update_time);
+        v1_deployment_condition->last_update_time = NULL;
+    }
+    if (v1_deployment_condition->message) {
+        free(v1_deployment_condition->message);
+        v1_deployment_condition->message = NULL;
+    }
+    if (v1_deployment_condition->reason) {
+        free(v1_deployment_condition->reason);
+        v1_deployment_condition->reason = NULL;
+    }
+    if (v1_deployment_condition->status) {
+        free(v1_deployment_condition->status);
+        v1_deployment_condition->status = NULL;
+    }
+    if (v1_deployment_condition->type) {
+        free(v1_deployment_condition->type);
+        v1_deployment_condition->type = NULL;
+    }
     free(v1_deployment_condition);
 }
 

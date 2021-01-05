@@ -27,9 +27,18 @@ void v1_env_var_free(v1_env_var_t *v1_env_var) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_env_var->name);
-    free(v1_env_var->value);
-    v1_env_var_source_free(v1_env_var->value_from);
+    if (v1_env_var->name) {
+        free(v1_env_var->name);
+        v1_env_var->name = NULL;
+    }
+    if (v1_env_var->value) {
+        free(v1_env_var->value);
+        v1_env_var->value = NULL;
+    }
+    if (v1_env_var->value_from) {
+        v1_env_var_source_free(v1_env_var->value_from);
+        v1_env_var->value_from = NULL;
+    }
     free(v1_env_var);
 }
 

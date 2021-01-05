@@ -27,18 +27,27 @@ void v1_resource_quota_spec_free(v1_resource_quota_spec_t *v1_resource_quota_spe
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_resource_quota_spec->hard) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_resource_quota_spec->hard) {
+        list_ForEach(listEntry, v1_resource_quota_spec->hard) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_resource_quota_spec->hard);
+        v1_resource_quota_spec->hard = NULL;
     }
-    list_free(v1_resource_quota_spec->hard);
-    v1_scope_selector_free(v1_resource_quota_spec->scope_selector);
-    list_ForEach(listEntry, v1_resource_quota_spec->scopes) {
-        free(listEntry->data);
+    if (v1_resource_quota_spec->scope_selector) {
+        v1_scope_selector_free(v1_resource_quota_spec->scope_selector);
+        v1_resource_quota_spec->scope_selector = NULL;
     }
-    list_free(v1_resource_quota_spec->scopes);
+    if (v1_resource_quota_spec->scopes) {
+        list_ForEach(listEntry, v1_resource_quota_spec->scopes) {
+            free(listEntry->data);
+        }
+        list_free(v1_resource_quota_spec->scopes);
+        v1_resource_quota_spec->scopes = NULL;
+    }
     free(v1_resource_quota_spec);
 }
 

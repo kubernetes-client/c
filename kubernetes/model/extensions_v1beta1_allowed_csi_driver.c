@@ -23,7 +23,10 @@ void extensions_v1beta1_allowed_csi_driver_free(extensions_v1beta1_allowed_csi_d
         return ;
     }
     listEntry_t *listEntry;
-    free(extensions_v1beta1_allowed_csi_driver->name);
+    if (extensions_v1beta1_allowed_csi_driver->name) {
+        free(extensions_v1beta1_allowed_csi_driver->name);
+        extensions_v1beta1_allowed_csi_driver->name = NULL;
+    }
     free(extensions_v1beta1_allowed_csi_driver);
 }
 

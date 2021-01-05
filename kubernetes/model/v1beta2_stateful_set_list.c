@@ -29,13 +29,25 @@ void v1beta2_stateful_set_list_free(v1beta2_stateful_set_list_t *v1beta2_statefu
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta2_stateful_set_list->api_version);
-    list_ForEach(listEntry, v1beta2_stateful_set_list->items) {
-        v1beta2_stateful_set_free(listEntry->data);
+    if (v1beta2_stateful_set_list->api_version) {
+        free(v1beta2_stateful_set_list->api_version);
+        v1beta2_stateful_set_list->api_version = NULL;
     }
-    list_free(v1beta2_stateful_set_list->items);
-    free(v1beta2_stateful_set_list->kind);
-    v1_list_meta_free(v1beta2_stateful_set_list->metadata);
+    if (v1beta2_stateful_set_list->items) {
+        list_ForEach(listEntry, v1beta2_stateful_set_list->items) {
+            v1beta2_stateful_set_free(listEntry->data);
+        }
+        list_free(v1beta2_stateful_set_list->items);
+        v1beta2_stateful_set_list->items = NULL;
+    }
+    if (v1beta2_stateful_set_list->kind) {
+        free(v1beta2_stateful_set_list->kind);
+        v1beta2_stateful_set_list->kind = NULL;
+    }
+    if (v1beta2_stateful_set_list->metadata) {
+        v1_list_meta_free(v1beta2_stateful_set_list->metadata);
+        v1beta2_stateful_set_list->metadata = NULL;
+    }
     free(v1beta2_stateful_set_list);
 }
 

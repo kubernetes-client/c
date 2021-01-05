@@ -27,9 +27,18 @@ void v1_env_from_source_free(v1_env_from_source_t *v1_env_from_source) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_config_map_env_source_free(v1_env_from_source->config_map_ref);
-    free(v1_env_from_source->prefix);
-    v1_secret_env_source_free(v1_env_from_source->secret_ref);
+    if (v1_env_from_source->config_map_ref) {
+        v1_config_map_env_source_free(v1_env_from_source->config_map_ref);
+        v1_env_from_source->config_map_ref = NULL;
+    }
+    if (v1_env_from_source->prefix) {
+        free(v1_env_from_source->prefix);
+        v1_env_from_source->prefix = NULL;
+    }
+    if (v1_env_from_source->secret_ref) {
+        v1_secret_env_source_free(v1_env_from_source->secret_ref);
+        v1_env_from_source->secret_ref = NULL;
+    }
     free(v1_env_from_source);
 }
 

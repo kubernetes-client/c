@@ -27,8 +27,14 @@ void v1alpha1_webhook_client_config_free(v1alpha1_webhook_client_config_t *v1alp
         return ;
     }
     listEntry_t *listEntry;
-    v1alpha1_service_reference_free(v1alpha1_webhook_client_config->service);
-    free(v1alpha1_webhook_client_config->url);
+    if (v1alpha1_webhook_client_config->service) {
+        v1alpha1_service_reference_free(v1alpha1_webhook_client_config->service);
+        v1alpha1_webhook_client_config->service = NULL;
+    }
+    if (v1alpha1_webhook_client_config->url) {
+        free(v1alpha1_webhook_client_config->url);
+        v1alpha1_webhook_client_config->url = NULL;
+    }
     free(v1alpha1_webhook_client_config);
 }
 

@@ -14,7 +14,7 @@ extensions_v1beta1_deployment_spec_t *extensions_v1beta1_deployment_spec_create(
     extensions_v1beta1_rollback_config_t *rollback_to,
     v1_label_selector_t *selector,
     extensions_v1beta1_deployment_strategy_t *strategy,
-    v1_pod_template_spec_t *template
+    v1_pod_template_spec_t *_template
     ) {
     extensions_v1beta1_deployment_spec_t *extensions_v1beta1_deployment_spec_local_var = malloc(sizeof(extensions_v1beta1_deployment_spec_t));
     if (!extensions_v1beta1_deployment_spec_local_var) {
@@ -28,7 +28,7 @@ extensions_v1beta1_deployment_spec_t *extensions_v1beta1_deployment_spec_create(
     extensions_v1beta1_deployment_spec_local_var->rollback_to = rollback_to;
     extensions_v1beta1_deployment_spec_local_var->selector = selector;
     extensions_v1beta1_deployment_spec_local_var->strategy = strategy;
-    extensions_v1beta1_deployment_spec_local_var->template = template;
+    extensions_v1beta1_deployment_spec_local_var->_template = _template;
 
     return extensions_v1beta1_deployment_spec_local_var;
 }
@@ -39,10 +39,22 @@ void extensions_v1beta1_deployment_spec_free(extensions_v1beta1_deployment_spec_
         return ;
     }
     listEntry_t *listEntry;
-    extensions_v1beta1_rollback_config_free(extensions_v1beta1_deployment_spec->rollback_to);
-    v1_label_selector_free(extensions_v1beta1_deployment_spec->selector);
-    extensions_v1beta1_deployment_strategy_free(extensions_v1beta1_deployment_spec->strategy);
-    v1_pod_template_spec_free(extensions_v1beta1_deployment_spec->template);
+    if (extensions_v1beta1_deployment_spec->rollback_to) {
+        extensions_v1beta1_rollback_config_free(extensions_v1beta1_deployment_spec->rollback_to);
+        extensions_v1beta1_deployment_spec->rollback_to = NULL;
+    }
+    if (extensions_v1beta1_deployment_spec->selector) {
+        v1_label_selector_free(extensions_v1beta1_deployment_spec->selector);
+        extensions_v1beta1_deployment_spec->selector = NULL;
+    }
+    if (extensions_v1beta1_deployment_spec->strategy) {
+        extensions_v1beta1_deployment_strategy_free(extensions_v1beta1_deployment_spec->strategy);
+        extensions_v1beta1_deployment_spec->strategy = NULL;
+    }
+    if (extensions_v1beta1_deployment_spec->_template) {
+        v1_pod_template_spec_free(extensions_v1beta1_deployment_spec->_template);
+        extensions_v1beta1_deployment_spec->_template = NULL;
+    }
     free(extensions_v1beta1_deployment_spec);
 }
 
@@ -128,16 +140,16 @@ cJSON *extensions_v1beta1_deployment_spec_convertToJSON(extensions_v1beta1_deplo
      } 
 
 
-    // extensions_v1beta1_deployment_spec->template
-    if (!extensions_v1beta1_deployment_spec->template) {
+    // extensions_v1beta1_deployment_spec->_template
+    if (!extensions_v1beta1_deployment_spec->_template) {
         goto fail;
     }
     
-    cJSON *template_local_JSON = v1_pod_template_spec_convertToJSON(extensions_v1beta1_deployment_spec->template);
-    if(template_local_JSON == NULL) {
+    cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(extensions_v1beta1_deployment_spec->_template);
+    if(_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "template", template_local_JSON);
+    cJSON_AddItemToObject(item, "template", _template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -220,15 +232,15 @@ extensions_v1beta1_deployment_spec_t *extensions_v1beta1_deployment_spec_parseFr
     strategy_local_nonprim = extensions_v1beta1_deployment_strategy_parseFromJSON(strategy); //nonprimitive
     }
 
-    // extensions_v1beta1_deployment_spec->template
-    cJSON *template = cJSON_GetObjectItemCaseSensitive(extensions_v1beta1_deployment_specJSON, "template");
-    if (!template) {
+    // extensions_v1beta1_deployment_spec->_template
+    cJSON *_template = cJSON_GetObjectItemCaseSensitive(extensions_v1beta1_deployment_specJSON, "template");
+    if (!_template) {
         goto end;
     }
 
-    v1_pod_template_spec_t *template_local_nonprim = NULL;
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     
-    template_local_nonprim = v1_pod_template_spec_parseFromJSON(template); //nonprimitive
+    _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 
 
     extensions_v1beta1_deployment_spec_local_var = extensions_v1beta1_deployment_spec_create (
@@ -240,7 +252,7 @@ extensions_v1beta1_deployment_spec_t *extensions_v1beta1_deployment_spec_parseFr
         rollback_to ? rollback_to_local_nonprim : NULL,
         selector ? selector_local_nonprim : NULL,
         strategy ? strategy_local_nonprim : NULL,
-        template_local_nonprim
+        _template_local_nonprim
         );
 
     return extensions_v1beta1_deployment_spec_local_var;

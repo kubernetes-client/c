@@ -55,22 +55,70 @@ void v1beta1_event_free(v1beta1_event_t *v1beta1_event) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_event->action);
-    free(v1beta1_event->api_version);
-    free(v1beta1_event->deprecated_first_timestamp);
-    free(v1beta1_event->deprecated_last_timestamp);
-    v1_event_source_free(v1beta1_event->deprecated_source);
-    free(v1beta1_event->event_time);
-    free(v1beta1_event->kind);
-    v1_object_meta_free(v1beta1_event->metadata);
-    free(v1beta1_event->note);
-    free(v1beta1_event->reason);
-    v1_object_reference_free(v1beta1_event->regarding);
-    v1_object_reference_free(v1beta1_event->related);
-    free(v1beta1_event->reporting_controller);
-    free(v1beta1_event->reporting_instance);
-    v1beta1_event_series_free(v1beta1_event->series);
-    free(v1beta1_event->type);
+    if (v1beta1_event->action) {
+        free(v1beta1_event->action);
+        v1beta1_event->action = NULL;
+    }
+    if (v1beta1_event->api_version) {
+        free(v1beta1_event->api_version);
+        v1beta1_event->api_version = NULL;
+    }
+    if (v1beta1_event->deprecated_first_timestamp) {
+        free(v1beta1_event->deprecated_first_timestamp);
+        v1beta1_event->deprecated_first_timestamp = NULL;
+    }
+    if (v1beta1_event->deprecated_last_timestamp) {
+        free(v1beta1_event->deprecated_last_timestamp);
+        v1beta1_event->deprecated_last_timestamp = NULL;
+    }
+    if (v1beta1_event->deprecated_source) {
+        v1_event_source_free(v1beta1_event->deprecated_source);
+        v1beta1_event->deprecated_source = NULL;
+    }
+    if (v1beta1_event->event_time) {
+        free(v1beta1_event->event_time);
+        v1beta1_event->event_time = NULL;
+    }
+    if (v1beta1_event->kind) {
+        free(v1beta1_event->kind);
+        v1beta1_event->kind = NULL;
+    }
+    if (v1beta1_event->metadata) {
+        v1_object_meta_free(v1beta1_event->metadata);
+        v1beta1_event->metadata = NULL;
+    }
+    if (v1beta1_event->note) {
+        free(v1beta1_event->note);
+        v1beta1_event->note = NULL;
+    }
+    if (v1beta1_event->reason) {
+        free(v1beta1_event->reason);
+        v1beta1_event->reason = NULL;
+    }
+    if (v1beta1_event->regarding) {
+        v1_object_reference_free(v1beta1_event->regarding);
+        v1beta1_event->regarding = NULL;
+    }
+    if (v1beta1_event->related) {
+        v1_object_reference_free(v1beta1_event->related);
+        v1beta1_event->related = NULL;
+    }
+    if (v1beta1_event->reporting_controller) {
+        free(v1beta1_event->reporting_controller);
+        v1beta1_event->reporting_controller = NULL;
+    }
+    if (v1beta1_event->reporting_instance) {
+        free(v1beta1_event->reporting_instance);
+        v1beta1_event->reporting_instance = NULL;
+    }
+    if (v1beta1_event->series) {
+        v1beta1_event_series_free(v1beta1_event->series);
+        v1beta1_event->series = NULL;
+    }
+    if (v1beta1_event->type) {
+        free(v1beta1_event->type);
+        v1beta1_event->type = NULL;
+    }
     free(v1beta1_event);
 }
 

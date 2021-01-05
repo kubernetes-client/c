@@ -39,12 +39,30 @@ void v1_container_status_free(v1_container_status_t *v1_container_status) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_container_status->container_id);
-    free(v1_container_status->image);
-    free(v1_container_status->image_id);
-    v1_container_state_free(v1_container_status->last_state);
-    free(v1_container_status->name);
-    v1_container_state_free(v1_container_status->state);
+    if (v1_container_status->container_id) {
+        free(v1_container_status->container_id);
+        v1_container_status->container_id = NULL;
+    }
+    if (v1_container_status->image) {
+        free(v1_container_status->image);
+        v1_container_status->image = NULL;
+    }
+    if (v1_container_status->image_id) {
+        free(v1_container_status->image_id);
+        v1_container_status->image_id = NULL;
+    }
+    if (v1_container_status->last_state) {
+        v1_container_state_free(v1_container_status->last_state);
+        v1_container_status->last_state = NULL;
+    }
+    if (v1_container_status->name) {
+        free(v1_container_status->name);
+        v1_container_status->name = NULL;
+    }
+    if (v1_container_status->state) {
+        v1_container_state_free(v1_container_status->state);
+        v1_container_status->state = NULL;
+    }
     free(v1_container_status);
 }
 

@@ -27,14 +27,20 @@ void extensions_v1beta1_scale_status_free(extensions_v1beta1_scale_status_t *ext
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, extensions_v1beta1_scale_status->selector) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (extensions_v1beta1_scale_status->selector) {
+        list_ForEach(listEntry, extensions_v1beta1_scale_status->selector) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(extensions_v1beta1_scale_status->selector);
+        extensions_v1beta1_scale_status->selector = NULL;
     }
-    list_free(extensions_v1beta1_scale_status->selector);
-    free(extensions_v1beta1_scale_status->target_selector);
+    if (extensions_v1beta1_scale_status->target_selector) {
+        free(extensions_v1beta1_scale_status->target_selector);
+        extensions_v1beta1_scale_status->target_selector = NULL;
+    }
     free(extensions_v1beta1_scale_status);
 }
 

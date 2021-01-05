@@ -25,11 +25,17 @@ void extensions_v1beta1_runtime_class_strategy_options_free(extensions_v1beta1_r
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, extensions_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names) {
-        free(listEntry->data);
+    if (extensions_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names) {
+        list_ForEach(listEntry, extensions_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names) {
+            free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names);
+        extensions_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names = NULL;
     }
-    list_free(extensions_v1beta1_runtime_class_strategy_options->allowed_runtime_class_names);
-    free(extensions_v1beta1_runtime_class_strategy_options->default_runtime_class_name);
+    if (extensions_v1beta1_runtime_class_strategy_options->default_runtime_class_name) {
+        free(extensions_v1beta1_runtime_class_strategy_options->default_runtime_class_name);
+        extensions_v1beta1_runtime_class_strategy_options->default_runtime_class_name = NULL;
+    }
     free(extensions_v1beta1_runtime_class_strategy_options);
 }
 

@@ -33,17 +33,32 @@ void v1_service_account_free(v1_service_account_t *v1_service_account) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_service_account->api_version);
-    list_ForEach(listEntry, v1_service_account->image_pull_secrets) {
-        v1_local_object_reference_free(listEntry->data);
+    if (v1_service_account->api_version) {
+        free(v1_service_account->api_version);
+        v1_service_account->api_version = NULL;
     }
-    list_free(v1_service_account->image_pull_secrets);
-    free(v1_service_account->kind);
-    v1_object_meta_free(v1_service_account->metadata);
-    list_ForEach(listEntry, v1_service_account->secrets) {
-        v1_object_reference_free(listEntry->data);
+    if (v1_service_account->image_pull_secrets) {
+        list_ForEach(listEntry, v1_service_account->image_pull_secrets) {
+            v1_local_object_reference_free(listEntry->data);
+        }
+        list_free(v1_service_account->image_pull_secrets);
+        v1_service_account->image_pull_secrets = NULL;
     }
-    list_free(v1_service_account->secrets);
+    if (v1_service_account->kind) {
+        free(v1_service_account->kind);
+        v1_service_account->kind = NULL;
+    }
+    if (v1_service_account->metadata) {
+        v1_object_meta_free(v1_service_account->metadata);
+        v1_service_account->metadata = NULL;
+    }
+    if (v1_service_account->secrets) {
+        list_ForEach(listEntry, v1_service_account->secrets) {
+            v1_object_reference_free(listEntry->data);
+        }
+        list_free(v1_service_account->secrets);
+        v1_service_account->secrets = NULL;
+    }
     free(v1_service_account);
 }
 

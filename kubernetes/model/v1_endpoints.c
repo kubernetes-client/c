@@ -29,13 +29,25 @@ void v1_endpoints_free(v1_endpoints_t *v1_endpoints) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_endpoints->api_version);
-    free(v1_endpoints->kind);
-    v1_object_meta_free(v1_endpoints->metadata);
-    list_ForEach(listEntry, v1_endpoints->subsets) {
-        v1_endpoint_subset_free(listEntry->data);
+    if (v1_endpoints->api_version) {
+        free(v1_endpoints->api_version);
+        v1_endpoints->api_version = NULL;
     }
-    list_free(v1_endpoints->subsets);
+    if (v1_endpoints->kind) {
+        free(v1_endpoints->kind);
+        v1_endpoints->kind = NULL;
+    }
+    if (v1_endpoints->metadata) {
+        v1_object_meta_free(v1_endpoints->metadata);
+        v1_endpoints->metadata = NULL;
+    }
+    if (v1_endpoints->subsets) {
+        list_ForEach(listEntry, v1_endpoints->subsets) {
+            v1_endpoint_subset_free(listEntry->data);
+        }
+        list_free(v1_endpoints->subsets);
+        v1_endpoints->subsets = NULL;
+    }
     free(v1_endpoints);
 }
 

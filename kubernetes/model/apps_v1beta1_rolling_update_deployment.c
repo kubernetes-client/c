@@ -25,8 +25,14 @@ void apps_v1beta1_rolling_update_deployment_free(apps_v1beta1_rolling_update_dep
         return ;
     }
     listEntry_t *listEntry;
-    object_free(apps_v1beta1_rolling_update_deployment->max_surge);
-    object_free(apps_v1beta1_rolling_update_deployment->max_unavailable);
+    if (apps_v1beta1_rolling_update_deployment->max_surge) {
+        object_free(apps_v1beta1_rolling_update_deployment->max_surge);
+        apps_v1beta1_rolling_update_deployment->max_surge = NULL;
+    }
+    if (apps_v1beta1_rolling_update_deployment->max_unavailable) {
+        object_free(apps_v1beta1_rolling_update_deployment->max_unavailable);
+        apps_v1beta1_rolling_update_deployment->max_unavailable = NULL;
+    }
     free(apps_v1beta1_rolling_update_deployment);
 }
 

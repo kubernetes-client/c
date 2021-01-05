@@ -37,13 +37,34 @@ void v1_status_free(v1_status_t *v1_status) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_status->api_version);
-    v1_status_details_free(v1_status->details);
-    free(v1_status->kind);
-    free(v1_status->message);
-    v1_list_meta_free(v1_status->metadata);
-    free(v1_status->reason);
-    free(v1_status->status);
+    if (v1_status->api_version) {
+        free(v1_status->api_version);
+        v1_status->api_version = NULL;
+    }
+    if (v1_status->details) {
+        v1_status_details_free(v1_status->details);
+        v1_status->details = NULL;
+    }
+    if (v1_status->kind) {
+        free(v1_status->kind);
+        v1_status->kind = NULL;
+    }
+    if (v1_status->message) {
+        free(v1_status->message);
+        v1_status->message = NULL;
+    }
+    if (v1_status->metadata) {
+        v1_list_meta_free(v1_status->metadata);
+        v1_status->metadata = NULL;
+    }
+    if (v1_status->reason) {
+        free(v1_status->reason);
+        v1_status->reason = NULL;
+    }
+    if (v1_status->status) {
+        free(v1_status->status);
+        v1_status->status = NULL;
+    }
     free(v1_status);
 }
 

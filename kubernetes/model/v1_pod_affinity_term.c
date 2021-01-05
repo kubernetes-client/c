@@ -27,12 +27,21 @@ void v1_pod_affinity_term_free(v1_pod_affinity_term_t *v1_pod_affinity_term) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_label_selector_free(v1_pod_affinity_term->label_selector);
-    list_ForEach(listEntry, v1_pod_affinity_term->namespaces) {
-        free(listEntry->data);
+    if (v1_pod_affinity_term->label_selector) {
+        v1_label_selector_free(v1_pod_affinity_term->label_selector);
+        v1_pod_affinity_term->label_selector = NULL;
     }
-    list_free(v1_pod_affinity_term->namespaces);
-    free(v1_pod_affinity_term->topology_key);
+    if (v1_pod_affinity_term->namespaces) {
+        list_ForEach(listEntry, v1_pod_affinity_term->namespaces) {
+            free(listEntry->data);
+        }
+        list_free(v1_pod_affinity_term->namespaces);
+        v1_pod_affinity_term->namespaces = NULL;
+    }
+    if (v1_pod_affinity_term->topology_key) {
+        free(v1_pod_affinity_term->topology_key);
+        v1_pod_affinity_term->topology_key = NULL;
+    }
     free(v1_pod_affinity_term);
 }
 

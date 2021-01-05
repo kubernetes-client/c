@@ -25,8 +25,14 @@ void v1alpha1_volume_error_free(v1alpha1_volume_error_t *v1alpha1_volume_error) 
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_volume_error->message);
-    free(v1alpha1_volume_error->time);
+    if (v1alpha1_volume_error->message) {
+        free(v1alpha1_volume_error->message);
+        v1alpha1_volume_error->message = NULL;
+    }
+    if (v1alpha1_volume_error->time) {
+        free(v1alpha1_volume_error->time);
+        v1alpha1_volume_error->time = NULL;
+    }
     free(v1alpha1_volume_error);
 }
 

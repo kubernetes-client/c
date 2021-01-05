@@ -23,7 +23,10 @@ void extensions_v1beta1_ingress_status_free(extensions_v1beta1_ingress_status_t 
         return ;
     }
     listEntry_t *listEntry;
-    v1_load_balancer_status_free(extensions_v1beta1_ingress_status->load_balancer);
+    if (extensions_v1beta1_ingress_status->load_balancer) {
+        v1_load_balancer_status_free(extensions_v1beta1_ingress_status->load_balancer);
+        extensions_v1beta1_ingress_status->load_balancer = NULL;
+    }
     free(extensions_v1beta1_ingress_status);
 }
 

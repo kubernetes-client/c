@@ -29,10 +29,22 @@ void v1_volume_projection_free(v1_volume_projection_t *v1_volume_projection) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_config_map_projection_free(v1_volume_projection->config_map);
-    v1_downward_api_projection_free(v1_volume_projection->downward_api);
-    v1_secret_projection_free(v1_volume_projection->secret);
-    v1_service_account_token_projection_free(v1_volume_projection->service_account_token);
+    if (v1_volume_projection->config_map) {
+        v1_config_map_projection_free(v1_volume_projection->config_map);
+        v1_volume_projection->config_map = NULL;
+    }
+    if (v1_volume_projection->downward_api) {
+        v1_downward_api_projection_free(v1_volume_projection->downward_api);
+        v1_volume_projection->downward_api = NULL;
+    }
+    if (v1_volume_projection->secret) {
+        v1_secret_projection_free(v1_volume_projection->secret);
+        v1_volume_projection->secret = NULL;
+    }
+    if (v1_volume_projection->service_account_token) {
+        v1_service_account_token_projection_free(v1_volume_projection->service_account_token);
+        v1_volume_projection->service_account_token = NULL;
+    }
     free(v1_volume_projection);
 }
 

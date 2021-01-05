@@ -83,13 +83,13 @@ AdmissionregistrationV1API_patchValidatingWebhookConfiguration(apiClient_t *apiC
 // read the specified MutatingWebhookConfiguration
 //
 v1_mutating_webhook_configuration_t*
-AdmissionregistrationV1API_readMutatingWebhookConfiguration(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+AdmissionregistrationV1API_readMutatingWebhookConfiguration(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read the specified ValidatingWebhookConfiguration
 //
 v1_validating_webhook_configuration_t*
-AdmissionregistrationV1API_readValidatingWebhookConfiguration(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+AdmissionregistrationV1API_readValidatingWebhookConfiguration(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // replace the specified MutatingWebhookConfiguration

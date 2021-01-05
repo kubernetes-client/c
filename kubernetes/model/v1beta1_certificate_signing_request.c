@@ -31,11 +31,26 @@ void v1beta1_certificate_signing_request_free(v1beta1_certificate_signing_reques
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_certificate_signing_request->api_version);
-    free(v1beta1_certificate_signing_request->kind);
-    v1_object_meta_free(v1beta1_certificate_signing_request->metadata);
-    v1beta1_certificate_signing_request_spec_free(v1beta1_certificate_signing_request->spec);
-    v1beta1_certificate_signing_request_status_free(v1beta1_certificate_signing_request->status);
+    if (v1beta1_certificate_signing_request->api_version) {
+        free(v1beta1_certificate_signing_request->api_version);
+        v1beta1_certificate_signing_request->api_version = NULL;
+    }
+    if (v1beta1_certificate_signing_request->kind) {
+        free(v1beta1_certificate_signing_request->kind);
+        v1beta1_certificate_signing_request->kind = NULL;
+    }
+    if (v1beta1_certificate_signing_request->metadata) {
+        v1_object_meta_free(v1beta1_certificate_signing_request->metadata);
+        v1beta1_certificate_signing_request->metadata = NULL;
+    }
+    if (v1beta1_certificate_signing_request->spec) {
+        v1beta1_certificate_signing_request_spec_free(v1beta1_certificate_signing_request->spec);
+        v1beta1_certificate_signing_request->spec = NULL;
+    }
+    if (v1beta1_certificate_signing_request->status) {
+        v1beta1_certificate_signing_request_status_free(v1beta1_certificate_signing_request->status);
+        v1beta1_certificate_signing_request->status = NULL;
+    }
     free(v1beta1_certificate_signing_request);
 }
 

@@ -31,14 +31,29 @@ void v1_cluster_role_binding_free(v1_cluster_role_binding_t *v1_cluster_role_bin
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_cluster_role_binding->api_version);
-    free(v1_cluster_role_binding->kind);
-    v1_object_meta_free(v1_cluster_role_binding->metadata);
-    v1_role_ref_free(v1_cluster_role_binding->role_ref);
-    list_ForEach(listEntry, v1_cluster_role_binding->subjects) {
-        v1_subject_free(listEntry->data);
+    if (v1_cluster_role_binding->api_version) {
+        free(v1_cluster_role_binding->api_version);
+        v1_cluster_role_binding->api_version = NULL;
     }
-    list_free(v1_cluster_role_binding->subjects);
+    if (v1_cluster_role_binding->kind) {
+        free(v1_cluster_role_binding->kind);
+        v1_cluster_role_binding->kind = NULL;
+    }
+    if (v1_cluster_role_binding->metadata) {
+        v1_object_meta_free(v1_cluster_role_binding->metadata);
+        v1_cluster_role_binding->metadata = NULL;
+    }
+    if (v1_cluster_role_binding->role_ref) {
+        v1_role_ref_free(v1_cluster_role_binding->role_ref);
+        v1_cluster_role_binding->role_ref = NULL;
+    }
+    if (v1_cluster_role_binding->subjects) {
+        list_ForEach(listEntry, v1_cluster_role_binding->subjects) {
+            v1_subject_free(listEntry->data);
+        }
+        list_free(v1_cluster_role_binding->subjects);
+        v1_cluster_role_binding->subjects = NULL;
+    }
     free(v1_cluster_role_binding);
 }
 

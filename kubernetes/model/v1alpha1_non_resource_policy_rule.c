@@ -25,14 +25,20 @@ void v1alpha1_non_resource_policy_rule_free(v1alpha1_non_resource_policy_rule_t 
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1alpha1_non_resource_policy_rule->non_resource_ur_ls) {
-        free(listEntry->data);
+    if (v1alpha1_non_resource_policy_rule->non_resource_ur_ls) {
+        list_ForEach(listEntry, v1alpha1_non_resource_policy_rule->non_resource_ur_ls) {
+            free(listEntry->data);
+        }
+        list_free(v1alpha1_non_resource_policy_rule->non_resource_ur_ls);
+        v1alpha1_non_resource_policy_rule->non_resource_ur_ls = NULL;
     }
-    list_free(v1alpha1_non_resource_policy_rule->non_resource_ur_ls);
-    list_ForEach(listEntry, v1alpha1_non_resource_policy_rule->verbs) {
-        free(listEntry->data);
+    if (v1alpha1_non_resource_policy_rule->verbs) {
+        list_ForEach(listEntry, v1alpha1_non_resource_policy_rule->verbs) {
+            free(listEntry->data);
+        }
+        list_free(v1alpha1_non_resource_policy_rule->verbs);
+        v1alpha1_non_resource_policy_rule->verbs = NULL;
     }
-    list_free(v1alpha1_non_resource_policy_rule->verbs);
     free(v1alpha1_non_resource_policy_rule);
 }
 

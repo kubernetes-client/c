@@ -27,9 +27,18 @@ void v1_affinity_free(v1_affinity_t *v1_affinity) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_node_affinity_free(v1_affinity->node_affinity);
-    v1_pod_affinity_free(v1_affinity->pod_affinity);
-    v1_pod_anti_affinity_free(v1_affinity->pod_anti_affinity);
+    if (v1_affinity->node_affinity) {
+        v1_node_affinity_free(v1_affinity->node_affinity);
+        v1_affinity->node_affinity = NULL;
+    }
+    if (v1_affinity->pod_affinity) {
+        v1_pod_affinity_free(v1_affinity->pod_affinity);
+        v1_affinity->pod_affinity = NULL;
+    }
+    if (v1_affinity->pod_anti_affinity) {
+        v1_pod_anti_affinity_free(v1_affinity->pod_anti_affinity);
+        v1_affinity->pod_anti_affinity = NULL;
+    }
     free(v1_affinity);
 }
 

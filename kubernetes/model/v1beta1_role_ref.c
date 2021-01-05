@@ -27,9 +27,18 @@ void v1beta1_role_ref_free(v1beta1_role_ref_t *v1beta1_role_ref) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_role_ref->api_group);
-    free(v1beta1_role_ref->kind);
-    free(v1beta1_role_ref->name);
+    if (v1beta1_role_ref->api_group) {
+        free(v1beta1_role_ref->api_group);
+        v1beta1_role_ref->api_group = NULL;
+    }
+    if (v1beta1_role_ref->kind) {
+        free(v1beta1_role_ref->kind);
+        v1beta1_role_ref->kind = NULL;
+    }
+    if (v1beta1_role_ref->name) {
+        free(v1beta1_role_ref->name);
+        v1beta1_role_ref->name = NULL;
+    }
     free(v1beta1_role_ref);
 }
 

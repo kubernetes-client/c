@@ -29,13 +29,25 @@ void v1_component_status_list_free(v1_component_status_list_t *v1_component_stat
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_component_status_list->api_version);
-    list_ForEach(listEntry, v1_component_status_list->items) {
-        v1_component_status_free(listEntry->data);
+    if (v1_component_status_list->api_version) {
+        free(v1_component_status_list->api_version);
+        v1_component_status_list->api_version = NULL;
     }
-    list_free(v1_component_status_list->items);
-    free(v1_component_status_list->kind);
-    v1_list_meta_free(v1_component_status_list->metadata);
+    if (v1_component_status_list->items) {
+        list_ForEach(listEntry, v1_component_status_list->items) {
+            v1_component_status_free(listEntry->data);
+        }
+        list_free(v1_component_status_list->items);
+        v1_component_status_list->items = NULL;
+    }
+    if (v1_component_status_list->kind) {
+        free(v1_component_status_list->kind);
+        v1_component_status_list->kind = NULL;
+    }
+    if (v1_component_status_list->metadata) {
+        v1_list_meta_free(v1_component_status_list->metadata);
+        v1_component_status_list->metadata = NULL;
+    }
     free(v1_component_status_list);
 }
 

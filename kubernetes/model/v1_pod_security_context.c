@@ -37,16 +37,28 @@ void v1_pod_security_context_free(v1_pod_security_context_t *v1_pod_security_con
         return ;
     }
     listEntry_t *listEntry;
-    v1_se_linux_options_free(v1_pod_security_context->se_linux_options);
-    list_ForEach(listEntry, v1_pod_security_context->supplemental_groups) {
-        free(listEntry->data);
+    if (v1_pod_security_context->se_linux_options) {
+        v1_se_linux_options_free(v1_pod_security_context->se_linux_options);
+        v1_pod_security_context->se_linux_options = NULL;
     }
-    list_free(v1_pod_security_context->supplemental_groups);
-    list_ForEach(listEntry, v1_pod_security_context->sysctls) {
-        v1_sysctl_free(listEntry->data);
+    if (v1_pod_security_context->supplemental_groups) {
+        list_ForEach(listEntry, v1_pod_security_context->supplemental_groups) {
+            free(listEntry->data);
+        }
+        list_free(v1_pod_security_context->supplemental_groups);
+        v1_pod_security_context->supplemental_groups = NULL;
     }
-    list_free(v1_pod_security_context->sysctls);
-    v1_windows_security_context_options_free(v1_pod_security_context->windows_options);
+    if (v1_pod_security_context->sysctls) {
+        list_ForEach(listEntry, v1_pod_security_context->sysctls) {
+            v1_sysctl_free(listEntry->data);
+        }
+        list_free(v1_pod_security_context->sysctls);
+        v1_pod_security_context->sysctls = NULL;
+    }
+    if (v1_pod_security_context->windows_options) {
+        v1_windows_security_context_options_free(v1_pod_security_context->windows_options);
+        v1_pod_security_context->windows_options = NULL;
+    }
     free(v1_pod_security_context);
 }
 

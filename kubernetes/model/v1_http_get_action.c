@@ -31,14 +31,29 @@ void v1_http_get_action_free(v1_http_get_action_t *v1_http_get_action) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_http_get_action->host);
-    list_ForEach(listEntry, v1_http_get_action->http_headers) {
-        v1_http_header_free(listEntry->data);
+    if (v1_http_get_action->host) {
+        free(v1_http_get_action->host);
+        v1_http_get_action->host = NULL;
     }
-    list_free(v1_http_get_action->http_headers);
-    free(v1_http_get_action->path);
-    object_free(v1_http_get_action->port);
-    free(v1_http_get_action->scheme);
+    if (v1_http_get_action->http_headers) {
+        list_ForEach(listEntry, v1_http_get_action->http_headers) {
+            v1_http_header_free(listEntry->data);
+        }
+        list_free(v1_http_get_action->http_headers);
+        v1_http_get_action->http_headers = NULL;
+    }
+    if (v1_http_get_action->path) {
+        free(v1_http_get_action->path);
+        v1_http_get_action->path = NULL;
+    }
+    if (v1_http_get_action->port) {
+        object_free(v1_http_get_action->port);
+        v1_http_get_action->port = NULL;
+    }
+    if (v1_http_get_action->scheme) {
+        free(v1_http_get_action->scheme);
+        v1_http_get_action->scheme = NULL;
+    }
     free(v1_http_get_action);
 }
 

@@ -25,8 +25,14 @@ void networking_v1beta1_http_ingress_path_free(networking_v1beta1_http_ingress_p
         return ;
     }
     listEntry_t *listEntry;
-    networking_v1beta1_ingress_backend_free(networking_v1beta1_http_ingress_path->backend);
-    free(networking_v1beta1_http_ingress_path->path);
+    if (networking_v1beta1_http_ingress_path->backend) {
+        networking_v1beta1_ingress_backend_free(networking_v1beta1_http_ingress_path->backend);
+        networking_v1beta1_http_ingress_path->backend = NULL;
+    }
+    if (networking_v1beta1_http_ingress_path->path) {
+        free(networking_v1beta1_http_ingress_path->path);
+        networking_v1beta1_http_ingress_path->path = NULL;
+    }
     free(networking_v1beta1_http_ingress_path);
 }
 

@@ -29,13 +29,25 @@ void v1_limit_range_list_free(v1_limit_range_list_t *v1_limit_range_list) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_limit_range_list->api_version);
-    list_ForEach(listEntry, v1_limit_range_list->items) {
-        v1_limit_range_free(listEntry->data);
+    if (v1_limit_range_list->api_version) {
+        free(v1_limit_range_list->api_version);
+        v1_limit_range_list->api_version = NULL;
     }
-    list_free(v1_limit_range_list->items);
-    free(v1_limit_range_list->kind);
-    v1_list_meta_free(v1_limit_range_list->metadata);
+    if (v1_limit_range_list->items) {
+        list_ForEach(listEntry, v1_limit_range_list->items) {
+            v1_limit_range_free(listEntry->data);
+        }
+        list_free(v1_limit_range_list->items);
+        v1_limit_range_list->items = NULL;
+    }
+    if (v1_limit_range_list->kind) {
+        free(v1_limit_range_list->kind);
+        v1_limit_range_list->kind = NULL;
+    }
+    if (v1_limit_range_list->metadata) {
+        v1_list_meta_free(v1_limit_range_list->metadata);
+        v1_limit_range_list->metadata = NULL;
+    }
     free(v1_limit_range_list);
 }
 

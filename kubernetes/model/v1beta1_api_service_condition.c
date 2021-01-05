@@ -31,11 +31,26 @@ void v1beta1_api_service_condition_free(v1beta1_api_service_condition_t *v1beta1
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_api_service_condition->last_transition_time);
-    free(v1beta1_api_service_condition->message);
-    free(v1beta1_api_service_condition->reason);
-    free(v1beta1_api_service_condition->status);
-    free(v1beta1_api_service_condition->type);
+    if (v1beta1_api_service_condition->last_transition_time) {
+        free(v1beta1_api_service_condition->last_transition_time);
+        v1beta1_api_service_condition->last_transition_time = NULL;
+    }
+    if (v1beta1_api_service_condition->message) {
+        free(v1beta1_api_service_condition->message);
+        v1beta1_api_service_condition->message = NULL;
+    }
+    if (v1beta1_api_service_condition->reason) {
+        free(v1beta1_api_service_condition->reason);
+        v1beta1_api_service_condition->reason = NULL;
+    }
+    if (v1beta1_api_service_condition->status) {
+        free(v1beta1_api_service_condition->status);
+        v1beta1_api_service_condition->status = NULL;
+    }
+    if (v1beta1_api_service_condition->type) {
+        free(v1beta1_api_service_condition->type);
+        v1beta1_api_service_condition->type = NULL;
+    }
     free(v1beta1_api_service_condition);
 }
 

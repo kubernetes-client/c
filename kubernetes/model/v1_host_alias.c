@@ -25,11 +25,17 @@ void v1_host_alias_free(v1_host_alias_t *v1_host_alias) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_host_alias->hostnames) {
-        free(listEntry->data);
+    if (v1_host_alias->hostnames) {
+        list_ForEach(listEntry, v1_host_alias->hostnames) {
+            free(listEntry->data);
+        }
+        list_free(v1_host_alias->hostnames);
+        v1_host_alias->hostnames = NULL;
     }
-    list_free(v1_host_alias->hostnames);
-    free(v1_host_alias->ip);
+    if (v1_host_alias->ip) {
+        free(v1_host_alias->ip);
+        v1_host_alias->ip = NULL;
+    }
     free(v1_host_alias);
 }
 

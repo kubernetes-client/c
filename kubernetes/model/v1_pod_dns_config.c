@@ -27,18 +27,27 @@ void v1_pod_dns_config_free(v1_pod_dns_config_t *v1_pod_dns_config) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_pod_dns_config->nameservers) {
-        free(listEntry->data);
+    if (v1_pod_dns_config->nameservers) {
+        list_ForEach(listEntry, v1_pod_dns_config->nameservers) {
+            free(listEntry->data);
+        }
+        list_free(v1_pod_dns_config->nameservers);
+        v1_pod_dns_config->nameservers = NULL;
     }
-    list_free(v1_pod_dns_config->nameservers);
-    list_ForEach(listEntry, v1_pod_dns_config->options) {
-        v1_pod_dns_config_option_free(listEntry->data);
+    if (v1_pod_dns_config->options) {
+        list_ForEach(listEntry, v1_pod_dns_config->options) {
+            v1_pod_dns_config_option_free(listEntry->data);
+        }
+        list_free(v1_pod_dns_config->options);
+        v1_pod_dns_config->options = NULL;
     }
-    list_free(v1_pod_dns_config->options);
-    list_ForEach(listEntry, v1_pod_dns_config->searches) {
-        free(listEntry->data);
+    if (v1_pod_dns_config->searches) {
+        list_ForEach(listEntry, v1_pod_dns_config->searches) {
+            free(listEntry->data);
+        }
+        list_free(v1_pod_dns_config->searches);
+        v1_pod_dns_config->searches = NULL;
     }
-    list_free(v1_pod_dns_config->searches);
     free(v1_pod_dns_config);
 }
 

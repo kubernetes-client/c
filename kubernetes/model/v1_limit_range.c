@@ -29,10 +29,22 @@ void v1_limit_range_free(v1_limit_range_t *v1_limit_range) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_limit_range->api_version);
-    free(v1_limit_range->kind);
-    v1_object_meta_free(v1_limit_range->metadata);
-    v1_limit_range_spec_free(v1_limit_range->spec);
+    if (v1_limit_range->api_version) {
+        free(v1_limit_range->api_version);
+        v1_limit_range->api_version = NULL;
+    }
+    if (v1_limit_range->kind) {
+        free(v1_limit_range->kind);
+        v1_limit_range->kind = NULL;
+    }
+    if (v1_limit_range->metadata) {
+        v1_object_meta_free(v1_limit_range->metadata);
+        v1_limit_range->metadata = NULL;
+    }
+    if (v1_limit_range->spec) {
+        v1_limit_range_spec_free(v1_limit_range->spec);
+        v1_limit_range->spec = NULL;
+    }
     free(v1_limit_range);
 }
 

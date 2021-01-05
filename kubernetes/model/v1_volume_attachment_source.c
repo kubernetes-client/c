@@ -25,8 +25,14 @@ void v1_volume_attachment_source_free(v1_volume_attachment_source_t *v1_volume_a
         return ;
     }
     listEntry_t *listEntry;
-    v1_persistent_volume_spec_free(v1_volume_attachment_source->inline_volume_spec);
-    free(v1_volume_attachment_source->persistent_volume_name);
+    if (v1_volume_attachment_source->inline_volume_spec) {
+        v1_persistent_volume_spec_free(v1_volume_attachment_source->inline_volume_spec);
+        v1_volume_attachment_source->inline_volume_spec = NULL;
+    }
+    if (v1_volume_attachment_source->persistent_volume_name) {
+        free(v1_volume_attachment_source->persistent_volume_name);
+        v1_volume_attachment_source->persistent_volume_name = NULL;
+    }
     free(v1_volume_attachment_source);
 }
 

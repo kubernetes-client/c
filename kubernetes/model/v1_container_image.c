@@ -25,10 +25,13 @@ void v1_container_image_free(v1_container_image_t *v1_container_image) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_container_image->names) {
-        free(listEntry->data);
+    if (v1_container_image->names) {
+        list_ForEach(listEntry, v1_container_image->names) {
+            free(listEntry->data);
+        }
+        list_free(v1_container_image->names);
+        v1_container_image->names = NULL;
     }
-    list_free(v1_container_image->names);
     free(v1_container_image);
 }
 

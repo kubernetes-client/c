@@ -29,11 +29,17 @@ void v2beta2_horizontal_pod_autoscaler_spec_free(v2beta2_horizontal_pod_autoscal
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v2beta2_horizontal_pod_autoscaler_spec->metrics) {
-        v2beta2_metric_spec_free(listEntry->data);
+    if (v2beta2_horizontal_pod_autoscaler_spec->metrics) {
+        list_ForEach(listEntry, v2beta2_horizontal_pod_autoscaler_spec->metrics) {
+            v2beta2_metric_spec_free(listEntry->data);
+        }
+        list_free(v2beta2_horizontal_pod_autoscaler_spec->metrics);
+        v2beta2_horizontal_pod_autoscaler_spec->metrics = NULL;
     }
-    list_free(v2beta2_horizontal_pod_autoscaler_spec->metrics);
-    v2beta2_cross_version_object_reference_free(v2beta2_horizontal_pod_autoscaler_spec->scale_target_ref);
+    if (v2beta2_horizontal_pod_autoscaler_spec->scale_target_ref) {
+        v2beta2_cross_version_object_reference_free(v2beta2_horizontal_pod_autoscaler_spec->scale_target_ref);
+        v2beta2_horizontal_pod_autoscaler_spec->scale_target_ref = NULL;
+    }
     free(v2beta2_horizontal_pod_autoscaler_spec);
 }
 

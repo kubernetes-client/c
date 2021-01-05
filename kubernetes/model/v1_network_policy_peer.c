@@ -27,9 +27,18 @@ void v1_network_policy_peer_free(v1_network_policy_peer_t *v1_network_policy_pee
         return ;
     }
     listEntry_t *listEntry;
-    v1_ip_block_free(v1_network_policy_peer->ip_block);
-    v1_label_selector_free(v1_network_policy_peer->namespace_selector);
-    v1_label_selector_free(v1_network_policy_peer->pod_selector);
+    if (v1_network_policy_peer->ip_block) {
+        v1_ip_block_free(v1_network_policy_peer->ip_block);
+        v1_network_policy_peer->ip_block = NULL;
+    }
+    if (v1_network_policy_peer->namespace_selector) {
+        v1_label_selector_free(v1_network_policy_peer->namespace_selector);
+        v1_network_policy_peer->namespace_selector = NULL;
+    }
+    if (v1_network_policy_peer->pod_selector) {
+        v1_label_selector_free(v1_network_policy_peer->pod_selector);
+        v1_network_policy_peer->pod_selector = NULL;
+    }
     free(v1_network_policy_peer);
 }
 

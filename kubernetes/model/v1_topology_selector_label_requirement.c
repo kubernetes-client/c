@@ -25,11 +25,17 @@ void v1_topology_selector_label_requirement_free(v1_topology_selector_label_requ
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_topology_selector_label_requirement->key);
-    list_ForEach(listEntry, v1_topology_selector_label_requirement->values) {
-        free(listEntry->data);
+    if (v1_topology_selector_label_requirement->key) {
+        free(v1_topology_selector_label_requirement->key);
+        v1_topology_selector_label_requirement->key = NULL;
     }
-    list_free(v1_topology_selector_label_requirement->values);
+    if (v1_topology_selector_label_requirement->values) {
+        list_ForEach(listEntry, v1_topology_selector_label_requirement->values) {
+            free(listEntry->data);
+        }
+        list_free(v1_topology_selector_label_requirement->values);
+        v1_topology_selector_label_requirement->values = NULL;
+    }
     free(v1_topology_selector_label_requirement);
 }
 

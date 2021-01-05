@@ -29,9 +29,18 @@ void v2beta2_metric_target_free(v2beta2_metric_target_t *v2beta2_metric_target) 
         return ;
     }
     listEntry_t *listEntry;
-    free(v2beta2_metric_target->average_value);
-    free(v2beta2_metric_target->type);
-    free(v2beta2_metric_target->value);
+    if (v2beta2_metric_target->average_value) {
+        free(v2beta2_metric_target->average_value);
+        v2beta2_metric_target->average_value = NULL;
+    }
+    if (v2beta2_metric_target->type) {
+        free(v2beta2_metric_target->type);
+        v2beta2_metric_target->type = NULL;
+    }
+    if (v2beta2_metric_target->value) {
+        free(v2beta2_metric_target->value);
+        v2beta2_metric_target->value = NULL;
+    }
     free(v2beta2_metric_target);
 }
 

@@ -23,10 +23,13 @@ void v1_csi_node_spec_free(v1_csi_node_spec_t *v1_csi_node_spec) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_csi_node_spec->drivers) {
-        v1_csi_node_driver_free(listEntry->data);
+    if (v1_csi_node_spec->drivers) {
+        list_ForEach(listEntry, v1_csi_node_spec->drivers) {
+            v1_csi_node_driver_free(listEntry->data);
+        }
+        list_free(v1_csi_node_spec->drivers);
+        v1_csi_node_spec->drivers = NULL;
     }
-    list_free(v1_csi_node_spec->drivers);
     free(v1_csi_node_spec);
 }
 

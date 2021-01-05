@@ -25,8 +25,14 @@ void networking_v1beta1_ingress_rule_free(networking_v1beta1_ingress_rule_t *net
         return ;
     }
     listEntry_t *listEntry;
-    free(networking_v1beta1_ingress_rule->host);
-    networking_v1beta1_http_ingress_rule_value_free(networking_v1beta1_ingress_rule->http);
+    if (networking_v1beta1_ingress_rule->host) {
+        free(networking_v1beta1_ingress_rule->host);
+        networking_v1beta1_ingress_rule->host = NULL;
+    }
+    if (networking_v1beta1_ingress_rule->http) {
+        networking_v1beta1_http_ingress_rule_value_free(networking_v1beta1_ingress_rule->http);
+        networking_v1beta1_ingress_rule->http = NULL;
+    }
     free(networking_v1beta1_ingress_rule);
 }
 

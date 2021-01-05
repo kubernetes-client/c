@@ -29,10 +29,22 @@ void v1alpha1_audit_sink_free(v1alpha1_audit_sink_t *v1alpha1_audit_sink) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_audit_sink->api_version);
-    free(v1alpha1_audit_sink->kind);
-    v1_object_meta_free(v1alpha1_audit_sink->metadata);
-    v1alpha1_audit_sink_spec_free(v1alpha1_audit_sink->spec);
+    if (v1alpha1_audit_sink->api_version) {
+        free(v1alpha1_audit_sink->api_version);
+        v1alpha1_audit_sink->api_version = NULL;
+    }
+    if (v1alpha1_audit_sink->kind) {
+        free(v1alpha1_audit_sink->kind);
+        v1alpha1_audit_sink->kind = NULL;
+    }
+    if (v1alpha1_audit_sink->metadata) {
+        v1_object_meta_free(v1alpha1_audit_sink->metadata);
+        v1alpha1_audit_sink->metadata = NULL;
+    }
+    if (v1alpha1_audit_sink->spec) {
+        v1alpha1_audit_sink_spec_free(v1alpha1_audit_sink->spec);
+        v1alpha1_audit_sink->spec = NULL;
+    }
     free(v1alpha1_audit_sink);
 }
 

@@ -15,7 +15,7 @@
 // create a LocalSubjectAccessReview
 //
 v1beta1_local_subject_access_review_t*
-AuthorizationV1beta1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClient, char * namespace , v1beta1_local_subject_access_review_t * body , char * dryRun , char * fieldManager , char * pretty )
+AuthorizationV1beta1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClient, char * _namespace , v1beta1_local_subject_access_review_t * body , char * dryRun , char * fieldManager , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -31,14 +31,14 @@ AuthorizationV1beta1API_createNamespacedLocalSubjectAccessReview(apiClient_t *ap
 
 
     // Path Params
-    long sizeOfPathParams_namespace = strlen(namespace)+3 + strlen("{ namespace }");
-    if(namespace == NULL) {
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
         goto end;
     }
-    char* localVarToReplace_namespace = malloc(sizeOfPathParams_namespace);
-    sprintf(localVarToReplace_namespace, "{%s}", "namespace");
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_namespace, namespace);
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
 
 
@@ -131,7 +131,7 @@ AuthorizationV1beta1API_createNamespacedLocalSubjectAccessReview(apiClient_t *ap
     list_free(localVarHeaderType);
     
     free(localVarPath);
-    free(localVarToReplace_namespace);
+    free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
         cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;

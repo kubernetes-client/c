@@ -29,13 +29,25 @@ void v1_validating_webhook_configuration_free(v1_validating_webhook_configuratio
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_validating_webhook_configuration->api_version);
-    free(v1_validating_webhook_configuration->kind);
-    v1_object_meta_free(v1_validating_webhook_configuration->metadata);
-    list_ForEach(listEntry, v1_validating_webhook_configuration->webhooks) {
-        v1_validating_webhook_free(listEntry->data);
+    if (v1_validating_webhook_configuration->api_version) {
+        free(v1_validating_webhook_configuration->api_version);
+        v1_validating_webhook_configuration->api_version = NULL;
     }
-    list_free(v1_validating_webhook_configuration->webhooks);
+    if (v1_validating_webhook_configuration->kind) {
+        free(v1_validating_webhook_configuration->kind);
+        v1_validating_webhook_configuration->kind = NULL;
+    }
+    if (v1_validating_webhook_configuration->metadata) {
+        v1_object_meta_free(v1_validating_webhook_configuration->metadata);
+        v1_validating_webhook_configuration->metadata = NULL;
+    }
+    if (v1_validating_webhook_configuration->webhooks) {
+        list_ForEach(listEntry, v1_validating_webhook_configuration->webhooks) {
+            v1_validating_webhook_free(listEntry->data);
+        }
+        list_free(v1_validating_webhook_configuration->webhooks);
+        v1_validating_webhook_configuration->webhooks = NULL;
+    }
     free(v1_validating_webhook_configuration);
 }
 

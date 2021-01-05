@@ -29,13 +29,25 @@ void apps_v1beta1_deployment_list_free(apps_v1beta1_deployment_list_t *apps_v1be
         return ;
     }
     listEntry_t *listEntry;
-    free(apps_v1beta1_deployment_list->api_version);
-    list_ForEach(listEntry, apps_v1beta1_deployment_list->items) {
-        apps_v1beta1_deployment_free(listEntry->data);
+    if (apps_v1beta1_deployment_list->api_version) {
+        free(apps_v1beta1_deployment_list->api_version);
+        apps_v1beta1_deployment_list->api_version = NULL;
     }
-    list_free(apps_v1beta1_deployment_list->items);
-    free(apps_v1beta1_deployment_list->kind);
-    v1_list_meta_free(apps_v1beta1_deployment_list->metadata);
+    if (apps_v1beta1_deployment_list->items) {
+        list_ForEach(listEntry, apps_v1beta1_deployment_list->items) {
+            apps_v1beta1_deployment_free(listEntry->data);
+        }
+        list_free(apps_v1beta1_deployment_list->items);
+        apps_v1beta1_deployment_list->items = NULL;
+    }
+    if (apps_v1beta1_deployment_list->kind) {
+        free(apps_v1beta1_deployment_list->kind);
+        apps_v1beta1_deployment_list->kind = NULL;
+    }
+    if (apps_v1beta1_deployment_list->metadata) {
+        v1_list_meta_free(apps_v1beta1_deployment_list->metadata);
+        apps_v1beta1_deployment_list->metadata = NULL;
+    }
     free(apps_v1beta1_deployment_list);
 }
 

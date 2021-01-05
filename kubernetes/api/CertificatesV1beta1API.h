@@ -57,7 +57,7 @@ CertificatesV1beta1API_patchCertificateSigningRequestStatus(apiClient_t *apiClie
 // read the specified CertificateSigningRequest
 //
 v1beta1_certificate_signing_request_t*
-CertificatesV1beta1API_readCertificateSigningRequest(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+CertificatesV1beta1API_readCertificateSigningRequest(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read status of the specified CertificateSigningRequest

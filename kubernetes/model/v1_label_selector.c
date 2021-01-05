@@ -25,17 +25,23 @@ void v1_label_selector_free(v1_label_selector_t *v1_label_selector) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_label_selector->match_expressions) {
-        v1_label_selector_requirement_free(listEntry->data);
+    if (v1_label_selector->match_expressions) {
+        list_ForEach(listEntry, v1_label_selector->match_expressions) {
+            v1_label_selector_requirement_free(listEntry->data);
+        }
+        list_free(v1_label_selector->match_expressions);
+        v1_label_selector->match_expressions = NULL;
     }
-    list_free(v1_label_selector->match_expressions);
-    list_ForEach(listEntry, v1_label_selector->match_labels) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_label_selector->match_labels) {
+        list_ForEach(listEntry, v1_label_selector->match_labels) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_label_selector->match_labels);
+        v1_label_selector->match_labels = NULL;
     }
-    list_free(v1_label_selector->match_labels);
     free(v1_label_selector);
 }
 

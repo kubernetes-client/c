@@ -33,11 +33,26 @@ void v1_azure_disk_volume_source_free(v1_azure_disk_volume_source_t *v1_azure_di
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_azure_disk_volume_source->caching_mode);
-    free(v1_azure_disk_volume_source->disk_name);
-    free(v1_azure_disk_volume_source->disk_uri);
-    free(v1_azure_disk_volume_source->fs_type);
-    free(v1_azure_disk_volume_source->kind);
+    if (v1_azure_disk_volume_source->caching_mode) {
+        free(v1_azure_disk_volume_source->caching_mode);
+        v1_azure_disk_volume_source->caching_mode = NULL;
+    }
+    if (v1_azure_disk_volume_source->disk_name) {
+        free(v1_azure_disk_volume_source->disk_name);
+        v1_azure_disk_volume_source->disk_name = NULL;
+    }
+    if (v1_azure_disk_volume_source->disk_uri) {
+        free(v1_azure_disk_volume_source->disk_uri);
+        v1_azure_disk_volume_source->disk_uri = NULL;
+    }
+    if (v1_azure_disk_volume_source->fs_type) {
+        free(v1_azure_disk_volume_source->fs_type);
+        v1_azure_disk_volume_source->fs_type = NULL;
+    }
+    if (v1_azure_disk_volume_source->kind) {
+        free(v1_azure_disk_volume_source->kind);
+        v1_azure_disk_volume_source->kind = NULL;
+    }
     free(v1_azure_disk_volume_source);
 }
 

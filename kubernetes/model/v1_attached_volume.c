@@ -25,8 +25,14 @@ void v1_attached_volume_free(v1_attached_volume_t *v1_attached_volume) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_attached_volume->device_path);
-    free(v1_attached_volume->name);
+    if (v1_attached_volume->device_path) {
+        free(v1_attached_volume->device_path);
+        v1_attached_volume->device_path = NULL;
+    }
+    if (v1_attached_volume->name) {
+        free(v1_attached_volume->name);
+        v1_attached_volume->name = NULL;
+    }
     free(v1_attached_volume);
 }
 

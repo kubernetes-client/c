@@ -29,13 +29,25 @@ void v1_controller_revision_list_free(v1_controller_revision_list_t *v1_controll
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_controller_revision_list->api_version);
-    list_ForEach(listEntry, v1_controller_revision_list->items) {
-        v1_controller_revision_free(listEntry->data);
+    if (v1_controller_revision_list->api_version) {
+        free(v1_controller_revision_list->api_version);
+        v1_controller_revision_list->api_version = NULL;
     }
-    list_free(v1_controller_revision_list->items);
-    free(v1_controller_revision_list->kind);
-    v1_list_meta_free(v1_controller_revision_list->metadata);
+    if (v1_controller_revision_list->items) {
+        list_ForEach(listEntry, v1_controller_revision_list->items) {
+            v1_controller_revision_free(listEntry->data);
+        }
+        list_free(v1_controller_revision_list->items);
+        v1_controller_revision_list->items = NULL;
+    }
+    if (v1_controller_revision_list->kind) {
+        free(v1_controller_revision_list->kind);
+        v1_controller_revision_list->kind = NULL;
+    }
+    if (v1_controller_revision_list->metadata) {
+        v1_list_meta_free(v1_controller_revision_list->metadata);
+        v1_controller_revision_list->metadata = NULL;
+    }
     free(v1_controller_revision_list);
 }
 

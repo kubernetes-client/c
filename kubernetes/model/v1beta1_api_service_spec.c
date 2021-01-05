@@ -35,9 +35,18 @@ void v1beta1_api_service_spec_free(v1beta1_api_service_spec_t *v1beta1_api_servi
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_api_service_spec->group);
-    apiregistration_v1beta1_service_reference_free(v1beta1_api_service_spec->service);
-    free(v1beta1_api_service_spec->version);
+    if (v1beta1_api_service_spec->group) {
+        free(v1beta1_api_service_spec->group);
+        v1beta1_api_service_spec->group = NULL;
+    }
+    if (v1beta1_api_service_spec->service) {
+        apiregistration_v1beta1_service_reference_free(v1beta1_api_service_spec->service);
+        v1beta1_api_service_spec->service = NULL;
+    }
+    if (v1beta1_api_service_spec->version) {
+        free(v1beta1_api_service_spec->version);
+        v1beta1_api_service_spec->version = NULL;
+    }
     free(v1beta1_api_service_spec);
 }
 

@@ -31,11 +31,26 @@ void extensions_v1beta1_ingress_free(extensions_v1beta1_ingress_t *extensions_v1
         return ;
     }
     listEntry_t *listEntry;
-    free(extensions_v1beta1_ingress->api_version);
-    free(extensions_v1beta1_ingress->kind);
-    v1_object_meta_free(extensions_v1beta1_ingress->metadata);
-    extensions_v1beta1_ingress_spec_free(extensions_v1beta1_ingress->spec);
-    extensions_v1beta1_ingress_status_free(extensions_v1beta1_ingress->status);
+    if (extensions_v1beta1_ingress->api_version) {
+        free(extensions_v1beta1_ingress->api_version);
+        extensions_v1beta1_ingress->api_version = NULL;
+    }
+    if (extensions_v1beta1_ingress->kind) {
+        free(extensions_v1beta1_ingress->kind);
+        extensions_v1beta1_ingress->kind = NULL;
+    }
+    if (extensions_v1beta1_ingress->metadata) {
+        v1_object_meta_free(extensions_v1beta1_ingress->metadata);
+        extensions_v1beta1_ingress->metadata = NULL;
+    }
+    if (extensions_v1beta1_ingress->spec) {
+        extensions_v1beta1_ingress_spec_free(extensions_v1beta1_ingress->spec);
+        extensions_v1beta1_ingress->spec = NULL;
+    }
+    if (extensions_v1beta1_ingress->status) {
+        extensions_v1beta1_ingress_status_free(extensions_v1beta1_ingress->status);
+        extensions_v1beta1_ingress->status = NULL;
+    }
     free(extensions_v1beta1_ingress);
 }
 

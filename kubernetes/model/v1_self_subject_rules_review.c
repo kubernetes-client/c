@@ -31,11 +31,26 @@ void v1_self_subject_rules_review_free(v1_self_subject_rules_review_t *v1_self_s
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_self_subject_rules_review->api_version);
-    free(v1_self_subject_rules_review->kind);
-    v1_object_meta_free(v1_self_subject_rules_review->metadata);
-    v1_self_subject_rules_review_spec_free(v1_self_subject_rules_review->spec);
-    v1_subject_rules_review_status_free(v1_self_subject_rules_review->status);
+    if (v1_self_subject_rules_review->api_version) {
+        free(v1_self_subject_rules_review->api_version);
+        v1_self_subject_rules_review->api_version = NULL;
+    }
+    if (v1_self_subject_rules_review->kind) {
+        free(v1_self_subject_rules_review->kind);
+        v1_self_subject_rules_review->kind = NULL;
+    }
+    if (v1_self_subject_rules_review->metadata) {
+        v1_object_meta_free(v1_self_subject_rules_review->metadata);
+        v1_self_subject_rules_review->metadata = NULL;
+    }
+    if (v1_self_subject_rules_review->spec) {
+        v1_self_subject_rules_review_spec_free(v1_self_subject_rules_review->spec);
+        v1_self_subject_rules_review->spec = NULL;
+    }
+    if (v1_self_subject_rules_review->status) {
+        v1_subject_rules_review_status_free(v1_self_subject_rules_review->status);
+        v1_self_subject_rules_review->status = NULL;
+    }
     free(v1_self_subject_rules_review);
 }
 

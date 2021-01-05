@@ -25,14 +25,20 @@ void v1_pod_affinity_free(v1_pod_affinity_t *v1_pod_affinity) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_pod_affinity->preferred_during_scheduling_ignored_during_execution) {
-        v1_weighted_pod_affinity_term_free(listEntry->data);
+    if (v1_pod_affinity->preferred_during_scheduling_ignored_during_execution) {
+        list_ForEach(listEntry, v1_pod_affinity->preferred_during_scheduling_ignored_during_execution) {
+            v1_weighted_pod_affinity_term_free(listEntry->data);
+        }
+        list_free(v1_pod_affinity->preferred_during_scheduling_ignored_during_execution);
+        v1_pod_affinity->preferred_during_scheduling_ignored_during_execution = NULL;
     }
-    list_free(v1_pod_affinity->preferred_during_scheduling_ignored_during_execution);
-    list_ForEach(listEntry, v1_pod_affinity->required_during_scheduling_ignored_during_execution) {
-        v1_pod_affinity_term_free(listEntry->data);
+    if (v1_pod_affinity->required_during_scheduling_ignored_during_execution) {
+        list_ForEach(listEntry, v1_pod_affinity->required_during_scheduling_ignored_during_execution) {
+            v1_pod_affinity_term_free(listEntry->data);
+        }
+        list_free(v1_pod_affinity->required_during_scheduling_ignored_during_execution);
+        v1_pod_affinity->required_during_scheduling_ignored_during_execution = NULL;
     }
-    list_free(v1_pod_affinity->required_during_scheduling_ignored_during_execution);
     free(v1_pod_affinity);
 }
 

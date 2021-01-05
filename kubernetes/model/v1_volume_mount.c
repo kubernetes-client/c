@@ -33,11 +33,26 @@ void v1_volume_mount_free(v1_volume_mount_t *v1_volume_mount) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_volume_mount->mount_path);
-    free(v1_volume_mount->mount_propagation);
-    free(v1_volume_mount->name);
-    free(v1_volume_mount->sub_path);
-    free(v1_volume_mount->sub_path_expr);
+    if (v1_volume_mount->mount_path) {
+        free(v1_volume_mount->mount_path);
+        v1_volume_mount->mount_path = NULL;
+    }
+    if (v1_volume_mount->mount_propagation) {
+        free(v1_volume_mount->mount_propagation);
+        v1_volume_mount->mount_propagation = NULL;
+    }
+    if (v1_volume_mount->name) {
+        free(v1_volume_mount->name);
+        v1_volume_mount->name = NULL;
+    }
+    if (v1_volume_mount->sub_path) {
+        free(v1_volume_mount->sub_path);
+        v1_volume_mount->sub_path = NULL;
+    }
+    if (v1_volume_mount->sub_path_expr) {
+        free(v1_volume_mount->sub_path_expr);
+        v1_volume_mount->sub_path_expr = NULL;
+    }
     free(v1_volume_mount);
 }
 

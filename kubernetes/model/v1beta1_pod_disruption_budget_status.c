@@ -33,13 +33,16 @@ void v1beta1_pod_disruption_budget_status_free(v1beta1_pod_disruption_budget_sta
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_pod_disruption_budget_status->disrupted_pods) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta1_pod_disruption_budget_status->disrupted_pods) {
+        list_ForEach(listEntry, v1beta1_pod_disruption_budget_status->disrupted_pods) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta1_pod_disruption_budget_status->disrupted_pods);
+        v1beta1_pod_disruption_budget_status->disrupted_pods = NULL;
     }
-    list_free(v1beta1_pod_disruption_budget_status->disrupted_pods);
     free(v1beta1_pod_disruption_budget_status);
 }
 

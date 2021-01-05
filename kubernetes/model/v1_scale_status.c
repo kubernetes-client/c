@@ -25,7 +25,10 @@ void v1_scale_status_free(v1_scale_status_t *v1_scale_status) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_scale_status->selector);
+    if (v1_scale_status->selector) {
+        free(v1_scale_status->selector);
+        v1_scale_status->selector = NULL;
+    }
     free(v1_scale_status);
 }
 

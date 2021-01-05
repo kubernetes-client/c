@@ -29,10 +29,22 @@ void policy_v1beta1_pod_security_policy_free(policy_v1beta1_pod_security_policy_
         return ;
     }
     listEntry_t *listEntry;
-    free(policy_v1beta1_pod_security_policy->api_version);
-    free(policy_v1beta1_pod_security_policy->kind);
-    v1_object_meta_free(policy_v1beta1_pod_security_policy->metadata);
-    policy_v1beta1_pod_security_policy_spec_free(policy_v1beta1_pod_security_policy->spec);
+    if (policy_v1beta1_pod_security_policy->api_version) {
+        free(policy_v1beta1_pod_security_policy->api_version);
+        policy_v1beta1_pod_security_policy->api_version = NULL;
+    }
+    if (policy_v1beta1_pod_security_policy->kind) {
+        free(policy_v1beta1_pod_security_policy->kind);
+        policy_v1beta1_pod_security_policy->kind = NULL;
+    }
+    if (policy_v1beta1_pod_security_policy->metadata) {
+        v1_object_meta_free(policy_v1beta1_pod_security_policy->metadata);
+        policy_v1beta1_pod_security_policy->metadata = NULL;
+    }
+    if (policy_v1beta1_pod_security_policy->spec) {
+        policy_v1beta1_pod_security_policy_spec_free(policy_v1beta1_pod_security_policy->spec);
+        policy_v1beta1_pod_security_policy->spec = NULL;
+    }
     free(policy_v1beta1_pod_security_policy);
 }
 

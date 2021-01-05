@@ -29,13 +29,25 @@ void v1_api_resource_list_free(v1_api_resource_list_t *v1_api_resource_list) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_api_resource_list->api_version);
-    free(v1_api_resource_list->group_version);
-    free(v1_api_resource_list->kind);
-    list_ForEach(listEntry, v1_api_resource_list->resources) {
-        v1_api_resource_free(listEntry->data);
+    if (v1_api_resource_list->api_version) {
+        free(v1_api_resource_list->api_version);
+        v1_api_resource_list->api_version = NULL;
     }
-    list_free(v1_api_resource_list->resources);
+    if (v1_api_resource_list->group_version) {
+        free(v1_api_resource_list->group_version);
+        v1_api_resource_list->group_version = NULL;
+    }
+    if (v1_api_resource_list->kind) {
+        free(v1_api_resource_list->kind);
+        v1_api_resource_list->kind = NULL;
+    }
+    if (v1_api_resource_list->resources) {
+        list_ForEach(listEntry, v1_api_resource_list->resources) {
+            v1_api_resource_free(listEntry->data);
+        }
+        list_free(v1_api_resource_list->resources);
+        v1_api_resource_list->resources = NULL;
+    }
     free(v1_api_resource_list);
 }
 

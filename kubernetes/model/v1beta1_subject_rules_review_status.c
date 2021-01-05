@@ -29,15 +29,24 @@ void v1beta1_subject_rules_review_status_free(v1beta1_subject_rules_review_statu
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_subject_rules_review_status->evaluation_error);
-    list_ForEach(listEntry, v1beta1_subject_rules_review_status->non_resource_rules) {
-        v1beta1_non_resource_rule_free(listEntry->data);
+    if (v1beta1_subject_rules_review_status->evaluation_error) {
+        free(v1beta1_subject_rules_review_status->evaluation_error);
+        v1beta1_subject_rules_review_status->evaluation_error = NULL;
     }
-    list_free(v1beta1_subject_rules_review_status->non_resource_rules);
-    list_ForEach(listEntry, v1beta1_subject_rules_review_status->resource_rules) {
-        v1beta1_resource_rule_free(listEntry->data);
+    if (v1beta1_subject_rules_review_status->non_resource_rules) {
+        list_ForEach(listEntry, v1beta1_subject_rules_review_status->non_resource_rules) {
+            v1beta1_non_resource_rule_free(listEntry->data);
+        }
+        list_free(v1beta1_subject_rules_review_status->non_resource_rules);
+        v1beta1_subject_rules_review_status->non_resource_rules = NULL;
     }
-    list_free(v1beta1_subject_rules_review_status->resource_rules);
+    if (v1beta1_subject_rules_review_status->resource_rules) {
+        list_ForEach(listEntry, v1beta1_subject_rules_review_status->resource_rules) {
+            v1beta1_resource_rule_free(listEntry->data);
+        }
+        list_free(v1beta1_subject_rules_review_status->resource_rules);
+        v1beta1_subject_rules_review_status->resource_rules = NULL;
+    }
     free(v1beta1_subject_rules_review_status);
 }
 

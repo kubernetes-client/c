@@ -89,70 +89,145 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_affinity_free(v1_pod_spec->affinity);
-    list_ForEach(listEntry, v1_pod_spec->containers) {
-        v1_container_free(listEntry->data);
+    if (v1_pod_spec->affinity) {
+        v1_affinity_free(v1_pod_spec->affinity);
+        v1_pod_spec->affinity = NULL;
     }
-    list_free(v1_pod_spec->containers);
-    v1_pod_dns_config_free(v1_pod_spec->dns_config);
-    free(v1_pod_spec->dns_policy);
-    list_ForEach(listEntry, v1_pod_spec->ephemeral_containers) {
-        v1_ephemeral_container_free(listEntry->data);
+    if (v1_pod_spec->containers) {
+        list_ForEach(listEntry, v1_pod_spec->containers) {
+            v1_container_free(listEntry->data);
+        }
+        list_free(v1_pod_spec->containers);
+        v1_pod_spec->containers = NULL;
     }
-    list_free(v1_pod_spec->ephemeral_containers);
-    list_ForEach(listEntry, v1_pod_spec->host_aliases) {
-        v1_host_alias_free(listEntry->data);
+    if (v1_pod_spec->dns_config) {
+        v1_pod_dns_config_free(v1_pod_spec->dns_config);
+        v1_pod_spec->dns_config = NULL;
     }
-    list_free(v1_pod_spec->host_aliases);
-    free(v1_pod_spec->hostname);
-    list_ForEach(listEntry, v1_pod_spec->image_pull_secrets) {
-        v1_local_object_reference_free(listEntry->data);
+    if (v1_pod_spec->dns_policy) {
+        free(v1_pod_spec->dns_policy);
+        v1_pod_spec->dns_policy = NULL;
     }
-    list_free(v1_pod_spec->image_pull_secrets);
-    list_ForEach(listEntry, v1_pod_spec->init_containers) {
-        v1_container_free(listEntry->data);
+    if (v1_pod_spec->ephemeral_containers) {
+        list_ForEach(listEntry, v1_pod_spec->ephemeral_containers) {
+            v1_ephemeral_container_free(listEntry->data);
+        }
+        list_free(v1_pod_spec->ephemeral_containers);
+        v1_pod_spec->ephemeral_containers = NULL;
     }
-    list_free(v1_pod_spec->init_containers);
-    free(v1_pod_spec->node_name);
-    list_ForEach(listEntry, v1_pod_spec->node_selector) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_pod_spec->host_aliases) {
+        list_ForEach(listEntry, v1_pod_spec->host_aliases) {
+            v1_host_alias_free(listEntry->data);
+        }
+        list_free(v1_pod_spec->host_aliases);
+        v1_pod_spec->host_aliases = NULL;
     }
-    list_free(v1_pod_spec->node_selector);
-    list_ForEach(listEntry, v1_pod_spec->overhead) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_pod_spec->hostname) {
+        free(v1_pod_spec->hostname);
+        v1_pod_spec->hostname = NULL;
     }
-    list_free(v1_pod_spec->overhead);
-    free(v1_pod_spec->preemption_policy);
-    free(v1_pod_spec->priority_class_name);
-    list_ForEach(listEntry, v1_pod_spec->readiness_gates) {
-        v1_pod_readiness_gate_free(listEntry->data);
+    if (v1_pod_spec->image_pull_secrets) {
+        list_ForEach(listEntry, v1_pod_spec->image_pull_secrets) {
+            v1_local_object_reference_free(listEntry->data);
+        }
+        list_free(v1_pod_spec->image_pull_secrets);
+        v1_pod_spec->image_pull_secrets = NULL;
     }
-    list_free(v1_pod_spec->readiness_gates);
-    free(v1_pod_spec->restart_policy);
-    free(v1_pod_spec->runtime_class_name);
-    free(v1_pod_spec->scheduler_name);
-    v1_pod_security_context_free(v1_pod_spec->security_context);
-    free(v1_pod_spec->service_account);
-    free(v1_pod_spec->service_account_name);
-    free(v1_pod_spec->subdomain);
-    list_ForEach(listEntry, v1_pod_spec->tolerations) {
-        v1_toleration_free(listEntry->data);
+    if (v1_pod_spec->init_containers) {
+        list_ForEach(listEntry, v1_pod_spec->init_containers) {
+            v1_container_free(listEntry->data);
+        }
+        list_free(v1_pod_spec->init_containers);
+        v1_pod_spec->init_containers = NULL;
     }
-    list_free(v1_pod_spec->tolerations);
-    list_ForEach(listEntry, v1_pod_spec->topology_spread_constraints) {
-        v1_topology_spread_constraint_free(listEntry->data);
+    if (v1_pod_spec->node_name) {
+        free(v1_pod_spec->node_name);
+        v1_pod_spec->node_name = NULL;
     }
-    list_free(v1_pod_spec->topology_spread_constraints);
-    list_ForEach(listEntry, v1_pod_spec->volumes) {
-        v1_volume_free(listEntry->data);
+    if (v1_pod_spec->node_selector) {
+        list_ForEach(listEntry, v1_pod_spec->node_selector) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_pod_spec->node_selector);
+        v1_pod_spec->node_selector = NULL;
     }
-    list_free(v1_pod_spec->volumes);
+    if (v1_pod_spec->overhead) {
+        list_ForEach(listEntry, v1_pod_spec->overhead) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_pod_spec->overhead);
+        v1_pod_spec->overhead = NULL;
+    }
+    if (v1_pod_spec->preemption_policy) {
+        free(v1_pod_spec->preemption_policy);
+        v1_pod_spec->preemption_policy = NULL;
+    }
+    if (v1_pod_spec->priority_class_name) {
+        free(v1_pod_spec->priority_class_name);
+        v1_pod_spec->priority_class_name = NULL;
+    }
+    if (v1_pod_spec->readiness_gates) {
+        list_ForEach(listEntry, v1_pod_spec->readiness_gates) {
+            v1_pod_readiness_gate_free(listEntry->data);
+        }
+        list_free(v1_pod_spec->readiness_gates);
+        v1_pod_spec->readiness_gates = NULL;
+    }
+    if (v1_pod_spec->restart_policy) {
+        free(v1_pod_spec->restart_policy);
+        v1_pod_spec->restart_policy = NULL;
+    }
+    if (v1_pod_spec->runtime_class_name) {
+        free(v1_pod_spec->runtime_class_name);
+        v1_pod_spec->runtime_class_name = NULL;
+    }
+    if (v1_pod_spec->scheduler_name) {
+        free(v1_pod_spec->scheduler_name);
+        v1_pod_spec->scheduler_name = NULL;
+    }
+    if (v1_pod_spec->security_context) {
+        v1_pod_security_context_free(v1_pod_spec->security_context);
+        v1_pod_spec->security_context = NULL;
+    }
+    if (v1_pod_spec->service_account) {
+        free(v1_pod_spec->service_account);
+        v1_pod_spec->service_account = NULL;
+    }
+    if (v1_pod_spec->service_account_name) {
+        free(v1_pod_spec->service_account_name);
+        v1_pod_spec->service_account_name = NULL;
+    }
+    if (v1_pod_spec->subdomain) {
+        free(v1_pod_spec->subdomain);
+        v1_pod_spec->subdomain = NULL;
+    }
+    if (v1_pod_spec->tolerations) {
+        list_ForEach(listEntry, v1_pod_spec->tolerations) {
+            v1_toleration_free(listEntry->data);
+        }
+        list_free(v1_pod_spec->tolerations);
+        v1_pod_spec->tolerations = NULL;
+    }
+    if (v1_pod_spec->topology_spread_constraints) {
+        list_ForEach(listEntry, v1_pod_spec->topology_spread_constraints) {
+            v1_topology_spread_constraint_free(listEntry->data);
+        }
+        list_free(v1_pod_spec->topology_spread_constraints);
+        v1_pod_spec->topology_spread_constraints = NULL;
+    }
+    if (v1_pod_spec->volumes) {
+        list_ForEach(listEntry, v1_pod_spec->volumes) {
+            v1_volume_free(listEntry->data);
+        }
+        list_free(v1_pod_spec->volumes);
+        v1_pod_spec->volumes = NULL;
+    }
     free(v1_pod_spec);
 }
 

@@ -27,8 +27,14 @@ void v1_portworx_volume_source_free(v1_portworx_volume_source_t *v1_portworx_vol
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_portworx_volume_source->fs_type);
-    free(v1_portworx_volume_source->volume_id);
+    if (v1_portworx_volume_source->fs_type) {
+        free(v1_portworx_volume_source->fs_type);
+        v1_portworx_volume_source->fs_type = NULL;
+    }
+    if (v1_portworx_volume_source->volume_id) {
+        free(v1_portworx_volume_source->volume_id);
+        v1_portworx_volume_source->volume_id = NULL;
+    }
     free(v1_portworx_volume_source);
 }
 

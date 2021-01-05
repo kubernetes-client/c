@@ -31,9 +31,18 @@ void v1beta1_lease_spec_free(v1beta1_lease_spec_t *v1beta1_lease_spec) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta1_lease_spec->acquire_time);
-    free(v1beta1_lease_spec->holder_identity);
-    free(v1beta1_lease_spec->renew_time);
+    if (v1beta1_lease_spec->acquire_time) {
+        free(v1beta1_lease_spec->acquire_time);
+        v1beta1_lease_spec->acquire_time = NULL;
+    }
+    if (v1beta1_lease_spec->holder_identity) {
+        free(v1beta1_lease_spec->holder_identity);
+        v1beta1_lease_spec->holder_identity = NULL;
+    }
+    if (v1beta1_lease_spec->renew_time) {
+        free(v1beta1_lease_spec->renew_time);
+        v1beta1_lease_spec->renew_time = NULL;
+    }
     free(v1beta1_lease_spec);
 }
 

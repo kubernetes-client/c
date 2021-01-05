@@ -33,42 +33,60 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_limit_range_item->_default) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_limit_range_item->_default) {
+        list_ForEach(listEntry, v1_limit_range_item->_default) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_limit_range_item->_default);
+        v1_limit_range_item->_default = NULL;
     }
-    list_free(v1_limit_range_item->_default);
-    list_ForEach(listEntry, v1_limit_range_item->default_request) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_limit_range_item->default_request) {
+        list_ForEach(listEntry, v1_limit_range_item->default_request) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_limit_range_item->default_request);
+        v1_limit_range_item->default_request = NULL;
     }
-    list_free(v1_limit_range_item->default_request);
-    list_ForEach(listEntry, v1_limit_range_item->max) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_limit_range_item->max) {
+        list_ForEach(listEntry, v1_limit_range_item->max) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_limit_range_item->max);
+        v1_limit_range_item->max = NULL;
     }
-    list_free(v1_limit_range_item->max);
-    list_ForEach(listEntry, v1_limit_range_item->max_limit_request_ratio) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_limit_range_item->max_limit_request_ratio) {
+        list_ForEach(listEntry, v1_limit_range_item->max_limit_request_ratio) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_limit_range_item->max_limit_request_ratio);
+        v1_limit_range_item->max_limit_request_ratio = NULL;
     }
-    list_free(v1_limit_range_item->max_limit_request_ratio);
-    list_ForEach(listEntry, v1_limit_range_item->min) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_limit_range_item->min) {
+        list_ForEach(listEntry, v1_limit_range_item->min) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_limit_range_item->min);
+        v1_limit_range_item->min = NULL;
     }
-    list_free(v1_limit_range_item->min);
-    free(v1_limit_range_item->type);
+    if (v1_limit_range_item->type) {
+        free(v1_limit_range_item->type);
+        v1_limit_range_item->type = NULL;
+    }
     free(v1_limit_range_item);
 }
 

@@ -13,7 +13,7 @@ v1beta2_deployment_spec_t *v1beta2_deployment_spec_create(
     int revision_history_limit,
     v1_label_selector_t *selector,
     v1beta2_deployment_strategy_t *strategy,
-    v1_pod_template_spec_t *template
+    v1_pod_template_spec_t *_template
     ) {
     v1beta2_deployment_spec_t *v1beta2_deployment_spec_local_var = malloc(sizeof(v1beta2_deployment_spec_t));
     if (!v1beta2_deployment_spec_local_var) {
@@ -26,7 +26,7 @@ v1beta2_deployment_spec_t *v1beta2_deployment_spec_create(
     v1beta2_deployment_spec_local_var->revision_history_limit = revision_history_limit;
     v1beta2_deployment_spec_local_var->selector = selector;
     v1beta2_deployment_spec_local_var->strategy = strategy;
-    v1beta2_deployment_spec_local_var->template = template;
+    v1beta2_deployment_spec_local_var->_template = _template;
 
     return v1beta2_deployment_spec_local_var;
 }
@@ -37,9 +37,18 @@ void v1beta2_deployment_spec_free(v1beta2_deployment_spec_t *v1beta2_deployment_
         return ;
     }
     listEntry_t *listEntry;
-    v1_label_selector_free(v1beta2_deployment_spec->selector);
-    v1beta2_deployment_strategy_free(v1beta2_deployment_spec->strategy);
-    v1_pod_template_spec_free(v1beta2_deployment_spec->template);
+    if (v1beta2_deployment_spec->selector) {
+        v1_label_selector_free(v1beta2_deployment_spec->selector);
+        v1beta2_deployment_spec->selector = NULL;
+    }
+    if (v1beta2_deployment_spec->strategy) {
+        v1beta2_deployment_strategy_free(v1beta2_deployment_spec->strategy);
+        v1beta2_deployment_spec->strategy = NULL;
+    }
+    if (v1beta2_deployment_spec->_template) {
+        v1_pod_template_spec_free(v1beta2_deployment_spec->_template);
+        v1beta2_deployment_spec->_template = NULL;
+    }
     free(v1beta2_deployment_spec);
 }
 
@@ -114,16 +123,16 @@ cJSON *v1beta2_deployment_spec_convertToJSON(v1beta2_deployment_spec_t *v1beta2_
      } 
 
 
-    // v1beta2_deployment_spec->template
-    if (!v1beta2_deployment_spec->template) {
+    // v1beta2_deployment_spec->_template
+    if (!v1beta2_deployment_spec->_template) {
         goto fail;
     }
     
-    cJSON *template_local_JSON = v1_pod_template_spec_convertToJSON(v1beta2_deployment_spec->template);
-    if(template_local_JSON == NULL) {
+    cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1beta2_deployment_spec->_template);
+    if(_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "template", template_local_JSON);
+    cJSON_AddItemToObject(item, "template", _template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -202,15 +211,15 @@ v1beta2_deployment_spec_t *v1beta2_deployment_spec_parseFromJSON(cJSON *v1beta2_
     strategy_local_nonprim = v1beta2_deployment_strategy_parseFromJSON(strategy); //nonprimitive
     }
 
-    // v1beta2_deployment_spec->template
-    cJSON *template = cJSON_GetObjectItemCaseSensitive(v1beta2_deployment_specJSON, "template");
-    if (!template) {
+    // v1beta2_deployment_spec->_template
+    cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1beta2_deployment_specJSON, "template");
+    if (!_template) {
         goto end;
     }
 
-    v1_pod_template_spec_t *template_local_nonprim = NULL;
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     
-    template_local_nonprim = v1_pod_template_spec_parseFromJSON(template); //nonprimitive
+    _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 
 
     v1beta2_deployment_spec_local_var = v1beta2_deployment_spec_create (
@@ -221,7 +230,7 @@ v1beta2_deployment_spec_t *v1beta2_deployment_spec_parseFromJSON(cJSON *v1beta2_
         revision_history_limit ? revision_history_limit->valuedouble : 0,
         selector_local_nonprim,
         strategy ? strategy_local_nonprim : NULL,
-        template_local_nonprim
+        _template_local_nonprim
         );
 
     return v1beta2_deployment_spec_local_var;

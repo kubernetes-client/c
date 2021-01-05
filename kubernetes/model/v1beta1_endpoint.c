@@ -31,20 +31,35 @@ void v1beta1_endpoint_free(v1beta1_endpoint_t *v1beta1_endpoint) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_endpoint->addresses) {
-        free(listEntry->data);
+    if (v1beta1_endpoint->addresses) {
+        list_ForEach(listEntry, v1beta1_endpoint->addresses) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_endpoint->addresses);
+        v1beta1_endpoint->addresses = NULL;
     }
-    list_free(v1beta1_endpoint->addresses);
-    v1beta1_endpoint_conditions_free(v1beta1_endpoint->conditions);
-    free(v1beta1_endpoint->hostname);
-    v1_object_reference_free(v1beta1_endpoint->target_ref);
-    list_ForEach(listEntry, v1beta1_endpoint->topology) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta1_endpoint->conditions) {
+        v1beta1_endpoint_conditions_free(v1beta1_endpoint->conditions);
+        v1beta1_endpoint->conditions = NULL;
     }
-    list_free(v1beta1_endpoint->topology);
+    if (v1beta1_endpoint->hostname) {
+        free(v1beta1_endpoint->hostname);
+        v1beta1_endpoint->hostname = NULL;
+    }
+    if (v1beta1_endpoint->target_ref) {
+        v1_object_reference_free(v1beta1_endpoint->target_ref);
+        v1beta1_endpoint->target_ref = NULL;
+    }
+    if (v1beta1_endpoint->topology) {
+        list_ForEach(listEntry, v1beta1_endpoint->topology) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta1_endpoint->topology);
+        v1beta1_endpoint->topology = NULL;
+    }
     free(v1beta1_endpoint);
 }
 

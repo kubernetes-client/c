@@ -29,7 +29,7 @@ typedef struct v1_deployment_spec_t {
     int revision_history_limit; //numeric
     struct v1_label_selector_t *selector; //model
     struct v1_deployment_strategy_t *strategy; //model
-    struct v1_pod_template_spec_t *template; //model
+    struct v1_pod_template_spec_t *_template; //model
 
 } v1_deployment_spec_t;
 
@@ -41,7 +41,7 @@ v1_deployment_spec_t *v1_deployment_spec_create(
     int revision_history_limit,
     v1_label_selector_t *selector,
     v1_deployment_strategy_t *strategy,
-    v1_pod_template_spec_t *template
+    v1_pod_template_spec_t *_template
 );
 
 void v1_deployment_spec_free(v1_deployment_spec_t *v1_deployment_spec);

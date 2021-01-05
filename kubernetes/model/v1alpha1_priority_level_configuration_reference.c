@@ -23,7 +23,10 @@ void v1alpha1_priority_level_configuration_reference_free(v1alpha1_priority_leve
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_priority_level_configuration_reference->name);
+    if (v1alpha1_priority_level_configuration_reference->name) {
+        free(v1alpha1_priority_level_configuration_reference->name);
+        v1alpha1_priority_level_configuration_reference->name = NULL;
+    }
     free(v1alpha1_priority_level_configuration_reference);
 }
 

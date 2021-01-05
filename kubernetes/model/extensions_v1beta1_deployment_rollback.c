@@ -31,17 +31,32 @@ void extensions_v1beta1_deployment_rollback_free(extensions_v1beta1_deployment_r
         return ;
     }
     listEntry_t *listEntry;
-    free(extensions_v1beta1_deployment_rollback->api_version);
-    free(extensions_v1beta1_deployment_rollback->kind);
-    free(extensions_v1beta1_deployment_rollback->name);
-    extensions_v1beta1_rollback_config_free(extensions_v1beta1_deployment_rollback->rollback_to);
-    list_ForEach(listEntry, extensions_v1beta1_deployment_rollback->updated_annotations) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (extensions_v1beta1_deployment_rollback->api_version) {
+        free(extensions_v1beta1_deployment_rollback->api_version);
+        extensions_v1beta1_deployment_rollback->api_version = NULL;
     }
-    list_free(extensions_v1beta1_deployment_rollback->updated_annotations);
+    if (extensions_v1beta1_deployment_rollback->kind) {
+        free(extensions_v1beta1_deployment_rollback->kind);
+        extensions_v1beta1_deployment_rollback->kind = NULL;
+    }
+    if (extensions_v1beta1_deployment_rollback->name) {
+        free(extensions_v1beta1_deployment_rollback->name);
+        extensions_v1beta1_deployment_rollback->name = NULL;
+    }
+    if (extensions_v1beta1_deployment_rollback->rollback_to) {
+        extensions_v1beta1_rollback_config_free(extensions_v1beta1_deployment_rollback->rollback_to);
+        extensions_v1beta1_deployment_rollback->rollback_to = NULL;
+    }
+    if (extensions_v1beta1_deployment_rollback->updated_annotations) {
+        list_ForEach(listEntry, extensions_v1beta1_deployment_rollback->updated_annotations) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(extensions_v1beta1_deployment_rollback->updated_annotations);
+        extensions_v1beta1_deployment_rollback->updated_annotations = NULL;
+    }
     free(extensions_v1beta1_deployment_rollback);
 }
 

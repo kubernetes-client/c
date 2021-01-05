@@ -12,7 +12,7 @@ v1_job_spec_t *v1_job_spec_create(
     int manual_selector,
     int parallelism,
     v1_label_selector_t *selector,
-    v1_pod_template_spec_t *template,
+    v1_pod_template_spec_t *_template,
     int ttl_seconds_after_finished
     ) {
     v1_job_spec_t *v1_job_spec_local_var = malloc(sizeof(v1_job_spec_t));
@@ -25,7 +25,7 @@ v1_job_spec_t *v1_job_spec_create(
     v1_job_spec_local_var->manual_selector = manual_selector;
     v1_job_spec_local_var->parallelism = parallelism;
     v1_job_spec_local_var->selector = selector;
-    v1_job_spec_local_var->template = template;
+    v1_job_spec_local_var->_template = _template;
     v1_job_spec_local_var->ttl_seconds_after_finished = ttl_seconds_after_finished;
 
     return v1_job_spec_local_var;
@@ -37,8 +37,14 @@ void v1_job_spec_free(v1_job_spec_t *v1_job_spec) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_label_selector_free(v1_job_spec->selector);
-    v1_pod_template_spec_free(v1_job_spec->template);
+    if (v1_job_spec->selector) {
+        v1_label_selector_free(v1_job_spec->selector);
+        v1_job_spec->selector = NULL;
+    }
+    if (v1_job_spec->_template) {
+        v1_pod_template_spec_free(v1_job_spec->_template);
+        v1_job_spec->_template = NULL;
+    }
     free(v1_job_spec);
 }
 
@@ -98,16 +104,16 @@ cJSON *v1_job_spec_convertToJSON(v1_job_spec_t *v1_job_spec) {
      } 
 
 
-    // v1_job_spec->template
-    if (!v1_job_spec->template) {
+    // v1_job_spec->_template
+    if (!v1_job_spec->_template) {
         goto fail;
     }
     
-    cJSON *template_local_JSON = v1_pod_template_spec_convertToJSON(v1_job_spec->template);
-    if(template_local_JSON == NULL) {
+    cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_job_spec->_template);
+    if(_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "template", template_local_JSON);
+    cJSON_AddItemToObject(item, "template", _template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -184,15 +190,15 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
-    // v1_job_spec->template
-    cJSON *template = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "template");
-    if (!template) {
+    // v1_job_spec->_template
+    cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "template");
+    if (!_template) {
         goto end;
     }
 
-    v1_pod_template_spec_t *template_local_nonprim = NULL;
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     
-    template_local_nonprim = v1_pod_template_spec_parseFromJSON(template); //nonprimitive
+    _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 
     // v1_job_spec->ttl_seconds_after_finished
     cJSON *ttl_seconds_after_finished = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "ttlSecondsAfterFinished");
@@ -211,7 +217,7 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
         manual_selector ? manual_selector->valueint : 0,
         parallelism ? parallelism->valuedouble : 0,
         selector ? selector_local_nonprim : NULL,
-        template_local_nonprim,
+        _template_local_nonprim,
         ttl_seconds_after_finished ? ttl_seconds_after_finished->valuedouble : 0
         );
 

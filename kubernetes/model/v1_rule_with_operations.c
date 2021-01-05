@@ -31,23 +31,38 @@ void v1_rule_with_operations_free(v1_rule_with_operations_t *v1_rule_with_operat
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_rule_with_operations->api_groups) {
-        free(listEntry->data);
+    if (v1_rule_with_operations->api_groups) {
+        list_ForEach(listEntry, v1_rule_with_operations->api_groups) {
+            free(listEntry->data);
+        }
+        list_free(v1_rule_with_operations->api_groups);
+        v1_rule_with_operations->api_groups = NULL;
     }
-    list_free(v1_rule_with_operations->api_groups);
-    list_ForEach(listEntry, v1_rule_with_operations->api_versions) {
-        free(listEntry->data);
+    if (v1_rule_with_operations->api_versions) {
+        list_ForEach(listEntry, v1_rule_with_operations->api_versions) {
+            free(listEntry->data);
+        }
+        list_free(v1_rule_with_operations->api_versions);
+        v1_rule_with_operations->api_versions = NULL;
     }
-    list_free(v1_rule_with_operations->api_versions);
-    list_ForEach(listEntry, v1_rule_with_operations->operations) {
-        free(listEntry->data);
+    if (v1_rule_with_operations->operations) {
+        list_ForEach(listEntry, v1_rule_with_operations->operations) {
+            free(listEntry->data);
+        }
+        list_free(v1_rule_with_operations->operations);
+        v1_rule_with_operations->operations = NULL;
     }
-    list_free(v1_rule_with_operations->operations);
-    list_ForEach(listEntry, v1_rule_with_operations->resources) {
-        free(listEntry->data);
+    if (v1_rule_with_operations->resources) {
+        list_ForEach(listEntry, v1_rule_with_operations->resources) {
+            free(listEntry->data);
+        }
+        list_free(v1_rule_with_operations->resources);
+        v1_rule_with_operations->resources = NULL;
     }
-    list_free(v1_rule_with_operations->resources);
-    free(v1_rule_with_operations->scope);
+    if (v1_rule_with_operations->scope) {
+        free(v1_rule_with_operations->scope);
+        v1_rule_with_operations->scope = NULL;
+    }
     free(v1_rule_with_operations);
 }
 

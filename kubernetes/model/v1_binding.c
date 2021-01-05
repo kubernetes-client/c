@@ -29,10 +29,22 @@ void v1_binding_free(v1_binding_t *v1_binding) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_binding->api_version);
-    free(v1_binding->kind);
-    v1_object_meta_free(v1_binding->metadata);
-    v1_object_reference_free(v1_binding->target);
+    if (v1_binding->api_version) {
+        free(v1_binding->api_version);
+        v1_binding->api_version = NULL;
+    }
+    if (v1_binding->kind) {
+        free(v1_binding->kind);
+        v1_binding->kind = NULL;
+    }
+    if (v1_binding->metadata) {
+        v1_object_meta_free(v1_binding->metadata);
+        v1_binding->metadata = NULL;
+    }
+    if (v1_binding->target) {
+        v1_object_reference_free(v1_binding->target);
+        v1_binding->target = NULL;
+    }
     free(v1_binding);
 }
 

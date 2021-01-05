@@ -27,9 +27,18 @@ void v1beta1_pod_disruption_budget_spec_free(v1beta1_pod_disruption_budget_spec_
         return ;
     }
     listEntry_t *listEntry;
-    object_free(v1beta1_pod_disruption_budget_spec->max_unavailable);
-    object_free(v1beta1_pod_disruption_budget_spec->min_available);
-    v1_label_selector_free(v1beta1_pod_disruption_budget_spec->selector);
+    if (v1beta1_pod_disruption_budget_spec->max_unavailable) {
+        object_free(v1beta1_pod_disruption_budget_spec->max_unavailable);
+        v1beta1_pod_disruption_budget_spec->max_unavailable = NULL;
+    }
+    if (v1beta1_pod_disruption_budget_spec->min_available) {
+        object_free(v1beta1_pod_disruption_budget_spec->min_available);
+        v1beta1_pod_disruption_budget_spec->min_available = NULL;
+    }
+    if (v1beta1_pod_disruption_budget_spec->selector) {
+        v1_label_selector_free(v1beta1_pod_disruption_budget_spec->selector);
+        v1beta1_pod_disruption_budget_spec->selector = NULL;
+    }
     free(v1beta1_pod_disruption_budget_spec);
 }
 

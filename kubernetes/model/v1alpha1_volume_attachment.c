@@ -31,11 +31,26 @@ void v1alpha1_volume_attachment_free(v1alpha1_volume_attachment_t *v1alpha1_volu
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_volume_attachment->api_version);
-    free(v1alpha1_volume_attachment->kind);
-    v1_object_meta_free(v1alpha1_volume_attachment->metadata);
-    v1alpha1_volume_attachment_spec_free(v1alpha1_volume_attachment->spec);
-    v1alpha1_volume_attachment_status_free(v1alpha1_volume_attachment->status);
+    if (v1alpha1_volume_attachment->api_version) {
+        free(v1alpha1_volume_attachment->api_version);
+        v1alpha1_volume_attachment->api_version = NULL;
+    }
+    if (v1alpha1_volume_attachment->kind) {
+        free(v1alpha1_volume_attachment->kind);
+        v1alpha1_volume_attachment->kind = NULL;
+    }
+    if (v1alpha1_volume_attachment->metadata) {
+        v1_object_meta_free(v1alpha1_volume_attachment->metadata);
+        v1alpha1_volume_attachment->metadata = NULL;
+    }
+    if (v1alpha1_volume_attachment->spec) {
+        v1alpha1_volume_attachment_spec_free(v1alpha1_volume_attachment->spec);
+        v1alpha1_volume_attachment->spec = NULL;
+    }
+    if (v1alpha1_volume_attachment->status) {
+        v1alpha1_volume_attachment_status_free(v1alpha1_volume_attachment->status);
+        v1alpha1_volume_attachment->status = NULL;
+    }
     free(v1alpha1_volume_attachment);
 }
 

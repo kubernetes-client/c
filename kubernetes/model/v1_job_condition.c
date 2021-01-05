@@ -33,12 +33,30 @@ void v1_job_condition_free(v1_job_condition_t *v1_job_condition) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_job_condition->last_probe_time);
-    free(v1_job_condition->last_transition_time);
-    free(v1_job_condition->message);
-    free(v1_job_condition->reason);
-    free(v1_job_condition->status);
-    free(v1_job_condition->type);
+    if (v1_job_condition->last_probe_time) {
+        free(v1_job_condition->last_probe_time);
+        v1_job_condition->last_probe_time = NULL;
+    }
+    if (v1_job_condition->last_transition_time) {
+        free(v1_job_condition->last_transition_time);
+        v1_job_condition->last_transition_time = NULL;
+    }
+    if (v1_job_condition->message) {
+        free(v1_job_condition->message);
+        v1_job_condition->message = NULL;
+    }
+    if (v1_job_condition->reason) {
+        free(v1_job_condition->reason);
+        v1_job_condition->reason = NULL;
+    }
+    if (v1_job_condition->status) {
+        free(v1_job_condition->status);
+        v1_job_condition->status = NULL;
+    }
+    if (v1_job_condition->type) {
+        free(v1_job_condition->type);
+        v1_job_condition->type = NULL;
+    }
     free(v1_job_condition);
 }
 

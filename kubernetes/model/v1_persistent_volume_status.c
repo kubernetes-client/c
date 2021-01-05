@@ -27,9 +27,18 @@ void v1_persistent_volume_status_free(v1_persistent_volume_status_t *v1_persiste
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_persistent_volume_status->message);
-    free(v1_persistent_volume_status->phase);
-    free(v1_persistent_volume_status->reason);
+    if (v1_persistent_volume_status->message) {
+        free(v1_persistent_volume_status->message);
+        v1_persistent_volume_status->message = NULL;
+    }
+    if (v1_persistent_volume_status->phase) {
+        free(v1_persistent_volume_status->phase);
+        v1_persistent_volume_status->phase = NULL;
+    }
+    if (v1_persistent_volume_status->reason) {
+        free(v1_persistent_volume_status->reason);
+        v1_persistent_volume_status->reason = NULL;
+    }
     free(v1_persistent_volume_status);
 }
 

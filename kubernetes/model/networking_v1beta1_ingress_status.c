@@ -23,7 +23,10 @@ void networking_v1beta1_ingress_status_free(networking_v1beta1_ingress_status_t 
         return ;
     }
     listEntry_t *listEntry;
-    v1_load_balancer_status_free(networking_v1beta1_ingress_status->load_balancer);
+    if (networking_v1beta1_ingress_status->load_balancer) {
+        v1_load_balancer_status_free(networking_v1beta1_ingress_status->load_balancer);
+        networking_v1beta1_ingress_status->load_balancer = NULL;
+    }
     free(networking_v1beta1_ingress_status);
 }
 

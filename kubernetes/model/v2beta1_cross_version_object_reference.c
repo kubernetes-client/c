@@ -27,9 +27,18 @@ void v2beta1_cross_version_object_reference_free(v2beta1_cross_version_object_re
         return ;
     }
     listEntry_t *listEntry;
-    free(v2beta1_cross_version_object_reference->api_version);
-    free(v2beta1_cross_version_object_reference->kind);
-    free(v2beta1_cross_version_object_reference->name);
+    if (v2beta1_cross_version_object_reference->api_version) {
+        free(v2beta1_cross_version_object_reference->api_version);
+        v2beta1_cross_version_object_reference->api_version = NULL;
+    }
+    if (v2beta1_cross_version_object_reference->kind) {
+        free(v2beta1_cross_version_object_reference->kind);
+        v2beta1_cross_version_object_reference->kind = NULL;
+    }
+    if (v2beta1_cross_version_object_reference->name) {
+        free(v2beta1_cross_version_object_reference->name);
+        v2beta1_cross_version_object_reference->name = NULL;
+    }
     free(v2beta1_cross_version_object_reference);
 }
 

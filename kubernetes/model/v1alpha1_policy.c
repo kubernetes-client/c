@@ -25,11 +25,17 @@ void v1alpha1_policy_free(v1alpha1_policy_t *v1alpha1_policy) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_policy->level);
-    list_ForEach(listEntry, v1alpha1_policy->stages) {
-        free(listEntry->data);
+    if (v1alpha1_policy->level) {
+        free(v1alpha1_policy->level);
+        v1alpha1_policy->level = NULL;
     }
-    list_free(v1alpha1_policy->stages);
+    if (v1alpha1_policy->stages) {
+        list_ForEach(listEntry, v1alpha1_policy->stages) {
+            free(listEntry->data);
+        }
+        list_free(v1alpha1_policy->stages);
+        v1alpha1_policy->stages = NULL;
+    }
     free(v1alpha1_policy);
 }
 

@@ -25,20 +25,26 @@ void v1_resource_quota_status_free(v1_resource_quota_status_t *v1_resource_quota
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_resource_quota_status->hard) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_resource_quota_status->hard) {
+        list_ForEach(listEntry, v1_resource_quota_status->hard) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_resource_quota_status->hard);
+        v1_resource_quota_status->hard = NULL;
     }
-    list_free(v1_resource_quota_status->hard);
-    list_ForEach(listEntry, v1_resource_quota_status->used) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_resource_quota_status->used) {
+        list_ForEach(listEntry, v1_resource_quota_status->used) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_resource_quota_status->used);
+        v1_resource_quota_status->used = NULL;
     }
-    list_free(v1_resource_quota_status->used);
     free(v1_resource_quota_status);
 }
 

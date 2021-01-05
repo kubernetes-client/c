@@ -15,7 +15,7 @@
 // create a LocalSubjectAccessReview
 //
 v1beta1_local_subject_access_review_t*
-AuthorizationV1beta1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClient, char * namespace , v1beta1_local_subject_access_review_t * body , char * dryRun , char * fieldManager , char * pretty );
+AuthorizationV1beta1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClient, char * _namespace , v1beta1_local_subject_access_review_t * body , char * dryRun , char * fieldManager , char * pretty );
 
 
 // create a SelfSubjectAccessReview

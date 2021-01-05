@@ -27,9 +27,18 @@ void v1_windows_security_context_options_free(v1_windows_security_context_option
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_windows_security_context_options->gmsa_credential_spec);
-    free(v1_windows_security_context_options->gmsa_credential_spec_name);
-    free(v1_windows_security_context_options->run_as_user_name);
+    if (v1_windows_security_context_options->gmsa_credential_spec) {
+        free(v1_windows_security_context_options->gmsa_credential_spec);
+        v1_windows_security_context_options->gmsa_credential_spec = NULL;
+    }
+    if (v1_windows_security_context_options->gmsa_credential_spec_name) {
+        free(v1_windows_security_context_options->gmsa_credential_spec_name);
+        v1_windows_security_context_options->gmsa_credential_spec_name = NULL;
+    }
+    if (v1_windows_security_context_options->run_as_user_name) {
+        free(v1_windows_security_context_options->run_as_user_name);
+        v1_windows_security_context_options->run_as_user_name = NULL;
+    }
     free(v1_windows_security_context_options);
 }
 

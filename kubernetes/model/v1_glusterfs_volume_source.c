@@ -27,8 +27,14 @@ void v1_glusterfs_volume_source_free(v1_glusterfs_volume_source_t *v1_glusterfs_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_glusterfs_volume_source->endpoints);
-    free(v1_glusterfs_volume_source->path);
+    if (v1_glusterfs_volume_source->endpoints) {
+        free(v1_glusterfs_volume_source->endpoints);
+        v1_glusterfs_volume_source->endpoints = NULL;
+    }
+    if (v1_glusterfs_volume_source->path) {
+        free(v1_glusterfs_volume_source->path);
+        v1_glusterfs_volume_source->path = NULL;
+    }
     free(v1_glusterfs_volume_source);
 }
 

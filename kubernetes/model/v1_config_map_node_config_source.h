@@ -21,7 +21,7 @@ typedef struct v1_config_map_node_config_source_t v1_config_map_node_config_sour
 typedef struct v1_config_map_node_config_source_t {
     char *kubelet_config_key; // string
     char *name; // string
-    char *namespace; // string
+    char *_namespace; // string
     char *resource_version; // string
     char *uid; // string
 
@@ -30,7 +30,7 @@ typedef struct v1_config_map_node_config_source_t {
 v1_config_map_node_config_source_t *v1_config_map_node_config_source_create(
     char *kubelet_config_key,
     char *name,
-    char *namespace,
+    char *_namespace,
     char *resource_version,
     char *uid
 );

@@ -25,8 +25,14 @@ void v1_host_path_volume_source_free(v1_host_path_volume_source_t *v1_host_path_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_host_path_volume_source->path);
-    free(v1_host_path_volume_source->type);
+    if (v1_host_path_volume_source->path) {
+        free(v1_host_path_volume_source->path);
+        v1_host_path_volume_source->path = NULL;
+    }
+    if (v1_host_path_volume_source->type) {
+        free(v1_host_path_volume_source->type);
+        v1_host_path_volume_source->type = NULL;
+    }
     free(v1_host_path_volume_source);
 }
 

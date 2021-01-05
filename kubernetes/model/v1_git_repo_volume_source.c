@@ -27,9 +27,18 @@ void v1_git_repo_volume_source_free(v1_git_repo_volume_source_t *v1_git_repo_vol
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_git_repo_volume_source->directory);
-    free(v1_git_repo_volume_source->repository);
-    free(v1_git_repo_volume_source->revision);
+    if (v1_git_repo_volume_source->directory) {
+        free(v1_git_repo_volume_source->directory);
+        v1_git_repo_volume_source->directory = NULL;
+    }
+    if (v1_git_repo_volume_source->repository) {
+        free(v1_git_repo_volume_source->repository);
+        v1_git_repo_volume_source->repository = NULL;
+    }
+    if (v1_git_repo_volume_source->revision) {
+        free(v1_git_repo_volume_source->revision);
+        v1_git_repo_volume_source->revision = NULL;
+    }
     free(v1_git_repo_volume_source);
 }
 

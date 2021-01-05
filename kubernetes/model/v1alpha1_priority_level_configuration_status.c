@@ -23,10 +23,13 @@ void v1alpha1_priority_level_configuration_status_free(v1alpha1_priority_level_c
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1alpha1_priority_level_configuration_status->conditions) {
-        v1alpha1_priority_level_configuration_condition_free(listEntry->data);
+    if (v1alpha1_priority_level_configuration_status->conditions) {
+        list_ForEach(listEntry, v1alpha1_priority_level_configuration_status->conditions) {
+            v1alpha1_priority_level_configuration_condition_free(listEntry->data);
+        }
+        list_free(v1alpha1_priority_level_configuration_status->conditions);
+        v1alpha1_priority_level_configuration_status->conditions = NULL;
     }
-    list_free(v1alpha1_priority_level_configuration_status->conditions);
     free(v1alpha1_priority_level_configuration_status);
 }
 

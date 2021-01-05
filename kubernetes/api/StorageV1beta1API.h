@@ -147,25 +147,25 @@ StorageV1beta1API_patchVolumeAttachment(apiClient_t *apiClient, char * name , ob
 // read the specified CSIDriver
 //
 v1beta1_csi_driver_t*
-StorageV1beta1API_readCSIDriver(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+StorageV1beta1API_readCSIDriver(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read the specified CSINode
 //
 v1beta1_csi_node_t*
-StorageV1beta1API_readCSINode(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+StorageV1beta1API_readCSINode(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read the specified StorageClass
 //
 v1beta1_storage_class_t*
-StorageV1beta1API_readStorageClass(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+StorageV1beta1API_readStorageClass(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // read the specified VolumeAttachment
 //
 v1beta1_volume_attachment_t*
-StorageV1beta1API_readVolumeAttachment(apiClient_t *apiClient, char * name , char * pretty , int exact , int export );
+StorageV1beta1API_readVolumeAttachment(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
 
 
 // replace the specified CSIDriver

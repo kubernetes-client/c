@@ -37,9 +37,18 @@ void v1_probe_free(v1_probe_t *v1_probe) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_exec_action_free(v1_probe->exec);
-    v1_http_get_action_free(v1_probe->http_get);
-    v1_tcp_socket_action_free(v1_probe->tcp_socket);
+    if (v1_probe->exec) {
+        v1_exec_action_free(v1_probe->exec);
+        v1_probe->exec = NULL;
+    }
+    if (v1_probe->http_get) {
+        v1_http_get_action_free(v1_probe->http_get);
+        v1_probe->http_get = NULL;
+    }
+    if (v1_probe->tcp_socket) {
+        v1_tcp_socket_action_free(v1_probe->tcp_socket);
+        v1_probe->tcp_socket = NULL;
+    }
     free(v1_probe);
 }
 

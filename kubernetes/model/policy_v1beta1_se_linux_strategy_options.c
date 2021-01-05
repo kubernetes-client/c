@@ -25,8 +25,14 @@ void policy_v1beta1_se_linux_strategy_options_free(policy_v1beta1_se_linux_strat
         return ;
     }
     listEntry_t *listEntry;
-    free(policy_v1beta1_se_linux_strategy_options->rule);
-    v1_se_linux_options_free(policy_v1beta1_se_linux_strategy_options->se_linux_options);
+    if (policy_v1beta1_se_linux_strategy_options->rule) {
+        free(policy_v1beta1_se_linux_strategy_options->rule);
+        policy_v1beta1_se_linux_strategy_options->rule = NULL;
+    }
+    if (policy_v1beta1_se_linux_strategy_options->se_linux_options) {
+        v1_se_linux_options_free(policy_v1beta1_se_linux_strategy_options->se_linux_options);
+        policy_v1beta1_se_linux_strategy_options->se_linux_options = NULL;
+    }
     free(policy_v1beta1_se_linux_strategy_options);
 }
 

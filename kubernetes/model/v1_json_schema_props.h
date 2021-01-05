@@ -48,7 +48,7 @@ typedef struct v1_json_schema_props_t {
     long min_properties; //numeric
     double minimum; //numeric
     double multiple_of; //numeric
-    struct v1_json_schema_props_t *not; //model
+    struct v1_json_schema_props_t *_not; //model
     int nullable; //boolean
     list_t *one_of; //nonprimitive container
     char *pattern; // string
@@ -95,7 +95,7 @@ v1_json_schema_props_t *v1_json_schema_props_create(
     long min_properties,
     double minimum,
     double multiple_of,
-    v1_json_schema_props_t *not,
+    v1_json_schema_props_t *_not,
     int nullable,
     list_t *one_of,
     char *pattern,

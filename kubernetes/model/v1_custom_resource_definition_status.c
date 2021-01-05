@@ -27,15 +27,24 @@ void v1_custom_resource_definition_status_free(v1_custom_resource_definition_sta
         return ;
     }
     listEntry_t *listEntry;
-    v1_custom_resource_definition_names_free(v1_custom_resource_definition_status->accepted_names);
-    list_ForEach(listEntry, v1_custom_resource_definition_status->conditions) {
-        v1_custom_resource_definition_condition_free(listEntry->data);
+    if (v1_custom_resource_definition_status->accepted_names) {
+        v1_custom_resource_definition_names_free(v1_custom_resource_definition_status->accepted_names);
+        v1_custom_resource_definition_status->accepted_names = NULL;
     }
-    list_free(v1_custom_resource_definition_status->conditions);
-    list_ForEach(listEntry, v1_custom_resource_definition_status->stored_versions) {
-        free(listEntry->data);
+    if (v1_custom_resource_definition_status->conditions) {
+        list_ForEach(listEntry, v1_custom_resource_definition_status->conditions) {
+            v1_custom_resource_definition_condition_free(listEntry->data);
+        }
+        list_free(v1_custom_resource_definition_status->conditions);
+        v1_custom_resource_definition_status->conditions = NULL;
     }
-    list_free(v1_custom_resource_definition_status->stored_versions);
+    if (v1_custom_resource_definition_status->stored_versions) {
+        list_ForEach(listEntry, v1_custom_resource_definition_status->stored_versions) {
+            free(listEntry->data);
+        }
+        list_free(v1_custom_resource_definition_status->stored_versions);
+        v1_custom_resource_definition_status->stored_versions = NULL;
+    }
     free(v1_custom_resource_definition_status);
 }
 

@@ -27,9 +27,18 @@ void v1alpha1_runtime_class_spec_free(v1alpha1_runtime_class_spec_t *v1alpha1_ru
         return ;
     }
     listEntry_t *listEntry;
-    v1alpha1_overhead_free(v1alpha1_runtime_class_spec->overhead);
-    free(v1alpha1_runtime_class_spec->runtime_handler);
-    v1alpha1_scheduling_free(v1alpha1_runtime_class_spec->scheduling);
+    if (v1alpha1_runtime_class_spec->overhead) {
+        v1alpha1_overhead_free(v1alpha1_runtime_class_spec->overhead);
+        v1alpha1_runtime_class_spec->overhead = NULL;
+    }
+    if (v1alpha1_runtime_class_spec->runtime_handler) {
+        free(v1alpha1_runtime_class_spec->runtime_handler);
+        v1alpha1_runtime_class_spec->runtime_handler = NULL;
+    }
+    if (v1alpha1_runtime_class_spec->scheduling) {
+        v1alpha1_scheduling_free(v1alpha1_runtime_class_spec->scheduling);
+        v1alpha1_runtime_class_spec->scheduling = NULL;
+    }
     free(v1alpha1_runtime_class_spec);
 }
 

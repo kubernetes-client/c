@@ -27,9 +27,18 @@ void v1_status_cause_free(v1_status_cause_t *v1_status_cause) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_status_cause->field);
-    free(v1_status_cause->message);
-    free(v1_status_cause->reason);
+    if (v1_status_cause->field) {
+        free(v1_status_cause->field);
+        v1_status_cause->field = NULL;
+    }
+    if (v1_status_cause->message) {
+        free(v1_status_cause->message);
+        v1_status_cause->message = NULL;
+    }
+    if (v1_status_cause->reason) {
+        free(v1_status_cause->reason);
+        v1_status_cause->reason = NULL;
+    }
     free(v1_status_cause);
 }
 

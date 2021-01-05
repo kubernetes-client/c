@@ -41,27 +41,54 @@ void v1beta1_storage_class_free(v1beta1_storage_class_t *v1beta1_storage_class) 
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1beta1_storage_class->allowed_topologies) {
-        v1_topology_selector_term_free(listEntry->data);
+    if (v1beta1_storage_class->allowed_topologies) {
+        list_ForEach(listEntry, v1beta1_storage_class->allowed_topologies) {
+            v1_topology_selector_term_free(listEntry->data);
+        }
+        list_free(v1beta1_storage_class->allowed_topologies);
+        v1beta1_storage_class->allowed_topologies = NULL;
     }
-    list_free(v1beta1_storage_class->allowed_topologies);
-    free(v1beta1_storage_class->api_version);
-    free(v1beta1_storage_class->kind);
-    v1_object_meta_free(v1beta1_storage_class->metadata);
-    list_ForEach(listEntry, v1beta1_storage_class->mount_options) {
-        free(listEntry->data);
+    if (v1beta1_storage_class->api_version) {
+        free(v1beta1_storage_class->api_version);
+        v1beta1_storage_class->api_version = NULL;
     }
-    list_free(v1beta1_storage_class->mount_options);
-    list_ForEach(listEntry, v1beta1_storage_class->parameters) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1beta1_storage_class->kind) {
+        free(v1beta1_storage_class->kind);
+        v1beta1_storage_class->kind = NULL;
     }
-    list_free(v1beta1_storage_class->parameters);
-    free(v1beta1_storage_class->provisioner);
-    free(v1beta1_storage_class->reclaim_policy);
-    free(v1beta1_storage_class->volume_binding_mode);
+    if (v1beta1_storage_class->metadata) {
+        v1_object_meta_free(v1beta1_storage_class->metadata);
+        v1beta1_storage_class->metadata = NULL;
+    }
+    if (v1beta1_storage_class->mount_options) {
+        list_ForEach(listEntry, v1beta1_storage_class->mount_options) {
+            free(listEntry->data);
+        }
+        list_free(v1beta1_storage_class->mount_options);
+        v1beta1_storage_class->mount_options = NULL;
+    }
+    if (v1beta1_storage_class->parameters) {
+        list_ForEach(listEntry, v1beta1_storage_class->parameters) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1beta1_storage_class->parameters);
+        v1beta1_storage_class->parameters = NULL;
+    }
+    if (v1beta1_storage_class->provisioner) {
+        free(v1beta1_storage_class->provisioner);
+        v1beta1_storage_class->provisioner = NULL;
+    }
+    if (v1beta1_storage_class->reclaim_policy) {
+        free(v1beta1_storage_class->reclaim_policy);
+        v1beta1_storage_class->reclaim_policy = NULL;
+    }
+    if (v1beta1_storage_class->volume_binding_mode) {
+        free(v1beta1_storage_class->volume_binding_mode);
+        v1beta1_storage_class->volume_binding_mode = NULL;
+    }
     free(v1beta1_storage_class);
 }
 

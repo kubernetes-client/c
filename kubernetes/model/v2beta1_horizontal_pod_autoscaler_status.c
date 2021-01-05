@@ -33,15 +33,24 @@ void v2beta1_horizontal_pod_autoscaler_status_free(v2beta1_horizontal_pod_autosc
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v2beta1_horizontal_pod_autoscaler_status->conditions) {
-        v2beta1_horizontal_pod_autoscaler_condition_free(listEntry->data);
+    if (v2beta1_horizontal_pod_autoscaler_status->conditions) {
+        list_ForEach(listEntry, v2beta1_horizontal_pod_autoscaler_status->conditions) {
+            v2beta1_horizontal_pod_autoscaler_condition_free(listEntry->data);
+        }
+        list_free(v2beta1_horizontal_pod_autoscaler_status->conditions);
+        v2beta1_horizontal_pod_autoscaler_status->conditions = NULL;
     }
-    list_free(v2beta1_horizontal_pod_autoscaler_status->conditions);
-    list_ForEach(listEntry, v2beta1_horizontal_pod_autoscaler_status->current_metrics) {
-        v2beta1_metric_status_free(listEntry->data);
+    if (v2beta1_horizontal_pod_autoscaler_status->current_metrics) {
+        list_ForEach(listEntry, v2beta1_horizontal_pod_autoscaler_status->current_metrics) {
+            v2beta1_metric_status_free(listEntry->data);
+        }
+        list_free(v2beta1_horizontal_pod_autoscaler_status->current_metrics);
+        v2beta1_horizontal_pod_autoscaler_status->current_metrics = NULL;
     }
-    list_free(v2beta1_horizontal_pod_autoscaler_status->current_metrics);
-    free(v2beta1_horizontal_pod_autoscaler_status->last_scale_time);
+    if (v2beta1_horizontal_pod_autoscaler_status->last_scale_time) {
+        free(v2beta1_horizontal_pod_autoscaler_status->last_scale_time);
+        v2beta1_horizontal_pod_autoscaler_status->last_scale_time = NULL;
+    }
     free(v2beta1_horizontal_pod_autoscaler_status);
 }
 

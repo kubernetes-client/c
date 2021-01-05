@@ -69,56 +69,107 @@ void extensions_v1beta1_pod_security_policy_spec_free(extensions_v1beta1_pod_sec
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_csi_drivers) {
-        extensions_v1beta1_allowed_csi_driver_free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_spec->allowed_csi_drivers) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_csi_drivers) {
+            extensions_v1beta1_allowed_csi_driver_free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_spec->allowed_csi_drivers);
+        extensions_v1beta1_pod_security_policy_spec->allowed_csi_drivers = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_spec->allowed_csi_drivers);
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_capabilities) {
-        free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_spec->allowed_capabilities) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_capabilities) {
+            free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_spec->allowed_capabilities);
+        extensions_v1beta1_pod_security_policy_spec->allowed_capabilities = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_spec->allowed_capabilities);
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_flex_volumes) {
-        extensions_v1beta1_allowed_flex_volume_free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_spec->allowed_flex_volumes) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_flex_volumes) {
+            extensions_v1beta1_allowed_flex_volume_free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_spec->allowed_flex_volumes);
+        extensions_v1beta1_pod_security_policy_spec->allowed_flex_volumes = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_spec->allowed_flex_volumes);
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_host_paths) {
-        extensions_v1beta1_allowed_host_path_free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_spec->allowed_host_paths) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_host_paths) {
+            extensions_v1beta1_allowed_host_path_free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_spec->allowed_host_paths);
+        extensions_v1beta1_pod_security_policy_spec->allowed_host_paths = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_spec->allowed_host_paths);
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_proc_mount_types) {
-        free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_spec->allowed_proc_mount_types) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_proc_mount_types) {
+            free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_spec->allowed_proc_mount_types);
+        extensions_v1beta1_pod_security_policy_spec->allowed_proc_mount_types = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_spec->allowed_proc_mount_types);
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls) {
-        free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls) {
+            free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls);
+        extensions_v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls);
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->default_add_capabilities) {
-        free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_spec->default_add_capabilities) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->default_add_capabilities) {
+            free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_spec->default_add_capabilities);
+        extensions_v1beta1_pod_security_policy_spec->default_add_capabilities = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_spec->default_add_capabilities);
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->forbidden_sysctls) {
-        free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_spec->forbidden_sysctls) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->forbidden_sysctls) {
+            free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_spec->forbidden_sysctls);
+        extensions_v1beta1_pod_security_policy_spec->forbidden_sysctls = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_spec->forbidden_sysctls);
-    extensions_v1beta1_fs_group_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->fs_group);
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->host_ports) {
-        extensions_v1beta1_host_port_range_free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_spec->fs_group) {
+        extensions_v1beta1_fs_group_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->fs_group);
+        extensions_v1beta1_pod_security_policy_spec->fs_group = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_spec->host_ports);
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->required_drop_capabilities) {
-        free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_spec->host_ports) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->host_ports) {
+            extensions_v1beta1_host_port_range_free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_spec->host_ports);
+        extensions_v1beta1_pod_security_policy_spec->host_ports = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_spec->required_drop_capabilities);
-    extensions_v1beta1_run_as_group_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->run_as_group);
-    extensions_v1beta1_run_as_user_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->run_as_user);
-    extensions_v1beta1_runtime_class_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->runtime_class);
-    extensions_v1beta1_se_linux_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->se_linux);
-    extensions_v1beta1_supplemental_groups_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->supplemental_groups);
-    list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->volumes) {
-        free(listEntry->data);
+    if (extensions_v1beta1_pod_security_policy_spec->required_drop_capabilities) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->required_drop_capabilities) {
+            free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_spec->required_drop_capabilities);
+        extensions_v1beta1_pod_security_policy_spec->required_drop_capabilities = NULL;
     }
-    list_free(extensions_v1beta1_pod_security_policy_spec->volumes);
+    if (extensions_v1beta1_pod_security_policy_spec->run_as_group) {
+        extensions_v1beta1_run_as_group_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->run_as_group);
+        extensions_v1beta1_pod_security_policy_spec->run_as_group = NULL;
+    }
+    if (extensions_v1beta1_pod_security_policy_spec->run_as_user) {
+        extensions_v1beta1_run_as_user_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->run_as_user);
+        extensions_v1beta1_pod_security_policy_spec->run_as_user = NULL;
+    }
+    if (extensions_v1beta1_pod_security_policy_spec->runtime_class) {
+        extensions_v1beta1_runtime_class_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->runtime_class);
+        extensions_v1beta1_pod_security_policy_spec->runtime_class = NULL;
+    }
+    if (extensions_v1beta1_pod_security_policy_spec->se_linux) {
+        extensions_v1beta1_se_linux_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->se_linux);
+        extensions_v1beta1_pod_security_policy_spec->se_linux = NULL;
+    }
+    if (extensions_v1beta1_pod_security_policy_spec->supplemental_groups) {
+        extensions_v1beta1_supplemental_groups_strategy_options_free(extensions_v1beta1_pod_security_policy_spec->supplemental_groups);
+        extensions_v1beta1_pod_security_policy_spec->supplemental_groups = NULL;
+    }
+    if (extensions_v1beta1_pod_security_policy_spec->volumes) {
+        list_ForEach(listEntry, extensions_v1beta1_pod_security_policy_spec->volumes) {
+            free(listEntry->data);
+        }
+        list_free(extensions_v1beta1_pod_security_policy_spec->volumes);
+        extensions_v1beta1_pod_security_policy_spec->volumes = NULL;
+    }
     free(extensions_v1beta1_pod_security_policy_spec);
 }
 

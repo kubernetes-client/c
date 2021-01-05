@@ -25,8 +25,14 @@ void extensions_v1beta1_http_ingress_path_free(extensions_v1beta1_http_ingress_p
         return ;
     }
     listEntry_t *listEntry;
-    extensions_v1beta1_ingress_backend_free(extensions_v1beta1_http_ingress_path->backend);
-    free(extensions_v1beta1_http_ingress_path->path);
+    if (extensions_v1beta1_http_ingress_path->backend) {
+        extensions_v1beta1_ingress_backend_free(extensions_v1beta1_http_ingress_path->backend);
+        extensions_v1beta1_http_ingress_path->backend = NULL;
+    }
+    if (extensions_v1beta1_http_ingress_path->path) {
+        free(extensions_v1beta1_http_ingress_path->path);
+        extensions_v1beta1_http_ingress_path->path = NULL;
+    }
     free(extensions_v1beta1_http_ingress_path);
 }
 

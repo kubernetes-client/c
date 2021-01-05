@@ -25,8 +25,14 @@ void v1_sysctl_free(v1_sysctl_t *v1_sysctl) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_sysctl->name);
-    free(v1_sysctl->value);
+    if (v1_sysctl->name) {
+        free(v1_sysctl->name);
+        v1_sysctl->name = NULL;
+    }
+    if (v1_sysctl->value) {
+        free(v1_sysctl->value);
+        v1_sysctl->value = NULL;
+    }
     free(v1_sysctl);
 }
 

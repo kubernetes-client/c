@@ -31,9 +31,18 @@ void v1_container_port_free(v1_container_port_t *v1_container_port) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_container_port->host_ip);
-    free(v1_container_port->name);
-    free(v1_container_port->protocol);
+    if (v1_container_port->host_ip) {
+        free(v1_container_port->host_ip);
+        v1_container_port->host_ip = NULL;
+    }
+    if (v1_container_port->name) {
+        free(v1_container_port->name);
+        v1_container_port->name = NULL;
+    }
+    if (v1_container_port->protocol) {
+        free(v1_container_port->protocol);
+        v1_container_port->protocol = NULL;
+    }
     free(v1_container_port);
 }
 

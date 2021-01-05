@@ -31,11 +31,26 @@ void v1_persistent_volume_claim_free(v1_persistent_volume_claim_t *v1_persistent
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_persistent_volume_claim->api_version);
-    free(v1_persistent_volume_claim->kind);
-    v1_object_meta_free(v1_persistent_volume_claim->metadata);
-    v1_persistent_volume_claim_spec_free(v1_persistent_volume_claim->spec);
-    v1_persistent_volume_claim_status_free(v1_persistent_volume_claim->status);
+    if (v1_persistent_volume_claim->api_version) {
+        free(v1_persistent_volume_claim->api_version);
+        v1_persistent_volume_claim->api_version = NULL;
+    }
+    if (v1_persistent_volume_claim->kind) {
+        free(v1_persistent_volume_claim->kind);
+        v1_persistent_volume_claim->kind = NULL;
+    }
+    if (v1_persistent_volume_claim->metadata) {
+        v1_object_meta_free(v1_persistent_volume_claim->metadata);
+        v1_persistent_volume_claim->metadata = NULL;
+    }
+    if (v1_persistent_volume_claim->spec) {
+        v1_persistent_volume_claim_spec_free(v1_persistent_volume_claim->spec);
+        v1_persistent_volume_claim->spec = NULL;
+    }
+    if (v1_persistent_volume_claim->status) {
+        v1_persistent_volume_claim_status_free(v1_persistent_volume_claim->status);
+        v1_persistent_volume_claim->status = NULL;
+    }
     free(v1_persistent_volume_claim);
 }
 

@@ -27,8 +27,14 @@ void v1_azure_file_volume_source_free(v1_azure_file_volume_source_t *v1_azure_fi
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_azure_file_volume_source->secret_name);
-    free(v1_azure_file_volume_source->share_name);
+    if (v1_azure_file_volume_source->secret_name) {
+        free(v1_azure_file_volume_source->secret_name);
+        v1_azure_file_volume_source->secret_name = NULL;
+    }
+    if (v1_azure_file_volume_source->share_name) {
+        free(v1_azure_file_volume_source->share_name);
+        v1_azure_file_volume_source->share_name = NULL;
+    }
     free(v1_azure_file_volume_source);
 }
 

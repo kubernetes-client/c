@@ -31,11 +31,26 @@ void v2beta1_metric_status_free(v2beta1_metric_status_t *v2beta1_metric_status) 
         return ;
     }
     listEntry_t *listEntry;
-    v2beta1_external_metric_status_free(v2beta1_metric_status->external);
-    v2beta1_object_metric_status_free(v2beta1_metric_status->object);
-    v2beta1_pods_metric_status_free(v2beta1_metric_status->pods);
-    v2beta1_resource_metric_status_free(v2beta1_metric_status->resource);
-    free(v2beta1_metric_status->type);
+    if (v2beta1_metric_status->external) {
+        v2beta1_external_metric_status_free(v2beta1_metric_status->external);
+        v2beta1_metric_status->external = NULL;
+    }
+    if (v2beta1_metric_status->object) {
+        v2beta1_object_metric_status_free(v2beta1_metric_status->object);
+        v2beta1_metric_status->object = NULL;
+    }
+    if (v2beta1_metric_status->pods) {
+        v2beta1_pods_metric_status_free(v2beta1_metric_status->pods);
+        v2beta1_metric_status->pods = NULL;
+    }
+    if (v2beta1_metric_status->resource) {
+        v2beta1_resource_metric_status_free(v2beta1_metric_status->resource);
+        v2beta1_metric_status->resource = NULL;
+    }
+    if (v2beta1_metric_status->type) {
+        free(v2beta1_metric_status->type);
+        v2beta1_metric_status->type = NULL;
+    }
     free(v2beta1_metric_status);
 }
 

@@ -31,7 +31,7 @@ typedef struct extensions_v1beta1_deployment_spec_t {
     struct extensions_v1beta1_rollback_config_t *rollback_to; //model
     struct v1_label_selector_t *selector; //model
     struct extensions_v1beta1_deployment_strategy_t *strategy; //model
-    struct v1_pod_template_spec_t *template; //model
+    struct v1_pod_template_spec_t *_template; //model
 
 } extensions_v1beta1_deployment_spec_t;
 
@@ -44,7 +44,7 @@ extensions_v1beta1_deployment_spec_t *extensions_v1beta1_deployment_spec_create(
     extensions_v1beta1_rollback_config_t *rollback_to,
     v1_label_selector_t *selector,
     extensions_v1beta1_deployment_strategy_t *strategy,
-    v1_pod_template_spec_t *template
+    v1_pod_template_spec_t *_template
 );
 
 void extensions_v1beta1_deployment_spec_free(extensions_v1beta1_deployment_spec_t *extensions_v1beta1_deployment_spec);

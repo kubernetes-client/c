@@ -25,8 +25,14 @@ void v1alpha1_priority_level_configuration_spec_free(v1alpha1_priority_level_con
         return ;
     }
     listEntry_t *listEntry;
-    v1alpha1_limited_priority_level_configuration_free(v1alpha1_priority_level_configuration_spec->limited);
-    free(v1alpha1_priority_level_configuration_spec->type);
+    if (v1alpha1_priority_level_configuration_spec->limited) {
+        v1alpha1_limited_priority_level_configuration_free(v1alpha1_priority_level_configuration_spec->limited);
+        v1alpha1_priority_level_configuration_spec->limited = NULL;
+    }
+    if (v1alpha1_priority_level_configuration_spec->type) {
+        free(v1alpha1_priority_level_configuration_spec->type);
+        v1alpha1_priority_level_configuration_spec->type = NULL;
+    }
     free(v1alpha1_priority_level_configuration_spec);
 }
 

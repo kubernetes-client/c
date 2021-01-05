@@ -20,14 +20,14 @@ typedef struct apiregistration_v1_service_reference_t apiregistration_v1_service
 
 typedef struct apiregistration_v1_service_reference_t {
     char *name; // string
-    char *namespace; // string
+    char *_namespace; // string
     int port; //numeric
 
 } apiregistration_v1_service_reference_t;
 
 apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_create(
     char *name,
-    char *namespace,
+    char *_namespace,
     int port
 );
 

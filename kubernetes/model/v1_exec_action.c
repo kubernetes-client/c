@@ -23,10 +23,13 @@ void v1_exec_action_free(v1_exec_action_t *v1_exec_action) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_exec_action->command) {
-        free(listEntry->data);
+    if (v1_exec_action->command) {
+        list_ForEach(listEntry, v1_exec_action->command) {
+            free(listEntry->data);
+        }
+        list_free(v1_exec_action->command);
+        v1_exec_action->command = NULL;
     }
-    list_free(v1_exec_action->command);
     free(v1_exec_action);
 }
 

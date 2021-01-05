@@ -27,18 +27,27 @@ void v1_endpoint_subset_free(v1_endpoint_subset_t *v1_endpoint_subset) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_endpoint_subset->addresses) {
-        v1_endpoint_address_free(listEntry->data);
+    if (v1_endpoint_subset->addresses) {
+        list_ForEach(listEntry, v1_endpoint_subset->addresses) {
+            v1_endpoint_address_free(listEntry->data);
+        }
+        list_free(v1_endpoint_subset->addresses);
+        v1_endpoint_subset->addresses = NULL;
     }
-    list_free(v1_endpoint_subset->addresses);
-    list_ForEach(listEntry, v1_endpoint_subset->not_ready_addresses) {
-        v1_endpoint_address_free(listEntry->data);
+    if (v1_endpoint_subset->not_ready_addresses) {
+        list_ForEach(listEntry, v1_endpoint_subset->not_ready_addresses) {
+            v1_endpoint_address_free(listEntry->data);
+        }
+        list_free(v1_endpoint_subset->not_ready_addresses);
+        v1_endpoint_subset->not_ready_addresses = NULL;
     }
-    list_free(v1_endpoint_subset->not_ready_addresses);
-    list_ForEach(listEntry, v1_endpoint_subset->ports) {
-        v1_endpoint_port_free(listEntry->data);
+    if (v1_endpoint_subset->ports) {
+        list_ForEach(listEntry, v1_endpoint_subset->ports) {
+            v1_endpoint_port_free(listEntry->data);
+        }
+        list_free(v1_endpoint_subset->ports);
+        v1_endpoint_subset->ports = NULL;
     }
-    list_free(v1_endpoint_subset->ports);
     free(v1_endpoint_subset);
 }
 

@@ -31,11 +31,26 @@ void v1alpha1_priority_level_configuration_free(v1alpha1_priority_level_configur
         return ;
     }
     listEntry_t *listEntry;
-    free(v1alpha1_priority_level_configuration->api_version);
-    free(v1alpha1_priority_level_configuration->kind);
-    v1_object_meta_free(v1alpha1_priority_level_configuration->metadata);
-    v1alpha1_priority_level_configuration_spec_free(v1alpha1_priority_level_configuration->spec);
-    v1alpha1_priority_level_configuration_status_free(v1alpha1_priority_level_configuration->status);
+    if (v1alpha1_priority_level_configuration->api_version) {
+        free(v1alpha1_priority_level_configuration->api_version);
+        v1alpha1_priority_level_configuration->api_version = NULL;
+    }
+    if (v1alpha1_priority_level_configuration->kind) {
+        free(v1alpha1_priority_level_configuration->kind);
+        v1alpha1_priority_level_configuration->kind = NULL;
+    }
+    if (v1alpha1_priority_level_configuration->metadata) {
+        v1_object_meta_free(v1alpha1_priority_level_configuration->metadata);
+        v1alpha1_priority_level_configuration->metadata = NULL;
+    }
+    if (v1alpha1_priority_level_configuration->spec) {
+        v1alpha1_priority_level_configuration_spec_free(v1alpha1_priority_level_configuration->spec);
+        v1alpha1_priority_level_configuration->spec = NULL;
+    }
+    if (v1alpha1_priority_level_configuration->status) {
+        v1alpha1_priority_level_configuration_status_free(v1alpha1_priority_level_configuration->status);
+        v1alpha1_priority_level_configuration->status = NULL;
+    }
     free(v1alpha1_priority_level_configuration);
 }
 

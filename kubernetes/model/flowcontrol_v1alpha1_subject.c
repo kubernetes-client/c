@@ -29,10 +29,22 @@ void flowcontrol_v1alpha1_subject_free(flowcontrol_v1alpha1_subject_t *flowcontr
         return ;
     }
     listEntry_t *listEntry;
-    v1alpha1_group_subject_free(flowcontrol_v1alpha1_subject->group);
-    free(flowcontrol_v1alpha1_subject->kind);
-    v1alpha1_service_account_subject_free(flowcontrol_v1alpha1_subject->service_account);
-    v1alpha1_user_subject_free(flowcontrol_v1alpha1_subject->user);
+    if (flowcontrol_v1alpha1_subject->group) {
+        v1alpha1_group_subject_free(flowcontrol_v1alpha1_subject->group);
+        flowcontrol_v1alpha1_subject->group = NULL;
+    }
+    if (flowcontrol_v1alpha1_subject->kind) {
+        free(flowcontrol_v1alpha1_subject->kind);
+        flowcontrol_v1alpha1_subject->kind = NULL;
+    }
+    if (flowcontrol_v1alpha1_subject->service_account) {
+        v1alpha1_service_account_subject_free(flowcontrol_v1alpha1_subject->service_account);
+        flowcontrol_v1alpha1_subject->service_account = NULL;
+    }
+    if (flowcontrol_v1alpha1_subject->user) {
+        v1alpha1_user_subject_free(flowcontrol_v1alpha1_subject->user);
+        flowcontrol_v1alpha1_subject->user = NULL;
+    }
     free(flowcontrol_v1alpha1_subject);
 }
 

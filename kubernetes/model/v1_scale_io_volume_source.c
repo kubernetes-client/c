@@ -41,14 +41,38 @@ void v1_scale_io_volume_source_free(v1_scale_io_volume_source_t *v1_scale_io_vol
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_scale_io_volume_source->fs_type);
-    free(v1_scale_io_volume_source->gateway);
-    free(v1_scale_io_volume_source->protection_domain);
-    v1_local_object_reference_free(v1_scale_io_volume_source->secret_ref);
-    free(v1_scale_io_volume_source->storage_mode);
-    free(v1_scale_io_volume_source->storage_pool);
-    free(v1_scale_io_volume_source->system);
-    free(v1_scale_io_volume_source->volume_name);
+    if (v1_scale_io_volume_source->fs_type) {
+        free(v1_scale_io_volume_source->fs_type);
+        v1_scale_io_volume_source->fs_type = NULL;
+    }
+    if (v1_scale_io_volume_source->gateway) {
+        free(v1_scale_io_volume_source->gateway);
+        v1_scale_io_volume_source->gateway = NULL;
+    }
+    if (v1_scale_io_volume_source->protection_domain) {
+        free(v1_scale_io_volume_source->protection_domain);
+        v1_scale_io_volume_source->protection_domain = NULL;
+    }
+    if (v1_scale_io_volume_source->secret_ref) {
+        v1_local_object_reference_free(v1_scale_io_volume_source->secret_ref);
+        v1_scale_io_volume_source->secret_ref = NULL;
+    }
+    if (v1_scale_io_volume_source->storage_mode) {
+        free(v1_scale_io_volume_source->storage_mode);
+        v1_scale_io_volume_source->storage_mode = NULL;
+    }
+    if (v1_scale_io_volume_source->storage_pool) {
+        free(v1_scale_io_volume_source->storage_pool);
+        v1_scale_io_volume_source->storage_pool = NULL;
+    }
+    if (v1_scale_io_volume_source->system) {
+        free(v1_scale_io_volume_source->system);
+        v1_scale_io_volume_source->system = NULL;
+    }
+    if (v1_scale_io_volume_source->volume_name) {
+        free(v1_scale_io_volume_source->volume_name);
+        v1_scale_io_volume_source->volume_name = NULL;
+    }
     free(v1_scale_io_volume_source);
 }
 

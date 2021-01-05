@@ -23,7 +23,10 @@ void v1_custom_resource_validation_free(v1_custom_resource_validation_t *v1_cust
         return ;
     }
     listEntry_t *listEntry;
-    v1_json_schema_props_free(v1_custom_resource_validation->open_apiv3_schema);
+    if (v1_custom_resource_validation->open_apiv3_schema) {
+        v1_json_schema_props_free(v1_custom_resource_validation->open_apiv3_schema);
+        v1_custom_resource_validation->open_apiv3_schema = NULL;
+    }
     free(v1_custom_resource_validation);
 }
 

@@ -27,8 +27,14 @@ void v2beta1_resource_metric_source_free(v2beta1_resource_metric_source_t *v2bet
         return ;
     }
     listEntry_t *listEntry;
-    free(v2beta1_resource_metric_source->name);
-    free(v2beta1_resource_metric_source->target_average_value);
+    if (v2beta1_resource_metric_source->name) {
+        free(v2beta1_resource_metric_source->name);
+        v2beta1_resource_metric_source->name = NULL;
+    }
+    if (v2beta1_resource_metric_source->target_average_value) {
+        free(v2beta1_resource_metric_source->target_average_value);
+        v2beta1_resource_metric_source->target_average_value = NULL;
+    }
     free(v2beta1_resource_metric_source);
 }
 

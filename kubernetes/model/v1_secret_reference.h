@@ -20,13 +20,13 @@ typedef struct v1_secret_reference_t v1_secret_reference_t;
 
 typedef struct v1_secret_reference_t {
     char *name; // string
-    char *namespace; // string
+    char *_namespace; // string
 
 } v1_secret_reference_t;
 
 v1_secret_reference_t *v1_secret_reference_create(
     char *name,
-    char *namespace
+    char *_namespace
 );
 
 void v1_secret_reference_free(v1_secret_reference_t *v1_secret_reference);

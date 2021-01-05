@@ -27,12 +27,21 @@ void v1_api_group_list_free(v1_api_group_list_t *v1_api_group_list) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_api_group_list->api_version);
-    list_ForEach(listEntry, v1_api_group_list->groups) {
-        v1_api_group_free(listEntry->data);
+    if (v1_api_group_list->api_version) {
+        free(v1_api_group_list->api_version);
+        v1_api_group_list->api_version = NULL;
     }
-    list_free(v1_api_group_list->groups);
-    free(v1_api_group_list->kind);
+    if (v1_api_group_list->groups) {
+        list_ForEach(listEntry, v1_api_group_list->groups) {
+            v1_api_group_free(listEntry->data);
+        }
+        list_free(v1_api_group_list->groups);
+        v1_api_group_list->groups = NULL;
+    }
+    if (v1_api_group_list->kind) {
+        free(v1_api_group_list->kind);
+        v1_api_group_list->kind = NULL;
+    }
     free(v1_api_group_list);
 }
 

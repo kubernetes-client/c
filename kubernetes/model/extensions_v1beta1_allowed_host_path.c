@@ -25,7 +25,10 @@ void extensions_v1beta1_allowed_host_path_free(extensions_v1beta1_allowed_host_p
         return ;
     }
     listEntry_t *listEntry;
-    free(extensions_v1beta1_allowed_host_path->path_prefix);
+    if (extensions_v1beta1_allowed_host_path->path_prefix) {
+        free(extensions_v1beta1_allowed_host_path->path_prefix);
+        extensions_v1beta1_allowed_host_path->path_prefix = NULL;
+    }
     free(extensions_v1beta1_allowed_host_path);
 }
 

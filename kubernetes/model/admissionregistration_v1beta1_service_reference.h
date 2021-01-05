@@ -20,7 +20,7 @@ typedef struct admissionregistration_v1beta1_service_reference_t admissionregist
 
 typedef struct admissionregistration_v1beta1_service_reference_t {
     char *name; // string
-    char *namespace; // string
+    char *_namespace; // string
     char *path; // string
     int port; //numeric
 
@@ -28,7 +28,7 @@ typedef struct admissionregistration_v1beta1_service_reference_t {
 
 admissionregistration_v1beta1_service_reference_t *admissionregistration_v1beta1_service_reference_create(
     char *name,
-    char *namespace,
+    char *_namespace,
     char *path,
     int port
 );

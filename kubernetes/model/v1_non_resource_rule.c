@@ -25,14 +25,20 @@ void v1_non_resource_rule_free(v1_non_resource_rule_t *v1_non_resource_rule) {
         return ;
     }
     listEntry_t *listEntry;
-    list_ForEach(listEntry, v1_non_resource_rule->non_resource_ur_ls) {
-        free(listEntry->data);
+    if (v1_non_resource_rule->non_resource_ur_ls) {
+        list_ForEach(listEntry, v1_non_resource_rule->non_resource_ur_ls) {
+            free(listEntry->data);
+        }
+        list_free(v1_non_resource_rule->non_resource_ur_ls);
+        v1_non_resource_rule->non_resource_ur_ls = NULL;
     }
-    list_free(v1_non_resource_rule->non_resource_ur_ls);
-    list_ForEach(listEntry, v1_non_resource_rule->verbs) {
-        free(listEntry->data);
+    if (v1_non_resource_rule->verbs) {
+        list_ForEach(listEntry, v1_non_resource_rule->verbs) {
+            free(listEntry->data);
+        }
+        list_free(v1_non_resource_rule->verbs);
+        v1_non_resource_rule->verbs = NULL;
     }
-    list_free(v1_non_resource_rule->verbs);
     free(v1_non_resource_rule);
 }
 

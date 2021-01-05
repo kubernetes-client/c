@@ -39,20 +39,44 @@ void v1_csi_persistent_volume_source_free(v1_csi_persistent_volume_source_t *v1_
         return ;
     }
     listEntry_t *listEntry;
-    v1_secret_reference_free(v1_csi_persistent_volume_source->controller_expand_secret_ref);
-    v1_secret_reference_free(v1_csi_persistent_volume_source->controller_publish_secret_ref);
-    free(v1_csi_persistent_volume_source->driver);
-    free(v1_csi_persistent_volume_source->fs_type);
-    v1_secret_reference_free(v1_csi_persistent_volume_source->node_publish_secret_ref);
-    v1_secret_reference_free(v1_csi_persistent_volume_source->node_stage_secret_ref);
-    list_ForEach(listEntry, v1_csi_persistent_volume_source->volume_attributes) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
-        free (localKeyValue->key);
-        free (localKeyValue->value);
-        keyValuePair_free(localKeyValue);
+    if (v1_csi_persistent_volume_source->controller_expand_secret_ref) {
+        v1_secret_reference_free(v1_csi_persistent_volume_source->controller_expand_secret_ref);
+        v1_csi_persistent_volume_source->controller_expand_secret_ref = NULL;
     }
-    list_free(v1_csi_persistent_volume_source->volume_attributes);
-    free(v1_csi_persistent_volume_source->volume_handle);
+    if (v1_csi_persistent_volume_source->controller_publish_secret_ref) {
+        v1_secret_reference_free(v1_csi_persistent_volume_source->controller_publish_secret_ref);
+        v1_csi_persistent_volume_source->controller_publish_secret_ref = NULL;
+    }
+    if (v1_csi_persistent_volume_source->driver) {
+        free(v1_csi_persistent_volume_source->driver);
+        v1_csi_persistent_volume_source->driver = NULL;
+    }
+    if (v1_csi_persistent_volume_source->fs_type) {
+        free(v1_csi_persistent_volume_source->fs_type);
+        v1_csi_persistent_volume_source->fs_type = NULL;
+    }
+    if (v1_csi_persistent_volume_source->node_publish_secret_ref) {
+        v1_secret_reference_free(v1_csi_persistent_volume_source->node_publish_secret_ref);
+        v1_csi_persistent_volume_source->node_publish_secret_ref = NULL;
+    }
+    if (v1_csi_persistent_volume_source->node_stage_secret_ref) {
+        v1_secret_reference_free(v1_csi_persistent_volume_source->node_stage_secret_ref);
+        v1_csi_persistent_volume_source->node_stage_secret_ref = NULL;
+    }
+    if (v1_csi_persistent_volume_source->volume_attributes) {
+        list_ForEach(listEntry, v1_csi_persistent_volume_source->volume_attributes) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_free(v1_csi_persistent_volume_source->volume_attributes);
+        v1_csi_persistent_volume_source->volume_attributes = NULL;
+    }
+    if (v1_csi_persistent_volume_source->volume_handle) {
+        free(v1_csi_persistent_volume_source->volume_handle);
+        v1_csi_persistent_volume_source->volume_handle = NULL;
+    }
     free(v1_csi_persistent_volume_source);
 }
 

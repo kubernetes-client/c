@@ -27,9 +27,18 @@ void v1_handler_free(v1_handler_t *v1_handler) {
         return ;
     }
     listEntry_t *listEntry;
-    v1_exec_action_free(v1_handler->exec);
-    v1_http_get_action_free(v1_handler->http_get);
-    v1_tcp_socket_action_free(v1_handler->tcp_socket);
+    if (v1_handler->exec) {
+        v1_exec_action_free(v1_handler->exec);
+        v1_handler->exec = NULL;
+    }
+    if (v1_handler->http_get) {
+        v1_http_get_action_free(v1_handler->http_get);
+        v1_handler->http_get = NULL;
+    }
+    if (v1_handler->tcp_socket) {
+        v1_tcp_socket_action_free(v1_handler->tcp_socket);
+        v1_handler->tcp_socket = NULL;
+    }
     free(v1_handler);
 }
 

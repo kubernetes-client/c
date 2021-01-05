@@ -29,10 +29,22 @@ void v1_endpoint_address_free(v1_endpoint_address_t *v1_endpoint_address) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_endpoint_address->hostname);
-    free(v1_endpoint_address->ip);
-    free(v1_endpoint_address->node_name);
-    v1_object_reference_free(v1_endpoint_address->target_ref);
+    if (v1_endpoint_address->hostname) {
+        free(v1_endpoint_address->hostname);
+        v1_endpoint_address->hostname = NULL;
+    }
+    if (v1_endpoint_address->ip) {
+        free(v1_endpoint_address->ip);
+        v1_endpoint_address->ip = NULL;
+    }
+    if (v1_endpoint_address->node_name) {
+        free(v1_endpoint_address->node_name);
+        v1_endpoint_address->node_name = NULL;
+    }
+    if (v1_endpoint_address->target_ref) {
+        v1_object_reference_free(v1_endpoint_address->target_ref);
+        v1_endpoint_address->target_ref = NULL;
+    }
     free(v1_endpoint_address);
 }
 

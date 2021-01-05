@@ -29,13 +29,25 @@ void v2alpha1_cron_job_list_free(v2alpha1_cron_job_list_t *v2alpha1_cron_job_lis
         return ;
     }
     listEntry_t *listEntry;
-    free(v2alpha1_cron_job_list->api_version);
-    list_ForEach(listEntry, v2alpha1_cron_job_list->items) {
-        v2alpha1_cron_job_free(listEntry->data);
+    if (v2alpha1_cron_job_list->api_version) {
+        free(v2alpha1_cron_job_list->api_version);
+        v2alpha1_cron_job_list->api_version = NULL;
     }
-    list_free(v2alpha1_cron_job_list->items);
-    free(v2alpha1_cron_job_list->kind);
-    v1_list_meta_free(v2alpha1_cron_job_list->metadata);
+    if (v2alpha1_cron_job_list->items) {
+        list_ForEach(listEntry, v2alpha1_cron_job_list->items) {
+            v2alpha1_cron_job_free(listEntry->data);
+        }
+        list_free(v2alpha1_cron_job_list->items);
+        v2alpha1_cron_job_list->items = NULL;
+    }
+    if (v2alpha1_cron_job_list->kind) {
+        free(v2alpha1_cron_job_list->kind);
+        v2alpha1_cron_job_list->kind = NULL;
+    }
+    if (v2alpha1_cron_job_list->metadata) {
+        v1_list_meta_free(v2alpha1_cron_job_list->metadata);
+        v2alpha1_cron_job_list->metadata = NULL;
+    }
     free(v2alpha1_cron_job_list);
 }
 

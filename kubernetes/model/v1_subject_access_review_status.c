@@ -29,8 +29,14 @@ void v1_subject_access_review_status_free(v1_subject_access_review_status_t *v1_
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_subject_access_review_status->evaluation_error);
-    free(v1_subject_access_review_status->reason);
+    if (v1_subject_access_review_status->evaluation_error) {
+        free(v1_subject_access_review_status->evaluation_error);
+        v1_subject_access_review_status->evaluation_error = NULL;
+    }
+    if (v1_subject_access_review_status->reason) {
+        free(v1_subject_access_review_status->reason);
+        v1_subject_access_review_status->reason = NULL;
+    }
     free(v1_subject_access_review_status);
 }
 

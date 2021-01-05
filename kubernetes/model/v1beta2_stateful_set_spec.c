@@ -11,7 +11,7 @@ v1beta2_stateful_set_spec_t *v1beta2_stateful_set_spec_create(
     int revision_history_limit,
     v1_label_selector_t *selector,
     char *service_name,
-    v1_pod_template_spec_t *template,
+    v1_pod_template_spec_t *_template,
     v1beta2_stateful_set_update_strategy_t *update_strategy,
     list_t *volume_claim_templates
     ) {
@@ -24,7 +24,7 @@ v1beta2_stateful_set_spec_t *v1beta2_stateful_set_spec_create(
     v1beta2_stateful_set_spec_local_var->revision_history_limit = revision_history_limit;
     v1beta2_stateful_set_spec_local_var->selector = selector;
     v1beta2_stateful_set_spec_local_var->service_name = service_name;
-    v1beta2_stateful_set_spec_local_var->template = template;
+    v1beta2_stateful_set_spec_local_var->_template = _template;
     v1beta2_stateful_set_spec_local_var->update_strategy = update_strategy;
     v1beta2_stateful_set_spec_local_var->volume_claim_templates = volume_claim_templates;
 
@@ -37,15 +37,33 @@ void v1beta2_stateful_set_spec_free(v1beta2_stateful_set_spec_t *v1beta2_statefu
         return ;
     }
     listEntry_t *listEntry;
-    free(v1beta2_stateful_set_spec->pod_management_policy);
-    v1_label_selector_free(v1beta2_stateful_set_spec->selector);
-    free(v1beta2_stateful_set_spec->service_name);
-    v1_pod_template_spec_free(v1beta2_stateful_set_spec->template);
-    v1beta2_stateful_set_update_strategy_free(v1beta2_stateful_set_spec->update_strategy);
-    list_ForEach(listEntry, v1beta2_stateful_set_spec->volume_claim_templates) {
-        v1_persistent_volume_claim_free(listEntry->data);
+    if (v1beta2_stateful_set_spec->pod_management_policy) {
+        free(v1beta2_stateful_set_spec->pod_management_policy);
+        v1beta2_stateful_set_spec->pod_management_policy = NULL;
     }
-    list_free(v1beta2_stateful_set_spec->volume_claim_templates);
+    if (v1beta2_stateful_set_spec->selector) {
+        v1_label_selector_free(v1beta2_stateful_set_spec->selector);
+        v1beta2_stateful_set_spec->selector = NULL;
+    }
+    if (v1beta2_stateful_set_spec->service_name) {
+        free(v1beta2_stateful_set_spec->service_name);
+        v1beta2_stateful_set_spec->service_name = NULL;
+    }
+    if (v1beta2_stateful_set_spec->_template) {
+        v1_pod_template_spec_free(v1beta2_stateful_set_spec->_template);
+        v1beta2_stateful_set_spec->_template = NULL;
+    }
+    if (v1beta2_stateful_set_spec->update_strategy) {
+        v1beta2_stateful_set_update_strategy_free(v1beta2_stateful_set_spec->update_strategy);
+        v1beta2_stateful_set_spec->update_strategy = NULL;
+    }
+    if (v1beta2_stateful_set_spec->volume_claim_templates) {
+        list_ForEach(listEntry, v1beta2_stateful_set_spec->volume_claim_templates) {
+            v1_persistent_volume_claim_free(listEntry->data);
+        }
+        list_free(v1beta2_stateful_set_spec->volume_claim_templates);
+        v1beta2_stateful_set_spec->volume_claim_templates = NULL;
+    }
     free(v1beta2_stateful_set_spec);
 }
 
@@ -101,16 +119,16 @@ cJSON *v1beta2_stateful_set_spec_convertToJSON(v1beta2_stateful_set_spec_t *v1be
     }
 
 
-    // v1beta2_stateful_set_spec->template
-    if (!v1beta2_stateful_set_spec->template) {
+    // v1beta2_stateful_set_spec->_template
+    if (!v1beta2_stateful_set_spec->_template) {
         goto fail;
     }
     
-    cJSON *template_local_JSON = v1_pod_template_spec_convertToJSON(v1beta2_stateful_set_spec->template);
-    if(template_local_JSON == NULL) {
+    cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1beta2_stateful_set_spec->_template);
+    if(_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "template", template_local_JSON);
+    cJSON_AddItemToObject(item, "template", _template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -209,15 +227,15 @@ v1beta2_stateful_set_spec_t *v1beta2_stateful_set_spec_parseFromJSON(cJSON *v1be
     goto end; //String
     }
 
-    // v1beta2_stateful_set_spec->template
-    cJSON *template = cJSON_GetObjectItemCaseSensitive(v1beta2_stateful_set_specJSON, "template");
-    if (!template) {
+    // v1beta2_stateful_set_spec->_template
+    cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1beta2_stateful_set_specJSON, "template");
+    if (!_template) {
         goto end;
     }
 
-    v1_pod_template_spec_t *template_local_nonprim = NULL;
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     
-    template_local_nonprim = v1_pod_template_spec_parseFromJSON(template); //nonprimitive
+    _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 
     // v1beta2_stateful_set_spec->update_strategy
     cJSON *update_strategy = cJSON_GetObjectItemCaseSensitive(v1beta2_stateful_set_specJSON, "updateStrategy");
@@ -255,7 +273,7 @@ v1beta2_stateful_set_spec_t *v1beta2_stateful_set_spec_parseFromJSON(cJSON *v1be
         revision_history_limit ? revision_history_limit->valuedouble : 0,
         selector_local_nonprim,
         strdup(service_name->valuestring),
-        template_local_nonprim,
+        _template_local_nonprim,
         update_strategy ? update_strategy_local_nonprim : NULL,
         volume_claim_templates ? volume_claim_templatesList : NULL
         );

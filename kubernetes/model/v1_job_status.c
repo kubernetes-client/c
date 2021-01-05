@@ -33,12 +33,21 @@ void v1_job_status_free(v1_job_status_t *v1_job_status) {
         return ;
     }
     listEntry_t *listEntry;
-    free(v1_job_status->completion_time);
-    list_ForEach(listEntry, v1_job_status->conditions) {
-        v1_job_condition_free(listEntry->data);
+    if (v1_job_status->completion_time) {
+        free(v1_job_status->completion_time);
+        v1_job_status->completion_time = NULL;
     }
-    list_free(v1_job_status->conditions);
-    free(v1_job_status->start_time);
+    if (v1_job_status->conditions) {
+        list_ForEach(listEntry, v1_job_status->conditions) {
+            v1_job_condition_free(listEntry->data);
+        }
+        list_free(v1_job_status->conditions);
+        v1_job_status->conditions = NULL;
+    }
+    if (v1_job_status->start_time) {
+        free(v1_job_status->start_time);
+        v1_job_status->start_time = NULL;
+    }
     free(v1_job_status);
 }
 

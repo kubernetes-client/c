@@ -25,8 +25,14 @@ void extensions_v1beta1_se_linux_strategy_options_free(extensions_v1beta1_se_lin
         return ;
     }
     listEntry_t *listEntry;
-    free(extensions_v1beta1_se_linux_strategy_options->rule);
-    v1_se_linux_options_free(extensions_v1beta1_se_linux_strategy_options->se_linux_options);
+    if (extensions_v1beta1_se_linux_strategy_options->rule) {
+        free(extensions_v1beta1_se_linux_strategy_options->rule);
+        extensions_v1beta1_se_linux_strategy_options->rule = NULL;
+    }
+    if (extensions_v1beta1_se_linux_strategy_options->se_linux_options) {
+        v1_se_linux_options_free(extensions_v1beta1_se_linux_strategy_options->se_linux_options);
+        extensions_v1beta1_se_linux_strategy_options->se_linux_options = NULL;
+    }
     free(extensions_v1beta1_se_linux_strategy_options);
 }
 
