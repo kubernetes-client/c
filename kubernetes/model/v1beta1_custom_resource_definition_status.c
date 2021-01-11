@@ -180,6 +180,10 @@ v1beta1_custom_resource_definition_status_t *v1beta1_custom_resource_definition_
 
     return v1beta1_custom_resource_definition_status_local_var;
 end:
+    if (accepted_names_local_nonprim) {
+        v1beta1_custom_resource_definition_names_free(accepted_names_local_nonprim);
+        accepted_names_local_nonprim = NULL;
+    }
     return NULL;
 
 }

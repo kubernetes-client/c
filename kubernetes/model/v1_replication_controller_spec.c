@@ -166,6 +166,10 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
 
     return v1_replication_controller_spec_local_var;
 end:
+    if (_template_local_nonprim) {
+        v1_pod_template_spec_free(_template_local_nonprim);
+        _template_local_nonprim = NULL;
+    }
     return NULL;
 
 }

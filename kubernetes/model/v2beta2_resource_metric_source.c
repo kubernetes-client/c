@@ -105,6 +105,10 @@ v2beta2_resource_metric_source_t *v2beta2_resource_metric_source_parseFromJSON(c
 
     return v2beta2_resource_metric_source_local_var;
 end:
+    if (target_local_nonprim) {
+        v2beta2_metric_target_free(target_local_nonprim);
+        target_local_nonprim = NULL;
+    }
     return NULL;
 
 }

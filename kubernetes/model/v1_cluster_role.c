@@ -198,6 +198,14 @@ v1_cluster_role_t *v1_cluster_role_parseFromJSON(cJSON *v1_cluster_roleJSON){
 
     return v1_cluster_role_local_var;
 end:
+    if (aggregation_rule_local_nonprim) {
+        v1_aggregation_rule_free(aggregation_rule_local_nonprim);
+        aggregation_rule_local_nonprim = NULL;
+    }
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

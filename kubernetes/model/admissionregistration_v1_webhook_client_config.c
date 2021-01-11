@@ -115,6 +115,10 @@ admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webho
 
     return admissionregistration_v1_webhook_client_config_local_var;
 end:
+    if (service_local_nonprim) {
+        admissionregistration_v1_service_reference_free(service_local_nonprim);
+        service_local_nonprim = NULL;
+    }
     return NULL;
 
 }

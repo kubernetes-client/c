@@ -913,6 +913,102 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     return v1_persistent_volume_spec_local_var;
 end:
+    if (aws_elastic_block_store_local_nonprim) {
+        v1_aws_elastic_block_store_volume_source_free(aws_elastic_block_store_local_nonprim);
+        aws_elastic_block_store_local_nonprim = NULL;
+    }
+    if (azure_disk_local_nonprim) {
+        v1_azure_disk_volume_source_free(azure_disk_local_nonprim);
+        azure_disk_local_nonprim = NULL;
+    }
+    if (azure_file_local_nonprim) {
+        v1_azure_file_persistent_volume_source_free(azure_file_local_nonprim);
+        azure_file_local_nonprim = NULL;
+    }
+    if (cephfs_local_nonprim) {
+        v1_ceph_fs_persistent_volume_source_free(cephfs_local_nonprim);
+        cephfs_local_nonprim = NULL;
+    }
+    if (cinder_local_nonprim) {
+        v1_cinder_persistent_volume_source_free(cinder_local_nonprim);
+        cinder_local_nonprim = NULL;
+    }
+    if (claim_ref_local_nonprim) {
+        v1_object_reference_free(claim_ref_local_nonprim);
+        claim_ref_local_nonprim = NULL;
+    }
+    if (csi_local_nonprim) {
+        v1_csi_persistent_volume_source_free(csi_local_nonprim);
+        csi_local_nonprim = NULL;
+    }
+    if (fc_local_nonprim) {
+        v1_fc_volume_source_free(fc_local_nonprim);
+        fc_local_nonprim = NULL;
+    }
+    if (flex_volume_local_nonprim) {
+        v1_flex_persistent_volume_source_free(flex_volume_local_nonprim);
+        flex_volume_local_nonprim = NULL;
+    }
+    if (flocker_local_nonprim) {
+        v1_flocker_volume_source_free(flocker_local_nonprim);
+        flocker_local_nonprim = NULL;
+    }
+    if (gce_persistent_disk_local_nonprim) {
+        v1_gce_persistent_disk_volume_source_free(gce_persistent_disk_local_nonprim);
+        gce_persistent_disk_local_nonprim = NULL;
+    }
+    if (glusterfs_local_nonprim) {
+        v1_glusterfs_persistent_volume_source_free(glusterfs_local_nonprim);
+        glusterfs_local_nonprim = NULL;
+    }
+    if (host_path_local_nonprim) {
+        v1_host_path_volume_source_free(host_path_local_nonprim);
+        host_path_local_nonprim = NULL;
+    }
+    if (iscsi_local_nonprim) {
+        v1_iscsi_persistent_volume_source_free(iscsi_local_nonprim);
+        iscsi_local_nonprim = NULL;
+    }
+    if (local_local_nonprim) {
+        v1_local_volume_source_free(local_local_nonprim);
+        local_local_nonprim = NULL;
+    }
+    if (nfs_local_nonprim) {
+        v1_nfs_volume_source_free(nfs_local_nonprim);
+        nfs_local_nonprim = NULL;
+    }
+    if (node_affinity_local_nonprim) {
+        v1_volume_node_affinity_free(node_affinity_local_nonprim);
+        node_affinity_local_nonprim = NULL;
+    }
+    if (photon_persistent_disk_local_nonprim) {
+        v1_photon_persistent_disk_volume_source_free(photon_persistent_disk_local_nonprim);
+        photon_persistent_disk_local_nonprim = NULL;
+    }
+    if (portworx_volume_local_nonprim) {
+        v1_portworx_volume_source_free(portworx_volume_local_nonprim);
+        portworx_volume_local_nonprim = NULL;
+    }
+    if (quobyte_local_nonprim) {
+        v1_quobyte_volume_source_free(quobyte_local_nonprim);
+        quobyte_local_nonprim = NULL;
+    }
+    if (rbd_local_nonprim) {
+        v1_rbd_persistent_volume_source_free(rbd_local_nonprim);
+        rbd_local_nonprim = NULL;
+    }
+    if (scale_io_local_nonprim) {
+        v1_scale_io_persistent_volume_source_free(scale_io_local_nonprim);
+        scale_io_local_nonprim = NULL;
+    }
+    if (storageos_local_nonprim) {
+        v1_storage_os_persistent_volume_source_free(storageos_local_nonprim);
+        storageos_local_nonprim = NULL;
+    }
+    if (vsphere_volume_local_nonprim) {
+        v1_vsphere_virtual_disk_volume_source_free(vsphere_volume_local_nonprim);
+        vsphere_volume_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -25,7 +25,7 @@ typedef struct v1_api_group_t {
     char *kind; // string
     char *name; // string
     struct v1_group_version_for_discovery_t *preferred_version; //model
-    list_t *server_address_by_client_cid_rs; //nonprimitive container
+    list_t *server_address_by_client_cidrs; //nonprimitive container
     list_t *versions; //nonprimitive container
 
 } v1_api_group_t;
@@ -35,7 +35,7 @@ v1_api_group_t *v1_api_group_create(
     char *kind,
     char *name,
     v1_group_version_for_discovery_t *preferred_version,
-    list_t *server_address_by_client_cid_rs,
+    list_t *server_address_by_client_cidrs,
     list_t *versions
 );
 

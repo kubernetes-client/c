@@ -163,6 +163,10 @@ v1_storage_os_volume_source_t *v1_storage_os_volume_source_parseFromJSON(cJSON *
 
     return v1_storage_os_volume_source_local_var;
 end:
+    if (secret_ref_local_nonprim) {
+        v1_local_object_reference_free(secret_ref_local_nonprim);
+        secret_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

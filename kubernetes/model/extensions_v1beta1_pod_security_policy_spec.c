@@ -903,6 +903,30 @@ extensions_v1beta1_pod_security_policy_spec_t *extensions_v1beta1_pod_security_p
 
     return extensions_v1beta1_pod_security_policy_spec_local_var;
 end:
+    if (fs_group_local_nonprim) {
+        extensions_v1beta1_fs_group_strategy_options_free(fs_group_local_nonprim);
+        fs_group_local_nonprim = NULL;
+    }
+    if (run_as_group_local_nonprim) {
+        extensions_v1beta1_run_as_group_strategy_options_free(run_as_group_local_nonprim);
+        run_as_group_local_nonprim = NULL;
+    }
+    if (run_as_user_local_nonprim) {
+        extensions_v1beta1_run_as_user_strategy_options_free(run_as_user_local_nonprim);
+        run_as_user_local_nonprim = NULL;
+    }
+    if (runtime_class_local_nonprim) {
+        extensions_v1beta1_runtime_class_strategy_options_free(runtime_class_local_nonprim);
+        runtime_class_local_nonprim = NULL;
+    }
+    if (se_linux_local_nonprim) {
+        extensions_v1beta1_se_linux_strategy_options_free(se_linux_local_nonprim);
+        se_linux_local_nonprim = NULL;
+    }
+    if (supplemental_groups_local_nonprim) {
+        extensions_v1beta1_supplemental_groups_strategy_options_free(supplemental_groups_local_nonprim);
+        supplemental_groups_local_nonprim = NULL;
+    }
     return NULL;
 
 }

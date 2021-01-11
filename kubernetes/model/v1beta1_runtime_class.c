@@ -202,6 +202,18 @@ v1beta1_runtime_class_t *v1beta1_runtime_class_parseFromJSON(cJSON *v1beta1_runt
 
     return v1beta1_runtime_class_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (overhead_local_nonprim) {
+        v1beta1_overhead_free(overhead_local_nonprim);
+        overhead_local_nonprim = NULL;
+    }
+    if (scheduling_local_nonprim) {
+        v1beta1_scheduling_free(scheduling_local_nonprim);
+        scheduling_local_nonprim = NULL;
+    }
     return NULL;
 
 }

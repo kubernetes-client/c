@@ -227,6 +227,10 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
 
     return v1_network_policy_spec_local_var;
 end:
+    if (pod_selector_local_nonprim) {
+        v1_label_selector_free(pod_selector_local_nonprim);
+        pod_selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -95,6 +95,10 @@ v1beta2_deployment_strategy_t *v1beta2_deployment_strategy_parseFromJSON(cJSON *
 
     return v1beta2_deployment_strategy_local_var;
 end:
+    if (rolling_update_local_nonprim) {
+        v1beta2_rolling_update_deployment_free(rolling_update_local_nonprim);
+        rolling_update_local_nonprim = NULL;
+    }
     return NULL;
 
 }

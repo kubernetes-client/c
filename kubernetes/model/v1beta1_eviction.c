@@ -146,6 +146,14 @@ v1beta1_eviction_t *v1beta1_eviction_parseFromJSON(cJSON *v1beta1_evictionJSON){
 
     return v1beta1_eviction_local_var;
 end:
+    if (delete_options_local_nonprim) {
+        v1_delete_options_free(delete_options_local_nonprim);
+        delete_options_local_nonprim = NULL;
+    }
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

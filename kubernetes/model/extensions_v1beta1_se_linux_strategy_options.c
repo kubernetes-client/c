@@ -100,6 +100,10 @@ extensions_v1beta1_se_linux_strategy_options_t *extensions_v1beta1_se_linux_stra
 
     return extensions_v1beta1_se_linux_strategy_options_local_var;
 end:
+    if (se_linux_options_local_nonprim) {
+        v1_se_linux_options_free(se_linux_options_local_nonprim);
+        se_linux_options_local_nonprim = NULL;
+    }
     return NULL;
 
 }

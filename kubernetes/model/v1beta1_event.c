@@ -468,6 +468,26 @@ v1beta1_event_t *v1beta1_event_parseFromJSON(cJSON *v1beta1_eventJSON){
 
     return v1beta1_event_local_var;
 end:
+    if (deprecated_source_local_nonprim) {
+        v1_event_source_free(deprecated_source_local_nonprim);
+        deprecated_source_local_nonprim = NULL;
+    }
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (regarding_local_nonprim) {
+        v1_object_reference_free(regarding_local_nonprim);
+        regarding_local_nonprim = NULL;
+    }
+    if (related_local_nonprim) {
+        v1_object_reference_free(related_local_nonprim);
+        related_local_nonprim = NULL;
+    }
+    if (series_local_nonprim) {
+        v1beta1_event_series_free(series_local_nonprim);
+        series_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -214,6 +214,10 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     return v1_api_service_spec_local_var;
 end:
+    if (service_local_nonprim) {
+        apiregistration_v1_service_reference_free(service_local_nonprim);
+        service_local_nonprim = NULL;
+    }
     return NULL;
 
 }

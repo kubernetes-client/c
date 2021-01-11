@@ -146,6 +146,14 @@ v1alpha1_pod_preset_t *v1alpha1_pod_preset_parseFromJSON(cJSON *v1alpha1_pod_pre
 
     return v1alpha1_pod_preset_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        v1alpha1_pod_preset_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
     return NULL;
 
 }

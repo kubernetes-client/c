@@ -141,6 +141,10 @@ v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_parseFrom
 
     return v1_horizontal_pod_autoscaler_spec_local_var;
 end:
+    if (scale_target_ref_local_nonprim) {
+        v1_cross_version_object_reference_free(scale_target_ref_local_nonprim);
+        scale_target_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

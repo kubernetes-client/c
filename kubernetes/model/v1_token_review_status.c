@@ -162,6 +162,10 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
 
     return v1_token_review_status_local_var;
 end:
+    if (user_local_nonprim) {
+        v1_user_info_free(user_local_nonprim);
+        user_local_nonprim = NULL;
+    }
     return NULL;
 
 }

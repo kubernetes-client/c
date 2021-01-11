@@ -125,6 +125,18 @@ v1beta1_network_policy_peer_t *v1beta1_network_policy_peer_parseFromJSON(cJSON *
 
     return v1beta1_network_policy_peer_local_var;
 end:
+    if (ip_block_local_nonprim) {
+        v1beta1_ip_block_free(ip_block_local_nonprim);
+        ip_block_local_nonprim = NULL;
+    }
+    if (namespace_selector_local_nonprim) {
+        v1_label_selector_free(namespace_selector_local_nonprim);
+        namespace_selector_local_nonprim = NULL;
+    }
+    if (pod_selector_local_nonprim) {
+        v1_label_selector_free(pod_selector_local_nonprim);
+        pod_selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -98,6 +98,10 @@ v1beta1_custom_resource_subresources_t *v1beta1_custom_resource_subresources_par
 
     return v1beta1_custom_resource_subresources_local_var;
 end:
+    if (scale_local_nonprim) {
+        v1beta1_custom_resource_subresource_scale_free(scale_local_nonprim);
+        scale_local_nonprim = NULL;
+    }
     return NULL;
 
 }

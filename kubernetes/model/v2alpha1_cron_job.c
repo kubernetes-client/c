@@ -173,6 +173,18 @@ v2alpha1_cron_job_t *v2alpha1_cron_job_parseFromJSON(cJSON *v2alpha1_cron_jobJSO
 
     return v2alpha1_cron_job_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        v2alpha1_cron_job_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
+    if (status_local_nonprim) {
+        v2alpha1_cron_job_status_free(status_local_nonprim);
+        status_local_nonprim = NULL;
+    }
     return NULL;
 
 }

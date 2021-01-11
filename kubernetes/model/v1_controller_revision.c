@@ -171,6 +171,10 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
 
     return v1_controller_revision_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

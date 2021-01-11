@@ -143,6 +143,10 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
 
     return v1_token_request_spec_local_var;
 end:
+    if (bound_object_ref_local_nonprim) {
+        v1_bound_object_reference_free(bound_object_ref_local_nonprim);
+        bound_object_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

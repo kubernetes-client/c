@@ -151,6 +151,14 @@ v1_csi_node_t *v1_csi_node_parseFromJSON(cJSON *v1_csi_nodeJSON){
 
     return v1_csi_node_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        v1_csi_node_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
     return NULL;
 
 }

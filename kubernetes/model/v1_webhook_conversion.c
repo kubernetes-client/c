@@ -123,6 +123,10 @@ v1_webhook_conversion_t *v1_webhook_conversion_parseFromJSON(cJSON *v1_webhook_c
 
     return v1_webhook_conversion_local_var;
 end:
+    if (client_config_local_nonprim) {
+        apiextensions_v1_webhook_client_config_free(client_config_local_nonprim);
+        client_config_local_nonprim = NULL;
+    }
     return NULL;
 
 }

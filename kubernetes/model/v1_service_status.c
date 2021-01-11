@@ -71,6 +71,10 @@ v1_service_status_t *v1_service_status_parseFromJSON(cJSON *v1_service_statusJSO
 
     return v1_service_status_local_var;
 end:
+    if (load_balancer_local_nonprim) {
+        v1_load_balancer_status_free(load_balancer_local_nonprim);
+        load_balancer_local_nonprim = NULL;
+    }
     return NULL;
 
 }

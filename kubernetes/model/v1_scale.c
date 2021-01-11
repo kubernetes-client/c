@@ -173,6 +173,18 @@ v1_scale_t *v1_scale_parseFromJSON(cJSON *v1_scaleJSON){
 
     return v1_scale_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        v1_scale_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
+    if (status_local_nonprim) {
+        v1_scale_status_free(status_local_nonprim);
+        status_local_nonprim = NULL;
+    }
     return NULL;
 
 }

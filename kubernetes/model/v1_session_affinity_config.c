@@ -71,6 +71,10 @@ v1_session_affinity_config_t *v1_session_affinity_config_parseFromJSON(cJSON *v1
 
     return v1_session_affinity_config_local_var;
 end:
+    if (client_ip_local_nonprim) {
+        v1_client_ip_config_free(client_ip_local_nonprim);
+        client_ip_local_nonprim = NULL;
+    }
     return NULL;
 
 }

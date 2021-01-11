@@ -22,7 +22,7 @@ typedef struct v1_api_versions_t v1_api_versions_t;
 typedef struct v1_api_versions_t {
     char *api_version; // string
     char *kind; // string
-    list_t *server_address_by_client_cid_rs; //nonprimitive container
+    list_t *server_address_by_client_cidrs; //nonprimitive container
     list_t *versions; //primitive container
 
 } v1_api_versions_t;
@@ -30,7 +30,7 @@ typedef struct v1_api_versions_t {
 v1_api_versions_t *v1_api_versions_create(
     char *api_version,
     char *kind,
-    list_t *server_address_by_client_cid_rs,
+    list_t *server_address_by_client_cidrs,
     list_t *versions
 );
 

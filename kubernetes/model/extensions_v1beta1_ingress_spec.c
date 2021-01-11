@@ -175,6 +175,10 @@ extensions_v1beta1_ingress_spec_t *extensions_v1beta1_ingress_spec_parseFromJSON
 
     return extensions_v1beta1_ingress_spec_local_var;
 end:
+    if (backend_local_nonprim) {
+        extensions_v1beta1_ingress_backend_free(backend_local_nonprim);
+        backend_local_nonprim = NULL;
+    }
     return NULL;
 
 }

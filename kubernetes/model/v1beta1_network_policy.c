@@ -146,6 +146,14 @@ v1beta1_network_policy_t *v1beta1_network_policy_parseFromJSON(cJSON *v1beta1_ne
 
     return v1beta1_network_policy_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        v1beta1_network_policy_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
     return NULL;
 
 }

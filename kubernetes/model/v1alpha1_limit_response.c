@@ -100,6 +100,10 @@ v1alpha1_limit_response_t *v1alpha1_limit_response_parseFromJSON(cJSON *v1alpha1
 
     return v1alpha1_limit_response_local_var;
 end:
+    if (queuing_local_nonprim) {
+        v1alpha1_queuing_configuration_free(queuing_local_nonprim);
+        queuing_local_nonprim = NULL;
+    }
     return NULL;
 
 }

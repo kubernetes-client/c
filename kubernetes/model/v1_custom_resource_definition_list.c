@@ -176,6 +176,10 @@ v1_custom_resource_definition_list_t *v1_custom_resource_definition_list_parseFr
 
     return v1_custom_resource_definition_list_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_list_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

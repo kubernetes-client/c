@@ -171,6 +171,10 @@ v1_endpoints_t *v1_endpoints_parseFromJSON(cJSON *v1_endpointsJSON){
 
     return v1_endpoints_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

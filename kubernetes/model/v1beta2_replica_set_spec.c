@@ -143,6 +143,14 @@ v1beta2_replica_set_spec_t *v1beta2_replica_set_spec_parseFromJSON(cJSON *v1beta
 
     return v1beta2_replica_set_spec_local_var;
 end:
+    if (selector_local_nonprim) {
+        v1_label_selector_free(selector_local_nonprim);
+        selector_local_nonprim = NULL;
+    }
+    if (_template_local_nonprim) {
+        v1_pod_template_spec_free(_template_local_nonprim);
+        _template_local_nonprim = NULL;
+    }
     return NULL;
 
 }

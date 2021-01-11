@@ -140,6 +140,18 @@ v2beta2_object_metric_status_t *v2beta2_object_metric_status_parseFromJSON(cJSON
 
     return v2beta2_object_metric_status_local_var;
 end:
+    if (current_local_nonprim) {
+        v2beta2_metric_value_status_free(current_local_nonprim);
+        current_local_nonprim = NULL;
+    }
+    if (described_object_local_nonprim) {
+        v2beta2_cross_version_object_reference_free(described_object_local_nonprim);
+        described_object_local_nonprim = NULL;
+    }
+    if (metric_local_nonprim) {
+        v2beta2_metric_identifier_free(metric_local_nonprim);
+        metric_local_nonprim = NULL;
+    }
     return NULL;
 
 }

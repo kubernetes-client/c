@@ -95,6 +95,10 @@ apps_v1beta1_deployment_strategy_t *apps_v1beta1_deployment_strategy_parseFromJS
 
     return apps_v1beta1_deployment_strategy_local_var;
 end:
+    if (rolling_update_local_nonprim) {
+        apps_v1beta1_rolling_update_deployment_free(rolling_update_local_nonprim);
+        rolling_update_local_nonprim = NULL;
+    }
     return NULL;
 
 }

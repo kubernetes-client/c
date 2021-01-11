@@ -129,6 +129,10 @@ v2beta1_pods_metric_source_t *v2beta1_pods_metric_source_parseFromJSON(cJSON *v2
 
     return v2beta1_pods_metric_source_local_var;
 end:
+    if (selector_local_nonprim) {
+        v1_label_selector_free(selector_local_nonprim);
+        selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

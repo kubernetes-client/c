@@ -238,6 +238,14 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
 
     return v1_custom_resource_definition_spec_local_var;
 end:
+    if (conversion_local_nonprim) {
+        v1_custom_resource_conversion_free(conversion_local_nonprim);
+        conversion_local_nonprim = NULL;
+    }
+    if (names_local_nonprim) {
+        v1_custom_resource_definition_names_free(names_local_nonprim);
+        names_local_nonprim = NULL;
+    }
     return NULL;
 
 }

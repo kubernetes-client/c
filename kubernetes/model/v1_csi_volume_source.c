@@ -199,6 +199,10 @@ v1_csi_volume_source_t *v1_csi_volume_source_parseFromJSON(cJSON *v1_csi_volume_
 
     return v1_csi_volume_source_local_var;
 end:
+    if (node_publish_secret_ref_local_nonprim) {
+        v1_local_object_reference_free(node_publish_secret_ref_local_nonprim);
+        node_publish_secret_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

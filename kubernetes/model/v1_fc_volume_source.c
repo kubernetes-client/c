@@ -9,7 +9,7 @@ v1_fc_volume_source_t *v1_fc_volume_source_create(
     char *fs_type,
     int lun,
     int read_only,
-    list_t *target_ww_ns,
+    list_t *target_wwns,
     list_t *wwids
     ) {
     v1_fc_volume_source_t *v1_fc_volume_source_local_var = malloc(sizeof(v1_fc_volume_source_t));
@@ -19,7 +19,7 @@ v1_fc_volume_source_t *v1_fc_volume_source_create(
     v1_fc_volume_source_local_var->fs_type = fs_type;
     v1_fc_volume_source_local_var->lun = lun;
     v1_fc_volume_source_local_var->read_only = read_only;
-    v1_fc_volume_source_local_var->target_ww_ns = target_ww_ns;
+    v1_fc_volume_source_local_var->target_wwns = target_wwns;
     v1_fc_volume_source_local_var->wwids = wwids;
 
     return v1_fc_volume_source_local_var;
@@ -35,12 +35,12 @@ void v1_fc_volume_source_free(v1_fc_volume_source_t *v1_fc_volume_source) {
         free(v1_fc_volume_source->fs_type);
         v1_fc_volume_source->fs_type = NULL;
     }
-    if (v1_fc_volume_source->target_ww_ns) {
-        list_ForEach(listEntry, v1_fc_volume_source->target_ww_ns) {
+    if (v1_fc_volume_source->target_wwns) {
+        list_ForEach(listEntry, v1_fc_volume_source->target_wwns) {
             free(listEntry->data);
         }
-        list_free(v1_fc_volume_source->target_ww_ns);
-        v1_fc_volume_source->target_ww_ns = NULL;
+        list_free(v1_fc_volume_source->target_wwns);
+        v1_fc_volume_source->target_wwns = NULL;
     }
     if (v1_fc_volume_source->wwids) {
         list_ForEach(listEntry, v1_fc_volume_source->wwids) {
@@ -79,16 +79,16 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
      } 
 
 
-    // v1_fc_volume_source->target_ww_ns
-    if(v1_fc_volume_source->target_ww_ns) { 
-    cJSON *target_ww_ns = cJSON_AddArrayToObject(item, "targetWWNs");
-    if(target_ww_ns == NULL) {
+    // v1_fc_volume_source->target_wwns
+    if(v1_fc_volume_source->target_wwns) { 
+    cJSON *target_wwns = cJSON_AddArrayToObject(item, "targetWWNs");
+    if(target_wwns == NULL) {
         goto fail; //primitive container
     }
 
-    listEntry_t *target_ww_nsListEntry;
-    list_ForEach(target_ww_nsListEntry, v1_fc_volume_source->target_ww_ns) {
-    if(cJSON_AddStringToObject(target_ww_ns, "", (char*)target_ww_nsListEntry->data) == NULL)
+    listEntry_t *target_wwnsListEntry;
+    list_ForEach(target_wwnsListEntry, v1_fc_volume_source->target_wwns) {
+    if(cJSON_AddStringToObject(target_wwns, "", (char*)target_wwnsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -151,23 +151,23 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
     }
     }
 
-    // v1_fc_volume_source->target_ww_ns
-    cJSON *target_ww_ns = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "targetWWNs");
-    list_t *target_ww_nsList;
-    if (target_ww_ns) { 
-    cJSON *target_ww_ns_local;
-    if(!cJSON_IsArray(target_ww_ns)) {
+    // v1_fc_volume_source->target_wwns
+    cJSON *target_wwns = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "targetWWNs");
+    list_t *target_wwnsList;
+    if (target_wwns) { 
+    cJSON *target_wwns_local;
+    if(!cJSON_IsArray(target_wwns)) {
         goto end;//primitive container
     }
-    target_ww_nsList = list_create();
+    target_wwnsList = list_create();
 
-    cJSON_ArrayForEach(target_ww_ns_local, target_ww_ns)
+    cJSON_ArrayForEach(target_wwns_local, target_wwns)
     {
-        if(!cJSON_IsString(target_ww_ns_local))
+        if(!cJSON_IsString(target_wwns_local))
         {
             goto end;
         }
-        list_addElement(target_ww_nsList , strdup(target_ww_ns_local->valuestring));
+        list_addElement(target_wwnsList , strdup(target_wwns_local->valuestring));
     }
     }
 
@@ -196,7 +196,7 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
         fs_type ? strdup(fs_type->valuestring) : NULL,
         lun ? lun->valuedouble : 0,
         read_only ? read_only->valueint : 0,
-        target_ww_ns ? target_ww_nsList : NULL,
+        target_wwns ? target_wwnsList : NULL,
         wwids ? wwidsList : NULL
         );
 

@@ -127,6 +127,14 @@ v1alpha1_runtime_class_spec_t *v1alpha1_runtime_class_spec_parseFromJSON(cJSON *
 
     return v1alpha1_runtime_class_spec_local_var;
 end:
+    if (overhead_local_nonprim) {
+        v1alpha1_overhead_free(overhead_local_nonprim);
+        overhead_local_nonprim = NULL;
+    }
+    if (scheduling_local_nonprim) {
+        v1alpha1_scheduling_free(scheduling_local_nonprim);
+        scheduling_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -152,6 +152,22 @@ v1_volume_projection_t *v1_volume_projection_parseFromJSON(cJSON *v1_volume_proj
 
     return v1_volume_projection_local_var;
 end:
+    if (config_map_local_nonprim) {
+        v1_config_map_projection_free(config_map_local_nonprim);
+        config_map_local_nonprim = NULL;
+    }
+    if (downward_api_local_nonprim) {
+        v1_downward_api_projection_free(downward_api_local_nonprim);
+        downward_api_local_nonprim = NULL;
+    }
+    if (secret_local_nonprim) {
+        v1_secret_projection_free(secret_local_nonprim);
+        secret_local_nonprim = NULL;
+    }
+    if (service_account_token_local_nonprim) {
+        v1_service_account_token_projection_free(service_account_token_local_nonprim);
+        service_account_token_local_nonprim = NULL;
+    }
     return NULL;
 
 }

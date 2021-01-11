@@ -147,6 +147,14 @@ v1_downward_api_volume_file_t *v1_downward_api_volume_file_parseFromJSON(cJSON *
 
     return v1_downward_api_volume_file_local_var;
 end:
+    if (field_ref_local_nonprim) {
+        v1_object_field_selector_free(field_ref_local_nonprim);
+        field_ref_local_nonprim = NULL;
+    }
+    if (resource_field_ref_local_nonprim) {
+        v1_resource_field_selector_free(resource_field_ref_local_nonprim);
+        resource_field_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

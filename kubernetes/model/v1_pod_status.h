@@ -31,7 +31,7 @@ typedef struct v1_pod_status_t {
     char *nominated_node_name; // string
     char *phase; // string
     char *pod_ip; // string
-    list_t *pod_i_ps; //nonprimitive container
+    list_t *pod_ips; //nonprimitive container
     char *qos_class; // string
     char *reason; // string
     char *start_time; //date time
@@ -48,7 +48,7 @@ v1_pod_status_t *v1_pod_status_create(
     char *nominated_node_name,
     char *phase,
     char *pod_ip,
-    list_t *pod_i_ps,
+    list_t *pod_ips,
     char *qos_class,
     char *reason,
     char *start_time

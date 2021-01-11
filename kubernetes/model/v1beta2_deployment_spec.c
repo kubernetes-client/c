@@ -235,6 +235,18 @@ v1beta2_deployment_spec_t *v1beta2_deployment_spec_parseFromJSON(cJSON *v1beta2_
 
     return v1beta2_deployment_spec_local_var;
 end:
+    if (selector_local_nonprim) {
+        v1_label_selector_free(selector_local_nonprim);
+        selector_local_nonprim = NULL;
+    }
+    if (strategy_local_nonprim) {
+        v1beta2_deployment_strategy_free(strategy_local_nonprim);
+        strategy_local_nonprim = NULL;
+    }
+    if (_template_local_nonprim) {
+        v1_pod_template_spec_free(_template_local_nonprim);
+        _template_local_nonprim = NULL;
+    }
     return NULL;
 
 }

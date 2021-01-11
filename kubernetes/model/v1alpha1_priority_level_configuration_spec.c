@@ -100,6 +100,10 @@ v1alpha1_priority_level_configuration_spec_t *v1alpha1_priority_level_configurat
 
     return v1alpha1_priority_level_configuration_spec_local_var;
 end:
+    if (limited_local_nonprim) {
+        v1alpha1_limited_priority_level_configuration_free(limited_local_nonprim);
+        limited_local_nonprim = NULL;
+    }
     return NULL;
 
 }

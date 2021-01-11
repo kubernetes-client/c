@@ -71,6 +71,10 @@ v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_parseFromJSON(cJSON *v1_nod
 
     return v1_node_daemon_endpoints_local_var;
 end:
+    if (kubelet_endpoint_local_nonprim) {
+        v1_daemon_endpoint_free(kubelet_endpoint_local_nonprim);
+        kubelet_endpoint_local_nonprim = NULL;
+    }
     return NULL;
 
 }

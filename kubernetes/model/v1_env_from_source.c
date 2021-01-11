@@ -122,6 +122,14 @@ v1_env_from_source_t *v1_env_from_source_parseFromJSON(cJSON *v1_env_from_source
 
     return v1_env_from_source_local_var;
 end:
+    if (config_map_ref_local_nonprim) {
+        v1_config_map_env_source_free(config_map_ref_local_nonprim);
+        config_map_ref_local_nonprim = NULL;
+    }
+    if (secret_ref_local_nonprim) {
+        v1_secret_env_source_free(secret_ref_local_nonprim);
+        secret_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

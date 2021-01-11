@@ -95,6 +95,10 @@ v1beta1_stateful_set_update_strategy_t *v1beta1_stateful_set_update_strategy_par
 
     return v1beta1_stateful_set_update_strategy_local_var;
 end:
+    if (rolling_update_local_nonprim) {
+        v1beta1_rolling_update_stateful_set_strategy_free(rolling_update_local_nonprim);
+        rolling_update_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -115,6 +115,10 @@ v1alpha1_webhook_client_config_t *v1alpha1_webhook_client_config_parseFromJSON(c
 
     return v1alpha1_webhook_client_config_local_var;
 end:
+    if (service_local_nonprim) {
+        v1alpha1_service_reference_free(service_local_nonprim);
+        service_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -148,6 +148,10 @@ v2beta1_external_metric_source_t *v2beta1_external_metric_source_parseFromJSON(c
 
     return v2beta1_external_metric_source_local_var;
 end:
+    if (metric_selector_local_nonprim) {
+        v1_label_selector_free(metric_selector_local_nonprim);
+        metric_selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

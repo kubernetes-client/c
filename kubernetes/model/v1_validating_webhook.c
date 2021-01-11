@@ -360,6 +360,18 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     return v1_validating_webhook_local_var;
 end:
+    if (client_config_local_nonprim) {
+        admissionregistration_v1_webhook_client_config_free(client_config_local_nonprim);
+        client_config_local_nonprim = NULL;
+    }
+    if (namespace_selector_local_nonprim) {
+        v1_label_selector_free(namespace_selector_local_nonprim);
+        namespace_selector_local_nonprim = NULL;
+    }
+    if (object_selector_local_nonprim) {
+        v1_label_selector_free(object_selector_local_nonprim);
+        object_selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

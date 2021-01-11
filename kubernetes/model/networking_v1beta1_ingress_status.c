@@ -71,6 +71,10 @@ networking_v1beta1_ingress_status_t *networking_v1beta1_ingress_status_parseFrom
 
     return networking_v1beta1_ingress_status_local_var;
 end:
+    if (load_balancer_local_nonprim) {
+        v1_load_balancer_status_free(load_balancer_local_nonprim);
+        load_balancer_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -309,6 +309,22 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
 
     return v1_csi_persistent_volume_source_local_var;
 end:
+    if (controller_expand_secret_ref_local_nonprim) {
+        v1_secret_reference_free(controller_expand_secret_ref_local_nonprim);
+        controller_expand_secret_ref_local_nonprim = NULL;
+    }
+    if (controller_publish_secret_ref_local_nonprim) {
+        v1_secret_reference_free(controller_publish_secret_ref_local_nonprim);
+        controller_publish_secret_ref_local_nonprim = NULL;
+    }
+    if (node_publish_secret_ref_local_nonprim) {
+        v1_secret_reference_free(node_publish_secret_ref_local_nonprim);
+        node_publish_secret_ref_local_nonprim = NULL;
+    }
+    if (node_stage_secret_ref_local_nonprim) {
+        v1_secret_reference_free(node_stage_secret_ref_local_nonprim);
+        node_stage_secret_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

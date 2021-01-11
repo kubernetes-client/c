@@ -125,6 +125,18 @@ v1_handler_t *v1_handler_parseFromJSON(cJSON *v1_handlerJSON){
 
     return v1_handler_local_var;
 end:
+    if (exec_local_nonprim) {
+        v1_exec_action_free(exec_local_nonprim);
+        exec_local_nonprim = NULL;
+    }
+    if (http_get_local_nonprim) {
+        v1_http_get_action_free(http_get_local_nonprim);
+        http_get_local_nonprim = NULL;
+    }
+    if (tcp_socket_local_nonprim) {
+        v1_tcp_socket_action_free(tcp_socket_local_nonprim);
+        tcp_socket_local_nonprim = NULL;
+    }
     return NULL;
 
 }

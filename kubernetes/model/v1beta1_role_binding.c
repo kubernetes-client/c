@@ -203,6 +203,14 @@ v1beta1_role_binding_t *v1beta1_role_binding_parseFromJSON(cJSON *v1beta1_role_b
 
     return v1beta1_role_binding_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (role_ref_local_nonprim) {
+        v1beta1_role_ref_free(role_ref_local_nonprim);
+        role_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

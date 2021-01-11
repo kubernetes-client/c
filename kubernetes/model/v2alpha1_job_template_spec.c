@@ -98,6 +98,14 @@ v2alpha1_job_template_spec_t *v2alpha1_job_template_spec_parseFromJSON(cJSON *v2
 
     return v2alpha1_job_template_spec_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        v1_job_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
     return NULL;
 
 }

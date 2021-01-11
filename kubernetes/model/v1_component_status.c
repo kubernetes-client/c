@@ -171,6 +171,10 @@ v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_sta
 
     return v1_component_status_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

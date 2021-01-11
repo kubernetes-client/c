@@ -152,6 +152,22 @@ v1_env_var_source_t *v1_env_var_source_parseFromJSON(cJSON *v1_env_var_sourceJSO
 
     return v1_env_var_source_local_var;
 end:
+    if (config_map_key_ref_local_nonprim) {
+        v1_config_map_key_selector_free(config_map_key_ref_local_nonprim);
+        config_map_key_ref_local_nonprim = NULL;
+    }
+    if (field_ref_local_nonprim) {
+        v1_object_field_selector_free(field_ref_local_nonprim);
+        field_ref_local_nonprim = NULL;
+    }
+    if (resource_field_ref_local_nonprim) {
+        v1_resource_field_selector_free(resource_field_ref_local_nonprim);
+        resource_field_ref_local_nonprim = NULL;
+    }
+    if (secret_key_ref_local_nonprim) {
+        v1_secret_key_selector_free(secret_key_ref_local_nonprim);
+        secret_key_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

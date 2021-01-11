@@ -7,7 +7,7 @@
 
 v1_service_spec_t *v1_service_spec_create(
     char *cluster_ip,
-    list_t *external_i_ps,
+    list_t *external_ips,
     char *external_name,
     char *external_traffic_policy,
     int health_check_node_port,
@@ -27,7 +27,7 @@ v1_service_spec_t *v1_service_spec_create(
         return NULL;
     }
     v1_service_spec_local_var->cluster_ip = cluster_ip;
-    v1_service_spec_local_var->external_i_ps = external_i_ps;
+    v1_service_spec_local_var->external_ips = external_ips;
     v1_service_spec_local_var->external_name = external_name;
     v1_service_spec_local_var->external_traffic_policy = external_traffic_policy;
     v1_service_spec_local_var->health_check_node_port = health_check_node_port;
@@ -55,12 +55,12 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
         free(v1_service_spec->cluster_ip);
         v1_service_spec->cluster_ip = NULL;
     }
-    if (v1_service_spec->external_i_ps) {
-        list_ForEach(listEntry, v1_service_spec->external_i_ps) {
+    if (v1_service_spec->external_ips) {
+        list_ForEach(listEntry, v1_service_spec->external_ips) {
             free(listEntry->data);
         }
-        list_free(v1_service_spec->external_i_ps);
-        v1_service_spec->external_i_ps = NULL;
+        list_free(v1_service_spec->external_ips);
+        v1_service_spec->external_ips = NULL;
     }
     if (v1_service_spec->external_name) {
         free(v1_service_spec->external_name);
@@ -135,16 +135,16 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
      } 
 
 
-    // v1_service_spec->external_i_ps
-    if(v1_service_spec->external_i_ps) { 
-    cJSON *external_i_ps = cJSON_AddArrayToObject(item, "externalIPs");
-    if(external_i_ps == NULL) {
+    // v1_service_spec->external_ips
+    if(v1_service_spec->external_ips) { 
+    cJSON *external_ips = cJSON_AddArrayToObject(item, "externalIPs");
+    if(external_ips == NULL) {
         goto fail; //primitive container
     }
 
-    listEntry_t *external_i_psListEntry;
-    list_ForEach(external_i_psListEntry, v1_service_spec->external_i_ps) {
-    if(cJSON_AddStringToObject(external_i_ps, "", (char*)external_i_psListEntry->data) == NULL)
+    listEntry_t *external_ipsListEntry;
+    list_ForEach(external_ipsListEntry, v1_service_spec->external_ips) {
+    if(cJSON_AddStringToObject(external_ips, "", (char*)external_ipsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -323,23 +323,23 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     }
     }
 
-    // v1_service_spec->external_i_ps
-    cJSON *external_i_ps = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalIPs");
-    list_t *external_i_psList;
-    if (external_i_ps) { 
-    cJSON *external_i_ps_local;
-    if(!cJSON_IsArray(external_i_ps)) {
+    // v1_service_spec->external_ips
+    cJSON *external_ips = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalIPs");
+    list_t *external_ipsList;
+    if (external_ips) { 
+    cJSON *external_ips_local;
+    if(!cJSON_IsArray(external_ips)) {
         goto end;//primitive container
     }
-    external_i_psList = list_create();
+    external_ipsList = list_create();
 
-    cJSON_ArrayForEach(external_i_ps_local, external_i_ps)
+    cJSON_ArrayForEach(external_ips_local, external_ips)
     {
-        if(!cJSON_IsString(external_i_ps_local))
+        if(!cJSON_IsString(external_ips_local))
         {
             goto end;
         }
-        list_addElement(external_i_psList , strdup(external_i_ps_local->valuestring));
+        list_addElement(external_ipsList , strdup(external_ips_local->valuestring));
     }
     }
 
@@ -509,7 +509,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     v1_service_spec_local_var = v1_service_spec_create (
         cluster_ip ? strdup(cluster_ip->valuestring) : NULL,
-        external_i_ps ? external_i_psList : NULL,
+        external_ips ? external_ipsList : NULL,
         external_name ? strdup(external_name->valuestring) : NULL,
         external_traffic_policy ? strdup(external_traffic_policy->valuestring) : NULL,
         health_check_node_port ? health_check_node_port->valuedouble : 0,
@@ -527,6 +527,10 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     return v1_service_spec_local_var;
 end:
+    if (session_affinity_config_local_nonprim) {
+        v1_session_affinity_config_free(session_affinity_config_local_nonprim);
+        session_affinity_config_local_nonprim = NULL;
+    }
     return NULL;
 
 }

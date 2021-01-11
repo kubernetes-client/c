@@ -173,6 +173,18 @@ networking_v1beta1_ingress_t *networking_v1beta1_ingress_parseFromJSON(cJSON *ne
 
     return networking_v1beta1_ingress_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        networking_v1beta1_ingress_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
+    if (status_local_nonprim) {
+        networking_v1beta1_ingress_status_free(status_local_nonprim);
+        status_local_nonprim = NULL;
+    }
     return NULL;
 
 }

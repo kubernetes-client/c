@@ -793,6 +793,30 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     return v1_ephemeral_container_local_var;
 end:
+    if (lifecycle_local_nonprim) {
+        v1_lifecycle_free(lifecycle_local_nonprim);
+        lifecycle_local_nonprim = NULL;
+    }
+    if (liveness_probe_local_nonprim) {
+        v1_probe_free(liveness_probe_local_nonprim);
+        liveness_probe_local_nonprim = NULL;
+    }
+    if (readiness_probe_local_nonprim) {
+        v1_probe_free(readiness_probe_local_nonprim);
+        readiness_probe_local_nonprim = NULL;
+    }
+    if (resources_local_nonprim) {
+        v1_resource_requirements_free(resources_local_nonprim);
+        resources_local_nonprim = NULL;
+    }
+    if (security_context_local_nonprim) {
+        v1_security_context_free(security_context_local_nonprim);
+        security_context_local_nonprim = NULL;
+    }
+    if (startup_probe_local_nonprim) {
+        v1_probe_free(startup_probe_local_nonprim);
+        startup_probe_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -1152,6 +1152,18 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     return v1_pod_spec_local_var;
 end:
+    if (affinity_local_nonprim) {
+        v1_affinity_free(affinity_local_nonprim);
+        affinity_local_nonprim = NULL;
+    }
+    if (dns_config_local_nonprim) {
+        v1_pod_dns_config_free(dns_config_local_nonprim);
+        dns_config_local_nonprim = NULL;
+    }
+    if (security_context_local_nonprim) {
+        v1_pod_security_context_free(security_context_local_nonprim);
+        security_context_local_nonprim = NULL;
+    }
     return NULL;
 
 }

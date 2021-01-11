@@ -154,6 +154,18 @@ flowcontrol_v1alpha1_subject_t *flowcontrol_v1alpha1_subject_parseFromJSON(cJSON
 
     return flowcontrol_v1alpha1_subject_local_var;
 end:
+    if (group_local_nonprim) {
+        v1alpha1_group_subject_free(group_local_nonprim);
+        group_local_nonprim = NULL;
+    }
+    if (service_account_local_nonprim) {
+        v1alpha1_service_account_subject_free(service_account_local_nonprim);
+        service_account_local_nonprim = NULL;
+    }
+    if (user_local_nonprim) {
+        v1alpha1_user_subject_free(user_local_nonprim);
+        user_local_nonprim = NULL;
+    }
     return NULL;
 
 }

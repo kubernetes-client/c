@@ -125,6 +125,10 @@ v1beta1_pod_disruption_budget_spec_t *v1beta1_pod_disruption_budget_spec_parseFr
 
     return v1beta1_pod_disruption_budget_spec_local_var;
 end:
+    if (selector_local_nonprim) {
+        v1_label_selector_free(selector_local_nonprim);
+        selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

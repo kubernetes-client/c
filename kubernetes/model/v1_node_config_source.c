@@ -71,6 +71,10 @@ v1_node_config_source_t *v1_node_config_source_parseFromJSON(cJSON *v1_node_conf
 
     return v1_node_config_source_local_var;
 end:
+    if (config_map_local_nonprim) {
+        v1_config_map_node_config_source_free(config_map_local_nonprim);
+        config_map_local_nonprim = NULL;
+    }
     return NULL;
 
 }

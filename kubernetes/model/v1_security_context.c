@@ -269,6 +269,18 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
 
     return v1_security_context_local_var;
 end:
+    if (capabilities_local_nonprim) {
+        v1_capabilities_free(capabilities_local_nonprim);
+        capabilities_local_nonprim = NULL;
+    }
+    if (se_linux_options_local_nonprim) {
+        v1_se_linux_options_free(se_linux_options_local_nonprim);
+        se_linux_options_local_nonprim = NULL;
+    }
+    if (windows_options_local_nonprim) {
+        v1_windows_security_context_options_free(windows_options_local_nonprim);
+        windows_options_local_nonprim = NULL;
+    }
     return NULL;
 
 }

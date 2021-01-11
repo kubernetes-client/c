@@ -95,6 +95,10 @@ v1_volume_attachment_source_t *v1_volume_attachment_source_parseFromJSON(cJSON *
 
     return v1_volume_attachment_source_local_var;
 end:
+    if (inline_volume_spec_local_nonprim) {
+        v1_persistent_volume_spec_free(inline_volume_spec_local_nonprim);
+        inline_volume_spec_local_nonprim = NULL;
+    }
     return NULL;
 
 }

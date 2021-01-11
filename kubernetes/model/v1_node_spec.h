@@ -24,7 +24,7 @@ typedef struct v1_node_spec_t {
     struct v1_node_config_source_t *config_source; //model
     char *external_id; // string
     char *pod_cidr; // string
-    list_t *pod_cid_rs; //primitive container
+    list_t *pod_cidrs; //primitive container
     char *provider_id; // string
     list_t *taints; //nonprimitive container
     int unschedulable; //boolean
@@ -35,7 +35,7 @@ v1_node_spec_t *v1_node_spec_create(
     v1_node_config_source_t *config_source,
     char *external_id,
     char *pod_cidr,
-    list_t *pod_cid_rs,
+    list_t *pod_cidrs,
     char *provider_id,
     list_t *taints,
     int unschedulable

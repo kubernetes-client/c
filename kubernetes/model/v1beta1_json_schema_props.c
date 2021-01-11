@@ -1279,6 +1279,14 @@ v1beta1_json_schema_props_t *v1beta1_json_schema_props_parseFromJSON(cJSON *v1be
 
     return v1beta1_json_schema_props_local_var;
 end:
+    if (external_docs_local_nonprim) {
+        v1beta1_external_documentation_free(external_docs_local_nonprim);
+        external_docs_local_nonprim = NULL;
+    }
+    if (_not_local_nonprim) {
+        v1beta1_json_schema_props_free(_not_local_nonprim);
+        _not_local_nonprim = NULL;
+    }
     return NULL;
 
 }

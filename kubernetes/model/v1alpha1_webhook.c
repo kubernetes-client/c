@@ -103,6 +103,14 @@ v1alpha1_webhook_t *v1alpha1_webhook_parseFromJSON(cJSON *v1alpha1_webhookJSON){
 
     return v1alpha1_webhook_local_var;
 end:
+    if (client_config_local_nonprim) {
+        v1alpha1_webhook_client_config_free(client_config_local_nonprim);
+        client_config_local_nonprim = NULL;
+    }
+    if (throttle_local_nonprim) {
+        v1alpha1_webhook_throttle_config_free(throttle_local_nonprim);
+        throttle_local_nonprim = NULL;
+    }
     return NULL;
 
 }

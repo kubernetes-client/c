@@ -171,6 +171,10 @@ v1beta1_mutating_webhook_configuration_t *v1beta1_mutating_webhook_configuration
 
     return v1beta1_mutating_webhook_configuration_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }
