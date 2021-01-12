@@ -1,8 +1,11 @@
 INCLUDE:=-I../../kubernetes/include -I../../kubernetes/model -I../../kubernetes/api -I../../kubernetes/config
 LIBS:=-L../../kubernetes/build -lkubernetes -lyaml
 CFLAGS:=-g
+BIN:=create_pod_bin
 
 all:
-	gcc main.c $(CFLAGS) $(INCLUDE) $(LIBS) -o create_pod_bin
+	gcc main.c $(CFLAGS) $(INCLUDE) $(LIBS) -o $(BIN)
 clean:
-	rm ./create_pod_bin
+	rm ./$(BIN)
+test:
+	./$(BIN)

@@ -34,3 +34,9 @@ jobs:
       run: |
         cd examples/
         make
+    - name: Create k8s kind cluster
+      uses: helm/kind-action@v1.1.0
+    - name: Test examples
+      run: |
+        cd examples/
+        LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kubernetes/build/ make test
