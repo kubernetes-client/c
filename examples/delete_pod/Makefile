@@ -7,3 +7,5 @@ all:
 	gcc main.c $(CFLAGS) $(INCLUDE) $(LIBS) -o $(BIN)
 clean:
 	rm ./$(BIN)
+test:
+	./$(BIN)

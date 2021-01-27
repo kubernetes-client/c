@@ -19,3 +19,10 @@ clean:
 	cd auth_provider; make clean
 	cd watch_list_pod; make clean
 	cd multi_thread; make clean
+
+test:
+	cd create_pod; make test; sleep 10
+	cd list_pod; make test
+	cd delete_pod; make test
+	cd generic; make test
+	cd multi_thread; make test

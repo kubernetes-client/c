@@ -1,8 +1,11 @@
 INCLUDE:=-I../../kubernetes/include -I../../kubernetes/model -I../../kubernetes/api -I../../kubernetes/config
 LIBS:=-L../../kubernetes/build -lkubernetes -lyaml
 CFLAGS:=-g
+BIN:=generic_bin
 
 all:
-	gcc main.c $(CFLAGS) $(INCLUDE) $(LIBS) -o generic_bin 
+	gcc main.c $(CFLAGS) $(INCLUDE) $(LIBS) -o $(BIN) 
 clean:
-	rm ./generic_bin
+	rm ./$(BIN)
+test:
+	./$(BIN)

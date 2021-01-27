@@ -11,6 +11,8 @@ all: $(OBJECTS)
 $(OBJECTS): %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-.PHONY : clean
+.PHONY : clean test
 clean:
 	rm $(BIN) $(OBJECTS)
+test:
+	./$(BIN)
