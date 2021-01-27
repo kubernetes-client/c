@@ -178,6 +178,18 @@ v1beta1_custom_resource_definition_t *v1beta1_custom_resource_definition_parseFr
 
     return v1beta1_custom_resource_definition_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        v1beta1_custom_resource_definition_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
+    if (status_local_nonprim) {
+        v1beta1_custom_resource_definition_status_free(status_local_nonprim);
+        status_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -101,6 +101,10 @@ v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_parseFromJSON(cJS
 
     return v1_weighted_pod_affinity_term_local_var;
 end:
+    if (pod_affinity_term_local_nonprim) {
+        v1_pod_affinity_term_free(pod_affinity_term_local_nonprim);
+        pod_affinity_term_local_nonprim = NULL;
+    }
     return NULL;
 
 }

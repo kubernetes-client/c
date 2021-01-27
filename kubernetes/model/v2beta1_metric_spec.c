@@ -181,6 +181,22 @@ v2beta1_metric_spec_t *v2beta1_metric_spec_parseFromJSON(cJSON *v2beta1_metric_s
 
     return v2beta1_metric_spec_local_var;
 end:
+    if (external_local_nonprim) {
+        v2beta1_external_metric_source_free(external_local_nonprim);
+        external_local_nonprim = NULL;
+    }
+    if (object_local_nonprim) {
+        v2beta1_object_metric_source_free(object_local_nonprim);
+        object_local_nonprim = NULL;
+    }
+    if (pods_local_nonprim) {
+        v2beta1_pods_metric_source_free(pods_local_nonprim);
+        pods_local_nonprim = NULL;
+    }
+    if (resource_local_nonprim) {
+        v2beta1_resource_metric_source_free(resource_local_nonprim);
+        resource_local_nonprim = NULL;
+    }
     return NULL;
 
 }

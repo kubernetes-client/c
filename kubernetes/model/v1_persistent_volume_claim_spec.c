@@ -244,6 +244,18 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
 
     return v1_persistent_volume_claim_spec_local_var;
 end:
+    if (data_source_local_nonprim) {
+        v1_typed_local_object_reference_free(data_source_local_nonprim);
+        data_source_local_nonprim = NULL;
+    }
+    if (resources_local_nonprim) {
+        v1_resource_requirements_free(resources_local_nonprim);
+        resources_local_nonprim = NULL;
+    }
+    if (selector_local_nonprim) {
+        v1_label_selector_free(selector_local_nonprim);
+        selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

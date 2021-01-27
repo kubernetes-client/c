@@ -176,6 +176,10 @@ v1beta1_csi_node_driver_t *v1beta1_csi_node_driver_parseFromJSON(cJSON *v1beta1_
 
     return v1beta1_csi_node_driver_local_var;
 end:
+    if (allocatable_local_nonprim) {
+        v1beta1_volume_node_resources_free(allocatable_local_nonprim);
+        allocatable_local_nonprim = NULL;
+    }
     return NULL;
 
 }

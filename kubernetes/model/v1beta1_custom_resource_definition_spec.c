@@ -363,6 +363,22 @@ v1beta1_custom_resource_definition_spec_t *v1beta1_custom_resource_definition_sp
 
     return v1beta1_custom_resource_definition_spec_local_var;
 end:
+    if (conversion_local_nonprim) {
+        v1beta1_custom_resource_conversion_free(conversion_local_nonprim);
+        conversion_local_nonprim = NULL;
+    }
+    if (names_local_nonprim) {
+        v1beta1_custom_resource_definition_names_free(names_local_nonprim);
+        names_local_nonprim = NULL;
+    }
+    if (subresources_local_nonprim) {
+        v1beta1_custom_resource_subresources_free(subresources_local_nonprim);
+        subresources_local_nonprim = NULL;
+    }
+    if (validation_local_nonprim) {
+        v1beta1_custom_resource_validation_free(validation_local_nonprim);
+        validation_local_nonprim = NULL;
+    }
     return NULL;
 
 }

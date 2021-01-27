@@ -175,6 +175,10 @@ networking_v1beta1_ingress_spec_t *networking_v1beta1_ingress_spec_parseFromJSON
 
     return networking_v1beta1_ingress_spec_local_var;
 end:
+    if (backend_local_nonprim) {
+        networking_v1beta1_ingress_backend_free(backend_local_nonprim);
+        backend_local_nonprim = NULL;
+    }
     return NULL;
 
 }

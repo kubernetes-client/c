@@ -147,6 +147,10 @@ v1beta1_custom_resource_conversion_t *v1beta1_custom_resource_conversion_parseFr
 
     return v1beta1_custom_resource_conversion_local_var;
 end:
+    if (webhook_client_config_local_nonprim) {
+        apiextensions_v1beta1_webhook_client_config_free(webhook_client_config_local_nonprim);
+        webhook_client_config_local_nonprim = NULL;
+    }
     return NULL;
 
 }

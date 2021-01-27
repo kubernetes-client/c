@@ -7,7 +7,7 @@
 
 v1beta1_policy_rule_t *v1beta1_policy_rule_create(
     list_t *api_groups,
-    list_t *non_resource_ur_ls,
+    list_t *non_resource_urls,
     list_t *resource_names,
     list_t *resources,
     list_t *verbs
@@ -17,7 +17,7 @@ v1beta1_policy_rule_t *v1beta1_policy_rule_create(
         return NULL;
     }
     v1beta1_policy_rule_local_var->api_groups = api_groups;
-    v1beta1_policy_rule_local_var->non_resource_ur_ls = non_resource_ur_ls;
+    v1beta1_policy_rule_local_var->non_resource_urls = non_resource_urls;
     v1beta1_policy_rule_local_var->resource_names = resource_names;
     v1beta1_policy_rule_local_var->resources = resources;
     v1beta1_policy_rule_local_var->verbs = verbs;
@@ -38,12 +38,12 @@ void v1beta1_policy_rule_free(v1beta1_policy_rule_t *v1beta1_policy_rule) {
         list_free(v1beta1_policy_rule->api_groups);
         v1beta1_policy_rule->api_groups = NULL;
     }
-    if (v1beta1_policy_rule->non_resource_ur_ls) {
-        list_ForEach(listEntry, v1beta1_policy_rule->non_resource_ur_ls) {
+    if (v1beta1_policy_rule->non_resource_urls) {
+        list_ForEach(listEntry, v1beta1_policy_rule->non_resource_urls) {
             free(listEntry->data);
         }
-        list_free(v1beta1_policy_rule->non_resource_ur_ls);
-        v1beta1_policy_rule->non_resource_ur_ls = NULL;
+        list_free(v1beta1_policy_rule->non_resource_urls);
+        v1beta1_policy_rule->non_resource_urls = NULL;
     }
     if (v1beta1_policy_rule->resource_names) {
         list_ForEach(listEntry, v1beta1_policy_rule->resource_names) {
@@ -89,16 +89,16 @@ cJSON *v1beta1_policy_rule_convertToJSON(v1beta1_policy_rule_t *v1beta1_policy_r
      } 
 
 
-    // v1beta1_policy_rule->non_resource_ur_ls
-    if(v1beta1_policy_rule->non_resource_ur_ls) { 
-    cJSON *non_resource_ur_ls = cJSON_AddArrayToObject(item, "nonResourceURLs");
-    if(non_resource_ur_ls == NULL) {
+    // v1beta1_policy_rule->non_resource_urls
+    if(v1beta1_policy_rule->non_resource_urls) { 
+    cJSON *non_resource_urls = cJSON_AddArrayToObject(item, "nonResourceURLs");
+    if(non_resource_urls == NULL) {
         goto fail; //primitive container
     }
 
-    listEntry_t *non_resource_ur_lsListEntry;
-    list_ForEach(non_resource_ur_lsListEntry, v1beta1_policy_rule->non_resource_ur_ls) {
-    if(cJSON_AddStringToObject(non_resource_ur_ls, "", (char*)non_resource_ur_lsListEntry->data) == NULL)
+    listEntry_t *non_resource_urlsListEntry;
+    list_ForEach(non_resource_urlsListEntry, v1beta1_policy_rule->non_resource_urls) {
+    if(cJSON_AddStringToObject(non_resource_urls, "", (char*)non_resource_urlsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -190,23 +190,23 @@ v1beta1_policy_rule_t *v1beta1_policy_rule_parseFromJSON(cJSON *v1beta1_policy_r
     }
     }
 
-    // v1beta1_policy_rule->non_resource_ur_ls
-    cJSON *non_resource_ur_ls = cJSON_GetObjectItemCaseSensitive(v1beta1_policy_ruleJSON, "nonResourceURLs");
-    list_t *non_resource_ur_lsList;
-    if (non_resource_ur_ls) { 
-    cJSON *non_resource_ur_ls_local;
-    if(!cJSON_IsArray(non_resource_ur_ls)) {
+    // v1beta1_policy_rule->non_resource_urls
+    cJSON *non_resource_urls = cJSON_GetObjectItemCaseSensitive(v1beta1_policy_ruleJSON, "nonResourceURLs");
+    list_t *non_resource_urlsList;
+    if (non_resource_urls) { 
+    cJSON *non_resource_urls_local;
+    if(!cJSON_IsArray(non_resource_urls)) {
         goto end;//primitive container
     }
-    non_resource_ur_lsList = list_create();
+    non_resource_urlsList = list_create();
 
-    cJSON_ArrayForEach(non_resource_ur_ls_local, non_resource_ur_ls)
+    cJSON_ArrayForEach(non_resource_urls_local, non_resource_urls)
     {
-        if(!cJSON_IsString(non_resource_ur_ls_local))
+        if(!cJSON_IsString(non_resource_urls_local))
         {
             goto end;
         }
-        list_addElement(non_resource_ur_lsList , strdup(non_resource_ur_ls_local->valuestring));
+        list_addElement(non_resource_urlsList , strdup(non_resource_urls_local->valuestring));
     }
     }
 
@@ -276,7 +276,7 @@ v1beta1_policy_rule_t *v1beta1_policy_rule_parseFromJSON(cJSON *v1beta1_policy_r
 
     v1beta1_policy_rule_local_var = v1beta1_policy_rule_create (
         api_groups ? api_groupsList : NULL,
-        non_resource_ur_ls ? non_resource_ur_lsList : NULL,
+        non_resource_urls ? non_resource_urlsList : NULL,
         resource_names ? resource_namesList : NULL,
         resources ? resourcesList : NULL,
         verbsList

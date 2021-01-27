@@ -100,6 +100,10 @@ v1_custom_resource_conversion_t *v1_custom_resource_conversion_parseFromJSON(cJS
 
     return v1_custom_resource_conversion_local_var;
 end:
+    if (webhook_local_nonprim) {
+        v1_webhook_conversion_free(webhook_local_nonprim);
+        webhook_local_nonprim = NULL;
+    }
     return NULL;
 
 }

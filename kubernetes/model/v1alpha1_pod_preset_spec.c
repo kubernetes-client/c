@@ -279,6 +279,10 @@ v1alpha1_pod_preset_spec_t *v1alpha1_pod_preset_spec_parseFromJSON(cJSON *v1alph
 
     return v1alpha1_pod_preset_spec_local_var;
 end:
+    if (selector_local_nonprim) {
+        v1_label_selector_free(selector_local_nonprim);
+        selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

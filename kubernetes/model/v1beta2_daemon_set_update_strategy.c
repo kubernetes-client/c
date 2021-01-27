@@ -95,6 +95,10 @@ v1beta2_daemon_set_update_strategy_t *v1beta2_daemon_set_update_strategy_parseFr
 
     return v1beta2_daemon_set_update_strategy_local_var;
 end:
+    if (rolling_update_local_nonprim) {
+        v1beta2_rolling_update_daemon_set_free(rolling_update_local_nonprim);
+        rolling_update_local_nonprim = NULL;
+    }
     return NULL;
 
 }

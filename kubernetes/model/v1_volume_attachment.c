@@ -178,6 +178,18 @@ v1_volume_attachment_t *v1_volume_attachment_parseFromJSON(cJSON *v1_volume_atta
 
     return v1_volume_attachment_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        v1_volume_attachment_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
+    if (status_local_nonprim) {
+        v1_volume_attachment_status_free(status_local_nonprim);
+        status_local_nonprim = NULL;
+    }
     return NULL;
 
 }

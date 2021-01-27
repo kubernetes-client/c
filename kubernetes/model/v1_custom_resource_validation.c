@@ -71,6 +71,10 @@ v1_custom_resource_validation_t *v1_custom_resource_validation_parseFromJSON(cJS
 
     return v1_custom_resource_validation_local_var;
 end:
+    if (open_apiv3_schema_local_nonprim) {
+        v1_json_schema_props_free(open_apiv3_schema_local_nonprim);
+        open_apiv3_schema_local_nonprim = NULL;
+    }
     return NULL;
 
 }

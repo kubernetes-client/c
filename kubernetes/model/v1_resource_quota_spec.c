@@ -173,6 +173,10 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
 
     return v1_resource_quota_spec_local_var;
 end:
+    if (scope_selector_local_nonprim) {
+        v1_scope_selector_free(scope_selector_local_nonprim);
+        scope_selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

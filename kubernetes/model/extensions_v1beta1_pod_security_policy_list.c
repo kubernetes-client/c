@@ -176,6 +176,10 @@ extensions_v1beta1_pod_security_policy_list_t *extensions_v1beta1_pod_security_p
 
     return extensions_v1beta1_pod_security_policy_list_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_list_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

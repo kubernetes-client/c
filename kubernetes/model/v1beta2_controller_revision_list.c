@@ -176,6 +176,10 @@ v1beta2_controller_revision_list_t *v1beta2_controller_revision_list_parseFromJS
 
     return v1beta2_controller_revision_list_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_list_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

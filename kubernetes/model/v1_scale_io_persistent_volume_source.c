@@ -294,6 +294,10 @@ v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_par
 
     return v1_scale_io_persistent_volume_source_local_var;
 end:
+    if (secret_ref_local_nonprim) {
+        v1_secret_reference_free(secret_ref_local_nonprim);
+        secret_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

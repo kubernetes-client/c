@@ -229,6 +229,14 @@ v1beta1_custom_resource_definition_version_t *v1beta1_custom_resource_definition
 
     return v1beta1_custom_resource_definition_version_local_var;
 end:
+    if (schema_local_nonprim) {
+        v1beta1_custom_resource_validation_free(schema_local_nonprim);
+        schema_local_nonprim = NULL;
+    }
+    if (subresources_local_nonprim) {
+        v1beta1_custom_resource_subresources_free(subresources_local_nonprim);
+        subresources_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -173,6 +173,18 @@ apps_v1beta1_deployment_t *apps_v1beta1_deployment_parseFromJSON(cJSON *apps_v1b
 
     return apps_v1beta1_deployment_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        apps_v1beta1_deployment_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
+    if (status_local_nonprim) {
+        apps_v1beta1_deployment_status_free(status_local_nonprim);
+        status_local_nonprim = NULL;
+    }
     return NULL;
 
 }

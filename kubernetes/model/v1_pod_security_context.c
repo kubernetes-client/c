@@ -277,6 +277,14 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     return v1_pod_security_context_local_var;
 end:
+    if (se_linux_options_local_nonprim) {
+        v1_se_linux_options_free(se_linux_options_local_nonprim);
+        se_linux_options_local_nonprim = NULL;
+    }
+    if (windows_options_local_nonprim) {
+        v1_windows_security_context_options_free(windows_options_local_nonprim);
+        windows_options_local_nonprim = NULL;
+    }
     return NULL;
 
 }

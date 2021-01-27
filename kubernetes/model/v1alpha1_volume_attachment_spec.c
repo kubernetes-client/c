@@ -134,6 +134,10 @@ v1alpha1_volume_attachment_spec_t *v1alpha1_volume_attachment_spec_parseFromJSON
 
     return v1alpha1_volume_attachment_spec_local_var;
 end:
+    if (source_local_nonprim) {
+        v1alpha1_volume_attachment_source_free(source_local_nonprim);
+        source_local_nonprim = NULL;
+    }
     return NULL;
 
 }

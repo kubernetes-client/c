@@ -6,14 +6,14 @@
 
 
 v1alpha1_non_resource_policy_rule_t *v1alpha1_non_resource_policy_rule_create(
-    list_t *non_resource_ur_ls,
+    list_t *non_resource_urls,
     list_t *verbs
     ) {
     v1alpha1_non_resource_policy_rule_t *v1alpha1_non_resource_policy_rule_local_var = malloc(sizeof(v1alpha1_non_resource_policy_rule_t));
     if (!v1alpha1_non_resource_policy_rule_local_var) {
         return NULL;
     }
-    v1alpha1_non_resource_policy_rule_local_var->non_resource_ur_ls = non_resource_ur_ls;
+    v1alpha1_non_resource_policy_rule_local_var->non_resource_urls = non_resource_urls;
     v1alpha1_non_resource_policy_rule_local_var->verbs = verbs;
 
     return v1alpha1_non_resource_policy_rule_local_var;
@@ -25,12 +25,12 @@ void v1alpha1_non_resource_policy_rule_free(v1alpha1_non_resource_policy_rule_t 
         return ;
     }
     listEntry_t *listEntry;
-    if (v1alpha1_non_resource_policy_rule->non_resource_ur_ls) {
-        list_ForEach(listEntry, v1alpha1_non_resource_policy_rule->non_resource_ur_ls) {
+    if (v1alpha1_non_resource_policy_rule->non_resource_urls) {
+        list_ForEach(listEntry, v1alpha1_non_resource_policy_rule->non_resource_urls) {
             free(listEntry->data);
         }
-        list_free(v1alpha1_non_resource_policy_rule->non_resource_ur_ls);
-        v1alpha1_non_resource_policy_rule->non_resource_ur_ls = NULL;
+        list_free(v1alpha1_non_resource_policy_rule->non_resource_urls);
+        v1alpha1_non_resource_policy_rule->non_resource_urls = NULL;
     }
     if (v1alpha1_non_resource_policy_rule->verbs) {
         list_ForEach(listEntry, v1alpha1_non_resource_policy_rule->verbs) {
@@ -45,19 +45,19 @@ void v1alpha1_non_resource_policy_rule_free(v1alpha1_non_resource_policy_rule_t 
 cJSON *v1alpha1_non_resource_policy_rule_convertToJSON(v1alpha1_non_resource_policy_rule_t *v1alpha1_non_resource_policy_rule) {
     cJSON *item = cJSON_CreateObject();
 
-    // v1alpha1_non_resource_policy_rule->non_resource_ur_ls
-    if (!v1alpha1_non_resource_policy_rule->non_resource_ur_ls) {
+    // v1alpha1_non_resource_policy_rule->non_resource_urls
+    if (!v1alpha1_non_resource_policy_rule->non_resource_urls) {
         goto fail;
     }
     
-    cJSON *non_resource_ur_ls = cJSON_AddArrayToObject(item, "nonResourceURLs");
-    if(non_resource_ur_ls == NULL) {
+    cJSON *non_resource_urls = cJSON_AddArrayToObject(item, "nonResourceURLs");
+    if(non_resource_urls == NULL) {
         goto fail; //primitive container
     }
 
-    listEntry_t *non_resource_ur_lsListEntry;
-    list_ForEach(non_resource_ur_lsListEntry, v1alpha1_non_resource_policy_rule->non_resource_ur_ls) {
-    if(cJSON_AddStringToObject(non_resource_ur_ls, "", (char*)non_resource_ur_lsListEntry->data) == NULL)
+    listEntry_t *non_resource_urlsListEntry;
+    list_ForEach(non_resource_urlsListEntry, v1alpha1_non_resource_policy_rule->non_resource_urls) {
+    if(cJSON_AddStringToObject(non_resource_urls, "", (char*)non_resource_urlsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -94,27 +94,27 @@ v1alpha1_non_resource_policy_rule_t *v1alpha1_non_resource_policy_rule_parseFrom
 
     v1alpha1_non_resource_policy_rule_t *v1alpha1_non_resource_policy_rule_local_var = NULL;
 
-    // v1alpha1_non_resource_policy_rule->non_resource_ur_ls
-    cJSON *non_resource_ur_ls = cJSON_GetObjectItemCaseSensitive(v1alpha1_non_resource_policy_ruleJSON, "nonResourceURLs");
-    if (!non_resource_ur_ls) {
+    // v1alpha1_non_resource_policy_rule->non_resource_urls
+    cJSON *non_resource_urls = cJSON_GetObjectItemCaseSensitive(v1alpha1_non_resource_policy_ruleJSON, "nonResourceURLs");
+    if (!non_resource_urls) {
         goto end;
     }
 
-    list_t *non_resource_ur_lsList;
+    list_t *non_resource_urlsList;
     
-    cJSON *non_resource_ur_ls_local;
-    if(!cJSON_IsArray(non_resource_ur_ls)) {
+    cJSON *non_resource_urls_local;
+    if(!cJSON_IsArray(non_resource_urls)) {
         goto end;//primitive container
     }
-    non_resource_ur_lsList = list_create();
+    non_resource_urlsList = list_create();
 
-    cJSON_ArrayForEach(non_resource_ur_ls_local, non_resource_ur_ls)
+    cJSON_ArrayForEach(non_resource_urls_local, non_resource_urls)
     {
-        if(!cJSON_IsString(non_resource_ur_ls_local))
+        if(!cJSON_IsString(non_resource_urls_local))
         {
             goto end;
         }
-        list_addElement(non_resource_ur_lsList , strdup(non_resource_ur_ls_local->valuestring));
+        list_addElement(non_resource_urlsList , strdup(non_resource_urls_local->valuestring));
     }
 
     // v1alpha1_non_resource_policy_rule->verbs
@@ -142,7 +142,7 @@ v1alpha1_non_resource_policy_rule_t *v1alpha1_non_resource_policy_rule_parseFrom
 
 
     v1alpha1_non_resource_policy_rule_local_var = v1alpha1_non_resource_policy_rule_create (
-        non_resource_ur_lsList,
+        non_resource_urlsList,
         verbsList
         );
 

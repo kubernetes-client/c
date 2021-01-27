@@ -208,6 +208,10 @@ apps_v1beta1_deployment_rollback_t *apps_v1beta1_deployment_rollback_parseFromJS
 
     return apps_v1beta1_deployment_rollback_local_var;
 end:
+    if (rollback_to_local_nonprim) {
+        apps_v1beta1_rollback_config_free(rollback_to_local_nonprim);
+        rollback_to_local_nonprim = NULL;
+    }
     return NULL;
 
 }

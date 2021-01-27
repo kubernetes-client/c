@@ -244,6 +244,10 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     return v1_secret_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

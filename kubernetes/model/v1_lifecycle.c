@@ -98,6 +98,14 @@ v1_lifecycle_t *v1_lifecycle_parseFromJSON(cJSON *v1_lifecycleJSON){
 
     return v1_lifecycle_local_var;
 end:
+    if (post_start_local_nonprim) {
+        v1_handler_free(post_start_local_nonprim);
+        post_start_local_nonprim = NULL;
+    }
+    if (pre_stop_local_nonprim) {
+        v1_handler_free(pre_stop_local_nonprim);
+        pre_stop_local_nonprim = NULL;
+    }
     return NULL;
 
 }

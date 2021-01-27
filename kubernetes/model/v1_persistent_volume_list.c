@@ -176,6 +176,10 @@ v1_persistent_volume_list_t *v1_persistent_volume_list_parseFromJSON(cJSON *v1_p
 
     return v1_persistent_volume_list_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_list_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

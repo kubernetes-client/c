@@ -208,6 +208,10 @@ extensions_v1beta1_deployment_rollback_t *extensions_v1beta1_deployment_rollback
 
     return extensions_v1beta1_deployment_rollback_local_var;
 end:
+    if (rollback_to_local_nonprim) {
+        extensions_v1beta1_rollback_config_free(rollback_to_local_nonprim);
+        rollback_to_local_nonprim = NULL;
+    }
     return NULL;
 
 }

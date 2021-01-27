@@ -209,6 +209,10 @@ v1beta1_cron_job_spec_t *v1beta1_cron_job_spec_parseFromJSON(cJSON *v1beta1_cron
 
     return v1beta1_cron_job_spec_local_var;
 end:
+    if (job_template_local_nonprim) {
+        v1beta1_job_template_spec_free(job_template_local_nonprim);
+        job_template_local_nonprim = NULL;
+    }
     return NULL;
 
 }

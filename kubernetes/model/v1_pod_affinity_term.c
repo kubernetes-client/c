@@ -147,6 +147,10 @@ v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinit
 
     return v1_pod_affinity_term_local_var;
 end:
+    if (label_selector_local_nonprim) {
+        v1_label_selector_free(label_selector_local_nonprim);
+        label_selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

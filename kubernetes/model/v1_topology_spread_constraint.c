@@ -154,6 +154,10 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
 
     return v1_topology_spread_constraint_local_var;
 end:
+    if (label_selector_local_nonprim) {
+        v1_label_selector_free(label_selector_local_nonprim);
+        label_selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

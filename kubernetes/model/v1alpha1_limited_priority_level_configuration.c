@@ -91,6 +91,10 @@ v1alpha1_limited_priority_level_configuration_t *v1alpha1_limited_priority_level
 
     return v1alpha1_limited_priority_level_configuration_local_var;
 end:
+    if (limit_response_local_nonprim) {
+        v1alpha1_limit_response_free(limit_response_local_nonprim);
+        limit_response_local_nonprim = NULL;
+    }
     return NULL;
 
 }

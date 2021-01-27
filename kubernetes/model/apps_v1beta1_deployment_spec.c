@@ -257,6 +257,22 @@ apps_v1beta1_deployment_spec_t *apps_v1beta1_deployment_spec_parseFromJSON(cJSON
 
     return apps_v1beta1_deployment_spec_local_var;
 end:
+    if (rollback_to_local_nonprim) {
+        apps_v1beta1_rollback_config_free(rollback_to_local_nonprim);
+        rollback_to_local_nonprim = NULL;
+    }
+    if (selector_local_nonprim) {
+        v1_label_selector_free(selector_local_nonprim);
+        selector_local_nonprim = NULL;
+    }
+    if (strategy_local_nonprim) {
+        apps_v1beta1_deployment_strategy_free(strategy_local_nonprim);
+        strategy_local_nonprim = NULL;
+    }
+    if (_template_local_nonprim) {
+        v1_pod_template_spec_free(_template_local_nonprim);
+        _template_local_nonprim = NULL;
+    }
     return NULL;
 
 }

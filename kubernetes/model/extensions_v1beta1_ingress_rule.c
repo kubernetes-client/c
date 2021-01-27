@@ -95,6 +95,10 @@ extensions_v1beta1_ingress_rule_t *extensions_v1beta1_ingress_rule_parseFromJSON
 
     return extensions_v1beta1_ingress_rule_local_var;
 end:
+    if (http_local_nonprim) {
+        extensions_v1beta1_http_ingress_rule_value_free(http_local_nonprim);
+        http_local_nonprim = NULL;
+    }
     return NULL;
 
 }

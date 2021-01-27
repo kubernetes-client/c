@@ -279,6 +279,14 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     return v1_container_status_local_var;
 end:
+    if (last_state_local_nonprim) {
+        v1_container_state_free(last_state_local_nonprim);
+        last_state_local_nonprim = NULL;
+    }
+    if (state_local_nonprim) {
+        v1_container_state_free(state_local_nonprim);
+        state_local_nonprim = NULL;
+    }
     return NULL;
 
 }

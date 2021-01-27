@@ -100,6 +100,10 @@ v2beta2_metric_identifier_t *v2beta2_metric_identifier_parseFromJSON(cJSON *v2be
 
     return v2beta2_metric_identifier_local_var;
 end:
+    if (selector_local_nonprim) {
+        v1_label_selector_free(selector_local_nonprim);
+        selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -123,6 +123,10 @@ v1_node_affinity_t *v1_node_affinity_parseFromJSON(cJSON *v1_node_affinityJSON){
 
     return v1_node_affinity_local_var;
 end:
+    if (required_during_scheduling_ignored_during_execution_local_nonprim) {
+        v1_node_selector_free(required_during_scheduling_ignored_during_execution_local_nonprim);
+        required_during_scheduling_ignored_during_execution_local_nonprim = NULL;
+    }
     return NULL;
 
 }

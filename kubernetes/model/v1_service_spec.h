@@ -22,7 +22,7 @@ typedef struct v1_service_spec_t v1_service_spec_t;
 
 typedef struct v1_service_spec_t {
     char *cluster_ip; // string
-    list_t *external_i_ps; //primitive container
+    list_t *external_ips; //primitive container
     char *external_name; // string
     char *external_traffic_policy; // string
     int health_check_node_port; //numeric
@@ -41,7 +41,7 @@ typedef struct v1_service_spec_t {
 
 v1_service_spec_t *v1_service_spec_create(
     char *cluster_ip,
-    list_t *external_i_ps,
+    list_t *external_ips,
     char *external_name,
     char *external_traffic_policy,
     int health_check_node_port,

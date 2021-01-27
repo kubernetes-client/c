@@ -100,6 +100,10 @@ networking_v1beta1_http_ingress_path_t *networking_v1beta1_http_ingress_path_par
 
     return networking_v1beta1_http_ingress_path_local_var;
 end:
+    if (backend_local_nonprim) {
+        networking_v1beta1_ingress_backend_free(backend_local_nonprim);
+        backend_local_nonprim = NULL;
+    }
     return NULL;
 
 }

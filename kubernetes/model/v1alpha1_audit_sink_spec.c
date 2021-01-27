@@ -108,6 +108,14 @@ v1alpha1_audit_sink_spec_t *v1alpha1_audit_sink_spec_parseFromJSON(cJSON *v1alph
 
     return v1alpha1_audit_sink_spec_local_var;
 end:
+    if (policy_local_nonprim) {
+        v1alpha1_policy_free(policy_local_nonprim);
+        policy_local_nonprim = NULL;
+    }
+    if (webhook_local_nonprim) {
+        v1alpha1_webhook_free(webhook_local_nonprim);
+        webhook_local_nonprim = NULL;
+    }
     return NULL;
 
 }

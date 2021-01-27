@@ -149,6 +149,18 @@ v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_conf
 
     return v1_node_config_status_local_var;
 end:
+    if (active_local_nonprim) {
+        v1_node_config_source_free(active_local_nonprim);
+        active_local_nonprim = NULL;
+    }
+    if (assigned_local_nonprim) {
+        v1_node_config_source_free(assigned_local_nonprim);
+        assigned_local_nonprim = NULL;
+    }
+    if (last_known_good_local_nonprim) {
+        v1_node_config_source_free(last_known_good_local_nonprim);
+        last_known_good_local_nonprim = NULL;
+    }
     return NULL;
 
 }

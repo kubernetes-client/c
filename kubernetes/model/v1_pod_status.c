@@ -15,7 +15,7 @@ v1_pod_status_t *v1_pod_status_create(
     char *nominated_node_name,
     char *phase,
     char *pod_ip,
-    list_t *pod_i_ps,
+    list_t *pod_ips,
     char *qos_class,
     char *reason,
     char *start_time
@@ -33,7 +33,7 @@ v1_pod_status_t *v1_pod_status_create(
     v1_pod_status_local_var->nominated_node_name = nominated_node_name;
     v1_pod_status_local_var->phase = phase;
     v1_pod_status_local_var->pod_ip = pod_ip;
-    v1_pod_status_local_var->pod_i_ps = pod_i_ps;
+    v1_pod_status_local_var->pod_ips = pod_ips;
     v1_pod_status_local_var->qos_class = qos_class;
     v1_pod_status_local_var->reason = reason;
     v1_pod_status_local_var->start_time = start_time;
@@ -95,12 +95,12 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
         free(v1_pod_status->pod_ip);
         v1_pod_status->pod_ip = NULL;
     }
-    if (v1_pod_status->pod_i_ps) {
-        list_ForEach(listEntry, v1_pod_status->pod_i_ps) {
+    if (v1_pod_status->pod_ips) {
+        list_ForEach(listEntry, v1_pod_status->pod_ips) {
             v1_pod_ip_free(listEntry->data);
         }
-        list_free(v1_pod_status->pod_i_ps);
-        v1_pod_status->pod_i_ps = NULL;
+        list_free(v1_pod_status->pod_ips);
+        v1_pod_status->pod_ips = NULL;
     }
     if (v1_pod_status->qos_class) {
         free(v1_pod_status->qos_class);
@@ -240,21 +240,21 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
      } 
 
 
-    // v1_pod_status->pod_i_ps
-    if(v1_pod_status->pod_i_ps) { 
-    cJSON *pod_i_ps = cJSON_AddArrayToObject(item, "podIPs");
-    if(pod_i_ps == NULL) {
+    // v1_pod_status->pod_ips
+    if(v1_pod_status->pod_ips) { 
+    cJSON *pod_ips = cJSON_AddArrayToObject(item, "podIPs");
+    if(pod_ips == NULL) {
     goto fail; //nonprimitive container
     }
 
-    listEntry_t *pod_i_psListEntry;
-    if (v1_pod_status->pod_i_ps) {
-    list_ForEach(pod_i_psListEntry, v1_pod_status->pod_i_ps) {
-    cJSON *itemLocal = v1_pod_ip_convertToJSON(pod_i_psListEntry->data);
+    listEntry_t *pod_ipsListEntry;
+    if (v1_pod_status->pod_ips) {
+    list_ForEach(pod_ipsListEntry, v1_pod_status->pod_ips) {
+    cJSON *itemLocal = v1_pod_ip_convertToJSON(pod_ipsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(pod_i_ps, itemLocal);
+    cJSON_AddItemToArray(pod_ips, itemLocal);
     }
     }
      } 
@@ -428,25 +428,25 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     }
     }
 
-    // v1_pod_status->pod_i_ps
-    cJSON *pod_i_ps = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "podIPs");
-    list_t *pod_i_psList;
-    if (pod_i_ps) { 
-    cJSON *pod_i_ps_local_nonprimitive;
-    if(!cJSON_IsArray(pod_i_ps)){
+    // v1_pod_status->pod_ips
+    cJSON *pod_ips = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "podIPs");
+    list_t *pod_ipsList;
+    if (pod_ips) { 
+    cJSON *pod_ips_local_nonprimitive;
+    if(!cJSON_IsArray(pod_ips)){
         goto end; //nonprimitive container
     }
 
-    pod_i_psList = list_create();
+    pod_ipsList = list_create();
 
-    cJSON_ArrayForEach(pod_i_ps_local_nonprimitive,pod_i_ps )
+    cJSON_ArrayForEach(pod_ips_local_nonprimitive,pod_ips )
     {
-        if(!cJSON_IsObject(pod_i_ps_local_nonprimitive)){
+        if(!cJSON_IsObject(pod_ips_local_nonprimitive)){
             goto end;
         }
-        v1_pod_ip_t *pod_i_psItem = v1_pod_ip_parseFromJSON(pod_i_ps_local_nonprimitive);
+        v1_pod_ip_t *pod_ipsItem = v1_pod_ip_parseFromJSON(pod_ips_local_nonprimitive);
 
-        list_addElement(pod_i_psList, pod_i_psItem);
+        list_addElement(pod_ipsList, pod_ipsItem);
     }
     }
 
@@ -488,7 +488,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         nominated_node_name ? strdup(nominated_node_name->valuestring) : NULL,
         phase ? strdup(phase->valuestring) : NULL,
         pod_ip ? strdup(pod_ip->valuestring) : NULL,
-        pod_i_ps ? pod_i_psList : NULL,
+        pod_ips ? pod_ipsList : NULL,
         qos_class ? strdup(qos_class->valuestring) : NULL,
         reason ? strdup(reason->valuestring) : NULL,
         start_time ? strdup(start_time->valuestring) : NULL

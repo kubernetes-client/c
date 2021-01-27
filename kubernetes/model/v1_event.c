@@ -473,6 +473,26 @@ v1_event_t *v1_event_parseFromJSON(cJSON *v1_eventJSON){
 
     return v1_event_local_var;
 end:
+    if (involved_object_local_nonprim) {
+        v1_object_reference_free(involved_object_local_nonprim);
+        involved_object_local_nonprim = NULL;
+    }
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (related_local_nonprim) {
+        v1_object_reference_free(related_local_nonprim);
+        related_local_nonprim = NULL;
+    }
+    if (series_local_nonprim) {
+        v1_event_series_free(series_local_nonprim);
+        series_local_nonprim = NULL;
+    }
+    if (source_local_nonprim) {
+        v1_event_source_free(source_local_nonprim);
+        source_local_nonprim = NULL;
+    }
     return NULL;
 
 }

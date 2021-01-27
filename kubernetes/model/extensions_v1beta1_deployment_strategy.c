@@ -95,6 +95,10 @@ extensions_v1beta1_deployment_strategy_t *extensions_v1beta1_deployment_strategy
 
     return extensions_v1beta1_deployment_strategy_local_var;
 end:
+    if (rolling_update_local_nonprim) {
+        extensions_v1beta1_rolling_update_deployment_free(rolling_update_local_nonprim);
+        rolling_update_local_nonprim = NULL;
+    }
     return NULL;
 
 }

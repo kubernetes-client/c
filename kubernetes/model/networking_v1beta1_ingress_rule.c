@@ -95,6 +95,10 @@ networking_v1beta1_ingress_rule_t *networking_v1beta1_ingress_rule_parseFromJSON
 
     return networking_v1beta1_ingress_rule_local_var;
 end:
+    if (http_local_nonprim) {
+        networking_v1beta1_http_ingress_rule_value_free(http_local_nonprim);
+        http_local_nonprim = NULL;
+    }
     return NULL;
 
 }

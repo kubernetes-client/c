@@ -101,6 +101,10 @@ v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_parseFromJSON(cJSON
 
     return v1_preferred_scheduling_term_local_var;
 end:
+    if (preference_local_nonprim) {
+        v1_node_selector_term_free(preference_local_nonprim);
+        preference_local_nonprim = NULL;
+    }
     return NULL;
 
 }

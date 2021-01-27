@@ -124,6 +124,10 @@ v1_env_var_t *v1_env_var_parseFromJSON(cJSON *v1_env_varJSON){
 
     return v1_env_var_local_var;
 end:
+    if (value_from_local_nonprim) {
+        v1_env_var_source_free(value_from_local_nonprim);
+        value_from_local_nonprim = NULL;
+    }
     return NULL;
 
 }

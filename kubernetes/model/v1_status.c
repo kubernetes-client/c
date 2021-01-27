@@ -238,6 +238,14 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
     return v1_status_local_var;
 end:
+    if (details_local_nonprim) {
+        v1_status_details_free(details_local_nonprim);
+        details_local_nonprim = NULL;
+    }
+    if (metadata_local_nonprim) {
+        v1_list_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

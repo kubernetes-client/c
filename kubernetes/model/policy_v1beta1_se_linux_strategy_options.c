@@ -100,6 +100,10 @@ policy_v1beta1_se_linux_strategy_options_t *policy_v1beta1_se_linux_strategy_opt
 
     return policy_v1beta1_se_linux_strategy_options_local_var;
 end:
+    if (se_linux_options_local_nonprim) {
+        v1_se_linux_options_free(se_linux_options_local_nonprim);
+        se_linux_options_local_nonprim = NULL;
+    }
     return NULL;
 
 }

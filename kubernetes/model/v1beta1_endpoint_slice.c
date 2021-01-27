@@ -257,6 +257,10 @@ v1beta1_endpoint_slice_t *v1beta1_endpoint_slice_parseFromJSON(cJSON *v1beta1_en
 
     return v1beta1_endpoint_slice_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -20,7 +20,7 @@ typedef struct v1_policy_rule_t v1_policy_rule_t;
 
 typedef struct v1_policy_rule_t {
     list_t *api_groups; //primitive container
-    list_t *non_resource_ur_ls; //primitive container
+    list_t *non_resource_urls; //primitive container
     list_t *resource_names; //primitive container
     list_t *resources; //primitive container
     list_t *verbs; //primitive container
@@ -29,7 +29,7 @@ typedef struct v1_policy_rule_t {
 
 v1_policy_rule_t *v1_policy_rule_create(
     list_t *api_groups,
-    list_t *non_resource_ur_ls,
+    list_t *non_resource_urls,
     list_t *resource_names,
     list_t *resources,
     list_t *verbs

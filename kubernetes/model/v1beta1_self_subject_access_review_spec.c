@@ -98,6 +98,14 @@ v1beta1_self_subject_access_review_spec_t *v1beta1_self_subject_access_review_sp
 
     return v1beta1_self_subject_access_review_spec_local_var;
 end:
+    if (non_resource_attributes_local_nonprim) {
+        v1beta1_non_resource_attributes_free(non_resource_attributes_local_nonprim);
+        non_resource_attributes_local_nonprim = NULL;
+    }
+    if (resource_attributes_local_nonprim) {
+        v1beta1_resource_attributes_free(resource_attributes_local_nonprim);
+        resource_attributes_local_nonprim = NULL;
+    }
     return NULL;
 
 }

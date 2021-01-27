@@ -108,6 +108,14 @@ v2beta2_external_metric_status_t *v2beta2_external_metric_status_parseFromJSON(c
 
     return v2beta2_external_metric_status_local_var;
 end:
+    if (current_local_nonprim) {
+        v2beta2_metric_value_status_free(current_local_nonprim);
+        current_local_nonprim = NULL;
+    }
+    if (metric_local_nonprim) {
+        v2beta2_metric_identifier_free(metric_local_nonprim);
+        metric_local_nonprim = NULL;
+    }
     return NULL;
 
 }

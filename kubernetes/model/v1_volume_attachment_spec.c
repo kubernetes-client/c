@@ -134,6 +134,10 @@ v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(cJSON *v1_v
 
     return v1_volume_attachment_spec_local_var;
 end:
+    if (source_local_nonprim) {
+        v1_volume_attachment_source_free(source_local_nonprim);
+        source_local_nonprim = NULL;
+    }
     return NULL;
 
 }

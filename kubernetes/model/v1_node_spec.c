@@ -9,7 +9,7 @@ v1_node_spec_t *v1_node_spec_create(
     v1_node_config_source_t *config_source,
     char *external_id,
     char *pod_cidr,
-    list_t *pod_cid_rs,
+    list_t *pod_cidrs,
     char *provider_id,
     list_t *taints,
     int unschedulable
@@ -21,7 +21,7 @@ v1_node_spec_t *v1_node_spec_create(
     v1_node_spec_local_var->config_source = config_source;
     v1_node_spec_local_var->external_id = external_id;
     v1_node_spec_local_var->pod_cidr = pod_cidr;
-    v1_node_spec_local_var->pod_cid_rs = pod_cid_rs;
+    v1_node_spec_local_var->pod_cidrs = pod_cidrs;
     v1_node_spec_local_var->provider_id = provider_id;
     v1_node_spec_local_var->taints = taints;
     v1_node_spec_local_var->unschedulable = unschedulable;
@@ -47,12 +47,12 @@ void v1_node_spec_free(v1_node_spec_t *v1_node_spec) {
         free(v1_node_spec->pod_cidr);
         v1_node_spec->pod_cidr = NULL;
     }
-    if (v1_node_spec->pod_cid_rs) {
-        list_ForEach(listEntry, v1_node_spec->pod_cid_rs) {
+    if (v1_node_spec->pod_cidrs) {
+        list_ForEach(listEntry, v1_node_spec->pod_cidrs) {
             free(listEntry->data);
         }
-        list_free(v1_node_spec->pod_cid_rs);
-        v1_node_spec->pod_cid_rs = NULL;
+        list_free(v1_node_spec->pod_cidrs);
+        v1_node_spec->pod_cidrs = NULL;
     }
     if (v1_node_spec->provider_id) {
         free(v1_node_spec->provider_id);
@@ -100,16 +100,16 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
      } 
 
 
-    // v1_node_spec->pod_cid_rs
-    if(v1_node_spec->pod_cid_rs) { 
-    cJSON *pod_cid_rs = cJSON_AddArrayToObject(item, "podCIDRs");
-    if(pod_cid_rs == NULL) {
+    // v1_node_spec->pod_cidrs
+    if(v1_node_spec->pod_cidrs) { 
+    cJSON *pod_cidrs = cJSON_AddArrayToObject(item, "podCIDRs");
+    if(pod_cidrs == NULL) {
         goto fail; //primitive container
     }
 
-    listEntry_t *pod_cid_rsListEntry;
-    list_ForEach(pod_cid_rsListEntry, v1_node_spec->pod_cid_rs) {
-    if(cJSON_AddStringToObject(pod_cid_rs, "", (char*)pod_cid_rsListEntry->data) == NULL)
+    listEntry_t *pod_cidrsListEntry;
+    list_ForEach(pod_cidrsListEntry, v1_node_spec->pod_cidrs) {
+    if(cJSON_AddStringToObject(pod_cidrs, "", (char*)pod_cidrsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -189,23 +189,23 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     }
     }
 
-    // v1_node_spec->pod_cid_rs
-    cJSON *pod_cid_rs = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "podCIDRs");
-    list_t *pod_cid_rsList;
-    if (pod_cid_rs) { 
-    cJSON *pod_cid_rs_local;
-    if(!cJSON_IsArray(pod_cid_rs)) {
+    // v1_node_spec->pod_cidrs
+    cJSON *pod_cidrs = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "podCIDRs");
+    list_t *pod_cidrsList;
+    if (pod_cidrs) { 
+    cJSON *pod_cidrs_local;
+    if(!cJSON_IsArray(pod_cidrs)) {
         goto end;//primitive container
     }
-    pod_cid_rsList = list_create();
+    pod_cidrsList = list_create();
 
-    cJSON_ArrayForEach(pod_cid_rs_local, pod_cid_rs)
+    cJSON_ArrayForEach(pod_cidrs_local, pod_cidrs)
     {
-        if(!cJSON_IsString(pod_cid_rs_local))
+        if(!cJSON_IsString(pod_cidrs_local))
         {
             goto end;
         }
-        list_addElement(pod_cid_rsList , strdup(pod_cid_rs_local->valuestring));
+        list_addElement(pod_cidrsList , strdup(pod_cidrs_local->valuestring));
     }
     }
 
@@ -254,7 +254,7 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
         config_source ? config_source_local_nonprim : NULL,
         external_id ? strdup(external_id->valuestring) : NULL,
         pod_cidr ? strdup(pod_cidr->valuestring) : NULL,
-        pod_cid_rs ? pod_cid_rsList : NULL,
+        pod_cidrs ? pod_cidrsList : NULL,
         provider_id ? strdup(provider_id->valuestring) : NULL,
         taints ? taintsList : NULL,
         unschedulable ? unschedulable->valueint : 0
@@ -262,6 +262,10 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     return v1_node_spec_local_var;
 end:
+    if (config_source_local_nonprim) {
+        v1_node_config_source_free(config_source_local_nonprim);
+        config_source_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -151,6 +151,14 @@ v1beta1_csi_driver_t *v1beta1_csi_driver_parseFromJSON(cJSON *v1beta1_csi_driver
 
     return v1beta1_csi_driver_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        v1beta1_csi_driver_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
     return NULL;
 
 }

@@ -146,6 +146,14 @@ policy_v1beta1_pod_security_policy_t *policy_v1beta1_pod_security_policy_parseFr
 
     return policy_v1beta1_pod_security_policy_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (spec_local_nonprim) {
+        policy_v1beta1_pod_security_policy_spec_free(spec_local_nonprim);
+        spec_local_nonprim = NULL;
+    }
     return NULL;
 
 }

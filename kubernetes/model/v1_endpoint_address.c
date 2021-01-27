@@ -148,6 +148,10 @@ v1_endpoint_address_t *v1_endpoint_address_parseFromJSON(cJSON *v1_endpoint_addr
 
     return v1_endpoint_address_local_var;
 end:
+    if (target_ref_local_nonprim) {
+        v1_object_reference_free(target_ref_local_nonprim);
+        target_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

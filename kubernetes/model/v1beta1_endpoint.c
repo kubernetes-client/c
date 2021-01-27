@@ -229,6 +229,14 @@ v1beta1_endpoint_t *v1beta1_endpoint_parseFromJSON(cJSON *v1beta1_endpointJSON){
 
     return v1beta1_endpoint_local_var;
 end:
+    if (conditions_local_nonprim) {
+        v1beta1_endpoint_conditions_free(conditions_local_nonprim);
+        conditions_local_nonprim = NULL;
+    }
+    if (target_ref_local_nonprim) {
+        v1_object_reference_free(target_ref_local_nonprim);
+        target_ref_local_nonprim = NULL;
+    }
     return NULL;
 
 }

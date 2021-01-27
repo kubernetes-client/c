@@ -175,6 +175,14 @@ v1alpha1_flow_schema_spec_t *v1alpha1_flow_schema_spec_parseFromJSON(cJSON *v1al
 
     return v1alpha1_flow_schema_spec_local_var;
 end:
+    if (distinguisher_method_local_nonprim) {
+        v1alpha1_flow_distinguisher_method_free(distinguisher_method_local_nonprim);
+        distinguisher_method_local_nonprim = NULL;
+    }
+    if (priority_level_configuration_local_nonprim) {
+        v1alpha1_priority_level_configuration_reference_free(priority_level_configuration_local_nonprim);
+        priority_level_configuration_local_nonprim = NULL;
+    }
     return NULL;
 
 }

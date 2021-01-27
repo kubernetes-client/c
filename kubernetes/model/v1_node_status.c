@@ -514,6 +514,18 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     return v1_node_status_local_var;
 end:
+    if (config_local_nonprim) {
+        v1_node_config_status_free(config_local_nonprim);
+        config_local_nonprim = NULL;
+    }
+    if (daemon_endpoints_local_nonprim) {
+        v1_node_daemon_endpoints_free(daemon_endpoints_local_nonprim);
+        daemon_endpoints_local_nonprim = NULL;
+    }
+    if (node_info_local_nonprim) {
+        v1_node_system_info_free(node_info_local_nonprim);
+        node_info_local_nonprim = NULL;
+    }
     return NULL;
 
 }

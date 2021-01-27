@@ -230,6 +230,10 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
 
     return v1_delete_options_local_var;
 end:
+    if (preconditions_local_nonprim) {
+        v1_preconditions_free(preconditions_local_nonprim);
+        preconditions_local_nonprim = NULL;
+    }
     return NULL;
 
 }

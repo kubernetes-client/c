@@ -125,6 +125,18 @@ v1_container_state_t *v1_container_state_parseFromJSON(cJSON *v1_container_state
 
     return v1_container_state_local_var;
 end:
+    if (running_local_nonprim) {
+        v1_container_state_running_free(running_local_nonprim);
+        running_local_nonprim = NULL;
+    }
+    if (terminated_local_nonprim) {
+        v1_container_state_terminated_free(terminated_local_nonprim);
+        terminated_local_nonprim = NULL;
+    }
+    if (waiting_local_nonprim) {
+        v1_container_state_waiting_free(waiting_local_nonprim);
+        waiting_local_nonprim = NULL;
+    }
     return NULL;
 
 }

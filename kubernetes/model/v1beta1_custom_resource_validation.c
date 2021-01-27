@@ -71,6 +71,10 @@ v1beta1_custom_resource_validation_t *v1beta1_custom_resource_validation_parseFr
 
     return v1beta1_custom_resource_validation_local_var;
 end:
+    if (open_apiv3_schema_local_nonprim) {
+        v1beta1_json_schema_props_free(open_apiv3_schema_local_nonprim);
+        open_apiv3_schema_local_nonprim = NULL;
+    }
     return NULL;
 
 }

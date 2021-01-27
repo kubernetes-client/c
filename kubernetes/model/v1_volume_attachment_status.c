@@ -178,6 +178,14 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
 
     return v1_volume_attachment_status_local_var;
 end:
+    if (attach_error_local_nonprim) {
+        v1_volume_error_free(attach_error_local_nonprim);
+        attach_error_local_nonprim = NULL;
+    }
+    if (detach_error_local_nonprim) {
+        v1_volume_error_free(detach_error_local_nonprim);
+        detach_error_local_nonprim = NULL;
+    }
     return NULL;
 
 }

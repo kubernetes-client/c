@@ -125,6 +125,18 @@ v1_affinity_t *v1_affinity_parseFromJSON(cJSON *v1_affinityJSON){
 
     return v1_affinity_local_var;
 end:
+    if (node_affinity_local_nonprim) {
+        v1_node_affinity_free(node_affinity_local_nonprim);
+        node_affinity_local_nonprim = NULL;
+    }
+    if (pod_affinity_local_nonprim) {
+        v1_pod_affinity_free(pod_affinity_local_nonprim);
+        pod_affinity_local_nonprim = NULL;
+    }
+    if (pod_anti_affinity_local_nonprim) {
+        v1_pod_anti_affinity_free(pod_anti_affinity_local_nonprim);
+        pod_anti_affinity_local_nonprim = NULL;
+    }
     return NULL;
 
 }

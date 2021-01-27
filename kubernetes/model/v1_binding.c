@@ -151,6 +151,14 @@ v1_binding_t *v1_binding_parseFromJSON(cJSON *v1_bindingJSON){
 
     return v1_binding_local_var;
 end:
+    if (metadata_local_nonprim) {
+        v1_object_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    if (target_local_nonprim) {
+        v1_object_reference_free(target_local_nonprim);
+        target_local_nonprim = NULL;
+    }
     return NULL;
 
 }
