@@ -50,8 +50,10 @@ void makeResourcePath(char* path, genericClient_t *client, const char* name) {
     }
 }
 
-char* callInternal(genericClient_t *client, const char* path, const char* method, const char* body) {
-    apiClient_invoke(client->client, path, NULL, NULL, NULL, NULL, NULL, body, method);
+char* callInternal(genericClient_t *client,
+                   const char *path, list_t *queryParameters, list_t *headerParameters, list_t *formParameters, list_t *headerType, list_t *contentType, const char *body, const char *method)
+{
+    apiClient_invoke(client->client, path, queryParameters, headerParameters, formParameters, headerType, contentType, body, method);
 
     if (client->client->response_code == 200) {
         printf("%s\n","OK");
@@ -71,18 +73,23 @@ char* callInternal(genericClient_t *client, const char* path, const char* method
     return elementToReturn;
 }
 
+char *callSimplifiedInternal(genericClient_t *client, const char *path, const char *method, const char *body)
+{
+    return callInternal(client, path, NULL, NULL, NULL, NULL, NULL, body, method);
+}
+
 char* Generic_readNamespacedResource(genericClient_t *client, const char *namespace, const char *name) {
     char path[128];
 
     makeNamespacedResourcePath(path, client, namespace, name);
-    return callInternal(client, path, "GET", NULL);
+    return callSimplifiedInternal(client, path, "GET", NULL);
 }
 
 char* Generic_readResource(genericClient_t *client, const char *name) {
     char path[128];
 
     makeResourcePath(path, client, name);
-    return callInternal(client, path, "GET", NULL);
+    return callSimplifiedInternal(client, path, "GET", NULL);
 }
 
 char *Generic_listNamespaced(genericClient_t *client, const char *namespace) {
@@ -94,7 +101,7 @@ char *Generic_listNamespaced(genericClient_t *client, const char *namespace) {
         snprintf(path, 128, "/api/%s/namespaces/%s/%s",
                  client->apiVersion, namespace, client->resourcePlural);
     }
-    return callInternal(client, path, "GET", NULL);
+    return callSimplifiedInternal(client, path, "GET", NULL);
 }
 
 char *Generic_list(genericClient_t *client) {
@@ -106,42 +113,59 @@ char *Generic_list(genericClient_t *client) {
         snprintf(path, 128, "/api/%s/%s",
                  client->apiVersion, client->resourcePlural);
     }
-    return callInternal(client, path, "GET", NULL);
+    return callSimplifiedInternal(client, path, "GET", NULL);
 }
 
 char* Generic_deleteNamespacedResource(genericClient_t *client, const char *namespace, const char *name) {
     char path[128];
     makeNamespacedResourcePath(path, client, namespace, name);
-    return callInternal(client, path, "DELETE", NULL);
+    return callSimplifiedInternal(client, path, "DELETE", NULL);
 }
 
 char* Generic_deleteResource(genericClient_t *client, const char* name) {
     char path[128];
     makeResourcePath(path, client, name);
-    return callInternal(client, path, "DELETE", NULL);
+    return callSimplifiedInternal(client, path, "DELETE", NULL);
 }
 
 char* Generic_createNamespacedResource(genericClient_t *client, const char *ns, const char* body) {
     char path[128];
     makeNamespacedResourcePath(path, client, ns, "");
-    return callInternal(client, path, "POST", body);
+    return callSimplifiedInternal(client, path, "POST", body);
 }
 
 char* Generic_createResource(genericClient_t *client, const char* body) {
     char path[128];
     makeResourcePath(path, client, "");
     printf("%s\n", path);
-    return callInternal(client, path, "POST", body);
+    return callSimplifiedInternal(client, path, "POST", body);
 }
 
 char* Generic_replaceNamespacedResource(genericClient_t *client, const char *ns, const char *name, const char* body) {
     char path[128];
     makeNamespacedResourcePath(path, client, ns, name);
-    return callInternal(client, path, "PUT", body);
+    return callSimplifiedInternal(client, path, "PUT", body);
 }
 
 char* Generic_replaceResource(genericClient_t *client, const char *name, const char* body) {
     char path[128];
     makeResourcePath(path, client, name);
-    return callInternal(client, path, "PUT", body);
+    return callSimplifiedInternal(client, path, "PUT", body);
+}
+
+char* Generic_patchNamespacedResource(genericClient_t * client,
+                                      const char *ns,
+                                      const char *name, const char *body, list_t *queryParameters, list_t *headerParameters, list_t *formParameters, list_t *headerType, list_t *contentType)
+{
+    char path[128];
+    makeNamespacedResourcePath(path, client, ns, name);
+    return callInternal(client, path, queryParameters, headerParameters, formParameters, headerType, contentType, body, "PATCH");
+}
+
+char* Generic_patchResource(genericClient_t * client,
+                            const char *name, const char *body, list_t *queryParameters, list_t *headerParameters, list_t *formParameters, list_t *headerType, list_t *contentType)
+{
+    char path[128];
+    makeResourcePath(path, client, name);
+    return callInternal(client, path, queryParameters, headerParameters, formParameters, headerType, contentType, body, "PATCH");
 }

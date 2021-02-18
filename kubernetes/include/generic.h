@@ -11,7 +11,7 @@ typedef struct genericClient_t {
     apiClient_t *client;
     char *apiGroup;
     char *apiVersion;
-    char *resourcePlural; 
+    char *resourcePlural;
 } genericClient_t;
 
 genericClient_t* genericClient_create(apiClient_t *client, const char *apiGroup, const char* apiVersion, const char* resourcePlural);
@@ -31,6 +31,11 @@ char* Generic_createResource(genericClient_t *client, const char* body);
 
 char* Generic_replaceNamespacedResource(genericClient_t *client, const char *ns, const char *name, const char* body);
 char* Generic_replaceResource(genericClient_t *client, const char *name, const char* body);
+
+char* Generic_patchNamespacedResource(genericClient_t *client, const char *ns, const char *name, const char *body, list_t *queryParameters, list_t *headerParameters, list_t *formParameters,
+                                      list_t *headerType, list_t *contentType);
+char* Generic_patchResource(genericClient_t *client, const char *name, const char *body, list_t *queryParameters, list_t *headerParameters, list_t *formParameters, list_t *headerType,
+                            list_t *contentType);
 
 #ifdef  __cplusplus
 }
