@@ -46,13 +46,24 @@ int main(int argc, char *argv[])
     printf("%s\n", update);
     free(update);
 
+    const char *patchBody = "[{\"op\": \"replace\", \"path\": \"/metadata/labels/foo\", \"value\": \"qux\" }]";
+    list_t *contentType = list_create();
+    // Kubernetes supports multiple content types:
+    list_addElement(contentType, "application/json-patch+json");
+    // list_addElement(contentType, "application/merge-patch+json");
+    // list_addElement(contentType, "application/strategic-merge-patch+json");
+    // list_addElement(contentType, "application/apply-patch+yaml");
+    char *patch = Generic_patchResource(genericClient, "test", patchBody, NULL, NULL, NULL, NULL, contentType);
+    printf("%s\n", patch);
+    list_free(contentType);
+    free(patch);
+
     char *del = Generic_deleteResource(genericClient, "test");
     printf("%s\n", del);
     free(del);
 
     genericClient_free(genericClient);
     genericClient = NULL;
-
 
     apiClient_free(apiClient);
     apiClient = NULL;
