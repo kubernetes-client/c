@@ -58,6 +58,1666 @@ Once compiled, you can run it with ``` ./main ```
 
 Note: You don't need to specify includes for models and include folder seperately as they are path linked. You just have to import the api.h file in your code, the include linking will work.
 
+## Documentation for API Endpoints
+
+All URIs are relative to *http://localhost*
+
+Category | Method | HTTP request | Description
+------------ | ------------- | ------------- | -------------
+*AdmissionregistrationAPI* | [**AdmissionregistrationAPI_getAPIGroup**](docs/AdmissionregistrationAPI.md#AdmissionregistrationAPI_getAPIGroup) | **GET** /apis/admissionregistration.k8s.io/ | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_createMutatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_createMutatingWebhookConfiguration) | **POST** /apis/admissionregistration.k8s.io/v1/mutatingwebhookconfigurations | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_createValidatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_createValidatingWebhookConfiguration) | **POST** /apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration) | **DELETE** /apis/admissionregistration.k8s.io/v1/mutatingwebhookconfigurations | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration) | **DELETE** /apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_deleteMutatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_deleteMutatingWebhookConfiguration) | **DELETE** /apis/admissionregistration.k8s.io/v1/mutatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_deleteValidatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_deleteValidatingWebhookConfiguration) | **DELETE** /apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_getAPIResources**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_getAPIResources) | **GET** /apis/admissionregistration.k8s.io/v1/ | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_listMutatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_listMutatingWebhookConfiguration) | **GET** /apis/admissionregistration.k8s.io/v1/mutatingwebhookconfigurations | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_listValidatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_listValidatingWebhookConfiguration) | **GET** /apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_patchMutatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_patchMutatingWebhookConfiguration) | **PATCH** /apis/admissionregistration.k8s.io/v1/mutatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_patchValidatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_patchValidatingWebhookConfiguration) | **PATCH** /apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_readMutatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_readMutatingWebhookConfiguration) | **GET** /apis/admissionregistration.k8s.io/v1/mutatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_readValidatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_readValidatingWebhookConfiguration) | **GET** /apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_replaceMutatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_replaceMutatingWebhookConfiguration) | **PUT** /apis/admissionregistration.k8s.io/v1/mutatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1API* | [**AdmissionregistrationV1API_replaceValidatingWebhookConfiguration**](docs/AdmissionregistrationV1API.md#AdmissionregistrationV1API_replaceValidatingWebhookConfiguration) | **PUT** /apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_createMutatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_createMutatingWebhookConfiguration) | **POST** /apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_createValidatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_createValidatingWebhookConfiguration) | **POST** /apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_deleteCollectionMutatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteCollectionMutatingWebhookConfiguration) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_deleteCollectionValidatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteCollectionValidatingWebhookConfiguration) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_deleteMutatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteMutatingWebhookConfiguration) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_deleteValidatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteValidatingWebhookConfiguration) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_getAPIResources**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_getAPIResources) | **GET** /apis/admissionregistration.k8s.io/v1beta1/ | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_listMutatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_listMutatingWebhookConfiguration) | **GET** /apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_listValidatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_listValidatingWebhookConfiguration) | **GET** /apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_patchMutatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_patchMutatingWebhookConfiguration) | **PATCH** /apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_patchValidatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_patchValidatingWebhookConfiguration) | **PATCH** /apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_readMutatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_readMutatingWebhookConfiguration) | **GET** /apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_readValidatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_readValidatingWebhookConfiguration) | **GET** /apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_replaceMutatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_replaceMutatingWebhookConfiguration) | **PUT** /apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name} | 
+*AdmissionregistrationV1beta1API* | [**AdmissionregistrationV1beta1API_replaceValidatingWebhookConfiguration**](docs/AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_replaceValidatingWebhookConfiguration) | **PUT** /apis/admissionregistration.k8s.io/v1beta1/validatingwebhookconfigurations/{name} | 
+*ApiextensionsAPI* | [**ApiextensionsAPI_getAPIGroup**](docs/ApiextensionsAPI.md#ApiextensionsAPI_getAPIGroup) | **GET** /apis/apiextensions.k8s.io/ | 
+*ApiextensionsV1API* | [**ApiextensionsV1API_createCustomResourceDefinition**](docs/ApiextensionsV1API.md#ApiextensionsV1API_createCustomResourceDefinition) | **POST** /apis/apiextensions.k8s.io/v1/customresourcedefinitions | 
+*ApiextensionsV1API* | [**ApiextensionsV1API_deleteCollectionCustomResourceDefinition**](docs/ApiextensionsV1API.md#ApiextensionsV1API_deleteCollectionCustomResourceDefinition) | **DELETE** /apis/apiextensions.k8s.io/v1/customresourcedefinitions | 
+*ApiextensionsV1API* | [**ApiextensionsV1API_deleteCustomResourceDefinition**](docs/ApiextensionsV1API.md#ApiextensionsV1API_deleteCustomResourceDefinition) | **DELETE** /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name} | 
+*ApiextensionsV1API* | [**ApiextensionsV1API_getAPIResources**](docs/ApiextensionsV1API.md#ApiextensionsV1API_getAPIResources) | **GET** /apis/apiextensions.k8s.io/v1/ | 
+*ApiextensionsV1API* | [**ApiextensionsV1API_listCustomResourceDefinition**](docs/ApiextensionsV1API.md#ApiextensionsV1API_listCustomResourceDefinition) | **GET** /apis/apiextensions.k8s.io/v1/customresourcedefinitions | 
+*ApiextensionsV1API* | [**ApiextensionsV1API_patchCustomResourceDefinition**](docs/ApiextensionsV1API.md#ApiextensionsV1API_patchCustomResourceDefinition) | **PATCH** /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name} | 
+*ApiextensionsV1API* | [**ApiextensionsV1API_patchCustomResourceDefinitionStatus**](docs/ApiextensionsV1API.md#ApiextensionsV1API_patchCustomResourceDefinitionStatus) | **PATCH** /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}/status | 
+*ApiextensionsV1API* | [**ApiextensionsV1API_readCustomResourceDefinition**](docs/ApiextensionsV1API.md#ApiextensionsV1API_readCustomResourceDefinition) | **GET** /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name} | 
+*ApiextensionsV1API* | [**ApiextensionsV1API_readCustomResourceDefinitionStatus**](docs/ApiextensionsV1API.md#ApiextensionsV1API_readCustomResourceDefinitionStatus) | **GET** /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}/status | 
+*ApiextensionsV1API* | [**ApiextensionsV1API_replaceCustomResourceDefinition**](docs/ApiextensionsV1API.md#ApiextensionsV1API_replaceCustomResourceDefinition) | **PUT** /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name} | 
+*ApiextensionsV1API* | [**ApiextensionsV1API_replaceCustomResourceDefinitionStatus**](docs/ApiextensionsV1API.md#ApiextensionsV1API_replaceCustomResourceDefinitionStatus) | **PUT** /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}/status | 
+*ApiextensionsV1beta1API* | [**ApiextensionsV1beta1API_createCustomResourceDefinition**](docs/ApiextensionsV1beta1API.md#ApiextensionsV1beta1API_createCustomResourceDefinition) | **POST** /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions | 
+*ApiextensionsV1beta1API* | [**ApiextensionsV1beta1API_deleteCollectionCustomResourceDefinition**](docs/ApiextensionsV1beta1API.md#ApiextensionsV1beta1API_deleteCollectionCustomResourceDefinition) | **DELETE** /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions | 
+*ApiextensionsV1beta1API* | [**ApiextensionsV1beta1API_deleteCustomResourceDefinition**](docs/ApiextensionsV1beta1API.md#ApiextensionsV1beta1API_deleteCustomResourceDefinition) | **DELETE** /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name} | 
+*ApiextensionsV1beta1API* | [**ApiextensionsV1beta1API_getAPIResources**](docs/ApiextensionsV1beta1API.md#ApiextensionsV1beta1API_getAPIResources) | **GET** /apis/apiextensions.k8s.io/v1beta1/ | 
+*ApiextensionsV1beta1API* | [**ApiextensionsV1beta1API_listCustomResourceDefinition**](docs/ApiextensionsV1beta1API.md#ApiextensionsV1beta1API_listCustomResourceDefinition) | **GET** /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions | 
+*ApiextensionsV1beta1API* | [**ApiextensionsV1beta1API_patchCustomResourceDefinition**](docs/ApiextensionsV1beta1API.md#ApiextensionsV1beta1API_patchCustomResourceDefinition) | **PATCH** /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name} | 
+*ApiextensionsV1beta1API* | [**ApiextensionsV1beta1API_patchCustomResourceDefinitionStatus**](docs/ApiextensionsV1beta1API.md#ApiextensionsV1beta1API_patchCustomResourceDefinitionStatus) | **PATCH** /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}/status | 
+*ApiextensionsV1beta1API* | [**ApiextensionsV1beta1API_readCustomResourceDefinition**](docs/ApiextensionsV1beta1API.md#ApiextensionsV1beta1API_readCustomResourceDefinition) | **GET** /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name} | 
+*ApiextensionsV1beta1API* | [**ApiextensionsV1beta1API_readCustomResourceDefinitionStatus**](docs/ApiextensionsV1beta1API.md#ApiextensionsV1beta1API_readCustomResourceDefinitionStatus) | **GET** /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}/status | 
+*ApiextensionsV1beta1API* | [**ApiextensionsV1beta1API_replaceCustomResourceDefinition**](docs/ApiextensionsV1beta1API.md#ApiextensionsV1beta1API_replaceCustomResourceDefinition) | **PUT** /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name} | 
+*ApiextensionsV1beta1API* | [**ApiextensionsV1beta1API_replaceCustomResourceDefinitionStatus**](docs/ApiextensionsV1beta1API.md#ApiextensionsV1beta1API_replaceCustomResourceDefinitionStatus) | **PUT** /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}/status | 
+*ApiregistrationAPI* | [**ApiregistrationAPI_getAPIGroup**](docs/ApiregistrationAPI.md#ApiregistrationAPI_getAPIGroup) | **GET** /apis/apiregistration.k8s.io/ | 
+*ApiregistrationV1API* | [**ApiregistrationV1API_createAPIService**](docs/ApiregistrationV1API.md#ApiregistrationV1API_createAPIService) | **POST** /apis/apiregistration.k8s.io/v1/apiservices | 
+*ApiregistrationV1API* | [**ApiregistrationV1API_deleteAPIService**](docs/ApiregistrationV1API.md#ApiregistrationV1API_deleteAPIService) | **DELETE** /apis/apiregistration.k8s.io/v1/apiservices/{name} | 
+*ApiregistrationV1API* | [**ApiregistrationV1API_deleteCollectionAPIService**](docs/ApiregistrationV1API.md#ApiregistrationV1API_deleteCollectionAPIService) | **DELETE** /apis/apiregistration.k8s.io/v1/apiservices | 
+*ApiregistrationV1API* | [**ApiregistrationV1API_getAPIResources**](docs/ApiregistrationV1API.md#ApiregistrationV1API_getAPIResources) | **GET** /apis/apiregistration.k8s.io/v1/ | 
+*ApiregistrationV1API* | [**ApiregistrationV1API_listAPIService**](docs/ApiregistrationV1API.md#ApiregistrationV1API_listAPIService) | **GET** /apis/apiregistration.k8s.io/v1/apiservices | 
+*ApiregistrationV1API* | [**ApiregistrationV1API_patchAPIService**](docs/ApiregistrationV1API.md#ApiregistrationV1API_patchAPIService) | **PATCH** /apis/apiregistration.k8s.io/v1/apiservices/{name} | 
+*ApiregistrationV1API* | [**ApiregistrationV1API_patchAPIServiceStatus**](docs/ApiregistrationV1API.md#ApiregistrationV1API_patchAPIServiceStatus) | **PATCH** /apis/apiregistration.k8s.io/v1/apiservices/{name}/status | 
+*ApiregistrationV1API* | [**ApiregistrationV1API_readAPIService**](docs/ApiregistrationV1API.md#ApiregistrationV1API_readAPIService) | **GET** /apis/apiregistration.k8s.io/v1/apiservices/{name} | 
+*ApiregistrationV1API* | [**ApiregistrationV1API_readAPIServiceStatus**](docs/ApiregistrationV1API.md#ApiregistrationV1API_readAPIServiceStatus) | **GET** /apis/apiregistration.k8s.io/v1/apiservices/{name}/status | 
+*ApiregistrationV1API* | [**ApiregistrationV1API_replaceAPIService**](docs/ApiregistrationV1API.md#ApiregistrationV1API_replaceAPIService) | **PUT** /apis/apiregistration.k8s.io/v1/apiservices/{name} | 
+*ApiregistrationV1API* | [**ApiregistrationV1API_replaceAPIServiceStatus**](docs/ApiregistrationV1API.md#ApiregistrationV1API_replaceAPIServiceStatus) | **PUT** /apis/apiregistration.k8s.io/v1/apiservices/{name}/status | 
+*ApiregistrationV1beta1API* | [**ApiregistrationV1beta1API_createAPIService**](docs/ApiregistrationV1beta1API.md#ApiregistrationV1beta1API_createAPIService) | **POST** /apis/apiregistration.k8s.io/v1beta1/apiservices | 
+*ApiregistrationV1beta1API* | [**ApiregistrationV1beta1API_deleteAPIService**](docs/ApiregistrationV1beta1API.md#ApiregistrationV1beta1API_deleteAPIService) | **DELETE** /apis/apiregistration.k8s.io/v1beta1/apiservices/{name} | 
+*ApiregistrationV1beta1API* | [**ApiregistrationV1beta1API_deleteCollectionAPIService**](docs/ApiregistrationV1beta1API.md#ApiregistrationV1beta1API_deleteCollectionAPIService) | **DELETE** /apis/apiregistration.k8s.io/v1beta1/apiservices | 
+*ApiregistrationV1beta1API* | [**ApiregistrationV1beta1API_getAPIResources**](docs/ApiregistrationV1beta1API.md#ApiregistrationV1beta1API_getAPIResources) | **GET** /apis/apiregistration.k8s.io/v1beta1/ | 
+*ApiregistrationV1beta1API* | [**ApiregistrationV1beta1API_listAPIService**](docs/ApiregistrationV1beta1API.md#ApiregistrationV1beta1API_listAPIService) | **GET** /apis/apiregistration.k8s.io/v1beta1/apiservices | 
+*ApiregistrationV1beta1API* | [**ApiregistrationV1beta1API_patchAPIService**](docs/ApiregistrationV1beta1API.md#ApiregistrationV1beta1API_patchAPIService) | **PATCH** /apis/apiregistration.k8s.io/v1beta1/apiservices/{name} | 
+*ApiregistrationV1beta1API* | [**ApiregistrationV1beta1API_patchAPIServiceStatus**](docs/ApiregistrationV1beta1API.md#ApiregistrationV1beta1API_patchAPIServiceStatus) | **PATCH** /apis/apiregistration.k8s.io/v1beta1/apiservices/{name}/status | 
+*ApiregistrationV1beta1API* | [**ApiregistrationV1beta1API_readAPIService**](docs/ApiregistrationV1beta1API.md#ApiregistrationV1beta1API_readAPIService) | **GET** /apis/apiregistration.k8s.io/v1beta1/apiservices/{name} | 
+*ApiregistrationV1beta1API* | [**ApiregistrationV1beta1API_readAPIServiceStatus**](docs/ApiregistrationV1beta1API.md#ApiregistrationV1beta1API_readAPIServiceStatus) | **GET** /apis/apiregistration.k8s.io/v1beta1/apiservices/{name}/status | 
+*ApiregistrationV1beta1API* | [**ApiregistrationV1beta1API_replaceAPIService**](docs/ApiregistrationV1beta1API.md#ApiregistrationV1beta1API_replaceAPIService) | **PUT** /apis/apiregistration.k8s.io/v1beta1/apiservices/{name} | 
+*ApiregistrationV1beta1API* | [**ApiregistrationV1beta1API_replaceAPIServiceStatus**](docs/ApiregistrationV1beta1API.md#ApiregistrationV1beta1API_replaceAPIServiceStatus) | **PUT** /apis/apiregistration.k8s.io/v1beta1/apiservices/{name}/status | 
+*ApisAPI* | [**ApisAPI_getAPIVersions**](docs/ApisAPI.md#ApisAPI_getAPIVersions) | **GET** /apis/ | 
+*AppsAPI* | [**AppsAPI_getAPIGroup**](docs/AppsAPI.md#AppsAPI_getAPIGroup) | **GET** /apis/apps/ | 
+*AppsV1API* | [**AppsV1API_createNamespacedControllerRevision**](docs/AppsV1API.md#AppsV1API_createNamespacedControllerRevision) | **POST** /apis/apps/v1/namespaces/{namespace}/controllerrevisions | 
+*AppsV1API* | [**AppsV1API_createNamespacedDaemonSet**](docs/AppsV1API.md#AppsV1API_createNamespacedDaemonSet) | **POST** /apis/apps/v1/namespaces/{namespace}/daemonsets | 
+*AppsV1API* | [**AppsV1API_createNamespacedDeployment**](docs/AppsV1API.md#AppsV1API_createNamespacedDeployment) | **POST** /apis/apps/v1/namespaces/{namespace}/deployments | 
+*AppsV1API* | [**AppsV1API_createNamespacedReplicaSet**](docs/AppsV1API.md#AppsV1API_createNamespacedReplicaSet) | **POST** /apis/apps/v1/namespaces/{namespace}/replicasets | 
+*AppsV1API* | [**AppsV1API_createNamespacedStatefulSet**](docs/AppsV1API.md#AppsV1API_createNamespacedStatefulSet) | **POST** /apis/apps/v1/namespaces/{namespace}/statefulsets | 
+*AppsV1API* | [**AppsV1API_deleteCollectionNamespacedControllerRevision**](docs/AppsV1API.md#AppsV1API_deleteCollectionNamespacedControllerRevision) | **DELETE** /apis/apps/v1/namespaces/{namespace}/controllerrevisions | 
+*AppsV1API* | [**AppsV1API_deleteCollectionNamespacedDaemonSet**](docs/AppsV1API.md#AppsV1API_deleteCollectionNamespacedDaemonSet) | **DELETE** /apis/apps/v1/namespaces/{namespace}/daemonsets | 
+*AppsV1API* | [**AppsV1API_deleteCollectionNamespacedDeployment**](docs/AppsV1API.md#AppsV1API_deleteCollectionNamespacedDeployment) | **DELETE** /apis/apps/v1/namespaces/{namespace}/deployments | 
+*AppsV1API* | [**AppsV1API_deleteCollectionNamespacedReplicaSet**](docs/AppsV1API.md#AppsV1API_deleteCollectionNamespacedReplicaSet) | **DELETE** /apis/apps/v1/namespaces/{namespace}/replicasets | 
+*AppsV1API* | [**AppsV1API_deleteCollectionNamespacedStatefulSet**](docs/AppsV1API.md#AppsV1API_deleteCollectionNamespacedStatefulSet) | **DELETE** /apis/apps/v1/namespaces/{namespace}/statefulsets | 
+*AppsV1API* | [**AppsV1API_deleteNamespacedControllerRevision**](docs/AppsV1API.md#AppsV1API_deleteNamespacedControllerRevision) | **DELETE** /apis/apps/v1/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1API* | [**AppsV1API_deleteNamespacedDaemonSet**](docs/AppsV1API.md#AppsV1API_deleteNamespacedDaemonSet) | **DELETE** /apis/apps/v1/namespaces/{namespace}/daemonsets/{name} | 
+*AppsV1API* | [**AppsV1API_deleteNamespacedDeployment**](docs/AppsV1API.md#AppsV1API_deleteNamespacedDeployment) | **DELETE** /apis/apps/v1/namespaces/{namespace}/deployments/{name} | 
+*AppsV1API* | [**AppsV1API_deleteNamespacedReplicaSet**](docs/AppsV1API.md#AppsV1API_deleteNamespacedReplicaSet) | **DELETE** /apis/apps/v1/namespaces/{namespace}/replicasets/{name} | 
+*AppsV1API* | [**AppsV1API_deleteNamespacedStatefulSet**](docs/AppsV1API.md#AppsV1API_deleteNamespacedStatefulSet) | **DELETE** /apis/apps/v1/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1API* | [**AppsV1API_getAPIResources**](docs/AppsV1API.md#AppsV1API_getAPIResources) | **GET** /apis/apps/v1/ | 
+*AppsV1API* | [**AppsV1API_listControllerRevisionForAllNamespaces**](docs/AppsV1API.md#AppsV1API_listControllerRevisionForAllNamespaces) | **GET** /apis/apps/v1/controllerrevisions | 
+*AppsV1API* | [**AppsV1API_listDaemonSetForAllNamespaces**](docs/AppsV1API.md#AppsV1API_listDaemonSetForAllNamespaces) | **GET** /apis/apps/v1/daemonsets | 
+*AppsV1API* | [**AppsV1API_listDeploymentForAllNamespaces**](docs/AppsV1API.md#AppsV1API_listDeploymentForAllNamespaces) | **GET** /apis/apps/v1/deployments | 
+*AppsV1API* | [**AppsV1API_listNamespacedControllerRevision**](docs/AppsV1API.md#AppsV1API_listNamespacedControllerRevision) | **GET** /apis/apps/v1/namespaces/{namespace}/controllerrevisions | 
+*AppsV1API* | [**AppsV1API_listNamespacedDaemonSet**](docs/AppsV1API.md#AppsV1API_listNamespacedDaemonSet) | **GET** /apis/apps/v1/namespaces/{namespace}/daemonsets | 
+*AppsV1API* | [**AppsV1API_listNamespacedDeployment**](docs/AppsV1API.md#AppsV1API_listNamespacedDeployment) | **GET** /apis/apps/v1/namespaces/{namespace}/deployments | 
+*AppsV1API* | [**AppsV1API_listNamespacedReplicaSet**](docs/AppsV1API.md#AppsV1API_listNamespacedReplicaSet) | **GET** /apis/apps/v1/namespaces/{namespace}/replicasets | 
+*AppsV1API* | [**AppsV1API_listNamespacedStatefulSet**](docs/AppsV1API.md#AppsV1API_listNamespacedStatefulSet) | **GET** /apis/apps/v1/namespaces/{namespace}/statefulsets | 
+*AppsV1API* | [**AppsV1API_listReplicaSetForAllNamespaces**](docs/AppsV1API.md#AppsV1API_listReplicaSetForAllNamespaces) | **GET** /apis/apps/v1/replicasets | 
+*AppsV1API* | [**AppsV1API_listStatefulSetForAllNamespaces**](docs/AppsV1API.md#AppsV1API_listStatefulSetForAllNamespaces) | **GET** /apis/apps/v1/statefulsets | 
+*AppsV1API* | [**AppsV1API_patchNamespacedControllerRevision**](docs/AppsV1API.md#AppsV1API_patchNamespacedControllerRevision) | **PATCH** /apis/apps/v1/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1API* | [**AppsV1API_patchNamespacedDaemonSet**](docs/AppsV1API.md#AppsV1API_patchNamespacedDaemonSet) | **PATCH** /apis/apps/v1/namespaces/{namespace}/daemonsets/{name} | 
+*AppsV1API* | [**AppsV1API_patchNamespacedDaemonSetStatus**](docs/AppsV1API.md#AppsV1API_patchNamespacedDaemonSetStatus) | **PATCH** /apis/apps/v1/namespaces/{namespace}/daemonsets/{name}/status | 
+*AppsV1API* | [**AppsV1API_patchNamespacedDeployment**](docs/AppsV1API.md#AppsV1API_patchNamespacedDeployment) | **PATCH** /apis/apps/v1/namespaces/{namespace}/deployments/{name} | 
+*AppsV1API* | [**AppsV1API_patchNamespacedDeploymentScale**](docs/AppsV1API.md#AppsV1API_patchNamespacedDeploymentScale) | **PATCH** /apis/apps/v1/namespaces/{namespace}/deployments/{name}/scale | 
+*AppsV1API* | [**AppsV1API_patchNamespacedDeploymentStatus**](docs/AppsV1API.md#AppsV1API_patchNamespacedDeploymentStatus) | **PATCH** /apis/apps/v1/namespaces/{namespace}/deployments/{name}/status | 
+*AppsV1API* | [**AppsV1API_patchNamespacedReplicaSet**](docs/AppsV1API.md#AppsV1API_patchNamespacedReplicaSet) | **PATCH** /apis/apps/v1/namespaces/{namespace}/replicasets/{name} | 
+*AppsV1API* | [**AppsV1API_patchNamespacedReplicaSetScale**](docs/AppsV1API.md#AppsV1API_patchNamespacedReplicaSetScale) | **PATCH** /apis/apps/v1/namespaces/{namespace}/replicasets/{name}/scale | 
+*AppsV1API* | [**AppsV1API_patchNamespacedReplicaSetStatus**](docs/AppsV1API.md#AppsV1API_patchNamespacedReplicaSetStatus) | **PATCH** /apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status | 
+*AppsV1API* | [**AppsV1API_patchNamespacedStatefulSet**](docs/AppsV1API.md#AppsV1API_patchNamespacedStatefulSet) | **PATCH** /apis/apps/v1/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1API* | [**AppsV1API_patchNamespacedStatefulSetScale**](docs/AppsV1API.md#AppsV1API_patchNamespacedStatefulSetScale) | **PATCH** /apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/scale | 
+*AppsV1API* | [**AppsV1API_patchNamespacedStatefulSetStatus**](docs/AppsV1API.md#AppsV1API_patchNamespacedStatefulSetStatus) | **PATCH** /apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/status | 
+*AppsV1API* | [**AppsV1API_readNamespacedControllerRevision**](docs/AppsV1API.md#AppsV1API_readNamespacedControllerRevision) | **GET** /apis/apps/v1/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1API* | [**AppsV1API_readNamespacedDaemonSet**](docs/AppsV1API.md#AppsV1API_readNamespacedDaemonSet) | **GET** /apis/apps/v1/namespaces/{namespace}/daemonsets/{name} | 
+*AppsV1API* | [**AppsV1API_readNamespacedDaemonSetStatus**](docs/AppsV1API.md#AppsV1API_readNamespacedDaemonSetStatus) | **GET** /apis/apps/v1/namespaces/{namespace}/daemonsets/{name}/status | 
+*AppsV1API* | [**AppsV1API_readNamespacedDeployment**](docs/AppsV1API.md#AppsV1API_readNamespacedDeployment) | **GET** /apis/apps/v1/namespaces/{namespace}/deployments/{name} | 
+*AppsV1API* | [**AppsV1API_readNamespacedDeploymentScale**](docs/AppsV1API.md#AppsV1API_readNamespacedDeploymentScale) | **GET** /apis/apps/v1/namespaces/{namespace}/deployments/{name}/scale | 
+*AppsV1API* | [**AppsV1API_readNamespacedDeploymentStatus**](docs/AppsV1API.md#AppsV1API_readNamespacedDeploymentStatus) | **GET** /apis/apps/v1/namespaces/{namespace}/deployments/{name}/status | 
+*AppsV1API* | [**AppsV1API_readNamespacedReplicaSet**](docs/AppsV1API.md#AppsV1API_readNamespacedReplicaSet) | **GET** /apis/apps/v1/namespaces/{namespace}/replicasets/{name} | 
+*AppsV1API* | [**AppsV1API_readNamespacedReplicaSetScale**](docs/AppsV1API.md#AppsV1API_readNamespacedReplicaSetScale) | **GET** /apis/apps/v1/namespaces/{namespace}/replicasets/{name}/scale | 
+*AppsV1API* | [**AppsV1API_readNamespacedReplicaSetStatus**](docs/AppsV1API.md#AppsV1API_readNamespacedReplicaSetStatus) | **GET** /apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status | 
+*AppsV1API* | [**AppsV1API_readNamespacedStatefulSet**](docs/AppsV1API.md#AppsV1API_readNamespacedStatefulSet) | **GET** /apis/apps/v1/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1API* | [**AppsV1API_readNamespacedStatefulSetScale**](docs/AppsV1API.md#AppsV1API_readNamespacedStatefulSetScale) | **GET** /apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/scale | 
+*AppsV1API* | [**AppsV1API_readNamespacedStatefulSetStatus**](docs/AppsV1API.md#AppsV1API_readNamespacedStatefulSetStatus) | **GET** /apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/status | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedControllerRevision**](docs/AppsV1API.md#AppsV1API_replaceNamespacedControllerRevision) | **PUT** /apis/apps/v1/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedDaemonSet**](docs/AppsV1API.md#AppsV1API_replaceNamespacedDaemonSet) | **PUT** /apis/apps/v1/namespaces/{namespace}/daemonsets/{name} | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedDaemonSetStatus**](docs/AppsV1API.md#AppsV1API_replaceNamespacedDaemonSetStatus) | **PUT** /apis/apps/v1/namespaces/{namespace}/daemonsets/{name}/status | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedDeployment**](docs/AppsV1API.md#AppsV1API_replaceNamespacedDeployment) | **PUT** /apis/apps/v1/namespaces/{namespace}/deployments/{name} | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedDeploymentScale**](docs/AppsV1API.md#AppsV1API_replaceNamespacedDeploymentScale) | **PUT** /apis/apps/v1/namespaces/{namespace}/deployments/{name}/scale | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedDeploymentStatus**](docs/AppsV1API.md#AppsV1API_replaceNamespacedDeploymentStatus) | **PUT** /apis/apps/v1/namespaces/{namespace}/deployments/{name}/status | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedReplicaSet**](docs/AppsV1API.md#AppsV1API_replaceNamespacedReplicaSet) | **PUT** /apis/apps/v1/namespaces/{namespace}/replicasets/{name} | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedReplicaSetScale**](docs/AppsV1API.md#AppsV1API_replaceNamespacedReplicaSetScale) | **PUT** /apis/apps/v1/namespaces/{namespace}/replicasets/{name}/scale | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedReplicaSetStatus**](docs/AppsV1API.md#AppsV1API_replaceNamespacedReplicaSetStatus) | **PUT** /apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedStatefulSet**](docs/AppsV1API.md#AppsV1API_replaceNamespacedStatefulSet) | **PUT** /apis/apps/v1/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedStatefulSetScale**](docs/AppsV1API.md#AppsV1API_replaceNamespacedStatefulSetScale) | **PUT** /apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/scale | 
+*AppsV1API* | [**AppsV1API_replaceNamespacedStatefulSetStatus**](docs/AppsV1API.md#AppsV1API_replaceNamespacedStatefulSetStatus) | **PUT** /apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/status | 
+*AppsV1beta1API* | [**AppsV1beta1API_createNamespacedControllerRevision**](docs/AppsV1beta1API.md#AppsV1beta1API_createNamespacedControllerRevision) | **POST** /apis/apps/v1beta1/namespaces/{namespace}/controllerrevisions | 
+*AppsV1beta1API* | [**AppsV1beta1API_createNamespacedDeployment**](docs/AppsV1beta1API.md#AppsV1beta1API_createNamespacedDeployment) | **POST** /apis/apps/v1beta1/namespaces/{namespace}/deployments | 
+*AppsV1beta1API* | [**AppsV1beta1API_createNamespacedDeploymentRollback**](docs/AppsV1beta1API.md#AppsV1beta1API_createNamespacedDeploymentRollback) | **POST** /apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/rollback | 
+*AppsV1beta1API* | [**AppsV1beta1API_createNamespacedStatefulSet**](docs/AppsV1beta1API.md#AppsV1beta1API_createNamespacedStatefulSet) | **POST** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets | 
+*AppsV1beta1API* | [**AppsV1beta1API_deleteCollectionNamespacedControllerRevision**](docs/AppsV1beta1API.md#AppsV1beta1API_deleteCollectionNamespacedControllerRevision) | **DELETE** /apis/apps/v1beta1/namespaces/{namespace}/controllerrevisions | 
+*AppsV1beta1API* | [**AppsV1beta1API_deleteCollectionNamespacedDeployment**](docs/AppsV1beta1API.md#AppsV1beta1API_deleteCollectionNamespacedDeployment) | **DELETE** /apis/apps/v1beta1/namespaces/{namespace}/deployments | 
+*AppsV1beta1API* | [**AppsV1beta1API_deleteCollectionNamespacedStatefulSet**](docs/AppsV1beta1API.md#AppsV1beta1API_deleteCollectionNamespacedStatefulSet) | **DELETE** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets | 
+*AppsV1beta1API* | [**AppsV1beta1API_deleteNamespacedControllerRevision**](docs/AppsV1beta1API.md#AppsV1beta1API_deleteNamespacedControllerRevision) | **DELETE** /apis/apps/v1beta1/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_deleteNamespacedDeployment**](docs/AppsV1beta1API.md#AppsV1beta1API_deleteNamespacedDeployment) | **DELETE** /apis/apps/v1beta1/namespaces/{namespace}/deployments/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_deleteNamespacedStatefulSet**](docs/AppsV1beta1API.md#AppsV1beta1API_deleteNamespacedStatefulSet) | **DELETE** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_getAPIResources**](docs/AppsV1beta1API.md#AppsV1beta1API_getAPIResources) | **GET** /apis/apps/v1beta1/ | 
+*AppsV1beta1API* | [**AppsV1beta1API_listControllerRevisionForAllNamespaces**](docs/AppsV1beta1API.md#AppsV1beta1API_listControllerRevisionForAllNamespaces) | **GET** /apis/apps/v1beta1/controllerrevisions | 
+*AppsV1beta1API* | [**AppsV1beta1API_listDeploymentForAllNamespaces**](docs/AppsV1beta1API.md#AppsV1beta1API_listDeploymentForAllNamespaces) | **GET** /apis/apps/v1beta1/deployments | 
+*AppsV1beta1API* | [**AppsV1beta1API_listNamespacedControllerRevision**](docs/AppsV1beta1API.md#AppsV1beta1API_listNamespacedControllerRevision) | **GET** /apis/apps/v1beta1/namespaces/{namespace}/controllerrevisions | 
+*AppsV1beta1API* | [**AppsV1beta1API_listNamespacedDeployment**](docs/AppsV1beta1API.md#AppsV1beta1API_listNamespacedDeployment) | **GET** /apis/apps/v1beta1/namespaces/{namespace}/deployments | 
+*AppsV1beta1API* | [**AppsV1beta1API_listNamespacedStatefulSet**](docs/AppsV1beta1API.md#AppsV1beta1API_listNamespacedStatefulSet) | **GET** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets | 
+*AppsV1beta1API* | [**AppsV1beta1API_listStatefulSetForAllNamespaces**](docs/AppsV1beta1API.md#AppsV1beta1API_listStatefulSetForAllNamespaces) | **GET** /apis/apps/v1beta1/statefulsets | 
+*AppsV1beta1API* | [**AppsV1beta1API_patchNamespacedControllerRevision**](docs/AppsV1beta1API.md#AppsV1beta1API_patchNamespacedControllerRevision) | **PATCH** /apis/apps/v1beta1/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_patchNamespacedDeployment**](docs/AppsV1beta1API.md#AppsV1beta1API_patchNamespacedDeployment) | **PATCH** /apis/apps/v1beta1/namespaces/{namespace}/deployments/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_patchNamespacedDeploymentScale**](docs/AppsV1beta1API.md#AppsV1beta1API_patchNamespacedDeploymentScale) | **PATCH** /apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/scale | 
+*AppsV1beta1API* | [**AppsV1beta1API_patchNamespacedDeploymentStatus**](docs/AppsV1beta1API.md#AppsV1beta1API_patchNamespacedDeploymentStatus) | **PATCH** /apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/status | 
+*AppsV1beta1API* | [**AppsV1beta1API_patchNamespacedStatefulSet**](docs/AppsV1beta1API.md#AppsV1beta1API_patchNamespacedStatefulSet) | **PATCH** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_patchNamespacedStatefulSetScale**](docs/AppsV1beta1API.md#AppsV1beta1API_patchNamespacedStatefulSetScale) | **PATCH** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}/scale | 
+*AppsV1beta1API* | [**AppsV1beta1API_patchNamespacedStatefulSetStatus**](docs/AppsV1beta1API.md#AppsV1beta1API_patchNamespacedStatefulSetStatus) | **PATCH** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}/status | 
+*AppsV1beta1API* | [**AppsV1beta1API_readNamespacedControllerRevision**](docs/AppsV1beta1API.md#AppsV1beta1API_readNamespacedControllerRevision) | **GET** /apis/apps/v1beta1/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_readNamespacedDeployment**](docs/AppsV1beta1API.md#AppsV1beta1API_readNamespacedDeployment) | **GET** /apis/apps/v1beta1/namespaces/{namespace}/deployments/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_readNamespacedDeploymentScale**](docs/AppsV1beta1API.md#AppsV1beta1API_readNamespacedDeploymentScale) | **GET** /apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/scale | 
+*AppsV1beta1API* | [**AppsV1beta1API_readNamespacedDeploymentStatus**](docs/AppsV1beta1API.md#AppsV1beta1API_readNamespacedDeploymentStatus) | **GET** /apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/status | 
+*AppsV1beta1API* | [**AppsV1beta1API_readNamespacedStatefulSet**](docs/AppsV1beta1API.md#AppsV1beta1API_readNamespacedStatefulSet) | **GET** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_readNamespacedStatefulSetScale**](docs/AppsV1beta1API.md#AppsV1beta1API_readNamespacedStatefulSetScale) | **GET** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}/scale | 
+*AppsV1beta1API* | [**AppsV1beta1API_readNamespacedStatefulSetStatus**](docs/AppsV1beta1API.md#AppsV1beta1API_readNamespacedStatefulSetStatus) | **GET** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}/status | 
+*AppsV1beta1API* | [**AppsV1beta1API_replaceNamespacedControllerRevision**](docs/AppsV1beta1API.md#AppsV1beta1API_replaceNamespacedControllerRevision) | **PUT** /apis/apps/v1beta1/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_replaceNamespacedDeployment**](docs/AppsV1beta1API.md#AppsV1beta1API_replaceNamespacedDeployment) | **PUT** /apis/apps/v1beta1/namespaces/{namespace}/deployments/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_replaceNamespacedDeploymentScale**](docs/AppsV1beta1API.md#AppsV1beta1API_replaceNamespacedDeploymentScale) | **PUT** /apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/scale | 
+*AppsV1beta1API* | [**AppsV1beta1API_replaceNamespacedDeploymentStatus**](docs/AppsV1beta1API.md#AppsV1beta1API_replaceNamespacedDeploymentStatus) | **PUT** /apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/status | 
+*AppsV1beta1API* | [**AppsV1beta1API_replaceNamespacedStatefulSet**](docs/AppsV1beta1API.md#AppsV1beta1API_replaceNamespacedStatefulSet) | **PUT** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1beta1API* | [**AppsV1beta1API_replaceNamespacedStatefulSetScale**](docs/AppsV1beta1API.md#AppsV1beta1API_replaceNamespacedStatefulSetScale) | **PUT** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}/scale | 
+*AppsV1beta1API* | [**AppsV1beta1API_replaceNamespacedStatefulSetStatus**](docs/AppsV1beta1API.md#AppsV1beta1API_replaceNamespacedStatefulSetStatus) | **PUT** /apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_createNamespacedControllerRevision**](docs/AppsV1beta2API.md#AppsV1beta2API_createNamespacedControllerRevision) | **POST** /apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions | 
+*AppsV1beta2API* | [**AppsV1beta2API_createNamespacedDaemonSet**](docs/AppsV1beta2API.md#AppsV1beta2API_createNamespacedDaemonSet) | **POST** /apis/apps/v1beta2/namespaces/{namespace}/daemonsets | 
+*AppsV1beta2API* | [**AppsV1beta2API_createNamespacedDeployment**](docs/AppsV1beta2API.md#AppsV1beta2API_createNamespacedDeployment) | **POST** /apis/apps/v1beta2/namespaces/{namespace}/deployments | 
+*AppsV1beta2API* | [**AppsV1beta2API_createNamespacedReplicaSet**](docs/AppsV1beta2API.md#AppsV1beta2API_createNamespacedReplicaSet) | **POST** /apis/apps/v1beta2/namespaces/{namespace}/replicasets | 
+*AppsV1beta2API* | [**AppsV1beta2API_createNamespacedStatefulSet**](docs/AppsV1beta2API.md#AppsV1beta2API_createNamespacedStatefulSet) | **POST** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets | 
+*AppsV1beta2API* | [**AppsV1beta2API_deleteCollectionNamespacedControllerRevision**](docs/AppsV1beta2API.md#AppsV1beta2API_deleteCollectionNamespacedControllerRevision) | **DELETE** /apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions | 
+*AppsV1beta2API* | [**AppsV1beta2API_deleteCollectionNamespacedDaemonSet**](docs/AppsV1beta2API.md#AppsV1beta2API_deleteCollectionNamespacedDaemonSet) | **DELETE** /apis/apps/v1beta2/namespaces/{namespace}/daemonsets | 
+*AppsV1beta2API* | [**AppsV1beta2API_deleteCollectionNamespacedDeployment**](docs/AppsV1beta2API.md#AppsV1beta2API_deleteCollectionNamespacedDeployment) | **DELETE** /apis/apps/v1beta2/namespaces/{namespace}/deployments | 
+*AppsV1beta2API* | [**AppsV1beta2API_deleteCollectionNamespacedReplicaSet**](docs/AppsV1beta2API.md#AppsV1beta2API_deleteCollectionNamespacedReplicaSet) | **DELETE** /apis/apps/v1beta2/namespaces/{namespace}/replicasets | 
+*AppsV1beta2API* | [**AppsV1beta2API_deleteCollectionNamespacedStatefulSet**](docs/AppsV1beta2API.md#AppsV1beta2API_deleteCollectionNamespacedStatefulSet) | **DELETE** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets | 
+*AppsV1beta2API* | [**AppsV1beta2API_deleteNamespacedControllerRevision**](docs/AppsV1beta2API.md#AppsV1beta2API_deleteNamespacedControllerRevision) | **DELETE** /apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_deleteNamespacedDaemonSet**](docs/AppsV1beta2API.md#AppsV1beta2API_deleteNamespacedDaemonSet) | **DELETE** /apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_deleteNamespacedDeployment**](docs/AppsV1beta2API.md#AppsV1beta2API_deleteNamespacedDeployment) | **DELETE** /apis/apps/v1beta2/namespaces/{namespace}/deployments/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_deleteNamespacedReplicaSet**](docs/AppsV1beta2API.md#AppsV1beta2API_deleteNamespacedReplicaSet) | **DELETE** /apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_deleteNamespacedStatefulSet**](docs/AppsV1beta2API.md#AppsV1beta2API_deleteNamespacedStatefulSet) | **DELETE** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_getAPIResources**](docs/AppsV1beta2API.md#AppsV1beta2API_getAPIResources) | **GET** /apis/apps/v1beta2/ | 
+*AppsV1beta2API* | [**AppsV1beta2API_listControllerRevisionForAllNamespaces**](docs/AppsV1beta2API.md#AppsV1beta2API_listControllerRevisionForAllNamespaces) | **GET** /apis/apps/v1beta2/controllerrevisions | 
+*AppsV1beta2API* | [**AppsV1beta2API_listDaemonSetForAllNamespaces**](docs/AppsV1beta2API.md#AppsV1beta2API_listDaemonSetForAllNamespaces) | **GET** /apis/apps/v1beta2/daemonsets | 
+*AppsV1beta2API* | [**AppsV1beta2API_listDeploymentForAllNamespaces**](docs/AppsV1beta2API.md#AppsV1beta2API_listDeploymentForAllNamespaces) | **GET** /apis/apps/v1beta2/deployments | 
+*AppsV1beta2API* | [**AppsV1beta2API_listNamespacedControllerRevision**](docs/AppsV1beta2API.md#AppsV1beta2API_listNamespacedControllerRevision) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions | 
+*AppsV1beta2API* | [**AppsV1beta2API_listNamespacedDaemonSet**](docs/AppsV1beta2API.md#AppsV1beta2API_listNamespacedDaemonSet) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/daemonsets | 
+*AppsV1beta2API* | [**AppsV1beta2API_listNamespacedDeployment**](docs/AppsV1beta2API.md#AppsV1beta2API_listNamespacedDeployment) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/deployments | 
+*AppsV1beta2API* | [**AppsV1beta2API_listNamespacedReplicaSet**](docs/AppsV1beta2API.md#AppsV1beta2API_listNamespacedReplicaSet) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/replicasets | 
+*AppsV1beta2API* | [**AppsV1beta2API_listNamespacedStatefulSet**](docs/AppsV1beta2API.md#AppsV1beta2API_listNamespacedStatefulSet) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets | 
+*AppsV1beta2API* | [**AppsV1beta2API_listReplicaSetForAllNamespaces**](docs/AppsV1beta2API.md#AppsV1beta2API_listReplicaSetForAllNamespaces) | **GET** /apis/apps/v1beta2/replicasets | 
+*AppsV1beta2API* | [**AppsV1beta2API_listStatefulSetForAllNamespaces**](docs/AppsV1beta2API.md#AppsV1beta2API_listStatefulSetForAllNamespaces) | **GET** /apis/apps/v1beta2/statefulsets | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedControllerRevision**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedControllerRevision) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedDaemonSet**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedDaemonSet) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedDaemonSetStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedDaemonSetStatus) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedDeployment**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedDeployment) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/deployments/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedDeploymentScale**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedDeploymentScale) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/scale | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedDeploymentStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedDeploymentStatus) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedReplicaSet**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedReplicaSet) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedReplicaSetScale**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedReplicaSetScale) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/scale | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedReplicaSetStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedReplicaSetStatus) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedStatefulSet**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedStatefulSet) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedStatefulSetScale**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedStatefulSetScale) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/scale | 
+*AppsV1beta2API* | [**AppsV1beta2API_patchNamespacedStatefulSetStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_patchNamespacedStatefulSetStatus) | **PATCH** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedControllerRevision**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedControllerRevision) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedDaemonSet**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedDaemonSet) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedDaemonSetStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedDaemonSetStatus) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedDeployment**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedDeployment) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/deployments/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedDeploymentScale**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedDeploymentScale) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/scale | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedDeploymentStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedDeploymentStatus) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedReplicaSet**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedReplicaSet) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedReplicaSetScale**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedReplicaSetScale) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/scale | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedReplicaSetStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedReplicaSetStatus) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedStatefulSet**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedStatefulSet) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedStatefulSetScale**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedStatefulSetScale) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/scale | 
+*AppsV1beta2API* | [**AppsV1beta2API_readNamespacedStatefulSetStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_readNamespacedStatefulSetStatus) | **GET** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedControllerRevision**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedControllerRevision) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/controllerrevisions/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedDaemonSet**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedDaemonSet) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedDaemonSetStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedDaemonSetStatus) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedDeployment**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedDeployment) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/deployments/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedDeploymentScale**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedDeploymentScale) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/scale | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedDeploymentStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedDeploymentStatus) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedReplicaSet**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedReplicaSet) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedReplicaSetScale**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedReplicaSetScale) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/scale | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedReplicaSetStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedReplicaSetStatus) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/status | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedStatefulSet**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedStatefulSet) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name} | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedStatefulSetScale**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedStatefulSetScale) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/scale | 
+*AppsV1beta2API* | [**AppsV1beta2API_replaceNamespacedStatefulSetStatus**](docs/AppsV1beta2API.md#AppsV1beta2API_replaceNamespacedStatefulSetStatus) | **PUT** /apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/status | 
+*AuditregistrationAPI* | [**AuditregistrationAPI_getAPIGroup**](docs/AuditregistrationAPI.md#AuditregistrationAPI_getAPIGroup) | **GET** /apis/auditregistration.k8s.io/ | 
+*AuditregistrationV1alpha1API* | [**AuditregistrationV1alpha1API_createAuditSink**](docs/AuditregistrationV1alpha1API.md#AuditregistrationV1alpha1API_createAuditSink) | **POST** /apis/auditregistration.k8s.io/v1alpha1/auditsinks | 
+*AuditregistrationV1alpha1API* | [**AuditregistrationV1alpha1API_deleteAuditSink**](docs/AuditregistrationV1alpha1API.md#AuditregistrationV1alpha1API_deleteAuditSink) | **DELETE** /apis/auditregistration.k8s.io/v1alpha1/auditsinks/{name} | 
+*AuditregistrationV1alpha1API* | [**AuditregistrationV1alpha1API_deleteCollectionAuditSink**](docs/AuditregistrationV1alpha1API.md#AuditregistrationV1alpha1API_deleteCollectionAuditSink) | **DELETE** /apis/auditregistration.k8s.io/v1alpha1/auditsinks | 
+*AuditregistrationV1alpha1API* | [**AuditregistrationV1alpha1API_getAPIResources**](docs/AuditregistrationV1alpha1API.md#AuditregistrationV1alpha1API_getAPIResources) | **GET** /apis/auditregistration.k8s.io/v1alpha1/ | 
+*AuditregistrationV1alpha1API* | [**AuditregistrationV1alpha1API_listAuditSink**](docs/AuditregistrationV1alpha1API.md#AuditregistrationV1alpha1API_listAuditSink) | **GET** /apis/auditregistration.k8s.io/v1alpha1/auditsinks | 
+*AuditregistrationV1alpha1API* | [**AuditregistrationV1alpha1API_patchAuditSink**](docs/AuditregistrationV1alpha1API.md#AuditregistrationV1alpha1API_patchAuditSink) | **PATCH** /apis/auditregistration.k8s.io/v1alpha1/auditsinks/{name} | 
+*AuditregistrationV1alpha1API* | [**AuditregistrationV1alpha1API_readAuditSink**](docs/AuditregistrationV1alpha1API.md#AuditregistrationV1alpha1API_readAuditSink) | **GET** /apis/auditregistration.k8s.io/v1alpha1/auditsinks/{name} | 
+*AuditregistrationV1alpha1API* | [**AuditregistrationV1alpha1API_replaceAuditSink**](docs/AuditregistrationV1alpha1API.md#AuditregistrationV1alpha1API_replaceAuditSink) | **PUT** /apis/auditregistration.k8s.io/v1alpha1/auditsinks/{name} | 
+*AuthenticationAPI* | [**AuthenticationAPI_getAPIGroup**](docs/AuthenticationAPI.md#AuthenticationAPI_getAPIGroup) | **GET** /apis/authentication.k8s.io/ | 
+*AuthenticationV1API* | [**AuthenticationV1API_createTokenReview**](docs/AuthenticationV1API.md#AuthenticationV1API_createTokenReview) | **POST** /apis/authentication.k8s.io/v1/tokenreviews | 
+*AuthenticationV1API* | [**AuthenticationV1API_getAPIResources**](docs/AuthenticationV1API.md#AuthenticationV1API_getAPIResources) | **GET** /apis/authentication.k8s.io/v1/ | 
+*AuthenticationV1beta1API* | [**AuthenticationV1beta1API_createTokenReview**](docs/AuthenticationV1beta1API.md#AuthenticationV1beta1API_createTokenReview) | **POST** /apis/authentication.k8s.io/v1beta1/tokenreviews | 
+*AuthenticationV1beta1API* | [**AuthenticationV1beta1API_getAPIResources**](docs/AuthenticationV1beta1API.md#AuthenticationV1beta1API_getAPIResources) | **GET** /apis/authentication.k8s.io/v1beta1/ | 
+*AuthorizationAPI* | [**AuthorizationAPI_getAPIGroup**](docs/AuthorizationAPI.md#AuthorizationAPI_getAPIGroup) | **GET** /apis/authorization.k8s.io/ | 
+*AuthorizationV1API* | [**AuthorizationV1API_createNamespacedLocalSubjectAccessReview**](docs/AuthorizationV1API.md#AuthorizationV1API_createNamespacedLocalSubjectAccessReview) | **POST** /apis/authorization.k8s.io/v1/namespaces/{namespace}/localsubjectaccessreviews | 
+*AuthorizationV1API* | [**AuthorizationV1API_createSelfSubjectAccessReview**](docs/AuthorizationV1API.md#AuthorizationV1API_createSelfSubjectAccessReview) | **POST** /apis/authorization.k8s.io/v1/selfsubjectaccessreviews | 
+*AuthorizationV1API* | [**AuthorizationV1API_createSelfSubjectRulesReview**](docs/AuthorizationV1API.md#AuthorizationV1API_createSelfSubjectRulesReview) | **POST** /apis/authorization.k8s.io/v1/selfsubjectrulesreviews | 
+*AuthorizationV1API* | [**AuthorizationV1API_createSubjectAccessReview**](docs/AuthorizationV1API.md#AuthorizationV1API_createSubjectAccessReview) | **POST** /apis/authorization.k8s.io/v1/subjectaccessreviews | 
+*AuthorizationV1API* | [**AuthorizationV1API_getAPIResources**](docs/AuthorizationV1API.md#AuthorizationV1API_getAPIResources) | **GET** /apis/authorization.k8s.io/v1/ | 
+*AuthorizationV1beta1API* | [**AuthorizationV1beta1API_createNamespacedLocalSubjectAccessReview**](docs/AuthorizationV1beta1API.md#AuthorizationV1beta1API_createNamespacedLocalSubjectAccessReview) | **POST** /apis/authorization.k8s.io/v1beta1/namespaces/{namespace}/localsubjectaccessreviews | 
+*AuthorizationV1beta1API* | [**AuthorizationV1beta1API_createSelfSubjectAccessReview**](docs/AuthorizationV1beta1API.md#AuthorizationV1beta1API_createSelfSubjectAccessReview) | **POST** /apis/authorization.k8s.io/v1beta1/selfsubjectaccessreviews | 
+*AuthorizationV1beta1API* | [**AuthorizationV1beta1API_createSelfSubjectRulesReview**](docs/AuthorizationV1beta1API.md#AuthorizationV1beta1API_createSelfSubjectRulesReview) | **POST** /apis/authorization.k8s.io/v1beta1/selfsubjectrulesreviews | 
+*AuthorizationV1beta1API* | [**AuthorizationV1beta1API_createSubjectAccessReview**](docs/AuthorizationV1beta1API.md#AuthorizationV1beta1API_createSubjectAccessReview) | **POST** /apis/authorization.k8s.io/v1beta1/subjectaccessreviews | 
+*AuthorizationV1beta1API* | [**AuthorizationV1beta1API_getAPIResources**](docs/AuthorizationV1beta1API.md#AuthorizationV1beta1API_getAPIResources) | **GET** /apis/authorization.k8s.io/v1beta1/ | 
+*AutoscalingAPI* | [**AutoscalingAPI_getAPIGroup**](docs/AutoscalingAPI.md#AutoscalingAPI_getAPIGroup) | **GET** /apis/autoscaling/ | 
+*AutoscalingV1API* | [**AutoscalingV1API_createNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV1API.md#AutoscalingV1API_createNamespacedHorizontalPodAutoscaler) | **POST** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers | 
+*AutoscalingV1API* | [**AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV1API.md#AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler) | **DELETE** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers | 
+*AutoscalingV1API* | [**AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV1API.md#AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler) | **DELETE** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV1API* | [**AutoscalingV1API_getAPIResources**](docs/AutoscalingV1API.md#AutoscalingV1API_getAPIResources) | **GET** /apis/autoscaling/v1/ | 
+*AutoscalingV1API* | [**AutoscalingV1API_listHorizontalPodAutoscalerForAllNamespaces**](docs/AutoscalingV1API.md#AutoscalingV1API_listHorizontalPodAutoscalerForAllNamespaces) | **GET** /apis/autoscaling/v1/horizontalpodautoscalers | 
+*AutoscalingV1API* | [**AutoscalingV1API_listNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV1API.md#AutoscalingV1API_listNamespacedHorizontalPodAutoscaler) | **GET** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers | 
+*AutoscalingV1API* | [**AutoscalingV1API_patchNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV1API.md#AutoscalingV1API_patchNamespacedHorizontalPodAutoscaler) | **PATCH** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV1API* | [**AutoscalingV1API_patchNamespacedHorizontalPodAutoscalerStatus**](docs/AutoscalingV1API.md#AutoscalingV1API_patchNamespacedHorizontalPodAutoscalerStatus) | **PATCH** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
+*AutoscalingV1API* | [**AutoscalingV1API_readNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV1API.md#AutoscalingV1API_readNamespacedHorizontalPodAutoscaler) | **GET** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV1API* | [**AutoscalingV1API_readNamespacedHorizontalPodAutoscalerStatus**](docs/AutoscalingV1API.md#AutoscalingV1API_readNamespacedHorizontalPodAutoscalerStatus) | **GET** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
+*AutoscalingV1API* | [**AutoscalingV1API_replaceNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV1API.md#AutoscalingV1API_replaceNamespacedHorizontalPodAutoscaler) | **PUT** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV1API* | [**AutoscalingV1API_replaceNamespacedHorizontalPodAutoscalerStatus**](docs/AutoscalingV1API.md#AutoscalingV1API_replaceNamespacedHorizontalPodAutoscalerStatus) | **PUT** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_createNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_createNamespacedHorizontalPodAutoscaler) | **POST** /apis/autoscaling/v2beta1/namespaces/{namespace}/horizontalpodautoscalers | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_deleteCollectionNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_deleteCollectionNamespacedHorizontalPodAutoscaler) | **DELETE** /apis/autoscaling/v2beta1/namespaces/{namespace}/horizontalpodautoscalers | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_deleteNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_deleteNamespacedHorizontalPodAutoscaler) | **DELETE** /apis/autoscaling/v2beta1/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_getAPIResources**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_getAPIResources) | **GET** /apis/autoscaling/v2beta1/ | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_listHorizontalPodAutoscalerForAllNamespaces**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_listHorizontalPodAutoscalerForAllNamespaces) | **GET** /apis/autoscaling/v2beta1/horizontalpodautoscalers | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_listNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_listNamespacedHorizontalPodAutoscaler) | **GET** /apis/autoscaling/v2beta1/namespaces/{namespace}/horizontalpodautoscalers | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscaler) | **PATCH** /apis/autoscaling/v2beta1/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscalerStatus**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscalerStatus) | **PATCH** /apis/autoscaling/v2beta1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_readNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_readNamespacedHorizontalPodAutoscaler) | **GET** /apis/autoscaling/v2beta1/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_readNamespacedHorizontalPodAutoscalerStatus**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_readNamespacedHorizontalPodAutoscalerStatus) | **GET** /apis/autoscaling/v2beta1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscaler) | **PUT** /apis/autoscaling/v2beta1/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV2beta1API* | [**AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscalerStatus**](docs/AutoscalingV2beta1API.md#AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscalerStatus) | **PUT** /apis/autoscaling/v2beta1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_createNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_createNamespacedHorizontalPodAutoscaler) | **POST** /apis/autoscaling/v2beta2/namespaces/{namespace}/horizontalpodautoscalers | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_deleteCollectionNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_deleteCollectionNamespacedHorizontalPodAutoscaler) | **DELETE** /apis/autoscaling/v2beta2/namespaces/{namespace}/horizontalpodautoscalers | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_deleteNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_deleteNamespacedHorizontalPodAutoscaler) | **DELETE** /apis/autoscaling/v2beta2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_getAPIResources**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_getAPIResources) | **GET** /apis/autoscaling/v2beta2/ | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_listHorizontalPodAutoscalerForAllNamespaces**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_listHorizontalPodAutoscalerForAllNamespaces) | **GET** /apis/autoscaling/v2beta2/horizontalpodautoscalers | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_listNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_listNamespacedHorizontalPodAutoscaler) | **GET** /apis/autoscaling/v2beta2/namespaces/{namespace}/horizontalpodautoscalers | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_patchNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_patchNamespacedHorizontalPodAutoscaler) | **PATCH** /apis/autoscaling/v2beta2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_patchNamespacedHorizontalPodAutoscalerStatus**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_patchNamespacedHorizontalPodAutoscalerStatus) | **PATCH** /apis/autoscaling/v2beta2/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_readNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_readNamespacedHorizontalPodAutoscaler) | **GET** /apis/autoscaling/v2beta2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_readNamespacedHorizontalPodAutoscalerStatus**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_readNamespacedHorizontalPodAutoscalerStatus) | **GET** /apis/autoscaling/v2beta2/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_replaceNamespacedHorizontalPodAutoscaler**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_replaceNamespacedHorizontalPodAutoscaler) | **PUT** /apis/autoscaling/v2beta2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+*AutoscalingV2beta2API* | [**AutoscalingV2beta2API_replaceNamespacedHorizontalPodAutoscalerStatus**](docs/AutoscalingV2beta2API.md#AutoscalingV2beta2API_replaceNamespacedHorizontalPodAutoscalerStatus) | **PUT** /apis/autoscaling/v2beta2/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
+*BatchAPI* | [**BatchAPI_getAPIGroup**](docs/BatchAPI.md#BatchAPI_getAPIGroup) | **GET** /apis/batch/ | 
+*BatchV1API* | [**BatchV1API_createNamespacedJob**](docs/BatchV1API.md#BatchV1API_createNamespacedJob) | **POST** /apis/batch/v1/namespaces/{namespace}/jobs | 
+*BatchV1API* | [**BatchV1API_deleteCollectionNamespacedJob**](docs/BatchV1API.md#BatchV1API_deleteCollectionNamespacedJob) | **DELETE** /apis/batch/v1/namespaces/{namespace}/jobs | 
+*BatchV1API* | [**BatchV1API_deleteNamespacedJob**](docs/BatchV1API.md#BatchV1API_deleteNamespacedJob) | **DELETE** /apis/batch/v1/namespaces/{namespace}/jobs/{name} | 
+*BatchV1API* | [**BatchV1API_getAPIResources**](docs/BatchV1API.md#BatchV1API_getAPIResources) | **GET** /apis/batch/v1/ | 
+*BatchV1API* | [**BatchV1API_listJobForAllNamespaces**](docs/BatchV1API.md#BatchV1API_listJobForAllNamespaces) | **GET** /apis/batch/v1/jobs | 
+*BatchV1API* | [**BatchV1API_listNamespacedJob**](docs/BatchV1API.md#BatchV1API_listNamespacedJob) | **GET** /apis/batch/v1/namespaces/{namespace}/jobs | 
+*BatchV1API* | [**BatchV1API_patchNamespacedJob**](docs/BatchV1API.md#BatchV1API_patchNamespacedJob) | **PATCH** /apis/batch/v1/namespaces/{namespace}/jobs/{name} | 
+*BatchV1API* | [**BatchV1API_patchNamespacedJobStatus**](docs/BatchV1API.md#BatchV1API_patchNamespacedJobStatus) | **PATCH** /apis/batch/v1/namespaces/{namespace}/jobs/{name}/status | 
+*BatchV1API* | [**BatchV1API_readNamespacedJob**](docs/BatchV1API.md#BatchV1API_readNamespacedJob) | **GET** /apis/batch/v1/namespaces/{namespace}/jobs/{name} | 
+*BatchV1API* | [**BatchV1API_readNamespacedJobStatus**](docs/BatchV1API.md#BatchV1API_readNamespacedJobStatus) | **GET** /apis/batch/v1/namespaces/{namespace}/jobs/{name}/status | 
+*BatchV1API* | [**BatchV1API_replaceNamespacedJob**](docs/BatchV1API.md#BatchV1API_replaceNamespacedJob) | **PUT** /apis/batch/v1/namespaces/{namespace}/jobs/{name} | 
+*BatchV1API* | [**BatchV1API_replaceNamespacedJobStatus**](docs/BatchV1API.md#BatchV1API_replaceNamespacedJobStatus) | **PUT** /apis/batch/v1/namespaces/{namespace}/jobs/{name}/status | 
+*BatchV1beta1API* | [**BatchV1beta1API_createNamespacedCronJob**](docs/BatchV1beta1API.md#BatchV1beta1API_createNamespacedCronJob) | **POST** /apis/batch/v1beta1/namespaces/{namespace}/cronjobs | 
+*BatchV1beta1API* | [**BatchV1beta1API_deleteCollectionNamespacedCronJob**](docs/BatchV1beta1API.md#BatchV1beta1API_deleteCollectionNamespacedCronJob) | **DELETE** /apis/batch/v1beta1/namespaces/{namespace}/cronjobs | 
+*BatchV1beta1API* | [**BatchV1beta1API_deleteNamespacedCronJob**](docs/BatchV1beta1API.md#BatchV1beta1API_deleteNamespacedCronJob) | **DELETE** /apis/batch/v1beta1/namespaces/{namespace}/cronjobs/{name} | 
+*BatchV1beta1API* | [**BatchV1beta1API_getAPIResources**](docs/BatchV1beta1API.md#BatchV1beta1API_getAPIResources) | **GET** /apis/batch/v1beta1/ | 
+*BatchV1beta1API* | [**BatchV1beta1API_listCronJobForAllNamespaces**](docs/BatchV1beta1API.md#BatchV1beta1API_listCronJobForAllNamespaces) | **GET** /apis/batch/v1beta1/cronjobs | 
+*BatchV1beta1API* | [**BatchV1beta1API_listNamespacedCronJob**](docs/BatchV1beta1API.md#BatchV1beta1API_listNamespacedCronJob) | **GET** /apis/batch/v1beta1/namespaces/{namespace}/cronjobs | 
+*BatchV1beta1API* | [**BatchV1beta1API_patchNamespacedCronJob**](docs/BatchV1beta1API.md#BatchV1beta1API_patchNamespacedCronJob) | **PATCH** /apis/batch/v1beta1/namespaces/{namespace}/cronjobs/{name} | 
+*BatchV1beta1API* | [**BatchV1beta1API_patchNamespacedCronJobStatus**](docs/BatchV1beta1API.md#BatchV1beta1API_patchNamespacedCronJobStatus) | **PATCH** /apis/batch/v1beta1/namespaces/{namespace}/cronjobs/{name}/status | 
+*BatchV1beta1API* | [**BatchV1beta1API_readNamespacedCronJob**](docs/BatchV1beta1API.md#BatchV1beta1API_readNamespacedCronJob) | **GET** /apis/batch/v1beta1/namespaces/{namespace}/cronjobs/{name} | 
+*BatchV1beta1API* | [**BatchV1beta1API_readNamespacedCronJobStatus**](docs/BatchV1beta1API.md#BatchV1beta1API_readNamespacedCronJobStatus) | **GET** /apis/batch/v1beta1/namespaces/{namespace}/cronjobs/{name}/status | 
+*BatchV1beta1API* | [**BatchV1beta1API_replaceNamespacedCronJob**](docs/BatchV1beta1API.md#BatchV1beta1API_replaceNamespacedCronJob) | **PUT** /apis/batch/v1beta1/namespaces/{namespace}/cronjobs/{name} | 
+*BatchV1beta1API* | [**BatchV1beta1API_replaceNamespacedCronJobStatus**](docs/BatchV1beta1API.md#BatchV1beta1API_replaceNamespacedCronJobStatus) | **PUT** /apis/batch/v1beta1/namespaces/{namespace}/cronjobs/{name}/status | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_createNamespacedCronJob**](docs/BatchV2alpha1API.md#BatchV2alpha1API_createNamespacedCronJob) | **POST** /apis/batch/v2alpha1/namespaces/{namespace}/cronjobs | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_deleteCollectionNamespacedCronJob**](docs/BatchV2alpha1API.md#BatchV2alpha1API_deleteCollectionNamespacedCronJob) | **DELETE** /apis/batch/v2alpha1/namespaces/{namespace}/cronjobs | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_deleteNamespacedCronJob**](docs/BatchV2alpha1API.md#BatchV2alpha1API_deleteNamespacedCronJob) | **DELETE** /apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name} | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_getAPIResources**](docs/BatchV2alpha1API.md#BatchV2alpha1API_getAPIResources) | **GET** /apis/batch/v2alpha1/ | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_listCronJobForAllNamespaces**](docs/BatchV2alpha1API.md#BatchV2alpha1API_listCronJobForAllNamespaces) | **GET** /apis/batch/v2alpha1/cronjobs | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_listNamespacedCronJob**](docs/BatchV2alpha1API.md#BatchV2alpha1API_listNamespacedCronJob) | **GET** /apis/batch/v2alpha1/namespaces/{namespace}/cronjobs | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_patchNamespacedCronJob**](docs/BatchV2alpha1API.md#BatchV2alpha1API_patchNamespacedCronJob) | **PATCH** /apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name} | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_patchNamespacedCronJobStatus**](docs/BatchV2alpha1API.md#BatchV2alpha1API_patchNamespacedCronJobStatus) | **PATCH** /apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_readNamespacedCronJob**](docs/BatchV2alpha1API.md#BatchV2alpha1API_readNamespacedCronJob) | **GET** /apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name} | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_readNamespacedCronJobStatus**](docs/BatchV2alpha1API.md#BatchV2alpha1API_readNamespacedCronJobStatus) | **GET** /apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_replaceNamespacedCronJob**](docs/BatchV2alpha1API.md#BatchV2alpha1API_replaceNamespacedCronJob) | **PUT** /apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name} | 
+*BatchV2alpha1API* | [**BatchV2alpha1API_replaceNamespacedCronJobStatus**](docs/BatchV2alpha1API.md#BatchV2alpha1API_replaceNamespacedCronJobStatus) | **PUT** /apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status | 
+*CertificatesAPI* | [**CertificatesAPI_getAPIGroup**](docs/CertificatesAPI.md#CertificatesAPI_getAPIGroup) | **GET** /apis/certificates.k8s.io/ | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_createCertificateSigningRequest**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_createCertificateSigningRequest) | **POST** /apis/certificates.k8s.io/v1beta1/certificatesigningrequests | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_deleteCertificateSigningRequest**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_deleteCertificateSigningRequest) | **DELETE** /apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name} | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_deleteCollectionCertificateSigningRequest**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_deleteCollectionCertificateSigningRequest) | **DELETE** /apis/certificates.k8s.io/v1beta1/certificatesigningrequests | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_getAPIResources**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_getAPIResources) | **GET** /apis/certificates.k8s.io/v1beta1/ | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_listCertificateSigningRequest**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_listCertificateSigningRequest) | **GET** /apis/certificates.k8s.io/v1beta1/certificatesigningrequests | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_patchCertificateSigningRequest**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_patchCertificateSigningRequest) | **PATCH** /apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name} | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_patchCertificateSigningRequestStatus**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_patchCertificateSigningRequestStatus) | **PATCH** /apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_readCertificateSigningRequest**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_readCertificateSigningRequest) | **GET** /apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name} | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_readCertificateSigningRequestStatus**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_readCertificateSigningRequestStatus) | **GET** /apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_replaceCertificateSigningRequest**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_replaceCertificateSigningRequest) | **PUT** /apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name} | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_replaceCertificateSigningRequestApproval**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_replaceCertificateSigningRequestApproval) | **PUT** /apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/approval | 
+*CertificatesV1beta1API* | [**CertificatesV1beta1API_replaceCertificateSigningRequestStatus**](docs/CertificatesV1beta1API.md#CertificatesV1beta1API_replaceCertificateSigningRequestStatus) | **PUT** /apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status | 
+*CoordinationAPI* | [**CoordinationAPI_getAPIGroup**](docs/CoordinationAPI.md#CoordinationAPI_getAPIGroup) | **GET** /apis/coordination.k8s.io/ | 
+*CoordinationV1API* | [**CoordinationV1API_createNamespacedLease**](docs/CoordinationV1API.md#CoordinationV1API_createNamespacedLease) | **POST** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases | 
+*CoordinationV1API* | [**CoordinationV1API_deleteCollectionNamespacedLease**](docs/CoordinationV1API.md#CoordinationV1API_deleteCollectionNamespacedLease) | **DELETE** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases | 
+*CoordinationV1API* | [**CoordinationV1API_deleteNamespacedLease**](docs/CoordinationV1API.md#CoordinationV1API_deleteNamespacedLease) | **DELETE** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases/{name} | 
+*CoordinationV1API* | [**CoordinationV1API_getAPIResources**](docs/CoordinationV1API.md#CoordinationV1API_getAPIResources) | **GET** /apis/coordination.k8s.io/v1/ | 
+*CoordinationV1API* | [**CoordinationV1API_listLeaseForAllNamespaces**](docs/CoordinationV1API.md#CoordinationV1API_listLeaseForAllNamespaces) | **GET** /apis/coordination.k8s.io/v1/leases | 
+*CoordinationV1API* | [**CoordinationV1API_listNamespacedLease**](docs/CoordinationV1API.md#CoordinationV1API_listNamespacedLease) | **GET** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases | 
+*CoordinationV1API* | [**CoordinationV1API_patchNamespacedLease**](docs/CoordinationV1API.md#CoordinationV1API_patchNamespacedLease) | **PATCH** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases/{name} | 
+*CoordinationV1API* | [**CoordinationV1API_readNamespacedLease**](docs/CoordinationV1API.md#CoordinationV1API_readNamespacedLease) | **GET** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases/{name} | 
+*CoordinationV1API* | [**CoordinationV1API_replaceNamespacedLease**](docs/CoordinationV1API.md#CoordinationV1API_replaceNamespacedLease) | **PUT** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases/{name} | 
+*CoordinationV1beta1API* | [**CoordinationV1beta1API_createNamespacedLease**](docs/CoordinationV1beta1API.md#CoordinationV1beta1API_createNamespacedLease) | **POST** /apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases | 
+*CoordinationV1beta1API* | [**CoordinationV1beta1API_deleteCollectionNamespacedLease**](docs/CoordinationV1beta1API.md#CoordinationV1beta1API_deleteCollectionNamespacedLease) | **DELETE** /apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases | 
+*CoordinationV1beta1API* | [**CoordinationV1beta1API_deleteNamespacedLease**](docs/CoordinationV1beta1API.md#CoordinationV1beta1API_deleteNamespacedLease) | **DELETE** /apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases/{name} | 
+*CoordinationV1beta1API* | [**CoordinationV1beta1API_getAPIResources**](docs/CoordinationV1beta1API.md#CoordinationV1beta1API_getAPIResources) | **GET** /apis/coordination.k8s.io/v1beta1/ | 
+*CoordinationV1beta1API* | [**CoordinationV1beta1API_listLeaseForAllNamespaces**](docs/CoordinationV1beta1API.md#CoordinationV1beta1API_listLeaseForAllNamespaces) | **GET** /apis/coordination.k8s.io/v1beta1/leases | 
+*CoordinationV1beta1API* | [**CoordinationV1beta1API_listNamespacedLease**](docs/CoordinationV1beta1API.md#CoordinationV1beta1API_listNamespacedLease) | **GET** /apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases | 
+*CoordinationV1beta1API* | [**CoordinationV1beta1API_patchNamespacedLease**](docs/CoordinationV1beta1API.md#CoordinationV1beta1API_patchNamespacedLease) | **PATCH** /apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases/{name} | 
+*CoordinationV1beta1API* | [**CoordinationV1beta1API_readNamespacedLease**](docs/CoordinationV1beta1API.md#CoordinationV1beta1API_readNamespacedLease) | **GET** /apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases/{name} | 
+*CoordinationV1beta1API* | [**CoordinationV1beta1API_replaceNamespacedLease**](docs/CoordinationV1beta1API.md#CoordinationV1beta1API_replaceNamespacedLease) | **PUT** /apis/coordination.k8s.io/v1beta1/namespaces/{namespace}/leases/{name} | 
+*CoreAPI* | [**CoreAPI_getAPIVersions**](docs/CoreAPI.md#CoreAPI_getAPIVersions) | **GET** /api/ | 
+*CoreV1API* | [**CoreV1API_connectDeleteNamespacedPodProxy**](docs/CoreV1API.md#CoreV1API_connectDeleteNamespacedPodProxy) | **DELETE** /api/v1/namespaces/{namespace}/pods/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectDeleteNamespacedPodProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectDeleteNamespacedPodProxyWithPath) | **DELETE** /api/v1/namespaces/{namespace}/pods/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectDeleteNamespacedServiceProxy**](docs/CoreV1API.md#CoreV1API_connectDeleteNamespacedServiceProxy) | **DELETE** /api/v1/namespaces/{namespace}/services/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectDeleteNamespacedServiceProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectDeleteNamespacedServiceProxyWithPath) | **DELETE** /api/v1/namespaces/{namespace}/services/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectDeleteNodeProxy**](docs/CoreV1API.md#CoreV1API_connectDeleteNodeProxy) | **DELETE** /api/v1/nodes/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectDeleteNodeProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectDeleteNodeProxyWithPath) | **DELETE** /api/v1/nodes/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectGetNamespacedPodAttach**](docs/CoreV1API.md#CoreV1API_connectGetNamespacedPodAttach) | **GET** /api/v1/namespaces/{namespace}/pods/{name}/attach | 
+*CoreV1API* | [**CoreV1API_connectGetNamespacedPodExec**](docs/CoreV1API.md#CoreV1API_connectGetNamespacedPodExec) | **GET** /api/v1/namespaces/{namespace}/pods/{name}/exec | 
+*CoreV1API* | [**CoreV1API_connectGetNamespacedPodPortforward**](docs/CoreV1API.md#CoreV1API_connectGetNamespacedPodPortforward) | **GET** /api/v1/namespaces/{namespace}/pods/{name}/portforward | 
+*CoreV1API* | [**CoreV1API_connectGetNamespacedPodProxy**](docs/CoreV1API.md#CoreV1API_connectGetNamespacedPodProxy) | **GET** /api/v1/namespaces/{namespace}/pods/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectGetNamespacedPodProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectGetNamespacedPodProxyWithPath) | **GET** /api/v1/namespaces/{namespace}/pods/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectGetNamespacedServiceProxy**](docs/CoreV1API.md#CoreV1API_connectGetNamespacedServiceProxy) | **GET** /api/v1/namespaces/{namespace}/services/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectGetNamespacedServiceProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectGetNamespacedServiceProxyWithPath) | **GET** /api/v1/namespaces/{namespace}/services/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectGetNodeProxy**](docs/CoreV1API.md#CoreV1API_connectGetNodeProxy) | **GET** /api/v1/nodes/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectGetNodeProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectGetNodeProxyWithPath) | **GET** /api/v1/nodes/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectHeadNamespacedPodProxy**](docs/CoreV1API.md#CoreV1API_connectHeadNamespacedPodProxy) | **HEAD** /api/v1/namespaces/{namespace}/pods/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectHeadNamespacedPodProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectHeadNamespacedPodProxyWithPath) | **HEAD** /api/v1/namespaces/{namespace}/pods/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectHeadNamespacedServiceProxy**](docs/CoreV1API.md#CoreV1API_connectHeadNamespacedServiceProxy) | **HEAD** /api/v1/namespaces/{namespace}/services/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectHeadNamespacedServiceProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectHeadNamespacedServiceProxyWithPath) | **HEAD** /api/v1/namespaces/{namespace}/services/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectHeadNodeProxy**](docs/CoreV1API.md#CoreV1API_connectHeadNodeProxy) | **HEAD** /api/v1/nodes/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectHeadNodeProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectHeadNodeProxyWithPath) | **HEAD** /api/v1/nodes/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectOptionsNamespacedPodProxy**](docs/CoreV1API.md#CoreV1API_connectOptionsNamespacedPodProxy) | **OPTIONS** /api/v1/namespaces/{namespace}/pods/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectOptionsNamespacedPodProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectOptionsNamespacedPodProxyWithPath) | **OPTIONS** /api/v1/namespaces/{namespace}/pods/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectOptionsNamespacedServiceProxy**](docs/CoreV1API.md#CoreV1API_connectOptionsNamespacedServiceProxy) | **OPTIONS** /api/v1/namespaces/{namespace}/services/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectOptionsNamespacedServiceProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectOptionsNamespacedServiceProxyWithPath) | **OPTIONS** /api/v1/namespaces/{namespace}/services/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectOptionsNodeProxy**](docs/CoreV1API.md#CoreV1API_connectOptionsNodeProxy) | **OPTIONS** /api/v1/nodes/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectOptionsNodeProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectOptionsNodeProxyWithPath) | **OPTIONS** /api/v1/nodes/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectPatchNamespacedPodProxy**](docs/CoreV1API.md#CoreV1API_connectPatchNamespacedPodProxy) | **PATCH** /api/v1/namespaces/{namespace}/pods/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectPatchNamespacedPodProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectPatchNamespacedPodProxyWithPath) | **PATCH** /api/v1/namespaces/{namespace}/pods/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectPatchNamespacedServiceProxy**](docs/CoreV1API.md#CoreV1API_connectPatchNamespacedServiceProxy) | **PATCH** /api/v1/namespaces/{namespace}/services/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectPatchNamespacedServiceProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectPatchNamespacedServiceProxyWithPath) | **PATCH** /api/v1/namespaces/{namespace}/services/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectPatchNodeProxy**](docs/CoreV1API.md#CoreV1API_connectPatchNodeProxy) | **PATCH** /api/v1/nodes/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectPatchNodeProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectPatchNodeProxyWithPath) | **PATCH** /api/v1/nodes/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectPostNamespacedPodAttach**](docs/CoreV1API.md#CoreV1API_connectPostNamespacedPodAttach) | **POST** /api/v1/namespaces/{namespace}/pods/{name}/attach | 
+*CoreV1API* | [**CoreV1API_connectPostNamespacedPodExec**](docs/CoreV1API.md#CoreV1API_connectPostNamespacedPodExec) | **POST** /api/v1/namespaces/{namespace}/pods/{name}/exec | 
+*CoreV1API* | [**CoreV1API_connectPostNamespacedPodPortforward**](docs/CoreV1API.md#CoreV1API_connectPostNamespacedPodPortforward) | **POST** /api/v1/namespaces/{namespace}/pods/{name}/portforward | 
+*CoreV1API* | [**CoreV1API_connectPostNamespacedPodProxy**](docs/CoreV1API.md#CoreV1API_connectPostNamespacedPodProxy) | **POST** /api/v1/namespaces/{namespace}/pods/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectPostNamespacedPodProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectPostNamespacedPodProxyWithPath) | **POST** /api/v1/namespaces/{namespace}/pods/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectPostNamespacedServiceProxy**](docs/CoreV1API.md#CoreV1API_connectPostNamespacedServiceProxy) | **POST** /api/v1/namespaces/{namespace}/services/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectPostNamespacedServiceProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectPostNamespacedServiceProxyWithPath) | **POST** /api/v1/namespaces/{namespace}/services/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectPostNodeProxy**](docs/CoreV1API.md#CoreV1API_connectPostNodeProxy) | **POST** /api/v1/nodes/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectPostNodeProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectPostNodeProxyWithPath) | **POST** /api/v1/nodes/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectPutNamespacedPodProxy**](docs/CoreV1API.md#CoreV1API_connectPutNamespacedPodProxy) | **PUT** /api/v1/namespaces/{namespace}/pods/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectPutNamespacedPodProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectPutNamespacedPodProxyWithPath) | **PUT** /api/v1/namespaces/{namespace}/pods/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectPutNamespacedServiceProxy**](docs/CoreV1API.md#CoreV1API_connectPutNamespacedServiceProxy) | **PUT** /api/v1/namespaces/{namespace}/services/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectPutNamespacedServiceProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectPutNamespacedServiceProxyWithPath) | **PUT** /api/v1/namespaces/{namespace}/services/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_connectPutNodeProxy**](docs/CoreV1API.md#CoreV1API_connectPutNodeProxy) | **PUT** /api/v1/nodes/{name}/proxy | 
+*CoreV1API* | [**CoreV1API_connectPutNodeProxyWithPath**](docs/CoreV1API.md#CoreV1API_connectPutNodeProxyWithPath) | **PUT** /api/v1/nodes/{name}/proxy/{path} | 
+*CoreV1API* | [**CoreV1API_createNamespace**](docs/CoreV1API.md#CoreV1API_createNamespace) | **POST** /api/v1/namespaces | 
+*CoreV1API* | [**CoreV1API_createNamespacedBinding**](docs/CoreV1API.md#CoreV1API_createNamespacedBinding) | **POST** /api/v1/namespaces/{namespace}/bindings | 
+*CoreV1API* | [**CoreV1API_createNamespacedConfigMap**](docs/CoreV1API.md#CoreV1API_createNamespacedConfigMap) | **POST** /api/v1/namespaces/{namespace}/configmaps | 
+*CoreV1API* | [**CoreV1API_createNamespacedEndpoints**](docs/CoreV1API.md#CoreV1API_createNamespacedEndpoints) | **POST** /api/v1/namespaces/{namespace}/endpoints | 
+*CoreV1API* | [**CoreV1API_createNamespacedEvent**](docs/CoreV1API.md#CoreV1API_createNamespacedEvent) | **POST** /api/v1/namespaces/{namespace}/events | 
+*CoreV1API* | [**CoreV1API_createNamespacedLimitRange**](docs/CoreV1API.md#CoreV1API_createNamespacedLimitRange) | **POST** /api/v1/namespaces/{namespace}/limitranges | 
+*CoreV1API* | [**CoreV1API_createNamespacedPersistentVolumeClaim**](docs/CoreV1API.md#CoreV1API_createNamespacedPersistentVolumeClaim) | **POST** /api/v1/namespaces/{namespace}/persistentvolumeclaims | 
+*CoreV1API* | [**CoreV1API_createNamespacedPod**](docs/CoreV1API.md#CoreV1API_createNamespacedPod) | **POST** /api/v1/namespaces/{namespace}/pods | 
+*CoreV1API* | [**CoreV1API_createNamespacedPodBinding**](docs/CoreV1API.md#CoreV1API_createNamespacedPodBinding) | **POST** /api/v1/namespaces/{namespace}/pods/{name}/binding | 
+*CoreV1API* | [**CoreV1API_createNamespacedPodEviction**](docs/CoreV1API.md#CoreV1API_createNamespacedPodEviction) | **POST** /api/v1/namespaces/{namespace}/pods/{name}/eviction | 
+*CoreV1API* | [**CoreV1API_createNamespacedPodTemplate**](docs/CoreV1API.md#CoreV1API_createNamespacedPodTemplate) | **POST** /api/v1/namespaces/{namespace}/podtemplates | 
+*CoreV1API* | [**CoreV1API_createNamespacedReplicationController**](docs/CoreV1API.md#CoreV1API_createNamespacedReplicationController) | **POST** /api/v1/namespaces/{namespace}/replicationcontrollers | 
+*CoreV1API* | [**CoreV1API_createNamespacedResourceQuota**](docs/CoreV1API.md#CoreV1API_createNamespacedResourceQuota) | **POST** /api/v1/namespaces/{namespace}/resourcequotas | 
+*CoreV1API* | [**CoreV1API_createNamespacedSecret**](docs/CoreV1API.md#CoreV1API_createNamespacedSecret) | **POST** /api/v1/namespaces/{namespace}/secrets | 
+*CoreV1API* | [**CoreV1API_createNamespacedService**](docs/CoreV1API.md#CoreV1API_createNamespacedService) | **POST** /api/v1/namespaces/{namespace}/services | 
+*CoreV1API* | [**CoreV1API_createNamespacedServiceAccount**](docs/CoreV1API.md#CoreV1API_createNamespacedServiceAccount) | **POST** /api/v1/namespaces/{namespace}/serviceaccounts | 
+*CoreV1API* | [**CoreV1API_createNamespacedServiceAccountToken**](docs/CoreV1API.md#CoreV1API_createNamespacedServiceAccountToken) | **POST** /api/v1/namespaces/{namespace}/serviceaccounts/{name}/token | 
+*CoreV1API* | [**CoreV1API_createNode**](docs/CoreV1API.md#CoreV1API_createNode) | **POST** /api/v1/nodes | 
+*CoreV1API* | [**CoreV1API_createPersistentVolume**](docs/CoreV1API.md#CoreV1API_createPersistentVolume) | **POST** /api/v1/persistentvolumes | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNamespacedConfigMap**](docs/CoreV1API.md#CoreV1API_deleteCollectionNamespacedConfigMap) | **DELETE** /api/v1/namespaces/{namespace}/configmaps | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNamespacedEndpoints**](docs/CoreV1API.md#CoreV1API_deleteCollectionNamespacedEndpoints) | **DELETE** /api/v1/namespaces/{namespace}/endpoints | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNamespacedEvent**](docs/CoreV1API.md#CoreV1API_deleteCollectionNamespacedEvent) | **DELETE** /api/v1/namespaces/{namespace}/events | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNamespacedLimitRange**](docs/CoreV1API.md#CoreV1API_deleteCollectionNamespacedLimitRange) | **DELETE** /api/v1/namespaces/{namespace}/limitranges | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim**](docs/CoreV1API.md#CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim) | **DELETE** /api/v1/namespaces/{namespace}/persistentvolumeclaims | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNamespacedPod**](docs/CoreV1API.md#CoreV1API_deleteCollectionNamespacedPod) | **DELETE** /api/v1/namespaces/{namespace}/pods | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNamespacedPodTemplate**](docs/CoreV1API.md#CoreV1API_deleteCollectionNamespacedPodTemplate) | **DELETE** /api/v1/namespaces/{namespace}/podtemplates | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNamespacedReplicationController**](docs/CoreV1API.md#CoreV1API_deleteCollectionNamespacedReplicationController) | **DELETE** /api/v1/namespaces/{namespace}/replicationcontrollers | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNamespacedResourceQuota**](docs/CoreV1API.md#CoreV1API_deleteCollectionNamespacedResourceQuota) | **DELETE** /api/v1/namespaces/{namespace}/resourcequotas | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNamespacedSecret**](docs/CoreV1API.md#CoreV1API_deleteCollectionNamespacedSecret) | **DELETE** /api/v1/namespaces/{namespace}/secrets | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNamespacedServiceAccount**](docs/CoreV1API.md#CoreV1API_deleteCollectionNamespacedServiceAccount) | **DELETE** /api/v1/namespaces/{namespace}/serviceaccounts | 
+*CoreV1API* | [**CoreV1API_deleteCollectionNode**](docs/CoreV1API.md#CoreV1API_deleteCollectionNode) | **DELETE** /api/v1/nodes | 
+*CoreV1API* | [**CoreV1API_deleteCollectionPersistentVolume**](docs/CoreV1API.md#CoreV1API_deleteCollectionPersistentVolume) | **DELETE** /api/v1/persistentvolumes | 
+*CoreV1API* | [**CoreV1API_deleteNamespace**](docs/CoreV1API.md#CoreV1API_deleteNamespace) | **DELETE** /api/v1/namespaces/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedConfigMap**](docs/CoreV1API.md#CoreV1API_deleteNamespacedConfigMap) | **DELETE** /api/v1/namespaces/{namespace}/configmaps/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedEndpoints**](docs/CoreV1API.md#CoreV1API_deleteNamespacedEndpoints) | **DELETE** /api/v1/namespaces/{namespace}/endpoints/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedEvent**](docs/CoreV1API.md#CoreV1API_deleteNamespacedEvent) | **DELETE** /api/v1/namespaces/{namespace}/events/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedLimitRange**](docs/CoreV1API.md#CoreV1API_deleteNamespacedLimitRange) | **DELETE** /api/v1/namespaces/{namespace}/limitranges/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedPersistentVolumeClaim**](docs/CoreV1API.md#CoreV1API_deleteNamespacedPersistentVolumeClaim) | **DELETE** /api/v1/namespaces/{namespace}/persistentvolumeclaims/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedPod**](docs/CoreV1API.md#CoreV1API_deleteNamespacedPod) | **DELETE** /api/v1/namespaces/{namespace}/pods/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedPodTemplate**](docs/CoreV1API.md#CoreV1API_deleteNamespacedPodTemplate) | **DELETE** /api/v1/namespaces/{namespace}/podtemplates/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedReplicationController**](docs/CoreV1API.md#CoreV1API_deleteNamespacedReplicationController) | **DELETE** /api/v1/namespaces/{namespace}/replicationcontrollers/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedResourceQuota**](docs/CoreV1API.md#CoreV1API_deleteNamespacedResourceQuota) | **DELETE** /api/v1/namespaces/{namespace}/resourcequotas/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedSecret**](docs/CoreV1API.md#CoreV1API_deleteNamespacedSecret) | **DELETE** /api/v1/namespaces/{namespace}/secrets/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedService**](docs/CoreV1API.md#CoreV1API_deleteNamespacedService) | **DELETE** /api/v1/namespaces/{namespace}/services/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNamespacedServiceAccount**](docs/CoreV1API.md#CoreV1API_deleteNamespacedServiceAccount) | **DELETE** /api/v1/namespaces/{namespace}/serviceaccounts/{name} | 
+*CoreV1API* | [**CoreV1API_deleteNode**](docs/CoreV1API.md#CoreV1API_deleteNode) | **DELETE** /api/v1/nodes/{name} | 
+*CoreV1API* | [**CoreV1API_deletePersistentVolume**](docs/CoreV1API.md#CoreV1API_deletePersistentVolume) | **DELETE** /api/v1/persistentvolumes/{name} | 
+*CoreV1API* | [**CoreV1API_getAPIResources**](docs/CoreV1API.md#CoreV1API_getAPIResources) | **GET** /api/v1/ | 
+*CoreV1API* | [**CoreV1API_listComponentStatus**](docs/CoreV1API.md#CoreV1API_listComponentStatus) | **GET** /api/v1/componentstatuses | 
+*CoreV1API* | [**CoreV1API_listConfigMapForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listConfigMapForAllNamespaces) | **GET** /api/v1/configmaps | 
+*CoreV1API* | [**CoreV1API_listEndpointsForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listEndpointsForAllNamespaces) | **GET** /api/v1/endpoints | 
+*CoreV1API* | [**CoreV1API_listEventForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listEventForAllNamespaces) | **GET** /api/v1/events | 
+*CoreV1API* | [**CoreV1API_listLimitRangeForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listLimitRangeForAllNamespaces) | **GET** /api/v1/limitranges | 
+*CoreV1API* | [**CoreV1API_listNamespace**](docs/CoreV1API.md#CoreV1API_listNamespace) | **GET** /api/v1/namespaces | 
+*CoreV1API* | [**CoreV1API_listNamespacedConfigMap**](docs/CoreV1API.md#CoreV1API_listNamespacedConfigMap) | **GET** /api/v1/namespaces/{namespace}/configmaps | 
+*CoreV1API* | [**CoreV1API_listNamespacedEndpoints**](docs/CoreV1API.md#CoreV1API_listNamespacedEndpoints) | **GET** /api/v1/namespaces/{namespace}/endpoints | 
+*CoreV1API* | [**CoreV1API_listNamespacedEvent**](docs/CoreV1API.md#CoreV1API_listNamespacedEvent) | **GET** /api/v1/namespaces/{namespace}/events | 
+*CoreV1API* | [**CoreV1API_listNamespacedLimitRange**](docs/CoreV1API.md#CoreV1API_listNamespacedLimitRange) | **GET** /api/v1/namespaces/{namespace}/limitranges | 
+*CoreV1API* | [**CoreV1API_listNamespacedPersistentVolumeClaim**](docs/CoreV1API.md#CoreV1API_listNamespacedPersistentVolumeClaim) | **GET** /api/v1/namespaces/{namespace}/persistentvolumeclaims | 
+*CoreV1API* | [**CoreV1API_listNamespacedPod**](docs/CoreV1API.md#CoreV1API_listNamespacedPod) | **GET** /api/v1/namespaces/{namespace}/pods | 
+*CoreV1API* | [**CoreV1API_listNamespacedPodTemplate**](docs/CoreV1API.md#CoreV1API_listNamespacedPodTemplate) | **GET** /api/v1/namespaces/{namespace}/podtemplates | 
+*CoreV1API* | [**CoreV1API_listNamespacedReplicationController**](docs/CoreV1API.md#CoreV1API_listNamespacedReplicationController) | **GET** /api/v1/namespaces/{namespace}/replicationcontrollers | 
+*CoreV1API* | [**CoreV1API_listNamespacedResourceQuota**](docs/CoreV1API.md#CoreV1API_listNamespacedResourceQuota) | **GET** /api/v1/namespaces/{namespace}/resourcequotas | 
+*CoreV1API* | [**CoreV1API_listNamespacedSecret**](docs/CoreV1API.md#CoreV1API_listNamespacedSecret) | **GET** /api/v1/namespaces/{namespace}/secrets | 
+*CoreV1API* | [**CoreV1API_listNamespacedService**](docs/CoreV1API.md#CoreV1API_listNamespacedService) | **GET** /api/v1/namespaces/{namespace}/services | 
+*CoreV1API* | [**CoreV1API_listNamespacedServiceAccount**](docs/CoreV1API.md#CoreV1API_listNamespacedServiceAccount) | **GET** /api/v1/namespaces/{namespace}/serviceaccounts | 
+*CoreV1API* | [**CoreV1API_listNode**](docs/CoreV1API.md#CoreV1API_listNode) | **GET** /api/v1/nodes | 
+*CoreV1API* | [**CoreV1API_listPersistentVolume**](docs/CoreV1API.md#CoreV1API_listPersistentVolume) | **GET** /api/v1/persistentvolumes | 
+*CoreV1API* | [**CoreV1API_listPersistentVolumeClaimForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listPersistentVolumeClaimForAllNamespaces) | **GET** /api/v1/persistentvolumeclaims | 
+*CoreV1API* | [**CoreV1API_listPodForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listPodForAllNamespaces) | **GET** /api/v1/pods | 
+*CoreV1API* | [**CoreV1API_listPodTemplateForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listPodTemplateForAllNamespaces) | **GET** /api/v1/podtemplates | 
+*CoreV1API* | [**CoreV1API_listReplicationControllerForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listReplicationControllerForAllNamespaces) | **GET** /api/v1/replicationcontrollers | 
+*CoreV1API* | [**CoreV1API_listResourceQuotaForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listResourceQuotaForAllNamespaces) | **GET** /api/v1/resourcequotas | 
+*CoreV1API* | [**CoreV1API_listSecretForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listSecretForAllNamespaces) | **GET** /api/v1/secrets | 
+*CoreV1API* | [**CoreV1API_listServiceAccountForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listServiceAccountForAllNamespaces) | **GET** /api/v1/serviceaccounts | 
+*CoreV1API* | [**CoreV1API_listServiceForAllNamespaces**](docs/CoreV1API.md#CoreV1API_listServiceForAllNamespaces) | **GET** /api/v1/services | 
+*CoreV1API* | [**CoreV1API_patchNamespace**](docs/CoreV1API.md#CoreV1API_patchNamespace) | **PATCH** /api/v1/namespaces/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespaceStatus**](docs/CoreV1API.md#CoreV1API_patchNamespaceStatus) | **PATCH** /api/v1/namespaces/{name}/status | 
+*CoreV1API* | [**CoreV1API_patchNamespacedConfigMap**](docs/CoreV1API.md#CoreV1API_patchNamespacedConfigMap) | **PATCH** /api/v1/namespaces/{namespace}/configmaps/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedEndpoints**](docs/CoreV1API.md#CoreV1API_patchNamespacedEndpoints) | **PATCH** /api/v1/namespaces/{namespace}/endpoints/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedEvent**](docs/CoreV1API.md#CoreV1API_patchNamespacedEvent) | **PATCH** /api/v1/namespaces/{namespace}/events/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedLimitRange**](docs/CoreV1API.md#CoreV1API_patchNamespacedLimitRange) | **PATCH** /api/v1/namespaces/{namespace}/limitranges/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedPersistentVolumeClaim**](docs/CoreV1API.md#CoreV1API_patchNamespacedPersistentVolumeClaim) | **PATCH** /api/v1/namespaces/{namespace}/persistentvolumeclaims/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedPersistentVolumeClaimStatus**](docs/CoreV1API.md#CoreV1API_patchNamespacedPersistentVolumeClaimStatus) | **PATCH** /api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status | 
+*CoreV1API* | [**CoreV1API_patchNamespacedPod**](docs/CoreV1API.md#CoreV1API_patchNamespacedPod) | **PATCH** /api/v1/namespaces/{namespace}/pods/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedPodStatus**](docs/CoreV1API.md#CoreV1API_patchNamespacedPodStatus) | **PATCH** /api/v1/namespaces/{namespace}/pods/{name}/status | 
+*CoreV1API* | [**CoreV1API_patchNamespacedPodTemplate**](docs/CoreV1API.md#CoreV1API_patchNamespacedPodTemplate) | **PATCH** /api/v1/namespaces/{namespace}/podtemplates/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedReplicationController**](docs/CoreV1API.md#CoreV1API_patchNamespacedReplicationController) | **PATCH** /api/v1/namespaces/{namespace}/replicationcontrollers/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedReplicationControllerScale**](docs/CoreV1API.md#CoreV1API_patchNamespacedReplicationControllerScale) | **PATCH** /api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale | 
+*CoreV1API* | [**CoreV1API_patchNamespacedReplicationControllerStatus**](docs/CoreV1API.md#CoreV1API_patchNamespacedReplicationControllerStatus) | **PATCH** /api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status | 
+*CoreV1API* | [**CoreV1API_patchNamespacedResourceQuota**](docs/CoreV1API.md#CoreV1API_patchNamespacedResourceQuota) | **PATCH** /api/v1/namespaces/{namespace}/resourcequotas/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedResourceQuotaStatus**](docs/CoreV1API.md#CoreV1API_patchNamespacedResourceQuotaStatus) | **PATCH** /api/v1/namespaces/{namespace}/resourcequotas/{name}/status | 
+*CoreV1API* | [**CoreV1API_patchNamespacedSecret**](docs/CoreV1API.md#CoreV1API_patchNamespacedSecret) | **PATCH** /api/v1/namespaces/{namespace}/secrets/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedService**](docs/CoreV1API.md#CoreV1API_patchNamespacedService) | **PATCH** /api/v1/namespaces/{namespace}/services/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedServiceAccount**](docs/CoreV1API.md#CoreV1API_patchNamespacedServiceAccount) | **PATCH** /api/v1/namespaces/{namespace}/serviceaccounts/{name} | 
+*CoreV1API* | [**CoreV1API_patchNamespacedServiceStatus**](docs/CoreV1API.md#CoreV1API_patchNamespacedServiceStatus) | **PATCH** /api/v1/namespaces/{namespace}/services/{name}/status | 
+*CoreV1API* | [**CoreV1API_patchNode**](docs/CoreV1API.md#CoreV1API_patchNode) | **PATCH** /api/v1/nodes/{name} | 
+*CoreV1API* | [**CoreV1API_patchNodeStatus**](docs/CoreV1API.md#CoreV1API_patchNodeStatus) | **PATCH** /api/v1/nodes/{name}/status | 
+*CoreV1API* | [**CoreV1API_patchPersistentVolume**](docs/CoreV1API.md#CoreV1API_patchPersistentVolume) | **PATCH** /api/v1/persistentvolumes/{name} | 
+*CoreV1API* | [**CoreV1API_patchPersistentVolumeStatus**](docs/CoreV1API.md#CoreV1API_patchPersistentVolumeStatus) | **PATCH** /api/v1/persistentvolumes/{name}/status | 
+*CoreV1API* | [**CoreV1API_readComponentStatus**](docs/CoreV1API.md#CoreV1API_readComponentStatus) | **GET** /api/v1/componentstatuses/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespace**](docs/CoreV1API.md#CoreV1API_readNamespace) | **GET** /api/v1/namespaces/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespaceStatus**](docs/CoreV1API.md#CoreV1API_readNamespaceStatus) | **GET** /api/v1/namespaces/{name}/status | 
+*CoreV1API* | [**CoreV1API_readNamespacedConfigMap**](docs/CoreV1API.md#CoreV1API_readNamespacedConfigMap) | **GET** /api/v1/namespaces/{namespace}/configmaps/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedEndpoints**](docs/CoreV1API.md#CoreV1API_readNamespacedEndpoints) | **GET** /api/v1/namespaces/{namespace}/endpoints/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedEvent**](docs/CoreV1API.md#CoreV1API_readNamespacedEvent) | **GET** /api/v1/namespaces/{namespace}/events/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedLimitRange**](docs/CoreV1API.md#CoreV1API_readNamespacedLimitRange) | **GET** /api/v1/namespaces/{namespace}/limitranges/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedPersistentVolumeClaim**](docs/CoreV1API.md#CoreV1API_readNamespacedPersistentVolumeClaim) | **GET** /api/v1/namespaces/{namespace}/persistentvolumeclaims/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedPersistentVolumeClaimStatus**](docs/CoreV1API.md#CoreV1API_readNamespacedPersistentVolumeClaimStatus) | **GET** /api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status | 
+*CoreV1API* | [**CoreV1API_readNamespacedPod**](docs/CoreV1API.md#CoreV1API_readNamespacedPod) | **GET** /api/v1/namespaces/{namespace}/pods/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedPodLog**](docs/CoreV1API.md#CoreV1API_readNamespacedPodLog) | **GET** /api/v1/namespaces/{namespace}/pods/{name}/log | 
+*CoreV1API* | [**CoreV1API_readNamespacedPodStatus**](docs/CoreV1API.md#CoreV1API_readNamespacedPodStatus) | **GET** /api/v1/namespaces/{namespace}/pods/{name}/status | 
+*CoreV1API* | [**CoreV1API_readNamespacedPodTemplate**](docs/CoreV1API.md#CoreV1API_readNamespacedPodTemplate) | **GET** /api/v1/namespaces/{namespace}/podtemplates/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedReplicationController**](docs/CoreV1API.md#CoreV1API_readNamespacedReplicationController) | **GET** /api/v1/namespaces/{namespace}/replicationcontrollers/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedReplicationControllerScale**](docs/CoreV1API.md#CoreV1API_readNamespacedReplicationControllerScale) | **GET** /api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale | 
+*CoreV1API* | [**CoreV1API_readNamespacedReplicationControllerStatus**](docs/CoreV1API.md#CoreV1API_readNamespacedReplicationControllerStatus) | **GET** /api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status | 
+*CoreV1API* | [**CoreV1API_readNamespacedResourceQuota**](docs/CoreV1API.md#CoreV1API_readNamespacedResourceQuota) | **GET** /api/v1/namespaces/{namespace}/resourcequotas/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedResourceQuotaStatus**](docs/CoreV1API.md#CoreV1API_readNamespacedResourceQuotaStatus) | **GET** /api/v1/namespaces/{namespace}/resourcequotas/{name}/status | 
+*CoreV1API* | [**CoreV1API_readNamespacedSecret**](docs/CoreV1API.md#CoreV1API_readNamespacedSecret) | **GET** /api/v1/namespaces/{namespace}/secrets/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedService**](docs/CoreV1API.md#CoreV1API_readNamespacedService) | **GET** /api/v1/namespaces/{namespace}/services/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedServiceAccount**](docs/CoreV1API.md#CoreV1API_readNamespacedServiceAccount) | **GET** /api/v1/namespaces/{namespace}/serviceaccounts/{name} | 
+*CoreV1API* | [**CoreV1API_readNamespacedServiceStatus**](docs/CoreV1API.md#CoreV1API_readNamespacedServiceStatus) | **GET** /api/v1/namespaces/{namespace}/services/{name}/status | 
+*CoreV1API* | [**CoreV1API_readNode**](docs/CoreV1API.md#CoreV1API_readNode) | **GET** /api/v1/nodes/{name} | 
+*CoreV1API* | [**CoreV1API_readNodeStatus**](docs/CoreV1API.md#CoreV1API_readNodeStatus) | **GET** /api/v1/nodes/{name}/status | 
+*CoreV1API* | [**CoreV1API_readPersistentVolume**](docs/CoreV1API.md#CoreV1API_readPersistentVolume) | **GET** /api/v1/persistentvolumes/{name} | 
+*CoreV1API* | [**CoreV1API_readPersistentVolumeStatus**](docs/CoreV1API.md#CoreV1API_readPersistentVolumeStatus) | **GET** /api/v1/persistentvolumes/{name}/status | 
+*CoreV1API* | [**CoreV1API_replaceNamespace**](docs/CoreV1API.md#CoreV1API_replaceNamespace) | **PUT** /api/v1/namespaces/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespaceFinalize**](docs/CoreV1API.md#CoreV1API_replaceNamespaceFinalize) | **PUT** /api/v1/namespaces/{name}/finalize | 
+*CoreV1API* | [**CoreV1API_replaceNamespaceStatus**](docs/CoreV1API.md#CoreV1API_replaceNamespaceStatus) | **PUT** /api/v1/namespaces/{name}/status | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedConfigMap**](docs/CoreV1API.md#CoreV1API_replaceNamespacedConfigMap) | **PUT** /api/v1/namespaces/{namespace}/configmaps/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedEndpoints**](docs/CoreV1API.md#CoreV1API_replaceNamespacedEndpoints) | **PUT** /api/v1/namespaces/{namespace}/endpoints/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedEvent**](docs/CoreV1API.md#CoreV1API_replaceNamespacedEvent) | **PUT** /api/v1/namespaces/{namespace}/events/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedLimitRange**](docs/CoreV1API.md#CoreV1API_replaceNamespacedLimitRange) | **PUT** /api/v1/namespaces/{namespace}/limitranges/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedPersistentVolumeClaim**](docs/CoreV1API.md#CoreV1API_replaceNamespacedPersistentVolumeClaim) | **PUT** /api/v1/namespaces/{namespace}/persistentvolumeclaims/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedPersistentVolumeClaimStatus**](docs/CoreV1API.md#CoreV1API_replaceNamespacedPersistentVolumeClaimStatus) | **PUT** /api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedPod**](docs/CoreV1API.md#CoreV1API_replaceNamespacedPod) | **PUT** /api/v1/namespaces/{namespace}/pods/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedPodStatus**](docs/CoreV1API.md#CoreV1API_replaceNamespacedPodStatus) | **PUT** /api/v1/namespaces/{namespace}/pods/{name}/status | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedPodTemplate**](docs/CoreV1API.md#CoreV1API_replaceNamespacedPodTemplate) | **PUT** /api/v1/namespaces/{namespace}/podtemplates/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedReplicationController**](docs/CoreV1API.md#CoreV1API_replaceNamespacedReplicationController) | **PUT** /api/v1/namespaces/{namespace}/replicationcontrollers/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedReplicationControllerScale**](docs/CoreV1API.md#CoreV1API_replaceNamespacedReplicationControllerScale) | **PUT** /api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedReplicationControllerStatus**](docs/CoreV1API.md#CoreV1API_replaceNamespacedReplicationControllerStatus) | **PUT** /api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedResourceQuota**](docs/CoreV1API.md#CoreV1API_replaceNamespacedResourceQuota) | **PUT** /api/v1/namespaces/{namespace}/resourcequotas/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedResourceQuotaStatus**](docs/CoreV1API.md#CoreV1API_replaceNamespacedResourceQuotaStatus) | **PUT** /api/v1/namespaces/{namespace}/resourcequotas/{name}/status | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedSecret**](docs/CoreV1API.md#CoreV1API_replaceNamespacedSecret) | **PUT** /api/v1/namespaces/{namespace}/secrets/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedService**](docs/CoreV1API.md#CoreV1API_replaceNamespacedService) | **PUT** /api/v1/namespaces/{namespace}/services/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedServiceAccount**](docs/CoreV1API.md#CoreV1API_replaceNamespacedServiceAccount) | **PUT** /api/v1/namespaces/{namespace}/serviceaccounts/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNamespacedServiceStatus**](docs/CoreV1API.md#CoreV1API_replaceNamespacedServiceStatus) | **PUT** /api/v1/namespaces/{namespace}/services/{name}/status | 
+*CoreV1API* | [**CoreV1API_replaceNode**](docs/CoreV1API.md#CoreV1API_replaceNode) | **PUT** /api/v1/nodes/{name} | 
+*CoreV1API* | [**CoreV1API_replaceNodeStatus**](docs/CoreV1API.md#CoreV1API_replaceNodeStatus) | **PUT** /api/v1/nodes/{name}/status | 
+*CoreV1API* | [**CoreV1API_replacePersistentVolume**](docs/CoreV1API.md#CoreV1API_replacePersistentVolume) | **PUT** /api/v1/persistentvolumes/{name} | 
+*CoreV1API* | [**CoreV1API_replacePersistentVolumeStatus**](docs/CoreV1API.md#CoreV1API_replacePersistentVolumeStatus) | **PUT** /api/v1/persistentvolumes/{name}/status | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_createClusterCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_createClusterCustomObject) | **POST** /apis/{group}/{version}/{plural} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_createNamespacedCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_createNamespacedCustomObject) | **POST** /apis/{group}/{version}/namespaces/{namespace}/{plural} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_deleteClusterCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_deleteClusterCustomObject) | **DELETE** /apis/{group}/{version}/{plural}/{name} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_deleteCollectionClusterCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_deleteCollectionClusterCustomObject) | **DELETE** /apis/{group}/{version}/{plural} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_deleteCollectionNamespacedCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_deleteCollectionNamespacedCustomObject) | **DELETE** /apis/{group}/{version}/namespaces/{namespace}/{plural} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_deleteNamespacedCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_deleteNamespacedCustomObject) | **DELETE** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_getClusterCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObject) | **GET** /apis/{group}/{version}/{plural}/{name} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_getClusterCustomObjectScale**](docs/CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObjectScale) | **GET** /apis/{group}/{version}/{plural}/{name}/scale | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_getClusterCustomObjectStatus**](docs/CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObjectStatus) | **GET** /apis/{group}/{version}/{plural}/{name}/status | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_getNamespacedCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_getNamespacedCustomObject) | **GET** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_getNamespacedCustomObjectScale**](docs/CustomObjectsAPI.md#CustomObjectsAPI_getNamespacedCustomObjectScale) | **GET** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_getNamespacedCustomObjectStatus**](docs/CustomObjectsAPI.md#CustomObjectsAPI_getNamespacedCustomObjectStatus) | **GET** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_listClusterCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_listClusterCustomObject) | **GET** /apis/{group}/{version}/{plural} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_listNamespacedCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_listNamespacedCustomObject) | **GET** /apis/{group}/{version}/namespaces/{namespace}/{plural} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_patchClusterCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_patchClusterCustomObject) | **PATCH** /apis/{group}/{version}/{plural}/{name} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_patchClusterCustomObjectScale**](docs/CustomObjectsAPI.md#CustomObjectsAPI_patchClusterCustomObjectScale) | **PATCH** /apis/{group}/{version}/{plural}/{name}/scale | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_patchClusterCustomObjectStatus**](docs/CustomObjectsAPI.md#CustomObjectsAPI_patchClusterCustomObjectStatus) | **PATCH** /apis/{group}/{version}/{plural}/{name}/status | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_patchNamespacedCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_patchNamespacedCustomObject) | **PATCH** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_patchNamespacedCustomObjectScale**](docs/CustomObjectsAPI.md#CustomObjectsAPI_patchNamespacedCustomObjectScale) | **PATCH** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_patchNamespacedCustomObjectStatus**](docs/CustomObjectsAPI.md#CustomObjectsAPI_patchNamespacedCustomObjectStatus) | **PATCH** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_replaceClusterCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_replaceClusterCustomObject) | **PUT** /apis/{group}/{version}/{plural}/{name} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_replaceClusterCustomObjectScale**](docs/CustomObjectsAPI.md#CustomObjectsAPI_replaceClusterCustomObjectScale) | **PUT** /apis/{group}/{version}/{plural}/{name}/scale | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_replaceClusterCustomObjectStatus**](docs/CustomObjectsAPI.md#CustomObjectsAPI_replaceClusterCustomObjectStatus) | **PUT** /apis/{group}/{version}/{plural}/{name}/status | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_replaceNamespacedCustomObject**](docs/CustomObjectsAPI.md#CustomObjectsAPI_replaceNamespacedCustomObject) | **PUT** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name} | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_replaceNamespacedCustomObjectScale**](docs/CustomObjectsAPI.md#CustomObjectsAPI_replaceNamespacedCustomObjectScale) | **PUT** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale | 
+*CustomObjectsAPI* | [**CustomObjectsAPI_replaceNamespacedCustomObjectStatus**](docs/CustomObjectsAPI.md#CustomObjectsAPI_replaceNamespacedCustomObjectStatus) | **PUT** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status | 
+*DiscoveryAPI* | [**DiscoveryAPI_getAPIGroup**](docs/DiscoveryAPI.md#DiscoveryAPI_getAPIGroup) | **GET** /apis/discovery.k8s.io/ | 
+*DiscoveryV1beta1API* | [**DiscoveryV1beta1API_createNamespacedEndpointSlice**](docs/DiscoveryV1beta1API.md#DiscoveryV1beta1API_createNamespacedEndpointSlice) | **POST** /apis/discovery.k8s.io/v1beta1/namespaces/{namespace}/endpointslices | 
+*DiscoveryV1beta1API* | [**DiscoveryV1beta1API_deleteCollectionNamespacedEndpointSlice**](docs/DiscoveryV1beta1API.md#DiscoveryV1beta1API_deleteCollectionNamespacedEndpointSlice) | **DELETE** /apis/discovery.k8s.io/v1beta1/namespaces/{namespace}/endpointslices | 
+*DiscoveryV1beta1API* | [**DiscoveryV1beta1API_deleteNamespacedEndpointSlice**](docs/DiscoveryV1beta1API.md#DiscoveryV1beta1API_deleteNamespacedEndpointSlice) | **DELETE** /apis/discovery.k8s.io/v1beta1/namespaces/{namespace}/endpointslices/{name} | 
+*DiscoveryV1beta1API* | [**DiscoveryV1beta1API_getAPIResources**](docs/DiscoveryV1beta1API.md#DiscoveryV1beta1API_getAPIResources) | **GET** /apis/discovery.k8s.io/v1beta1/ | 
+*DiscoveryV1beta1API* | [**DiscoveryV1beta1API_listEndpointSliceForAllNamespaces**](docs/DiscoveryV1beta1API.md#DiscoveryV1beta1API_listEndpointSliceForAllNamespaces) | **GET** /apis/discovery.k8s.io/v1beta1/endpointslices | 
+*DiscoveryV1beta1API* | [**DiscoveryV1beta1API_listNamespacedEndpointSlice**](docs/DiscoveryV1beta1API.md#DiscoveryV1beta1API_listNamespacedEndpointSlice) | **GET** /apis/discovery.k8s.io/v1beta1/namespaces/{namespace}/endpointslices | 
+*DiscoveryV1beta1API* | [**DiscoveryV1beta1API_patchNamespacedEndpointSlice**](docs/DiscoveryV1beta1API.md#DiscoveryV1beta1API_patchNamespacedEndpointSlice) | **PATCH** /apis/discovery.k8s.io/v1beta1/namespaces/{namespace}/endpointslices/{name} | 
+*DiscoveryV1beta1API* | [**DiscoveryV1beta1API_readNamespacedEndpointSlice**](docs/DiscoveryV1beta1API.md#DiscoveryV1beta1API_readNamespacedEndpointSlice) | **GET** /apis/discovery.k8s.io/v1beta1/namespaces/{namespace}/endpointslices/{name} | 
+*DiscoveryV1beta1API* | [**DiscoveryV1beta1API_replaceNamespacedEndpointSlice**](docs/DiscoveryV1beta1API.md#DiscoveryV1beta1API_replaceNamespacedEndpointSlice) | **PUT** /apis/discovery.k8s.io/v1beta1/namespaces/{namespace}/endpointslices/{name} | 
+*EventsAPI* | [**EventsAPI_getAPIGroup**](docs/EventsAPI.md#EventsAPI_getAPIGroup) | **GET** /apis/events.k8s.io/ | 
+*EventsV1beta1API* | [**EventsV1beta1API_createNamespacedEvent**](docs/EventsV1beta1API.md#EventsV1beta1API_createNamespacedEvent) | **POST** /apis/events.k8s.io/v1beta1/namespaces/{namespace}/events | 
+*EventsV1beta1API* | [**EventsV1beta1API_deleteCollectionNamespacedEvent**](docs/EventsV1beta1API.md#EventsV1beta1API_deleteCollectionNamespacedEvent) | **DELETE** /apis/events.k8s.io/v1beta1/namespaces/{namespace}/events | 
+*EventsV1beta1API* | [**EventsV1beta1API_deleteNamespacedEvent**](docs/EventsV1beta1API.md#EventsV1beta1API_deleteNamespacedEvent) | **DELETE** /apis/events.k8s.io/v1beta1/namespaces/{namespace}/events/{name} | 
+*EventsV1beta1API* | [**EventsV1beta1API_getAPIResources**](docs/EventsV1beta1API.md#EventsV1beta1API_getAPIResources) | **GET** /apis/events.k8s.io/v1beta1/ | 
+*EventsV1beta1API* | [**EventsV1beta1API_listEventForAllNamespaces**](docs/EventsV1beta1API.md#EventsV1beta1API_listEventForAllNamespaces) | **GET** /apis/events.k8s.io/v1beta1/events | 
+*EventsV1beta1API* | [**EventsV1beta1API_listNamespacedEvent**](docs/EventsV1beta1API.md#EventsV1beta1API_listNamespacedEvent) | **GET** /apis/events.k8s.io/v1beta1/namespaces/{namespace}/events | 
+*EventsV1beta1API* | [**EventsV1beta1API_patchNamespacedEvent**](docs/EventsV1beta1API.md#EventsV1beta1API_patchNamespacedEvent) | **PATCH** /apis/events.k8s.io/v1beta1/namespaces/{namespace}/events/{name} | 
+*EventsV1beta1API* | [**EventsV1beta1API_readNamespacedEvent**](docs/EventsV1beta1API.md#EventsV1beta1API_readNamespacedEvent) | **GET** /apis/events.k8s.io/v1beta1/namespaces/{namespace}/events/{name} | 
+*EventsV1beta1API* | [**EventsV1beta1API_replaceNamespacedEvent**](docs/EventsV1beta1API.md#EventsV1beta1API_replaceNamespacedEvent) | **PUT** /apis/events.k8s.io/v1beta1/namespaces/{namespace}/events/{name} | 
+*ExtensionsAPI* | [**ExtensionsAPI_getAPIGroup**](docs/ExtensionsAPI.md#ExtensionsAPI_getAPIGroup) | **GET** /apis/extensions/ | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_createNamespacedDaemonSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_createNamespacedDaemonSet) | **POST** /apis/extensions/v1beta1/namespaces/{namespace}/daemonsets | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_createNamespacedDeployment**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_createNamespacedDeployment) | **POST** /apis/extensions/v1beta1/namespaces/{namespace}/deployments | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_createNamespacedDeploymentRollback**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_createNamespacedDeploymentRollback) | **POST** /apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/rollback | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_createNamespacedIngress**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_createNamespacedIngress) | **POST** /apis/extensions/v1beta1/namespaces/{namespace}/ingresses | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_createNamespacedNetworkPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_createNamespacedNetworkPolicy) | **POST** /apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_createNamespacedReplicaSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_createNamespacedReplicaSet) | **POST** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_createPodSecurityPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_createPodSecurityPolicy) | **POST** /apis/extensions/v1beta1/podsecuritypolicies | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deleteCollectionNamespacedDaemonSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deleteCollectionNamespacedDaemonSet) | **DELETE** /apis/extensions/v1beta1/namespaces/{namespace}/daemonsets | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deleteCollectionNamespacedDeployment**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deleteCollectionNamespacedDeployment) | **DELETE** /apis/extensions/v1beta1/namespaces/{namespace}/deployments | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deleteCollectionNamespacedIngress**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deleteCollectionNamespacedIngress) | **DELETE** /apis/extensions/v1beta1/namespaces/{namespace}/ingresses | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deleteCollectionNamespacedNetworkPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deleteCollectionNamespacedNetworkPolicy) | **DELETE** /apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deleteCollectionNamespacedReplicaSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deleteCollectionNamespacedReplicaSet) | **DELETE** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deleteCollectionPodSecurityPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deleteCollectionPodSecurityPolicy) | **DELETE** /apis/extensions/v1beta1/podsecuritypolicies | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deleteNamespacedDaemonSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deleteNamespacedDaemonSet) | **DELETE** /apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deleteNamespacedDeployment**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deleteNamespacedDeployment) | **DELETE** /apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deleteNamespacedIngress**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deleteNamespacedIngress) | **DELETE** /apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deleteNamespacedNetworkPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deleteNamespacedNetworkPolicy) | **DELETE** /apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deleteNamespacedReplicaSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deleteNamespacedReplicaSet) | **DELETE** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_deletePodSecurityPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_deletePodSecurityPolicy) | **DELETE** /apis/extensions/v1beta1/podsecuritypolicies/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_getAPIResources**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_getAPIResources) | **GET** /apis/extensions/v1beta1/ | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_listDaemonSetForAllNamespaces**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_listDaemonSetForAllNamespaces) | **GET** /apis/extensions/v1beta1/daemonsets | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_listDeploymentForAllNamespaces**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_listDeploymentForAllNamespaces) | **GET** /apis/extensions/v1beta1/deployments | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_listIngressForAllNamespaces**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_listIngressForAllNamespaces) | **GET** /apis/extensions/v1beta1/ingresses | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_listNamespacedDaemonSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_listNamespacedDaemonSet) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/daemonsets | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_listNamespacedDeployment**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_listNamespacedDeployment) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/deployments | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_listNamespacedIngress**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_listNamespacedIngress) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/ingresses | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_listNamespacedNetworkPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_listNamespacedNetworkPolicy) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_listNamespacedReplicaSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_listNamespacedReplicaSet) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_listNetworkPolicyForAllNamespaces**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_listNetworkPolicyForAllNamespaces) | **GET** /apis/extensions/v1beta1/networkpolicies | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_listPodSecurityPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_listPodSecurityPolicy) | **GET** /apis/extensions/v1beta1/podsecuritypolicies | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_listReplicaSetForAllNamespaces**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_listReplicaSetForAllNamespaces) | **GET** /apis/extensions/v1beta1/replicasets | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedDaemonSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedDaemonSet) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedDaemonSetStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedDaemonSetStatus) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedDeployment**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedDeployment) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedDeploymentScale**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedDeploymentScale) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedDeploymentStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedDeploymentStatus) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedIngress**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedIngress) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedIngressStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedIngressStatus) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedNetworkPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedNetworkPolicy) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedReplicaSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedReplicaSet) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedReplicaSetScale**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedReplicaSetScale) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedReplicaSetStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedReplicaSetStatus) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchNamespacedReplicationControllerDummyScale**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchNamespacedReplicationControllerDummyScale) | **PATCH** /apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_patchPodSecurityPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_patchPodSecurityPolicy) | **PATCH** /apis/extensions/v1beta1/podsecuritypolicies/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedDaemonSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedDaemonSet) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedDaemonSetStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedDaemonSetStatus) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedDeployment**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedDeployment) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedDeploymentScale**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedDeploymentScale) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedDeploymentStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedDeploymentStatus) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedIngress**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedIngress) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedIngressStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedIngressStatus) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedNetworkPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedNetworkPolicy) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedReplicaSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedReplicaSet) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedReplicaSetScale**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedReplicaSetScale) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedReplicaSetStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedReplicaSetStatus) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readNamespacedReplicationControllerDummyScale**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readNamespacedReplicationControllerDummyScale) | **GET** /apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_readPodSecurityPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_readPodSecurityPolicy) | **GET** /apis/extensions/v1beta1/podsecuritypolicies/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedDaemonSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedDaemonSet) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedDaemonSetStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedDaemonSetStatus) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedDeployment**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedDeployment) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedDeploymentScale**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedDeploymentScale) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedDeploymentStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedDeploymentStatus) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedIngress**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedIngress) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedIngressStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedIngressStatus) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedNetworkPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedNetworkPolicy) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/networkpolicies/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedReplicaSet**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedReplicaSet) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name} | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedReplicaSetScale**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedReplicaSetScale) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedReplicaSetStatus**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedReplicaSetStatus) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/status | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replaceNamespacedReplicationControllerDummyScale**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replaceNamespacedReplicationControllerDummyScale) | **PUT** /apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale | 
+*ExtensionsV1beta1API* | [**ExtensionsV1beta1API_replacePodSecurityPolicy**](docs/ExtensionsV1beta1API.md#ExtensionsV1beta1API_replacePodSecurityPolicy) | **PUT** /apis/extensions/v1beta1/podsecuritypolicies/{name} | 
+*FlowcontrolApiserverAPI* | [**FlowcontrolApiserverAPI_getAPIGroup**](docs/FlowcontrolApiserverAPI.md#FlowcontrolApiserverAPI_getAPIGroup) | **GET** /apis/flowcontrol.apiserver.k8s.io/ | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_createFlowSchema**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_createFlowSchema) | **POST** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/flowschemas | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_createPriorityLevelConfiguration**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_createPriorityLevelConfiguration) | **POST** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_deleteCollectionFlowSchema**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_deleteCollectionFlowSchema) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/flowschemas | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_deleteCollectionPriorityLevelConfiguration**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_deleteCollectionPriorityLevelConfiguration) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_deleteFlowSchema**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_deleteFlowSchema) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/flowschemas/{name} | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_deletePriorityLevelConfiguration**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_deletePriorityLevelConfiguration) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations/{name} | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_getAPIResources**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_getAPIResources) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/ | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_listFlowSchema**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_listFlowSchema) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/flowschemas | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_listPriorityLevelConfiguration**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_listPriorityLevelConfiguration) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_patchFlowSchema**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_patchFlowSchema) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/flowschemas/{name} | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_patchFlowSchemaStatus**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_patchFlowSchemaStatus) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/flowschemas/{name}/status | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_patchPriorityLevelConfiguration**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_patchPriorityLevelConfiguration) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations/{name} | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_patchPriorityLevelConfigurationStatus**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_patchPriorityLevelConfigurationStatus) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations/{name}/status | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_readFlowSchema**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_readFlowSchema) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/flowschemas/{name} | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_readFlowSchemaStatus**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_readFlowSchemaStatus) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/flowschemas/{name}/status | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_readPriorityLevelConfiguration**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_readPriorityLevelConfiguration) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations/{name} | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_readPriorityLevelConfigurationStatus**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_readPriorityLevelConfigurationStatus) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations/{name}/status | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_replaceFlowSchema**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_replaceFlowSchema) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/flowschemas/{name} | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_replaceFlowSchemaStatus**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_replaceFlowSchemaStatus) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/flowschemas/{name}/status | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_replacePriorityLevelConfiguration**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_replacePriorityLevelConfiguration) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations/{name} | 
+*FlowcontrolApiserverV1alpha1API* | [**FlowcontrolApiserverV1alpha1API_replacePriorityLevelConfigurationStatus**](docs/FlowcontrolApiserverV1alpha1API.md#FlowcontrolApiserverV1alpha1API_replacePriorityLevelConfigurationStatus) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations/{name}/status | 
+*LogsAPI* | [**LogsAPI_logFileHandler**](docs/LogsAPI.md#LogsAPI_logFileHandler) | **GET** /logs/{logpath} | 
+*LogsAPI* | [**LogsAPI_logFileListHandler**](docs/LogsAPI.md#LogsAPI_logFileListHandler) | **GET** /logs/ | 
+*NetworkingAPI* | [**NetworkingAPI_getAPIGroup**](docs/NetworkingAPI.md#NetworkingAPI_getAPIGroup) | **GET** /apis/networking.k8s.io/ | 
+*NetworkingV1API* | [**NetworkingV1API_createNamespacedNetworkPolicy**](docs/NetworkingV1API.md#NetworkingV1API_createNamespacedNetworkPolicy) | **POST** /apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies | 
+*NetworkingV1API* | [**NetworkingV1API_deleteCollectionNamespacedNetworkPolicy**](docs/NetworkingV1API.md#NetworkingV1API_deleteCollectionNamespacedNetworkPolicy) | **DELETE** /apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies | 
+*NetworkingV1API* | [**NetworkingV1API_deleteNamespacedNetworkPolicy**](docs/NetworkingV1API.md#NetworkingV1API_deleteNamespacedNetworkPolicy) | **DELETE** /apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name} | 
+*NetworkingV1API* | [**NetworkingV1API_getAPIResources**](docs/NetworkingV1API.md#NetworkingV1API_getAPIResources) | **GET** /apis/networking.k8s.io/v1/ | 
+*NetworkingV1API* | [**NetworkingV1API_listNamespacedNetworkPolicy**](docs/NetworkingV1API.md#NetworkingV1API_listNamespacedNetworkPolicy) | **GET** /apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies | 
+*NetworkingV1API* | [**NetworkingV1API_listNetworkPolicyForAllNamespaces**](docs/NetworkingV1API.md#NetworkingV1API_listNetworkPolicyForAllNamespaces) | **GET** /apis/networking.k8s.io/v1/networkpolicies | 
+*NetworkingV1API* | [**NetworkingV1API_patchNamespacedNetworkPolicy**](docs/NetworkingV1API.md#NetworkingV1API_patchNamespacedNetworkPolicy) | **PATCH** /apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name} | 
+*NetworkingV1API* | [**NetworkingV1API_readNamespacedNetworkPolicy**](docs/NetworkingV1API.md#NetworkingV1API_readNamespacedNetworkPolicy) | **GET** /apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name} | 
+*NetworkingV1API* | [**NetworkingV1API_replaceNamespacedNetworkPolicy**](docs/NetworkingV1API.md#NetworkingV1API_replaceNamespacedNetworkPolicy) | **PUT** /apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name} | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_createNamespacedIngress**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_createNamespacedIngress) | **POST** /apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_deleteCollectionNamespacedIngress**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_deleteCollectionNamespacedIngress) | **DELETE** /apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_deleteNamespacedIngress**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_deleteNamespacedIngress) | **DELETE** /apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses/{name} | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_getAPIResources**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_getAPIResources) | **GET** /apis/networking.k8s.io/v1beta1/ | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_listIngressForAllNamespaces**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_listIngressForAllNamespaces) | **GET** /apis/networking.k8s.io/v1beta1/ingresses | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_listNamespacedIngress**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_listNamespacedIngress) | **GET** /apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_patchNamespacedIngress**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_patchNamespacedIngress) | **PATCH** /apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses/{name} | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_patchNamespacedIngressStatus**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_patchNamespacedIngressStatus) | **PATCH** /apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses/{name}/status | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_readNamespacedIngress**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_readNamespacedIngress) | **GET** /apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses/{name} | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_readNamespacedIngressStatus**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_readNamespacedIngressStatus) | **GET** /apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses/{name}/status | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_replaceNamespacedIngress**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_replaceNamespacedIngress) | **PUT** /apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses/{name} | 
+*NetworkingV1beta1API* | [**NetworkingV1beta1API_replaceNamespacedIngressStatus**](docs/NetworkingV1beta1API.md#NetworkingV1beta1API_replaceNamespacedIngressStatus) | **PUT** /apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses/{name}/status | 
+*NodeAPI* | [**NodeAPI_getAPIGroup**](docs/NodeAPI.md#NodeAPI_getAPIGroup) | **GET** /apis/node.k8s.io/ | 
+*NodeV1alpha1API* | [**NodeV1alpha1API_createRuntimeClass**](docs/NodeV1alpha1API.md#NodeV1alpha1API_createRuntimeClass) | **POST** /apis/node.k8s.io/v1alpha1/runtimeclasses | 
+*NodeV1alpha1API* | [**NodeV1alpha1API_deleteCollectionRuntimeClass**](docs/NodeV1alpha1API.md#NodeV1alpha1API_deleteCollectionRuntimeClass) | **DELETE** /apis/node.k8s.io/v1alpha1/runtimeclasses | 
+*NodeV1alpha1API* | [**NodeV1alpha1API_deleteRuntimeClass**](docs/NodeV1alpha1API.md#NodeV1alpha1API_deleteRuntimeClass) | **DELETE** /apis/node.k8s.io/v1alpha1/runtimeclasses/{name} | 
+*NodeV1alpha1API* | [**NodeV1alpha1API_getAPIResources**](docs/NodeV1alpha1API.md#NodeV1alpha1API_getAPIResources) | **GET** /apis/node.k8s.io/v1alpha1/ | 
+*NodeV1alpha1API* | [**NodeV1alpha1API_listRuntimeClass**](docs/NodeV1alpha1API.md#NodeV1alpha1API_listRuntimeClass) | **GET** /apis/node.k8s.io/v1alpha1/runtimeclasses | 
+*NodeV1alpha1API* | [**NodeV1alpha1API_patchRuntimeClass**](docs/NodeV1alpha1API.md#NodeV1alpha1API_patchRuntimeClass) | **PATCH** /apis/node.k8s.io/v1alpha1/runtimeclasses/{name} | 
+*NodeV1alpha1API* | [**NodeV1alpha1API_readRuntimeClass**](docs/NodeV1alpha1API.md#NodeV1alpha1API_readRuntimeClass) | **GET** /apis/node.k8s.io/v1alpha1/runtimeclasses/{name} | 
+*NodeV1alpha1API* | [**NodeV1alpha1API_replaceRuntimeClass**](docs/NodeV1alpha1API.md#NodeV1alpha1API_replaceRuntimeClass) | **PUT** /apis/node.k8s.io/v1alpha1/runtimeclasses/{name} | 
+*NodeV1beta1API* | [**NodeV1beta1API_createRuntimeClass**](docs/NodeV1beta1API.md#NodeV1beta1API_createRuntimeClass) | **POST** /apis/node.k8s.io/v1beta1/runtimeclasses | 
+*NodeV1beta1API* | [**NodeV1beta1API_deleteCollectionRuntimeClass**](docs/NodeV1beta1API.md#NodeV1beta1API_deleteCollectionRuntimeClass) | **DELETE** /apis/node.k8s.io/v1beta1/runtimeclasses | 
+*NodeV1beta1API* | [**NodeV1beta1API_deleteRuntimeClass**](docs/NodeV1beta1API.md#NodeV1beta1API_deleteRuntimeClass) | **DELETE** /apis/node.k8s.io/v1beta1/runtimeclasses/{name} | 
+*NodeV1beta1API* | [**NodeV1beta1API_getAPIResources**](docs/NodeV1beta1API.md#NodeV1beta1API_getAPIResources) | **GET** /apis/node.k8s.io/v1beta1/ | 
+*NodeV1beta1API* | [**NodeV1beta1API_listRuntimeClass**](docs/NodeV1beta1API.md#NodeV1beta1API_listRuntimeClass) | **GET** /apis/node.k8s.io/v1beta1/runtimeclasses | 
+*NodeV1beta1API* | [**NodeV1beta1API_patchRuntimeClass**](docs/NodeV1beta1API.md#NodeV1beta1API_patchRuntimeClass) | **PATCH** /apis/node.k8s.io/v1beta1/runtimeclasses/{name} | 
+*NodeV1beta1API* | [**NodeV1beta1API_readRuntimeClass**](docs/NodeV1beta1API.md#NodeV1beta1API_readRuntimeClass) | **GET** /apis/node.k8s.io/v1beta1/runtimeclasses/{name} | 
+*NodeV1beta1API* | [**NodeV1beta1API_replaceRuntimeClass**](docs/NodeV1beta1API.md#NodeV1beta1API_replaceRuntimeClass) | **PUT** /apis/node.k8s.io/v1beta1/runtimeclasses/{name} | 
+*PolicyAPI* | [**PolicyAPI_getAPIGroup**](docs/PolicyAPI.md#PolicyAPI_getAPIGroup) | **GET** /apis/policy/ | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_createNamespacedPodDisruptionBudget**](docs/PolicyV1beta1API.md#PolicyV1beta1API_createNamespacedPodDisruptionBudget) | **POST** /apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_createPodSecurityPolicy**](docs/PolicyV1beta1API.md#PolicyV1beta1API_createPodSecurityPolicy) | **POST** /apis/policy/v1beta1/podsecuritypolicies | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget**](docs/PolicyV1beta1API.md#PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget) | **DELETE** /apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_deleteCollectionPodSecurityPolicy**](docs/PolicyV1beta1API.md#PolicyV1beta1API_deleteCollectionPodSecurityPolicy) | **DELETE** /apis/policy/v1beta1/podsecuritypolicies | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_deleteNamespacedPodDisruptionBudget**](docs/PolicyV1beta1API.md#PolicyV1beta1API_deleteNamespacedPodDisruptionBudget) | **DELETE** /apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name} | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_deletePodSecurityPolicy**](docs/PolicyV1beta1API.md#PolicyV1beta1API_deletePodSecurityPolicy) | **DELETE** /apis/policy/v1beta1/podsecuritypolicies/{name} | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_getAPIResources**](docs/PolicyV1beta1API.md#PolicyV1beta1API_getAPIResources) | **GET** /apis/policy/v1beta1/ | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_listNamespacedPodDisruptionBudget**](docs/PolicyV1beta1API.md#PolicyV1beta1API_listNamespacedPodDisruptionBudget) | **GET** /apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces**](docs/PolicyV1beta1API.md#PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces) | **GET** /apis/policy/v1beta1/poddisruptionbudgets | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_listPodSecurityPolicy**](docs/PolicyV1beta1API.md#PolicyV1beta1API_listPodSecurityPolicy) | **GET** /apis/policy/v1beta1/podsecuritypolicies | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_patchNamespacedPodDisruptionBudget**](docs/PolicyV1beta1API.md#PolicyV1beta1API_patchNamespacedPodDisruptionBudget) | **PATCH** /apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name} | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus**](docs/PolicyV1beta1API.md#PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus) | **PATCH** /apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}/status | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_patchPodSecurityPolicy**](docs/PolicyV1beta1API.md#PolicyV1beta1API_patchPodSecurityPolicy) | **PATCH** /apis/policy/v1beta1/podsecuritypolicies/{name} | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_readNamespacedPodDisruptionBudget**](docs/PolicyV1beta1API.md#PolicyV1beta1API_readNamespacedPodDisruptionBudget) | **GET** /apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name} | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_readNamespacedPodDisruptionBudgetStatus**](docs/PolicyV1beta1API.md#PolicyV1beta1API_readNamespacedPodDisruptionBudgetStatus) | **GET** /apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}/status | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_readPodSecurityPolicy**](docs/PolicyV1beta1API.md#PolicyV1beta1API_readPodSecurityPolicy) | **GET** /apis/policy/v1beta1/podsecuritypolicies/{name} | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_replaceNamespacedPodDisruptionBudget**](docs/PolicyV1beta1API.md#PolicyV1beta1API_replaceNamespacedPodDisruptionBudget) | **PUT** /apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name} | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_replaceNamespacedPodDisruptionBudgetStatus**](docs/PolicyV1beta1API.md#PolicyV1beta1API_replaceNamespacedPodDisruptionBudgetStatus) | **PUT** /apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}/status | 
+*PolicyV1beta1API* | [**PolicyV1beta1API_replacePodSecurityPolicy**](docs/PolicyV1beta1API.md#PolicyV1beta1API_replacePodSecurityPolicy) | **PUT** /apis/policy/v1beta1/podsecuritypolicies/{name} | 
+*RbacAuthorizationAPI* | [**RbacAuthorizationAPI_getAPIGroup**](docs/RbacAuthorizationAPI.md#RbacAuthorizationAPI_getAPIGroup) | **GET** /apis/rbac.authorization.k8s.io/ | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_createClusterRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_createClusterRole) | **POST** /apis/rbac.authorization.k8s.io/v1/clusterroles | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_createClusterRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_createClusterRoleBinding) | **POST** /apis/rbac.authorization.k8s.io/v1/clusterrolebindings | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_createNamespacedRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_createNamespacedRole) | **POST** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/roles | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_createNamespacedRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_createNamespacedRoleBinding) | **POST** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/rolebindings | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_deleteClusterRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_deleteClusterRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1/clusterroles/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_deleteClusterRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_deleteClusterRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_deleteCollectionClusterRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_deleteCollectionClusterRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1/clusterroles | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_deleteCollectionClusterRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_deleteCollectionClusterRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1/clusterrolebindings | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_deleteCollectionNamespacedRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_deleteCollectionNamespacedRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/roles | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/rolebindings | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_deleteNamespacedRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_deleteNamespacedRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_deleteNamespacedRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_deleteNamespacedRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/rolebindings/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_getAPIResources**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_getAPIResources) | **GET** /apis/rbac.authorization.k8s.io/v1/ | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_listClusterRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_listClusterRole) | **GET** /apis/rbac.authorization.k8s.io/v1/clusterroles | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_listClusterRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_listClusterRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1/clusterrolebindings | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_listNamespacedRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_listNamespacedRole) | **GET** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/roles | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_listNamespacedRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_listNamespacedRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/rolebindings | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_listRoleBindingForAllNamespaces**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_listRoleBindingForAllNamespaces) | **GET** /apis/rbac.authorization.k8s.io/v1/rolebindings | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_listRoleForAllNamespaces**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_listRoleForAllNamespaces) | **GET** /apis/rbac.authorization.k8s.io/v1/roles | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_patchClusterRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_patchClusterRole) | **PATCH** /apis/rbac.authorization.k8s.io/v1/clusterroles/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_patchClusterRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_patchClusterRoleBinding) | **PATCH** /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_patchNamespacedRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_patchNamespacedRole) | **PATCH** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_patchNamespacedRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_patchNamespacedRoleBinding) | **PATCH** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/rolebindings/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_readClusterRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_readClusterRole) | **GET** /apis/rbac.authorization.k8s.io/v1/clusterroles/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_readClusterRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_readClusterRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_readNamespacedRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_readNamespacedRole) | **GET** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_readNamespacedRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_readNamespacedRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/rolebindings/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_replaceClusterRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_replaceClusterRole) | **PUT** /apis/rbac.authorization.k8s.io/v1/clusterroles/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_replaceClusterRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_replaceClusterRoleBinding) | **PUT** /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_replaceNamespacedRole**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_replaceNamespacedRole) | **PUT** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1API* | [**RbacAuthorizationV1API_replaceNamespacedRoleBinding**](docs/RbacAuthorizationV1API.md#RbacAuthorizationV1API_replaceNamespacedRoleBinding) | **PUT** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/rolebindings/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_createClusterRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_createClusterRole) | **POST** /apis/rbac.authorization.k8s.io/v1alpha1/clusterroles | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_createClusterRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_createClusterRoleBinding) | **POST** /apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_createNamespacedRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_createNamespacedRole) | **POST** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_createNamespacedRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_createNamespacedRoleBinding) | **POST** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_deleteClusterRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_deleteClusterRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1alpha1/clusterroles/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_deleteClusterRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_deleteClusterRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_deleteCollectionClusterRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_deleteCollectionClusterRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1alpha1/clusterroles | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_deleteCollectionClusterRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_deleteCollectionClusterRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_deleteCollectionNamespacedRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_deleteCollectionNamespacedRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_deleteCollectionNamespacedRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_deleteCollectionNamespacedRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_deleteNamespacedRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_deleteNamespacedRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_deleteNamespacedRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_deleteNamespacedRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_getAPIResources**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_getAPIResources) | **GET** /apis/rbac.authorization.k8s.io/v1alpha1/ | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_listClusterRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_listClusterRole) | **GET** /apis/rbac.authorization.k8s.io/v1alpha1/clusterroles | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_listClusterRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_listClusterRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_listNamespacedRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_listNamespacedRole) | **GET** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_listNamespacedRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_listNamespacedRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_listRoleBindingForAllNamespaces**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_listRoleBindingForAllNamespaces) | **GET** /apis/rbac.authorization.k8s.io/v1alpha1/rolebindings | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_listRoleForAllNamespaces**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_listRoleForAllNamespaces) | **GET** /apis/rbac.authorization.k8s.io/v1alpha1/roles | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_patchClusterRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_patchClusterRole) | **PATCH** /apis/rbac.authorization.k8s.io/v1alpha1/clusterroles/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_patchClusterRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_patchClusterRoleBinding) | **PATCH** /apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_patchNamespacedRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_patchNamespacedRole) | **PATCH** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_patchNamespacedRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_patchNamespacedRoleBinding) | **PATCH** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_readClusterRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_readClusterRole) | **GET** /apis/rbac.authorization.k8s.io/v1alpha1/clusterroles/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_readClusterRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_readClusterRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_readNamespacedRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_readNamespacedRole) | **GET** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_readNamespacedRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_readNamespacedRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_replaceClusterRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_replaceClusterRole) | **PUT** /apis/rbac.authorization.k8s.io/v1alpha1/clusterroles/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_replaceClusterRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_replaceClusterRoleBinding) | **PUT** /apis/rbac.authorization.k8s.io/v1alpha1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_replaceNamespacedRole**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_replaceNamespacedRole) | **PUT** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1alpha1API* | [**RbacAuthorizationV1alpha1API_replaceNamespacedRoleBinding**](docs/RbacAuthorizationV1alpha1API.md#RbacAuthorizationV1alpha1API_replaceNamespacedRoleBinding) | **PUT** /apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_createClusterRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_createClusterRole) | **POST** /apis/rbac.authorization.k8s.io/v1beta1/clusterroles | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_createClusterRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_createClusterRoleBinding) | **POST** /apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_createNamespacedRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_createNamespacedRole) | **POST** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_createNamespacedRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_createNamespacedRoleBinding) | **POST** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_deleteClusterRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_deleteClusterRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1beta1/clusterroles/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_deleteClusterRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_deleteClusterRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_deleteCollectionClusterRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_deleteCollectionClusterRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1beta1/clusterroles | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_deleteCollectionClusterRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_deleteCollectionClusterRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_deleteCollectionNamespacedRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_deleteCollectionNamespacedRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_deleteCollectionNamespacedRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_deleteCollectionNamespacedRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_deleteNamespacedRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_deleteNamespacedRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_deleteNamespacedRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_deleteNamespacedRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_getAPIResources**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_getAPIResources) | **GET** /apis/rbac.authorization.k8s.io/v1beta1/ | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_listClusterRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_listClusterRole) | **GET** /apis/rbac.authorization.k8s.io/v1beta1/clusterroles | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_listClusterRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_listClusterRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_listNamespacedRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_listNamespacedRole) | **GET** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_listNamespacedRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_listNamespacedRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_listRoleBindingForAllNamespaces**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_listRoleBindingForAllNamespaces) | **GET** /apis/rbac.authorization.k8s.io/v1beta1/rolebindings | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_listRoleForAllNamespaces**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_listRoleForAllNamespaces) | **GET** /apis/rbac.authorization.k8s.io/v1beta1/roles | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_patchClusterRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_patchClusterRole) | **PATCH** /apis/rbac.authorization.k8s.io/v1beta1/clusterroles/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_patchClusterRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_patchClusterRoleBinding) | **PATCH** /apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_patchNamespacedRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_patchNamespacedRole) | **PATCH** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_patchNamespacedRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_patchNamespacedRoleBinding) | **PATCH** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_readClusterRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_readClusterRole) | **GET** /apis/rbac.authorization.k8s.io/v1beta1/clusterroles/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_readClusterRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_readClusterRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_readNamespacedRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_readNamespacedRole) | **GET** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_readNamespacedRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_readNamespacedRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_replaceClusterRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_replaceClusterRole) | **PUT** /apis/rbac.authorization.k8s.io/v1beta1/clusterroles/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_replaceClusterRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_replaceClusterRoleBinding) | **PUT** /apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_replaceNamespacedRole**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_replaceNamespacedRole) | **PUT** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/roles/{name} | 
+*RbacAuthorizationV1beta1API* | [**RbacAuthorizationV1beta1API_replaceNamespacedRoleBinding**](docs/RbacAuthorizationV1beta1API.md#RbacAuthorizationV1beta1API_replaceNamespacedRoleBinding) | **PUT** /apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings/{name} | 
+*SchedulingAPI* | [**SchedulingAPI_getAPIGroup**](docs/SchedulingAPI.md#SchedulingAPI_getAPIGroup) | **GET** /apis/scheduling.k8s.io/ | 
+*SchedulingV1API* | [**SchedulingV1API_createPriorityClass**](docs/SchedulingV1API.md#SchedulingV1API_createPriorityClass) | **POST** /apis/scheduling.k8s.io/v1/priorityclasses | 
+*SchedulingV1API* | [**SchedulingV1API_deleteCollectionPriorityClass**](docs/SchedulingV1API.md#SchedulingV1API_deleteCollectionPriorityClass) | **DELETE** /apis/scheduling.k8s.io/v1/priorityclasses | 
+*SchedulingV1API* | [**SchedulingV1API_deletePriorityClass**](docs/SchedulingV1API.md#SchedulingV1API_deletePriorityClass) | **DELETE** /apis/scheduling.k8s.io/v1/priorityclasses/{name} | 
+*SchedulingV1API* | [**SchedulingV1API_getAPIResources**](docs/SchedulingV1API.md#SchedulingV1API_getAPIResources) | **GET** /apis/scheduling.k8s.io/v1/ | 
+*SchedulingV1API* | [**SchedulingV1API_listPriorityClass**](docs/SchedulingV1API.md#SchedulingV1API_listPriorityClass) | **GET** /apis/scheduling.k8s.io/v1/priorityclasses | 
+*SchedulingV1API* | [**SchedulingV1API_patchPriorityClass**](docs/SchedulingV1API.md#SchedulingV1API_patchPriorityClass) | **PATCH** /apis/scheduling.k8s.io/v1/priorityclasses/{name} | 
+*SchedulingV1API* | [**SchedulingV1API_readPriorityClass**](docs/SchedulingV1API.md#SchedulingV1API_readPriorityClass) | **GET** /apis/scheduling.k8s.io/v1/priorityclasses/{name} | 
+*SchedulingV1API* | [**SchedulingV1API_replacePriorityClass**](docs/SchedulingV1API.md#SchedulingV1API_replacePriorityClass) | **PUT** /apis/scheduling.k8s.io/v1/priorityclasses/{name} | 
+*SchedulingV1alpha1API* | [**SchedulingV1alpha1API_createPriorityClass**](docs/SchedulingV1alpha1API.md#SchedulingV1alpha1API_createPriorityClass) | **POST** /apis/scheduling.k8s.io/v1alpha1/priorityclasses | 
+*SchedulingV1alpha1API* | [**SchedulingV1alpha1API_deleteCollectionPriorityClass**](docs/SchedulingV1alpha1API.md#SchedulingV1alpha1API_deleteCollectionPriorityClass) | **DELETE** /apis/scheduling.k8s.io/v1alpha1/priorityclasses | 
+*SchedulingV1alpha1API* | [**SchedulingV1alpha1API_deletePriorityClass**](docs/SchedulingV1alpha1API.md#SchedulingV1alpha1API_deletePriorityClass) | **DELETE** /apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name} | 
+*SchedulingV1alpha1API* | [**SchedulingV1alpha1API_getAPIResources**](docs/SchedulingV1alpha1API.md#SchedulingV1alpha1API_getAPIResources) | **GET** /apis/scheduling.k8s.io/v1alpha1/ | 
+*SchedulingV1alpha1API* | [**SchedulingV1alpha1API_listPriorityClass**](docs/SchedulingV1alpha1API.md#SchedulingV1alpha1API_listPriorityClass) | **GET** /apis/scheduling.k8s.io/v1alpha1/priorityclasses | 
+*SchedulingV1alpha1API* | [**SchedulingV1alpha1API_patchPriorityClass**](docs/SchedulingV1alpha1API.md#SchedulingV1alpha1API_patchPriorityClass) | **PATCH** /apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name} | 
+*SchedulingV1alpha1API* | [**SchedulingV1alpha1API_readPriorityClass**](docs/SchedulingV1alpha1API.md#SchedulingV1alpha1API_readPriorityClass) | **GET** /apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name} | 
+*SchedulingV1alpha1API* | [**SchedulingV1alpha1API_replacePriorityClass**](docs/SchedulingV1alpha1API.md#SchedulingV1alpha1API_replacePriorityClass) | **PUT** /apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name} | 
+*SchedulingV1beta1API* | [**SchedulingV1beta1API_createPriorityClass**](docs/SchedulingV1beta1API.md#SchedulingV1beta1API_createPriorityClass) | **POST** /apis/scheduling.k8s.io/v1beta1/priorityclasses | 
+*SchedulingV1beta1API* | [**SchedulingV1beta1API_deleteCollectionPriorityClass**](docs/SchedulingV1beta1API.md#SchedulingV1beta1API_deleteCollectionPriorityClass) | **DELETE** /apis/scheduling.k8s.io/v1beta1/priorityclasses | 
+*SchedulingV1beta1API* | [**SchedulingV1beta1API_deletePriorityClass**](docs/SchedulingV1beta1API.md#SchedulingV1beta1API_deletePriorityClass) | **DELETE** /apis/scheduling.k8s.io/v1beta1/priorityclasses/{name} | 
+*SchedulingV1beta1API* | [**SchedulingV1beta1API_getAPIResources**](docs/SchedulingV1beta1API.md#SchedulingV1beta1API_getAPIResources) | **GET** /apis/scheduling.k8s.io/v1beta1/ | 
+*SchedulingV1beta1API* | [**SchedulingV1beta1API_listPriorityClass**](docs/SchedulingV1beta1API.md#SchedulingV1beta1API_listPriorityClass) | **GET** /apis/scheduling.k8s.io/v1beta1/priorityclasses | 
+*SchedulingV1beta1API* | [**SchedulingV1beta1API_patchPriorityClass**](docs/SchedulingV1beta1API.md#SchedulingV1beta1API_patchPriorityClass) | **PATCH** /apis/scheduling.k8s.io/v1beta1/priorityclasses/{name} | 
+*SchedulingV1beta1API* | [**SchedulingV1beta1API_readPriorityClass**](docs/SchedulingV1beta1API.md#SchedulingV1beta1API_readPriorityClass) | **GET** /apis/scheduling.k8s.io/v1beta1/priorityclasses/{name} | 
+*SchedulingV1beta1API* | [**SchedulingV1beta1API_replacePriorityClass**](docs/SchedulingV1beta1API.md#SchedulingV1beta1API_replacePriorityClass) | **PUT** /apis/scheduling.k8s.io/v1beta1/priorityclasses/{name} | 
+*SettingsAPI* | [**SettingsAPI_getAPIGroup**](docs/SettingsAPI.md#SettingsAPI_getAPIGroup) | **GET** /apis/settings.k8s.io/ | 
+*SettingsV1alpha1API* | [**SettingsV1alpha1API_createNamespacedPodPreset**](docs/SettingsV1alpha1API.md#SettingsV1alpha1API_createNamespacedPodPreset) | **POST** /apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets | 
+*SettingsV1alpha1API* | [**SettingsV1alpha1API_deleteCollectionNamespacedPodPreset**](docs/SettingsV1alpha1API.md#SettingsV1alpha1API_deleteCollectionNamespacedPodPreset) | **DELETE** /apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets | 
+*SettingsV1alpha1API* | [**SettingsV1alpha1API_deleteNamespacedPodPreset**](docs/SettingsV1alpha1API.md#SettingsV1alpha1API_deleteNamespacedPodPreset) | **DELETE** /apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name} | 
+*SettingsV1alpha1API* | [**SettingsV1alpha1API_getAPIResources**](docs/SettingsV1alpha1API.md#SettingsV1alpha1API_getAPIResources) | **GET** /apis/settings.k8s.io/v1alpha1/ | 
+*SettingsV1alpha1API* | [**SettingsV1alpha1API_listNamespacedPodPreset**](docs/SettingsV1alpha1API.md#SettingsV1alpha1API_listNamespacedPodPreset) | **GET** /apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets | 
+*SettingsV1alpha1API* | [**SettingsV1alpha1API_listPodPresetForAllNamespaces**](docs/SettingsV1alpha1API.md#SettingsV1alpha1API_listPodPresetForAllNamespaces) | **GET** /apis/settings.k8s.io/v1alpha1/podpresets | 
+*SettingsV1alpha1API* | [**SettingsV1alpha1API_patchNamespacedPodPreset**](docs/SettingsV1alpha1API.md#SettingsV1alpha1API_patchNamespacedPodPreset) | **PATCH** /apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name} | 
+*SettingsV1alpha1API* | [**SettingsV1alpha1API_readNamespacedPodPreset**](docs/SettingsV1alpha1API.md#SettingsV1alpha1API_readNamespacedPodPreset) | **GET** /apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name} | 
+*SettingsV1alpha1API* | [**SettingsV1alpha1API_replaceNamespacedPodPreset**](docs/SettingsV1alpha1API.md#SettingsV1alpha1API_replaceNamespacedPodPreset) | **PUT** /apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name} | 
+*StorageAPI* | [**StorageAPI_getAPIGroup**](docs/StorageAPI.md#StorageAPI_getAPIGroup) | **GET** /apis/storage.k8s.io/ | 
+*StorageV1API* | [**StorageV1API_createCSINode**](docs/StorageV1API.md#StorageV1API_createCSINode) | **POST** /apis/storage.k8s.io/v1/csinodes | 
+*StorageV1API* | [**StorageV1API_createStorageClass**](docs/StorageV1API.md#StorageV1API_createStorageClass) | **POST** /apis/storage.k8s.io/v1/storageclasses | 
+*StorageV1API* | [**StorageV1API_createVolumeAttachment**](docs/StorageV1API.md#StorageV1API_createVolumeAttachment) | **POST** /apis/storage.k8s.io/v1/volumeattachments | 
+*StorageV1API* | [**StorageV1API_deleteCSINode**](docs/StorageV1API.md#StorageV1API_deleteCSINode) | **DELETE** /apis/storage.k8s.io/v1/csinodes/{name} | 
+*StorageV1API* | [**StorageV1API_deleteCollectionCSINode**](docs/StorageV1API.md#StorageV1API_deleteCollectionCSINode) | **DELETE** /apis/storage.k8s.io/v1/csinodes | 
+*StorageV1API* | [**StorageV1API_deleteCollectionStorageClass**](docs/StorageV1API.md#StorageV1API_deleteCollectionStorageClass) | **DELETE** /apis/storage.k8s.io/v1/storageclasses | 
+*StorageV1API* | [**StorageV1API_deleteCollectionVolumeAttachment**](docs/StorageV1API.md#StorageV1API_deleteCollectionVolumeAttachment) | **DELETE** /apis/storage.k8s.io/v1/volumeattachments | 
+*StorageV1API* | [**StorageV1API_deleteStorageClass**](docs/StorageV1API.md#StorageV1API_deleteStorageClass) | **DELETE** /apis/storage.k8s.io/v1/storageclasses/{name} | 
+*StorageV1API* | [**StorageV1API_deleteVolumeAttachment**](docs/StorageV1API.md#StorageV1API_deleteVolumeAttachment) | **DELETE** /apis/storage.k8s.io/v1/volumeattachments/{name} | 
+*StorageV1API* | [**StorageV1API_getAPIResources**](docs/StorageV1API.md#StorageV1API_getAPIResources) | **GET** /apis/storage.k8s.io/v1/ | 
+*StorageV1API* | [**StorageV1API_listCSINode**](docs/StorageV1API.md#StorageV1API_listCSINode) | **GET** /apis/storage.k8s.io/v1/csinodes | 
+*StorageV1API* | [**StorageV1API_listStorageClass**](docs/StorageV1API.md#StorageV1API_listStorageClass) | **GET** /apis/storage.k8s.io/v1/storageclasses | 
+*StorageV1API* | [**StorageV1API_listVolumeAttachment**](docs/StorageV1API.md#StorageV1API_listVolumeAttachment) | **GET** /apis/storage.k8s.io/v1/volumeattachments | 
+*StorageV1API* | [**StorageV1API_patchCSINode**](docs/StorageV1API.md#StorageV1API_patchCSINode) | **PATCH** /apis/storage.k8s.io/v1/csinodes/{name} | 
+*StorageV1API* | [**StorageV1API_patchStorageClass**](docs/StorageV1API.md#StorageV1API_patchStorageClass) | **PATCH** /apis/storage.k8s.io/v1/storageclasses/{name} | 
+*StorageV1API* | [**StorageV1API_patchVolumeAttachment**](docs/StorageV1API.md#StorageV1API_patchVolumeAttachment) | **PATCH** /apis/storage.k8s.io/v1/volumeattachments/{name} | 
+*StorageV1API* | [**StorageV1API_patchVolumeAttachmentStatus**](docs/StorageV1API.md#StorageV1API_patchVolumeAttachmentStatus) | **PATCH** /apis/storage.k8s.io/v1/volumeattachments/{name}/status | 
+*StorageV1API* | [**StorageV1API_readCSINode**](docs/StorageV1API.md#StorageV1API_readCSINode) | **GET** /apis/storage.k8s.io/v1/csinodes/{name} | 
+*StorageV1API* | [**StorageV1API_readStorageClass**](docs/StorageV1API.md#StorageV1API_readStorageClass) | **GET** /apis/storage.k8s.io/v1/storageclasses/{name} | 
+*StorageV1API* | [**StorageV1API_readVolumeAttachment**](docs/StorageV1API.md#StorageV1API_readVolumeAttachment) | **GET** /apis/storage.k8s.io/v1/volumeattachments/{name} | 
+*StorageV1API* | [**StorageV1API_readVolumeAttachmentStatus**](docs/StorageV1API.md#StorageV1API_readVolumeAttachmentStatus) | **GET** /apis/storage.k8s.io/v1/volumeattachments/{name}/status | 
+*StorageV1API* | [**StorageV1API_replaceCSINode**](docs/StorageV1API.md#StorageV1API_replaceCSINode) | **PUT** /apis/storage.k8s.io/v1/csinodes/{name} | 
+*StorageV1API* | [**StorageV1API_replaceStorageClass**](docs/StorageV1API.md#StorageV1API_replaceStorageClass) | **PUT** /apis/storage.k8s.io/v1/storageclasses/{name} | 
+*StorageV1API* | [**StorageV1API_replaceVolumeAttachment**](docs/StorageV1API.md#StorageV1API_replaceVolumeAttachment) | **PUT** /apis/storage.k8s.io/v1/volumeattachments/{name} | 
+*StorageV1API* | [**StorageV1API_replaceVolumeAttachmentStatus**](docs/StorageV1API.md#StorageV1API_replaceVolumeAttachmentStatus) | **PUT** /apis/storage.k8s.io/v1/volumeattachments/{name}/status | 
+*StorageV1alpha1API* | [**StorageV1alpha1API_createVolumeAttachment**](docs/StorageV1alpha1API.md#StorageV1alpha1API_createVolumeAttachment) | **POST** /apis/storage.k8s.io/v1alpha1/volumeattachments | 
+*StorageV1alpha1API* | [**StorageV1alpha1API_deleteCollectionVolumeAttachment**](docs/StorageV1alpha1API.md#StorageV1alpha1API_deleteCollectionVolumeAttachment) | **DELETE** /apis/storage.k8s.io/v1alpha1/volumeattachments | 
+*StorageV1alpha1API* | [**StorageV1alpha1API_deleteVolumeAttachment**](docs/StorageV1alpha1API.md#StorageV1alpha1API_deleteVolumeAttachment) | **DELETE** /apis/storage.k8s.io/v1alpha1/volumeattachments/{name} | 
+*StorageV1alpha1API* | [**StorageV1alpha1API_getAPIResources**](docs/StorageV1alpha1API.md#StorageV1alpha1API_getAPIResources) | **GET** /apis/storage.k8s.io/v1alpha1/ | 
+*StorageV1alpha1API* | [**StorageV1alpha1API_listVolumeAttachment**](docs/StorageV1alpha1API.md#StorageV1alpha1API_listVolumeAttachment) | **GET** /apis/storage.k8s.io/v1alpha1/volumeattachments | 
+*StorageV1alpha1API* | [**StorageV1alpha1API_patchVolumeAttachment**](docs/StorageV1alpha1API.md#StorageV1alpha1API_patchVolumeAttachment) | **PATCH** /apis/storage.k8s.io/v1alpha1/volumeattachments/{name} | 
+*StorageV1alpha1API* | [**StorageV1alpha1API_readVolumeAttachment**](docs/StorageV1alpha1API.md#StorageV1alpha1API_readVolumeAttachment) | **GET** /apis/storage.k8s.io/v1alpha1/volumeattachments/{name} | 
+*StorageV1alpha1API* | [**StorageV1alpha1API_replaceVolumeAttachment**](docs/StorageV1alpha1API.md#StorageV1alpha1API_replaceVolumeAttachment) | **PUT** /apis/storage.k8s.io/v1alpha1/volumeattachments/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_createCSIDriver**](docs/StorageV1beta1API.md#StorageV1beta1API_createCSIDriver) | **POST** /apis/storage.k8s.io/v1beta1/csidrivers | 
+*StorageV1beta1API* | [**StorageV1beta1API_createCSINode**](docs/StorageV1beta1API.md#StorageV1beta1API_createCSINode) | **POST** /apis/storage.k8s.io/v1beta1/csinodes | 
+*StorageV1beta1API* | [**StorageV1beta1API_createStorageClass**](docs/StorageV1beta1API.md#StorageV1beta1API_createStorageClass) | **POST** /apis/storage.k8s.io/v1beta1/storageclasses | 
+*StorageV1beta1API* | [**StorageV1beta1API_createVolumeAttachment**](docs/StorageV1beta1API.md#StorageV1beta1API_createVolumeAttachment) | **POST** /apis/storage.k8s.io/v1beta1/volumeattachments | 
+*StorageV1beta1API* | [**StorageV1beta1API_deleteCSIDriver**](docs/StorageV1beta1API.md#StorageV1beta1API_deleteCSIDriver) | **DELETE** /apis/storage.k8s.io/v1beta1/csidrivers/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_deleteCSINode**](docs/StorageV1beta1API.md#StorageV1beta1API_deleteCSINode) | **DELETE** /apis/storage.k8s.io/v1beta1/csinodes/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_deleteCollectionCSIDriver**](docs/StorageV1beta1API.md#StorageV1beta1API_deleteCollectionCSIDriver) | **DELETE** /apis/storage.k8s.io/v1beta1/csidrivers | 
+*StorageV1beta1API* | [**StorageV1beta1API_deleteCollectionCSINode**](docs/StorageV1beta1API.md#StorageV1beta1API_deleteCollectionCSINode) | **DELETE** /apis/storage.k8s.io/v1beta1/csinodes | 
+*StorageV1beta1API* | [**StorageV1beta1API_deleteCollectionStorageClass**](docs/StorageV1beta1API.md#StorageV1beta1API_deleteCollectionStorageClass) | **DELETE** /apis/storage.k8s.io/v1beta1/storageclasses | 
+*StorageV1beta1API* | [**StorageV1beta1API_deleteCollectionVolumeAttachment**](docs/StorageV1beta1API.md#StorageV1beta1API_deleteCollectionVolumeAttachment) | **DELETE** /apis/storage.k8s.io/v1beta1/volumeattachments | 
+*StorageV1beta1API* | [**StorageV1beta1API_deleteStorageClass**](docs/StorageV1beta1API.md#StorageV1beta1API_deleteStorageClass) | **DELETE** /apis/storage.k8s.io/v1beta1/storageclasses/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_deleteVolumeAttachment**](docs/StorageV1beta1API.md#StorageV1beta1API_deleteVolumeAttachment) | **DELETE** /apis/storage.k8s.io/v1beta1/volumeattachments/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_getAPIResources**](docs/StorageV1beta1API.md#StorageV1beta1API_getAPIResources) | **GET** /apis/storage.k8s.io/v1beta1/ | 
+*StorageV1beta1API* | [**StorageV1beta1API_listCSIDriver**](docs/StorageV1beta1API.md#StorageV1beta1API_listCSIDriver) | **GET** /apis/storage.k8s.io/v1beta1/csidrivers | 
+*StorageV1beta1API* | [**StorageV1beta1API_listCSINode**](docs/StorageV1beta1API.md#StorageV1beta1API_listCSINode) | **GET** /apis/storage.k8s.io/v1beta1/csinodes | 
+*StorageV1beta1API* | [**StorageV1beta1API_listStorageClass**](docs/StorageV1beta1API.md#StorageV1beta1API_listStorageClass) | **GET** /apis/storage.k8s.io/v1beta1/storageclasses | 
+*StorageV1beta1API* | [**StorageV1beta1API_listVolumeAttachment**](docs/StorageV1beta1API.md#StorageV1beta1API_listVolumeAttachment) | **GET** /apis/storage.k8s.io/v1beta1/volumeattachments | 
+*StorageV1beta1API* | [**StorageV1beta1API_patchCSIDriver**](docs/StorageV1beta1API.md#StorageV1beta1API_patchCSIDriver) | **PATCH** /apis/storage.k8s.io/v1beta1/csidrivers/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_patchCSINode**](docs/StorageV1beta1API.md#StorageV1beta1API_patchCSINode) | **PATCH** /apis/storage.k8s.io/v1beta1/csinodes/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_patchStorageClass**](docs/StorageV1beta1API.md#StorageV1beta1API_patchStorageClass) | **PATCH** /apis/storage.k8s.io/v1beta1/storageclasses/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_patchVolumeAttachment**](docs/StorageV1beta1API.md#StorageV1beta1API_patchVolumeAttachment) | **PATCH** /apis/storage.k8s.io/v1beta1/volumeattachments/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_readCSIDriver**](docs/StorageV1beta1API.md#StorageV1beta1API_readCSIDriver) | **GET** /apis/storage.k8s.io/v1beta1/csidrivers/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_readCSINode**](docs/StorageV1beta1API.md#StorageV1beta1API_readCSINode) | **GET** /apis/storage.k8s.io/v1beta1/csinodes/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_readStorageClass**](docs/StorageV1beta1API.md#StorageV1beta1API_readStorageClass) | **GET** /apis/storage.k8s.io/v1beta1/storageclasses/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_readVolumeAttachment**](docs/StorageV1beta1API.md#StorageV1beta1API_readVolumeAttachment) | **GET** /apis/storage.k8s.io/v1beta1/volumeattachments/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_replaceCSIDriver**](docs/StorageV1beta1API.md#StorageV1beta1API_replaceCSIDriver) | **PUT** /apis/storage.k8s.io/v1beta1/csidrivers/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_replaceCSINode**](docs/StorageV1beta1API.md#StorageV1beta1API_replaceCSINode) | **PUT** /apis/storage.k8s.io/v1beta1/csinodes/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_replaceStorageClass**](docs/StorageV1beta1API.md#StorageV1beta1API_replaceStorageClass) | **PUT** /apis/storage.k8s.io/v1beta1/storageclasses/{name} | 
+*StorageV1beta1API* | [**StorageV1beta1API_replaceVolumeAttachment**](docs/StorageV1beta1API.md#StorageV1beta1API_replaceVolumeAttachment) | **PUT** /apis/storage.k8s.io/v1beta1/volumeattachments/{name} | 
+*VersionAPI* | [**VersionAPI_getCode**](docs/VersionAPI.md#VersionAPI_getCode) | **GET** /version/ | 
+
+
+## Documentation for Models
+
+ - [admissionregistration_v1_service_reference_t](docs/admissionregistration_v1_service_reference.md)
+ - [admissionregistration_v1_webhook_client_config_t](docs/admissionregistration_v1_webhook_client_config.md)
+ - [admissionregistration_v1beta1_service_reference_t](docs/admissionregistration_v1beta1_service_reference.md)
+ - [admissionregistration_v1beta1_webhook_client_config_t](docs/admissionregistration_v1beta1_webhook_client_config.md)
+ - [apiextensions_v1_service_reference_t](docs/apiextensions_v1_service_reference.md)
+ - [apiextensions_v1_webhook_client_config_t](docs/apiextensions_v1_webhook_client_config.md)
+ - [apiextensions_v1beta1_service_reference_t](docs/apiextensions_v1beta1_service_reference.md)
+ - [apiextensions_v1beta1_webhook_client_config_t](docs/apiextensions_v1beta1_webhook_client_config.md)
+ - [apiregistration_v1_service_reference_t](docs/apiregistration_v1_service_reference.md)
+ - [apiregistration_v1beta1_service_reference_t](docs/apiregistration_v1beta1_service_reference.md)
+ - [apps_v1beta1_deployment_t](docs/apps_v1beta1_deployment.md)
+ - [apps_v1beta1_deployment_condition_t](docs/apps_v1beta1_deployment_condition.md)
+ - [apps_v1beta1_deployment_list_t](docs/apps_v1beta1_deployment_list.md)
+ - [apps_v1beta1_deployment_rollback_t](docs/apps_v1beta1_deployment_rollback.md)
+ - [apps_v1beta1_deployment_spec_t](docs/apps_v1beta1_deployment_spec.md)
+ - [apps_v1beta1_deployment_status_t](docs/apps_v1beta1_deployment_status.md)
+ - [apps_v1beta1_deployment_strategy_t](docs/apps_v1beta1_deployment_strategy.md)
+ - [apps_v1beta1_rollback_config_t](docs/apps_v1beta1_rollback_config.md)
+ - [apps_v1beta1_rolling_update_deployment_t](docs/apps_v1beta1_rolling_update_deployment.md)
+ - [apps_v1beta1_scale_t](docs/apps_v1beta1_scale.md)
+ - [apps_v1beta1_scale_spec_t](docs/apps_v1beta1_scale_spec.md)
+ - [apps_v1beta1_scale_status_t](docs/apps_v1beta1_scale_status.md)
+ - [extensions_v1beta1_allowed_csi_driver_t](docs/extensions_v1beta1_allowed_csi_driver.md)
+ - [extensions_v1beta1_allowed_flex_volume_t](docs/extensions_v1beta1_allowed_flex_volume.md)
+ - [extensions_v1beta1_allowed_host_path_t](docs/extensions_v1beta1_allowed_host_path.md)
+ - [extensions_v1beta1_deployment_t](docs/extensions_v1beta1_deployment.md)
+ - [extensions_v1beta1_deployment_condition_t](docs/extensions_v1beta1_deployment_condition.md)
+ - [extensions_v1beta1_deployment_list_t](docs/extensions_v1beta1_deployment_list.md)
+ - [extensions_v1beta1_deployment_rollback_t](docs/extensions_v1beta1_deployment_rollback.md)
+ - [extensions_v1beta1_deployment_spec_t](docs/extensions_v1beta1_deployment_spec.md)
+ - [extensions_v1beta1_deployment_status_t](docs/extensions_v1beta1_deployment_status.md)
+ - [extensions_v1beta1_deployment_strategy_t](docs/extensions_v1beta1_deployment_strategy.md)
+ - [extensions_v1beta1_fs_group_strategy_options_t](docs/extensions_v1beta1_fs_group_strategy_options.md)
+ - [extensions_v1beta1_host_port_range_t](docs/extensions_v1beta1_host_port_range.md)
+ - [extensions_v1beta1_http_ingress_path_t](docs/extensions_v1beta1_http_ingress_path.md)
+ - [extensions_v1beta1_http_ingress_rule_value_t](docs/extensions_v1beta1_http_ingress_rule_value.md)
+ - [extensions_v1beta1_id_range_t](docs/extensions_v1beta1_id_range.md)
+ - [extensions_v1beta1_ingress_t](docs/extensions_v1beta1_ingress.md)
+ - [extensions_v1beta1_ingress_backend_t](docs/extensions_v1beta1_ingress_backend.md)
+ - [extensions_v1beta1_ingress_list_t](docs/extensions_v1beta1_ingress_list.md)
+ - [extensions_v1beta1_ingress_rule_t](docs/extensions_v1beta1_ingress_rule.md)
+ - [extensions_v1beta1_ingress_spec_t](docs/extensions_v1beta1_ingress_spec.md)
+ - [extensions_v1beta1_ingress_status_t](docs/extensions_v1beta1_ingress_status.md)
+ - [extensions_v1beta1_ingress_tls_t](docs/extensions_v1beta1_ingress_tls.md)
+ - [extensions_v1beta1_pod_security_policy_t](docs/extensions_v1beta1_pod_security_policy.md)
+ - [extensions_v1beta1_pod_security_policy_list_t](docs/extensions_v1beta1_pod_security_policy_list.md)
+ - [extensions_v1beta1_pod_security_policy_spec_t](docs/extensions_v1beta1_pod_security_policy_spec.md)
+ - [extensions_v1beta1_rollback_config_t](docs/extensions_v1beta1_rollback_config.md)
+ - [extensions_v1beta1_rolling_update_deployment_t](docs/extensions_v1beta1_rolling_update_deployment.md)
+ - [extensions_v1beta1_run_as_group_strategy_options_t](docs/extensions_v1beta1_run_as_group_strategy_options.md)
+ - [extensions_v1beta1_run_as_user_strategy_options_t](docs/extensions_v1beta1_run_as_user_strategy_options.md)
+ - [extensions_v1beta1_runtime_class_strategy_options_t](docs/extensions_v1beta1_runtime_class_strategy_options.md)
+ - [extensions_v1beta1_scale_t](docs/extensions_v1beta1_scale.md)
+ - [extensions_v1beta1_scale_spec_t](docs/extensions_v1beta1_scale_spec.md)
+ - [extensions_v1beta1_scale_status_t](docs/extensions_v1beta1_scale_status.md)
+ - [extensions_v1beta1_se_linux_strategy_options_t](docs/extensions_v1beta1_se_linux_strategy_options.md)
+ - [extensions_v1beta1_supplemental_groups_strategy_options_t](docs/extensions_v1beta1_supplemental_groups_strategy_options.md)
+ - [flowcontrol_v1alpha1_subject_t](docs/flowcontrol_v1alpha1_subject.md)
+ - [networking_v1beta1_http_ingress_path_t](docs/networking_v1beta1_http_ingress_path.md)
+ - [networking_v1beta1_http_ingress_rule_value_t](docs/networking_v1beta1_http_ingress_rule_value.md)
+ - [networking_v1beta1_ingress_t](docs/networking_v1beta1_ingress.md)
+ - [networking_v1beta1_ingress_backend_t](docs/networking_v1beta1_ingress_backend.md)
+ - [networking_v1beta1_ingress_list_t](docs/networking_v1beta1_ingress_list.md)
+ - [networking_v1beta1_ingress_rule_t](docs/networking_v1beta1_ingress_rule.md)
+ - [networking_v1beta1_ingress_spec_t](docs/networking_v1beta1_ingress_spec.md)
+ - [networking_v1beta1_ingress_status_t](docs/networking_v1beta1_ingress_status.md)
+ - [networking_v1beta1_ingress_tls_t](docs/networking_v1beta1_ingress_tls.md)
+ - [policy_v1beta1_allowed_csi_driver_t](docs/policy_v1beta1_allowed_csi_driver.md)
+ - [policy_v1beta1_allowed_flex_volume_t](docs/policy_v1beta1_allowed_flex_volume.md)
+ - [policy_v1beta1_allowed_host_path_t](docs/policy_v1beta1_allowed_host_path.md)
+ - [policy_v1beta1_fs_group_strategy_options_t](docs/policy_v1beta1_fs_group_strategy_options.md)
+ - [policy_v1beta1_host_port_range_t](docs/policy_v1beta1_host_port_range.md)
+ - [policy_v1beta1_id_range_t](docs/policy_v1beta1_id_range.md)
+ - [policy_v1beta1_pod_security_policy_t](docs/policy_v1beta1_pod_security_policy.md)
+ - [policy_v1beta1_pod_security_policy_list_t](docs/policy_v1beta1_pod_security_policy_list.md)
+ - [policy_v1beta1_pod_security_policy_spec_t](docs/policy_v1beta1_pod_security_policy_spec.md)
+ - [policy_v1beta1_run_as_group_strategy_options_t](docs/policy_v1beta1_run_as_group_strategy_options.md)
+ - [policy_v1beta1_run_as_user_strategy_options_t](docs/policy_v1beta1_run_as_user_strategy_options.md)
+ - [policy_v1beta1_runtime_class_strategy_options_t](docs/policy_v1beta1_runtime_class_strategy_options.md)
+ - [policy_v1beta1_se_linux_strategy_options_t](docs/policy_v1beta1_se_linux_strategy_options.md)
+ - [policy_v1beta1_supplemental_groups_strategy_options_t](docs/policy_v1beta1_supplemental_groups_strategy_options.md)
+ - [rbac_v1alpha1_subject_t](docs/rbac_v1alpha1_subject.md)
+ - [v1_affinity_t](docs/v1_affinity.md)
+ - [v1_aggregation_rule_t](docs/v1_aggregation_rule.md)
+ - [v1_api_group_t](docs/v1_api_group.md)
+ - [v1_api_group_list_t](docs/v1_api_group_list.md)
+ - [v1_api_resource_t](docs/v1_api_resource.md)
+ - [v1_api_resource_list_t](docs/v1_api_resource_list.md)
+ - [v1_api_service_t](docs/v1_api_service.md)
+ - [v1_api_service_condition_t](docs/v1_api_service_condition.md)
+ - [v1_api_service_list_t](docs/v1_api_service_list.md)
+ - [v1_api_service_spec_t](docs/v1_api_service_spec.md)
+ - [v1_api_service_status_t](docs/v1_api_service_status.md)
+ - [v1_api_versions_t](docs/v1_api_versions.md)
+ - [v1_attached_volume_t](docs/v1_attached_volume.md)
+ - [v1_aws_elastic_block_store_volume_source_t](docs/v1_aws_elastic_block_store_volume_source.md)
+ - [v1_azure_disk_volume_source_t](docs/v1_azure_disk_volume_source.md)
+ - [v1_azure_file_persistent_volume_source_t](docs/v1_azure_file_persistent_volume_source.md)
+ - [v1_azure_file_volume_source_t](docs/v1_azure_file_volume_source.md)
+ - [v1_binding_t](docs/v1_binding.md)
+ - [v1_bound_object_reference_t](docs/v1_bound_object_reference.md)
+ - [v1_capabilities_t](docs/v1_capabilities.md)
+ - [v1_ceph_fs_persistent_volume_source_t](docs/v1_ceph_fs_persistent_volume_source.md)
+ - [v1_ceph_fs_volume_source_t](docs/v1_ceph_fs_volume_source.md)
+ - [v1_cinder_persistent_volume_source_t](docs/v1_cinder_persistent_volume_source.md)
+ - [v1_cinder_volume_source_t](docs/v1_cinder_volume_source.md)
+ - [v1_client_ip_config_t](docs/v1_client_ip_config.md)
+ - [v1_cluster_role_t](docs/v1_cluster_role.md)
+ - [v1_cluster_role_binding_t](docs/v1_cluster_role_binding.md)
+ - [v1_cluster_role_binding_list_t](docs/v1_cluster_role_binding_list.md)
+ - [v1_cluster_role_list_t](docs/v1_cluster_role_list.md)
+ - [v1_component_condition_t](docs/v1_component_condition.md)
+ - [v1_component_status_t](docs/v1_component_status.md)
+ - [v1_component_status_list_t](docs/v1_component_status_list.md)
+ - [v1_config_map_t](docs/v1_config_map.md)
+ - [v1_config_map_env_source_t](docs/v1_config_map_env_source.md)
+ - [v1_config_map_key_selector_t](docs/v1_config_map_key_selector.md)
+ - [v1_config_map_list_t](docs/v1_config_map_list.md)
+ - [v1_config_map_node_config_source_t](docs/v1_config_map_node_config_source.md)
+ - [v1_config_map_projection_t](docs/v1_config_map_projection.md)
+ - [v1_config_map_volume_source_t](docs/v1_config_map_volume_source.md)
+ - [v1_container_t](docs/v1_container.md)
+ - [v1_container_image_t](docs/v1_container_image.md)
+ - [v1_container_port_t](docs/v1_container_port.md)
+ - [v1_container_state_t](docs/v1_container_state.md)
+ - [v1_container_state_running_t](docs/v1_container_state_running.md)
+ - [v1_container_state_terminated_t](docs/v1_container_state_terminated.md)
+ - [v1_container_state_waiting_t](docs/v1_container_state_waiting.md)
+ - [v1_container_status_t](docs/v1_container_status.md)
+ - [v1_controller_revision_t](docs/v1_controller_revision.md)
+ - [v1_controller_revision_list_t](docs/v1_controller_revision_list.md)
+ - [v1_cross_version_object_reference_t](docs/v1_cross_version_object_reference.md)
+ - [v1_csi_node_t](docs/v1_csi_node.md)
+ - [v1_csi_node_driver_t](docs/v1_csi_node_driver.md)
+ - [v1_csi_node_list_t](docs/v1_csi_node_list.md)
+ - [v1_csi_node_spec_t](docs/v1_csi_node_spec.md)
+ - [v1_csi_persistent_volume_source_t](docs/v1_csi_persistent_volume_source.md)
+ - [v1_csi_volume_source_t](docs/v1_csi_volume_source.md)
+ - [v1_custom_resource_column_definition_t](docs/v1_custom_resource_column_definition.md)
+ - [v1_custom_resource_conversion_t](docs/v1_custom_resource_conversion.md)
+ - [v1_custom_resource_definition_t](docs/v1_custom_resource_definition.md)
+ - [v1_custom_resource_definition_condition_t](docs/v1_custom_resource_definition_condition.md)
+ - [v1_custom_resource_definition_list_t](docs/v1_custom_resource_definition_list.md)
+ - [v1_custom_resource_definition_names_t](docs/v1_custom_resource_definition_names.md)
+ - [v1_custom_resource_definition_spec_t](docs/v1_custom_resource_definition_spec.md)
+ - [v1_custom_resource_definition_status_t](docs/v1_custom_resource_definition_status.md)
+ - [v1_custom_resource_definition_version_t](docs/v1_custom_resource_definition_version.md)
+ - [v1_custom_resource_subresource_scale_t](docs/v1_custom_resource_subresource_scale.md)
+ - [v1_custom_resource_subresources_t](docs/v1_custom_resource_subresources.md)
+ - [v1_custom_resource_validation_t](docs/v1_custom_resource_validation.md)
+ - [v1_daemon_endpoint_t](docs/v1_daemon_endpoint.md)
+ - [v1_daemon_set_t](docs/v1_daemon_set.md)
+ - [v1_daemon_set_condition_t](docs/v1_daemon_set_condition.md)
+ - [v1_daemon_set_list_t](docs/v1_daemon_set_list.md)
+ - [v1_daemon_set_spec_t](docs/v1_daemon_set_spec.md)
+ - [v1_daemon_set_status_t](docs/v1_daemon_set_status.md)
+ - [v1_daemon_set_update_strategy_t](docs/v1_daemon_set_update_strategy.md)
+ - [v1_delete_options_t](docs/v1_delete_options.md)
+ - [v1_deployment_t](docs/v1_deployment.md)
+ - [v1_deployment_condition_t](docs/v1_deployment_condition.md)
+ - [v1_deployment_list_t](docs/v1_deployment_list.md)
+ - [v1_deployment_spec_t](docs/v1_deployment_spec.md)
+ - [v1_deployment_status_t](docs/v1_deployment_status.md)
+ - [v1_deployment_strategy_t](docs/v1_deployment_strategy.md)
+ - [v1_downward_api_projection_t](docs/v1_downward_api_projection.md)
+ - [v1_downward_api_volume_file_t](docs/v1_downward_api_volume_file.md)
+ - [v1_downward_api_volume_source_t](docs/v1_downward_api_volume_source.md)
+ - [v1_empty_dir_volume_source_t](docs/v1_empty_dir_volume_source.md)
+ - [v1_endpoint_address_t](docs/v1_endpoint_address.md)
+ - [v1_endpoint_port_t](docs/v1_endpoint_port.md)
+ - [v1_endpoint_subset_t](docs/v1_endpoint_subset.md)
+ - [v1_endpoints_t](docs/v1_endpoints.md)
+ - [v1_endpoints_list_t](docs/v1_endpoints_list.md)
+ - [v1_env_from_source_t](docs/v1_env_from_source.md)
+ - [v1_env_var_t](docs/v1_env_var.md)
+ - [v1_env_var_source_t](docs/v1_env_var_source.md)
+ - [v1_ephemeral_container_t](docs/v1_ephemeral_container.md)
+ - [v1_event_t](docs/v1_event.md)
+ - [v1_event_list_t](docs/v1_event_list.md)
+ - [v1_event_series_t](docs/v1_event_series.md)
+ - [v1_event_source_t](docs/v1_event_source.md)
+ - [v1_exec_action_t](docs/v1_exec_action.md)
+ - [v1_external_documentation_t](docs/v1_external_documentation.md)
+ - [v1_fc_volume_source_t](docs/v1_fc_volume_source.md)
+ - [v1_flex_persistent_volume_source_t](docs/v1_flex_persistent_volume_source.md)
+ - [v1_flex_volume_source_t](docs/v1_flex_volume_source.md)
+ - [v1_flocker_volume_source_t](docs/v1_flocker_volume_source.md)
+ - [v1_gce_persistent_disk_volume_source_t](docs/v1_gce_persistent_disk_volume_source.md)
+ - [v1_git_repo_volume_source_t](docs/v1_git_repo_volume_source.md)
+ - [v1_glusterfs_persistent_volume_source_t](docs/v1_glusterfs_persistent_volume_source.md)
+ - [v1_glusterfs_volume_source_t](docs/v1_glusterfs_volume_source.md)
+ - [v1_group_version_for_discovery_t](docs/v1_group_version_for_discovery.md)
+ - [v1_handler_t](docs/v1_handler.md)
+ - [v1_horizontal_pod_autoscaler_t](docs/v1_horizontal_pod_autoscaler.md)
+ - [v1_horizontal_pod_autoscaler_list_t](docs/v1_horizontal_pod_autoscaler_list.md)
+ - [v1_horizontal_pod_autoscaler_spec_t](docs/v1_horizontal_pod_autoscaler_spec.md)
+ - [v1_horizontal_pod_autoscaler_status_t](docs/v1_horizontal_pod_autoscaler_status.md)
+ - [v1_host_alias_t](docs/v1_host_alias.md)
+ - [v1_host_path_volume_source_t](docs/v1_host_path_volume_source.md)
+ - [v1_http_get_action_t](docs/v1_http_get_action.md)
+ - [v1_http_header_t](docs/v1_http_header.md)
+ - [v1_ip_block_t](docs/v1_ip_block.md)
+ - [v1_iscsi_persistent_volume_source_t](docs/v1_iscsi_persistent_volume_source.md)
+ - [v1_iscsi_volume_source_t](docs/v1_iscsi_volume_source.md)
+ - [v1_job_t](docs/v1_job.md)
+ - [v1_job_condition_t](docs/v1_job_condition.md)
+ - [v1_job_list_t](docs/v1_job_list.md)
+ - [v1_job_spec_t](docs/v1_job_spec.md)
+ - [v1_job_status_t](docs/v1_job_status.md)
+ - [v1_json_schema_props_t](docs/v1_json_schema_props.md)
+ - [v1_key_to_path_t](docs/v1_key_to_path.md)
+ - [v1_label_selector_t](docs/v1_label_selector.md)
+ - [v1_label_selector_requirement_t](docs/v1_label_selector_requirement.md)
+ - [v1_lease_t](docs/v1_lease.md)
+ - [v1_lease_list_t](docs/v1_lease_list.md)
+ - [v1_lease_spec_t](docs/v1_lease_spec.md)
+ - [v1_lifecycle_t](docs/v1_lifecycle.md)
+ - [v1_limit_range_t](docs/v1_limit_range.md)
+ - [v1_limit_range_item_t](docs/v1_limit_range_item.md)
+ - [v1_limit_range_list_t](docs/v1_limit_range_list.md)
+ - [v1_limit_range_spec_t](docs/v1_limit_range_spec.md)
+ - [v1_list_meta_t](docs/v1_list_meta.md)
+ - [v1_load_balancer_ingress_t](docs/v1_load_balancer_ingress.md)
+ - [v1_load_balancer_status_t](docs/v1_load_balancer_status.md)
+ - [v1_local_object_reference_t](docs/v1_local_object_reference.md)
+ - [v1_local_subject_access_review_t](docs/v1_local_subject_access_review.md)
+ - [v1_local_volume_source_t](docs/v1_local_volume_source.md)
+ - [v1_managed_fields_entry_t](docs/v1_managed_fields_entry.md)
+ - [v1_mutating_webhook_t](docs/v1_mutating_webhook.md)
+ - [v1_mutating_webhook_configuration_t](docs/v1_mutating_webhook_configuration.md)
+ - [v1_mutating_webhook_configuration_list_t](docs/v1_mutating_webhook_configuration_list.md)
+ - [v1_namespace_t](docs/v1_namespace.md)
+ - [v1_namespace_condition_t](docs/v1_namespace_condition.md)
+ - [v1_namespace_list_t](docs/v1_namespace_list.md)
+ - [v1_namespace_spec_t](docs/v1_namespace_spec.md)
+ - [v1_namespace_status_t](docs/v1_namespace_status.md)
+ - [v1_network_policy_t](docs/v1_network_policy.md)
+ - [v1_network_policy_egress_rule_t](docs/v1_network_policy_egress_rule.md)
+ - [v1_network_policy_ingress_rule_t](docs/v1_network_policy_ingress_rule.md)
+ - [v1_network_policy_list_t](docs/v1_network_policy_list.md)
+ - [v1_network_policy_peer_t](docs/v1_network_policy_peer.md)
+ - [v1_network_policy_port_t](docs/v1_network_policy_port.md)
+ - [v1_network_policy_spec_t](docs/v1_network_policy_spec.md)
+ - [v1_nfs_volume_source_t](docs/v1_nfs_volume_source.md)
+ - [v1_node_t](docs/v1_node.md)
+ - [v1_node_address_t](docs/v1_node_address.md)
+ - [v1_node_affinity_t](docs/v1_node_affinity.md)
+ - [v1_node_condition_t](docs/v1_node_condition.md)
+ - [v1_node_config_source_t](docs/v1_node_config_source.md)
+ - [v1_node_config_status_t](docs/v1_node_config_status.md)
+ - [v1_node_daemon_endpoints_t](docs/v1_node_daemon_endpoints.md)
+ - [v1_node_list_t](docs/v1_node_list.md)
+ - [v1_node_selector_t](docs/v1_node_selector.md)
+ - [v1_node_selector_requirement_t](docs/v1_node_selector_requirement.md)
+ - [v1_node_selector_term_t](docs/v1_node_selector_term.md)
+ - [v1_node_spec_t](docs/v1_node_spec.md)
+ - [v1_node_status_t](docs/v1_node_status.md)
+ - [v1_node_system_info_t](docs/v1_node_system_info.md)
+ - [v1_non_resource_attributes_t](docs/v1_non_resource_attributes.md)
+ - [v1_non_resource_rule_t](docs/v1_non_resource_rule.md)
+ - [v1_object_field_selector_t](docs/v1_object_field_selector.md)
+ - [v1_object_meta_t](docs/v1_object_meta.md)
+ - [v1_object_reference_t](docs/v1_object_reference.md)
+ - [v1_owner_reference_t](docs/v1_owner_reference.md)
+ - [v1_persistent_volume_t](docs/v1_persistent_volume.md)
+ - [v1_persistent_volume_claim_t](docs/v1_persistent_volume_claim.md)
+ - [v1_persistent_volume_claim_condition_t](docs/v1_persistent_volume_claim_condition.md)
+ - [v1_persistent_volume_claim_list_t](docs/v1_persistent_volume_claim_list.md)
+ - [v1_persistent_volume_claim_spec_t](docs/v1_persistent_volume_claim_spec.md)
+ - [v1_persistent_volume_claim_status_t](docs/v1_persistent_volume_claim_status.md)
+ - [v1_persistent_volume_claim_volume_source_t](docs/v1_persistent_volume_claim_volume_source.md)
+ - [v1_persistent_volume_list_t](docs/v1_persistent_volume_list.md)
+ - [v1_persistent_volume_spec_t](docs/v1_persistent_volume_spec.md)
+ - [v1_persistent_volume_status_t](docs/v1_persistent_volume_status.md)
+ - [v1_photon_persistent_disk_volume_source_t](docs/v1_photon_persistent_disk_volume_source.md)
+ - [v1_pod_t](docs/v1_pod.md)
+ - [v1_pod_affinity_t](docs/v1_pod_affinity.md)
+ - [v1_pod_affinity_term_t](docs/v1_pod_affinity_term.md)
+ - [v1_pod_anti_affinity_t](docs/v1_pod_anti_affinity.md)
+ - [v1_pod_condition_t](docs/v1_pod_condition.md)
+ - [v1_pod_dns_config_t](docs/v1_pod_dns_config.md)
+ - [v1_pod_dns_config_option_t](docs/v1_pod_dns_config_option.md)
+ - [v1_pod_ip_t](docs/v1_pod_ip.md)
+ - [v1_pod_list_t](docs/v1_pod_list.md)
+ - [v1_pod_readiness_gate_t](docs/v1_pod_readiness_gate.md)
+ - [v1_pod_security_context_t](docs/v1_pod_security_context.md)
+ - [v1_pod_spec_t](docs/v1_pod_spec.md)
+ - [v1_pod_status_t](docs/v1_pod_status.md)
+ - [v1_pod_template_t](docs/v1_pod_template.md)
+ - [v1_pod_template_list_t](docs/v1_pod_template_list.md)
+ - [v1_pod_template_spec_t](docs/v1_pod_template_spec.md)
+ - [v1_policy_rule_t](docs/v1_policy_rule.md)
+ - [v1_portworx_volume_source_t](docs/v1_portworx_volume_source.md)
+ - [v1_preconditions_t](docs/v1_preconditions.md)
+ - [v1_preferred_scheduling_term_t](docs/v1_preferred_scheduling_term.md)
+ - [v1_priority_class_t](docs/v1_priority_class.md)
+ - [v1_priority_class_list_t](docs/v1_priority_class_list.md)
+ - [v1_probe_t](docs/v1_probe.md)
+ - [v1_projected_volume_source_t](docs/v1_projected_volume_source.md)
+ - [v1_quobyte_volume_source_t](docs/v1_quobyte_volume_source.md)
+ - [v1_rbd_persistent_volume_source_t](docs/v1_rbd_persistent_volume_source.md)
+ - [v1_rbd_volume_source_t](docs/v1_rbd_volume_source.md)
+ - [v1_replica_set_t](docs/v1_replica_set.md)
+ - [v1_replica_set_condition_t](docs/v1_replica_set_condition.md)
+ - [v1_replica_set_list_t](docs/v1_replica_set_list.md)
+ - [v1_replica_set_spec_t](docs/v1_replica_set_spec.md)
+ - [v1_replica_set_status_t](docs/v1_replica_set_status.md)
+ - [v1_replication_controller_t](docs/v1_replication_controller.md)
+ - [v1_replication_controller_condition_t](docs/v1_replication_controller_condition.md)
+ - [v1_replication_controller_list_t](docs/v1_replication_controller_list.md)
+ - [v1_replication_controller_spec_t](docs/v1_replication_controller_spec.md)
+ - [v1_replication_controller_status_t](docs/v1_replication_controller_status.md)
+ - [v1_resource_attributes_t](docs/v1_resource_attributes.md)
+ - [v1_resource_field_selector_t](docs/v1_resource_field_selector.md)
+ - [v1_resource_quota_t](docs/v1_resource_quota.md)
+ - [v1_resource_quota_list_t](docs/v1_resource_quota_list.md)
+ - [v1_resource_quota_spec_t](docs/v1_resource_quota_spec.md)
+ - [v1_resource_quota_status_t](docs/v1_resource_quota_status.md)
+ - [v1_resource_requirements_t](docs/v1_resource_requirements.md)
+ - [v1_resource_rule_t](docs/v1_resource_rule.md)
+ - [v1_role_t](docs/v1_role.md)
+ - [v1_role_binding_t](docs/v1_role_binding.md)
+ - [v1_role_binding_list_t](docs/v1_role_binding_list.md)
+ - [v1_role_list_t](docs/v1_role_list.md)
+ - [v1_role_ref_t](docs/v1_role_ref.md)
+ - [v1_rolling_update_daemon_set_t](docs/v1_rolling_update_daemon_set.md)
+ - [v1_rolling_update_deployment_t](docs/v1_rolling_update_deployment.md)
+ - [v1_rolling_update_stateful_set_strategy_t](docs/v1_rolling_update_stateful_set_strategy.md)
+ - [v1_rule_with_operations_t](docs/v1_rule_with_operations.md)
+ - [v1_scale_t](docs/v1_scale.md)
+ - [v1_scale_io_persistent_volume_source_t](docs/v1_scale_io_persistent_volume_source.md)
+ - [v1_scale_io_volume_source_t](docs/v1_scale_io_volume_source.md)
+ - [v1_scale_spec_t](docs/v1_scale_spec.md)
+ - [v1_scale_status_t](docs/v1_scale_status.md)
+ - [v1_scope_selector_t](docs/v1_scope_selector.md)
+ - [v1_scoped_resource_selector_requirement_t](docs/v1_scoped_resource_selector_requirement.md)
+ - [v1_se_linux_options_t](docs/v1_se_linux_options.md)
+ - [v1_secret_t](docs/v1_secret.md)
+ - [v1_secret_env_source_t](docs/v1_secret_env_source.md)
+ - [v1_secret_key_selector_t](docs/v1_secret_key_selector.md)
+ - [v1_secret_list_t](docs/v1_secret_list.md)
+ - [v1_secret_projection_t](docs/v1_secret_projection.md)
+ - [v1_secret_reference_t](docs/v1_secret_reference.md)
+ - [v1_secret_volume_source_t](docs/v1_secret_volume_source.md)
+ - [v1_security_context_t](docs/v1_security_context.md)
+ - [v1_self_subject_access_review_t](docs/v1_self_subject_access_review.md)
+ - [v1_self_subject_access_review_spec_t](docs/v1_self_subject_access_review_spec.md)
+ - [v1_self_subject_rules_review_t](docs/v1_self_subject_rules_review.md)
+ - [v1_self_subject_rules_review_spec_t](docs/v1_self_subject_rules_review_spec.md)
+ - [v1_server_address_by_client_cidr_t](docs/v1_server_address_by_client_cidr.md)
+ - [v1_service_t](docs/v1_service.md)
+ - [v1_service_account_t](docs/v1_service_account.md)
+ - [v1_service_account_list_t](docs/v1_service_account_list.md)
+ - [v1_service_account_token_projection_t](docs/v1_service_account_token_projection.md)
+ - [v1_service_list_t](docs/v1_service_list.md)
+ - [v1_service_port_t](docs/v1_service_port.md)
+ - [v1_service_spec_t](docs/v1_service_spec.md)
+ - [v1_service_status_t](docs/v1_service_status.md)
+ - [v1_session_affinity_config_t](docs/v1_session_affinity_config.md)
+ - [v1_stateful_set_t](docs/v1_stateful_set.md)
+ - [v1_stateful_set_condition_t](docs/v1_stateful_set_condition.md)
+ - [v1_stateful_set_list_t](docs/v1_stateful_set_list.md)
+ - [v1_stateful_set_spec_t](docs/v1_stateful_set_spec.md)
+ - [v1_stateful_set_status_t](docs/v1_stateful_set_status.md)
+ - [v1_stateful_set_update_strategy_t](docs/v1_stateful_set_update_strategy.md)
+ - [v1_status_t](docs/v1_status.md)
+ - [v1_status_cause_t](docs/v1_status_cause.md)
+ - [v1_status_details_t](docs/v1_status_details.md)
+ - [v1_storage_class_t](docs/v1_storage_class.md)
+ - [v1_storage_class_list_t](docs/v1_storage_class_list.md)
+ - [v1_storage_os_persistent_volume_source_t](docs/v1_storage_os_persistent_volume_source.md)
+ - [v1_storage_os_volume_source_t](docs/v1_storage_os_volume_source.md)
+ - [v1_subject_t](docs/v1_subject.md)
+ - [v1_subject_access_review_t](docs/v1_subject_access_review.md)
+ - [v1_subject_access_review_spec_t](docs/v1_subject_access_review_spec.md)
+ - [v1_subject_access_review_status_t](docs/v1_subject_access_review_status.md)
+ - [v1_subject_rules_review_status_t](docs/v1_subject_rules_review_status.md)
+ - [v1_sysctl_t](docs/v1_sysctl.md)
+ - [v1_taint_t](docs/v1_taint.md)
+ - [v1_tcp_socket_action_t](docs/v1_tcp_socket_action.md)
+ - [v1_token_request_t](docs/v1_token_request.md)
+ - [v1_token_request_spec_t](docs/v1_token_request_spec.md)
+ - [v1_token_request_status_t](docs/v1_token_request_status.md)
+ - [v1_token_review_t](docs/v1_token_review.md)
+ - [v1_token_review_spec_t](docs/v1_token_review_spec.md)
+ - [v1_token_review_status_t](docs/v1_token_review_status.md)
+ - [v1_toleration_t](docs/v1_toleration.md)
+ - [v1_topology_selector_label_requirement_t](docs/v1_topology_selector_label_requirement.md)
+ - [v1_topology_selector_term_t](docs/v1_topology_selector_term.md)
+ - [v1_topology_spread_constraint_t](docs/v1_topology_spread_constraint.md)
+ - [v1_typed_local_object_reference_t](docs/v1_typed_local_object_reference.md)
+ - [v1_user_info_t](docs/v1_user_info.md)
+ - [v1_validating_webhook_t](docs/v1_validating_webhook.md)
+ - [v1_validating_webhook_configuration_t](docs/v1_validating_webhook_configuration.md)
+ - [v1_validating_webhook_configuration_list_t](docs/v1_validating_webhook_configuration_list.md)
+ - [v1_volume_t](docs/v1_volume.md)
+ - [v1_volume_attachment_t](docs/v1_volume_attachment.md)
+ - [v1_volume_attachment_list_t](docs/v1_volume_attachment_list.md)
+ - [v1_volume_attachment_source_t](docs/v1_volume_attachment_source.md)
+ - [v1_volume_attachment_spec_t](docs/v1_volume_attachment_spec.md)
+ - [v1_volume_attachment_status_t](docs/v1_volume_attachment_status.md)
+ - [v1_volume_device_t](docs/v1_volume_device.md)
+ - [v1_volume_error_t](docs/v1_volume_error.md)
+ - [v1_volume_mount_t](docs/v1_volume_mount.md)
+ - [v1_volume_node_affinity_t](docs/v1_volume_node_affinity.md)
+ - [v1_volume_node_resources_t](docs/v1_volume_node_resources.md)
+ - [v1_volume_projection_t](docs/v1_volume_projection.md)
+ - [v1_vsphere_virtual_disk_volume_source_t](docs/v1_vsphere_virtual_disk_volume_source.md)
+ - [v1_watch_event_t](docs/v1_watch_event.md)
+ - [v1_webhook_conversion_t](docs/v1_webhook_conversion.md)
+ - [v1_weighted_pod_affinity_term_t](docs/v1_weighted_pod_affinity_term.md)
+ - [v1_windows_security_context_options_t](docs/v1_windows_security_context_options.md)
+ - [v1alpha1_aggregation_rule_t](docs/v1alpha1_aggregation_rule.md)
+ - [v1alpha1_audit_sink_t](docs/v1alpha1_audit_sink.md)
+ - [v1alpha1_audit_sink_list_t](docs/v1alpha1_audit_sink_list.md)
+ - [v1alpha1_audit_sink_spec_t](docs/v1alpha1_audit_sink_spec.md)
+ - [v1alpha1_cluster_role_t](docs/v1alpha1_cluster_role.md)
+ - [v1alpha1_cluster_role_binding_t](docs/v1alpha1_cluster_role_binding.md)
+ - [v1alpha1_cluster_role_binding_list_t](docs/v1alpha1_cluster_role_binding_list.md)
+ - [v1alpha1_cluster_role_list_t](docs/v1alpha1_cluster_role_list.md)
+ - [v1alpha1_flow_distinguisher_method_t](docs/v1alpha1_flow_distinguisher_method.md)
+ - [v1alpha1_flow_schema_t](docs/v1alpha1_flow_schema.md)
+ - [v1alpha1_flow_schema_condition_t](docs/v1alpha1_flow_schema_condition.md)
+ - [v1alpha1_flow_schema_list_t](docs/v1alpha1_flow_schema_list.md)
+ - [v1alpha1_flow_schema_spec_t](docs/v1alpha1_flow_schema_spec.md)
+ - [v1alpha1_flow_schema_status_t](docs/v1alpha1_flow_schema_status.md)
+ - [v1alpha1_group_subject_t](docs/v1alpha1_group_subject.md)
+ - [v1alpha1_limit_response_t](docs/v1alpha1_limit_response.md)
+ - [v1alpha1_limited_priority_level_configuration_t](docs/v1alpha1_limited_priority_level_configuration.md)
+ - [v1alpha1_non_resource_policy_rule_t](docs/v1alpha1_non_resource_policy_rule.md)
+ - [v1alpha1_overhead_t](docs/v1alpha1_overhead.md)
+ - [v1alpha1_pod_preset_t](docs/v1alpha1_pod_preset.md)
+ - [v1alpha1_pod_preset_list_t](docs/v1alpha1_pod_preset_list.md)
+ - [v1alpha1_pod_preset_spec_t](docs/v1alpha1_pod_preset_spec.md)
+ - [v1alpha1_policy_t](docs/v1alpha1_policy.md)
+ - [v1alpha1_policy_rule_t](docs/v1alpha1_policy_rule.md)
+ - [v1alpha1_policy_rules_with_subjects_t](docs/v1alpha1_policy_rules_with_subjects.md)
+ - [v1alpha1_priority_class_t](docs/v1alpha1_priority_class.md)
+ - [v1alpha1_priority_class_list_t](docs/v1alpha1_priority_class_list.md)
+ - [v1alpha1_priority_level_configuration_t](docs/v1alpha1_priority_level_configuration.md)
+ - [v1alpha1_priority_level_configuration_condition_t](docs/v1alpha1_priority_level_configuration_condition.md)
+ - [v1alpha1_priority_level_configuration_list_t](docs/v1alpha1_priority_level_configuration_list.md)
+ - [v1alpha1_priority_level_configuration_reference_t](docs/v1alpha1_priority_level_configuration_reference.md)
+ - [v1alpha1_priority_level_configuration_spec_t](docs/v1alpha1_priority_level_configuration_spec.md)
+ - [v1alpha1_priority_level_configuration_status_t](docs/v1alpha1_priority_level_configuration_status.md)
+ - [v1alpha1_queuing_configuration_t](docs/v1alpha1_queuing_configuration.md)
+ - [v1alpha1_resource_policy_rule_t](docs/v1alpha1_resource_policy_rule.md)
+ - [v1alpha1_role_t](docs/v1alpha1_role.md)
+ - [v1alpha1_role_binding_t](docs/v1alpha1_role_binding.md)
+ - [v1alpha1_role_binding_list_t](docs/v1alpha1_role_binding_list.md)
+ - [v1alpha1_role_list_t](docs/v1alpha1_role_list.md)
+ - [v1alpha1_role_ref_t](docs/v1alpha1_role_ref.md)
+ - [v1alpha1_runtime_class_t](docs/v1alpha1_runtime_class.md)
+ - [v1alpha1_runtime_class_list_t](docs/v1alpha1_runtime_class_list.md)
+ - [v1alpha1_runtime_class_spec_t](docs/v1alpha1_runtime_class_spec.md)
+ - [v1alpha1_scheduling_t](docs/v1alpha1_scheduling.md)
+ - [v1alpha1_service_account_subject_t](docs/v1alpha1_service_account_subject.md)
+ - [v1alpha1_service_reference_t](docs/v1alpha1_service_reference.md)
+ - [v1alpha1_user_subject_t](docs/v1alpha1_user_subject.md)
+ - [v1alpha1_volume_attachment_t](docs/v1alpha1_volume_attachment.md)
+ - [v1alpha1_volume_attachment_list_t](docs/v1alpha1_volume_attachment_list.md)
+ - [v1alpha1_volume_attachment_source_t](docs/v1alpha1_volume_attachment_source.md)
+ - [v1alpha1_volume_attachment_spec_t](docs/v1alpha1_volume_attachment_spec.md)
+ - [v1alpha1_volume_attachment_status_t](docs/v1alpha1_volume_attachment_status.md)
+ - [v1alpha1_volume_error_t](docs/v1alpha1_volume_error.md)
+ - [v1alpha1_webhook_t](docs/v1alpha1_webhook.md)
+ - [v1alpha1_webhook_client_config_t](docs/v1alpha1_webhook_client_config.md)
+ - [v1alpha1_webhook_throttle_config_t](docs/v1alpha1_webhook_throttle_config.md)
+ - [v1beta1_aggregation_rule_t](docs/v1beta1_aggregation_rule.md)
+ - [v1beta1_api_service_t](docs/v1beta1_api_service.md)
+ - [v1beta1_api_service_condition_t](docs/v1beta1_api_service_condition.md)
+ - [v1beta1_api_service_list_t](docs/v1beta1_api_service_list.md)
+ - [v1beta1_api_service_spec_t](docs/v1beta1_api_service_spec.md)
+ - [v1beta1_api_service_status_t](docs/v1beta1_api_service_status.md)
+ - [v1beta1_certificate_signing_request_t](docs/v1beta1_certificate_signing_request.md)
+ - [v1beta1_certificate_signing_request_condition_t](docs/v1beta1_certificate_signing_request_condition.md)
+ - [v1beta1_certificate_signing_request_list_t](docs/v1beta1_certificate_signing_request_list.md)
+ - [v1beta1_certificate_signing_request_spec_t](docs/v1beta1_certificate_signing_request_spec.md)
+ - [v1beta1_certificate_signing_request_status_t](docs/v1beta1_certificate_signing_request_status.md)
+ - [v1beta1_cluster_role_t](docs/v1beta1_cluster_role.md)
+ - [v1beta1_cluster_role_binding_t](docs/v1beta1_cluster_role_binding.md)
+ - [v1beta1_cluster_role_binding_list_t](docs/v1beta1_cluster_role_binding_list.md)
+ - [v1beta1_cluster_role_list_t](docs/v1beta1_cluster_role_list.md)
+ - [v1beta1_controller_revision_t](docs/v1beta1_controller_revision.md)
+ - [v1beta1_controller_revision_list_t](docs/v1beta1_controller_revision_list.md)
+ - [v1beta1_cron_job_t](docs/v1beta1_cron_job.md)
+ - [v1beta1_cron_job_list_t](docs/v1beta1_cron_job_list.md)
+ - [v1beta1_cron_job_spec_t](docs/v1beta1_cron_job_spec.md)
+ - [v1beta1_cron_job_status_t](docs/v1beta1_cron_job_status.md)
+ - [v1beta1_csi_driver_t](docs/v1beta1_csi_driver.md)
+ - [v1beta1_csi_driver_list_t](docs/v1beta1_csi_driver_list.md)
+ - [v1beta1_csi_driver_spec_t](docs/v1beta1_csi_driver_spec.md)
+ - [v1beta1_csi_node_t](docs/v1beta1_csi_node.md)
+ - [v1beta1_csi_node_driver_t](docs/v1beta1_csi_node_driver.md)
+ - [v1beta1_csi_node_list_t](docs/v1beta1_csi_node_list.md)
+ - [v1beta1_csi_node_spec_t](docs/v1beta1_csi_node_spec.md)
+ - [v1beta1_custom_resource_column_definition_t](docs/v1beta1_custom_resource_column_definition.md)
+ - [v1beta1_custom_resource_conversion_t](docs/v1beta1_custom_resource_conversion.md)
+ - [v1beta1_custom_resource_definition_t](docs/v1beta1_custom_resource_definition.md)
+ - [v1beta1_custom_resource_definition_condition_t](docs/v1beta1_custom_resource_definition_condition.md)
+ - [v1beta1_custom_resource_definition_list_t](docs/v1beta1_custom_resource_definition_list.md)
+ - [v1beta1_custom_resource_definition_names_t](docs/v1beta1_custom_resource_definition_names.md)
+ - [v1beta1_custom_resource_definition_spec_t](docs/v1beta1_custom_resource_definition_spec.md)
+ - [v1beta1_custom_resource_definition_status_t](docs/v1beta1_custom_resource_definition_status.md)
+ - [v1beta1_custom_resource_definition_version_t](docs/v1beta1_custom_resource_definition_version.md)
+ - [v1beta1_custom_resource_subresource_scale_t](docs/v1beta1_custom_resource_subresource_scale.md)
+ - [v1beta1_custom_resource_subresources_t](docs/v1beta1_custom_resource_subresources.md)
+ - [v1beta1_custom_resource_validation_t](docs/v1beta1_custom_resource_validation.md)
+ - [v1beta1_daemon_set_t](docs/v1beta1_daemon_set.md)
+ - [v1beta1_daemon_set_condition_t](docs/v1beta1_daemon_set_condition.md)
+ - [v1beta1_daemon_set_list_t](docs/v1beta1_daemon_set_list.md)
+ - [v1beta1_daemon_set_spec_t](docs/v1beta1_daemon_set_spec.md)
+ - [v1beta1_daemon_set_status_t](docs/v1beta1_daemon_set_status.md)
+ - [v1beta1_daemon_set_update_strategy_t](docs/v1beta1_daemon_set_update_strategy.md)
+ - [v1beta1_endpoint_t](docs/v1beta1_endpoint.md)
+ - [v1beta1_endpoint_conditions_t](docs/v1beta1_endpoint_conditions.md)
+ - [v1beta1_endpoint_port_t](docs/v1beta1_endpoint_port.md)
+ - [v1beta1_endpoint_slice_t](docs/v1beta1_endpoint_slice.md)
+ - [v1beta1_endpoint_slice_list_t](docs/v1beta1_endpoint_slice_list.md)
+ - [v1beta1_event_t](docs/v1beta1_event.md)
+ - [v1beta1_event_list_t](docs/v1beta1_event_list.md)
+ - [v1beta1_event_series_t](docs/v1beta1_event_series.md)
+ - [v1beta1_eviction_t](docs/v1beta1_eviction.md)
+ - [v1beta1_external_documentation_t](docs/v1beta1_external_documentation.md)
+ - [v1beta1_ip_block_t](docs/v1beta1_ip_block.md)
+ - [v1beta1_job_template_spec_t](docs/v1beta1_job_template_spec.md)
+ - [v1beta1_json_schema_props_t](docs/v1beta1_json_schema_props.md)
+ - [v1beta1_lease_t](docs/v1beta1_lease.md)
+ - [v1beta1_lease_list_t](docs/v1beta1_lease_list.md)
+ - [v1beta1_lease_spec_t](docs/v1beta1_lease_spec.md)
+ - [v1beta1_local_subject_access_review_t](docs/v1beta1_local_subject_access_review.md)
+ - [v1beta1_mutating_webhook_t](docs/v1beta1_mutating_webhook.md)
+ - [v1beta1_mutating_webhook_configuration_t](docs/v1beta1_mutating_webhook_configuration.md)
+ - [v1beta1_mutating_webhook_configuration_list_t](docs/v1beta1_mutating_webhook_configuration_list.md)
+ - [v1beta1_network_policy_t](docs/v1beta1_network_policy.md)
+ - [v1beta1_network_policy_egress_rule_t](docs/v1beta1_network_policy_egress_rule.md)
+ - [v1beta1_network_policy_ingress_rule_t](docs/v1beta1_network_policy_ingress_rule.md)
+ - [v1beta1_network_policy_list_t](docs/v1beta1_network_policy_list.md)
+ - [v1beta1_network_policy_peer_t](docs/v1beta1_network_policy_peer.md)
+ - [v1beta1_network_policy_port_t](docs/v1beta1_network_policy_port.md)
+ - [v1beta1_network_policy_spec_t](docs/v1beta1_network_policy_spec.md)
+ - [v1beta1_non_resource_attributes_t](docs/v1beta1_non_resource_attributes.md)
+ - [v1beta1_non_resource_rule_t](docs/v1beta1_non_resource_rule.md)
+ - [v1beta1_overhead_t](docs/v1beta1_overhead.md)
+ - [v1beta1_pod_disruption_budget_t](docs/v1beta1_pod_disruption_budget.md)
+ - [v1beta1_pod_disruption_budget_list_t](docs/v1beta1_pod_disruption_budget_list.md)
+ - [v1beta1_pod_disruption_budget_spec_t](docs/v1beta1_pod_disruption_budget_spec.md)
+ - [v1beta1_pod_disruption_budget_status_t](docs/v1beta1_pod_disruption_budget_status.md)
+ - [v1beta1_policy_rule_t](docs/v1beta1_policy_rule.md)
+ - [v1beta1_priority_class_t](docs/v1beta1_priority_class.md)
+ - [v1beta1_priority_class_list_t](docs/v1beta1_priority_class_list.md)
+ - [v1beta1_replica_set_t](docs/v1beta1_replica_set.md)
+ - [v1beta1_replica_set_condition_t](docs/v1beta1_replica_set_condition.md)
+ - [v1beta1_replica_set_list_t](docs/v1beta1_replica_set_list.md)
+ - [v1beta1_replica_set_spec_t](docs/v1beta1_replica_set_spec.md)
+ - [v1beta1_replica_set_status_t](docs/v1beta1_replica_set_status.md)
+ - [v1beta1_resource_attributes_t](docs/v1beta1_resource_attributes.md)
+ - [v1beta1_resource_rule_t](docs/v1beta1_resource_rule.md)
+ - [v1beta1_role_t](docs/v1beta1_role.md)
+ - [v1beta1_role_binding_t](docs/v1beta1_role_binding.md)
+ - [v1beta1_role_binding_list_t](docs/v1beta1_role_binding_list.md)
+ - [v1beta1_role_list_t](docs/v1beta1_role_list.md)
+ - [v1beta1_role_ref_t](docs/v1beta1_role_ref.md)
+ - [v1beta1_rolling_update_daemon_set_t](docs/v1beta1_rolling_update_daemon_set.md)
+ - [v1beta1_rolling_update_stateful_set_strategy_t](docs/v1beta1_rolling_update_stateful_set_strategy.md)
+ - [v1beta1_rule_with_operations_t](docs/v1beta1_rule_with_operations.md)
+ - [v1beta1_runtime_class_t](docs/v1beta1_runtime_class.md)
+ - [v1beta1_runtime_class_list_t](docs/v1beta1_runtime_class_list.md)
+ - [v1beta1_scheduling_t](docs/v1beta1_scheduling.md)
+ - [v1beta1_self_subject_access_review_t](docs/v1beta1_self_subject_access_review.md)
+ - [v1beta1_self_subject_access_review_spec_t](docs/v1beta1_self_subject_access_review_spec.md)
+ - [v1beta1_self_subject_rules_review_t](docs/v1beta1_self_subject_rules_review.md)
+ - [v1beta1_self_subject_rules_review_spec_t](docs/v1beta1_self_subject_rules_review_spec.md)
+ - [v1beta1_stateful_set_t](docs/v1beta1_stateful_set.md)
+ - [v1beta1_stateful_set_condition_t](docs/v1beta1_stateful_set_condition.md)
+ - [v1beta1_stateful_set_list_t](docs/v1beta1_stateful_set_list.md)
+ - [v1beta1_stateful_set_spec_t](docs/v1beta1_stateful_set_spec.md)
+ - [v1beta1_stateful_set_status_t](docs/v1beta1_stateful_set_status.md)
+ - [v1beta1_stateful_set_update_strategy_t](docs/v1beta1_stateful_set_update_strategy.md)
+ - [v1beta1_storage_class_t](docs/v1beta1_storage_class.md)
+ - [v1beta1_storage_class_list_t](docs/v1beta1_storage_class_list.md)
+ - [v1beta1_subject_t](docs/v1beta1_subject.md)
+ - [v1beta1_subject_access_review_t](docs/v1beta1_subject_access_review.md)
+ - [v1beta1_subject_access_review_spec_t](docs/v1beta1_subject_access_review_spec.md)
+ - [v1beta1_subject_access_review_status_t](docs/v1beta1_subject_access_review_status.md)
+ - [v1beta1_subject_rules_review_status_t](docs/v1beta1_subject_rules_review_status.md)
+ - [v1beta1_token_review_t](docs/v1beta1_token_review.md)
+ - [v1beta1_token_review_spec_t](docs/v1beta1_token_review_spec.md)
+ - [v1beta1_token_review_status_t](docs/v1beta1_token_review_status.md)
+ - [v1beta1_user_info_t](docs/v1beta1_user_info.md)
+ - [v1beta1_validating_webhook_t](docs/v1beta1_validating_webhook.md)
+ - [v1beta1_validating_webhook_configuration_t](docs/v1beta1_validating_webhook_configuration.md)
+ - [v1beta1_validating_webhook_configuration_list_t](docs/v1beta1_validating_webhook_configuration_list.md)
+ - [v1beta1_volume_attachment_t](docs/v1beta1_volume_attachment.md)
+ - [v1beta1_volume_attachment_list_t](docs/v1beta1_volume_attachment_list.md)
+ - [v1beta1_volume_attachment_source_t](docs/v1beta1_volume_attachment_source.md)
+ - [v1beta1_volume_attachment_spec_t](docs/v1beta1_volume_attachment_spec.md)
+ - [v1beta1_volume_attachment_status_t](docs/v1beta1_volume_attachment_status.md)
+ - [v1beta1_volume_error_t](docs/v1beta1_volume_error.md)
+ - [v1beta1_volume_node_resources_t](docs/v1beta1_volume_node_resources.md)
+ - [v1beta2_controller_revision_t](docs/v1beta2_controller_revision.md)
+ - [v1beta2_controller_revision_list_t](docs/v1beta2_controller_revision_list.md)
+ - [v1beta2_daemon_set_t](docs/v1beta2_daemon_set.md)
+ - [v1beta2_daemon_set_condition_t](docs/v1beta2_daemon_set_condition.md)
+ - [v1beta2_daemon_set_list_t](docs/v1beta2_daemon_set_list.md)
+ - [v1beta2_daemon_set_spec_t](docs/v1beta2_daemon_set_spec.md)
+ - [v1beta2_daemon_set_status_t](docs/v1beta2_daemon_set_status.md)
+ - [v1beta2_daemon_set_update_strategy_t](docs/v1beta2_daemon_set_update_strategy.md)
+ - [v1beta2_deployment_t](docs/v1beta2_deployment.md)
+ - [v1beta2_deployment_condition_t](docs/v1beta2_deployment_condition.md)
+ - [v1beta2_deployment_list_t](docs/v1beta2_deployment_list.md)
+ - [v1beta2_deployment_spec_t](docs/v1beta2_deployment_spec.md)
+ - [v1beta2_deployment_status_t](docs/v1beta2_deployment_status.md)
+ - [v1beta2_deployment_strategy_t](docs/v1beta2_deployment_strategy.md)
+ - [v1beta2_replica_set_t](docs/v1beta2_replica_set.md)
+ - [v1beta2_replica_set_condition_t](docs/v1beta2_replica_set_condition.md)
+ - [v1beta2_replica_set_list_t](docs/v1beta2_replica_set_list.md)
+ - [v1beta2_replica_set_spec_t](docs/v1beta2_replica_set_spec.md)
+ - [v1beta2_replica_set_status_t](docs/v1beta2_replica_set_status.md)
+ - [v1beta2_rolling_update_daemon_set_t](docs/v1beta2_rolling_update_daemon_set.md)
+ - [v1beta2_rolling_update_deployment_t](docs/v1beta2_rolling_update_deployment.md)
+ - [v1beta2_rolling_update_stateful_set_strategy_t](docs/v1beta2_rolling_update_stateful_set_strategy.md)
+ - [v1beta2_scale_t](docs/v1beta2_scale.md)
+ - [v1beta2_scale_spec_t](docs/v1beta2_scale_spec.md)
+ - [v1beta2_scale_status_t](docs/v1beta2_scale_status.md)
+ - [v1beta2_stateful_set_t](docs/v1beta2_stateful_set.md)
+ - [v1beta2_stateful_set_condition_t](docs/v1beta2_stateful_set_condition.md)
+ - [v1beta2_stateful_set_list_t](docs/v1beta2_stateful_set_list.md)
+ - [v1beta2_stateful_set_spec_t](docs/v1beta2_stateful_set_spec.md)
+ - [v1beta2_stateful_set_status_t](docs/v1beta2_stateful_set_status.md)
+ - [v1beta2_stateful_set_update_strategy_t](docs/v1beta2_stateful_set_update_strategy.md)
+ - [v2alpha1_cron_job_t](docs/v2alpha1_cron_job.md)
+ - [v2alpha1_cron_job_list_t](docs/v2alpha1_cron_job_list.md)
+ - [v2alpha1_cron_job_spec_t](docs/v2alpha1_cron_job_spec.md)
+ - [v2alpha1_cron_job_status_t](docs/v2alpha1_cron_job_status.md)
+ - [v2alpha1_job_template_spec_t](docs/v2alpha1_job_template_spec.md)
+ - [v2beta1_cross_version_object_reference_t](docs/v2beta1_cross_version_object_reference.md)
+ - [v2beta1_external_metric_source_t](docs/v2beta1_external_metric_source.md)
+ - [v2beta1_external_metric_status_t](docs/v2beta1_external_metric_status.md)
+ - [v2beta1_horizontal_pod_autoscaler_t](docs/v2beta1_horizontal_pod_autoscaler.md)
+ - [v2beta1_horizontal_pod_autoscaler_condition_t](docs/v2beta1_horizontal_pod_autoscaler_condition.md)
+ - [v2beta1_horizontal_pod_autoscaler_list_t](docs/v2beta1_horizontal_pod_autoscaler_list.md)
+ - [v2beta1_horizontal_pod_autoscaler_spec_t](docs/v2beta1_horizontal_pod_autoscaler_spec.md)
+ - [v2beta1_horizontal_pod_autoscaler_status_t](docs/v2beta1_horizontal_pod_autoscaler_status.md)
+ - [v2beta1_metric_spec_t](docs/v2beta1_metric_spec.md)
+ - [v2beta1_metric_status_t](docs/v2beta1_metric_status.md)
+ - [v2beta1_object_metric_source_t](docs/v2beta1_object_metric_source.md)
+ - [v2beta1_object_metric_status_t](docs/v2beta1_object_metric_status.md)
+ - [v2beta1_pods_metric_source_t](docs/v2beta1_pods_metric_source.md)
+ - [v2beta1_pods_metric_status_t](docs/v2beta1_pods_metric_status.md)
+ - [v2beta1_resource_metric_source_t](docs/v2beta1_resource_metric_source.md)
+ - [v2beta1_resource_metric_status_t](docs/v2beta1_resource_metric_status.md)
+ - [v2beta2_cross_version_object_reference_t](docs/v2beta2_cross_version_object_reference.md)
+ - [v2beta2_external_metric_source_t](docs/v2beta2_external_metric_source.md)
+ - [v2beta2_external_metric_status_t](docs/v2beta2_external_metric_status.md)
+ - [v2beta2_horizontal_pod_autoscaler_t](docs/v2beta2_horizontal_pod_autoscaler.md)
+ - [v2beta2_horizontal_pod_autoscaler_condition_t](docs/v2beta2_horizontal_pod_autoscaler_condition.md)
+ - [v2beta2_horizontal_pod_autoscaler_list_t](docs/v2beta2_horizontal_pod_autoscaler_list.md)
+ - [v2beta2_horizontal_pod_autoscaler_spec_t](docs/v2beta2_horizontal_pod_autoscaler_spec.md)
+ - [v2beta2_horizontal_pod_autoscaler_status_t](docs/v2beta2_horizontal_pod_autoscaler_status.md)
+ - [v2beta2_metric_identifier_t](docs/v2beta2_metric_identifier.md)
+ - [v2beta2_metric_spec_t](docs/v2beta2_metric_spec.md)
+ - [v2beta2_metric_status_t](docs/v2beta2_metric_status.md)
+ - [v2beta2_metric_target_t](docs/v2beta2_metric_target.md)
+ - [v2beta2_metric_value_status_t](docs/v2beta2_metric_value_status.md)
+ - [v2beta2_object_metric_source_t](docs/v2beta2_object_metric_source.md)
+ - [v2beta2_object_metric_status_t](docs/v2beta2_object_metric_status.md)
+ - [v2beta2_pods_metric_source_t](docs/v2beta2_pods_metric_source.md)
+ - [v2beta2_pods_metric_status_t](docs/v2beta2_pods_metric_status.md)
+ - [v2beta2_resource_metric_source_t](docs/v2beta2_resource_metric_source.md)
+ - [v2beta2_resource_metric_status_t](docs/v2beta2_resource_metric_status.md)
+ - [version_info_t](docs/version_info.md)
+
+
+## Documentation for Authorization
+
+
+### BearerToken
+
+- **Type**: API key
+
+- **API key parameter name**: authorization
+- **Location**: HTTP header
+
+
 ## Author
 
 

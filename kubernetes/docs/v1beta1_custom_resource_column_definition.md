@@ -1,0 +1,15 @@
+# v1beta1_custom_resource_column_definition_t
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**json_path** | **char \*** | JSONPath is a simple JSON path (i.e. with array notation) which is evaluated against each custom resource to produce the value for this column. | 
+**description** | **char \*** | description is a human readable description of this column. | [optional] 
+**format** | **char \*** | format is an optional OpenAPI type definition for this column. The &#39;name&#39; format is applied to the primary identifier column to assist in clients identifying column is the resource name. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details. | [optional] 
+**name** | **char \*** | name is a human readable name for the column. | 
+**priority** | **int** | priority is an integer defining the relative importance of this column compared to others. Lower numbers are considered higher priority. Columns that may be omitted in limited space scenarios should be given a priority greater than 0. | [optional] 
+**type** | **char \*** | type is an OpenAPI type definition for this column. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details. | 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

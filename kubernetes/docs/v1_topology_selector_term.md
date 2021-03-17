@@ -1,0 +1,10 @@
+# v1_topology_selector_term_t
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**match_label_expressions** | [**list_t**](v1_topology_selector_label_requirement.md) \* | A list of topology selector requirements by labels. | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
