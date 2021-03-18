@@ -138,6 +138,10 @@ If the C client library is used in multi-threaded program, the following 2 actio
 
 Refer to the [example](https://github.com/kubernetes-client/c/tree/master/examples/multi_thread/) for detail. 
 
+## Documentation
+
+All APIs and Models' documentation can be found at the [Generated client's README file](https://github.com/kubernetes-client/c/blob/master/kubernetes/README.md#documentation-for-api-endpoints)
+
 ## Community, discussion, contribution, and support
 
 Learn how to engage with the Kubernetes community on the [community page](http://kubernetes.io/community/).
