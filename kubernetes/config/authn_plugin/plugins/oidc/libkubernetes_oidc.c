@@ -70,9 +70,10 @@ static time_t get_token_expiration_time(const char *token_string)
         goto end;
     }
 
-    cJSON *payload_JSON = cJSON_Parse(b64decode);
+    const char *parse_end = NULL;
+    cJSON *payload_JSON = cJSON_ParseWithOpts(b64decode, &parse_end, 1);
     if (!payload_JSON) {
-        fprintf(stderr, "%s: Cannot create JSON from string.[%s].\n", fname, cJSON_GetErrorPtr());
+        fprintf(stderr, "%s: Cannot create JSON from string.[%s].\n", fname, parse_end);
         goto end;
     }
     cJSON *json_value = cJSON_GetObjectItem(payload_JSON, OIDC_ID_TOKEN_EXP);

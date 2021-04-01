@@ -15,13 +15,13 @@ int shc_request(char **p_http_response, int *p_http_response_length, char *type,
     int rc = http_client->response_code;
     switch (rc) {
     case HTTP_RC_OK:
-        *p_http_response = strndup((char *)http_client->dataReceived, http_client->dataReceivedLen);
+        *p_http_response = strndup((char *) http_client->dataReceived, http_client->dataReceivedLen);
         *p_http_response_length = http_client->dataReceivedLen;
         break;
     default:
         printf("%s: response_code=%ld\n", fname, http_client->response_code);
         if (http_client->dataReceived) {
-            printf("%s: %s\n", fname, (char *)http_client->dataReceived);
+            printf("%s: %s\n", fname, (char *) http_client->dataReceived);
         }
         break;
     }
@@ -50,9 +50,10 @@ char *shc_get_string_from_json(const char *json_string, const char *key)
         return NULL;
     }
 
-    cJSON *json = cJSON_Parse(json_string);
+    const char *parse_end = NULL;
+    cJSON *json = cJSON_ParseWithOpts(json_string, &parse_end, 1);
     if (!json) {
-        fprintf(stderr, "%s: Cannot create JSON from string.[%s].\n", fname, cJSON_GetErrorPtr());
+        fprintf(stderr, "%s: Cannot create JSON from string: [%s].\n", fname, parse_end);
         return NULL;
     }
     cJSON *value = cJSON_GetObjectItem(json, key);

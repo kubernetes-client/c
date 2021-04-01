@@ -12,9 +12,13 @@ static void on_pod_event_comes(const char *event_string)
         return;
     }
 
-    cJSON *event_json_obj = cJSON_Parse(event_string);
+    char *type = NULL;
+    v1_pod_t *pod = NULL;
+
+    const char *parse_end = NULL;
+    cJSON *event_json_obj = cJSON_ParseWithOpts(event_string, &parse_end, 1);
     if (!event_json_obj) {
-        fprintf(stderr, "%s: Cannot create JSON from string.[%s].\n", fname, cJSON_GetErrorPtr());
+        fprintf(stderr, "%s: Cannot create JSON from string: [%s].\n", fname, parse_end);
         goto end;
     }
 
@@ -23,7 +27,7 @@ static void on_pod_event_comes(const char *event_string)
         fprintf(stderr, "%s: Cannot get type in watch event.\n", fname);
         goto end;
     }
-    char *type = strdup(json_value_type->valuestring);
+    type = strdup(json_value_type->valuestring);
     printf("type: %s\n", type);
 
     cJSON *json_value_object = cJSON_GetObjectItem(event_json_obj, WATCH_EVENT_KEY_OBJECT);
@@ -31,7 +35,7 @@ static void on_pod_event_comes(const char *event_string)
         fprintf(stderr, "%s: Cannot get object in watch event.\n", fname);
         goto end;
     }
-    v1_pod_t *pod = v1_pod_parseFromJSON(json_value_object);
+    pod = v1_pod_parseFromJSON(json_value_object);
     if (!pod) {
         fprintf(stderr, "%s: Cannot get pod from watch event object.\n", fname);
         goto end;
