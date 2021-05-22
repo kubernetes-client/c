@@ -1119,7 +1119,7 @@ end:
 // list or watch objects of kind HorizontalPodAutoscaler
 //
 v1_horizontal_pod_autoscaler_list_t*
-AutoscalingV1API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+AutoscalingV1API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, const char * _namespace , const char * pretty , int allowWatchBookmarks , const char * _continue , const char * fieldSelector , const char * labelSelector , int limit , const char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1821,7 +1821,7 @@ end:
 // read the specified HorizontalPodAutoscaler
 //
 v1_horizontal_pod_autoscaler_t*
-AutoscalingV1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+AutoscalingV1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, const char * name , const char * _namespace , const char * pretty , int exact , int _export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1982,7 +1982,7 @@ end:
 // read status of the specified HorizontalPodAutoscaler
 //
 v1_horizontal_pod_autoscaler_t*
-AutoscalingV1API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AutoscalingV1API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, const char * name , const char * _namespace , const char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;

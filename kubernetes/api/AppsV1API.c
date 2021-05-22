@@ -5893,7 +5893,7 @@ end:
 // list or watch objects of kind StatefulSet
 //
 v1_stateful_set_list_t*
-AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, const char * _namespace , const char * pretty , int allowWatchBookmarks , const char * _continue , const char * fieldSelector , const char * labelSelector , int limit , const char * resourceVersion , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10388,7 +10388,7 @@ end:
 // read the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, const char * name , const char * _namespace , const char * pretty , int exact , int _export )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;

@@ -565,7 +565,7 @@ CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * n
 // delete a Pod
 //
 v1_status_t*
-CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
+CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, const char * name , const char * _namespace , const char * pretty , const char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
 // delete a PodTemplate
@@ -655,13 +655,13 @@ CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int allowWatchB
 // list or watch objects of kind Namespace
 //
 v1_namespace_list_t*
-CoreV1API_listNamespace(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespace(apiClient_t *apiClient, const char * pretty , int allowWatchBookmarks , const char * _continue , const char * fieldSelector , const char * labelSelector , int limit , const char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ConfigMap
 //
 v1_config_map_list_t*
-CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, const char * _namespace , const char * pretty , int allowWatchBookmarks , const char * _continue , const char * fieldSelector , const char * labelSelector , int limit , const char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Endpoints
@@ -685,13 +685,13 @@ CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , c
 // list or watch objects of kind PersistentVolumeClaim
 //
 v1_persistent_volume_claim_list_t*
-CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, const char * _namespace , char * pretty , int allowWatchBookmarks , const char * _continue , const char * fieldSelector , const char * labelSelector , int limit , const char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Pod
 //
 v1_pod_list_t*
-CoreV1API_listNamespacedPod(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedPod(apiClient_t *apiClient, const char * _namespace , const char * pretty , int allowWatchBookmarks , const char * _continue , const char * fieldSelector , const char * labelSelector , int limit , const char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind PodTemplate
@@ -721,7 +721,7 @@ CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char * _namespace , char 
 // list or watch objects of kind Service
 //
 v1_service_list_t*
-CoreV1API_listNamespacedService(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedService(apiClient_t *apiClient, const char * _namespace , const char * pretty , int allowWatchBookmarks , const char * _continue , const char * fieldSelector , const char * labelSelector , int limit , const char * resourceVersion , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ServiceAccount
@@ -955,7 +955,7 @@ CoreV1API_readNamespaceStatus(apiClient_t *apiClient, char * name , char * prett
 // read the specified ConfigMap
 //
 v1_config_map_t*
-CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, const char * name , const char * _namespace , const char * pretty , int exact , int _export );
 
 
 // read the specified Endpoints
@@ -979,7 +979,7 @@ CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char * name , char * 
 // read the specified PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, const char * name , const char * _namespace , const char * pretty , int exact , int _export );
 
 
 // read status of the specified PersistentVolumeClaim
@@ -991,7 +991,7 @@ CoreV1API_readNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char
 // read the specified Pod
 //
 v1_pod_t*
-CoreV1API_readNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedPod(apiClient_t *apiClient, const char * name , const char * _namespace , const char * pretty , int exact , int _export );
 
 
 // read log of the specified Pod
@@ -1051,7 +1051,7 @@ CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char * name , char * _nam
 // read the specified Service
 //
 v1_service_t*
-CoreV1API_readNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedService(apiClient_t *apiClient, const char * name , const char * _namespace , const char * pretty , int exact , int _export );
 
 
 // read the specified ServiceAccount
@@ -1069,7 +1069,7 @@ CoreV1API_readNamespacedServiceStatus(apiClient_t *apiClient, char * name , char
 // read the specified Node
 //
 v1_node_t*
-CoreV1API_readNode(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
+CoreV1API_readNode(apiClient_t *apiClient, const char * name , const char * pretty , int exact , int _export );
 
 
 // read status of the specified Node
