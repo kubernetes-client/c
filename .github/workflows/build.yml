@@ -16,6 +16,15 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libssl-dev libcurl4-openssl-dev uncrustify libyaml-dev
+    - name: Prepare libwebsockets
+      run: |
+        git clone https://libwebsockets.org/repo/libwebsockets --depth 1 --branch v4.2-stable
+        cd libwebsockets
+        mkdir build
+        cd build
+        cmake ..
+        make
+        sudo make install
     - name: Build client library
       run: |
         cd kubernetes
@@ -39,4 +48,4 @@ jobs:
     - name: Test examples
       run: |
         cd examples/
-        LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kubernetes/build/ make test
+        LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kubernetes/build/:/usr/local/lib make test
