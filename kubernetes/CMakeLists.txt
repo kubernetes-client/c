@@ -41,6 +41,8 @@ set(SRCS
     config/authn_plugin/authn_plugin_util.c
     config/authn_plugin/authn_plugin.c
     watch/watch_util.c
+    websocket/wsclient.c
+    websocket/kube_exec.c
     src/list.c
     src/apiKey.c
     src/apiClient.c
@@ -804,6 +806,8 @@ set(HDRS
     config/authn_plugin/authn_plugin_util.h
     config/authn_plugin/authn_plugin.h
     watch/watch_util.h
+    websocket/wsclient.h
+    websocket/kube_exec.h
     include/apiClient.h
     include/list.h
     include/binary.h
