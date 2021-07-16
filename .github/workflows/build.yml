@@ -16,6 +16,15 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libssl-dev libcurl4-openssl-dev uncrustify libyaml-dev
+    - name: Prepare libwebsockets
+      run: |
+        git clone https://libwebsockets.org/repo/libwebsockets --depth 1 --branch v4.2-stable
+        cd libwebsockets
+        mkdir build
+        cd build
+        cmake ..
+        make
+        sudo make install
     - name: Build client library
       run: |
         cd kubernetes
@@ -35,8 +44,10 @@ jobs:
         cd examples/
         make
     - name: Create k8s kind cluster
-      uses: helm/kind-action@v1.1.0
+      uses: helm/kind-action@v1.2.0
     - name: Test examples
       run: |
+        kubectl cluster-info --context kind-chart-testing
+        kubectl describe node
         cd examples/
-        LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kubernetes/build/ make test
+        LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kubernetes/build/:/usr/local/lib make test

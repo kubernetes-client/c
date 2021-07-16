@@ -16,6 +16,15 @@ CLIENT_REPO_ROOT=${PWD}/c
 # Install pre-requisites
 sudo apt-get install libssl-dev libcurl4-openssl-dev uncrustify libyaml-dev
 
+# Build pre-requisite: libwebsockets
+git clone https://libwebsockets.org/repo/libwebsockets --depth 1 --branch v4.2-stable
+cd libwebsockets
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local/lib ..
+make
+sudo make install
+
 # Move into the Kubernetes directory
 cd ${CLIENT_REPO_ROOT}/kubernetes
 

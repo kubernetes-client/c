@@ -8,6 +8,7 @@ all:
 	cd auth_provider; make
 	cd watch_list_pod; make
 	cd multi_thread; make
+	cd exec_pod; make
 
 clean:
 	cd create_pod; make clean
@@ -19,10 +20,13 @@ clean:
 	cd auth_provider; make clean
 	cd watch_list_pod; make clean
 	cd multi_thread; make clean
+	cd exec_pod; make clean
 
 test:
 	cd create_pod; make test; sleep 10
 	cd list_pod; make test
 	cd delete_pod; make test
 	cd generic; make test
-	cd multi_thread; make test
+	cd multi_thread; make test; sleep 10
+	kubectl describe po test-pod-8
+	cd exec_pod; make test
