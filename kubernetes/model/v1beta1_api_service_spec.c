@@ -6,7 +6,7 @@
 
 
 v1beta1_api_service_spec_t *v1beta1_api_service_spec_create(
-    char ca_bundle,
+    char *ca_bundle,
     char *group,
     int group_priority_minimum,
     int insecure_skip_tls_verify,
@@ -55,8 +55,8 @@ cJSON *v1beta1_api_service_spec_convertToJSON(v1beta1_api_service_spec_t *v1beta
 
     // v1beta1_api_service_spec->ca_bundle
     if(v1beta1_api_service_spec->ca_bundle) { 
-    if(cJSON_AddNumberToObject(item, "caBundle", v1beta1_api_service_spec->ca_bundle) == NULL) {
-    goto fail; //Byte
+    if(cJSON_AddStringToObject(item, "caBundle", v1beta1_api_service_spec->ca_bundle) == NULL) {
+    goto fail; //ByteArray
     }
      } 
 
@@ -134,9 +134,9 @@ v1beta1_api_service_spec_t *v1beta1_api_service_spec_parseFromJSON(cJSON *v1beta
     // v1beta1_api_service_spec->ca_bundle
     cJSON *ca_bundle = cJSON_GetObjectItemCaseSensitive(v1beta1_api_service_specJSON, "caBundle");
     if (ca_bundle) { 
-    if(!cJSON_IsNumber(ca_bundle))
+    if(!cJSON_IsString(ca_bundle))
     {
-    goto end; //Byte
+    goto end; //ByteArray
     }
     }
 
@@ -203,7 +203,7 @@ v1beta1_api_service_spec_t *v1beta1_api_service_spec_parseFromJSON(cJSON *v1beta
 
 
     v1beta1_api_service_spec_local_var = v1beta1_api_service_spec_create (
-        ca_bundle ? ca_bundle->valueint : 0,
+        ca_bundle ? strdup(ca_bundle->valuestring) : NULL,
         group ? strdup(group->valuestring) : NULL,
         group_priority_minimum->valuedouble,
         insecure_skip_tls_verify ? insecure_skip_tls_verify->valueint : 0,

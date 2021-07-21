@@ -94,6 +94,10 @@ cJSON *v1_secret_convertToJSON(v1_secret_t *v1_secret) {
     if (v1_secret->data) {
     list_ForEach(dataListEntry, v1_secret->data) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)dataListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        {
+            goto fail;
+        }
     }
     }
      } 
@@ -181,6 +185,11 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
     cJSON_ArrayForEach(data_local_map, data)
     {
 		cJSON *localMapObject = data_local_map;
+        if(!cJSON_IsString(localMapObject))
+        {
+            goto end;
+        }
+        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
         list_addElement(dataList , localMapKeyPair);
     }
     }

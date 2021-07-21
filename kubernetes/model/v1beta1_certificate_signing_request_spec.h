@@ -21,7 +21,7 @@ typedef struct v1beta1_certificate_signing_request_spec_t v1beta1_certificate_si
 typedef struct v1beta1_certificate_signing_request_spec_t {
     list_t* extra; //map
     list_t *groups; //primitive container
-    char request; //Byte
+    char *request; //ByteArray
     char *uid; // string
     list_t *usages; //primitive container
     char *username; // string
@@ -31,7 +31,7 @@ typedef struct v1beta1_certificate_signing_request_spec_t {
 v1beta1_certificate_signing_request_spec_t *v1beta1_certificate_signing_request_spec_create(
     list_t* extra,
     list_t *groups,
-    char request,
+    char *request,
     char *uid,
     list_t *usages,
     char *username
