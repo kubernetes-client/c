@@ -10,6 +10,7 @@ all:
 	cd multi_thread; make
 	cd exec_pod; make
 	cd list_secret; make
+	cd configmap; make
 
 clean:
 	cd create_pod; make clean
@@ -23,12 +24,14 @@ clean:
 	cd multi_thread; make clean
 	cd exec_pod; make clean
 	cd list_secret; make clean
+	cd configmap; make clean
 
 test:
 	cd create_pod; make test; sleep 10
 	cd list_pod; make test
 	cd delete_pod; make test
 	cd list_secret; make test
+	cd configmap; make test
 	cd generic; make test
 	cd multi_thread; make test; sleep 10
 	kubectl describe po test-pod-8
