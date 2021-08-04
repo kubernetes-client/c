@@ -27,6 +27,10 @@ void apiextensions_v1_webhook_client_config_free(apiextensions_v1_webhook_client
         return ;
     }
     listEntry_t *listEntry;
+    if (apiextensions_v1_webhook_client_config->ca_bundle) {
+        free(apiextensions_v1_webhook_client_config->ca_bundle);
+        apiextensions_v1_webhook_client_config->ca_bundle = NULL;
+    }
     if (apiextensions_v1_webhook_client_config->service) {
         apiextensions_v1_service_reference_free(apiextensions_v1_webhook_client_config->service);
         apiextensions_v1_webhook_client_config->service = NULL;

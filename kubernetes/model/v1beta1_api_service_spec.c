@@ -35,6 +35,10 @@ void v1beta1_api_service_spec_free(v1beta1_api_service_spec_t *v1beta1_api_servi
         return ;
     }
     listEntry_t *listEntry;
+    if (v1beta1_api_service_spec->ca_bundle) {
+        free(v1beta1_api_service_spec->ca_bundle);
+        v1beta1_api_service_spec->ca_bundle = NULL;
+    }
     if (v1beta1_api_service_spec->group) {
         free(v1beta1_api_service_spec->group);
         v1beta1_api_service_spec->group = NULL;

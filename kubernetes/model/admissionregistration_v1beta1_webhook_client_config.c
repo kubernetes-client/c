@@ -27,6 +27,10 @@ void admissionregistration_v1beta1_webhook_client_config_free(admissionregistrat
         return ;
     }
     listEntry_t *listEntry;
+    if (admissionregistration_v1beta1_webhook_client_config->ca_bundle) {
+        free(admissionregistration_v1beta1_webhook_client_config->ca_bundle);
+        admissionregistration_v1beta1_webhook_client_config->ca_bundle = NULL;
+    }
     if (admissionregistration_v1beta1_webhook_client_config->service) {
         admissionregistration_v1beta1_service_reference_free(admissionregistration_v1beta1_webhook_client_config->service);
         admissionregistration_v1beta1_webhook_client_config->service = NULL;

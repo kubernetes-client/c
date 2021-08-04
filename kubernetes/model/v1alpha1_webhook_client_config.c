@@ -27,6 +27,10 @@ void v1alpha1_webhook_client_config_free(v1alpha1_webhook_client_config_t *v1alp
         return ;
     }
     listEntry_t *listEntry;
+    if (v1alpha1_webhook_client_config->ca_bundle) {
+        free(v1alpha1_webhook_client_config->ca_bundle);
+        v1alpha1_webhook_client_config->ca_bundle = NULL;
+    }
     if (v1alpha1_webhook_client_config->service) {
         v1alpha1_service_reference_free(v1alpha1_webhook_client_config->service);
         v1alpha1_webhook_client_config->service = NULL;

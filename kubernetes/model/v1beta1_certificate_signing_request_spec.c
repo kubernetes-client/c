@@ -50,6 +50,10 @@ void v1beta1_certificate_signing_request_spec_free(v1beta1_certificate_signing_r
         list_free(v1beta1_certificate_signing_request_spec->groups);
         v1beta1_certificate_signing_request_spec->groups = NULL;
     }
+    if (v1beta1_certificate_signing_request_spec->request) {
+        free(v1beta1_certificate_signing_request_spec->request);
+        v1beta1_certificate_signing_request_spec->request = NULL;
+    }
     if (v1beta1_certificate_signing_request_spec->uid) {
         free(v1beta1_certificate_signing_request_spec->uid);
         v1beta1_certificate_signing_request_spec->uid = NULL;

@@ -25,6 +25,10 @@ void v1beta1_certificate_signing_request_status_free(v1beta1_certificate_signing
         return ;
     }
     listEntry_t *listEntry;
+    if (v1beta1_certificate_signing_request_status->certificate) {
+        free(v1beta1_certificate_signing_request_status->certificate);
+        v1beta1_certificate_signing_request_status->certificate = NULL;
+    }
     if (v1beta1_certificate_signing_request_status->conditions) {
         list_ForEach(listEntry, v1beta1_certificate_signing_request_status->conditions) {
             v1beta1_certificate_signing_request_condition_free(listEntry->data);
