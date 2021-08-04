@@ -20,7 +20,7 @@ typedef struct v1beta1_api_service_spec_t v1beta1_api_service_spec_t;
 
 
 typedef struct v1beta1_api_service_spec_t {
-    char ca_bundle; //Byte
+    char *ca_bundle; //ByteArray
     char *group; // string
     int group_priority_minimum; //numeric
     int insecure_skip_tls_verify; //boolean
@@ -31,7 +31,7 @@ typedef struct v1beta1_api_service_spec_t {
 } v1beta1_api_service_spec_t;
 
 v1beta1_api_service_spec_t *v1beta1_api_service_spec_create(
-    char ca_bundle,
+    char *ca_bundle,
     char *group,
     int group_priority_minimum,
     int insecure_skip_tls_verify,

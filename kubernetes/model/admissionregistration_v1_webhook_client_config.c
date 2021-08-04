@@ -6,7 +6,7 @@
 
 
 admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webhook_client_config_create(
-    char ca_bundle,
+    char *ca_bundle,
     admissionregistration_v1_service_reference_t *service,
     char *url
     ) {
@@ -27,6 +27,10 @@ void admissionregistration_v1_webhook_client_config_free(admissionregistration_v
         return ;
     }
     listEntry_t *listEntry;
+    if (admissionregistration_v1_webhook_client_config->ca_bundle) {
+        free(admissionregistration_v1_webhook_client_config->ca_bundle);
+        admissionregistration_v1_webhook_client_config->ca_bundle = NULL;
+    }
     if (admissionregistration_v1_webhook_client_config->service) {
         admissionregistration_v1_service_reference_free(admissionregistration_v1_webhook_client_config->service);
         admissionregistration_v1_webhook_client_config->service = NULL;
@@ -43,8 +47,8 @@ cJSON *admissionregistration_v1_webhook_client_config_convertToJSON(admissionreg
 
     // admissionregistration_v1_webhook_client_config->ca_bundle
     if(admissionregistration_v1_webhook_client_config->ca_bundle) { 
-    if(cJSON_AddNumberToObject(item, "caBundle", admissionregistration_v1_webhook_client_config->ca_bundle) == NULL) {
-    goto fail; //Byte
+    if(cJSON_AddStringToObject(item, "caBundle", admissionregistration_v1_webhook_client_config->ca_bundle) == NULL) {
+    goto fail; //ByteArray
     }
      } 
 
@@ -84,9 +88,9 @@ admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webho
     // admissionregistration_v1_webhook_client_config->ca_bundle
     cJSON *ca_bundle = cJSON_GetObjectItemCaseSensitive(admissionregistration_v1_webhook_client_configJSON, "caBundle");
     if (ca_bundle) { 
-    if(!cJSON_IsNumber(ca_bundle))
+    if(!cJSON_IsString(ca_bundle))
     {
-    goto end; //Byte
+    goto end; //ByteArray
     }
     }
 
@@ -108,7 +112,7 @@ admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webho
 
 
     admissionregistration_v1_webhook_client_config_local_var = admissionregistration_v1_webhook_client_config_create (
-        ca_bundle ? ca_bundle->valueint : 0,
+        ca_bundle ? strdup(ca_bundle->valuestring) : NULL,
         service ? service_local_nonprim : NULL,
         url ? strdup(url->valuestring) : NULL
         );

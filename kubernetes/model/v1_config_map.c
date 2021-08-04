@@ -88,6 +88,10 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
     if (v1_config_map->binary_data) {
     list_ForEach(binary_dataListEntry, v1_config_map->binary_data) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)binary_dataListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        {
+            goto fail;
+        }
     }
     }
      } 
@@ -167,6 +171,11 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     cJSON_ArrayForEach(binary_data_local_map, binary_data)
     {
 		cJSON *localMapObject = binary_data_local_map;
+        if(!cJSON_IsString(localMapObject))
+        {
+            goto end;
+        }
+        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
         list_addElement(binary_dataList , localMapKeyPair);
     }
     }

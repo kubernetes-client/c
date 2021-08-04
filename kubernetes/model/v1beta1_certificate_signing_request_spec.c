@@ -8,7 +8,7 @@
 v1beta1_certificate_signing_request_spec_t *v1beta1_certificate_signing_request_spec_create(
     list_t* extra,
     list_t *groups,
-    char request,
+    char *request,
     char *uid,
     list_t *usages,
     char *username
@@ -49,6 +49,10 @@ void v1beta1_certificate_signing_request_spec_free(v1beta1_certificate_signing_r
         }
         list_free(v1beta1_certificate_signing_request_spec->groups);
         v1beta1_certificate_signing_request_spec->groups = NULL;
+    }
+    if (v1beta1_certificate_signing_request_spec->request) {
+        free(v1beta1_certificate_signing_request_spec->request);
+        v1beta1_certificate_signing_request_spec->request = NULL;
     }
     if (v1beta1_certificate_signing_request_spec->uid) {
         free(v1beta1_certificate_signing_request_spec->uid);
@@ -109,8 +113,8 @@ cJSON *v1beta1_certificate_signing_request_spec_convertToJSON(v1beta1_certificat
         goto fail;
     }
     
-    if(cJSON_AddNumberToObject(item, "request", v1beta1_certificate_signing_request_spec->request) == NULL) {
-    goto fail; //Byte
+    if(cJSON_AddStringToObject(item, "request", v1beta1_certificate_signing_request_spec->request) == NULL) {
+    goto fail; //ByteArray
     }
 
 
@@ -202,9 +206,9 @@ v1beta1_certificate_signing_request_spec_t *v1beta1_certificate_signing_request_
     }
 
     
-    if(!cJSON_IsNumber(request))
+    if(!cJSON_IsString(request))
     {
-    goto end; //Byte
+    goto end; //ByteArray
     }
 
     // v1beta1_certificate_signing_request_spec->uid
@@ -249,7 +253,7 @@ v1beta1_certificate_signing_request_spec_t *v1beta1_certificate_signing_request_
     v1beta1_certificate_signing_request_spec_local_var = v1beta1_certificate_signing_request_spec_create (
         extra ? extraList : NULL,
         groups ? groupsList : NULL,
-        request->valueint,
+        strdup(request->valuestring),
         uid ? strdup(uid->valuestring) : NULL,
         usages ? usagesList : NULL,
         username ? strdup(username->valuestring) : NULL

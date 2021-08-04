@@ -6,7 +6,7 @@
 
 
 v1alpha1_webhook_client_config_t *v1alpha1_webhook_client_config_create(
-    char ca_bundle,
+    char *ca_bundle,
     v1alpha1_service_reference_t *service,
     char *url
     ) {
@@ -27,6 +27,10 @@ void v1alpha1_webhook_client_config_free(v1alpha1_webhook_client_config_t *v1alp
         return ;
     }
     listEntry_t *listEntry;
+    if (v1alpha1_webhook_client_config->ca_bundle) {
+        free(v1alpha1_webhook_client_config->ca_bundle);
+        v1alpha1_webhook_client_config->ca_bundle = NULL;
+    }
     if (v1alpha1_webhook_client_config->service) {
         v1alpha1_service_reference_free(v1alpha1_webhook_client_config->service);
         v1alpha1_webhook_client_config->service = NULL;
@@ -43,8 +47,8 @@ cJSON *v1alpha1_webhook_client_config_convertToJSON(v1alpha1_webhook_client_conf
 
     // v1alpha1_webhook_client_config->ca_bundle
     if(v1alpha1_webhook_client_config->ca_bundle) { 
-    if(cJSON_AddNumberToObject(item, "caBundle", v1alpha1_webhook_client_config->ca_bundle) == NULL) {
-    goto fail; //Byte
+    if(cJSON_AddStringToObject(item, "caBundle", v1alpha1_webhook_client_config->ca_bundle) == NULL) {
+    goto fail; //ByteArray
     }
      } 
 
@@ -84,9 +88,9 @@ v1alpha1_webhook_client_config_t *v1alpha1_webhook_client_config_parseFromJSON(c
     // v1alpha1_webhook_client_config->ca_bundle
     cJSON *ca_bundle = cJSON_GetObjectItemCaseSensitive(v1alpha1_webhook_client_configJSON, "caBundle");
     if (ca_bundle) { 
-    if(!cJSON_IsNumber(ca_bundle))
+    if(!cJSON_IsString(ca_bundle))
     {
-    goto end; //Byte
+    goto end; //ByteArray
     }
     }
 
@@ -108,7 +112,7 @@ v1alpha1_webhook_client_config_t *v1alpha1_webhook_client_config_parseFromJSON(c
 
 
     v1alpha1_webhook_client_config_local_var = v1alpha1_webhook_client_config_create (
-        ca_bundle ? ca_bundle->valueint : 0,
+        ca_bundle ? strdup(ca_bundle->valuestring) : NULL,
         service ? service_local_nonprim : NULL,
         url ? strdup(url->valuestring) : NULL
         );

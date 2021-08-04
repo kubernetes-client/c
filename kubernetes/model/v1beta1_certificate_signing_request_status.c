@@ -6,7 +6,7 @@
 
 
 v1beta1_certificate_signing_request_status_t *v1beta1_certificate_signing_request_status_create(
-    char certificate,
+    char *certificate,
     list_t *conditions
     ) {
     v1beta1_certificate_signing_request_status_t *v1beta1_certificate_signing_request_status_local_var = malloc(sizeof(v1beta1_certificate_signing_request_status_t));
@@ -25,6 +25,10 @@ void v1beta1_certificate_signing_request_status_free(v1beta1_certificate_signing
         return ;
     }
     listEntry_t *listEntry;
+    if (v1beta1_certificate_signing_request_status->certificate) {
+        free(v1beta1_certificate_signing_request_status->certificate);
+        v1beta1_certificate_signing_request_status->certificate = NULL;
+    }
     if (v1beta1_certificate_signing_request_status->conditions) {
         list_ForEach(listEntry, v1beta1_certificate_signing_request_status->conditions) {
             v1beta1_certificate_signing_request_condition_free(listEntry->data);
@@ -40,8 +44,8 @@ cJSON *v1beta1_certificate_signing_request_status_convertToJSON(v1beta1_certific
 
     // v1beta1_certificate_signing_request_status->certificate
     if(v1beta1_certificate_signing_request_status->certificate) { 
-    if(cJSON_AddNumberToObject(item, "certificate", v1beta1_certificate_signing_request_status->certificate) == NULL) {
-    goto fail; //Byte
+    if(cJSON_AddStringToObject(item, "certificate", v1beta1_certificate_signing_request_status->certificate) == NULL) {
+    goto fail; //ByteArray
     }
      } 
 
@@ -80,9 +84,9 @@ v1beta1_certificate_signing_request_status_t *v1beta1_certificate_signing_reques
     // v1beta1_certificate_signing_request_status->certificate
     cJSON *certificate = cJSON_GetObjectItemCaseSensitive(v1beta1_certificate_signing_request_statusJSON, "certificate");
     if (certificate) { 
-    if(!cJSON_IsNumber(certificate))
+    if(!cJSON_IsString(certificate))
     {
-    goto end; //Byte
+    goto end; //ByteArray
     }
     }
 
@@ -110,7 +114,7 @@ v1beta1_certificate_signing_request_status_t *v1beta1_certificate_signing_reques
 
 
     v1beta1_certificate_signing_request_status_local_var = v1beta1_certificate_signing_request_status_create (
-        certificate ? certificate->valueint : 0,
+        certificate ? strdup(certificate->valuestring) : NULL,
         conditions ? conditionsList : NULL
         );
 
