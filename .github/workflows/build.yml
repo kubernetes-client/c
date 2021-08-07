@@ -34,7 +34,7 @@ jobs:
         make
     - name: Build authentication plugin - oidc
       run: |
-        cd kubernetes/config/authn_plugin/plugins/oidc
+        cd plugins/oidc
         mkdir build
         cd build
         cmake ..
