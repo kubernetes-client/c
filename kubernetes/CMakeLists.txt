@@ -9,20 +9,25 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN OFF)
 
 option(BUILD_EXAMPLES "Build examples" OFF)
 
+set(pkgName "kubernetes")
+
+file(GLOB_RECURSE SRCS *.c)
+
+file(GLOB_RECURSE HDRS *.h)
+
+# Add library with project file with projectname as library name
+add_library(${pkgName} ${SRCS} ${HDRS})
+
 find_package(OpenSSL)
 
 if (OPENSSL_FOUND)
 	message (STATUS "OPENSSL found")
-	set (CMAKE_C_FLAGS "-DOPENSSL")
-	include_directories(${OPENSSL_INCLUDE_DIR})
-	include_directories(${OPENSSL_INCLUDE_DIRS})
-	link_directories(${OPENSSL_LIBRARIES})
+	target_link_libraries(${pkgName} OpenSSL::SSL OpenSSL::Crypto)
+	add_compile_definitions(OPENSSL)
 	message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
 else() 
 	message (STATUS "OpenSSL Not found.")
 endif()
-
-set(pkgName "kubernetes")
 
 find_package(CURL 7.58.0 REQUIRED)
 if(CURL_FOUND)
@@ -35,15 +40,8 @@ endif()
 find_package(libwebsockets REQUIRED)
 find_package(yaml CONFIG REQUIRED)
 
-file(GLOB_RECURSE SRCS *.c)
-
-file(GLOB_RECURSE HDRS *.h)
-
-# Add library with project file with projectname as library name
-add_library(${pkgName} ${SRCS} ${HDRS})
 # Link dependent libraries
 target_link_libraries(${pkgName} ${CURL_LIBRARIES} yaml)
-set_target_properties(${pkgName} PROPERTIES LINKER_LANGUAGE C)
 #install library to destination
 install(TARGETS ${pkgName} DESTINATION ${CMAKE_INSTALL_PREFIX})
 

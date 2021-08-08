@@ -25,7 +25,7 @@ typedef struct v1_ephemeral_container_t v1_ephemeral_container_t;
 #include "v1_volume_device.h"
 #include "v1_volume_mount.h"
 
-
+#undef stdin
 
 typedef struct v1_ephemeral_container_t {
     list_t *args; //primitive container

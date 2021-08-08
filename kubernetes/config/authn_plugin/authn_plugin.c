@@ -1,7 +1,9 @@
 #include "authn_plugin.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <dlfcn.h>
+#ifndef _WIN32
+    #include <dlfcn.h>
+#endif
 #include <errno.h>
 
 #define PLUGIN_NAME_TEMPLATE "libkubernetes_%s.so"
@@ -15,6 +17,7 @@ authn_plugin_t *create_authn_plugin(const char *name)
 {
     static char fname[] = "create_authn_plugin()";
 
+#ifndef _WIN32
     authn_plugin_t *plugin = calloc(1, sizeof(authn_plugin_t));
     if (!plugin) {
         fprintf(stderr, "%s: Cannot allocate memory for plugin library %s.[%s]\n", fname, name, strerror(errno));
@@ -55,6 +58,9 @@ authn_plugin_t *create_authn_plugin(const char *name)
     free_authn_plugin(plugin);
     plugin = NULL;
     return plugin;
+#else
+    return NULL;
+#endif
 }
 
 void free_authn_plugin(authn_plugin_t * plugin)
@@ -64,7 +70,9 @@ void free_authn_plugin(authn_plugin_t * plugin)
     }
 
     if (plugin->dlhandler) {
+#ifndef _WIN32
         dlclose(plugin->dlhandler);
+#endif
         plugin->dlhandler = NULL;
     }
 
