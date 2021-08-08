@@ -7,8 +7,10 @@
 #endif
 
 #include <string.h>
+#ifndef _WIN32
 #include <libgen.h>
 #include <stdbool.h>
+#endif
 #include "kube_config.h"
 #include "kube_config_yaml.h"
 #include "kube_config_common.h"
