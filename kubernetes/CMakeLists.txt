@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.12)
+cmake_minimum_required (VERSION 3.14.0)
 project (CGenerator)
 
 cmake_policy(SET CMP0063 NEW)
@@ -8,6 +8,7 @@ set(CMAKE_CXX_VISIBILITY_PRESET default)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN OFF)
 
 option(BUILD_EXAMPLES "Build examples" OFF)
+option(ENABLE_INSTALL "Generate the install target" ON)
 
 set(pkgName "kubernetes")
 
@@ -17,6 +18,11 @@ file(GLOB_RECURSE HDRS *.h)
 
 # Add library with project file with projectname as library name
 add_library(${pkgName} ${SRCS} ${HDRS})
+
+target_include_directories(${pkgName} PUBLIC
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/kubernetes>
+		$<INSTALL_INTERFACE:include>
+		)
 
 find_package(OpenSSL)
 
@@ -42,8 +48,55 @@ find_package(yaml CONFIG REQUIRED)
 
 # Link dependent libraries
 target_link_libraries(${pkgName} ${CURL_LIBRARIES} yaml)
-#install library to destination
-install(TARGETS ${pkgName} DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+if (ENABLE_INSTALL)
+	include(GNUInstallDirs)
+	install(TARGETS ${pkgName}
+			EXPORT ${pkgName}Targets
+			)
+
+	foreach(HDR_FILE ${HDRS})
+		get_filename_component(HDR_DIRECTORY ${HDR_FILE} DIRECTORY)
+		get_filename_component(ABSOLUTE_HDR_DIRECTORY ${HDR_DIRECTORY} ABSOLUTE)
+		file(RELATIVE_PATH RELATIVE_HDR_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${ABSOLUTE_HDR_DIRECTORY})
+		install(FILES ${HDR_FILE} DESTINATION include/${RELATIVE_HDR_PATH})
+	endforeach()
+
+	include(CMakePackageConfigHelpers)
+	write_basic_package_version_file(
+			"${CMAKE_CURRENT_BINARY_DIR}/${pkgName}/${pkgName}ConfigVersion.cmake"
+			VERSION 0.0.1
+			COMPATIBILITY AnyNewerVersion
+	)
+
+	export(EXPORT ${pkgName}Targets
+			FILE "${CMAKE_CURRENT_BINARY_DIR}/${pkgName}/${pkgName}Targets.cmake"
+			NAMESPACE ${pkgName}::
+			)
+
+	configure_file(../cmake/${pkgName}Config.cmake.in
+			"${CMAKE_CURRENT_BINARY_DIR}/${pkgName}/${pkgName}Config.cmake"
+			@ONLY
+			)
+
+	set(ConfigPackageLocation lib/cmake/${pkgName})
+	install(EXPORT ${pkgName}Targets
+			FILE
+			${pkgName}Targets.cmake
+			NAMESPACE
+			${pkgName}::
+			DESTINATION
+			${ConfigPackageLocation}
+			)
+	install(
+			FILES
+			"${CMAKE_CURRENT_BINARY_DIR}/${pkgName}/${pkgName}Config.cmake"
+			"${CMAKE_CURRENT_BINARY_DIR}/${pkgName}/${pkgName}ConfigVersion.cmake"
+			DESTINATION
+			${ConfigPackageLocation}
+	)
+endif()
+
 
 if(BUILD_EXAMPLES)
 	message("Include examples")
