@@ -21,7 +21,7 @@ git clone https://libwebsockets.org/repo/libwebsockets --depth 1 --branch v4.2-s
 cd libwebsockets
 mkdir build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=/usr/local/lib ..
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
 make
 sudo make install
 
