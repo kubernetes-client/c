@@ -230,7 +230,13 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
         {
             goto end;
         }
-        list_addElement(supplemental_groupsList , &supplemental_groups_local->valuedouble);
+        double *supplemental_groups_local_value = (double *)calloc(1, sizeof(double));
+        if(!supplemental_groups_local_value)
+        {
+            goto end;
+        }
+        *supplemental_groups_local_value = supplemental_groups_local->valuedouble;
+        list_addElement(supplemental_groupsList , supplemental_groups_local_value);
     }
     }
 
