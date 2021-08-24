@@ -29,6 +29,7 @@ typedef struct wsclient_t {
     struct lws *wsi;        /* related wsi if any */
     uint16_t retry_count;   /* count of consequetive retries */
     sslConfig_t *ssl_config;
+    list_t *api_tokens;
 } wsclient_t;
 
 wsclient_t *wsclient_create(const char *, sslConfig_t *, list_t *, int);
