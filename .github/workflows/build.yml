@@ -23,7 +23,7 @@ jobs:
         mkdir build
         cd build
         cmake .. -DLWS_WITHOUT_TESTAPPS=ON -DLWS_WITHOUT_TEST_SERVER=ON-DLWS_WITHOUT_TEST_SERVER_EXTPOLL=ON \
-            -DLWS_WITHOUT_TEST_PING=ON -DLWS_WITHOUT_TEST_CLIENT=ON -DCMAKE_C_FLAGS="-fpic"
+              -DLWS_WITHOUT_TEST_PING=ON -DLWS_WITHOUT_TEST_CLIENT=ON -DCMAKE_C_FLAGS="-fpic"
         make -j $(cat /proc/cpuinfo | grep processor | wc -l)
         sudo make install
     - name: Prepare libyaml
