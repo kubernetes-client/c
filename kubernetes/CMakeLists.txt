@@ -1540,7 +1540,7 @@ set(HDRS
 
 )
 
-include(PreTarget OPTIONAL)
+include(PreTarget.cmake OPTIONAL)
 
 # Add library with project file with project name as library name
 add_library(${pkgName} ${SRCS} ${HDRS})
@@ -1550,7 +1550,7 @@ if(NOT CMAKE_VERSION VERSION_LESS 3.4)
 endif()
 target_link_libraries(${pkgName} ${CURL_LIBRARIES} )
 
-include(PostTarget OPTIONAL)
+include(PostTarget.cmake OPTIONAL)
 
 #install library to destination
 install(TARGETS ${pkgName} DESTINATION ${CMAKE_INSTALL_PREFIX})
