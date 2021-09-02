@@ -28,7 +28,7 @@ jobs:
         sudo make install
     - name: Prepare libyaml
       run: |
-        git clone https://github.com/yaml/libyaml
+        git clone https://github.com/yaml/libyaml --depth 1 --branch release/0.2.5
         cd libyaml
         mkdir build
         cd build
