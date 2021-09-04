@@ -28,7 +28,12 @@ int kube_exec_and_get_result(ExecCredential_t * exec_credential, const kubeconfi
         for (int i = 0; i < exec->envs_count; i++) {
             keyValuePair_t *pair = exec->envs[i];
             if (pair && pair->key && pair->value) {
+
+#ifndef _WIN32
                 rc = setenv(pair->key, (char *) (pair->value), 1);  /* 1 means to overwrite the existing environment variable */
+#else
+                rc = _putenv_s(pair->key, (char *) (pair->value));
+#endif
                 if (0 != rc) {
                     fprintf(stderr, "%s: Cannot set environment variable %s=%s.[%s]\n", fname, pair->key, (char *) (pair->value), strerror(errno));
                     return -1;
@@ -61,7 +66,11 @@ int kube_exec_and_get_result(ExecCredential_t * exec_credential, const kubeconfi
 
     char *result_string = NULL;
     FILE *fp = NULL;
+#ifndef _WIN32
     fp = popen(command_string, "r");    /* r means read from stdout */
+#else
+    fp = _popen(command_string, "r");    /* r means read from stdout */
+#endif
     if (fp) {
         result_string = calloc(1, KUBECONFIG_EXEC_RESULT_BUFFER_SIZE);
         if (!result_string) {
@@ -81,7 +90,11 @@ int kube_exec_and_get_result(ExecCredential_t * exec_credential, const kubeconfi
             strncat(result_string, string_buf, strlen(string_buf));
             memset(string_buf, 0, sizeof(string_buf));
         }
+#ifndef _WIN32
         pclose(fp);
+#else
+        _pclose(fp);
+#endif
     } else {
         fprintf(stderr, "%s: Cannot open pipe to run command.[%s]\n", fname, strerror(errno));
         return -1;
@@ -89,7 +102,7 @@ int kube_exec_and_get_result(ExecCredential_t * exec_credential, const kubeconfi
 
     rc = kubeyaml_parse_exec_crendential(exec_credential, result_string);
 
-  end:
+    end:
     if (result_string) {
         free(result_string);
     }

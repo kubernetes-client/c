@@ -3,7 +3,14 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#ifndef _WIN32
 #include <unistd.h>
+#define KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE "/tmp/kubeconfig-XXXXXX"
+#else
+#include <io.h>
+#include <fcntl.h>
+#define KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE "%s\\kubeconfig-XXXXXX"
+#endif
 #include "../include/apiClient.h"
 
 #define KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE "/tmp/kubeconfig-XXXXXX"
@@ -39,21 +46,33 @@ char *kubeconfig_mk_cert_key_tempfile(const char *data)
         cert_key_data_bytes = strlen(cert_key_data);
     }
 
+#ifndef _WIN32
     char tempfile_name_template[] = KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE;
     int fd = mkstemp(tempfile_name_template);
+#else
+    char *tempdir_env = getenv("TEMP");
+    int tmpFileNameSize = strlen(tempdir_env) + strlen(KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE) + 1;
+    char *tempfile_name_template = calloc(tmpFileNameSize, sizeof(char));
+    snprintf(tempfile_name_template, tmpFileNameSize, KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE, tempdir_env);
+    char *filename = _mktemp(tempfile_name_template);
+    int fd = _sopen( filename, O_CREAT|O_WRONLY, _SH_DENYWR );
+#endif
+
     if (-1 == fd) {
         fprintf(stderr, "%s: Creating temp file for kubeconfig failed with error [%s]\n", fname, strerror(errno));
+        free(tempfile_name_template);
         return NULL;
     }
 
-    int rc = write(fd, cert_key_data, cert_key_data_bytes);
-    close(fd);
+    int rc = _write(fd, cert_key_data, cert_key_data_bytes);
+    _close(fd);
     if (true == is_data_base64_encoded && cert_key_data) {
-        free((char *) cert_key_data);   // cast "const char *" to "char *" 
+        free((char *) cert_key_data);   // cast "const char *" to "char *"
         cert_key_data = NULL;
     }
     if (-1 == rc) {
         fprintf(stderr, "%s: Writing temp file failed with error [%s]\n", fname, strerror(errno));
+        free(tempfile_name_template);
         return NULL;
     }
 

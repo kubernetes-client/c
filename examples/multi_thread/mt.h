@@ -10,7 +10,9 @@ extern "C" {
 #include <malloc.h>
 #include <stdio.h>
 #include <errno.h>
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #include <pthread.h>
 #include <apiClient.h>
 #include <CoreV1API.h>

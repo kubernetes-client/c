@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #include <fcntl.h>
 #include <stdbool.h>
 
@@ -143,7 +145,7 @@ static void connect_client(lws_sorted_usec_list_t * sul)
     i.host = i.address;
     i.origin = i.address;
     i.ssl_connection = wsc->ssl_config ? LCCSCF_USE_SSL : 0;
-    
+
     //i.protocol = pro;
     //i.local_protocol_name = "websocket-client";
     i.pwsi = &wsc->wsi;
@@ -186,8 +188,8 @@ static int callback_wsclient(struct lws *wsi, enum lws_callback_reasons reason, 
             lwsl_user("%s: The first char of data received is not STDOUT.\n", __func__);
             return 0;
         }
-        /* 
-         * The first character of data received from 
+        /*
+         * The first character of data received from
          * the kubernets API server is "STDOUT",
          * we ignore it
          */
@@ -271,11 +273,13 @@ static void read_from_stdin(wsclient_t * wsc)
     char wsc_attach_stdin_buffer[WSC_ATTACH_STDIN_BUFFER_SIZE];
     memset(wsc_attach_stdin_buffer, 0, sizeof(wsc_attach_stdin_buffer));
 
+#ifndef _WIN32
     int flag, newflag;
     flag = fcntl(STDIN_FILENO, F_GETFL);
     newflag = flag | O_NONBLOCK;
     fcntl(STDIN_FILENO, F_SETFL, newflag);
     fgets(wsc_attach_stdin_buffer, sizeof(wsc_attach_stdin_buffer) - 1, stdin);
+#endif
 
     if (wsc_attach_stdin_buffer && strlen(wsc_attach_stdin_buffer) > 0) {
         wsc->data_to_send_len = strlen(wsc_attach_stdin_buffer) + 1 /* TTY_STDIN_NUMBER */ ;
@@ -283,8 +287,9 @@ static void read_from_stdin(wsclient_t * wsc)
         wsc->data_to_send[LWS_PRE] = TTY_STDIN_NUMBER;
         strncpy(wsc->data_to_send + LWS_PRE + 1, wsc_attach_stdin_buffer, strlen(wsc_attach_stdin_buffer));
     }
-
+#ifndef _WIN32
     fcntl(STDIN_FILENO, F_SETFL, flag);
+#endif
 }
 
 int wsclient_run(wsclient_t * wsc, wsc_mode_t mode)

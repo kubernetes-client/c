@@ -1,7 +1,11 @@
 #define _GNU_SOURCE
 #include <stdlib.h>
 #include <errno.h>
+#ifndef _WIN32
 #include <unistd.h>
+#include <libgen.h>
+#endif
+
 #include <string.h>
 #include <libgen.h>
 #include <stdbool.h>
@@ -13,7 +17,12 @@
 #include "authn_plugin/authn_plugin.h"
 
 #define ENV_KUBECONFIG "KUBECONFIG"
+#ifndef _WIN32
 #define ENV_HOME "HOME"
+#else
+#define ENV_HOME "USERPROFILE"
+#endif
+
 #define KUBE_CONFIG_DEFAULT_LOCATION "%s/.kube/config"
 
 static int setBasePath(char **pBasePath, char *basePath)
@@ -41,10 +50,10 @@ static int setSslConfig(sslConfig_t ** pSslConfig, const kubeconfig_property_t *
         if (user->client_key_data) {
             client_key_file = kubeconfig_mk_cert_key_tempfile(user->client_key_data);
         }
-        insecure_skip_tls_verify = user->insecure_skip_tls_verify;
     }
 
     if (cluster) {
+        insecure_skip_tls_verify = cluster->insecure_skip_tls_verify;
         if ((0 == insecure_skip_tls_verify) && (cluster->certificate_authority_data)) {
             ca_file = kubeconfig_mk_cert_key_tempfile(cluster->certificate_authority_data);
         }
@@ -99,11 +108,19 @@ static char *getWorkingConfigFile(const char *configFileNamePassedIn)
     if (configFileNamePassedIn) {
         configFileName = strdup(configFileNamePassedIn);
     } else {
+#ifndef _WIN32
         kubeconfig_env = secure_getenv(ENV_KUBECONFIG);
+#else
+        kubeconfig_env = getenv(ENV_KUBECONFIG);
+#endif
         if (kubeconfig_env) {
             configFileName = strdup(kubeconfig_env);
         } else {
+#ifndef _WIN32
             homedir_env = secure_getenv(ENV_HOME);
+#else
+            homedir_env = getenv(ENV_HOME);
+#endif
             if (homedir_env) {
                 int configFileNameSize = strlen(homedir_env) + strlen(KUBE_CONFIG_DEFAULT_LOCATION) + 1;
                 configFileName = calloc(configFileNameSize, sizeof(char));
@@ -167,7 +184,7 @@ static int kubeconfig_exec(kubeconfig_property_t * current_user)
         goto end;
     }
 
-  end:
+    end:
     exec_credential_free(exec_output);
     exec_output = NULL;
     return rc;
@@ -184,13 +201,30 @@ static int kubeconfig_update_exec_command_path(kubeconfig_property_t * exec, con
 
     char *kube_config_file_copy = NULL;
     char *original_command = NULL;
+#ifndef _WIN32
     if ('/' != exec->command[0]) {  // relative path e.g. "./bin/" or "bin/"
+#else
+    if (':' != exec->command[1]) {  // relative path e.g. ".\bin\" or "bin\"
+#endif
         kube_config_file_copy = strdup(kube_config_file);
         if (NULL == kube_config_file_copy) {
             fprintf(stderr, "%s: Cannot allocate memory for temp kube config file name.[%s]\n", fname, strerror(errno));
             return -1;
         }
+#ifndef _WIN32
         const char *kube_config_dirname = dirname(kube_config_file_copy);
+#else
+        char drive[_MAX_DRIVE];
+        char dir[_MAX_DIR];
+        char fname[_MAX_FNAME];
+        char ext[_MAX_EXT];
+
+        _splitpath(kube_config_file_copy, drive, dir, fname, ext);
+
+        const char *kube_config_dirname;
+
+        _makepath(kube_config_dirname, drive, dir, NULL, NULL);
+#endif
         original_command = exec->command;
         int new_command_length = strlen(kube_config_dirname) + strlen("/") + strlen(original_command) + 1 /* 1 for the terminal of string */ ;
         exec->command = calloc(1, new_command_length);
@@ -334,7 +368,7 @@ int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApi
         }
     }
 
-    if (current_cluster || current_user) {
+    if (current_cluster) {
         rc = setSslConfig(pSslConfig, current_cluster, current_user);
         if (0 != rc) {
             fprintf(stderr, "%s: Cannot set the SSL Configuration for the client.\n", fname);
