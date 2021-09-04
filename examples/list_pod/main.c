@@ -1,9 +1,7 @@
 #include <kube_config.h>
 #include <apiClient.h>
 #include <CoreV1API.h>
-#include <malloc.h>
 #include <stdio.h>
-#include <errno.h>
 
 void list_pod(apiClient_t * apiClient)
 {
@@ -35,7 +33,7 @@ void list_pod(apiClient_t * apiClient)
     }
 }
 
-int main(int argc, char *argv[])
+int main()
 {
     char *basePath = NULL;
     sslConfig_t *sslConfig = NULL;
