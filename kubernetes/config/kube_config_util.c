@@ -64,8 +64,14 @@ char *kubeconfig_mk_cert_key_tempfile(const char *data)
         return NULL;
     }
 
+#ifndef _WIN32
+    int rc = write(fd, cert_key_data, cert_key_data_bytes);
+    close(fd);
+#else
     int rc = _write(fd, cert_key_data, cert_key_data_bytes);
     _close(fd);
+#endif
+
     if (true == is_data_base64_encoded && cert_key_data) {
         free((char *) cert_key_data);   // cast "const char *" to "char *"
         cert_key_data = NULL;
