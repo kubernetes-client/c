@@ -18,6 +18,10 @@ typedef struct v1beta1_cluster_role_binding_list_t v1beta1_cluster_role_binding_
 #include "v1_list_meta.h"
 #include "v1beta1_cluster_role_binding.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_cluster_role_binding_list_t {

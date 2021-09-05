@@ -16,6 +16,10 @@
 typedef struct v1_photon_persistent_disk_volume_source_t v1_photon_persistent_disk_volume_source_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_photon_persistent_disk_volume_source_t {

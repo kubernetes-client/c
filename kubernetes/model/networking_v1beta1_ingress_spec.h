@@ -19,6 +19,10 @@ typedef struct networking_v1beta1_ingress_spec_t networking_v1beta1_ingress_spec
 #include "networking_v1beta1_ingress_rule.h"
 #include "networking_v1beta1_ingress_tls.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct networking_v1beta1_ingress_spec_t {

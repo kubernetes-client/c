@@ -47,7 +47,7 @@ v1_cluster_role_t* RbacAuthorizationV1API_createClusterRole(apiClient_t *apiClie
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **body** | **[v1_cluster_role_t](v1_cluster_role.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -79,7 +79,7 @@ v1_cluster_role_binding_t* RbacAuthorizationV1API_createClusterRoleBinding(apiCl
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **body** | **[v1_cluster_role_binding_t](v1_cluster_role_binding.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -111,7 +111,7 @@ v1_role_t* RbacAuthorizationV1API_createNamespacedRole(apiClient_t *apiClient, c
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_role_t](v1_role.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -144,7 +144,7 @@ v1_role_binding_t* RbacAuthorizationV1API_createNamespacedRoleBinding(apiClient_
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_role_binding_t](v1_role_binding.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -177,7 +177,7 @@ v1_status_t* RbacAuthorizationV1API_deleteClusterRole(apiClient_t *apiClient, ch
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ClusterRole | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -212,7 +212,7 @@ v1_status_t* RbacAuthorizationV1API_deleteClusterRoleBinding(apiClient_t *apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ClusterRoleBinding | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -247,7 +247,7 @@ v1_status_t* RbacAuthorizationV1API_deleteCollectionClusterRole(apiClient_t *api
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -287,7 +287,7 @@ v1_status_t* RbacAuthorizationV1API_deleteCollectionClusterRoleBinding(apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -327,7 +327,7 @@ v1_status_t* RbacAuthorizationV1API_deleteCollectionNamespacedRole(apiClient_t *
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -368,7 +368,7 @@ v1_status_t* RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding(apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -409,7 +409,7 @@ v1_status_t* RbacAuthorizationV1API_deleteNamespacedRole(apiClient_t *apiClient,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Role | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -445,7 +445,7 @@ v1_status_t* RbacAuthorizationV1API_deleteNamespacedRoleBinding(apiClient_t *api
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the RoleBinding | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -481,7 +481,7 @@ v1_api_resource_list_t* RbacAuthorizationV1API_getAPIResources(apiClient_t *apiC
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 
 ### Return type
 
@@ -509,7 +509,7 @@ v1_cluster_role_list_t* RbacAuthorizationV1API_listClusterRole(apiClient_t *apiC
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -546,7 +546,7 @@ v1_cluster_role_binding_list_t* RbacAuthorizationV1API_listClusterRoleBinding(ap
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -583,7 +583,7 @@ v1_role_list_t* RbacAuthorizationV1API_listNamespacedRole(apiClient_t *apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -621,7 +621,7 @@ v1_role_binding_list_t* RbacAuthorizationV1API_listNamespacedRoleBinding(apiClie
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -659,7 +659,7 @@ v1_role_binding_list_t* RbacAuthorizationV1API_listRoleBindingForAllNamespaces(a
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -696,7 +696,7 @@ v1_role_list_t* RbacAuthorizationV1API_listRoleForAllNamespaces(apiClient_t *api
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -733,7 +733,7 @@ v1_cluster_role_t* RbacAuthorizationV1API_patchClusterRole(apiClient_t *apiClien
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ClusterRole | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -767,7 +767,7 @@ v1_cluster_role_binding_t* RbacAuthorizationV1API_patchClusterRoleBinding(apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ClusterRoleBinding | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -801,7 +801,7 @@ v1_role_t* RbacAuthorizationV1API_patchNamespacedRole(apiClient_t *apiClient, ch
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Role | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -836,7 +836,7 @@ v1_role_binding_t* RbacAuthorizationV1API_patchNamespacedRoleBinding(apiClient_t
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the RoleBinding | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -871,7 +871,7 @@ v1_cluster_role_t* RbacAuthorizationV1API_readClusterRole(apiClient_t *apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ClusterRole | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 
@@ -901,7 +901,7 @@ v1_cluster_role_binding_t* RbacAuthorizationV1API_readClusterRoleBinding(apiClie
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ClusterRoleBinding | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 
@@ -931,7 +931,7 @@ v1_role_t* RbacAuthorizationV1API_readNamespacedRole(apiClient_t *apiClient, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Role | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -962,7 +962,7 @@ v1_role_binding_t* RbacAuthorizationV1API_readNamespacedRoleBinding(apiClient_t 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the RoleBinding | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -993,7 +993,7 @@ v1_cluster_role_t* RbacAuthorizationV1API_replaceClusterRole(apiClient_t *apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ClusterRole | 
 **body** | **[v1_cluster_role_t](v1_cluster_role.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -1026,7 +1026,7 @@ v1_cluster_role_binding_t* RbacAuthorizationV1API_replaceClusterRoleBinding(apiC
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ClusterRoleBinding | 
 **body** | **[v1_cluster_role_binding_t](v1_cluster_role_binding.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -1059,7 +1059,7 @@ v1_role_t* RbacAuthorizationV1API_replaceNamespacedRole(apiClient_t *apiClient, 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Role | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_role_t](v1_role.md) \*** |  | 
@@ -1093,7 +1093,7 @@ v1_role_binding_t* RbacAuthorizationV1API_replaceNamespacedRoleBinding(apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the RoleBinding | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_role_binding_t](v1_role_binding.md) \*** |  | 

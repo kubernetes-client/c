@@ -17,6 +17,10 @@ typedef struct v1_storage_os_persistent_volume_source_t v1_storage_os_persistent
 
 #include "v1_object_reference.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_storage_os_persistent_volume_source_t {

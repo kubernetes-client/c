@@ -16,6 +16,10 @@
 typedef struct rbac_v1alpha1_subject_t rbac_v1alpha1_subject_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct rbac_v1alpha1_subject_t {

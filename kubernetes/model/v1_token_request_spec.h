@@ -17,6 +17,10 @@ typedef struct v1_token_request_spec_t v1_token_request_spec_t;
 
 #include "v1_bound_object_reference.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_token_request_spec_t {

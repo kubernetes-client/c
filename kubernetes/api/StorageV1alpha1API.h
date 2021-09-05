@@ -11,6 +11,10 @@
 #include "../model/v1alpha1_volume_attachment.h"
 #include "../model/v1alpha1_volume_attachment_list.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create a VolumeAttachment
 //

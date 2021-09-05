@@ -16,6 +16,10 @@
 typedef struct v1_replication_controller_condition_t v1_replication_controller_condition_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_replication_controller_condition_t {

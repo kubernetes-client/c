@@ -18,6 +18,10 @@ typedef struct v2beta2_horizontal_pod_autoscaler_status_t v2beta2_horizontal_pod
 #include "v2beta2_horizontal_pod_autoscaler_condition.h"
 #include "v2beta2_metric_status.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v2beta2_horizontal_pod_autoscaler_status_t {

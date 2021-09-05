@@ -19,6 +19,10 @@ typedef struct v1_handler_t v1_handler_t;
 #include "v1_http_get_action.h"
 #include "v1_tcp_socket_action.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_handler_t {

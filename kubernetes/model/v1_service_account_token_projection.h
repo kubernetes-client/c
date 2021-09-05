@@ -16,6 +16,10 @@
 typedef struct v1_service_account_token_projection_t v1_service_account_token_projection_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_service_account_token_projection_t {

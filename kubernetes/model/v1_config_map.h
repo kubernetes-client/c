@@ -17,6 +17,10 @@ typedef struct v1_config_map_t v1_config_map_t;
 
 #include "v1_object_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_config_map_t {

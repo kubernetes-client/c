@@ -11,6 +11,10 @@
 #include "../model/v1beta1_lease.h"
 #include "../model/v1beta1_lease_list.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create a Lease
 //

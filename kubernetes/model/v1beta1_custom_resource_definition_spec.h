@@ -22,6 +22,10 @@ typedef struct v1beta1_custom_resource_definition_spec_t v1beta1_custom_resource
 #include "v1beta1_custom_resource_subresources.h"
 #include "v1beta1_custom_resource_validation.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_custom_resource_definition_spec_t {

@@ -16,6 +16,10 @@
 typedef struct v2beta2_metric_target_t v2beta2_metric_target_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v2beta2_metric_target_t {

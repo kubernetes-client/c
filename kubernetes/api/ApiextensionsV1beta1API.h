@@ -11,6 +11,10 @@
 #include "../model/v1beta1_custom_resource_definition.h"
 #include "../model/v1beta1_custom_resource_definition_list.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create a CustomResourceDefinition
 //

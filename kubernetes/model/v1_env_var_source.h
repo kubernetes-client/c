@@ -20,6 +20,10 @@ typedef struct v1_env_var_source_t v1_env_var_source_t;
 #include "v1_resource_field_selector.h"
 #include "v1_secret_key_selector.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_env_var_source_t {

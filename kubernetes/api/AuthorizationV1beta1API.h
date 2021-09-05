@@ -11,6 +11,10 @@
 #include "../model/v1beta1_self_subject_rules_review.h"
 #include "../model/v1beta1_subject_access_review.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create a LocalSubjectAccessReview
 //

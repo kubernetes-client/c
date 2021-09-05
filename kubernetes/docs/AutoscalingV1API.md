@@ -28,7 +28,7 @@ v1_horizontal_pod_autoscaler_t* AutoscalingV1API_createNamespacedHorizontalPodAu
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_horizontal_pod_autoscaler_t](v1_horizontal_pod_autoscaler.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -61,7 +61,7 @@ v1_status_t* AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler(
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -102,7 +102,7 @@ v1_status_t* AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the HorizontalPodAutoscaler | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -138,7 +138,7 @@ v1_api_resource_list_t* AutoscalingV1API_getAPIResources(apiClient_t *apiClient)
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 
 ### Return type
 
@@ -166,7 +166,7 @@ v1_horizontal_pod_autoscaler_list_t* AutoscalingV1API_listHorizontalPodAutoscale
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -203,7 +203,7 @@ v1_horizontal_pod_autoscaler_list_t* AutoscalingV1API_listNamespacedHorizontalPo
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -241,7 +241,7 @@ v1_horizontal_pod_autoscaler_t* AutoscalingV1API_patchNamespacedHorizontalPodAut
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the HorizontalPodAutoscaler | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -276,7 +276,7 @@ v1_horizontal_pod_autoscaler_t* AutoscalingV1API_patchNamespacedHorizontalPodAut
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the HorizontalPodAutoscaler | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -311,7 +311,7 @@ v1_horizontal_pod_autoscaler_t* AutoscalingV1API_readNamespacedHorizontalPodAuto
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the HorizontalPodAutoscaler | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -344,7 +344,7 @@ v1_horizontal_pod_autoscaler_t* AutoscalingV1API_readNamespacedHorizontalPodAuto
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the HorizontalPodAutoscaler | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -375,7 +375,7 @@ v1_horizontal_pod_autoscaler_t* AutoscalingV1API_replaceNamespacedHorizontalPodA
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the HorizontalPodAutoscaler | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_horizontal_pod_autoscaler_t](v1_horizontal_pod_autoscaler.md) \*** |  | 
@@ -409,7 +409,7 @@ v1_horizontal_pod_autoscaler_t* AutoscalingV1API_replaceNamespacedHorizontalPodA
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the HorizontalPodAutoscaler | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_horizontal_pod_autoscaler_t](v1_horizontal_pod_autoscaler.md) \*** |  | 

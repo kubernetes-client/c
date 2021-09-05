@@ -17,6 +17,10 @@ typedef struct extensions_v1beta1_ingress_backend_t extensions_v1beta1_ingress_b
 
 #include "object.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct extensions_v1beta1_ingress_backend_t {

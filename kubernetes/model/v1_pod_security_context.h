@@ -19,6 +19,10 @@ typedef struct v1_pod_security_context_t v1_pod_security_context_t;
 #include "v1_sysctl.h"
 #include "v1_windows_security_context_options.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_pod_security_context_t {

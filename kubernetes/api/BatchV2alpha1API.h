@@ -11,6 +11,10 @@
 #include "../model/v2alpha1_cron_job.h"
 #include "../model/v2alpha1_cron_job_list.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create a CronJob
 //

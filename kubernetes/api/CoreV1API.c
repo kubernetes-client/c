@@ -80,7 +80,7 @@ CoreV1API_connectDeleteNamespacedPodProxy(apiClient_t *apiClient, char * name , 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -193,7 +193,7 @@ CoreV1API_connectDeleteNamespacedPodProxyWithPath(apiClient_t *apiClient, char *
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -297,7 +297,7 @@ CoreV1API_connectDeleteNamespacedServiceProxy(apiClient_t *apiClient, char * nam
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -410,7 +410,7 @@ CoreV1API_connectDeleteNamespacedServiceProxyWithPath(apiClient_t *apiClient, ch
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -504,7 +504,7 @@ CoreV1API_connectDeleteNodeProxy(apiClient_t *apiClient, char * name , char * pa
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -606,7 +606,7 @@ CoreV1API_connectDeleteNodeProxyWithPath(apiClient_t *apiClient, char * name , c
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -761,7 +761,7 @@ CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * name , ch
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -976,7 +976,7 @@ CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name , char
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1140,7 +1140,7 @@ CoreV1API_connectGetNamespacedPodPortforward(apiClient_t *apiClient, char * name
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1243,7 +1243,7 @@ CoreV1API_connectGetNamespacedPodProxy(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1356,7 +1356,7 @@ CoreV1API_connectGetNamespacedPodProxyWithPath(apiClient_t *apiClient, char * na
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1460,7 +1460,7 @@ CoreV1API_connectGetNamespacedServiceProxy(apiClient_t *apiClient, char * name ,
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1573,7 +1573,7 @@ CoreV1API_connectGetNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1667,7 +1667,7 @@ CoreV1API_connectGetNodeProxy(apiClient_t *apiClient, char * name , char * path 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1769,7 +1769,7 @@ CoreV1API_connectGetNodeProxyWithPath(apiClient_t *apiClient, char * name , char
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1872,7 +1872,7 @@ CoreV1API_connectHeadNamespacedPodProxy(apiClient_t *apiClient, char * name , ch
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1985,7 +1985,7 @@ CoreV1API_connectHeadNamespacedPodProxyWithPath(apiClient_t *apiClient, char * n
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2089,7 +2089,7 @@ CoreV1API_connectHeadNamespacedServiceProxy(apiClient_t *apiClient, char * name 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2202,7 +2202,7 @@ CoreV1API_connectHeadNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2296,7 +2296,7 @@ CoreV1API_connectHeadNodeProxy(apiClient_t *apiClient, char * name , char * path
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2398,7 +2398,7 @@ CoreV1API_connectHeadNodeProxyWithPath(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2501,7 +2501,7 @@ CoreV1API_connectOptionsNamespacedPodProxy(apiClient_t *apiClient, char * name ,
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2614,7 +2614,7 @@ CoreV1API_connectOptionsNamespacedPodProxyWithPath(apiClient_t *apiClient, char 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2718,7 +2718,7 @@ CoreV1API_connectOptionsNamespacedServiceProxy(apiClient_t *apiClient, char * na
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2831,7 +2831,7 @@ CoreV1API_connectOptionsNamespacedServiceProxyWithPath(apiClient_t *apiClient, c
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2925,7 +2925,7 @@ CoreV1API_connectOptionsNodeProxy(apiClient_t *apiClient, char * name , char * p
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3027,7 +3027,7 @@ CoreV1API_connectOptionsNodeProxyWithPath(apiClient_t *apiClient, char * name , 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3130,7 +3130,7 @@ CoreV1API_connectPatchNamespacedPodProxy(apiClient_t *apiClient, char * name , c
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3243,7 +3243,7 @@ CoreV1API_connectPatchNamespacedPodProxyWithPath(apiClient_t *apiClient, char * 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3347,7 +3347,7 @@ CoreV1API_connectPatchNamespacedServiceProxy(apiClient_t *apiClient, char * name
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3460,7 +3460,7 @@ CoreV1API_connectPatchNamespacedServiceProxyWithPath(apiClient_t *apiClient, cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3554,7 +3554,7 @@ CoreV1API_connectPatchNodeProxy(apiClient_t *apiClient, char * name , char * pat
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3656,7 +3656,7 @@ CoreV1API_connectPatchNodeProxyWithPath(apiClient_t *apiClient, char * name , ch
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3811,7 +3811,7 @@ CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * name , c
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4026,7 +4026,7 @@ CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4190,7 +4190,7 @@ CoreV1API_connectPostNamespacedPodPortforward(apiClient_t *apiClient, char * nam
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4293,7 +4293,7 @@ CoreV1API_connectPostNamespacedPodProxy(apiClient_t *apiClient, char * name , ch
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4406,7 +4406,7 @@ CoreV1API_connectPostNamespacedPodProxyWithPath(apiClient_t *apiClient, char * n
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4510,7 +4510,7 @@ CoreV1API_connectPostNamespacedServiceProxy(apiClient_t *apiClient, char * name 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4623,7 +4623,7 @@ CoreV1API_connectPostNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4717,7 +4717,7 @@ CoreV1API_connectPostNodeProxy(apiClient_t *apiClient, char * name , char * path
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4819,7 +4819,7 @@ CoreV1API_connectPostNodeProxyWithPath(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4922,7 +4922,7 @@ CoreV1API_connectPutNamespacedPodProxy(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -5035,7 +5035,7 @@ CoreV1API_connectPutNamespacedPodProxyWithPath(apiClient_t *apiClient, char * na
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -5139,7 +5139,7 @@ CoreV1API_connectPutNamespacedServiceProxy(apiClient_t *apiClient, char * name ,
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -5252,7 +5252,7 @@ CoreV1API_connectPutNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -5346,7 +5346,7 @@ CoreV1API_connectPutNodeProxy(apiClient_t *apiClient, char * name , char * path 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -5448,7 +5448,7 @@ CoreV1API_connectPutNodeProxyWithPath(apiClient_t *apiClient, char * name , char
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -31280,7 +31280,7 @@ CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char * name , char * _nam
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {

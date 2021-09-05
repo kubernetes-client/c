@@ -16,6 +16,10 @@
 typedef struct apps_v1beta1_scale_status_t apps_v1beta1_scale_status_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct apps_v1beta1_scale_status_t {

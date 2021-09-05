@@ -16,6 +16,10 @@
 typedef struct v1_list_meta_t v1_list_meta_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_list_meta_t {

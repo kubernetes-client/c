@@ -19,6 +19,10 @@ typedef struct v1_token_review_t v1_token_review_t;
 #include "v1_token_review_spec.h"
 #include "v1_token_review_status.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_token_review_t {

@@ -17,6 +17,10 @@ typedef struct v1_csi_node_driver_t v1_csi_node_driver_t;
 
 #include "v1_volume_node_resources.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_csi_node_driver_t {

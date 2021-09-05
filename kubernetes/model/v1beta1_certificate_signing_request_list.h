@@ -18,6 +18,10 @@ typedef struct v1beta1_certificate_signing_request_list_t v1beta1_certificate_si
 #include "v1_list_meta.h"
 #include "v1beta1_certificate_signing_request.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_certificate_signing_request_list_t {

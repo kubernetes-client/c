@@ -16,6 +16,10 @@
 typedef struct v1_scoped_resource_selector_requirement_t v1_scoped_resource_selector_requirement_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_scoped_resource_selector_requirement_t {

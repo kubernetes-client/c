@@ -18,6 +18,10 @@ typedef struct v1_custom_resource_subresources_t v1_custom_resource_subresources
 #include "object.h"
 #include "v1_custom_resource_subresource_scale.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_custom_resource_subresources_t {

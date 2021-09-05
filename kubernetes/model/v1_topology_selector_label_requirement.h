@@ -16,6 +16,10 @@
 typedef struct v1_topology_selector_label_requirement_t v1_topology_selector_label_requirement_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_topology_selector_label_requirement_t {

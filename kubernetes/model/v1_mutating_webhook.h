@@ -19,6 +19,10 @@ typedef struct v1_mutating_webhook_t v1_mutating_webhook_t;
 #include "v1_label_selector.h"
 #include "v1_rule_with_operations.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_mutating_webhook_t {

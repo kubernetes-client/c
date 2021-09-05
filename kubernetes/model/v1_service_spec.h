@@ -18,6 +18,10 @@ typedef struct v1_service_spec_t v1_service_spec_t;
 #include "v1_service_port.h"
 #include "v1_session_affinity_config.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_service_spec_t {

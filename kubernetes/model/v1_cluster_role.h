@@ -19,6 +19,10 @@ typedef struct v1_cluster_role_t v1_cluster_role_t;
 #include "v1_object_meta.h"
 #include "v1_policy_rule.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_cluster_role_t {

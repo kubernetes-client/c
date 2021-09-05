@@ -19,6 +19,10 @@ typedef struct v1beta1_endpoint_slice_t v1beta1_endpoint_slice_t;
 #include "v1beta1_endpoint.h"
 #include "v1beta1_endpoint_port.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_endpoint_slice_t {

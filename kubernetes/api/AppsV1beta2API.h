@@ -20,6 +20,10 @@
 #include "../model/v1beta2_stateful_set.h"
 #include "../model/v1beta2_stateful_set_list.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create a ControllerRevision
 //

@@ -17,6 +17,10 @@ typedef struct v1_ceph_fs_persistent_volume_source_t v1_ceph_fs_persistent_volum
 
 #include "v1_secret_reference.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_ceph_fs_persistent_volume_source_t {

@@ -18,6 +18,10 @@ typedef struct extensions_v1beta1_pod_security_policy_t extensions_v1beta1_pod_s
 #include "extensions_v1beta1_pod_security_policy_spec.h"
 #include "v1_object_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct extensions_v1beta1_pod_security_policy_t {

@@ -18,6 +18,10 @@ typedef struct v1_limit_range_t v1_limit_range_t;
 #include "v1_limit_range_spec.h"
 #include "v1_object_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_limit_range_t {

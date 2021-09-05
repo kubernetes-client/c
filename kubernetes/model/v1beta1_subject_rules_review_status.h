@@ -18,6 +18,10 @@ typedef struct v1beta1_subject_rules_review_status_t v1beta1_subject_rules_revie
 #include "v1beta1_non_resource_rule.h"
 #include "v1beta1_resource_rule.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_subject_rules_review_status_t {

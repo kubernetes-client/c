@@ -28,7 +28,7 @@ networking_v1beta1_ingress_t* NetworkingV1beta1API_createNamespacedIngress(apiCl
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[networking_v1beta1_ingress_t](networking_v1beta1_ingress.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -61,7 +61,7 @@ v1_status_t* NetworkingV1beta1API_deleteCollectionNamespacedIngress(apiClient_t 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -102,7 +102,7 @@ v1_status_t* NetworkingV1beta1API_deleteNamespacedIngress(apiClient_t *apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Ingress | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -138,7 +138,7 @@ v1_api_resource_list_t* NetworkingV1beta1API_getAPIResources(apiClient_t *apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 
 ### Return type
 
@@ -166,7 +166,7 @@ networking_v1beta1_ingress_list_t* NetworkingV1beta1API_listIngressForAllNamespa
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -203,7 +203,7 @@ networking_v1beta1_ingress_list_t* NetworkingV1beta1API_listNamespacedIngress(ap
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -241,7 +241,7 @@ networking_v1beta1_ingress_t* NetworkingV1beta1API_patchNamespacedIngress(apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Ingress | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -276,7 +276,7 @@ networking_v1beta1_ingress_t* NetworkingV1beta1API_patchNamespacedIngressStatus(
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Ingress | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -311,7 +311,7 @@ networking_v1beta1_ingress_t* NetworkingV1beta1API_readNamespacedIngress(apiClie
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Ingress | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -344,7 +344,7 @@ networking_v1beta1_ingress_t* NetworkingV1beta1API_readNamespacedIngressStatus(a
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Ingress | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -375,7 +375,7 @@ networking_v1beta1_ingress_t* NetworkingV1beta1API_replaceNamespacedIngress(apiC
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Ingress | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[networking_v1beta1_ingress_t](networking_v1beta1_ingress.md) \*** |  | 
@@ -409,7 +409,7 @@ networking_v1beta1_ingress_t* NetworkingV1beta1API_replaceNamespacedIngressStatu
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Ingress | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[networking_v1beta1_ingress_t](networking_v1beta1_ingress.md) \*** |  | 

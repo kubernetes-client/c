@@ -16,6 +16,10 @@
 typedef struct v1_user_info_t v1_user_info_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_user_info_t {

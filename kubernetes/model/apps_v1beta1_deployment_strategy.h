@@ -17,6 +17,10 @@ typedef struct apps_v1beta1_deployment_strategy_t apps_v1beta1_deployment_strate
 
 #include "apps_v1beta1_rolling_update_deployment.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct apps_v1beta1_deployment_strategy_t {

@@ -16,6 +16,10 @@
 typedef struct v1_cross_version_object_reference_t v1_cross_version_object_reference_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_cross_version_object_reference_t {

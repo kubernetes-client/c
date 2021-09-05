@@ -18,6 +18,10 @@ typedef struct v1alpha1_webhook_t v1alpha1_webhook_t;
 #include "v1alpha1_webhook_client_config.h"
 #include "v1alpha1_webhook_throttle_config.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_webhook_t {

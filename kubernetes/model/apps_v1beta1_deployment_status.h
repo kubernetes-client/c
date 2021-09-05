@@ -17,6 +17,10 @@ typedef struct apps_v1beta1_deployment_status_t apps_v1beta1_deployment_status_t
 
 #include "apps_v1beta1_deployment_condition.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct apps_v1beta1_deployment_status_t {

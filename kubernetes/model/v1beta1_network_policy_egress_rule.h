@@ -18,6 +18,10 @@ typedef struct v1beta1_network_policy_egress_rule_t v1beta1_network_policy_egres
 #include "v1beta1_network_policy_peer.h"
 #include "v1beta1_network_policy_port.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_network_policy_egress_rule_t {

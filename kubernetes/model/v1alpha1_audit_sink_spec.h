@@ -18,6 +18,10 @@ typedef struct v1alpha1_audit_sink_spec_t v1alpha1_audit_sink_spec_t;
 #include "v1alpha1_policy.h"
 #include "v1alpha1_webhook.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_audit_sink_spec_t {

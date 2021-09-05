@@ -11,6 +11,10 @@
 #include "../model/v1alpha1_runtime_class.h"
 #include "../model/v1alpha1_runtime_class_list.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create a RuntimeClass
 //

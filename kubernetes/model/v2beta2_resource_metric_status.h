@@ -17,6 +17,10 @@ typedef struct v2beta2_resource_metric_status_t v2beta2_resource_metric_status_t
 
 #include "v2beta2_metric_value_status.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v2beta2_resource_metric_status_t {

@@ -19,6 +19,10 @@ typedef struct v1_persistent_volume_t v1_persistent_volume_t;
 #include "v1_persistent_volume_spec.h"
 #include "v1_persistent_volume_status.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_persistent_volume_t {

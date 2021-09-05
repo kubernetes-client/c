@@ -20,6 +20,10 @@ typedef struct v1beta1_stateful_set_spec_t v1beta1_stateful_set_spec_t;
 #include "v1_pod_template_spec.h"
 #include "v1beta1_stateful_set_update_strategy.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_stateful_set_spec_t {

@@ -16,6 +16,10 @@
 typedef struct v1_se_linux_options_t v1_se_linux_options_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_se_linux_options_t {

@@ -17,6 +17,10 @@ typedef struct v1alpha1_flow_schema_status_t v1alpha1_flow_schema_status_t;
 
 #include "v1alpha1_flow_schema_condition.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_flow_schema_status_t {

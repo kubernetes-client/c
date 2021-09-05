@@ -18,6 +18,10 @@ typedef struct v1_cluster_role_list_t v1_cluster_role_list_t;
 #include "v1_cluster_role.h"
 #include "v1_list_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_cluster_role_list_t {

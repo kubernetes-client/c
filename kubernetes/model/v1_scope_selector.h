@@ -17,6 +17,10 @@ typedef struct v1_scope_selector_t v1_scope_selector_t;
 
 #include "v1_scoped_resource_selector_requirement.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_scope_selector_t {

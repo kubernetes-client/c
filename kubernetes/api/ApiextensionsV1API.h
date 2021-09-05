@@ -11,6 +11,10 @@
 #include "../model/v1_delete_options.h"
 #include "../model/v1_status.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create a CustomResourceDefinition
 //

@@ -18,6 +18,10 @@ typedef struct apps_v1beta1_deployment_list_t apps_v1beta1_deployment_list_t;
 #include "apps_v1beta1_deployment.h"
 #include "v1_list_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct apps_v1beta1_deployment_list_t {

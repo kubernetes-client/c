@@ -18,6 +18,10 @@ typedef struct v1beta1_eviction_t v1beta1_eviction_t;
 #include "v1_delete_options.h"
 #include "v1_object_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_eviction_t {

@@ -17,6 +17,10 @@ typedef struct v1_weighted_pod_affinity_term_t v1_weighted_pod_affinity_term_t;
 
 #include "v1_pod_affinity_term.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_weighted_pod_affinity_term_t {

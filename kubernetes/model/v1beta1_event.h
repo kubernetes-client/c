@@ -20,6 +20,10 @@ typedef struct v1beta1_event_t v1beta1_event_t;
 #include "v1_object_reference.h"
 #include "v1beta1_event_series.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_event_t {

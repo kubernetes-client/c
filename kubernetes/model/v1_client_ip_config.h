@@ -16,6 +16,10 @@
 typedef struct v1_client_ip_config_t v1_client_ip_config_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_client_ip_config_t {

@@ -18,6 +18,10 @@ typedef struct v1alpha1_runtime_class_spec_t v1alpha1_runtime_class_spec_t;
 #include "v1alpha1_overhead.h"
 #include "v1alpha1_scheduling.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_runtime_class_spec_t {

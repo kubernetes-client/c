@@ -17,6 +17,10 @@ typedef struct v1alpha1_limit_response_t v1alpha1_limit_response_t;
 
 #include "v1alpha1_queuing_configuration.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_limit_response_t {

@@ -17,6 +17,10 @@ typedef struct v1_node_daemon_endpoints_t v1_node_daemon_endpoints_t;
 
 #include "v1_daemon_endpoint.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_node_daemon_endpoints_t {

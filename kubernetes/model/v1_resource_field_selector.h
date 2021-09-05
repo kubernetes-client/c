@@ -16,6 +16,10 @@
 typedef struct v1_resource_field_selector_t v1_resource_field_selector_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_resource_field_selector_t {

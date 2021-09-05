@@ -18,6 +18,10 @@ typedef struct v1_endpoints_t v1_endpoints_t;
 #include "v1_endpoint_subset.h"
 #include "v1_object_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_endpoints_t {

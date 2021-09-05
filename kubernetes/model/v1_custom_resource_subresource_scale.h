@@ -16,6 +16,10 @@
 typedef struct v1_custom_resource_subresource_scale_t v1_custom_resource_subresource_scale_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_custom_resource_subresource_scale_t {

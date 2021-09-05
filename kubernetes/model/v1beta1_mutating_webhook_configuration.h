@@ -18,6 +18,10 @@ typedef struct v1beta1_mutating_webhook_configuration_t v1beta1_mutating_webhook
 #include "v1_object_meta.h"
 #include "v1beta1_mutating_webhook.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_mutating_webhook_configuration_t {

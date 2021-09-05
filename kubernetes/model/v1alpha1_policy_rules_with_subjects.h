@@ -19,6 +19,10 @@ typedef struct v1alpha1_policy_rules_with_subjects_t v1alpha1_policy_rules_with_
 #include "v1alpha1_non_resource_policy_rule.h"
 #include "v1alpha1_resource_policy_rule.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_policy_rules_with_subjects_t {

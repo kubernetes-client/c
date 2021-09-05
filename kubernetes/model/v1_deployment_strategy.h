@@ -17,6 +17,10 @@ typedef struct v1_deployment_strategy_t v1_deployment_strategy_t;
 
 #include "v1_rolling_update_deployment.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_deployment_strategy_t {

@@ -17,6 +17,10 @@ typedef struct extensions_v1beta1_ingress_status_t extensions_v1beta1_ingress_st
 
 #include "v1_load_balancer_status.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct extensions_v1beta1_ingress_status_t {

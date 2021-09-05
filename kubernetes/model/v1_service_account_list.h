@@ -18,6 +18,10 @@ typedef struct v1_service_account_list_t v1_service_account_list_t;
 #include "v1_list_meta.h"
 #include "v1_service_account.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_service_account_list_t {

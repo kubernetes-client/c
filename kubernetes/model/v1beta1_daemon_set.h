@@ -19,6 +19,10 @@ typedef struct v1beta1_daemon_set_t v1beta1_daemon_set_t;
 #include "v1beta1_daemon_set_spec.h"
 #include "v1beta1_daemon_set_status.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_daemon_set_t {

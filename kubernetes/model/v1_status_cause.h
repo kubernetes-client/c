@@ -16,6 +16,10 @@
 typedef struct v1_status_cause_t v1_status_cause_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_status_cause_t {

@@ -18,6 +18,10 @@ typedef struct v1_http_get_action_t v1_http_get_action_t;
 #include "object.h"
 #include "v1_http_header.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_http_get_action_t {

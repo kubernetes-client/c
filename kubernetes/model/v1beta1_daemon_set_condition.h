@@ -16,6 +16,10 @@
 typedef struct v1beta1_daemon_set_condition_t v1beta1_daemon_set_condition_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_daemon_set_condition_t {

@@ -19,6 +19,10 @@ typedef struct v1beta1_certificate_signing_request_t v1beta1_certificate_signing
 #include "v1beta1_certificate_signing_request_spec.h"
 #include "v1beta1_certificate_signing_request_status.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_certificate_signing_request_t {

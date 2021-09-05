@@ -17,6 +17,10 @@ typedef struct v1_volume_attachment_spec_t v1_volume_attachment_spec_t;
 
 #include "v1_volume_attachment_source.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_volume_attachment_spec_t {

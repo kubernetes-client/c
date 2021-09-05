@@ -18,6 +18,10 @@ typedef struct v1alpha1_volume_attachment_list_t v1alpha1_volume_attachment_list
 #include "v1_list_meta.h"
 #include "v1alpha1_volume_attachment.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_volume_attachment_list_t {

@@ -19,6 +19,10 @@ typedef struct v1beta1_cluster_role_t v1beta1_cluster_role_t;
 #include "v1beta1_aggregation_rule.h"
 #include "v1beta1_policy_rule.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_cluster_role_t {

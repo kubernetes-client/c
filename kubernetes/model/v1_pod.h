@@ -19,6 +19,10 @@ typedef struct v1_pod_t v1_pod_t;
 #include "v1_pod_spec.h"
 #include "v1_pod_status.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_pod_t {

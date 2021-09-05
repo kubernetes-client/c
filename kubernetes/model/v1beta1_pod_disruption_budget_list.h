@@ -18,6 +18,10 @@ typedef struct v1beta1_pod_disruption_budget_list_t v1beta1_pod_disruption_budge
 #include "v1_list_meta.h"
 #include "v1beta1_pod_disruption_budget.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_pod_disruption_budget_list_t {

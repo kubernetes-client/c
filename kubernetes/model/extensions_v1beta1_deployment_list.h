@@ -18,6 +18,10 @@ typedef struct extensions_v1beta1_deployment_list_t extensions_v1beta1_deploymen
 #include "extensions_v1beta1_deployment.h"
 #include "v1_list_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct extensions_v1beta1_deployment_list_t {

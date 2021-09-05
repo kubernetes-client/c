@@ -18,6 +18,10 @@ typedef struct v1beta1_endpoint_t v1beta1_endpoint_t;
 #include "v1_object_reference.h"
 #include "v1beta1_endpoint_conditions.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_endpoint_t {

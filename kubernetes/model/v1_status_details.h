@@ -17,6 +17,10 @@ typedef struct v1_status_details_t v1_status_details_t;
 
 #include "v1_status_cause.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_status_details_t {

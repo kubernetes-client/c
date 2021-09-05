@@ -40,6 +40,10 @@ typedef struct v1_persistent_volume_spec_t v1_persistent_volume_spec_t;
 #include "v1_volume_node_affinity.h"
 #include "v1_vsphere_virtual_disk_volume_source.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_persistent_volume_spec_t {

@@ -17,6 +17,10 @@ typedef struct v1beta1_cron_job_spec_t v1beta1_cron_job_spec_t;
 
 #include "v1beta1_job_template_spec.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_cron_job_spec_t {

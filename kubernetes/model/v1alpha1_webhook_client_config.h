@@ -17,6 +17,10 @@ typedef struct v1alpha1_webhook_client_config_t v1alpha1_webhook_client_config_t
 
 #include "v1alpha1_service_reference.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_webhook_client_config_t {

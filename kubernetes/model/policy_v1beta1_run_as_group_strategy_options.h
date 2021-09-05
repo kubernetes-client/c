@@ -17,6 +17,10 @@ typedef struct policy_v1beta1_run_as_group_strategy_options_t policy_v1beta1_run
 
 #include "policy_v1beta1_id_range.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct policy_v1beta1_run_as_group_strategy_options_t {

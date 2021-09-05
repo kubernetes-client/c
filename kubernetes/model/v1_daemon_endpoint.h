@@ -16,6 +16,10 @@
 typedef struct v1_daemon_endpoint_t v1_daemon_endpoint_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_daemon_endpoint_t {

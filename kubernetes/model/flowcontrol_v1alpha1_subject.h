@@ -19,6 +19,10 @@ typedef struct flowcontrol_v1alpha1_subject_t flowcontrol_v1alpha1_subject_t;
 #include "v1alpha1_service_account_subject.h"
 #include "v1alpha1_user_subject.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct flowcontrol_v1alpha1_subject_t {

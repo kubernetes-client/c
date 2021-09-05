@@ -16,6 +16,10 @@
 typedef struct v1_load_balancer_ingress_t v1_load_balancer_ingress_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_load_balancer_ingress_t {

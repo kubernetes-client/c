@@ -16,6 +16,10 @@
 typedef struct v1_lease_spec_t v1_lease_spec_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_lease_spec_t {

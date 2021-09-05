@@ -17,6 +17,10 @@ typedef struct v1alpha1_priority_level_configuration_spec_t v1alpha1_priority_le
 
 #include "v1alpha1_limited_priority_level_configuration.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_priority_level_configuration_spec_t {

@@ -16,6 +16,10 @@
 typedef struct v1_external_documentation_t v1_external_documentation_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_external_documentation_t {

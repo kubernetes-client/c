@@ -19,6 +19,10 @@ typedef struct v1_custom_resource_definition_t v1_custom_resource_definition_t;
 #include "v1_custom_resource_definition_status.h"
 #include "v1_object_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_custom_resource_definition_t {

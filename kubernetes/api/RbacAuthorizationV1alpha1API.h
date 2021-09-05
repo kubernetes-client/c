@@ -17,6 +17,10 @@
 #include "../model/v1alpha1_role_binding_list.h"
 #include "../model/v1alpha1_role_list.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create a ClusterRole
 //

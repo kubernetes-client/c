@@ -17,6 +17,10 @@ typedef struct admissionregistration_v1beta1_webhook_client_config_t admissionre
 
 #include "admissionregistration_v1beta1_service_reference.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct admissionregistration_v1beta1_webhook_client_config_t {

@@ -8,6 +8,10 @@
 #include "../model/v1_api_resource_list.h"
 #include "../model/v1beta1_token_review.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create a TokenReview
 //

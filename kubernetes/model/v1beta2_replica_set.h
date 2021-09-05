@@ -19,6 +19,10 @@ typedef struct v1beta2_replica_set_t v1beta2_replica_set_t;
 #include "v1beta2_replica_set_spec.h"
 #include "v1beta2_replica_set_status.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta2_replica_set_t {

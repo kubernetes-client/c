@@ -18,6 +18,10 @@ typedef struct v1_json_schema_props_t v1_json_schema_props_t;
 #include "object.h"
 #include "v1_external_documentation.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_json_schema_props_t {

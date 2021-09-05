@@ -45,6 +45,10 @@
 #include "../model/v1_token_request.h"
 #include "../model/v1beta1_eviction.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // connect DELETE requests to proxy of Pod
 //

@@ -17,6 +17,10 @@ typedef struct v1_projected_volume_source_t v1_projected_volume_source_t;
 
 #include "v1_volume_projection.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_projected_volume_source_t {

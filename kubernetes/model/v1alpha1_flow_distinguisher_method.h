@@ -16,6 +16,10 @@
 typedef struct v1alpha1_flow_distinguisher_method_t v1alpha1_flow_distinguisher_method_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_flow_distinguisher_method_t {

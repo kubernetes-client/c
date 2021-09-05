@@ -11,6 +11,10 @@
 #include "../model/v1alpha1_audit_sink.h"
 #include "../model/v1alpha1_audit_sink_list.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create an AuditSink
 //

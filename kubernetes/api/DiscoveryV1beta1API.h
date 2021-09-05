@@ -11,6 +11,10 @@
 #include "../model/v1beta1_endpoint_slice.h"
 #include "../model/v1beta1_endpoint_slice_list.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create an EndpointSlice
 //

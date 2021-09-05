@@ -16,6 +16,10 @@
 typedef struct v1_api_resource_t v1_api_resource_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_api_resource_t {

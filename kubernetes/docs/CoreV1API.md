@@ -215,7 +215,7 @@ char* CoreV1API_connectDeleteNamespacedPodProxy(apiClient_t *apiClient, char * n
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to pod. | [optional] 
@@ -247,7 +247,7 @@ char* CoreV1API_connectDeleteNamespacedPodProxyWithPath(apiClient_t *apiClient, 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -280,7 +280,7 @@ char* CoreV1API_connectDeleteNamespacedServiceProxy(apiClient_t *apiClient, char
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q&#x3D;user:kimchy. Path is _search?q&#x3D;user:kimchy. | [optional] 
@@ -312,7 +312,7 @@ char* CoreV1API_connectDeleteNamespacedServiceProxyWithPath(apiClient_t *apiClie
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -345,7 +345,7 @@ char* CoreV1API_connectDeleteNodeProxy(apiClient_t *apiClient, char * name, char
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
 
@@ -376,7 +376,7 @@ char* CoreV1API_connectDeleteNodeProxyWithPath(apiClient_t *apiClient, char * na
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | path to the resource | 
 **path2** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
@@ -408,7 +408,7 @@ char* CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * nam
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodAttachOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **container** | **char \*** | The container in which to execute the command. Defaults to only container if there is only one container in the pod. | [optional] 
@@ -444,7 +444,7 @@ char* CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodExecOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **command** | **char \*** | Command is the remote command to execute. argv array. Not executed within a shell. | [optional] 
@@ -481,7 +481,7 @@ char* CoreV1API_connectGetNamespacedPodPortforward(apiClient_t *apiClient, char 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodPortForwardOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **ports** | **int** | List of ports to forward Required when using WebSockets | [optional] 
@@ -513,7 +513,7 @@ char* CoreV1API_connectGetNamespacedPodProxy(apiClient_t *apiClient, char * name
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to pod. | [optional] 
@@ -545,7 +545,7 @@ char* CoreV1API_connectGetNamespacedPodProxyWithPath(apiClient_t *apiClient, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -578,7 +578,7 @@ char* CoreV1API_connectGetNamespacedServiceProxy(apiClient_t *apiClient, char * 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q&#x3D;user:kimchy. Path is _search?q&#x3D;user:kimchy. | [optional] 
@@ -610,7 +610,7 @@ char* CoreV1API_connectGetNamespacedServiceProxyWithPath(apiClient_t *apiClient,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -643,7 +643,7 @@ char* CoreV1API_connectGetNodeProxy(apiClient_t *apiClient, char * name, char * 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
 
@@ -674,7 +674,7 @@ char* CoreV1API_connectGetNodeProxyWithPath(apiClient_t *apiClient, char * name,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | path to the resource | 
 **path2** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
@@ -706,7 +706,7 @@ char* CoreV1API_connectHeadNamespacedPodProxy(apiClient_t *apiClient, char * nam
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to pod. | [optional] 
@@ -738,7 +738,7 @@ char* CoreV1API_connectHeadNamespacedPodProxyWithPath(apiClient_t *apiClient, ch
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -771,7 +771,7 @@ char* CoreV1API_connectHeadNamespacedServiceProxy(apiClient_t *apiClient, char *
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q&#x3D;user:kimchy. Path is _search?q&#x3D;user:kimchy. | [optional] 
@@ -803,7 +803,7 @@ char* CoreV1API_connectHeadNamespacedServiceProxyWithPath(apiClient_t *apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -836,7 +836,7 @@ char* CoreV1API_connectHeadNodeProxy(apiClient_t *apiClient, char * name, char *
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
 
@@ -867,7 +867,7 @@ char* CoreV1API_connectHeadNodeProxyWithPath(apiClient_t *apiClient, char * name
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | path to the resource | 
 **path2** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
@@ -899,7 +899,7 @@ char* CoreV1API_connectOptionsNamespacedPodProxy(apiClient_t *apiClient, char * 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to pod. | [optional] 
@@ -931,7 +931,7 @@ char* CoreV1API_connectOptionsNamespacedPodProxyWithPath(apiClient_t *apiClient,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -964,7 +964,7 @@ char* CoreV1API_connectOptionsNamespacedServiceProxy(apiClient_t *apiClient, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q&#x3D;user:kimchy. Path is _search?q&#x3D;user:kimchy. | [optional] 
@@ -996,7 +996,7 @@ char* CoreV1API_connectOptionsNamespacedServiceProxyWithPath(apiClient_t *apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -1029,7 +1029,7 @@ char* CoreV1API_connectOptionsNodeProxy(apiClient_t *apiClient, char * name, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
 
@@ -1060,7 +1060,7 @@ char* CoreV1API_connectOptionsNodeProxyWithPath(apiClient_t *apiClient, char * n
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | path to the resource | 
 **path2** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
@@ -1092,7 +1092,7 @@ char* CoreV1API_connectPatchNamespacedPodProxy(apiClient_t *apiClient, char * na
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to pod. | [optional] 
@@ -1124,7 +1124,7 @@ char* CoreV1API_connectPatchNamespacedPodProxyWithPath(apiClient_t *apiClient, c
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -1157,7 +1157,7 @@ char* CoreV1API_connectPatchNamespacedServiceProxy(apiClient_t *apiClient, char 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q&#x3D;user:kimchy. Path is _search?q&#x3D;user:kimchy. | [optional] 
@@ -1189,7 +1189,7 @@ char* CoreV1API_connectPatchNamespacedServiceProxyWithPath(apiClient_t *apiClien
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -1222,7 +1222,7 @@ char* CoreV1API_connectPatchNodeProxy(apiClient_t *apiClient, char * name, char 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
 
@@ -1253,7 +1253,7 @@ char* CoreV1API_connectPatchNodeProxyWithPath(apiClient_t *apiClient, char * nam
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | path to the resource | 
 **path2** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
@@ -1285,7 +1285,7 @@ char* CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * na
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodAttachOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **container** | **char \*** | The container in which to execute the command. Defaults to only container if there is only one container in the pod. | [optional] 
@@ -1321,7 +1321,7 @@ char* CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodExecOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **command** | **char \*** | Command is the remote command to execute. argv array. Not executed within a shell. | [optional] 
@@ -1358,7 +1358,7 @@ char* CoreV1API_connectPostNamespacedPodPortforward(apiClient_t *apiClient, char
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodPortForwardOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **ports** | **int** | List of ports to forward Required when using WebSockets | [optional] 
@@ -1390,7 +1390,7 @@ char* CoreV1API_connectPostNamespacedPodProxy(apiClient_t *apiClient, char * nam
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to pod. | [optional] 
@@ -1422,7 +1422,7 @@ char* CoreV1API_connectPostNamespacedPodProxyWithPath(apiClient_t *apiClient, ch
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -1455,7 +1455,7 @@ char* CoreV1API_connectPostNamespacedServiceProxy(apiClient_t *apiClient, char *
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q&#x3D;user:kimchy. Path is _search?q&#x3D;user:kimchy. | [optional] 
@@ -1487,7 +1487,7 @@ char* CoreV1API_connectPostNamespacedServiceProxyWithPath(apiClient_t *apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -1520,7 +1520,7 @@ char* CoreV1API_connectPostNodeProxy(apiClient_t *apiClient, char * name, char *
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
 
@@ -1551,7 +1551,7 @@ char* CoreV1API_connectPostNodeProxyWithPath(apiClient_t *apiClient, char * name
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | path to the resource | 
 **path2** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
@@ -1583,7 +1583,7 @@ char* CoreV1API_connectPutNamespacedPodProxy(apiClient_t *apiClient, char * name
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to pod. | [optional] 
@@ -1615,7 +1615,7 @@ char* CoreV1API_connectPutNamespacedPodProxyWithPath(apiClient_t *apiClient, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -1648,7 +1648,7 @@ char* CoreV1API_connectPutNamespacedServiceProxy(apiClient_t *apiClient, char * 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q&#x3D;user:kimchy. Path is _search?q&#x3D;user:kimchy. | [optional] 
@@ -1680,7 +1680,7 @@ char* CoreV1API_connectPutNamespacedServiceProxyWithPath(apiClient_t *apiClient,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceProxyOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **path** | **char \*** | path to the resource | 
@@ -1713,7 +1713,7 @@ char* CoreV1API_connectPutNodeProxy(apiClient_t *apiClient, char * name, char * 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
 
@@ -1744,7 +1744,7 @@ char* CoreV1API_connectPutNodeProxyWithPath(apiClient_t *apiClient, char * name,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the NodeProxyOptions | 
 **path** | **char \*** | path to the resource | 
 **path2** | **char \*** | Path is the URL path to use for the current proxy request to node. | [optional] 
@@ -1776,7 +1776,7 @@ v1_namespace_t* CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **body** | **[v1_namespace_t](v1_namespace.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -1808,7 +1808,7 @@ v1_binding_t* CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char * _
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_binding_t](v1_binding.md) \*** |  | 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -1841,7 +1841,7 @@ v1_config_map_t* CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_config_map_t](v1_config_map.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -1874,7 +1874,7 @@ v1_endpoints_t* CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_endpoints_t](v1_endpoints.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -1907,7 +1907,7 @@ v1_event_t* CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _name
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_event_t](v1_event.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -1940,7 +1940,7 @@ v1_limit_range_t* CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, c
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_limit_range_t](v1_limit_range.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -1973,7 +1973,7 @@ v1_persistent_volume_claim_t* CoreV1API_createNamespacedPersistentVolumeClaim(ap
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_persistent_volume_claim_t](v1_persistent_volume_claim.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -2006,7 +2006,7 @@ v1_pod_t* CoreV1API_createNamespacedPod(apiClient_t *apiClient, char * _namespac
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_pod_t](v1_pod.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -2039,7 +2039,7 @@ v1_binding_t* CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Binding | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_binding_t](v1_binding.md) \*** |  | 
@@ -2073,7 +2073,7 @@ v1beta1_eviction_t* CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Eviction | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1beta1_eviction_t](v1beta1_eviction.md) \*** |  | 
@@ -2107,7 +2107,7 @@ v1_pod_template_t* CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_pod_template_t](v1_pod_template.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -2140,7 +2140,7 @@ v1_replication_controller_t* CoreV1API_createNamespacedReplicationController(api
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_replication_controller_t](v1_replication_controller.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -2173,7 +2173,7 @@ v1_resource_quota_t* CoreV1API_createNamespacedResourceQuota(apiClient_t *apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_resource_quota_t](v1_resource_quota.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -2206,7 +2206,7 @@ v1_secret_t* CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char * _na
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_secret_t](v1_secret.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -2239,7 +2239,7 @@ v1_service_t* CoreV1API_createNamespacedService(apiClient_t *apiClient, char * _
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_service_t](v1_service.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -2272,7 +2272,7 @@ v1_service_account_t* CoreV1API_createNamespacedServiceAccount(apiClient_t *apiC
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_service_account_t](v1_service_account.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -2305,7 +2305,7 @@ v1_token_request_t* CoreV1API_createNamespacedServiceAccountToken(apiClient_t *a
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the TokenRequest | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_token_request_t](v1_token_request.md) \*** |  | 
@@ -2339,7 +2339,7 @@ v1_node_t* CoreV1API_createNode(apiClient_t *apiClient, v1_node_t * body, char *
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **body** | **[v1_node_t](v1_node.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -2371,7 +2371,7 @@ v1_persistent_volume_t* CoreV1API_createPersistentVolume(apiClient_t *apiClient,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **body** | **[v1_persistent_volume_t](v1_persistent_volume.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -2403,7 +2403,7 @@ v1_status_t* CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClien
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -2444,7 +2444,7 @@ v1_status_t* CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClien
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -2485,7 +2485,7 @@ v1_status_t* CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, c
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -2526,7 +2526,7 @@ v1_status_t* CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClie
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -2567,7 +2567,7 @@ v1_status_t* CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -2608,7 +2608,7 @@ v1_status_t* CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -2649,7 +2649,7 @@ v1_status_t* CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -2690,7 +2690,7 @@ v1_status_t* CoreV1API_deleteCollectionNamespacedReplicationController(apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -2731,7 +2731,7 @@ v1_status_t* CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiC
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -2772,7 +2772,7 @@ v1_status_t* CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -2813,7 +2813,7 @@ v1_status_t* CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *api
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -2854,7 +2854,7 @@ v1_status_t* CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char * prett
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -2894,7 +2894,7 @@ v1_status_t* CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -2934,7 +2934,7 @@ v1_status_t* CoreV1API_deleteNamespace(apiClient_t *apiClient, char * name, char
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Namespace | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -2969,7 +2969,7 @@ v1_status_t* CoreV1API_deleteNamespacedConfigMap(apiClient_t *apiClient, char * 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ConfigMap | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3005,7 +3005,7 @@ v1_status_t* CoreV1API_deleteNamespacedEndpoints(apiClient_t *apiClient, char * 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Endpoints | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3041,7 +3041,7 @@ v1_status_t* CoreV1API_deleteNamespacedEvent(apiClient_t *apiClient, char * name
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Event | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3077,7 +3077,7 @@ v1_status_t* CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char *
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the LimitRange | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3113,7 +3113,7 @@ v1_status_t* CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolumeClaim | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3149,7 +3149,7 @@ v1_status_t* CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char * name, 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Pod | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3185,7 +3185,7 @@ v1_status_t* CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodTemplate | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3221,7 +3221,7 @@ v1_status_t* CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ReplicationController | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3257,7 +3257,7 @@ v1_status_t* CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ResourceQuota | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3293,7 +3293,7 @@ v1_status_t* CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char * nam
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Secret | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3329,7 +3329,7 @@ v1_status_t* CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char * na
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Service | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3365,7 +3365,7 @@ v1_status_t* CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, ch
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceAccount | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -3401,7 +3401,7 @@ v1_status_t* CoreV1API_deleteNode(apiClient_t *apiClient, char * name, char * pr
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Node | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -3436,7 +3436,7 @@ v1_status_t* CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char * nam
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolume | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -3471,7 +3471,7 @@ v1_api_resource_list_t* CoreV1API_getAPIResources(apiClient_t *apiClient);
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 
 ### Return type
 
@@ -3499,7 +3499,7 @@ v1_component_status_list_t* CoreV1API_listComponentStatus(apiClient_t *apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -3536,7 +3536,7 @@ v1_config_map_list_t* CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiCl
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -3573,7 +3573,7 @@ v1_endpoints_list_t* CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -3610,7 +3610,7 @@ v1_event_list_t* CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -3647,7 +3647,7 @@ v1_limit_range_list_t* CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *api
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -3684,7 +3684,7 @@ v1_namespace_list_t* CoreV1API_listNamespace(apiClient_t *apiClient, char * pret
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -3721,7 +3721,7 @@ v1_config_map_list_t* CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -3759,7 +3759,7 @@ v1_endpoints_list_t* CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, c
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -3797,7 +3797,7 @@ v1_event_list_t* CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char * _n
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -3835,7 +3835,7 @@ v1_limit_range_list_t* CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -3873,7 +3873,7 @@ v1_persistent_volume_claim_list_t* CoreV1API_listNamespacedPersistentVolumeClaim
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -3911,7 +3911,7 @@ v1_pod_list_t* CoreV1API_listNamespacedPod(apiClient_t *apiClient, char * _names
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -3949,7 +3949,7 @@ v1_pod_template_list_t* CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClie
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -3987,7 +3987,7 @@ v1_replication_controller_list_t* CoreV1API_listNamespacedReplicationController(
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -4025,7 +4025,7 @@ v1_resource_quota_list_t* CoreV1API_listNamespacedResourceQuota(apiClient_t *api
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -4063,7 +4063,7 @@ v1_secret_list_t* CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char * 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -4101,7 +4101,7 @@ v1_service_list_t* CoreV1API_listNamespacedService(apiClient_t *apiClient, char 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -4139,7 +4139,7 @@ v1_service_account_list_t* CoreV1API_listNamespacedServiceAccount(apiClient_t *a
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
@@ -4177,7 +4177,7 @@ v1_node_list_t* CoreV1API_listNode(apiClient_t *apiClient, char * pretty, int al
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -4214,7 +4214,7 @@ v1_persistent_volume_list_t* CoreV1API_listPersistentVolume(apiClient_t *apiClie
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
@@ -4251,7 +4251,7 @@ v1_persistent_volume_claim_list_t* CoreV1API_listPersistentVolumeClaimForAllName
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -4288,7 +4288,7 @@ v1_pod_list_t* CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int all
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -4325,7 +4325,7 @@ v1_pod_template_list_t* CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *a
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -4362,7 +4362,7 @@ v1_replication_controller_list_t* CoreV1API_listReplicationControllerForAllNames
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -4399,7 +4399,7 @@ v1_resource_quota_list_t* CoreV1API_listResourceQuotaForAllNamespaces(apiClient_
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -4436,7 +4436,7 @@ v1_secret_list_t* CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, i
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -4473,7 +4473,7 @@ v1_service_account_list_t* CoreV1API_listServiceAccountForAllNamespaces(apiClien
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -4510,7 +4510,7 @@ v1_service_list_t* CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **allowWatchBookmarks** | **int** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
@@ -4547,7 +4547,7 @@ v1_namespace_t* CoreV1API_patchNamespace(apiClient_t *apiClient, char * name, ob
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Namespace | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -4581,7 +4581,7 @@ v1_namespace_t* CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char * na
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Namespace | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -4615,7 +4615,7 @@ v1_config_map_t* CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ConfigMap | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -4650,7 +4650,7 @@ v1_endpoints_t* CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Endpoints | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -4685,7 +4685,7 @@ v1_event_t* CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name, 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Event | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -4720,7 +4720,7 @@ v1_limit_range_t* CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, ch
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the LimitRange | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -4755,7 +4755,7 @@ v1_persistent_volume_claim_t* CoreV1API_patchNamespacedPersistentVolumeClaim(api
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolumeClaim | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -4790,7 +4790,7 @@ v1_persistent_volume_claim_t* CoreV1API_patchNamespacedPersistentVolumeClaimStat
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolumeClaim | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -4825,7 +4825,7 @@ v1_pod_t* CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char * name, char
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Pod | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -4860,7 +4860,7 @@ v1_pod_t* CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char * name
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Pod | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -4895,7 +4895,7 @@ v1_pod_template_t* CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodTemplate | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -4930,7 +4930,7 @@ v1_replication_controller_t* CoreV1API_patchNamespacedReplicationController(apiC
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ReplicationController | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -4965,7 +4965,7 @@ v1_scale_t* CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *api
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Scale | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -5000,7 +5000,7 @@ v1_replication_controller_t* CoreV1API_patchNamespacedReplicationControllerStatu
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ReplicationController | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -5035,7 +5035,7 @@ v1_resource_quota_t* CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClie
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ResourceQuota | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -5070,7 +5070,7 @@ v1_resource_quota_t* CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *a
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ResourceQuota | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -5105,7 +5105,7 @@ v1_secret_t* CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char * name
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Secret | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -5140,7 +5140,7 @@ v1_service_t* CoreV1API_patchNamespacedService(apiClient_t *apiClient, char * na
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Service | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -5175,7 +5175,7 @@ v1_service_account_t* CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiCl
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceAccount | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -5210,7 +5210,7 @@ v1_service_t* CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Service | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[object_t](object.md) \*** |  | 
@@ -5245,7 +5245,7 @@ v1_node_t* CoreV1API_patchNode(apiClient_t *apiClient, char * name, object_t * b
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Node | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5279,7 +5279,7 @@ v1_node_t* CoreV1API_patchNodeStatus(apiClient_t *apiClient, char * name, object
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Node | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5313,7 +5313,7 @@ v1_persistent_volume_t* CoreV1API_patchPersistentVolume(apiClient_t *apiClient, 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolume | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5347,7 +5347,7 @@ v1_persistent_volume_t* CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiCl
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolume | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5381,7 +5381,7 @@ v1_component_status_t* CoreV1API_readComponentStatus(apiClient_t *apiClient, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ComponentStatus | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 
@@ -5411,7 +5411,7 @@ v1_namespace_t* CoreV1API_readNamespace(apiClient_t *apiClient, char * name, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Namespace | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **exact** | **int** | Should the export be exact.  Exact export maintains cluster-specific fields like &#39;Namespace&#39;. Deprecated. Planned for removal in 1.18. | [optional] 
@@ -5443,7 +5443,7 @@ v1_namespace_t* CoreV1API_readNamespaceStatus(apiClient_t *apiClient, char * nam
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Namespace | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 
@@ -5473,7 +5473,7 @@ v1_config_map_t* CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ConfigMap | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5506,7 +5506,7 @@ v1_endpoints_t* CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char *
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Endpoints | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5539,7 +5539,7 @@ v1_event_t* CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char * name, c
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Event | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5572,7 +5572,7 @@ v1_limit_range_t* CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the LimitRange | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5605,7 +5605,7 @@ v1_persistent_volume_claim_t* CoreV1API_readNamespacedPersistentVolumeClaim(apiC
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolumeClaim | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5638,7 +5638,7 @@ v1_persistent_volume_claim_t* CoreV1API_readNamespacedPersistentVolumeClaimStatu
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolumeClaim | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5669,7 +5669,7 @@ v1_pod_t* CoreV1API_readNamespacedPod(apiClient_t *apiClient, char * name, char 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Pod | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5702,7 +5702,7 @@ char* CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char * name, char *
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Pod | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **container** | **char \*** | The container for which to stream logs. Defaults to only container if there is one container in the pod. | [optional] 
@@ -5742,7 +5742,7 @@ v1_pod_t* CoreV1API_readNamespacedPodStatus(apiClient_t *apiClient, char * name,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Pod | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5773,7 +5773,7 @@ v1_pod_template_t* CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, c
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodTemplate | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5806,7 +5806,7 @@ v1_replication_controller_t* CoreV1API_readNamespacedReplicationController(apiCl
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ReplicationController | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5839,7 +5839,7 @@ v1_scale_t* CoreV1API_readNamespacedReplicationControllerScale(apiClient_t *apiC
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Scale | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5870,7 +5870,7 @@ v1_replication_controller_t* CoreV1API_readNamespacedReplicationControllerStatus
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ReplicationController | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5901,7 +5901,7 @@ v1_resource_quota_t* CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClien
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ResourceQuota | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5934,7 +5934,7 @@ v1_resource_quota_t* CoreV1API_readNamespacedResourceQuotaStatus(apiClient_t *ap
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ResourceQuota | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5965,7 +5965,7 @@ v1_secret_t* CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char * name,
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Secret | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -5998,7 +5998,7 @@ v1_service_t* CoreV1API_readNamespacedService(apiClient_t *apiClient, char * nam
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Service | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -6031,7 +6031,7 @@ v1_service_account_t* CoreV1API_readNamespacedServiceAccount(apiClient_t *apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceAccount | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -6064,7 +6064,7 @@ v1_service_t* CoreV1API_readNamespacedServiceStatus(apiClient_t *apiClient, char
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Service | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -6095,7 +6095,7 @@ v1_node_t* CoreV1API_readNode(apiClient_t *apiClient, char * name, char * pretty
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Node | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **exact** | **int** | Should the export be exact.  Exact export maintains cluster-specific fields like &#39;Namespace&#39;. Deprecated. Planned for removal in 1.18. | [optional] 
@@ -6127,7 +6127,7 @@ v1_node_t* CoreV1API_readNodeStatus(apiClient_t *apiClient, char * name, char * 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Node | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 
@@ -6157,7 +6157,7 @@ v1_persistent_volume_t* CoreV1API_readPersistentVolume(apiClient_t *apiClient, c
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolume | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **exact** | **int** | Should the export be exact.  Exact export maintains cluster-specific fields like &#39;Namespace&#39;. Deprecated. Planned for removal in 1.18. | [optional] 
@@ -6189,7 +6189,7 @@ v1_persistent_volume_t* CoreV1API_readPersistentVolumeStatus(apiClient_t *apiCli
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolume | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 
@@ -6219,7 +6219,7 @@ v1_namespace_t* CoreV1API_replaceNamespace(apiClient_t *apiClient, char * name, 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Namespace | 
 **body** | **[v1_namespace_t](v1_namespace.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -6252,7 +6252,7 @@ v1_namespace_t* CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Namespace | 
 **body** | **[v1_namespace_t](v1_namespace.md) \*** |  | 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -6285,7 +6285,7 @@ v1_namespace_t* CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char * 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Namespace | 
 **body** | **[v1_namespace_t](v1_namespace.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -6318,7 +6318,7 @@ v1_config_map_t* CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, ch
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ConfigMap | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_config_map_t](v1_config_map.md) \*** |  | 
@@ -6352,7 +6352,7 @@ v1_endpoints_t* CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, cha
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Endpoints | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_endpoints_t](v1_endpoints.md) \*** |  | 
@@ -6386,7 +6386,7 @@ v1_event_t* CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Event | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_event_t](v1_event.md) \*** |  | 
@@ -6420,7 +6420,7 @@ v1_limit_range_t* CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the LimitRange | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_limit_range_t](v1_limit_range.md) \*** |  | 
@@ -6454,7 +6454,7 @@ v1_persistent_volume_claim_t* CoreV1API_replaceNamespacedPersistentVolumeClaim(a
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolumeClaim | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_persistent_volume_claim_t](v1_persistent_volume_claim.md) \*** |  | 
@@ -6488,7 +6488,7 @@ v1_persistent_volume_claim_t* CoreV1API_replaceNamespacedPersistentVolumeClaimSt
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolumeClaim | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_persistent_volume_claim_t](v1_persistent_volume_claim.md) \*** |  | 
@@ -6522,7 +6522,7 @@ v1_pod_t* CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char * name, ch
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Pod | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_pod_t](v1_pod.md) \*** |  | 
@@ -6556,7 +6556,7 @@ v1_pod_t* CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char * na
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Pod | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_pod_t](v1_pod.md) \*** |  | 
@@ -6590,7 +6590,7 @@ v1_pod_template_t* CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PodTemplate | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_pod_template_t](v1_pod_template.md) \*** |  | 
@@ -6624,7 +6624,7 @@ v1_replication_controller_t* CoreV1API_replaceNamespacedReplicationController(ap
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ReplicationController | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_replication_controller_t](v1_replication_controller.md) \*** |  | 
@@ -6658,7 +6658,7 @@ v1_scale_t* CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *a
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Scale | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_scale_t](v1_scale.md) \*** |  | 
@@ -6692,7 +6692,7 @@ v1_replication_controller_t* CoreV1API_replaceNamespacedReplicationControllerSta
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ReplicationController | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_replication_controller_t](v1_replication_controller.md) \*** |  | 
@@ -6726,7 +6726,7 @@ v1_resource_quota_t* CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiCl
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ResourceQuota | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_resource_quota_t](v1_resource_quota.md) \*** |  | 
@@ -6760,7 +6760,7 @@ v1_resource_quota_t* CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ResourceQuota | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_resource_quota_t](v1_resource_quota.md) \*** |  | 
@@ -6794,7 +6794,7 @@ v1_secret_t* CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char * na
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Secret | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_secret_t](v1_secret.md) \*** |  | 
@@ -6828,7 +6828,7 @@ v1_service_t* CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char * 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Service | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_service_t](v1_service.md) \*** |  | 
@@ -6862,7 +6862,7 @@ v1_service_account_t* CoreV1API_replaceNamespacedServiceAccount(apiClient_t *api
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the ServiceAccount | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_service_account_t](v1_service_account.md) \*** |  | 
@@ -6896,7 +6896,7 @@ v1_service_t* CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, c
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Service | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **body** | **[v1_service_t](v1_service.md) \*** |  | 
@@ -6930,7 +6930,7 @@ v1_node_t* CoreV1API_replaceNode(apiClient_t *apiClient, char * name, v1_node_t 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Node | 
 **body** | **[v1_node_t](v1_node.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -6963,7 +6963,7 @@ v1_node_t* CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char * name, v1_n
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the Node | 
 **body** | **[v1_node_t](v1_node.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -6996,7 +6996,7 @@ v1_persistent_volume_t* CoreV1API_replacePersistentVolume(apiClient_t *apiClient
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolume | 
 **body** | **[v1_persistent_volume_t](v1_persistent_volume.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
@@ -7029,7 +7029,7 @@ v1_persistent_volume_t* CoreV1API_replacePersistentVolumeStatus(apiClient_t *api
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the PersistentVolume | 
 **body** | **[v1_persistent_volume_t](v1_persistent_volume.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 

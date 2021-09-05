@@ -16,6 +16,10 @@
 typedef struct v1_node_address_t v1_node_address_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_node_address_t {

@@ -18,6 +18,10 @@ typedef struct networking_v1beta1_ingress_list_t networking_v1beta1_ingress_list
 #include "networking_v1beta1_ingress.h"
 #include "v1_list_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct networking_v1beta1_ingress_list_t {

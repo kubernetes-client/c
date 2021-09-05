@@ -16,6 +16,10 @@
 typedef struct v1_rule_with_operations_t v1_rule_with_operations_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_rule_with_operations_t {

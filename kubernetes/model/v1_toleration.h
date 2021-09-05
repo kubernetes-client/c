@@ -16,6 +16,10 @@
 typedef struct v1_toleration_t v1_toleration_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_toleration_t {

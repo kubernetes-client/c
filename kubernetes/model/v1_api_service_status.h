@@ -17,6 +17,10 @@ typedef struct v1_api_service_status_t v1_api_service_status_t;
 
 #include "v1_api_service_condition.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_api_service_status_t {

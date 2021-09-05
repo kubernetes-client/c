@@ -18,6 +18,10 @@ typedef struct extensions_v1beta1_ingress_list_t extensions_v1beta1_ingress_list
 #include "extensions_v1beta1_ingress.h"
 #include "v1_list_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct extensions_v1beta1_ingress_list_t {

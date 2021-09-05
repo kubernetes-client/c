@@ -27,6 +27,10 @@ typedef struct v1_pod_spec_t v1_pod_spec_t;
 #include "v1_topology_spread_constraint.h"
 #include "v1_volume.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_pod_spec_t {

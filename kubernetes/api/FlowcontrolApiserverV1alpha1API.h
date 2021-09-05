@@ -13,6 +13,10 @@
 #include "../model/v1alpha1_priority_level_configuration.h"
 #include "../model/v1alpha1_priority_level_configuration_list.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 // create a FlowSchema
 //

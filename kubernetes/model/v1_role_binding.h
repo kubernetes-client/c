@@ -19,6 +19,10 @@ typedef struct v1_role_binding_t v1_role_binding_t;
 #include "v1_role_ref.h"
 #include "v1_subject.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_role_binding_t {

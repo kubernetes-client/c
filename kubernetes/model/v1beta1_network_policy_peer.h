@@ -18,6 +18,10 @@ typedef struct v1beta1_network_policy_peer_t v1beta1_network_policy_peer_t;
 #include "v1_label_selector.h"
 #include "v1beta1_ip_block.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_network_policy_peer_t {

@@ -18,6 +18,10 @@ typedef struct v1_api_service_list_t v1_api_service_list_t;
 #include "v1_api_service.h"
 #include "v1_list_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_api_service_list_t {

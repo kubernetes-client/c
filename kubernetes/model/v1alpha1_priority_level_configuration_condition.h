@@ -16,6 +16,10 @@
 typedef struct v1alpha1_priority_level_configuration_condition_t v1alpha1_priority_level_configuration_condition_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_priority_level_configuration_condition_t {

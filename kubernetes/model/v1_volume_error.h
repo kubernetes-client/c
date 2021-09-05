@@ -16,6 +16,10 @@
 typedef struct v1_volume_error_t v1_volume_error_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_volume_error_t {

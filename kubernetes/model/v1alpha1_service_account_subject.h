@@ -16,6 +16,10 @@
 typedef struct v1alpha1_service_account_subject_t v1alpha1_service_account_subject_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_service_account_subject_t {

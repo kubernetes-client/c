@@ -16,6 +16,10 @@
 typedef struct v1_volume_mount_t v1_volume_mount_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_volume_mount_t {

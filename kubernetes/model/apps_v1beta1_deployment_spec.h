@@ -20,6 +20,10 @@ typedef struct apps_v1beta1_deployment_spec_t apps_v1beta1_deployment_spec_t;
 #include "v1_label_selector.h"
 #include "v1_pod_template_spec.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct apps_v1beta1_deployment_spec_t {

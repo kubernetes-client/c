@@ -17,6 +17,10 @@ typedef struct v1_preferred_scheduling_term_t v1_preferred_scheduling_term_t;
 
 #include "v1_node_selector_term.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_preferred_scheduling_term_t {

@@ -19,6 +19,10 @@ typedef struct v1_network_policy_spec_t v1_network_policy_spec_t;
 #include "v1_network_policy_egress_rule.h"
 #include "v1_network_policy_ingress_rule.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_network_policy_spec_t {

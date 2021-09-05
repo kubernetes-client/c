@@ -17,6 +17,10 @@ typedef struct extensions_v1beta1_deployment_status_t extensions_v1beta1_deploym
 
 #include "extensions_v1beta1_deployment_condition.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct extensions_v1beta1_deployment_status_t {

@@ -18,6 +18,10 @@ typedef struct v1_network_policy_ingress_rule_t v1_network_policy_ingress_rule_t
 #include "v1_network_policy_peer.h"
 #include "v1_network_policy_port.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_network_policy_ingress_rule_t {

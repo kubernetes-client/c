@@ -17,6 +17,10 @@ typedef struct extensions_v1beta1_deployment_rollback_t extensions_v1beta1_deplo
 
 #include "extensions_v1beta1_rollback_config.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct extensions_v1beta1_deployment_rollback_t {

@@ -18,6 +18,10 @@ typedef struct v1_mutating_webhook_configuration_list_t v1_mutating_webhook_conf
 #include "v1_list_meta.h"
 #include "v1_mutating_webhook_configuration.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_mutating_webhook_configuration_list_t {

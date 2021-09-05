@@ -18,6 +18,10 @@ typedef struct v1_custom_resource_definition_list_t v1_custom_resource_definitio
 #include "v1_custom_resource_definition.h"
 #include "v1_list_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_custom_resource_definition_list_t {

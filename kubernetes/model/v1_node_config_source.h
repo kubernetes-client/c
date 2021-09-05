@@ -17,6 +17,10 @@ typedef struct v1_node_config_source_t v1_node_config_source_t;
 
 #include "v1_config_map_node_config_source.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_node_config_source_t {

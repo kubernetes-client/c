@@ -16,6 +16,10 @@
 typedef struct version_info_t version_info_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct version_info_t {

@@ -17,6 +17,10 @@ typedef struct v1beta1_volume_attachment_status_t v1beta1_volume_attachment_stat
 
 #include "v1beta1_volume_error.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_volume_attachment_status_t {

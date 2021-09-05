@@ -17,6 +17,10 @@ typedef struct extensions_v1beta1_deployment_strategy_t extensions_v1beta1_deplo
 
 #include "extensions_v1beta1_rolling_update_deployment.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct extensions_v1beta1_deployment_strategy_t {

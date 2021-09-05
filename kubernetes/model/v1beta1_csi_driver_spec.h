@@ -16,6 +16,10 @@
 typedef struct v1beta1_csi_driver_spec_t v1beta1_csi_driver_spec_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_csi_driver_spec_t {

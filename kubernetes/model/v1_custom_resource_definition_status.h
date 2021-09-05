@@ -18,6 +18,10 @@ typedef struct v1_custom_resource_definition_status_t v1_custom_resource_definit
 #include "v1_custom_resource_definition_condition.h"
 #include "v1_custom_resource_definition_names.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_custom_resource_definition_status_t {

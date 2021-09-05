@@ -16,6 +16,10 @@
 typedef struct policy_v1beta1_allowed_host_path_t policy_v1beta1_allowed_host_path_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct policy_v1beta1_allowed_host_path_t {

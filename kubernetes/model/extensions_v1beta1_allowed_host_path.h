@@ -16,6 +16,10 @@
 typedef struct extensions_v1beta1_allowed_host_path_t extensions_v1beta1_allowed_host_path_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct extensions_v1beta1_allowed_host_path_t {

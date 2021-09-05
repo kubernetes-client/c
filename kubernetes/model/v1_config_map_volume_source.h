@@ -17,6 +17,10 @@ typedef struct v1_config_map_volume_source_t v1_config_map_volume_source_t;
 
 #include "v1_key_to_path.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_config_map_volume_source_t {

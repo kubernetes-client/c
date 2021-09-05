@@ -17,6 +17,10 @@ typedef struct extensions_v1beta1_run_as_group_strategy_options_t extensions_v1b
 
 #include "extensions_v1beta1_id_range.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct extensions_v1beta1_run_as_group_strategy_options_t {

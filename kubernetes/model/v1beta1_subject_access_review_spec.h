@@ -18,6 +18,10 @@ typedef struct v1beta1_subject_access_review_spec_t v1beta1_subject_access_revie
 #include "v1beta1_non_resource_attributes.h"
 #include "v1beta1_resource_attributes.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_subject_access_review_spec_t {

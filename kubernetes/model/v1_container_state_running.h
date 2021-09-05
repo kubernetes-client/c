@@ -16,6 +16,10 @@
 typedef struct v1_container_state_running_t v1_container_state_running_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_container_state_running_t {

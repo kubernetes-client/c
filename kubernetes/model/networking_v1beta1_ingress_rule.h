@@ -17,6 +17,10 @@ typedef struct networking_v1beta1_ingress_rule_t networking_v1beta1_ingress_rule
 
 #include "networking_v1beta1_http_ingress_rule_value.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct networking_v1beta1_ingress_rule_t {

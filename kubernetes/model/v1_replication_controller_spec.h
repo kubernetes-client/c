@@ -17,6 +17,10 @@ typedef struct v1_replication_controller_spec_t v1_replication_controller_spec_t
 
 #include "v1_pod_template_spec.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_replication_controller_spec_t {

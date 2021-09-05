@@ -19,6 +19,10 @@ typedef struct v1_security_context_t v1_security_context_t;
 #include "v1_se_linux_options.h"
 #include "v1_windows_security_context_options.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_security_context_t {

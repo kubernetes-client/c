@@ -18,6 +18,10 @@ typedef struct v1alpha1_priority_level_configuration_list_t v1alpha1_priority_le
 #include "v1_list_meta.h"
 #include "v1alpha1_priority_level_configuration.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1alpha1_priority_level_configuration_list_t {

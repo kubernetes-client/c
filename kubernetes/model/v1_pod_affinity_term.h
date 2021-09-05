@@ -17,6 +17,10 @@ typedef struct v1_pod_affinity_term_t v1_pod_affinity_term_t;
 
 #include "v1_label_selector.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_pod_affinity_term_t {

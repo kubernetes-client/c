@@ -17,6 +17,10 @@ typedef struct v1_cinder_volume_source_t v1_cinder_volume_source_t;
 
 #include "v1_local_object_reference.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_cinder_volume_source_t {

@@ -16,6 +16,10 @@
 typedef struct v1beta1_custom_resource_definition_names_t v1beta1_custom_resource_definition_names_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_custom_resource_definition_names_t {

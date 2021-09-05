@@ -18,6 +18,10 @@ typedef struct policy_v1beta1_pod_security_policy_list_t policy_v1beta1_pod_secu
 #include "policy_v1beta1_pod_security_policy.h"
 #include "v1_list_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct policy_v1beta1_pod_security_policy_list_t {

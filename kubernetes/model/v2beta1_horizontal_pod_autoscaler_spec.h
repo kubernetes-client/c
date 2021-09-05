@@ -18,6 +18,10 @@ typedef struct v2beta1_horizontal_pod_autoscaler_spec_t v2beta1_horizontal_pod_a
 #include "v2beta1_cross_version_object_reference.h"
 #include "v2beta1_metric_spec.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v2beta1_horizontal_pod_autoscaler_spec_t {

@@ -17,6 +17,10 @@ typedef struct apiextensions_v1beta1_webhook_client_config_t apiextensions_v1bet
 
 #include "apiextensions_v1beta1_service_reference.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct apiextensions_v1beta1_webhook_client_config_t {

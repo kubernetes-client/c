@@ -17,6 +17,10 @@ typedef struct v1beta1_priority_class_t v1beta1_priority_class_t;
 
 #include "v1_object_meta.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_priority_class_t {

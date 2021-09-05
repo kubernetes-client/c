@@ -19,6 +19,10 @@ typedef struct v1beta1_runtime_class_t v1beta1_runtime_class_t;
 #include "v1beta1_overhead.h"
 #include "v1beta1_scheduling.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1beta1_runtime_class_t {

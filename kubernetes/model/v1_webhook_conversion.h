@@ -17,6 +17,10 @@ typedef struct v1_webhook_conversion_t v1_webhook_conversion_t;
 
 #include "apiextensions_v1_webhook_client_config.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_webhook_conversion_t {

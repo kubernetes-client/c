@@ -16,6 +16,10 @@
 typedef struct v1_persistent_volume_claim_condition_t v1_persistent_volume_claim_condition_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_persistent_volume_claim_condition_t {

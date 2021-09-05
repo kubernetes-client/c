@@ -17,6 +17,10 @@ typedef struct v1_tcp_socket_action_t v1_tcp_socket_action_t;
 
 #include "object.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_tcp_socket_action_t {

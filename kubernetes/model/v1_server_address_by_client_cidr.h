@@ -16,6 +16,10 @@
 typedef struct v1_server_address_by_client_cidr_t v1_server_address_by_client_cidr_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_server_address_by_client_cidr_t {

@@ -17,6 +17,10 @@ typedef struct v1_delete_options_t v1_delete_options_t;
 
 #include "v1_preconditions.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_delete_options_t {

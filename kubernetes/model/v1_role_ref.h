@@ -16,6 +16,10 @@
 typedef struct v1_role_ref_t v1_role_ref_t;
 
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_role_ref_t {

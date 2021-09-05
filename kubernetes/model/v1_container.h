@@ -25,6 +25,10 @@ typedef struct v1_container_t v1_container_t;
 #include "v1_volume_device.h"
 #include "v1_volume_mount.h"
 
+#undef stdin
+#undef stderr
+#undef stdout
+
 
 
 typedef struct v1_container_t {
