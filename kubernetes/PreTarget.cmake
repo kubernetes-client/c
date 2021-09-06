@@ -1,3 +1,7 @@
+# config.h checks
+include(ConfigureChecks.cmake)
+configure_file(config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+
 list(APPEND SRCS
         config/kube_config_model.c
         config/kube_config_yaml.c
@@ -27,5 +31,5 @@ list(APPEND HDRS
         websocket/kube_exec.h
         include/generic.h)
 
-find_package(libwebsockets REQUIRED)
+find_package(libwebsockets CONFIG REQUIRED)
 find_package(yaml CONFIG REQUIRED)

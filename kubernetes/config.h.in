@@ -1,0 +1,2 @@
+/* Define to 1 if you have the `strndup' function. */
+#cmakedefine HAVE_STRNDUP 1

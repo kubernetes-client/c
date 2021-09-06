@@ -13,8 +13,6 @@
 #endif
 #include "../include/apiClient.h"
 
-#define KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE "/tmp/kubeconfig-XXXXXX"
-
 static bool is_cert_or_key_base64_encoded(const char *data)
 {
     if (NULL == strstr(data, "BEGIN")) {
