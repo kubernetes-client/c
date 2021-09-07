@@ -28,6 +28,7 @@ else()
 endif()
 
 set(pkgName "kubernetes")
+set(VERSION 0.0.1)
 
 find_package(CURL 7.58.0 REQUIRED)
 if(CURL_FOUND)
@@ -1541,7 +1542,6 @@ set(HDRS
 
 )
 
-set(VERSION 0.0.1)
 include(PreTarget.cmake OPTIONAL)
 
 # Add library with project file with project name as library name
