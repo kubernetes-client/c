@@ -17,9 +17,6 @@ typedef struct v1beta1_api_service_spec_t v1beta1_api_service_spec_t;
 
 #include "apiregistration_v1beta1_service_reference.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

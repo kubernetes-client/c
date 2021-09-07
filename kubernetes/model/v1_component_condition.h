@@ -16,9 +16,6 @@
 typedef struct v1_component_condition_t v1_component_condition_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

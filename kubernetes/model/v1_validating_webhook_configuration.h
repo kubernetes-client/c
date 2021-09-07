@@ -18,9 +18,6 @@ typedef struct v1_validating_webhook_configuration_t v1_validating_webhook_confi
 #include "v1_object_meta.h"
 #include "v1_validating_webhook.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

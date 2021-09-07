@@ -18,9 +18,6 @@ typedef struct v1_subject_access_review_spec_t v1_subject_access_review_spec_t;
 #include "v1_non_resource_attributes.h"
 #include "v1_resource_attributes.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

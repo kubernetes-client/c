@@ -18,9 +18,6 @@ typedef struct v1_object_meta_t v1_object_meta_t;
 #include "v1_managed_fields_entry.h"
 #include "v1_owner_reference.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

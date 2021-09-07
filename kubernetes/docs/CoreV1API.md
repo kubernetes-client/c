@@ -402,7 +402,7 @@ char*
 ```c
 // connect GET requests to attach of Pod
 //
-char* CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * name, char * _namespace, char * container, int stderr, int stdin, int stdout, int tty);
+char* CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * name, char * _namespace, char * container, int _stderr, int _stdin, int _stdout, int tty);
 ```
 
 ### Parameters
@@ -412,9 +412,9 @@ Name | Type | Description  | Notes
 **name** | **char \*** | name of the PodAttachOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **container** | **char \*** | The container in which to execute the command. Defaults to only container if there is only one container in the pod. | [optional] 
-**stderr** | **int** | Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true. | [optional] 
-**stdin** | **int** | Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false. | [optional] 
-**stdout** | **int** | Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true. | [optional] 
+**_stderr** | **int** | Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true. | [optional] 
+**_stdin** | **int** | Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false. | [optional] 
+**_stdout** | **int** | Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true. | [optional] 
 **tty** | **int** | TTY if true indicates that a tty will be allocated for the attach call. This is passed through the container runtime so the tty is allocated on the worker node by the container runtime. Defaults to false. | [optional] 
 
 ### Return type
@@ -438,7 +438,7 @@ char*
 ```c
 // connect GET requests to exec of Pod
 //
-char* CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name, char * _namespace, char * command, char * container, int stderr, int stdin, int stdout, int tty);
+char* CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name, char * _namespace, char * command, char * container, int _stderr, int _stdin, int _stdout, int tty);
 ```
 
 ### Parameters
@@ -449,9 +449,9 @@ Name | Type | Description  | Notes
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **command** | **char \*** | Command is the remote command to execute. argv array. Not executed within a shell. | [optional] 
 **container** | **char \*** | Container in which to execute the command. Defaults to only container if there is only one container in the pod. | [optional] 
-**stderr** | **int** | Redirect the standard error stream of the pod for this call. Defaults to true. | [optional] 
-**stdin** | **int** | Redirect the standard input stream of the pod for this call. Defaults to false. | [optional] 
-**stdout** | **int** | Redirect the standard output stream of the pod for this call. Defaults to true. | [optional] 
+**_stderr** | **int** | Redirect the standard error stream of the pod for this call. Defaults to true. | [optional] 
+**_stdin** | **int** | Redirect the standard input stream of the pod for this call. Defaults to false. | [optional] 
+**_stdout** | **int** | Redirect the standard output stream of the pod for this call. Defaults to true. | [optional] 
 **tty** | **int** | TTY if true indicates that a tty will be allocated for the exec call. Defaults to false. | [optional] 
 
 ### Return type
@@ -1279,7 +1279,7 @@ char*
 ```c
 // connect POST requests to attach of Pod
 //
-char* CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * name, char * _namespace, char * container, int stderr, int stdin, int stdout, int tty);
+char* CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * name, char * _namespace, char * container, int _stderr, int _stdin, int _stdout, int tty);
 ```
 
 ### Parameters
@@ -1289,9 +1289,9 @@ Name | Type | Description  | Notes
 **name** | **char \*** | name of the PodAttachOptions | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **container** | **char \*** | The container in which to execute the command. Defaults to only container if there is only one container in the pod. | [optional] 
-**stderr** | **int** | Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true. | [optional] 
-**stdin** | **int** | Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false. | [optional] 
-**stdout** | **int** | Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true. | [optional] 
+**_stderr** | **int** | Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true. | [optional] 
+**_stdin** | **int** | Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false. | [optional] 
+**_stdout** | **int** | Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true. | [optional] 
 **tty** | **int** | TTY if true indicates that a tty will be allocated for the attach call. This is passed through the container runtime so the tty is allocated on the worker node by the container runtime. Defaults to false. | [optional] 
 
 ### Return type
@@ -1315,7 +1315,7 @@ char*
 ```c
 // connect POST requests to exec of Pod
 //
-char* CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name, char * _namespace, char * command, char * container, int stderr, int stdin, int stdout, int tty);
+char* CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name, char * _namespace, char * command, char * container, int _stderr, int _stdin, int _stdout, int tty);
 ```
 
 ### Parameters
@@ -1326,9 +1326,9 @@ Name | Type | Description  | Notes
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
 **command** | **char \*** | Command is the remote command to execute. argv array. Not executed within a shell. | [optional] 
 **container** | **char \*** | Container in which to execute the command. Defaults to only container if there is only one container in the pod. | [optional] 
-**stderr** | **int** | Redirect the standard error stream of the pod for this call. Defaults to true. | [optional] 
-**stdin** | **int** | Redirect the standard input stream of the pod for this call. Defaults to false. | [optional] 
-**stdout** | **int** | Redirect the standard output stream of the pod for this call. Defaults to true. | [optional] 
+**_stderr** | **int** | Redirect the standard error stream of the pod for this call. Defaults to true. | [optional] 
+**_stdin** | **int** | Redirect the standard input stream of the pod for this call. Defaults to false. | [optional] 
+**_stdout** | **int** | Redirect the standard output stream of the pod for this call. Defaults to true. | [optional] 
 **tty** | **int** | TTY if true indicates that a tty will be allocated for the exec call. Defaults to false. | [optional] 
 
 ### Return type

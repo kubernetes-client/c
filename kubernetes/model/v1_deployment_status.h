@@ -17,9 +17,6 @@ typedef struct v1_deployment_status_t v1_deployment_status_t;
 
 #include "v1_deployment_condition.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

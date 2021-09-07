@@ -17,10 +17,6 @@
 #include "../model/v1_role_list.h"
 #include "../model/v1_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // create a ClusterRole
 //

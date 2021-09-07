@@ -19,9 +19,6 @@ typedef struct v1beta1_cluster_role_binding_t v1beta1_cluster_role_binding_t;
 #include "v1beta1_role_ref.h"
 #include "v1beta1_subject.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

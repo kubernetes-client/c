@@ -17,9 +17,6 @@ typedef struct v1_rolling_update_daemon_set_t v1_rolling_update_daemon_set_t;
 
 #include "object.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

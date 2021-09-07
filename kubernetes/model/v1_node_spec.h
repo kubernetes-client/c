@@ -18,9 +18,6 @@ typedef struct v1_node_spec_t v1_node_spec_t;
 #include "v1_node_config_source.h"
 #include "v1_taint.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

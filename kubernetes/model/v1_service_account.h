@@ -19,9 +19,6 @@ typedef struct v1_service_account_t v1_service_account_t;
 #include "v1_object_meta.h"
 #include "v1_object_reference.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

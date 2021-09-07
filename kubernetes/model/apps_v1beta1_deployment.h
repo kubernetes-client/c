@@ -19,9 +19,6 @@ typedef struct apps_v1beta1_deployment_t apps_v1beta1_deployment_t;
 #include "apps_v1beta1_deployment_status.h"
 #include "v1_object_meta.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

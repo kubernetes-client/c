@@ -16,9 +16,6 @@
 typedef struct v1_custom_resource_definition_condition_t v1_custom_resource_definition_condition_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

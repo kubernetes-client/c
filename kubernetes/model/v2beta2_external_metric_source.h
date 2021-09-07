@@ -18,9 +18,6 @@ typedef struct v2beta2_external_metric_source_t v2beta2_external_metric_source_t
 #include "v2beta2_metric_identifier.h"
 #include "v2beta2_metric_target.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

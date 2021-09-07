@@ -17,9 +17,6 @@ typedef struct v1beta2_daemon_set_update_strategy_t v1beta2_daemon_set_update_st
 
 #include "v1beta2_rolling_update_daemon_set.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -19,9 +19,6 @@ typedef struct v1_scale_t v1_scale_t;
 #include "v1_scale_spec.h"
 #include "v1_scale_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

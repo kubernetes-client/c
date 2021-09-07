@@ -16,9 +16,6 @@
 typedef struct v1alpha1_webhook_throttle_config_t v1alpha1_webhook_throttle_config_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

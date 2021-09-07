@@ -11,10 +11,6 @@
 #include "../model/v2beta1_horizontal_pod_autoscaler.h"
 #include "../model/v2beta1_horizontal_pod_autoscaler_list.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // create a HorizontalPodAutoscaler
 //

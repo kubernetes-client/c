@@ -19,9 +19,6 @@ typedef struct v1_local_subject_access_review_t v1_local_subject_access_review_t
 #include "v1_subject_access_review_spec.h"
 #include "v1_subject_access_review_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

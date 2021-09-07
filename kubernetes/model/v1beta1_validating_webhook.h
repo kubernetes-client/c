@@ -19,9 +19,6 @@ typedef struct v1beta1_validating_webhook_t v1beta1_validating_webhook_t;
 #include "v1_label_selector.h"
 #include "v1beta1_rule_with_operations.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

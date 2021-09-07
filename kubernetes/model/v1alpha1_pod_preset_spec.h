@@ -21,9 +21,6 @@ typedef struct v1alpha1_pod_preset_spec_t v1alpha1_pod_preset_spec_t;
 #include "v1_volume.h"
 #include "v1_volume_mount.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

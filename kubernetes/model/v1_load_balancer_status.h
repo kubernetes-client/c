@@ -17,9 +17,6 @@ typedef struct v1_load_balancer_status_t v1_load_balancer_status_t;
 
 #include "v1_load_balancer_ingress.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

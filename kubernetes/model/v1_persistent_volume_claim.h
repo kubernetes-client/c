@@ -19,9 +19,6 @@ typedef struct v1_persistent_volume_claim_t v1_persistent_volume_claim_t;
 #include "v1_persistent_volume_claim_spec.h"
 #include "v1_persistent_volume_claim_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

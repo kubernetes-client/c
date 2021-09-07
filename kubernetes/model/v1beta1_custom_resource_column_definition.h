@@ -16,9 +16,6 @@
 typedef struct v1beta1_custom_resource_column_definition_t v1beta1_custom_resource_column_definition_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

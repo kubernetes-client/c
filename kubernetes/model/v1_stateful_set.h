@@ -19,9 +19,6 @@ typedef struct v1_stateful_set_t v1_stateful_set_t;
 #include "v1_stateful_set_spec.h"
 #include "v1_stateful_set_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

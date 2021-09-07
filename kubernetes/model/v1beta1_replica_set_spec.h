@@ -18,9 +18,6 @@ typedef struct v1beta1_replica_set_spec_t v1beta1_replica_set_spec_t;
 #include "v1_label_selector.h"
 #include "v1_pod_template_spec.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

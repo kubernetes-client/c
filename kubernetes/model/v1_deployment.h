@@ -19,9 +19,6 @@ typedef struct v1_deployment_t v1_deployment_t;
 #include "v1_deployment_status.h"
 #include "v1_object_meta.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -7,10 +7,6 @@
 #include "../include/binary.h"
 #include "../model/v1_api_group.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // get information of a group
 //

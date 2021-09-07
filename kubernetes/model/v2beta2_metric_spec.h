@@ -20,9 +20,6 @@ typedef struct v2beta2_metric_spec_t v2beta2_metric_spec_t;
 #include "v2beta2_pods_metric_source.h"
 #include "v2beta2_resource_metric_source.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

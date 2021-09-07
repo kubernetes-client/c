@@ -16,9 +16,6 @@
 typedef struct extensions_v1beta1_id_range_t extensions_v1beta1_id_range_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

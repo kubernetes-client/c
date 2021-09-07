@@ -16,9 +16,6 @@
 typedef struct v1_owner_reference_t v1_owner_reference_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

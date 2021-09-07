@@ -19,9 +19,6 @@ typedef struct extensions_v1beta1_ingress_t extensions_v1beta1_ingress_t;
 #include "extensions_v1beta1_ingress_status.h"
 #include "v1_object_meta.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

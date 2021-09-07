@@ -16,9 +16,6 @@
 typedef struct v1_persistent_volume_claim_volume_source_t v1_persistent_volume_claim_volume_source_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

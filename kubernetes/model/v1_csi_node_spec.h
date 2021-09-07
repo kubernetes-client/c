@@ -17,9 +17,6 @@ typedef struct v1_csi_node_spec_t v1_csi_node_spec_t;
 
 #include "v1_csi_node_driver.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

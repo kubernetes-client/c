@@ -17,9 +17,6 @@ typedef struct v1_topology_selector_term_t v1_topology_selector_term_t;
 
 #include "v1_topology_selector_label_requirement.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

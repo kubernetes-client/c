@@ -16,9 +16,6 @@
 typedef struct v1_node_selector_requirement_t v1_node_selector_requirement_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

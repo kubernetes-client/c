@@ -16,9 +16,6 @@
 typedef struct policy_v1beta1_id_range_t policy_v1beta1_id_range_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

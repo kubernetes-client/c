@@ -16,9 +16,6 @@
 typedef struct v1alpha1_overhead_t v1alpha1_overhead_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -17,9 +17,6 @@ typedef struct v1_session_affinity_config_t v1_session_affinity_config_t;
 
 #include "v1_client_ip_config.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

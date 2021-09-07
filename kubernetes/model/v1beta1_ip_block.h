@@ -16,9 +16,6 @@
 typedef struct v1beta1_ip_block_t v1beta1_ip_block_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

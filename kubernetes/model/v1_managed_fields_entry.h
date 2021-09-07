@@ -17,9 +17,6 @@ typedef struct v1_managed_fields_entry_t v1_managed_fields_entry_t;
 
 #include "object.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -18,9 +18,6 @@ typedef struct v1_downward_api_volume_file_t v1_downward_api_volume_file_t;
 #include "v1_object_field_selector.h"
 #include "v1_resource_field_selector.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

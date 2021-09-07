@@ -18,9 +18,6 @@ typedef struct v1_service_list_t v1_service_list_t;
 #include "v1_list_meta.h"
 #include "v1_service.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

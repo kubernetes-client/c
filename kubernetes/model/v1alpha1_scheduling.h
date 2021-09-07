@@ -17,9 +17,6 @@ typedef struct v1alpha1_scheduling_t v1alpha1_scheduling_t;
 
 #include "v1_toleration.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

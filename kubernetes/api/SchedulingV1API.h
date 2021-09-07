@@ -11,10 +11,6 @@
 #include "../model/v1_priority_class_list.h"
 #include "../model/v1_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // create a PriorityClass
 //

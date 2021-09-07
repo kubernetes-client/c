@@ -16,9 +16,6 @@
 typedef struct v1_token_review_spec_t v1_token_review_spec_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

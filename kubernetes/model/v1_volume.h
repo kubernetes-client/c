@@ -44,9 +44,6 @@ typedef struct v1_volume_t v1_volume_t;
 #include "v1_storage_os_volume_source.h"
 #include "v1_vsphere_virtual_disk_volume_source.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

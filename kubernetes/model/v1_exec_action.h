@@ -16,9 +16,6 @@
 typedef struct v1_exec_action_t v1_exec_action_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -16,9 +16,6 @@
 typedef struct networking_v1beta1_ingress_tls_t networking_v1beta1_ingress_tls_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

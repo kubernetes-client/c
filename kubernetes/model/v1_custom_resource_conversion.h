@@ -17,9 +17,6 @@ typedef struct v1_custom_resource_conversion_t v1_custom_resource_conversion_t;
 
 #include "v1_webhook_conversion.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

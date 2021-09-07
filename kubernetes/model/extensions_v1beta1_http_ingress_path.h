@@ -17,9 +17,6 @@ typedef struct extensions_v1beta1_http_ingress_path_t extensions_v1beta1_http_in
 
 #include "extensions_v1beta1_ingress_backend.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

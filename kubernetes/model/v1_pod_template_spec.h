@@ -18,9 +18,6 @@ typedef struct v1_pod_template_spec_t v1_pod_template_spec_t;
 #include "v1_object_meta.h"
 #include "v1_pod_spec.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

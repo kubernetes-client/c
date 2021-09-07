@@ -16,9 +16,6 @@
 typedef struct v1beta1_subject_access_review_status_t v1beta1_subject_access_review_status_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -16,9 +16,6 @@
 typedef struct v1_http_header_t v1_http_header_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

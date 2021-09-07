@@ -16,9 +16,6 @@
 typedef struct v1_container_image_t v1_container_image_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -18,9 +18,6 @@ typedef struct v1_persistent_volume_claim_list_t v1_persistent_volume_claim_list
 #include "v1_list_meta.h"
 #include "v1_persistent_volume_claim.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

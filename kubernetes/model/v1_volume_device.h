@@ -16,9 +16,6 @@
 typedef struct v1_volume_device_t v1_volume_device_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

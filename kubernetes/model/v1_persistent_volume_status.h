@@ -16,9 +16,6 @@
 typedef struct v1_persistent_volume_status_t v1_persistent_volume_status_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

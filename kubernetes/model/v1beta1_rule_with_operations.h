@@ -16,9 +16,6 @@
 typedef struct v1beta1_rule_with_operations_t v1beta1_rule_with_operations_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

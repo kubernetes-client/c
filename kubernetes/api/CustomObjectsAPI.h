@@ -8,10 +8,6 @@
 #include "../model/object.h"
 #include "../model/v1_delete_options.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // Creates a cluster scoped Custom object
 //

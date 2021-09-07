@@ -16,9 +16,6 @@
 typedef struct v1_self_subject_rules_review_spec_t v1_self_subject_rules_review_spec_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

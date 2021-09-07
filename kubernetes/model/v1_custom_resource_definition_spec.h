@@ -19,9 +19,6 @@ typedef struct v1_custom_resource_definition_spec_t v1_custom_resource_definitio
 #include "v1_custom_resource_definition_names.h"
 #include "v1_custom_resource_definition_version.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

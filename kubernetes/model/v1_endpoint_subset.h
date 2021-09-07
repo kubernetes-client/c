@@ -18,9 +18,6 @@ typedef struct v1_endpoint_subset_t v1_endpoint_subset_t;
 #include "v1_endpoint_address.h"
 #include "v1_endpoint_port.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

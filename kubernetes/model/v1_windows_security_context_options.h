@@ -16,9 +16,6 @@
 typedef struct v1_windows_security_context_options_t v1_windows_security_context_options_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

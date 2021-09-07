@@ -19,9 +19,6 @@ typedef struct v1beta1_custom_resource_definition_t v1beta1_custom_resource_defi
 #include "v1beta1_custom_resource_definition_spec.h"
 #include "v1beta1_custom_resource_definition_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

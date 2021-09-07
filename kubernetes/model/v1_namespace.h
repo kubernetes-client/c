@@ -19,9 +19,6 @@ typedef struct v1_namespace_t v1_namespace_t;
 #include "v1_namespace_status.h"
 #include "v1_object_meta.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

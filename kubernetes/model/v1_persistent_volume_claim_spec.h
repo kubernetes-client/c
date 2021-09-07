@@ -19,9 +19,6 @@ typedef struct v1_persistent_volume_claim_spec_t v1_persistent_volume_claim_spec
 #include "v1_resource_requirements.h"
 #include "v1_typed_local_object_reference.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

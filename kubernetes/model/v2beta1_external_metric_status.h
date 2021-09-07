@@ -17,9 +17,6 @@ typedef struct v2beta1_external_metric_status_t v2beta1_external_metric_status_t
 
 #include "v1_label_selector.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

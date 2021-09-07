@@ -20,9 +20,6 @@ typedef struct v1_volume_projection_t v1_volume_projection_t;
 #include "v1_secret_projection.h"
 #include "v1_service_account_token_projection.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

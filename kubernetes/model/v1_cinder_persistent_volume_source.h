@@ -17,9 +17,6 @@ typedef struct v1_cinder_persistent_volume_source_t v1_cinder_persistent_volume_
 
 #include "v1_secret_reference.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

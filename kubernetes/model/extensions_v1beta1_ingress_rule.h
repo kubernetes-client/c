@@ -17,9 +17,6 @@ typedef struct extensions_v1beta1_ingress_rule_t extensions_v1beta1_ingress_rule
 
 #include "extensions_v1beta1_http_ingress_rule_value.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

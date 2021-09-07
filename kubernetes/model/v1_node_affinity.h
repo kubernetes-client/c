@@ -18,9 +18,6 @@ typedef struct v1_node_affinity_t v1_node_affinity_t;
 #include "v1_node_selector.h"
 #include "v1_preferred_scheduling_term.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

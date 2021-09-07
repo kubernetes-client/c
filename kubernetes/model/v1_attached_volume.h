@@ -16,9 +16,6 @@
 typedef struct v1_attached_volume_t v1_attached_volume_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

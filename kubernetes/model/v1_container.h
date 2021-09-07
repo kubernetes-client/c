@@ -25,9 +25,6 @@ typedef struct v1_container_t v1_container_t;
 #include "v1_volume_device.h"
 #include "v1_volume_mount.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 
@@ -46,7 +43,7 @@ typedef struct v1_container_t {
     struct v1_resource_requirements_t *resources; //model
     struct v1_security_context_t *security_context; //model
     struct v1_probe_t *startup_probe; //model
-    int stdin; //boolean
+    int _stdin; //boolean
     int stdin_once; //boolean
     char *termination_message_path; // string
     char *termination_message_policy; // string
@@ -72,7 +69,7 @@ v1_container_t *v1_container_create(
     v1_resource_requirements_t *resources,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,
-    int stdin,
+    int _stdin,
     int stdin_once,
     char *termination_message_path,
     char *termination_message_policy,

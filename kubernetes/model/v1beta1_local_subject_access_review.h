@@ -19,9 +19,6 @@ typedef struct v1beta1_local_subject_access_review_t v1beta1_local_subject_acces
 #include "v1beta1_subject_access_review_spec.h"
 #include "v1beta1_subject_access_review_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

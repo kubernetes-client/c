@@ -16,9 +16,6 @@
 typedef struct v1beta2_scale_spec_t v1beta2_scale_spec_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

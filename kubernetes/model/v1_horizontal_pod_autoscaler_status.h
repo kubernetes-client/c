@@ -16,9 +16,6 @@
 typedef struct v1_horizontal_pod_autoscaler_status_t v1_horizontal_pod_autoscaler_status_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

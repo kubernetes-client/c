@@ -7,10 +7,6 @@
 #include "../include/binary.h"
 #include "../model/version_info.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // get the code version
 //

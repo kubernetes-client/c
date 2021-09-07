@@ -18,9 +18,6 @@ typedef struct v2alpha1_cron_job_list_t v2alpha1_cron_job_list_t;
 #include "v1_list_meta.h"
 #include "v2alpha1_cron_job.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

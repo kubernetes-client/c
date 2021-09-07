@@ -17,9 +17,6 @@ typedef struct v2alpha1_cron_job_spec_t v2alpha1_cron_job_spec_t;
 
 #include "v2alpha1_job_template_spec.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

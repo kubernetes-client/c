@@ -17,9 +17,6 @@ typedef struct v1_container_status_t v1_container_status_t;
 
 #include "v1_container_state.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -19,9 +19,6 @@ typedef struct v1_service_t v1_service_t;
 #include "v1_service_spec.h"
 #include "v1_service_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

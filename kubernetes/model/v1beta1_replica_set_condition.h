@@ -16,9 +16,6 @@
 typedef struct v1beta1_replica_set_condition_t v1beta1_replica_set_condition_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

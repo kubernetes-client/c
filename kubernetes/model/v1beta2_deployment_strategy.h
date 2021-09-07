@@ -17,9 +17,6 @@ typedef struct v1beta2_deployment_strategy_t v1beta2_deployment_strategy_t;
 
 #include "v1beta2_rolling_update_deployment.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

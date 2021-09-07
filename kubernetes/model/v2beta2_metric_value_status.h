@@ -16,9 +16,6 @@
 typedef struct v2beta2_metric_value_status_t v2beta2_metric_value_status_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

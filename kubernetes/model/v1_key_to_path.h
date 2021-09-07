@@ -16,9 +16,6 @@
 typedef struct v1_key_to_path_t v1_key_to_path_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

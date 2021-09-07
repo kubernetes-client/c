@@ -17,9 +17,6 @@ typedef struct v2alpha1_cron_job_status_t v2alpha1_cron_job_status_t;
 
 #include "v1_object_reference.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

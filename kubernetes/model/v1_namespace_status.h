@@ -17,9 +17,6 @@ typedef struct v1_namespace_status_t v1_namespace_status_t;
 
 #include "v1_namespace_condition.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

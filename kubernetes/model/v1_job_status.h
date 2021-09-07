@@ -17,9 +17,6 @@ typedef struct v1_job_status_t v1_job_status_t;
 
 #include "v1_job_condition.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

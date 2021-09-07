@@ -17,9 +17,6 @@ typedef struct apps_v1beta1_deployment_rollback_t apps_v1beta1_deployment_rollba
 
 #include "apps_v1beta1_rollback_config.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -1551,14 +1551,16 @@ if(NOT CMAKE_VERSION VERSION_LESS 3.4)
 endif()
 target_link_libraries(${pkgName} PUBLIC ${CURL_LIBRARIES} )
 target_include_directories(
-        ${pkgName} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-        $<INSTALL_INTERFACE:include>
+    ${pkgName} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include>
 )
 
 include(PostTarget.cmake OPTIONAL)
 
-if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in)
-    # installation of libraries, headers, and config files
+# installation of libraries, headers, and config files
+if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in)
+    install(TARGETS ${pkgName} DESTINATION ${CMAKE_INSTALL_PREFIX})
+else()
     include(GNUInstallDirs)
     install(TARGETS ${pkgName}
             EXPORT ${pkgName}Targets

@@ -16,9 +16,6 @@
 typedef struct apiregistration_v1_service_reference_t apiregistration_v1_service_reference_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

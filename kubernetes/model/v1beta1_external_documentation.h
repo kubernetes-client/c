@@ -16,9 +16,6 @@
 typedef struct v1beta1_external_documentation_t v1beta1_external_documentation_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

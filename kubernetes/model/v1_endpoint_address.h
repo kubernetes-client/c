@@ -17,9 +17,6 @@ typedef struct v1_endpoint_address_t v1_endpoint_address_t;
 
 #include "v1_object_reference.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

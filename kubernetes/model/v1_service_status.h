@@ -17,9 +17,6 @@ typedef struct v1_service_status_t v1_service_status_t;
 
 #include "v1_load_balancer_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -18,9 +18,6 @@ typedef struct v1alpha1_role_t v1alpha1_role_t;
 #include "v1_object_meta.h"
 #include "v1alpha1_policy_rule.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

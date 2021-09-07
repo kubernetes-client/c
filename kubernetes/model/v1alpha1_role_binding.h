@@ -19,9 +19,6 @@ typedef struct v1alpha1_role_binding_t v1alpha1_role_binding_t;
 #include "v1_object_meta.h"
 #include "v1alpha1_role_ref.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

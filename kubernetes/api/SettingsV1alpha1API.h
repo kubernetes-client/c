@@ -11,10 +11,6 @@
 #include "../model/v1alpha1_pod_preset.h"
 #include "../model/v1alpha1_pod_preset_list.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // create a PodPreset
 //

@@ -19,9 +19,6 @@ typedef struct v1_node_t v1_node_t;
 #include "v1_node_status.h"
 #include "v1_object_meta.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

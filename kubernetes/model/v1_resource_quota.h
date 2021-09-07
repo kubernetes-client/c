@@ -19,9 +19,6 @@ typedef struct v1_resource_quota_t v1_resource_quota_t;
 #include "v1_resource_quota_spec.h"
 #include "v1_resource_quota_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

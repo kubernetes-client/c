@@ -18,9 +18,6 @@ typedef struct v1_network_policy_peer_t v1_network_policy_peer_t;
 #include "v1_ip_block.h"
 #include "v1_label_selector.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

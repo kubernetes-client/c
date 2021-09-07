@@ -18,9 +18,6 @@ typedef struct v1alpha1_role_binding_list_t v1alpha1_role_binding_list_t;
 #include "v1_list_meta.h"
 #include "v1alpha1_role_binding.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

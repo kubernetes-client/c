@@ -16,9 +16,6 @@
 typedef struct v1_resource_attributes_t v1_resource_attributes_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

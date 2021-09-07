@@ -16,9 +16,6 @@
 typedef struct v1beta1_role_ref_t v1beta1_role_ref_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

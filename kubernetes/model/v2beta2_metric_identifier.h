@@ -17,9 +17,6 @@ typedef struct v2beta2_metric_identifier_t v2beta2_metric_identifier_t;
 
 #include "v1_label_selector.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

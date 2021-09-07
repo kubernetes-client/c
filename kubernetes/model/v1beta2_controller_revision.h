@@ -18,9 +18,6 @@ typedef struct v1beta2_controller_revision_t v1beta2_controller_revision_t;
 #include "object.h"
 #include "v1_object_meta.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

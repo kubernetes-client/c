@@ -16,9 +16,6 @@
 typedef struct v1beta1_endpoint_conditions_t v1beta1_endpoint_conditions_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

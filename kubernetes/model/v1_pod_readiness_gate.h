@@ -16,9 +16,6 @@
 typedef struct v1_pod_readiness_gate_t v1_pod_readiness_gate_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

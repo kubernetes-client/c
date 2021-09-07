@@ -18,9 +18,6 @@ typedef struct v1alpha1_runtime_class_t v1alpha1_runtime_class_t;
 #include "v1_object_meta.h"
 #include "v1alpha1_runtime_class_spec.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

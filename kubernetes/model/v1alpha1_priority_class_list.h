@@ -18,9 +18,6 @@ typedef struct v1alpha1_priority_class_list_t v1alpha1_priority_class_list_t;
 #include "v1_list_meta.h"
 #include "v1alpha1_priority_class.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

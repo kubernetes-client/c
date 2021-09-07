@@ -16,9 +16,6 @@
 typedef struct v1_event_series_t v1_event_series_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

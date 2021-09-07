@@ -16,9 +16,6 @@
 typedef struct v1alpha1_flow_schema_condition_t v1alpha1_flow_schema_condition_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

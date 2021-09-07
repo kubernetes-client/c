@@ -17,9 +17,6 @@ typedef struct networking_v1beta1_http_ingress_rule_value_t networking_v1beta1_h
 
 #include "networking_v1beta1_http_ingress_path.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

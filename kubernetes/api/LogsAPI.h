@@ -6,10 +6,6 @@
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 void
 LogsAPI_logFileHandler(apiClient_t *apiClient, char * logpath );

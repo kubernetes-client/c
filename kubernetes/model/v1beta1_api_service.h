@@ -19,9 +19,6 @@ typedef struct v1beta1_api_service_t v1beta1_api_service_t;
 #include "v1beta1_api_service_spec.h"
 #include "v1beta1_api_service_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

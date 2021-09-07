@@ -11,10 +11,6 @@
 #include "../model/v1beta1_api_service.h"
 #include "../model/v1beta1_api_service_list.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // create an APIService
 //

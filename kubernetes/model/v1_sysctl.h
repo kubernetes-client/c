@@ -16,9 +16,6 @@
 typedef struct v1_sysctl_t v1_sysctl_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

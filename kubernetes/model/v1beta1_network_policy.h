@@ -18,9 +18,6 @@ typedef struct v1beta1_network_policy_t v1beta1_network_policy_t;
 #include "v1_object_meta.h"
 #include "v1beta1_network_policy_spec.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

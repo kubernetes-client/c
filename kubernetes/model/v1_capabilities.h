@@ -16,9 +16,6 @@
 typedef struct v1_capabilities_t v1_capabilities_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

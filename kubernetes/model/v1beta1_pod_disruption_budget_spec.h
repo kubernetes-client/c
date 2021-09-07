@@ -18,9 +18,6 @@ typedef struct v1beta1_pod_disruption_budget_spec_t v1beta1_pod_disruption_budge
 #include "object.h"
 #include "v1_label_selector.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

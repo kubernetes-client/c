@@ -16,9 +16,6 @@
 typedef struct v1_config_map_node_config_source_t v1_config_map_node_config_source_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

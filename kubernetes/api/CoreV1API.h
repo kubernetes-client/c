@@ -45,10 +45,6 @@
 #include "../model/v1_token_request.h"
 #include "../model/v1beta1_eviction.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // connect DELETE requests to proxy of Pod
 //
@@ -89,13 +85,13 @@ CoreV1API_connectDeleteNodeProxyWithPath(apiClient_t *apiClient, char * name , c
 // connect GET requests to attach of Pod
 //
 char*
-CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * name , char * _namespace , char * container , int stderr , int stdin , int stdout , int tty );
+CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * name , char * _namespace , char * container , int _stderr , int _stdin , int _stdout , int tty );
 
 
 // connect GET requests to exec of Pod
 //
 char*
-CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name , char * _namespace , char * command , char * container , int stderr , int stdin , int stdout , int tty );
+CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name , char * _namespace , char * command , char * container , int _stderr , int _stdin , int _stdout , int tty );
 
 
 // connect GET requests to portforward of Pod
@@ -251,13 +247,13 @@ CoreV1API_connectPatchNodeProxyWithPath(apiClient_t *apiClient, char * name , ch
 // connect POST requests to attach of Pod
 //
 char*
-CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * name , char * _namespace , char * container , int stderr , int stdin , int stdout , int tty );
+CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * name , char * _namespace , char * container , int _stderr , int _stdin , int _stdout , int tty );
 
 
 // connect POST requests to exec of Pod
 //
 char*
-CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name , char * _namespace , char * command , char * container , int stderr , int stdin , int stdout , int tty );
+CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name , char * _namespace , char * command , char * container , int _stderr , int _stdin , int _stdout , int tty );
 
 
 // connect POST requests to portforward of Pod

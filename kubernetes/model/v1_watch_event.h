@@ -17,9 +17,6 @@ typedef struct v1_watch_event_t v1_watch_event_t;
 
 #include "object.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

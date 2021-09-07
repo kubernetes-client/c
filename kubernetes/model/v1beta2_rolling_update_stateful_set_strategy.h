@@ -16,9 +16,6 @@
 typedef struct v1beta2_rolling_update_stateful_set_strategy_t v1beta2_rolling_update_stateful_set_strategy_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

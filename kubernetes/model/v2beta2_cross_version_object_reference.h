@@ -16,9 +16,6 @@
 typedef struct v2beta2_cross_version_object_reference_t v2beta2_cross_version_object_reference_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -16,9 +16,6 @@
 typedef struct v1_bound_object_reference_t v1_bound_object_reference_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

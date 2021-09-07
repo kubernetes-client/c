@@ -17,9 +17,6 @@ typedef struct v1alpha1_aggregation_rule_t v1alpha1_aggregation_rule_t;
 
 #include "v1_label_selector.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

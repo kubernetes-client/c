@@ -17,9 +17,6 @@ typedef struct v1_secret_volume_source_t v1_secret_volume_source_t;
 
 #include "v1_key_to_path.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

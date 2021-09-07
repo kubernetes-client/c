@@ -18,9 +18,6 @@ typedef struct v1_horizontal_pod_autoscaler_list_t v1_horizontal_pod_autoscaler_
 #include "v1_horizontal_pod_autoscaler.h"
 #include "v1_list_meta.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

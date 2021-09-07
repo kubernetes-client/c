@@ -16,9 +16,6 @@
 typedef struct v1beta1_non_resource_attributes_t v1beta1_non_resource_attributes_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

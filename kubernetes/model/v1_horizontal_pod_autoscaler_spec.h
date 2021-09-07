@@ -17,9 +17,6 @@ typedef struct v1_horizontal_pod_autoscaler_spec_t v1_horizontal_pod_autoscaler_
 
 #include "v1_cross_version_object_reference.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

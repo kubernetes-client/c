@@ -16,9 +16,6 @@
 typedef struct apiextensions_v1beta1_service_reference_t apiextensions_v1beta1_service_reference_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

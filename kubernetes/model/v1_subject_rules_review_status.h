@@ -18,9 +18,6 @@ typedef struct v1_subject_rules_review_status_t v1_subject_rules_review_status_t
 #include "v1_non_resource_rule.h"
 #include "v1_resource_rule.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

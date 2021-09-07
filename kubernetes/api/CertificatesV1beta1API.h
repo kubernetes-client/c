@@ -11,10 +11,6 @@
 #include "../model/v1beta1_certificate_signing_request.h"
 #include "../model/v1beta1_certificate_signing_request_list.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // create a CertificateSigningRequest
 //

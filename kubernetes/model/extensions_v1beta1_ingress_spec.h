@@ -19,9 +19,6 @@ typedef struct extensions_v1beta1_ingress_spec_t extensions_v1beta1_ingress_spec
 #include "extensions_v1beta1_ingress_rule.h"
 #include "extensions_v1beta1_ingress_tls.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -19,9 +19,6 @@ typedef struct v1beta2_scale_t v1beta2_scale_t;
 #include "v1beta2_scale_spec.h"
 #include "v1beta2_scale_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

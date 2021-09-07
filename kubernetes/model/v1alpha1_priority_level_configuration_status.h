@@ -17,9 +17,6 @@ typedef struct v1alpha1_priority_level_configuration_status_t v1alpha1_priority_
 
 #include "v1alpha1_priority_level_configuration_condition.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

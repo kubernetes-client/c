@@ -17,9 +17,6 @@ typedef struct v1_stateful_set_status_t v1_stateful_set_status_t;
 
 #include "v1_stateful_set_condition.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

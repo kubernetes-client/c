@@ -18,9 +18,6 @@ typedef struct v1_persistent_volume_list_t v1_persistent_volume_list_t;
 #include "v1_list_meta.h"
 #include "v1_persistent_volume.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

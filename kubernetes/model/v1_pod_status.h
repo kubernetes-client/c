@@ -19,9 +19,6 @@ typedef struct v1_pod_status_t v1_pod_status_t;
 #include "v1_pod_condition.h"
 #include "v1_pod_ip.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

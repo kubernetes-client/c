@@ -16,9 +16,6 @@
 typedef struct v1_azure_file_persistent_volume_source_t v1_azure_file_persistent_volume_source_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

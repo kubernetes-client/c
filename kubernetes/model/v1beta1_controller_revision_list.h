@@ -18,9 +18,6 @@ typedef struct v1beta1_controller_revision_list_t v1beta1_controller_revision_li
 #include "v1_list_meta.h"
 #include "v1beta1_controller_revision.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

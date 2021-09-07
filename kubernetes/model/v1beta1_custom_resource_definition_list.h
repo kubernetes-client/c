@@ -18,9 +18,6 @@ typedef struct v1beta1_custom_resource_definition_list_t v1beta1_custom_resource
 #include "v1_list_meta.h"
 #include "v1beta1_custom_resource_definition.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

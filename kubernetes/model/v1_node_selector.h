@@ -17,9 +17,6 @@ typedef struct v1_node_selector_t v1_node_selector_t;
 
 #include "v1_node_selector_term.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

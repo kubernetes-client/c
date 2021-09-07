@@ -17,9 +17,6 @@ typedef struct extensions_v1beta1_se_linux_strategy_options_t extensions_v1beta1
 
 #include "v1_se_linux_options.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

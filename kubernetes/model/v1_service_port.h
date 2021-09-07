@@ -17,9 +17,6 @@ typedef struct v1_service_port_t v1_service_port_t;
 
 #include "object.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

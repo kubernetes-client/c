@@ -18,9 +18,6 @@ typedef struct v2alpha1_job_template_spec_t v2alpha1_job_template_spec_t;
 #include "v1_job_spec.h"
 #include "v1_object_meta.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

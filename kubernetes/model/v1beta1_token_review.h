@@ -19,9 +19,6 @@ typedef struct v1beta1_token_review_t v1beta1_token_review_t;
 #include "v1beta1_token_review_spec.h"
 #include "v1beta1_token_review_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

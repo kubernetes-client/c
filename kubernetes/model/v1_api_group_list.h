@@ -17,9 +17,6 @@ typedef struct v1_api_group_list_t v1_api_group_list_t;
 
 #include "v1_api_group.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

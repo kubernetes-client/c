@@ -17,9 +17,6 @@ typedef struct v1_label_selector_t v1_label_selector_t;
 
 #include "v1_label_selector_requirement.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -17,9 +17,6 @@ typedef struct v1_custom_resource_validation_t v1_custom_resource_validation_t;
 
 #include "v1_json_schema_props.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

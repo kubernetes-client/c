@@ -19,9 +19,6 @@ typedef struct v1_affinity_t v1_affinity_t;
 #include "v1_pod_affinity.h"
 #include "v1_pod_anti_affinity.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -18,9 +18,6 @@ typedef struct v1beta1_csi_node_t v1beta1_csi_node_t;
 #include "v1_object_meta.h"
 #include "v1beta1_csi_node_spec.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

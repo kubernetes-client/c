@@ -17,9 +17,6 @@ typedef struct v1_downward_api_volume_source_t v1_downward_api_volume_source_t;
 
 #include "v1_downward_api_volume_file.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

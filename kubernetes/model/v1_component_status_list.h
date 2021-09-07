@@ -18,9 +18,6 @@ typedef struct v1_component_status_list_t v1_component_status_list_t;
 #include "v1_component_status.h"
 #include "v1_list_meta.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

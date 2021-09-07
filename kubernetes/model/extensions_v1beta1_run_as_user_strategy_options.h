@@ -17,9 +17,6 @@ typedef struct extensions_v1beta1_run_as_user_strategy_options_t extensions_v1be
 
 #include "extensions_v1beta1_id_range.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

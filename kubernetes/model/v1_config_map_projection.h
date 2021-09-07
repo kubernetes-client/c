@@ -17,9 +17,6 @@ typedef struct v1_config_map_projection_t v1_config_map_projection_t;
 
 #include "v1_key_to_path.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

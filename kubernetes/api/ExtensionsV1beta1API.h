@@ -23,10 +23,6 @@
 #include "../model/v1beta1_replica_set.h"
 #include "../model/v1beta1_replica_set_list.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // create a DaemonSet
 //

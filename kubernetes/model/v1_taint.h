@@ -16,9 +16,6 @@
 typedef struct v1_taint_t v1_taint_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

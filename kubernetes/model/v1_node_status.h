@@ -23,9 +23,6 @@ typedef struct v1_node_status_t v1_node_status_t;
 #include "v1_node_daemon_endpoints.h"
 #include "v1_node_system_info.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

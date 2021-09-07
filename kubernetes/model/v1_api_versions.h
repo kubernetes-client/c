@@ -17,9 +17,6 @@ typedef struct v1_api_versions_t v1_api_versions_t;
 
 #include "v1_server_address_by_client_cidr.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

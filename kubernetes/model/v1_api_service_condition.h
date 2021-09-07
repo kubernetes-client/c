@@ -16,9 +16,6 @@
 typedef struct v1_api_service_condition_t v1_api_service_condition_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

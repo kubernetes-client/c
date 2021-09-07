@@ -19,9 +19,6 @@ typedef struct v1beta1_pod_disruption_budget_t v1beta1_pod_disruption_budget_t;
 #include "v1beta1_pod_disruption_budget_spec.h"
 #include "v1beta1_pod_disruption_budget_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

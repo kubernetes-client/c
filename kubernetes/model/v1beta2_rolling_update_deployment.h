@@ -17,9 +17,6 @@ typedef struct v1beta2_rolling_update_deployment_t v1beta2_rolling_update_deploy
 
 #include "object.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

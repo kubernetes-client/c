@@ -17,9 +17,6 @@ typedef struct v1_topology_spread_constraint_t v1_topology_spread_constraint_t;
 
 #include "v1_label_selector.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

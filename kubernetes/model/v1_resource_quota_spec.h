@@ -17,9 +17,6 @@ typedef struct v1_resource_quota_spec_t v1_resource_quota_spec_t;
 
 #include "v1_scope_selector.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

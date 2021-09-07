@@ -17,9 +17,6 @@ typedef struct v1_pod_dns_config_t v1_pod_dns_config_t;
 
 #include "v1_pod_dns_config_option.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

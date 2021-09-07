@@ -17,9 +17,6 @@ typedef struct v1beta1_volume_attachment_source_t v1beta1_volume_attachment_sour
 
 #include "v1_persistent_volume_spec.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

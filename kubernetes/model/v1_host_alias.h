@@ -16,9 +16,6 @@
 typedef struct v1_host_alias_t v1_host_alias_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

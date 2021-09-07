@@ -18,9 +18,6 @@ typedef struct v1beta2_deployment_list_t v1beta2_deployment_list_t;
 #include "v1_list_meta.h"
 #include "v1beta2_deployment.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

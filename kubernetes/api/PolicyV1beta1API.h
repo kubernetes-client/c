@@ -13,10 +13,6 @@
 #include "../model/v1beta1_pod_disruption_budget.h"
 #include "../model/v1beta1_pod_disruption_budget_list.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // create a PodDisruptionBudget
 //

@@ -17,9 +17,6 @@ typedef struct apps_v1beta1_rolling_update_deployment_t apps_v1beta1_rolling_upd
 
 #include "object.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

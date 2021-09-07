@@ -18,9 +18,6 @@ typedef struct v1_binding_t v1_binding_t;
 #include "v1_object_meta.h"
 #include "v1_object_reference.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

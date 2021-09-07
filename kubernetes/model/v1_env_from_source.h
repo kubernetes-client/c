@@ -18,9 +18,6 @@ typedef struct v1_env_from_source_t v1_env_from_source_t;
 #include "v1_config_map_env_source.h"
 #include "v1_secret_env_source.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

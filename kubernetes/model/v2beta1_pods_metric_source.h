@@ -17,9 +17,6 @@ typedef struct v2beta1_pods_metric_source_t v2beta1_pods_metric_source_t;
 
 #include "v1_label_selector.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -17,9 +17,6 @@ typedef struct extensions_v1beta1_rolling_update_deployment_t extensions_v1beta1
 
 #include "object.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

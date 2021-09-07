@@ -18,9 +18,6 @@ typedef struct v1_resource_quota_list_t v1_resource_quota_list_t;
 #include "v1_list_meta.h"
 #include "v1_resource_quota.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

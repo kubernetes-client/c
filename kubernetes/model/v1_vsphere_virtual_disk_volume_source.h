@@ -16,9 +16,6 @@
 typedef struct v1_vsphere_virtual_disk_volume_source_t v1_vsphere_virtual_disk_volume_source_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

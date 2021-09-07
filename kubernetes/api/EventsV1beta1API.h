@@ -11,10 +11,6 @@
 #include "../model/v1beta1_event.h"
 #include "../model/v1beta1_event_list.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
-
 
 // create an Event
 //

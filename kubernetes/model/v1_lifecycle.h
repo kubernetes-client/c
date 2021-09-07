@@ -17,9 +17,6 @@ typedef struct v1_lifecycle_t v1_lifecycle_t;
 
 #include "v1_handler.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -17,9 +17,6 @@ typedef struct v1_env_var_t v1_env_var_t;
 
 #include "v1_env_var_source.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

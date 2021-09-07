@@ -16,9 +16,6 @@
 typedef struct v2beta1_resource_metric_source_t v2beta1_resource_metric_source_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

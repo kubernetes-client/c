@@ -26,9 +26,6 @@ typedef struct extensions_v1beta1_pod_security_policy_spec_t extensions_v1beta1_
 #include "extensions_v1beta1_se_linux_strategy_options.h"
 #include "extensions_v1beta1_supplemental_groups_strategy_options.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

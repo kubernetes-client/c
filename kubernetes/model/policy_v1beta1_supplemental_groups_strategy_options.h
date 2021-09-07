@@ -17,9 +17,6 @@ typedef struct policy_v1beta1_supplemental_groups_strategy_options_t policy_v1be
 
 #include "policy_v1beta1_id_range.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

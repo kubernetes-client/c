@@ -18,9 +18,6 @@ typedef struct v2beta1_object_metric_source_t v2beta1_object_metric_source_t;
 #include "v1_label_selector.h"
 #include "v2beta1_cross_version_object_reference.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

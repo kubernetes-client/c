@@ -16,9 +16,6 @@
 typedef struct v1alpha1_policy_rule_t v1alpha1_policy_rule_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

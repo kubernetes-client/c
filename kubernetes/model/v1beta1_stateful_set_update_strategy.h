@@ -17,9 +17,6 @@ typedef struct v1beta1_stateful_set_update_strategy_t v1beta1_stateful_set_updat
 
 #include "v1beta1_rolling_update_stateful_set_strategy.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

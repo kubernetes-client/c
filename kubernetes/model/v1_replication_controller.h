@@ -19,9 +19,6 @@ typedef struct v1_replication_controller_t v1_replication_controller_t;
 #include "v1_replication_controller_spec.h"
 #include "v1_replication_controller_status.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

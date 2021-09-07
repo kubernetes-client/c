@@ -17,9 +17,6 @@ typedef struct v1_scale_io_persistent_volume_source_t v1_scale_io_persistent_vol
 
 #include "v1_secret_reference.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

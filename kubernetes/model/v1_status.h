@@ -18,9 +18,6 @@ typedef struct v1_status_t v1_status_t;
 #include "v1_list_meta.h"
 #include "v1_status_details.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

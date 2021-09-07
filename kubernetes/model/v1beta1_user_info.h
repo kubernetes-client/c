@@ -16,9 +16,6 @@
 typedef struct v1beta1_user_info_t v1beta1_user_info_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -16,9 +16,6 @@
 typedef struct policy_v1beta1_runtime_class_strategy_options_t policy_v1beta1_runtime_class_strategy_options_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

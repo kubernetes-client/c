@@ -17,9 +17,6 @@ typedef struct v1beta1_replica_set_status_t v1beta1_replica_set_status_t;
 
 #include "v1beta1_replica_set_condition.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

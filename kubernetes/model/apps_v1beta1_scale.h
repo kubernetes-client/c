@@ -19,9 +19,6 @@ typedef struct apps_v1beta1_scale_t apps_v1beta1_scale_t;
 #include "apps_v1beta1_scale_status.h"
 #include "v1_object_meta.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

@@ -17,9 +17,6 @@ typedef struct v1_limit_range_spec_t v1_limit_range_spec_t;
 
 #include "v1_limit_range_item.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

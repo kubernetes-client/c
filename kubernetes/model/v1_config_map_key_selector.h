@@ -16,9 +16,6 @@
 typedef struct v1_config_map_key_selector_t v1_config_map_key_selector_t;
 
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 

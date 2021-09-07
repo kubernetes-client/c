@@ -19,9 +19,6 @@ typedef struct v1_container_state_t v1_container_state_t;
 #include "v1_container_state_terminated.h"
 #include "v1_container_state_waiting.h"
 
-#undef stdin
-#undef stderr
-#undef stdout
 
 
 
