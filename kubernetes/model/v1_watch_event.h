@@ -19,7 +19,6 @@ typedef struct v1_watch_event_t v1_watch_event_t;
 
 
 
-
 typedef struct v1_watch_event_t {
     object_t *object; //object
     char *type; // string

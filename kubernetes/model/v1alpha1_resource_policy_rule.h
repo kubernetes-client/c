@@ -18,7 +18,6 @@ typedef struct v1alpha1_resource_policy_rule_t v1alpha1_resource_policy_rule_t;
 
 
 
-
 typedef struct v1alpha1_resource_policy_rule_t {
     list_t *api_groups; //primitive container
     int cluster_scope; //boolean

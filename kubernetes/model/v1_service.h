@@ -21,7 +21,6 @@ typedef struct v1_service_t v1_service_t;
 
 
 
-
 typedef struct v1_service_t {
     char *api_version; // string
     char *kind; // string

@@ -20,7 +20,6 @@ typedef struct v1beta1_mutating_webhook_configuration_list_t v1beta1_mutating_we
 
 
 
-
 typedef struct v1beta1_mutating_webhook_configuration_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

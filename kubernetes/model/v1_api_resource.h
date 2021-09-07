@@ -18,7 +18,6 @@ typedef struct v1_api_resource_t v1_api_resource_t;
 
 
 
-
 typedef struct v1_api_resource_t {
     list_t *categories; //primitive container
     char *group; // string

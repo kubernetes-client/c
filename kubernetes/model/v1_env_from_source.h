@@ -20,7 +20,6 @@ typedef struct v1_env_from_source_t v1_env_from_source_t;
 
 
 
-
 typedef struct v1_env_from_source_t {
     struct v1_config_map_env_source_t *config_map_ref; //model
     char *prefix; // string

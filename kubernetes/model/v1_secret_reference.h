@@ -18,7 +18,6 @@ typedef struct v1_secret_reference_t v1_secret_reference_t;
 
 
 
-
 typedef struct v1_secret_reference_t {
     char *name; // string
     char *_namespace; // string

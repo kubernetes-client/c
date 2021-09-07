@@ -18,7 +18,6 @@ typedef struct v1_volume_device_t v1_volume_device_t;
 
 
 
-
 typedef struct v1_volume_device_t {
     char *device_path; // string
     char *name; // string

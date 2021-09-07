@@ -18,7 +18,6 @@ typedef struct v1_pod_dns_config_option_t v1_pod_dns_config_option_t;
 
 
 
-
 typedef struct v1_pod_dns_config_option_t {
     char *name; // string
     char *value; // string

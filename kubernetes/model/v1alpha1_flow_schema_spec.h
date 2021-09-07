@@ -21,7 +21,6 @@ typedef struct v1alpha1_flow_schema_spec_t v1alpha1_flow_schema_spec_t;
 
 
 
-
 typedef struct v1alpha1_flow_schema_spec_t {
     struct v1alpha1_flow_distinguisher_method_t *distinguisher_method; //model
     int matching_precedence; //numeric

@@ -19,7 +19,6 @@ typedef struct v1_managed_fields_entry_t v1_managed_fields_entry_t;
 
 
 
-
 typedef struct v1_managed_fields_entry_t {
     char *api_version; // string
     char *fields_type; // string

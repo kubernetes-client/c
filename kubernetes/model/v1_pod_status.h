@@ -21,7 +21,6 @@ typedef struct v1_pod_status_t v1_pod_status_t;
 
 
 
-
 typedef struct v1_pod_status_t {
     list_t *conditions; //nonprimitive container
     list_t *container_statuses; //nonprimitive container

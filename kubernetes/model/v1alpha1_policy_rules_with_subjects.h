@@ -21,7 +21,6 @@ typedef struct v1alpha1_policy_rules_with_subjects_t v1alpha1_policy_rules_with_
 
 
 
-
 typedef struct v1alpha1_policy_rules_with_subjects_t {
     list_t *non_resource_rules; //nonprimitive container
     list_t *resource_rules; //nonprimitive container

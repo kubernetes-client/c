@@ -20,7 +20,6 @@ typedef struct v1_horizontal_pod_autoscaler_list_t v1_horizontal_pod_autoscaler_
 
 
 
-
 typedef struct v1_horizontal_pod_autoscaler_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

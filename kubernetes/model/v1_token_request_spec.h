@@ -19,7 +19,6 @@ typedef struct v1_token_request_spec_t v1_token_request_spec_t;
 
 
 
-
 typedef struct v1_token_request_spec_t {
     list_t *audiences; //primitive container
     struct v1_bound_object_reference_t *bound_object_ref; //model

@@ -19,7 +19,6 @@ typedef struct v1_storage_os_persistent_volume_source_t v1_storage_os_persistent
 
 
 
-
 typedef struct v1_storage_os_persistent_volume_source_t {
     char *fs_type; // string
     int read_only; //boolean

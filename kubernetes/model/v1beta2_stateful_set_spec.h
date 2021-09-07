@@ -22,7 +22,6 @@ typedef struct v1beta2_stateful_set_spec_t v1beta2_stateful_set_spec_t;
 
 
 
-
 typedef struct v1beta2_stateful_set_spec_t {
     char *pod_management_policy; // string
     int replicas; //numeric

@@ -18,7 +18,6 @@ typedef struct v1alpha1_non_resource_policy_rule_t v1alpha1_non_resource_policy_
 
 
 
-
 typedef struct v1alpha1_non_resource_policy_rule_t {
     list_t *non_resource_urls; //primitive container
     list_t *verbs; //primitive container

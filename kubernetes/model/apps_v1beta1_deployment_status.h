@@ -19,7 +19,6 @@ typedef struct apps_v1beta1_deployment_status_t apps_v1beta1_deployment_status_t
 
 
 
-
 typedef struct apps_v1beta1_deployment_status_t {
     int available_replicas; //numeric
     int collision_count; //numeric

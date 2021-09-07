@@ -21,7 +21,6 @@ typedef struct v1_cluster_role_t v1_cluster_role_t;
 
 
 
-
 typedef struct v1_cluster_role_t {
     struct v1_aggregation_rule_t *aggregation_rule; //model
     char *api_version; // string

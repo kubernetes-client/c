@@ -18,7 +18,6 @@ typedef struct v1_typed_local_object_reference_t v1_typed_local_object_reference
 
 
 
-
 typedef struct v1_typed_local_object_reference_t {
     char *api_group; // string
     char *kind; // string

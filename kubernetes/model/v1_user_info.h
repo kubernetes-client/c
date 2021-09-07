@@ -18,7 +18,6 @@ typedef struct v1_user_info_t v1_user_info_t;
 
 
 
-
 typedef struct v1_user_info_t {
     list_t* extra; //map
     list_t *groups; //primitive container

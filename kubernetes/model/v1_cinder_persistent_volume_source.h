@@ -19,7 +19,6 @@ typedef struct v1_cinder_persistent_volume_source_t v1_cinder_persistent_volume_
 
 
 
-
 typedef struct v1_cinder_persistent_volume_source_t {
     char *fs_type; // string
     int read_only; //boolean

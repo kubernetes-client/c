@@ -18,7 +18,6 @@ typedef struct policy_v1beta1_id_range_t policy_v1beta1_id_range_t;
 
 
 
-
 typedef struct policy_v1beta1_id_range_t {
     long max; //numeric
     long min; //numeric

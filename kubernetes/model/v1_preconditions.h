@@ -18,7 +18,6 @@ typedef struct v1_preconditions_t v1_preconditions_t;
 
 
 
-
 typedef struct v1_preconditions_t {
     char *resource_version; // string
     char *uid; // string

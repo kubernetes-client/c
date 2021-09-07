@@ -20,7 +20,6 @@ typedef struct v1_persistent_volume_claim_list_t v1_persistent_volume_claim_list
 
 
 
-
 typedef struct v1_persistent_volume_claim_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

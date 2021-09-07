@@ -18,7 +18,6 @@ typedef struct v1_gce_persistent_disk_volume_source_t v1_gce_persistent_disk_vol
 
 
 
-
 typedef struct v1_gce_persistent_disk_volume_source_t {
     char *fs_type; // string
     int partition; //numeric

@@ -21,7 +21,6 @@ typedef struct v1_affinity_t v1_affinity_t;
 
 
 
-
 typedef struct v1_affinity_t {
     struct v1_node_affinity_t *node_affinity; //model
     struct v1_pod_affinity_t *pod_affinity; //model

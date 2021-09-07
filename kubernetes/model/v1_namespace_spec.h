@@ -18,7 +18,6 @@ typedef struct v1_namespace_spec_t v1_namespace_spec_t;
 
 
 
-
 typedef struct v1_namespace_spec_t {
     list_t *finalizers; //primitive container
 

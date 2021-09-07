@@ -18,7 +18,6 @@ typedef struct v1_vsphere_virtual_disk_volume_source_t v1_vsphere_virtual_disk_v
 
 
 
-
 typedef struct v1_vsphere_virtual_disk_volume_source_t {
     char *fs_type; // string
     char *storage_policy_id; // string

@@ -21,7 +21,6 @@ typedef struct v1alpha1_volume_attachment_t v1alpha1_volume_attachment_t;
 
 
 
-
 typedef struct v1alpha1_volume_attachment_t {
     char *api_version; // string
     char *kind; // string

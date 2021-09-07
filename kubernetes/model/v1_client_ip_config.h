@@ -18,7 +18,6 @@ typedef struct v1_client_ip_config_t v1_client_ip_config_t;
 
 
 
-
 typedef struct v1_client_ip_config_t {
     int timeout_seconds; //numeric
 

@@ -19,7 +19,6 @@ typedef struct v1_delete_options_t v1_delete_options_t;
 
 
 
-
 typedef struct v1_delete_options_t {
     char *api_version; // string
     list_t *dry_run; //primitive container

@@ -20,7 +20,6 @@ typedef struct v1_custom_resource_definition_list_t v1_custom_resource_definitio
 
 
 
-
 typedef struct v1_custom_resource_definition_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

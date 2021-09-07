@@ -19,7 +19,6 @@ typedef struct v1beta2_deployment_strategy_t v1beta2_deployment_strategy_t;
 
 
 
-
 typedef struct v1beta2_deployment_strategy_t {
     struct v1beta2_rolling_update_deployment_t *rolling_update; //model
     char *type; // string

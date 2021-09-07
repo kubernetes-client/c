@@ -18,7 +18,6 @@ typedef struct v1_volume_mount_t v1_volume_mount_t;
 
 
 
-
 typedef struct v1_volume_mount_t {
     char *mount_path; // string
     char *mount_propagation; // string

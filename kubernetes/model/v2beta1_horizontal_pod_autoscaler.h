@@ -21,7 +21,6 @@ typedef struct v2beta1_horizontal_pod_autoscaler_t v2beta1_horizontal_pod_autosc
 
 
 
-
 typedef struct v2beta1_horizontal_pod_autoscaler_t {
     char *api_version; // string
     char *kind; // string

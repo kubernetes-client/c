@@ -20,7 +20,6 @@ typedef struct v1_pod_template_t v1_pod_template_t;
 
 
 
-
 typedef struct v1_pod_template_t {
     char *api_version; // string
     char *kind; // string

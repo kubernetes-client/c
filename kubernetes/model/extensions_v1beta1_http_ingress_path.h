@@ -19,7 +19,6 @@ typedef struct extensions_v1beta1_http_ingress_path_t extensions_v1beta1_http_in
 
 
 
-
 typedef struct extensions_v1beta1_http_ingress_path_t {
     struct extensions_v1beta1_ingress_backend_t *backend; //model
     char *path; // string

@@ -20,7 +20,6 @@ typedef struct v1_service_spec_t v1_service_spec_t;
 
 
 
-
 typedef struct v1_service_spec_t {
     char *cluster_ip; // string
     list_t *external_ips; //primitive container

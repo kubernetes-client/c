@@ -19,7 +19,6 @@ typedef struct v1_pod_affinity_term_t v1_pod_affinity_term_t;
 
 
 
-
 typedef struct v1_pod_affinity_term_t {
     struct v1_label_selector_t *label_selector; //model
     list_t *namespaces; //primitive container

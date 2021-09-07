@@ -20,7 +20,6 @@ typedef struct v1_http_get_action_t v1_http_get_action_t;
 
 
 
-
 typedef struct v1_http_get_action_t {
     char *host; // string
     list_t *http_headers; //nonprimitive container

@@ -19,7 +19,6 @@ typedef struct v1beta1_volume_attachment_source_t v1beta1_volume_attachment_sour
 
 
 
-
 typedef struct v1beta1_volume_attachment_source_t {
     struct v1_persistent_volume_spec_t *inline_volume_spec; //model
     char *persistent_volume_name; // string

@@ -19,7 +19,6 @@ typedef struct extensions_v1beta1_ingress_backend_t extensions_v1beta1_ingress_b
 
 
 
-
 typedef struct extensions_v1beta1_ingress_backend_t {
     char *service_name; // string
     object_t *service_port; //object

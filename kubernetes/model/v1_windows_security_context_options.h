@@ -18,7 +18,6 @@ typedef struct v1_windows_security_context_options_t v1_windows_security_context
 
 
 
-
 typedef struct v1_windows_security_context_options_t {
     char *gmsa_credential_spec; // string
     char *gmsa_credential_spec_name; // string

@@ -18,7 +18,6 @@ typedef struct extensions_v1beta1_allowed_csi_driver_t extensions_v1beta1_allowe
 
 
 
-
 typedef struct extensions_v1beta1_allowed_csi_driver_t {
     char *name; // string
 

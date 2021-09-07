@@ -23,7 +23,6 @@ typedef struct v1alpha1_pod_preset_spec_t v1alpha1_pod_preset_spec_t;
 
 
 
-
 typedef struct v1alpha1_pod_preset_spec_t {
     list_t *env; //nonprimitive container
     list_t *env_from; //nonprimitive container

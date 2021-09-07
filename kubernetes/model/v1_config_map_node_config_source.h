@@ -18,7 +18,6 @@ typedef struct v1_config_map_node_config_source_t v1_config_map_node_config_sour
 
 
 
-
 typedef struct v1_config_map_node_config_source_t {
     char *kubelet_config_key; // string
     char *name; // string

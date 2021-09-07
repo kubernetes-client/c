@@ -19,7 +19,6 @@ typedef struct v1_rolling_update_daemon_set_t v1_rolling_update_daemon_set_t;
 
 
 
-
 typedef struct v1_rolling_update_daemon_set_t {
     object_t *max_unavailable; //object
 

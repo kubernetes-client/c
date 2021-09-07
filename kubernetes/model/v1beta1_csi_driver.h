@@ -20,7 +20,6 @@ typedef struct v1beta1_csi_driver_t v1beta1_csi_driver_t;
 
 
 
-
 typedef struct v1beta1_csi_driver_t {
     char *api_version; // string
     char *kind; // string

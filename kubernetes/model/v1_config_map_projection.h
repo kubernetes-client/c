@@ -19,7 +19,6 @@ typedef struct v1_config_map_projection_t v1_config_map_projection_t;
 
 
 
-
 typedef struct v1_config_map_projection_t {
     list_t *items; //nonprimitive container
     char *name; // string

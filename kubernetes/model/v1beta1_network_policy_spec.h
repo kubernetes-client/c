@@ -21,7 +21,6 @@ typedef struct v1beta1_network_policy_spec_t v1beta1_network_policy_spec_t;
 
 
 
-
 typedef struct v1beta1_network_policy_spec_t {
     list_t *egress; //nonprimitive container
     list_t *ingress; //nonprimitive container

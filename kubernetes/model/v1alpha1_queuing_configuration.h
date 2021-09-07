@@ -18,7 +18,6 @@ typedef struct v1alpha1_queuing_configuration_t v1alpha1_queuing_configuration_t
 
 
 
-
 typedef struct v1alpha1_queuing_configuration_t {
     int hand_size; //numeric
     int queue_length_limit; //numeric

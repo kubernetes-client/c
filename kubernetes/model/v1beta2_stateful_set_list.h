@@ -20,7 +20,6 @@ typedef struct v1beta2_stateful_set_list_t v1beta2_stateful_set_list_t;
 
 
 
-
 typedef struct v1beta2_stateful_set_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

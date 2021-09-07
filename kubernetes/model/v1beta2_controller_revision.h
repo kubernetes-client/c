@@ -20,7 +20,6 @@ typedef struct v1beta2_controller_revision_t v1beta2_controller_revision_t;
 
 
 
-
 typedef struct v1beta2_controller_revision_t {
     char *api_version; // string
     object_t *data; //object

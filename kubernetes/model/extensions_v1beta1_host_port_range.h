@@ -18,7 +18,6 @@ typedef struct extensions_v1beta1_host_port_range_t extensions_v1beta1_host_port
 
 
 
-
 typedef struct extensions_v1beta1_host_port_range_t {
     int max; //numeric
     int min; //numeric

@@ -18,7 +18,6 @@ typedef struct v1_local_object_reference_t v1_local_object_reference_t;
 
 
 
-
 typedef struct v1_local_object_reference_t {
     char *name; // string
 

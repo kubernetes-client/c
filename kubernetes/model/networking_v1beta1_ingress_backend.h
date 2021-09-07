@@ -19,7 +19,6 @@ typedef struct networking_v1beta1_ingress_backend_t networking_v1beta1_ingress_b
 
 
 
-
 typedef struct networking_v1beta1_ingress_backend_t {
     char *service_name; // string
     object_t *service_port; //object

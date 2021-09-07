@@ -21,7 +21,6 @@ typedef struct extensions_v1beta1_deployment_t extensions_v1beta1_deployment_t;
 
 
 
-
 typedef struct extensions_v1beta1_deployment_t {
     char *api_version; // string
     char *kind; // string

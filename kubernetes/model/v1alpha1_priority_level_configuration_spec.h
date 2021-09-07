@@ -19,7 +19,6 @@ typedef struct v1alpha1_priority_level_configuration_spec_t v1alpha1_priority_le
 
 
 
-
 typedef struct v1alpha1_priority_level_configuration_spec_t {
     struct v1alpha1_limited_priority_level_configuration_t *limited; //model
     char *type; // string

@@ -21,7 +21,6 @@ typedef struct apps_v1beta1_scale_t apps_v1beta1_scale_t;
 
 
 
-
 typedef struct apps_v1beta1_scale_t {
     char *api_version; // string
     char *kind; // string

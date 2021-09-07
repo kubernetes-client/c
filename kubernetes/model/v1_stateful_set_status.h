@@ -19,7 +19,6 @@ typedef struct v1_stateful_set_status_t v1_stateful_set_status_t;
 
 
 
-
 typedef struct v1_stateful_set_status_t {
     int collision_count; //numeric
     list_t *conditions; //nonprimitive container

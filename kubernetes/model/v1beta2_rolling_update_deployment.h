@@ -19,7 +19,6 @@ typedef struct v1beta2_rolling_update_deployment_t v1beta2_rolling_update_deploy
 
 
 
-
 typedef struct v1beta2_rolling_update_deployment_t {
     object_t *max_surge; //object
     object_t *max_unavailable; //object

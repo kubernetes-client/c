@@ -18,7 +18,6 @@ typedef struct v1_capabilities_t v1_capabilities_t;
 
 
 
-
 typedef struct v1_capabilities_t {
     list_t *add; //primitive container
     list_t *drop; //primitive container

@@ -18,7 +18,6 @@ typedef struct v1beta2_deployment_condition_t v1beta2_deployment_condition_t;
 
 
 
-
 typedef struct v1beta2_deployment_condition_t {
     char *last_transition_time; //date time
     char *last_update_time; //date time

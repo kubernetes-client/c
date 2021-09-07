@@ -21,7 +21,6 @@ typedef struct networking_v1beta1_ingress_spec_t networking_v1beta1_ingress_spec
 
 
 
-
 typedef struct networking_v1beta1_ingress_spec_t {
     struct networking_v1beta1_ingress_backend_t *backend; //model
     list_t *rules; //nonprimitive container

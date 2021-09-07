@@ -20,7 +20,6 @@ typedef struct v2beta2_horizontal_pod_autoscaler_status_t v2beta2_horizontal_pod
 
 
 
-
 typedef struct v2beta2_horizontal_pod_autoscaler_status_t {
     list_t *conditions; //nonprimitive container
     list_t *current_metrics; //nonprimitive container

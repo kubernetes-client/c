@@ -18,7 +18,6 @@ typedef struct v1_event_source_t v1_event_source_t;
 
 
 
-
 typedef struct v1_event_source_t {
     char *component; // string
     char *host; // string

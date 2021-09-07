@@ -18,7 +18,6 @@ typedef struct extensions_v1beta1_rollback_config_t extensions_v1beta1_rollback_
 
 
 
-
 typedef struct extensions_v1beta1_rollback_config_t {
     long revision; //numeric
 

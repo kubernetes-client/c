@@ -18,7 +18,6 @@ typedef struct v1_git_repo_volume_source_t v1_git_repo_volume_source_t;
 
 
 
-
 typedef struct v1_git_repo_volume_source_t {
     char *directory; // string
     char *repository; // string

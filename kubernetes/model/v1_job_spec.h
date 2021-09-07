@@ -20,7 +20,6 @@ typedef struct v1_job_spec_t v1_job_spec_t;
 
 
 
-
 typedef struct v1_job_spec_t {
     long active_deadline_seconds; //numeric
     int backoff_limit; //numeric

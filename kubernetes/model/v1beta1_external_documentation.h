@@ -18,7 +18,6 @@ typedef struct v1beta1_external_documentation_t v1beta1_external_documentation_t
 
 
 
-
 typedef struct v1beta1_external_documentation_t {
     char *description; // string
     char *url; // string

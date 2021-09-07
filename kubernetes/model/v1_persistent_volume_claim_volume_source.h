@@ -18,7 +18,6 @@ typedef struct v1_persistent_volume_claim_volume_source_t v1_persistent_volume_c
 
 
 
-
 typedef struct v1_persistent_volume_claim_volume_source_t {
     char *claim_name; // string
     int read_only; //boolean

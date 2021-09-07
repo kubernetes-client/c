@@ -18,7 +18,6 @@ typedef struct v1_empty_dir_volume_source_t v1_empty_dir_volume_source_t;
 
 
 
-
 typedef struct v1_empty_dir_volume_source_t {
     char *medium; // string
     char *size_limit; // string

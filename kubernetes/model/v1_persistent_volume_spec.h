@@ -42,7 +42,6 @@ typedef struct v1_persistent_volume_spec_t v1_persistent_volume_spec_t;
 
 
 
-
 typedef struct v1_persistent_volume_spec_t {
     list_t *access_modes; //primitive container
     struct v1_aws_elastic_block_store_volume_source_t *aws_elastic_block_store; //model

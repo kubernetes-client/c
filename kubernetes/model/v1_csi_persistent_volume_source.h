@@ -19,7 +19,6 @@ typedef struct v1_csi_persistent_volume_source_t v1_csi_persistent_volume_source
 
 
 
-
 typedef struct v1_csi_persistent_volume_source_t {
     struct v1_secret_reference_t *controller_expand_secret_ref; //model
     struct v1_secret_reference_t *controller_publish_secret_ref; //model

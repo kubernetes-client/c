@@ -20,7 +20,6 @@ typedef struct v1alpha1_pod_preset_t v1alpha1_pod_preset_t;
 
 
 
-
 typedef struct v1alpha1_pod_preset_t {
     char *api_version; // string
     char *kind; // string

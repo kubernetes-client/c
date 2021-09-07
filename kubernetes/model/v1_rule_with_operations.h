@@ -18,7 +18,6 @@ typedef struct v1_rule_with_operations_t v1_rule_with_operations_t;
 
 
 
-
 typedef struct v1_rule_with_operations_t {
     list_t *api_groups; //primitive container
     list_t *api_versions; //primitive container

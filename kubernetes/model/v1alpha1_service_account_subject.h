@@ -18,7 +18,6 @@ typedef struct v1alpha1_service_account_subject_t v1alpha1_service_account_subje
 
 
 
-
 typedef struct v1alpha1_service_account_subject_t {
     char *name; // string
     char *_namespace; // string

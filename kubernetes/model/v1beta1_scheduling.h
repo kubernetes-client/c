@@ -19,7 +19,6 @@ typedef struct v1beta1_scheduling_t v1beta1_scheduling_t;
 
 
 
-
 typedef struct v1beta1_scheduling_t {
     list_t* node_selector; //map
     list_t *tolerations; //nonprimitive container

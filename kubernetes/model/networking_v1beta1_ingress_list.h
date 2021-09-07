@@ -20,7 +20,6 @@ typedef struct networking_v1beta1_ingress_list_t networking_v1beta1_ingress_list
 
 
 
-
 typedef struct networking_v1beta1_ingress_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

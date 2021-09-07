@@ -18,7 +18,6 @@ typedef struct v1beta1_certificate_signing_request_condition_t v1beta1_certifica
 
 
 
-
 typedef struct v1beta1_certificate_signing_request_condition_t {
     char *last_update_time; //date time
     char *message; // string

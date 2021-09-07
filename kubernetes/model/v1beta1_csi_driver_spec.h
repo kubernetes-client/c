@@ -18,7 +18,6 @@ typedef struct v1beta1_csi_driver_spec_t v1beta1_csi_driver_spec_t;
 
 
 
-
 typedef struct v1beta1_csi_driver_spec_t {
     int attach_required; //boolean
     int pod_info_on_mount; //boolean

@@ -19,7 +19,6 @@ typedef struct policy_v1beta1_se_linux_strategy_options_t policy_v1beta1_se_linu
 
 
 
-
 typedef struct policy_v1beta1_se_linux_strategy_options_t {
     char *rule; // string
     struct v1_se_linux_options_t *se_linux_options; //model

@@ -21,7 +21,6 @@ typedef struct v1beta1_certificate_signing_request_t v1beta1_certificate_signing
 
 
 
-
 typedef struct v1beta1_certificate_signing_request_t {
     char *api_version; // string
     char *kind; // string

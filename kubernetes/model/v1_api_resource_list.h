@@ -19,7 +19,6 @@ typedef struct v1_api_resource_list_t v1_api_resource_list_t;
 
 
 
-
 typedef struct v1_api_resource_list_t {
     char *api_version; // string
     char *group_version; // string

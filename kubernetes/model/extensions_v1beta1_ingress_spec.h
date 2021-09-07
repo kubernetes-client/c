@@ -21,7 +21,6 @@ typedef struct extensions_v1beta1_ingress_spec_t extensions_v1beta1_ingress_spec
 
 
 
-
 typedef struct extensions_v1beta1_ingress_spec_t {
     struct extensions_v1beta1_ingress_backend_t *backend; //model
     list_t *rules; //nonprimitive container

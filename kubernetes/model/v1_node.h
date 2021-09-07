@@ -21,7 +21,6 @@ typedef struct v1_node_t v1_node_t;
 
 
 
-
 typedef struct v1_node_t {
     char *api_version; // string
     char *kind; // string

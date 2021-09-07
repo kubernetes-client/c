@@ -18,7 +18,6 @@ typedef struct v1beta1_custom_resource_subresource_scale_t v1beta1_custom_resour
 
 
 
-
 typedef struct v1beta1_custom_resource_subresource_scale_t {
     char *label_selector_path; // string
     char *spec_replicas_path; // string

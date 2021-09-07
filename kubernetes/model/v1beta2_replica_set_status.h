@@ -19,7 +19,6 @@ typedef struct v1beta2_replica_set_status_t v1beta2_replica_set_status_t;
 
 
 
-
 typedef struct v1beta2_replica_set_status_t {
     int available_replicas; //numeric
     list_t *conditions; //nonprimitive container

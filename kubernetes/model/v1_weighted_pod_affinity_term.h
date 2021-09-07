@@ -19,7 +19,6 @@ typedef struct v1_weighted_pod_affinity_term_t v1_weighted_pod_affinity_term_t;
 
 
 
-
 typedef struct v1_weighted_pod_affinity_term_t {
     struct v1_pod_affinity_term_t *pod_affinity_term; //model
     int weight; //numeric

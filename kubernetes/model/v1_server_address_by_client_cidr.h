@@ -18,7 +18,6 @@ typedef struct v1_server_address_by_client_cidr_t v1_server_address_by_client_ci
 
 
 
-
 typedef struct v1_server_address_by_client_cidr_t {
     char *client_cidr; // string
     char *server_address; // string

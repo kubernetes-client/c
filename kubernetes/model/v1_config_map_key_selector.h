@@ -18,7 +18,6 @@ typedef struct v1_config_map_key_selector_t v1_config_map_key_selector_t;
 
 
 
-
 typedef struct v1_config_map_key_selector_t {
     char *key; // string
     char *name; // string

@@ -18,7 +18,6 @@ typedef struct v1beta1_volume_node_resources_t v1beta1_volume_node_resources_t;
 
 
 
-
 typedef struct v1beta1_volume_node_resources_t {
     int count; //numeric
 

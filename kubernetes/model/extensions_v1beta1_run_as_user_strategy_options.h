@@ -19,7 +19,6 @@ typedef struct extensions_v1beta1_run_as_user_strategy_options_t extensions_v1be
 
 
 
-
 typedef struct extensions_v1beta1_run_as_user_strategy_options_t {
     list_t *ranges; //nonprimitive container
     char *rule; // string

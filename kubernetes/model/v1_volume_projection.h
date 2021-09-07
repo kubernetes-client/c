@@ -22,7 +22,6 @@ typedef struct v1_volume_projection_t v1_volume_projection_t;
 
 
 
-
 typedef struct v1_volume_projection_t {
     struct v1_config_map_projection_t *config_map; //model
     struct v1_downward_api_projection_t *downward_api; //model

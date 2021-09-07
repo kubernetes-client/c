@@ -20,7 +20,6 @@ typedef struct v1_object_meta_t v1_object_meta_t;
 
 
 
-
 typedef struct v1_object_meta_t {
     list_t* annotations; //map
     char *cluster_name; // string

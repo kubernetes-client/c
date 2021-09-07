@@ -18,7 +18,6 @@ typedef struct v1_ip_block_t v1_ip_block_t;
 
 
 
-
 typedef struct v1_ip_block_t {
     char *cidr; // string
     list_t *except; //primitive container

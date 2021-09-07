@@ -20,7 +20,6 @@ typedef struct v1_mutating_webhook_configuration_t v1_mutating_webhook_configura
 
 
 
-
 typedef struct v1_mutating_webhook_configuration_t {
     char *api_version; // string
     char *kind; // string

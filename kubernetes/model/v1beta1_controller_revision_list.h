@@ -20,7 +20,6 @@ typedef struct v1beta1_controller_revision_list_t v1beta1_controller_revision_li
 
 
 
-
 typedef struct v1beta1_controller_revision_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

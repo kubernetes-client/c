@@ -18,7 +18,6 @@ typedef struct v1_status_cause_t v1_status_cause_t;
 
 
 
-
 typedef struct v1_status_cause_t {
     char *field; // string
     char *message; // string

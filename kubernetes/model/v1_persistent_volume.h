@@ -21,7 +21,6 @@ typedef struct v1_persistent_volume_t v1_persistent_volume_t;
 
 
 
-
 typedef struct v1_persistent_volume_t {
     char *api_version; // string
     char *kind; // string

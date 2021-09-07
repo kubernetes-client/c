@@ -20,7 +20,6 @@ typedef struct v1_custom_resource_definition_status_t v1_custom_resource_definit
 
 
 
-
 typedef struct v1_custom_resource_definition_status_t {
     struct v1_custom_resource_definition_names_t *accepted_names; //model
     list_t *conditions; //nonprimitive container

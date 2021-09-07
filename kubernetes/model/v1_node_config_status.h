@@ -19,7 +19,6 @@ typedef struct v1_node_config_status_t v1_node_config_status_t;
 
 
 
-
 typedef struct v1_node_config_status_t {
     struct v1_node_config_source_t *active; //model
     struct v1_node_config_source_t *assigned; //model

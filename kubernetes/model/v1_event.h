@@ -22,7 +22,6 @@ typedef struct v1_event_t v1_event_t;
 
 
 
-
 typedef struct v1_event_t {
     char *action; // string
     char *api_version; // string

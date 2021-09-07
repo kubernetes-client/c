@@ -18,7 +18,6 @@ typedef struct policy_v1beta1_host_port_range_t policy_v1beta1_host_port_range_t
 
 
 
-
 typedef struct policy_v1beta1_host_port_range_t {
     int max; //numeric
     int min; //numeric

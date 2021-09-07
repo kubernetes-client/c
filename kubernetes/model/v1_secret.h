@@ -19,7 +19,6 @@ typedef struct v1_secret_t v1_secret_t;
 
 
 
-
 typedef struct v1_secret_t {
     char *api_version; // string
     list_t* data; //map

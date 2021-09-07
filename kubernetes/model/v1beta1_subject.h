@@ -18,7 +18,6 @@ typedef struct v1beta1_subject_t v1beta1_subject_t;
 
 
 
-
 typedef struct v1beta1_subject_t {
     char *api_group; // string
     char *kind; // string

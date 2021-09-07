@@ -19,7 +19,6 @@ typedef struct v1_preferred_scheduling_term_t v1_preferred_scheduling_term_t;
 
 
 
-
 typedef struct v1_preferred_scheduling_term_t {
     struct v1_node_selector_term_t *preference; //model
     int weight; //numeric

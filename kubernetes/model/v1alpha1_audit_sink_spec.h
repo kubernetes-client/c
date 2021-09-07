@@ -20,7 +20,6 @@ typedef struct v1alpha1_audit_sink_spec_t v1alpha1_audit_sink_spec_t;
 
 
 
-
 typedef struct v1alpha1_audit_sink_spec_t {
     struct v1alpha1_policy_t *policy; //model
     struct v1alpha1_webhook_t *webhook; //model

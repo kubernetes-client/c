@@ -19,7 +19,6 @@ typedef struct policy_v1beta1_run_as_user_strategy_options_t policy_v1beta1_run_
 
 
 
-
 typedef struct policy_v1beta1_run_as_user_strategy_options_t {
     list_t *ranges; //nonprimitive container
     char *rule; // string

@@ -18,7 +18,6 @@ typedef struct v1_resource_field_selector_t v1_resource_field_selector_t;
 
 
 
-
 typedef struct v1_resource_field_selector_t {
     char *container_name; // string
     char *divisor; // string

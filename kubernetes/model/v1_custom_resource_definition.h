@@ -21,7 +21,6 @@ typedef struct v1_custom_resource_definition_t v1_custom_resource_definition_t;
 
 
 
-
 typedef struct v1_custom_resource_definition_t {
     char *api_version; // string
     char *kind; // string

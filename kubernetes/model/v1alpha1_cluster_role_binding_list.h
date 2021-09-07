@@ -20,7 +20,6 @@ typedef struct v1alpha1_cluster_role_binding_list_t v1alpha1_cluster_role_bindin
 
 
 
-
 typedef struct v1alpha1_cluster_role_binding_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

@@ -18,7 +18,6 @@ typedef struct v1_sysctl_t v1_sysctl_t;
 
 
 
-
 typedef struct v1_sysctl_t {
     char *name; // string
     char *value; // string

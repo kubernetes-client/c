@@ -21,7 +21,6 @@ typedef struct v1beta1_custom_resource_definition_version_t v1beta1_custom_resou
 
 
 
-
 typedef struct v1beta1_custom_resource_definition_version_t {
     list_t *additional_printer_columns; //nonprimitive container
     char *name; // string

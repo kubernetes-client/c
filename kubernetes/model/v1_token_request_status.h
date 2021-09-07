@@ -18,7 +18,6 @@ typedef struct v1_token_request_status_t v1_token_request_status_t;
 
 
 
-
 typedef struct v1_token_request_status_t {
     char *expiration_timestamp; //date time
     char *token; // string

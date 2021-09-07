@@ -18,7 +18,6 @@ typedef struct v1_node_selector_requirement_t v1_node_selector_requirement_t;
 
 
 
-
 typedef struct v1_node_selector_requirement_t {
     char *key; // string
     char *_operator; // string

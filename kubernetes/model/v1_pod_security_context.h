@@ -21,7 +21,6 @@ typedef struct v1_pod_security_context_t v1_pod_security_context_t;
 
 
 
-
 typedef struct v1_pod_security_context_t {
     long fs_group; //numeric
     long run_as_group; //numeric

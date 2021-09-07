@@ -19,7 +19,6 @@ typedef struct v1_load_balancer_status_t v1_load_balancer_status_t;
 
 
 
-
 typedef struct v1_load_balancer_status_t {
     list_t *ingress; //nonprimitive container
 

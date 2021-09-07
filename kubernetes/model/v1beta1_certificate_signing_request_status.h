@@ -19,7 +19,6 @@ typedef struct v1beta1_certificate_signing_request_status_t v1beta1_certificate_
 
 
 
-
 typedef struct v1beta1_certificate_signing_request_status_t {
     char *certificate; //ByteArray
     list_t *conditions; //nonprimitive container

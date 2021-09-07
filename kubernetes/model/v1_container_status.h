@@ -19,7 +19,6 @@ typedef struct v1_container_status_t v1_container_status_t;
 
 
 
-
 typedef struct v1_container_status_t {
     char *container_id; // string
     char *image; // string

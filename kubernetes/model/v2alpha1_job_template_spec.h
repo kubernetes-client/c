@@ -20,7 +20,6 @@ typedef struct v2alpha1_job_template_spec_t v2alpha1_job_template_spec_t;
 
 
 
-
 typedef struct v2alpha1_job_template_spec_t {
     struct v1_object_meta_t *metadata; //model
     struct v1_job_spec_t *spec; //model

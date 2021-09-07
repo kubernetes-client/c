@@ -19,7 +19,6 @@ typedef struct v1alpha1_limit_response_t v1alpha1_limit_response_t;
 
 
 
-
 typedef struct v1alpha1_limit_response_t {
     struct v1alpha1_queuing_configuration_t *queuing; //model
     char *type; // string

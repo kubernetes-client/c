@@ -20,7 +20,6 @@ typedef struct v1_endpoints_t v1_endpoints_t;
 
 
 
-
 typedef struct v1_endpoints_t {
     char *api_version; // string
     char *kind; // string

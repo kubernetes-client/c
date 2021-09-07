@@ -19,7 +19,6 @@ typedef struct v1_topology_spread_constraint_t v1_topology_spread_constraint_t;
 
 
 
-
 typedef struct v1_topology_spread_constraint_t {
     struct v1_label_selector_t *label_selector; //model
     int max_skew; //numeric

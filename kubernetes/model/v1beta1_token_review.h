@@ -21,7 +21,6 @@ typedef struct v1beta1_token_review_t v1beta1_token_review_t;
 
 
 
-
 typedef struct v1beta1_token_review_t {
     char *api_version; // string
     char *kind; // string

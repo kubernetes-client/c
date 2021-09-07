@@ -18,7 +18,6 @@ typedef struct apiextensions_v1beta1_service_reference_t apiextensions_v1beta1_s
 
 
 
-
 typedef struct apiextensions_v1beta1_service_reference_t {
     char *name; // string
     char *_namespace; // string

@@ -20,7 +20,6 @@ typedef struct extensions_v1beta1_deployment_list_t extensions_v1beta1_deploymen
 
 
 
-
 typedef struct extensions_v1beta1_deployment_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

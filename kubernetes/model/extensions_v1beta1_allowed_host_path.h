@@ -18,7 +18,6 @@ typedef struct extensions_v1beta1_allowed_host_path_t extensions_v1beta1_allowed
 
 
 
-
 typedef struct extensions_v1beta1_allowed_host_path_t {
     char *path_prefix; // string
     int read_only; //boolean

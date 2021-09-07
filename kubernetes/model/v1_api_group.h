@@ -20,7 +20,6 @@ typedef struct v1_api_group_t v1_api_group_t;
 
 
 
-
 typedef struct v1_api_group_t {
     char *api_version; // string
     char *kind; // string

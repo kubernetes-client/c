@@ -20,7 +20,6 @@ typedef struct v1alpha1_runtime_class_t v1alpha1_runtime_class_t;
 
 
 
-
 typedef struct v1alpha1_runtime_class_t {
     char *api_version; // string
     char *kind; // string

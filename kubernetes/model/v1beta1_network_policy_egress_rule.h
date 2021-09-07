@@ -20,7 +20,6 @@ typedef struct v1beta1_network_policy_egress_rule_t v1beta1_network_policy_egres
 
 
 
-
 typedef struct v1beta1_network_policy_egress_rule_t {
     list_t *ports; //nonprimitive container
     list_t *to; //nonprimitive container

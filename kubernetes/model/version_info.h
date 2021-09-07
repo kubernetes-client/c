@@ -18,7 +18,6 @@ typedef struct version_info_t version_info_t;
 
 
 
-
 typedef struct version_info_t {
     char *build_date; // string
     char *compiler; // string

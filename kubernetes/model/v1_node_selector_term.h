@@ -19,7 +19,6 @@ typedef struct v1_node_selector_term_t v1_node_selector_term_t;
 
 
 
-
 typedef struct v1_node_selector_term_t {
     list_t *match_expressions; //nonprimitive container
     list_t *match_fields; //nonprimitive container

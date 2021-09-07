@@ -20,7 +20,6 @@ typedef struct v1_self_subject_access_review_spec_t v1_self_subject_access_revie
 
 
 
-
 typedef struct v1_self_subject_access_review_spec_t {
     struct v1_non_resource_attributes_t *non_resource_attributes; //model
     struct v1_resource_attributes_t *resource_attributes; //model

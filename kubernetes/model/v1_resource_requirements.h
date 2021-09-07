@@ -18,7 +18,6 @@ typedef struct v1_resource_requirements_t v1_resource_requirements_t;
 
 
 
-
 typedef struct v1_resource_requirements_t {
     list_t* limits; //map
     list_t* requests; //map

@@ -20,7 +20,6 @@ typedef struct v1_custom_resource_subresources_t v1_custom_resource_subresources
 
 
 
-
 typedef struct v1_custom_resource_subresources_t {
     struct v1_custom_resource_subresource_scale_t *scale; //model
     object_t *status; //object

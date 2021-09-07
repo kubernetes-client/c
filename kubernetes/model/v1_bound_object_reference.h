@@ -18,7 +18,6 @@ typedef struct v1_bound_object_reference_t v1_bound_object_reference_t;
 
 
 
-
 typedef struct v1_bound_object_reference_t {
     char *api_version; // string
     char *kind; // string

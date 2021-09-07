@@ -19,7 +19,6 @@ typedef struct v1_api_group_list_t v1_api_group_list_t;
 
 
 
-
 typedef struct v1_api_group_list_t {
     char *api_version; // string
     list_t *groups; //nonprimitive container

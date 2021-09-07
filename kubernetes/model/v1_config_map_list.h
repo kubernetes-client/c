@@ -20,7 +20,6 @@ typedef struct v1_config_map_list_t v1_config_map_list_t;
 
 
 
-
 typedef struct v1_config_map_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

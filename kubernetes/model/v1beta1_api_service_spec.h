@@ -19,7 +19,6 @@ typedef struct v1beta1_api_service_spec_t v1beta1_api_service_spec_t;
 
 
 
-
 typedef struct v1beta1_api_service_spec_t {
     char *ca_bundle; //ByteArray
     char *group; // string

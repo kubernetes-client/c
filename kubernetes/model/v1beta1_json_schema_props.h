@@ -20,7 +20,6 @@ typedef struct v1beta1_json_schema_props_t v1beta1_json_schema_props_t;
 
 
 
-
 typedef struct v1beta1_json_schema_props_t {
     char *ref; // string
     char *schema; // string

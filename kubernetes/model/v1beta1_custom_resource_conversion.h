@@ -19,7 +19,6 @@ typedef struct v1beta1_custom_resource_conversion_t v1beta1_custom_resource_conv
 
 
 
-
 typedef struct v1beta1_custom_resource_conversion_t {
     list_t *conversion_review_versions; //primitive container
     char *strategy; // string

@@ -19,7 +19,6 @@ typedef struct v1beta1_cron_job_spec_t v1beta1_cron_job_spec_t;
 
 
 
-
 typedef struct v1beta1_cron_job_spec_t {
     char *concurrency_policy; // string
     int failed_jobs_history_limit; //numeric

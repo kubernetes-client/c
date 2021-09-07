@@ -18,7 +18,6 @@ typedef struct v1beta1_overhead_t v1beta1_overhead_t;
 
 
 
-
 typedef struct v1beta1_overhead_t {
     list_t* pod_fixed; //map
 

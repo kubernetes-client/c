@@ -20,7 +20,6 @@ typedef struct v1_node_affinity_t v1_node_affinity_t;
 
 
 
-
 typedef struct v1_node_affinity_t {
     list_t *preferred_during_scheduling_ignored_during_execution; //nonprimitive container
     struct v1_node_selector_t *required_during_scheduling_ignored_during_execution; //model

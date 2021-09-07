@@ -19,7 +19,6 @@ typedef struct v1beta1_priority_class_t v1beta1_priority_class_t;
 
 
 
-
 typedef struct v1beta1_priority_class_t {
     char *api_version; // string
     char *description; // string

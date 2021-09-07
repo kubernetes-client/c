@@ -20,7 +20,6 @@ typedef struct v1_storage_class_t v1_storage_class_t;
 
 
 
-
 typedef struct v1_storage_class_t {
     int allow_volume_expansion; //boolean
     list_t *allowed_topologies; //nonprimitive container

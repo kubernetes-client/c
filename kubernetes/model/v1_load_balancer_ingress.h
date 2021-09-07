@@ -18,7 +18,6 @@ typedef struct v1_load_balancer_ingress_t v1_load_balancer_ingress_t;
 
 
 
-
 typedef struct v1_load_balancer_ingress_t {
     char *hostname; // string
     char *ip; // string

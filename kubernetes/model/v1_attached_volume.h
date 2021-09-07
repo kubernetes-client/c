@@ -18,7 +18,6 @@ typedef struct v1_attached_volume_t v1_attached_volume_t;
 
 
 
-
 typedef struct v1_attached_volume_t {
     char *device_path; // string
     char *name; // string

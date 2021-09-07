@@ -21,7 +21,6 @@ typedef struct v1_deployment_spec_t v1_deployment_spec_t;
 
 
 
-
 typedef struct v1_deployment_spec_t {
     int min_ready_seconds; //numeric
     int paused; //boolean

@@ -18,7 +18,6 @@ typedef struct v1_object_field_selector_t v1_object_field_selector_t;
 
 
 
-
 typedef struct v1_object_field_selector_t {
     char *api_version; // string
     char *field_path; // string

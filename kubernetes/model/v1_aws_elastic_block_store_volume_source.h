@@ -18,7 +18,6 @@ typedef struct v1_aws_elastic_block_store_volume_source_t v1_aws_elastic_block_s
 
 
 
-
 typedef struct v1_aws_elastic_block_store_volume_source_t {
     char *fs_type; // string
     int partition; //numeric

@@ -19,7 +19,6 @@ typedef struct v2beta1_external_metric_source_t v2beta1_external_metric_source_t
 
 
 
-
 typedef struct v2beta1_external_metric_source_t {
     char *metric_name; // string
     struct v1_label_selector_t *metric_selector; //model

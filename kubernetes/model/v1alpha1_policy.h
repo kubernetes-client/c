@@ -18,7 +18,6 @@ typedef struct v1alpha1_policy_t v1alpha1_policy_t;
 
 
 
-
 typedef struct v1alpha1_policy_t {
     char *level; // string
     list_t *stages; //primitive container

@@ -18,7 +18,6 @@ typedef struct apps_v1beta1_deployment_condition_t apps_v1beta1_deployment_condi
 
 
 
-
 typedef struct apps_v1beta1_deployment_condition_t {
     char *last_transition_time; //date time
     char *last_update_time; //date time

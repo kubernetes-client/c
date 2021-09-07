@@ -18,7 +18,6 @@ typedef struct v1_glusterfs_persistent_volume_source_t v1_glusterfs_persistent_v
 
 
 
-
 typedef struct v1_glusterfs_persistent_volume_source_t {
     char *endpoints; // string
     char *endpoints_namespace; // string

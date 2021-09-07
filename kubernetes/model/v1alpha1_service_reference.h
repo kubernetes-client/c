@@ -18,7 +18,6 @@ typedef struct v1alpha1_service_reference_t v1alpha1_service_reference_t;
 
 
 
-
 typedef struct v1alpha1_service_reference_t {
     char *name; // string
     char *_namespace; // string

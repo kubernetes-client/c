@@ -20,7 +20,6 @@ typedef struct v1beta1_lease_t v1beta1_lease_t;
 
 
 
-
 typedef struct v1beta1_lease_t {
     char *api_version; // string
     char *kind; // string

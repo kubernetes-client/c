@@ -21,7 +21,6 @@ typedef struct apps_v1beta1_deployment_t apps_v1beta1_deployment_t;
 
 
 
-
 typedef struct apps_v1beta1_deployment_t {
     char *api_version; // string
     char *kind; // string

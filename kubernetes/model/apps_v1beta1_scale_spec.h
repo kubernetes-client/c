@@ -18,7 +18,6 @@ typedef struct apps_v1beta1_scale_spec_t apps_v1beta1_scale_spec_t;
 
 
 
-
 typedef struct apps_v1beta1_scale_spec_t {
     int replicas; //numeric
 

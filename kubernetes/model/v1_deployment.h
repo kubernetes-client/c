@@ -21,7 +21,6 @@ typedef struct v1_deployment_t v1_deployment_t;
 
 
 
-
 typedef struct v1_deployment_t {
     char *api_version; // string
     char *kind; // string

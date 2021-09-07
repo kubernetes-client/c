@@ -18,7 +18,6 @@ typedef struct v2beta1_resource_metric_source_t v2beta1_resource_metric_source_t
 
 
 
-
 typedef struct v2beta1_resource_metric_source_t {
     char *name; // string
     int target_average_utilization; //numeric

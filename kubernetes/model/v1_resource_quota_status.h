@@ -18,7 +18,6 @@ typedef struct v1_resource_quota_status_t v1_resource_quota_status_t;
 
 
 
-
 typedef struct v1_resource_quota_status_t {
     list_t* hard; //map
     list_t* used; //map

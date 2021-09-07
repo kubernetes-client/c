@@ -21,7 +21,6 @@ typedef struct v1beta1_endpoint_slice_t v1beta1_endpoint_slice_t;
 
 
 
-
 typedef struct v1beta1_endpoint_slice_t {
     char *address_type; // string
     char *api_version; // string

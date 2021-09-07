@@ -21,7 +21,6 @@ typedef struct v1_job_t v1_job_t;
 
 
 
-
 typedef struct v1_job_t {
     char *api_version; // string
     char *kind; // string

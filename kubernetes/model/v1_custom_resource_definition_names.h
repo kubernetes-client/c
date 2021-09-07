@@ -18,7 +18,6 @@ typedef struct v1_custom_resource_definition_names_t v1_custom_resource_definiti
 
 
 
-
 typedef struct v1_custom_resource_definition_names_t {
     list_t *categories; //primitive container
     char *kind; // string

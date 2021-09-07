@@ -19,7 +19,6 @@ typedef struct v1_webhook_conversion_t v1_webhook_conversion_t;
 
 
 
-
 typedef struct v1_webhook_conversion_t {
     struct apiextensions_v1_webhook_client_config_t *client_config; //model
     list_t *conversion_review_versions; //primitive container
