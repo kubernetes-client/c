@@ -1,3 +1,5 @@
+set(VERSION 0.0.1)
+
 # config.h checks
 include(ConfigureChecks.cmake)
 configure_file(config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)

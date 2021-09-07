@@ -1541,6 +1541,7 @@ set(HDRS
 
 )
 
+set(VERSION 0.0.1)
 include(PreTarget.cmake OPTIONAL)
 
 # Add library with project file with project name as library name
@@ -1576,7 +1577,7 @@ else()
     include(CMakePackageConfigHelpers)
     write_basic_package_version_file(
             "${CMAKE_CURRENT_BINARY_DIR}/${pkgName}/${pkgName}ConfigVersion.cmake"
-            VERSION 0.0.1
+            VERSION "${VERSION}"
             COMPATIBILITY AnyNewerVersion
     )
 
