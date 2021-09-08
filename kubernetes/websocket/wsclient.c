@@ -1,4 +1,5 @@
 #include "wsclient.h"
+#include "../config/kube_config_common.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,7 +11,7 @@
 #define TTY_STDIN_NUMBER 0
 #define TTY_STDOUT_NUMBER 1
 #define WS_PROTOCOL_DELIM "://"
-#define WS_BASE_PATH_DELIM_CHAR ':'  /* ip:port */
+#define WS_BASE_PATH_DELIM_CHAR ':' /* ip:port */
 #define WS_BASE_PATH_DELIM_LENGTH 1
 
 static struct lws_context *g_lws_context;
@@ -73,7 +74,7 @@ static int get_server_address_and_port(char **p_ws_addr, int *p_ws_port, const c
     return 0;
 }
 
-wsclient_t *wsclient_create(const char *base_path, sslConfig_t * ssl_config, list_t * apiKeys, int ws_log_mask)
+wsclient_t *wsclient_create(const char *base_path, sslConfig_t * ssl_config, list_t * api_tokens, int ws_log_mask)
 {
     if (!base_path) {
         fprintf(stderr, "%s: The base path is invalid.\n", __func__);
@@ -93,11 +94,12 @@ wsclient_t *wsclient_create(const char *base_path, sslConfig_t * ssl_config, lis
     }
 
     wsc->ssl_config = ssl_config;
+    wsc->api_tokens = api_tokens;
     wsc->log_mask = ws_log_mask;
 
     return wsc;
 
-error:
+  error:
     if (wsc) {
         free(wsc);
         wsc = NULL;
@@ -121,6 +123,7 @@ void wsclient_free(wsclient_t * wsc)
     wsc->data_received_len = 0;
     wsc->data_callback_func = NULL;
     wsc->ssl_config = NULL;
+    wsc->api_tokens = NULL;
 
     free(wsc);
 }
@@ -143,7 +146,7 @@ static void connect_client(lws_sorted_usec_list_t * sul)
     i.host = i.address;
     i.origin = i.address;
     i.ssl_connection = wsc->ssl_config ? LCCSCF_USE_SSL : 0;
-    
+
     //i.protocol = pro;
     //i.local_protocol_name = "websocket-client";
     i.pwsi = &wsc->wsi;
@@ -175,6 +178,25 @@ static int callback_wsclient(struct lws *wsi, enum lws_callback_reasons reason, 
         goto do_retry;
         break;
 
+    case LWS_CALLBACK_CLIENT_APPEND_HANDSHAKE_HEADER:
+        if (!wsc->api_tokens) {
+            return 0;
+        }
+        lwsl_user("%s: LWS_CALLBACK_CLIENT_APPEND_HANDSHAKE_HEADER\n", __func__);
+        unsigned char **p = (unsigned char **) in, *end = (*p) + len;
+        listEntry_t *listEntry = NULL;
+        keyValuePair_t *token = NULL;
+        list_ForEach(listEntry, wsc->api_tokens) {
+            token = listEntry->data;
+            if (token && token->key && token->value && 0 == strcmp(token->key, AUTH_TOKEN_KEY)) {
+                lwsl_user("%s: token->key==%s, token->value=%s\n", __func__, token->key, (char *) token->value);
+                if (lws_add_http_header_by_token(wsi, WSI_TOKEN_HTTP_AUTHORIZATION, (unsigned char *) token->value, (int) strlen(token->value), p, end)) {
+                    return -1;
+                }
+            }
+        }
+        break;
+
     case LWS_CALLBACK_CLIENT_ESTABLISHED:
         lwsl_user("%s: wsclient connection established\n", __func__);
         lws_callback_on_writable(wsi);
@@ -196,7 +218,7 @@ static int callback_wsclient(struct lws *wsi, enum lws_callback_reasons reason, 
             lwsl_user("%s: The content of data received is empty.\n", __func__);
             return 0;
         }
-        char *valid_data = (char *)in + 1 ;
+        char *valid_data = (char *) in + 1;
 
         if (wsc->data_received_len > 0 && wsc->data_received) {
             free(wsc->data_received);
@@ -308,8 +330,11 @@ int wsclient_run(wsclient_t * wsc, wsc_mode_t mode)
     info.fd_limit_per_thread = 1 + 1 + 1;
 
     if (wsc->ssl_config) {
+        lwsl_user("%s: CACertFile=%s\n", __func__, wsc->ssl_config->CACertFile);
         info.client_ssl_ca_filepath = wsc->ssl_config->CACertFile;
+        lwsl_user("%s: clientKeyFile=%s\n", __func__, wsc->ssl_config->clientKeyFile);
         info.client_ssl_private_key_filepath = wsc->ssl_config->clientKeyFile;
+        lwsl_user("%s: clientCertFile=%s\n", __func__, wsc->ssl_config->clientCertFile);
         info.client_ssl_cert_filepath = wsc->ssl_config->clientCertFile;
     }
 
