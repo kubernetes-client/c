@@ -54,7 +54,6 @@ static int setBasePathInCluster(char **pBasePath)
         fprintf(stderr, "%s: Cannot retrieve the kubernetes service host inside a pod by the env %s.\n", fname, SERVICE_HOST_ENV_NAME);
         return -1;
     }
-
 #ifndef _WIN32
     const char *service_port_env = secure_getenv(SERVICE_PORT_ENV_NAME);
 #else
