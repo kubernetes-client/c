@@ -18,7 +18,6 @@ typedef struct v1_azure_disk_volume_source_t v1_azure_disk_volume_source_t;
 
 
 
-
 typedef struct v1_azure_disk_volume_source_t {
     char *caching_mode; // string
     char *disk_name; // string

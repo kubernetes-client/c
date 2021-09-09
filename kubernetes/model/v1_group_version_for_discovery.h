@@ -18,7 +18,6 @@ typedef struct v1_group_version_for_discovery_t v1_group_version_for_discovery_t
 
 
 
-
 typedef struct v1_group_version_for_discovery_t {
     char *group_version; // string
     char *version; // string

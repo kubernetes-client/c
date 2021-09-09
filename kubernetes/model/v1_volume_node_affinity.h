@@ -19,7 +19,6 @@ typedef struct v1_volume_node_affinity_t v1_volume_node_affinity_t;
 
 
 
-
 typedef struct v1_volume_node_affinity_t {
     struct v1_node_selector_t *required; //model
 

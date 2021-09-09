@@ -19,7 +19,6 @@ typedef struct v1_limit_range_spec_t v1_limit_range_spec_t;
 
 
 
-
 typedef struct v1_limit_range_spec_t {
     list_t *limits; //nonprimitive container
 

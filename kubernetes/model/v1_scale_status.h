@@ -18,7 +18,6 @@ typedef struct v1_scale_status_t v1_scale_status_t;
 
 
 
-
 typedef struct v1_scale_status_t {
     int replicas; //numeric
     char *selector; // string

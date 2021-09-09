@@ -19,7 +19,6 @@ typedef struct networking_v1beta1_ingress_rule_t networking_v1beta1_ingress_rule
 
 
 
-
 typedef struct networking_v1beta1_ingress_rule_t {
     char *host; // string
     struct networking_v1beta1_http_ingress_rule_value_t *http; //model

@@ -18,7 +18,6 @@ typedef struct v1alpha1_webhook_throttle_config_t v1alpha1_webhook_throttle_conf
 
 
 
-
 typedef struct v1alpha1_webhook_throttle_config_t {
     long burst; //numeric
     long qps; //numeric

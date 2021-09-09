@@ -18,7 +18,6 @@ typedef struct v1_container_state_terminated_t v1_container_state_terminated_t;
 
 
 
-
 typedef struct v1_container_state_terminated_t {
     char *container_id; // string
     int exit_code; //numeric

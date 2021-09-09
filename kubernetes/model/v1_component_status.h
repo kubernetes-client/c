@@ -20,7 +20,6 @@ typedef struct v1_component_status_t v1_component_status_t;
 
 
 
-
 typedef struct v1_component_status_t {
     char *api_version; // string
     list_t *conditions; //nonprimitive container

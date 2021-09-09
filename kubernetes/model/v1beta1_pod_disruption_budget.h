@@ -21,7 +21,6 @@ typedef struct v1beta1_pod_disruption_budget_t v1beta1_pod_disruption_budget_t;
 
 
 
-
 typedef struct v1beta1_pod_disruption_budget_t {
     char *api_version; // string
     char *kind; // string

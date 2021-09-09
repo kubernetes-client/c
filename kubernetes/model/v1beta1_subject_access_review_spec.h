@@ -20,7 +20,6 @@ typedef struct v1beta1_subject_access_review_spec_t v1beta1_subject_access_revie
 
 
 
-
 typedef struct v1beta1_subject_access_review_spec_t {
     list_t* extra; //map
     list_t *group; //primitive container

@@ -19,7 +19,6 @@ typedef struct v1_deployment_status_t v1_deployment_status_t;
 
 
 
-
 typedef struct v1_deployment_status_t {
     int available_replicas; //numeric
     int collision_count; //numeric

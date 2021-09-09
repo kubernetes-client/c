@@ -19,7 +19,6 @@ typedef struct v1_replication_controller_status_t v1_replication_controller_stat
 
 
 
-
 typedef struct v1_replication_controller_status_t {
     int available_replicas; //numeric
     list_t *conditions; //nonprimitive container

@@ -20,7 +20,6 @@ typedef struct v1_cluster_role_list_t v1_cluster_role_list_t;
 
 
 
-
 typedef struct v1_cluster_role_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

@@ -20,7 +20,6 @@ typedef struct v2beta1_horizontal_pod_autoscaler_spec_t v2beta1_horizontal_pod_a
 
 
 
-
 typedef struct v2beta1_horizontal_pod_autoscaler_spec_t {
     int max_replicas; //numeric
     list_t *metrics; //nonprimitive container

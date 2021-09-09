@@ -20,7 +20,6 @@ typedef struct v1beta1_eviction_t v1beta1_eviction_t;
 
 
 
-
 typedef struct v1beta1_eviction_t {
     char *api_version; // string
     struct v1_delete_options_t *delete_options; //model

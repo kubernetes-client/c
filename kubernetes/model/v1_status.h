@@ -20,7 +20,6 @@ typedef struct v1_status_t v1_status_t;
 
 
 
-
 typedef struct v1_status_t {
     char *api_version; // string
     int code; //numeric

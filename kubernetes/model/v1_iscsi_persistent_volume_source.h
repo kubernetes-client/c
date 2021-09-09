@@ -19,7 +19,6 @@ typedef struct v1_iscsi_persistent_volume_source_t v1_iscsi_persistent_volume_so
 
 
 
-
 typedef struct v1_iscsi_persistent_volume_source_t {
     int chap_auth_discovery; //boolean
     int chap_auth_session; //boolean

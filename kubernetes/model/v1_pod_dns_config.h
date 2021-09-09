@@ -19,7 +19,6 @@ typedef struct v1_pod_dns_config_t v1_pod_dns_config_t;
 
 
 
-
 typedef struct v1_pod_dns_config_t {
     list_t *nameservers; //primitive container
     list_t *options; //nonprimitive container

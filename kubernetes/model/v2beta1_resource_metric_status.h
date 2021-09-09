@@ -18,7 +18,6 @@ typedef struct v2beta1_resource_metric_status_t v2beta1_resource_metric_status_t
 
 
 
-
 typedef struct v2beta1_resource_metric_status_t {
     int current_average_utilization; //numeric
     char *current_average_value; // string

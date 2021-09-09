@@ -21,7 +21,6 @@ typedef struct v1beta1_replica_set_t v1beta1_replica_set_t;
 
 
 
-
 typedef struct v1beta1_replica_set_t {
     char *api_version; // string
     char *kind; // string

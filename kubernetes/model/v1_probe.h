@@ -21,7 +21,6 @@ typedef struct v1_probe_t v1_probe_t;
 
 
 
-
 typedef struct v1_probe_t {
     struct v1_exec_action_t *exec; //model
     int failure_threshold; //numeric

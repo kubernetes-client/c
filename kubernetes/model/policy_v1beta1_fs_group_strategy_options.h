@@ -19,7 +19,6 @@ typedef struct policy_v1beta1_fs_group_strategy_options_t policy_v1beta1_fs_grou
 
 
 
-
 typedef struct policy_v1beta1_fs_group_strategy_options_t {
     list_t *ranges; //nonprimitive container
     char *rule; // string

@@ -18,7 +18,6 @@ typedef struct v1_endpoint_port_t v1_endpoint_port_t;
 
 
 
-
 typedef struct v1_endpoint_port_t {
     char *name; // string
     int port; //numeric

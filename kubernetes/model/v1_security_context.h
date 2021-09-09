@@ -21,7 +21,6 @@ typedef struct v1_security_context_t v1_security_context_t;
 
 
 
-
 typedef struct v1_security_context_t {
     int allow_privilege_escalation; //boolean
     struct v1_capabilities_t *capabilities; //model

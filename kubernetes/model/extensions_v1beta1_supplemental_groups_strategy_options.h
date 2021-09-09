@@ -19,7 +19,6 @@ typedef struct extensions_v1beta1_supplemental_groups_strategy_options_t extensi
 
 
 
-
 typedef struct extensions_v1beta1_supplemental_groups_strategy_options_t {
     list_t *ranges; //nonprimitive container
     char *rule; // string

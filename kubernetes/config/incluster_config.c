@@ -26,15 +26,15 @@ static int checkServiceAccountFile(const char *fileName)
     struct stat info;
     if (-1 == stat(fileName, &info)) {
         switch (errno) {
-            case ENOENT:
-                fprintf(stderr, "%s: The file %s does not exist.[%s]\n", fname, fileName, strerror(errno));
-                return -1;
-            case EACCES:
-                fprintf(stderr, "%s: No permission to read the file %s.[%s]\n", fname, fileName, strerror(errno));
-                return -1;
-            default:
-                fprintf(stderr, "%s: Cannot retrieve the information of file %s.[%s]\n", fname, fileName, strerror(errno));
-                return -1;
+        case ENOENT:
+            fprintf(stderr, "%s: The file %s does not exist.[%s]\n", fname, fileName, strerror(errno));
+            return -1;
+        case EACCES:
+            fprintf(stderr, "%s: No permission to read the file %s.[%s]\n", fname, fileName, strerror(errno));
+            return -1;
+        default:
+            fprintf(stderr, "%s: Cannot retrieve the information of file %s.[%s]\n", fname, fileName, strerror(errno));
+            return -1;
         }
     }
 
@@ -54,7 +54,6 @@ static int setBasePathInCluster(char **pBasePath)
         fprintf(stderr, "%s: Cannot retrieve the kubernetes service host inside a pod by the env %s.\n", fname, SERVICE_HOST_ENV_NAME);
         return -1;
     }
-
 #ifndef _WIN32
     const char *service_port_env = secure_getenv(SERVICE_PORT_ENV_NAME);
 #else

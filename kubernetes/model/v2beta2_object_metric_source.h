@@ -21,7 +21,6 @@ typedef struct v2beta2_object_metric_source_t v2beta2_object_metric_source_t;
 
 
 
-
 typedef struct v2beta2_object_metric_source_t {
     struct v2beta2_cross_version_object_reference_t *described_object; //model
     struct v2beta2_metric_identifier_t *metric; //model

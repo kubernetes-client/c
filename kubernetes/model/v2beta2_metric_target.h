@@ -18,7 +18,6 @@ typedef struct v2beta2_metric_target_t v2beta2_metric_target_t;
 
 
 
-
 typedef struct v2beta2_metric_target_t {
     int average_utilization; //numeric
     char *average_value; // string

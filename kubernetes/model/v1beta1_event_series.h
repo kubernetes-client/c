@@ -18,7 +18,6 @@ typedef struct v1beta1_event_series_t v1beta1_event_series_t;
 
 
 
-
 typedef struct v1beta1_event_series_t {
     int count; //numeric
     char *last_observed_time; //date time

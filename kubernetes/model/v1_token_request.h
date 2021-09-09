@@ -21,7 +21,6 @@ typedef struct v1_token_request_t v1_token_request_t;
 
 
 
-
 typedef struct v1_token_request_t {
     char *api_version; // string
     char *kind; // string

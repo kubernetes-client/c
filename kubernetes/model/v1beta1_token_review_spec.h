@@ -18,7 +18,6 @@ typedef struct v1beta1_token_review_spec_t v1beta1_token_review_spec_t;
 
 
 
-
 typedef struct v1beta1_token_review_spec_t {
     list_t *audiences; //primitive container
     char *token; // string

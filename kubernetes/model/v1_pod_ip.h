@@ -18,7 +18,6 @@ typedef struct v1_pod_ip_t v1_pod_ip_t;
 
 
 
-
 typedef struct v1_pod_ip_t {
     char *ip; // string
 

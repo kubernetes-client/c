@@ -18,7 +18,6 @@ typedef struct v1_http_header_t v1_http_header_t;
 
 
 
-
 typedef struct v1_http_header_t {
     char *name; // string
     char *value; // string

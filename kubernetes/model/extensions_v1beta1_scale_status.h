@@ -18,7 +18,6 @@ typedef struct extensions_v1beta1_scale_status_t extensions_v1beta1_scale_status
 
 
 
-
 typedef struct extensions_v1beta1_scale_status_t {
     int replicas; //numeric
     list_t* selector; //map

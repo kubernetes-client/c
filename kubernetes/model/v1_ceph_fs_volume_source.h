@@ -19,7 +19,6 @@ typedef struct v1_ceph_fs_volume_source_t v1_ceph_fs_volume_source_t;
 
 
 
-
 typedef struct v1_ceph_fs_volume_source_t {
     list_t *monitors; //primitive container
     char *path; // string

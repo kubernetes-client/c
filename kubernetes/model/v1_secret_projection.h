@@ -19,7 +19,6 @@ typedef struct v1_secret_projection_t v1_secret_projection_t;
 
 
 
-
 typedef struct v1_secret_projection_t {
     list_t *items; //nonprimitive container
     char *name; // string

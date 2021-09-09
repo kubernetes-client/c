@@ -20,7 +20,6 @@ typedef struct v1beta1_pod_disruption_budget_spec_t v1beta1_pod_disruption_budge
 
 
 
-
 typedef struct v1beta1_pod_disruption_budget_spec_t {
     object_t *max_unavailable; //object
     object_t *min_available; //object

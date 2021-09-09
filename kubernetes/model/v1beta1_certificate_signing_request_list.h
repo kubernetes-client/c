@@ -20,7 +20,6 @@ typedef struct v1beta1_certificate_signing_request_list_t v1beta1_certificate_si
 
 
 
-
 typedef struct v1beta1_certificate_signing_request_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

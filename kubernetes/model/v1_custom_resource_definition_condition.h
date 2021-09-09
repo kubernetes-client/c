@@ -18,7 +18,6 @@ typedef struct v1_custom_resource_definition_condition_t v1_custom_resource_defi
 
 
 
-
 typedef struct v1_custom_resource_definition_condition_t {
     char *last_transition_time; //date time
     char *message; // string

@@ -20,7 +20,6 @@ typedef struct v1_endpoint_subset_t v1_endpoint_subset_t;
 
 
 
-
 typedef struct v1_endpoint_subset_t {
     list_t *addresses; //nonprimitive container
     list_t *not_ready_addresses; //nonprimitive container

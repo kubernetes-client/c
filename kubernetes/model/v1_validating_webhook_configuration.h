@@ -20,7 +20,6 @@ typedef struct v1_validating_webhook_configuration_t v1_validating_webhook_confi
 
 
 
-
 typedef struct v1_validating_webhook_configuration_t {
     char *api_version; // string
     char *kind; // string

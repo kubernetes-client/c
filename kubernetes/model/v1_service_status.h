@@ -19,7 +19,6 @@ typedef struct v1_service_status_t v1_service_status_t;
 
 
 
-
 typedef struct v1_service_status_t {
     struct v1_load_balancer_status_t *load_balancer; //model
 

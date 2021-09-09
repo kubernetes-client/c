@@ -18,7 +18,6 @@ typedef struct v1_node_system_info_t v1_node_system_info_t;
 
 
 
-
 typedef struct v1_node_system_info_t {
     char *architecture; // string
     char *boot_id; // string

@@ -20,7 +20,6 @@ typedef struct v1_binding_t v1_binding_t;
 
 
 
-
 typedef struct v1_binding_t {
     char *api_version; // string
     char *kind; // string

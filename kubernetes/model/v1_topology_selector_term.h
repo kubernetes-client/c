@@ -19,7 +19,6 @@ typedef struct v1_topology_selector_term_t v1_topology_selector_term_t;
 
 
 
-
 typedef struct v1_topology_selector_term_t {
     list_t *match_label_expressions; //nonprimitive container
 

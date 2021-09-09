@@ -27,7 +27,6 @@ typedef struct v1_ephemeral_container_t v1_ephemeral_container_t;
 
 
 
-
 typedef struct v1_ephemeral_container_t {
     list_t *args; //primitive container
     list_t *command; //primitive container

@@ -18,7 +18,6 @@ typedef struct v1_volume_error_t v1_volume_error_t;
 
 
 
-
 typedef struct v1_volume_error_t {
     char *message; // string
     char *time; //date time

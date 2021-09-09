@@ -18,7 +18,6 @@ typedef struct v1_list_meta_t v1_list_meta_t;
 
 
 
-
 typedef struct v1_list_meta_t {
     char *_continue; // string
     long remaining_item_count; //numeric

@@ -19,7 +19,6 @@ typedef struct extensions_v1beta1_deployment_status_t extensions_v1beta1_deploym
 
 
 
-
 typedef struct extensions_v1beta1_deployment_status_t {
     int available_replicas; //numeric
     int collision_count; //numeric

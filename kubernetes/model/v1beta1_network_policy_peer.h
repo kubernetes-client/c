@@ -20,7 +20,6 @@ typedef struct v1beta1_network_policy_peer_t v1beta1_network_policy_peer_t;
 
 
 
-
 typedef struct v1beta1_network_policy_peer_t {
     struct v1beta1_ip_block_t *ip_block; //model
     struct v1_label_selector_t *namespace_selector; //model

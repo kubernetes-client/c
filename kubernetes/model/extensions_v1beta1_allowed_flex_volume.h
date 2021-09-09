@@ -18,7 +18,6 @@ typedef struct extensions_v1beta1_allowed_flex_volume_t extensions_v1beta1_allow
 
 
 
-
 typedef struct extensions_v1beta1_allowed_flex_volume_t {
     char *driver; // string
 

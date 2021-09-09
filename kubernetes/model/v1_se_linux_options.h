@@ -18,7 +18,6 @@ typedef struct v1_se_linux_options_t v1_se_linux_options_t;
 
 
 
-
 typedef struct v1_se_linux_options_t {
     char *level; // string
     char *role; // string

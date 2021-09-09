@@ -18,7 +18,6 @@ typedef struct v1beta1_custom_resource_column_definition_t v1beta1_custom_resour
 
 
 
-
 typedef struct v1beta1_custom_resource_column_definition_t {
     char *json_path; // string
     char *description; // string

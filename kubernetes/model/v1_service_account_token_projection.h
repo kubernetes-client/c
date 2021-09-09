@@ -18,7 +18,6 @@ typedef struct v1_service_account_token_projection_t v1_service_account_token_pr
 
 
 
-
 typedef struct v1_service_account_token_projection_t {
     char *audience; // string
     long expiration_seconds; //numeric

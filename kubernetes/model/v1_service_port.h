@@ -19,7 +19,6 @@ typedef struct v1_service_port_t v1_service_port_t;
 
 
 
-
 typedef struct v1_service_port_t {
     char *name; // string
     int node_port; //numeric

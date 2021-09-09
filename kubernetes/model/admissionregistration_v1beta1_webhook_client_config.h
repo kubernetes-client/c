@@ -19,7 +19,6 @@ typedef struct admissionregistration_v1beta1_webhook_client_config_t admissionre
 
 
 
-
 typedef struct admissionregistration_v1beta1_webhook_client_config_t {
     char *ca_bundle; //ByteArray
     struct admissionregistration_v1beta1_service_reference_t *service; //model

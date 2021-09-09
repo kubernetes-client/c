@@ -19,7 +19,6 @@ typedef struct extensions_v1beta1_deployment_rollback_t extensions_v1beta1_deplo
 
 
 
-
 typedef struct extensions_v1beta1_deployment_rollback_t {
     char *api_version; // string
     char *kind; // string

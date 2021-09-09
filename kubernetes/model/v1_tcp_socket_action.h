@@ -19,7 +19,6 @@ typedef struct v1_tcp_socket_action_t v1_tcp_socket_action_t;
 
 
 
-
 typedef struct v1_tcp_socket_action_t {
     char *host; // string
     object_t *port; //object

@@ -19,7 +19,6 @@ typedef struct v1_config_map_t v1_config_map_t;
 
 
 
-
 typedef struct v1_config_map_t {
     char *api_version; // string
     list_t* binary_data; //map

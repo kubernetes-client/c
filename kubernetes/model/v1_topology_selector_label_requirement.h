@@ -18,7 +18,6 @@ typedef struct v1_topology_selector_label_requirement_t v1_topology_selector_lab
 
 
 
-
 typedef struct v1_topology_selector_label_requirement_t {
     char *key; // string
     list_t *values; //primitive container

@@ -18,7 +18,6 @@ typedef struct v1_non_resource_attributes_t v1_non_resource_attributes_t;
 
 
 
-
 typedef struct v1_non_resource_attributes_t {
     char *path; // string
     char *verb; // string

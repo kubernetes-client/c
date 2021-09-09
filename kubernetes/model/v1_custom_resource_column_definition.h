@@ -18,7 +18,6 @@ typedef struct v1_custom_resource_column_definition_t v1_custom_resource_column_
 
 
 
-
 typedef struct v1_custom_resource_column_definition_t {
     char *description; // string
     char *format; // string

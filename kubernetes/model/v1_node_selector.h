@@ -19,7 +19,6 @@ typedef struct v1_node_selector_t v1_node_selector_t;
 
 
 
-
 typedef struct v1_node_selector_t {
     list_t *node_selector_terms; //nonprimitive container
 

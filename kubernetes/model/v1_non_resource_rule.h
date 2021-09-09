@@ -18,7 +18,6 @@ typedef struct v1_non_resource_rule_t v1_non_resource_rule_t;
 
 
 
-
 typedef struct v1_non_resource_rule_t {
     list_t *non_resource_urls; //primitive container
     list_t *verbs; //primitive container

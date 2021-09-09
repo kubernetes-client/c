@@ -20,7 +20,6 @@ typedef struct v2beta2_external_metric_source_t v2beta2_external_metric_source_t
 
 
 
-
 typedef struct v2beta2_external_metric_source_t {
     struct v2beta2_metric_identifier_t *metric; //model
     struct v2beta2_metric_target_t *target; //model

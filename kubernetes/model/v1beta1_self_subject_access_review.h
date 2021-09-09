@@ -21,7 +21,6 @@ typedef struct v1beta1_self_subject_access_review_t v1beta1_self_subject_access_
 
 
 
-
 typedef struct v1beta1_self_subject_access_review_t {
     char *api_version; // string
     char *kind; // string

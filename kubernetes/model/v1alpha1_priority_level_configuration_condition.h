@@ -18,7 +18,6 @@ typedef struct v1alpha1_priority_level_configuration_condition_t v1alpha1_priori
 
 
 
-
 typedef struct v1alpha1_priority_level_configuration_condition_t {
     char *last_transition_time; //date time
     char *message; // string

@@ -18,7 +18,6 @@ typedef struct v1_container_port_t v1_container_port_t;
 
 
 
-
 typedef struct v1_container_port_t {
     int container_port; //numeric
     char *host_ip; // string

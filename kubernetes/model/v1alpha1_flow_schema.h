@@ -21,7 +21,6 @@ typedef struct v1alpha1_flow_schema_t v1alpha1_flow_schema_t;
 
 
 
-
 typedef struct v1alpha1_flow_schema_t {
     char *api_version; // string
     char *kind; // string

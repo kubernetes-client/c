@@ -18,7 +18,6 @@ typedef struct apps_v1beta1_rollback_config_t apps_v1beta1_rollback_config_t;
 
 
 
-
 typedef struct apps_v1beta1_rollback_config_t {
     long revision; //numeric
 

@@ -19,7 +19,6 @@ typedef struct v1alpha1_priority_level_configuration_status_t v1alpha1_priority_
 
 
 
-
 typedef struct v1alpha1_priority_level_configuration_status_t {
     list_t *conditions; //nonprimitive container
 

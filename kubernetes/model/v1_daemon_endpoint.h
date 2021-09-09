@@ -18,7 +18,6 @@ typedef struct v1_daemon_endpoint_t v1_daemon_endpoint_t;
 
 
 
-
 typedef struct v1_daemon_endpoint_t {
     int port; //numeric
 

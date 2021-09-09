@@ -21,7 +21,6 @@ typedef struct v1_resource_quota_t v1_resource_quota_t;
 
 
 
-
 typedef struct v1_resource_quota_t {
     char *api_version; // string
     char *kind; // string

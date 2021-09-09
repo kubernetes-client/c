@@ -18,7 +18,6 @@ typedef struct v1_secret_env_source_t v1_secret_env_source_t;
 
 
 
-
 typedef struct v1_secret_env_source_t {
     char *name; // string
     int optional; //boolean

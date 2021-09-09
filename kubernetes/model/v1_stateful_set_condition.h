@@ -18,7 +18,6 @@ typedef struct v1_stateful_set_condition_t v1_stateful_set_condition_t;
 
 
 
-
 typedef struct v1_stateful_set_condition_t {
     char *last_transition_time; //date time
     char *message; // string

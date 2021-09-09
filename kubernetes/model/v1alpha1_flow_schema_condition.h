@@ -18,7 +18,6 @@ typedef struct v1alpha1_flow_schema_condition_t v1alpha1_flow_schema_condition_t
 
 
 
-
 typedef struct v1alpha1_flow_schema_condition_t {
     char *last_transition_time; //date time
     char *message; // string

@@ -18,7 +18,6 @@ typedef struct policy_v1beta1_allowed_host_path_t policy_v1beta1_allowed_host_pa
 
 
 
-
 typedef struct policy_v1beta1_allowed_host_path_t {
     char *path_prefix; // string
     int read_only; //boolean

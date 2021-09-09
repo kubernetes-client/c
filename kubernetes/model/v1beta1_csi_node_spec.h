@@ -19,7 +19,6 @@ typedef struct v1beta1_csi_node_spec_t v1beta1_csi_node_spec_t;
 
 
 
-
 typedef struct v1beta1_csi_node_spec_t {
     list_t *drivers; //nonprimitive container
 

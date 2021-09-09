@@ -20,7 +20,6 @@ typedef struct v1alpha1_runtime_class_spec_t v1alpha1_runtime_class_spec_t;
 
 
 
-
 typedef struct v1alpha1_runtime_class_spec_t {
     struct v1alpha1_overhead_t *overhead; //model
     char *runtime_handler; // string

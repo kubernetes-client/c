@@ -18,7 +18,6 @@ typedef struct v1_scoped_resource_selector_requirement_t v1_scoped_resource_sele
 
 
 
-
 typedef struct v1_scoped_resource_selector_requirement_t {
     char *_operator; // string
     char *scope_name; // string

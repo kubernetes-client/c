@@ -20,7 +20,6 @@ typedef struct v2beta1_object_metric_source_t v2beta1_object_metric_source_t;
 
 
 
-
 typedef struct v2beta1_object_metric_source_t {
     char *average_value; // string
     char *metric_name; // string

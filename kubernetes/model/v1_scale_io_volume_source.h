@@ -19,7 +19,6 @@ typedef struct v1_scale_io_volume_source_t v1_scale_io_volume_source_t;
 
 
 
-
 typedef struct v1_scale_io_volume_source_t {
     char *fs_type; // string
     char *gateway; // string

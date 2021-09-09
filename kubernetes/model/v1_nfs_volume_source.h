@@ -18,7 +18,6 @@ typedef struct v1_nfs_volume_source_t v1_nfs_volume_source_t;
 
 
 
-
 typedef struct v1_nfs_volume_source_t {
     char *path; // string
     int read_only; //boolean

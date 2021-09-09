@@ -18,7 +18,6 @@ typedef struct v1_resource_rule_t v1_resource_rule_t;
 
 
 
-
 typedef struct v1_resource_rule_t {
     list_t *api_groups; //primitive container
     list_t *resource_names; //primitive container

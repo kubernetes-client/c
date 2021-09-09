@@ -18,7 +18,6 @@ typedef struct v1beta1_endpoint_conditions_t v1beta1_endpoint_conditions_t;
 
 
 
-
 typedef struct v1beta1_endpoint_conditions_t {
     int ready; //boolean
 

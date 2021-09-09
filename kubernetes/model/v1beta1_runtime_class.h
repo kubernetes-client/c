@@ -21,7 +21,6 @@ typedef struct v1beta1_runtime_class_t v1beta1_runtime_class_t;
 
 
 
-
 typedef struct v1beta1_runtime_class_t {
     char *api_version; // string
     char *handler; // string

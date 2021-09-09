@@ -19,7 +19,6 @@ typedef struct apps_v1beta1_deployment_strategy_t apps_v1beta1_deployment_strate
 
 
 
-
 typedef struct apps_v1beta1_deployment_strategy_t {
     struct apps_v1beta1_rolling_update_deployment_t *rolling_update; //model
     char *type; // string

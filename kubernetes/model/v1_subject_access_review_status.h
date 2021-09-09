@@ -18,7 +18,6 @@ typedef struct v1_subject_access_review_status_t v1_subject_access_review_status
 
 
 
-
 typedef struct v1_subject_access_review_status_t {
     int allowed; //boolean
     int denied; //boolean

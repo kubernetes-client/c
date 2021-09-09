@@ -18,7 +18,6 @@ typedef struct v1_glusterfs_volume_source_t v1_glusterfs_volume_source_t;
 
 
 
-
 typedef struct v1_glusterfs_volume_source_t {
     char *endpoints; // string
     char *path; // string

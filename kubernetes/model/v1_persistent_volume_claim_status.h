@@ -19,7 +19,6 @@ typedef struct v1_persistent_volume_claim_status_t v1_persistent_volume_claim_st
 
 
 
-
 typedef struct v1_persistent_volume_claim_status_t {
     list_t *access_modes; //primitive container
     list_t* capacity; //map

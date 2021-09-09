@@ -19,7 +19,6 @@ typedef struct v1_status_details_t v1_status_details_t;
 
 
 
-
 typedef struct v1_status_details_t {
     list_t *causes; //nonprimitive container
     char *group; // string

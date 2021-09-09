@@ -19,7 +19,6 @@ typedef struct v2beta2_metric_identifier_t v2beta2_metric_identifier_t;
 
 
 
-
 typedef struct v2beta2_metric_identifier_t {
     char *name; // string
     struct v1_label_selector_t *selector; //model

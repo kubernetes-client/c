@@ -19,7 +19,6 @@ typedef struct apiextensions_v1beta1_webhook_client_config_t apiextensions_v1bet
 
 
 
-
 typedef struct apiextensions_v1beta1_webhook_client_config_t {
     char *ca_bundle; //ByteArray
     struct apiextensions_v1beta1_service_reference_t *service; //model

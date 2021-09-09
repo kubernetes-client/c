@@ -18,7 +18,6 @@ typedef struct v1_horizontal_pod_autoscaler_status_t v1_horizontal_pod_autoscale
 
 
 
-
 typedef struct v1_horizontal_pod_autoscaler_status_t {
     int current_cpu_utilization_percentage; //numeric
     int current_replicas; //numeric

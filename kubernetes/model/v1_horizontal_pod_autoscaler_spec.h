@@ -19,7 +19,6 @@ typedef struct v1_horizontal_pod_autoscaler_spec_t v1_horizontal_pod_autoscaler_
 
 
 
-
 typedef struct v1_horizontal_pod_autoscaler_spec_t {
     int max_replicas; //numeric
     int min_replicas; //numeric

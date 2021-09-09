@@ -18,7 +18,6 @@ typedef struct extensions_v1beta1_scale_spec_t extensions_v1beta1_scale_spec_t;
 
 
 
-
 typedef struct extensions_v1beta1_scale_spec_t {
     int replicas; //numeric
 

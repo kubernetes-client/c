@@ -22,7 +22,6 @@ typedef struct apps_v1beta1_deployment_spec_t apps_v1beta1_deployment_spec_t;
 
 
 
-
 typedef struct apps_v1beta1_deployment_spec_t {
     int min_ready_seconds; //numeric
     int paused; //boolean

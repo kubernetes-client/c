@@ -18,7 +18,6 @@ typedef struct v1beta1_certificate_signing_request_spec_t v1beta1_certificate_si
 
 
 
-
 typedef struct v1beta1_certificate_signing_request_spec_t {
     list_t* extra; //map
     list_t *groups; //primitive container

@@ -20,7 +20,6 @@ typedef struct v1_node_spec_t v1_node_spec_t;
 
 
 
-
 typedef struct v1_node_spec_t {
     struct v1_node_config_source_t *config_source; //model
     char *external_id; // string

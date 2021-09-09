@@ -18,7 +18,6 @@ typedef struct v1beta1_self_subject_rules_review_spec_t v1beta1_self_subject_rul
 
 
 
-
 typedef struct v1beta1_self_subject_rules_review_spec_t {
     char *_namespace; // string
 

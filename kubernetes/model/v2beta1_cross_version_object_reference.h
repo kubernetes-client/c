@@ -18,7 +18,6 @@ typedef struct v2beta1_cross_version_object_reference_t v2beta1_cross_version_ob
 
 
 
-
 typedef struct v2beta1_cross_version_object_reference_t {
     char *api_version; // string
     char *kind; // string

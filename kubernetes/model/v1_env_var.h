@@ -19,7 +19,6 @@ typedef struct v1_env_var_t v1_env_var_t;
 
 
 
-
 typedef struct v1_env_var_t {
     char *name; // string
     char *value; // string

@@ -18,7 +18,6 @@ typedef struct v1_replication_controller_condition_t v1_replication_controller_c
 
 
 
-
 typedef struct v1_replication_controller_condition_t {
     char *last_transition_time; //date time
     char *message; // string

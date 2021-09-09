@@ -18,7 +18,6 @@ typedef struct v1beta1_resource_attributes_t v1beta1_resource_attributes_t;
 
 
 
-
 typedef struct v1beta1_resource_attributes_t {
     char *group; // string
     char *name; // string

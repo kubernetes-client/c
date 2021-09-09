@@ -21,7 +21,6 @@ typedef struct v1beta2_daemon_set_spec_t v1beta2_daemon_set_spec_t;
 
 
 
-
 typedef struct v1beta2_daemon_set_spec_t {
     int min_ready_seconds; //numeric
     int revision_history_limit; //numeric

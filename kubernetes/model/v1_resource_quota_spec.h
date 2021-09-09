@@ -19,7 +19,6 @@ typedef struct v1_resource_quota_spec_t v1_resource_quota_spec_t;
 
 
 
-
 typedef struct v1_resource_quota_spec_t {
     list_t* hard; //map
     struct v1_scope_selector_t *scope_selector; //model

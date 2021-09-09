@@ -21,7 +21,6 @@ typedef struct v1alpha1_priority_level_configuration_t v1alpha1_priority_level_c
 
 
 
-
 typedef struct v1alpha1_priority_level_configuration_t {
     char *api_version; // string
     char *kind; // string

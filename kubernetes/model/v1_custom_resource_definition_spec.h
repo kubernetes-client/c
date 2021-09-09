@@ -21,7 +21,6 @@ typedef struct v1_custom_resource_definition_spec_t v1_custom_resource_definitio
 
 
 
-
 typedef struct v1_custom_resource_definition_spec_t {
     struct v1_custom_resource_conversion_t *conversion; //model
     char *group; // string

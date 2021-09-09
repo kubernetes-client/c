@@ -18,7 +18,6 @@ typedef struct v2beta2_horizontal_pod_autoscaler_condition_t v2beta2_horizontal_
 
 
 
-
 typedef struct v2beta2_horizontal_pod_autoscaler_condition_t {
     char *last_transition_time; //date time
     char *message; // string

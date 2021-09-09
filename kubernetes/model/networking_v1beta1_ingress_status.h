@@ -19,7 +19,6 @@ typedef struct networking_v1beta1_ingress_status_t networking_v1beta1_ingress_st
 
 
 
-
 typedef struct networking_v1beta1_ingress_status_t {
     struct v1_load_balancer_status_t *load_balancer; //model
 

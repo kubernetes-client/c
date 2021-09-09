@@ -19,7 +19,6 @@ typedef struct v1_label_selector_t v1_label_selector_t;
 
 
 
-
 typedef struct v1_label_selector_t {
     list_t *match_expressions; //nonprimitive container
     list_t* match_labels; //map

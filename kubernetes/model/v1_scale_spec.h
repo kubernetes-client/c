@@ -18,7 +18,6 @@ typedef struct v1_scale_spec_t v1_scale_spec_t;
 
 
 
-
 typedef struct v1_scale_spec_t {
     int replicas; //numeric
 

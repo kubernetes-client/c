@@ -18,7 +18,6 @@ typedef struct v1_flocker_volume_source_t v1_flocker_volume_source_t;
 
 
 
-
 typedef struct v1_flocker_volume_source_t {
     char *dataset_name; // string
     char *dataset_uuid; // string

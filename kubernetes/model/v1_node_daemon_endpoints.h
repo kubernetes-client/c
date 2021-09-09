@@ -19,7 +19,6 @@ typedef struct v1_node_daemon_endpoints_t v1_node_daemon_endpoints_t;
 
 
 
-
 typedef struct v1_node_daemon_endpoints_t {
     struct v1_daemon_endpoint_t *kubelet_endpoint; //model
 

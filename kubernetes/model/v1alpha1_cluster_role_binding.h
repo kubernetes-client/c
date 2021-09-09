@@ -21,7 +21,6 @@ typedef struct v1alpha1_cluster_role_binding_t v1alpha1_cluster_role_binding_t;
 
 
 
-
 typedef struct v1alpha1_cluster_role_binding_t {
     char *api_version; // string
     char *kind; // string

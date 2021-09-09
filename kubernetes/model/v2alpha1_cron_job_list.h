@@ -20,7 +20,6 @@ typedef struct v2alpha1_cron_job_list_t v2alpha1_cron_job_list_t;
 
 
 
-
 typedef struct v2alpha1_cron_job_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

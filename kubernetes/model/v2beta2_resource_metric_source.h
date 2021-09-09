@@ -19,7 +19,6 @@ typedef struct v2beta2_resource_metric_source_t v2beta2_resource_metric_source_t
 
 
 
-
 typedef struct v2beta2_resource_metric_source_t {
     char *name; // string
     struct v2beta2_metric_target_t *target; //model

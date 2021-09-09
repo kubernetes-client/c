@@ -19,7 +19,6 @@ typedef struct extensions_v1beta1_ingress_status_t extensions_v1beta1_ingress_st
 
 
 
-
 typedef struct extensions_v1beta1_ingress_status_t {
     struct v1_load_balancer_status_t *load_balancer; //model
 

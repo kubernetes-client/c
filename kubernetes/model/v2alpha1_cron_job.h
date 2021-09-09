@@ -21,7 +21,6 @@ typedef struct v2alpha1_cron_job_t v2alpha1_cron_job_t;
 
 
 
-
 typedef struct v2alpha1_cron_job_t {
     char *api_version; // string
     char *kind; // string

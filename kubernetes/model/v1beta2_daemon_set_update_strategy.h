@@ -19,7 +19,6 @@ typedef struct v1beta2_daemon_set_update_strategy_t v1beta2_daemon_set_update_st
 
 
 
-
 typedef struct v1beta2_daemon_set_update_strategy_t {
     struct v1beta2_rolling_update_daemon_set_t *rolling_update; //model
     char *type; // string

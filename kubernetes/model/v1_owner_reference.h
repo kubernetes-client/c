@@ -18,7 +18,6 @@ typedef struct v1_owner_reference_t v1_owner_reference_t;
 
 
 
-
 typedef struct v1_owner_reference_t {
     char *api_version; // string
     int block_owner_deletion; //boolean

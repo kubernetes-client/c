@@ -18,7 +18,6 @@ typedef struct v1_persistent_volume_status_t v1_persistent_volume_status_t;
 
 
 
-
 typedef struct v1_persistent_volume_status_t {
     char *message; // string
     char *phase; // string

@@ -18,7 +18,6 @@ typedef struct v1_key_to_path_t v1_key_to_path_t;
 
 
 
-
 typedef struct v1_key_to_path_t {
     char *key; // string
     int mode; //numeric

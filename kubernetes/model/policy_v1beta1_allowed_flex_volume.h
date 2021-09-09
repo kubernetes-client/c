@@ -18,7 +18,6 @@ typedef struct policy_v1beta1_allowed_flex_volume_t policy_v1beta1_allowed_flex_
 
 
 
-
 typedef struct policy_v1beta1_allowed_flex_volume_t {
     char *driver; // string
 

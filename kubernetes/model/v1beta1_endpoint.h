@@ -20,7 +20,6 @@ typedef struct v1beta1_endpoint_t v1beta1_endpoint_t;
 
 
 
-
 typedef struct v1beta1_endpoint_t {
     list_t *addresses; //primitive container
     struct v1beta1_endpoint_conditions_t *conditions; //model

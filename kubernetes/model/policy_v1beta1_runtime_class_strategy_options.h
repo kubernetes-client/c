@@ -18,7 +18,6 @@ typedef struct policy_v1beta1_runtime_class_strategy_options_t policy_v1beta1_ru
 
 
 
-
 typedef struct policy_v1beta1_runtime_class_strategy_options_t {
     list_t *allowed_runtime_class_names; //primitive container
     char *default_runtime_class_name; // string

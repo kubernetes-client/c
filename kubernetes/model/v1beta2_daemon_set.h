@@ -21,7 +21,6 @@ typedef struct v1beta2_daemon_set_t v1beta2_daemon_set_t;
 
 
 
-
 typedef struct v1beta2_daemon_set_t {
     char *api_version; // string
     char *kind; // string

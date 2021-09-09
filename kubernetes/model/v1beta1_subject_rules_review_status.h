@@ -20,7 +20,6 @@ typedef struct v1beta1_subject_rules_review_status_t v1beta1_subject_rules_revie
 
 
 
-
 typedef struct v1beta1_subject_rules_review_status_t {
     char *evaluation_error; // string
     int incomplete; //boolean

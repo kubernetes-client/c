@@ -18,7 +18,6 @@ typedef struct v1alpha1_flow_distinguisher_method_t v1alpha1_flow_distinguisher_
 
 
 
-
 typedef struct v1alpha1_flow_distinguisher_method_t {
     char *type; // string
 

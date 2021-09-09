@@ -21,7 +21,6 @@ typedef struct v1_service_account_t v1_service_account_t;
 
 
 
-
 typedef struct v1_service_account_t {
     char *api_version; // string
     int automount_service_account_token; //boolean

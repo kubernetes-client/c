@@ -21,7 +21,6 @@ typedef struct v1_validating_webhook_t v1_validating_webhook_t;
 
 
 
-
 typedef struct v1_validating_webhook_t {
     list_t *admission_review_versions; //primitive container
     struct admissionregistration_v1_webhook_client_config_t *client_config; //model

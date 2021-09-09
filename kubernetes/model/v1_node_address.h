@@ -18,7 +18,6 @@ typedef struct v1_node_address_t v1_node_address_t;
 
 
 
-
 typedef struct v1_node_address_t {
     char *address; // string
     char *type; // string

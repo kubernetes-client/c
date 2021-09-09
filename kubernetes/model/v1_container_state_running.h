@@ -18,7 +18,6 @@ typedef struct v1_container_state_running_t v1_container_state_running_t;
 
 
 
-
 typedef struct v1_container_state_running_t {
     char *started_at; //date time
 

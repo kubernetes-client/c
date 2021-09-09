@@ -20,7 +20,6 @@ typedef struct v1beta1_pod_disruption_budget_list_t v1beta1_pod_disruption_budge
 
 
 
-
 typedef struct v1beta1_pod_disruption_budget_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

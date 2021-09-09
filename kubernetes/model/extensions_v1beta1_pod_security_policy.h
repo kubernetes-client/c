@@ -20,7 +20,6 @@ typedef struct extensions_v1beta1_pod_security_policy_t extensions_v1beta1_pod_s
 
 
 
-
 typedef struct extensions_v1beta1_pod_security_policy_t {
     char *api_version; // string
     char *kind; // string

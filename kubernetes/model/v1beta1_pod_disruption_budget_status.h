@@ -18,7 +18,6 @@ typedef struct v1beta1_pod_disruption_budget_status_t v1beta1_pod_disruption_bud
 
 
 
-
 typedef struct v1beta1_pod_disruption_budget_status_t {
     int current_healthy; //numeric
     int desired_healthy; //numeric

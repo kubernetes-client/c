@@ -18,7 +18,6 @@ typedef struct v1_container_state_waiting_t v1_container_state_waiting_t;
 
 
 
-
 typedef struct v1_container_state_waiting_t {
     char *message; // string
     char *reason; // string

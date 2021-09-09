@@ -20,7 +20,6 @@ typedef struct v1_network_policy_t v1_network_policy_t;
 
 
 
-
 typedef struct v1_network_policy_t {
     char *api_version; // string
     char *kind; // string

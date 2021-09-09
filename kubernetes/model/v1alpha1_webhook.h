@@ -20,7 +20,6 @@ typedef struct v1alpha1_webhook_t v1alpha1_webhook_t;
 
 
 
-
 typedef struct v1alpha1_webhook_t {
     struct v1alpha1_webhook_client_config_t *client_config; //model
     struct v1alpha1_webhook_throttle_config_t *throttle; //model

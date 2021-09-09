@@ -18,7 +18,6 @@ typedef struct networking_v1beta1_ingress_tls_t networking_v1beta1_ingress_tls_t
 
 
 
-
 typedef struct networking_v1beta1_ingress_tls_t {
     list_t *hosts; //primitive container
     char *secret_name; // string

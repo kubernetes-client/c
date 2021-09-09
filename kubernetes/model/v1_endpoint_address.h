@@ -19,7 +19,6 @@ typedef struct v1_endpoint_address_t v1_endpoint_address_t;
 
 
 
-
 typedef struct v1_endpoint_address_t {
     char *hostname; // string
     char *ip; // string

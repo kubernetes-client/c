@@ -19,7 +19,6 @@ typedef struct v1_config_map_volume_source_t v1_config_map_volume_source_t;
 
 
 
-
 typedef struct v1_config_map_volume_source_t {
     int default_mode; //numeric
     list_t *items; //nonprimitive container

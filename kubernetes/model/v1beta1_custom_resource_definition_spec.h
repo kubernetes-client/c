@@ -24,7 +24,6 @@ typedef struct v1beta1_custom_resource_definition_spec_t v1beta1_custom_resource
 
 
 
-
 typedef struct v1beta1_custom_resource_definition_spec_t {
     list_t *additional_printer_columns; //nonprimitive container
     struct v1beta1_custom_resource_conversion_t *conversion; //model

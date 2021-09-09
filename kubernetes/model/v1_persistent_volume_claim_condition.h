@@ -18,7 +18,6 @@ typedef struct v1_persistent_volume_claim_condition_t v1_persistent_volume_claim
 
 
 
-
 typedef struct v1_persistent_volume_claim_condition_t {
     char *last_probe_time; //date time
     char *last_transition_time; //date time

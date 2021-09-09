@@ -18,7 +18,6 @@ typedef struct v1_quobyte_volume_source_t v1_quobyte_volume_source_t;
 
 
 
-
 typedef struct v1_quobyte_volume_source_t {
     char *group; // string
     int read_only; //boolean

@@ -18,7 +18,6 @@ typedef struct admissionregistration_v1_service_reference_t admissionregistratio
 
 
 
-
 typedef struct admissionregistration_v1_service_reference_t {
     char *name; // string
     char *_namespace; // string

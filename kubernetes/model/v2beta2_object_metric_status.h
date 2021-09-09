@@ -21,7 +21,6 @@ typedef struct v2beta2_object_metric_status_t v2beta2_object_metric_status_t;
 
 
 
-
 typedef struct v2beta2_object_metric_status_t {
     struct v2beta2_metric_value_status_t *current; //model
     struct v2beta2_cross_version_object_reference_t *described_object; //model

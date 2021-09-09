@@ -28,7 +28,6 @@ typedef struct extensions_v1beta1_pod_security_policy_spec_t extensions_v1beta1_
 
 
 
-
 typedef struct extensions_v1beta1_pod_security_policy_spec_t {
     int allow_privilege_escalation; //boolean
     list_t *allowed_csi_drivers; //nonprimitive container

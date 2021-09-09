@@ -18,7 +18,6 @@ typedef struct v1_azure_file_persistent_volume_source_t v1_azure_file_persistent
 
 
 
-
 typedef struct v1_azure_file_persistent_volume_source_t {
     int read_only; //boolean
     char *secret_name; // string

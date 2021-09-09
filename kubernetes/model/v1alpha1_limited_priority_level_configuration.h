@@ -19,7 +19,6 @@ typedef struct v1alpha1_limited_priority_level_configuration_t v1alpha1_limited_
 
 
 
-
 typedef struct v1alpha1_limited_priority_level_configuration_t {
     int assured_concurrency_shares; //numeric
     struct v1alpha1_limit_response_t *limit_response; //model

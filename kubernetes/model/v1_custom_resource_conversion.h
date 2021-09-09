@@ -19,7 +19,6 @@ typedef struct v1_custom_resource_conversion_t v1_custom_resource_conversion_t;
 
 
 
-
 typedef struct v1_custom_resource_conversion_t {
     char *strategy; // string
     struct v1_webhook_conversion_t *webhook; //model

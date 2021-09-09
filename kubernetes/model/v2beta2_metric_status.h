@@ -22,7 +22,6 @@ typedef struct v2beta2_metric_status_t v2beta2_metric_status_t;
 
 
 
-
 typedef struct v2beta2_metric_status_t {
     struct v2beta2_external_metric_status_t *external; //model
     struct v2beta2_object_metric_status_t *object; //model

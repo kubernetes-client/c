@@ -20,7 +20,6 @@ typedef struct v1alpha1_audit_sink_t v1alpha1_audit_sink_t;
 
 
 
-
 typedef struct v1alpha1_audit_sink_t {
     char *api_version; // string
     char *kind; // string

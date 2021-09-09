@@ -19,7 +19,6 @@ typedef struct v1_rbd_volume_source_t v1_rbd_volume_source_t;
 
 
 
-
 typedef struct v1_rbd_volume_source_t {
     char *fs_type; // string
     char *image; // string

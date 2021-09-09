@@ -19,7 +19,6 @@ typedef struct v2beta1_pods_metric_status_t v2beta1_pods_metric_status_t;
 
 
 
-
 typedef struct v2beta1_pods_metric_status_t {
     char *current_average_value; // string
     char *metric_name; // string

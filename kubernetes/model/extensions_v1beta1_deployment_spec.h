@@ -22,7 +22,6 @@ typedef struct extensions_v1beta1_deployment_spec_t extensions_v1beta1_deploymen
 
 
 
-
 typedef struct extensions_v1beta1_deployment_spec_t {
     int min_ready_seconds; //numeric
     int paused; //boolean

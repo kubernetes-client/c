@@ -18,7 +18,6 @@ typedef struct v1_taint_t v1_taint_t;
 
 
 
-
 typedef struct v1_taint_t {
     char *effect; // string
     char *key; // string

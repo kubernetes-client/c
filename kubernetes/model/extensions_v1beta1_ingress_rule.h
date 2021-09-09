@@ -19,7 +19,6 @@ typedef struct extensions_v1beta1_ingress_rule_t extensions_v1beta1_ingress_rule
 
 
 
-
 typedef struct extensions_v1beta1_ingress_rule_t {
     char *host; // string
     struct extensions_v1beta1_http_ingress_rule_value_t *http; //model

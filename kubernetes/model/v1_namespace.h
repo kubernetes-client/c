@@ -21,7 +21,6 @@ typedef struct v1_namespace_t v1_namespace_t;
 
 
 
-
 typedef struct v1_namespace_t {
     char *api_version; // string
     char *kind; // string

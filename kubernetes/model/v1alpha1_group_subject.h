@@ -18,7 +18,6 @@ typedef struct v1alpha1_group_subject_t v1alpha1_group_subject_t;
 
 
 
-
 typedef struct v1alpha1_group_subject_t {
     char *name; // string
 

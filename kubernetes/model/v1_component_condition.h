@@ -18,7 +18,6 @@ typedef struct v1_component_condition_t v1_component_condition_t;
 
 
 
-
 typedef struct v1_component_condition_t {
     char *error; // string
     char *message; // string

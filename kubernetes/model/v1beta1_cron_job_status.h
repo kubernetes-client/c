@@ -19,7 +19,6 @@ typedef struct v1beta1_cron_job_status_t v1beta1_cron_job_status_t;
 
 
 
-
 typedef struct v1beta1_cron_job_status_t {
     list_t *active; //nonprimitive container
     char *last_schedule_time; //date time

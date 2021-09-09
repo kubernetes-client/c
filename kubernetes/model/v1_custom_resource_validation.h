@@ -19,7 +19,6 @@ typedef struct v1_custom_resource_validation_t v1_custom_resource_validation_t;
 
 
 
-
 typedef struct v1_custom_resource_validation_t {
     struct v1_json_schema_props_t *open_apiv3_schema; //model
 

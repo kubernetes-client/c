@@ -19,7 +19,6 @@ typedef struct v1_api_versions_t v1_api_versions_t;
 
 
 
-
 typedef struct v1_api_versions_t {
     char *api_version; // string
     char *kind; // string

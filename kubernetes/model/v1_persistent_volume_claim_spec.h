@@ -21,7 +21,6 @@ typedef struct v1_persistent_volume_claim_spec_t v1_persistent_volume_claim_spec
 
 
 
-
 typedef struct v1_persistent_volume_claim_spec_t {
     list_t *access_modes; //primitive container
     struct v1_typed_local_object_reference_t *data_source; //model

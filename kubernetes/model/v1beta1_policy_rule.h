@@ -18,7 +18,6 @@ typedef struct v1beta1_policy_rule_t v1beta1_policy_rule_t;
 
 
 
-
 typedef struct v1beta1_policy_rule_t {
     list_t *api_groups; //primitive container
     list_t *non_resource_urls; //primitive container

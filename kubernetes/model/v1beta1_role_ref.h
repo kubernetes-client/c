@@ -18,7 +18,6 @@ typedef struct v1beta1_role_ref_t v1beta1_role_ref_t;
 
 
 
-
 typedef struct v1beta1_role_ref_t {
     char *api_group; // string
     char *kind; // string

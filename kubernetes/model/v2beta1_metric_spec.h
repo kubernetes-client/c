@@ -22,7 +22,6 @@ typedef struct v2beta1_metric_spec_t v2beta1_metric_spec_t;
 
 
 
-
 typedef struct v2beta1_metric_spec_t {
     struct v2beta1_external_metric_source_t *external; //model
     struct v2beta1_object_metric_source_t *object; //model

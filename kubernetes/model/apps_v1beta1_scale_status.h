@@ -18,7 +18,6 @@ typedef struct apps_v1beta1_scale_status_t apps_v1beta1_scale_status_t;
 
 
 
-
 typedef struct apps_v1beta1_scale_status_t {
     int replicas; //numeric
     list_t* selector; //map

@@ -20,7 +20,6 @@ typedef struct v1beta1_network_policy_ingress_rule_t v1beta1_network_policy_ingr
 
 
 
-
 typedef struct v1beta1_network_policy_ingress_rule_t {
     list_t *from; //nonprimitive container
     list_t *ports; //nonprimitive container

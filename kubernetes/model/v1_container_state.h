@@ -21,7 +21,6 @@ typedef struct v1_container_state_t v1_container_state_t;
 
 
 
-
 typedef struct v1_container_state_t {
     struct v1_container_state_running_t *running; //model
     struct v1_container_state_terminated_t *terminated; //model

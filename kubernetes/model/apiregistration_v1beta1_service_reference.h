@@ -18,7 +18,6 @@ typedef struct apiregistration_v1beta1_service_reference_t apiregistration_v1bet
 
 
 
-
 typedef struct apiregistration_v1beta1_service_reference_t {
     char *name; // string
     char *_namespace; // string

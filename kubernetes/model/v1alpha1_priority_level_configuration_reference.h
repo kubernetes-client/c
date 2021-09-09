@@ -18,7 +18,6 @@ typedef struct v1alpha1_priority_level_configuration_reference_t v1alpha1_priori
 
 
 
-
 typedef struct v1alpha1_priority_level_configuration_reference_t {
     char *name; // string
 

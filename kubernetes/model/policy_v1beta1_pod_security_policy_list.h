@@ -20,7 +20,6 @@ typedef struct policy_v1beta1_pod_security_policy_list_t policy_v1beta1_pod_secu
 
 
 
-
 typedef struct policy_v1beta1_pod_security_policy_list_t {
     char *api_version; // string
     list_t *items; //nonprimitive container

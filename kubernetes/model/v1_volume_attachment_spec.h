@@ -19,7 +19,6 @@ typedef struct v1_volume_attachment_spec_t v1_volume_attachment_spec_t;
 
 
 
-
 typedef struct v1_volume_attachment_spec_t {
     char *attacher; // string
     char *node_name; // string

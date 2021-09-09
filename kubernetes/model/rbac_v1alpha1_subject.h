@@ -18,7 +18,6 @@ typedef struct rbac_v1alpha1_subject_t rbac_v1alpha1_subject_t;
 
 
 
-
 typedef struct rbac_v1alpha1_subject_t {
     char *api_version; // string
     char *kind; // string

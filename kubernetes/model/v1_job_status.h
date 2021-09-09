@@ -19,7 +19,6 @@ typedef struct v1_job_status_t v1_job_status_t;
 
 
 
-
 typedef struct v1_job_status_t {
     int active; //numeric
     char *completion_time; //date time

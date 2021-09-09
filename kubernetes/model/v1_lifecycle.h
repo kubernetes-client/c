@@ -19,7 +19,6 @@ typedef struct v1_lifecycle_t v1_lifecycle_t;
 
 
 
-
 typedef struct v1_lifecycle_t {
     struct v1_handler_t *post_start; //model
     struct v1_handler_t *pre_stop; //model

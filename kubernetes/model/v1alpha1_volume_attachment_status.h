@@ -19,7 +19,6 @@ typedef struct v1alpha1_volume_attachment_status_t v1alpha1_volume_attachment_st
 
 
 
-
 typedef struct v1alpha1_volume_attachment_status_t {
     struct v1alpha1_volume_error_t *attach_error; //model
     int attached; //boolean

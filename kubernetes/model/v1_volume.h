@@ -46,7 +46,6 @@ typedef struct v1_volume_t v1_volume_t;
 
 
 
-
 typedef struct v1_volume_t {
     struct v1_aws_elastic_block_store_volume_source_t *aws_elastic_block_store; //model
     struct v1_azure_disk_volume_source_t *azure_disk; //model

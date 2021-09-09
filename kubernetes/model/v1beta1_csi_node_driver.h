@@ -19,7 +19,6 @@ typedef struct v1beta1_csi_node_driver_t v1beta1_csi_node_driver_t;
 
 
 
-
 typedef struct v1beta1_csi_node_driver_t {
     struct v1beta1_volume_node_resources_t *allocatable; //model
     char *name; // string

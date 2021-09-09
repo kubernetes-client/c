@@ -20,7 +20,6 @@ typedef struct v1_limit_range_t v1_limit_range_t;
 
 
 
-
 typedef struct v1_limit_range_t {
     char *api_version; // string
     char *kind; // string

@@ -21,7 +21,6 @@ typedef struct flowcontrol_v1alpha1_subject_t flowcontrol_v1alpha1_subject_t;
 
 
 
-
 typedef struct flowcontrol_v1alpha1_subject_t {
     struct v1alpha1_group_subject_t *group; //model
     char *kind; // string

@@ -18,7 +18,6 @@ typedef struct v1_pod_readiness_gate_t v1_pod_readiness_gate_t;
 
 
 
-
 typedef struct v1_pod_readiness_gate_t {
     char *condition_type; // string
 

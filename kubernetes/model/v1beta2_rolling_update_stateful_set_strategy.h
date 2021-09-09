@@ -18,7 +18,6 @@ typedef struct v1beta2_rolling_update_stateful_set_strategy_t v1beta2_rolling_up
 
 
 
-
 typedef struct v1beta2_rolling_update_stateful_set_strategy_t {
     int partition; //numeric
 

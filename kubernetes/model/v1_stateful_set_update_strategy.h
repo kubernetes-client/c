@@ -19,7 +19,6 @@ typedef struct v1_stateful_set_update_strategy_t v1_stateful_set_update_strategy
 
 
 
-
 typedef struct v1_stateful_set_update_strategy_t {
     struct v1_rolling_update_stateful_set_strategy_t *rolling_update; //model
     char *type; // string

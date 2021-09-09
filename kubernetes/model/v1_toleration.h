@@ -18,7 +18,6 @@ typedef struct v1_toleration_t v1_toleration_t;
 
 
 
-
 typedef struct v1_toleration_t {
     char *effect; // string
     char *key; // string

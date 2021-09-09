@@ -29,7 +29,6 @@ typedef struct v1_pod_spec_t v1_pod_spec_t;
 
 
 
-
 typedef struct v1_pod_spec_t {
     long active_deadline_seconds; //numeric
     struct v1_affinity_t *affinity; //model

@@ -18,7 +18,6 @@ typedef struct extensions_v1beta1_id_range_t extensions_v1beta1_id_range_t;
 
 
 
-
 typedef struct extensions_v1beta1_id_range_t {
     long max; //numeric
     long min; //numeric

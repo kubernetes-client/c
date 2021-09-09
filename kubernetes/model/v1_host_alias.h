@@ -18,7 +18,6 @@ typedef struct v1_host_alias_t v1_host_alias_t;
 
 
 
-
 typedef struct v1_host_alias_t {
     list_t *hostnames; //primitive container
     char *ip; // string
