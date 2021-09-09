@@ -218,12 +218,12 @@ static int kubeconfig_update_exec_command_path(kubeconfig_property_t * exec, con
 #else
         char drive[_MAX_DRIVE];
         char dir[_MAX_DIR];
-        char fname[_MAX_FNAME];
+        char filename[_MAX_FNAME];
         char ext[_MAX_EXT];
 
-        _splitpath(kube_config_file_copy, drive, dir, fname, ext);
+        _splitpath(kube_config_file_copy, drive, dir, filename, ext);
 
-        const char *kube_config_dirname;
+        char *kube_config_dirname = NULL;
 
         _makepath(kube_config_dirname, drive, dir, NULL, NULL);
 #endif
