@@ -46,7 +46,7 @@ extern "C" {
             struct {            /* context */
                 char *cluster;
                 char *namespace;
-            char *user;
+                char *user;
             };
             struct {            /* cluster */
                 char *server;
