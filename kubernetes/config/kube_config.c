@@ -186,7 +186,7 @@ static int kubeconfig_exec(kubeconfig_property_t * current_user)
         goto end;
     }
 
-    end:
+end:
     exec_credential_free(exec_output);
     exec_output = NULL;
     return rc;
