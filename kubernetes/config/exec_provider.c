@@ -102,7 +102,7 @@ int kube_exec_and_get_result(ExecCredential_t * exec_credential, const kubeconfi
 
     rc = kubeyaml_parse_exec_crendential(exec_credential, result_string);
 
-    end:
+end:
     if (result_string) {
         free(result_string);
     }
