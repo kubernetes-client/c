@@ -2,6 +2,7 @@
 #include <malloc.h>
 #include <stdio.h>
 #include <kube_exec.h>
+#include <incluster_config.h>
 
 /* 
  * An example of call back function:
@@ -15,8 +16,13 @@ int main(int argc, char *argv[])
 {
     char *base_path = NULL;
     sslConfig_t *ssl_config = NULL;
-    list_t *api_keys = NULL;
-    int rc = load_kube_config(&base_path, &ssl_config, &api_keys, NULL);    /* NULL means loading configuration from $HOME/.kube/config */
+    list_t *api_tokens = NULL;
+
+    int rc = load_kube_config(&base_path, &ssl_config, &api_tokens, NULL);    /* NULL means loading configuration from $HOME/.kube/config */
+    /* 
+     * If you need exec pod in cluster:
+     * int rc = load_incluster_config(&base_path, &ssl_config, &api_tokens);
+     */
     if (rc != 0) {
         printf("Cannot load kubernetes configuration.\n");
         return -1;
@@ -25,10 +31,11 @@ int main(int argc, char *argv[])
     /* The log level mask for libwebsokets */
     int wsc_log_mask = LLL_ERR | LLL_WARN;
     /* 
-     * If you need a detail log:*/
-    //int wsc_log_mask = LLL_ERR | LLL_WARN | LLL_USER | LLL_NOTICE;
+     * If you need a detailed log:
+     * int wsc_log_mask = LLL_ERR | LLL_WARN | LLL_USER | LLL_NOTICE;
+    */
 
-    wsclient_t *wsc = wsclient_create(base_path, ssl_config, api_keys, wsc_log_mask);
+    wsclient_t *wsc = wsclient_create(base_path, ssl_config, api_tokens, wsc_log_mask);
     if (!wsc) {
         fprintf(stderr, "Cannot create a websocket client.\n");
         return -1;
@@ -76,10 +83,10 @@ int main(int argc, char *argv[])
   end:
     /* Clean up */
     wsclient_free(wsc);
-    free_client_config(base_path, ssl_config, api_keys);
+    free_client_config(base_path, ssl_config, api_tokens);
     base_path = NULL;
     ssl_config = NULL;
-    api_keys = NULL;
+    api_tokens = NULL;
 
     return 0;
 }
