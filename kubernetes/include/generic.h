@@ -14,10 +14,6 @@ typedef struct genericClient_t {
     char *resourcePlural;
 } genericClient_t;
 
-#if !defined(HAVE_STRNDUP)
-char *strndup(const char *s, size_t n);
-#endif /* ! HAVE_STRNDUP */
-
 genericClient_t* genericClient_create(apiClient_t *client, const char *apiGroup, const char* apiVersion, const char* resourcePlural);
 void genericClient_free(genericClient_t* client);
 

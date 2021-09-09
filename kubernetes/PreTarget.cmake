@@ -16,7 +16,8 @@ list(APPEND SRCS
         watch/watch_util.c
         websocket/wsclient.c
         websocket/kube_exec.c
-        src/generic.c)
+        src/generic.c
+        src/utils.c)
 
 list(APPEND HDRS
         config/kube_config_common.h
@@ -31,7 +32,8 @@ list(APPEND HDRS
         watch/watch_util.h
         websocket/wsclient.h
         websocket/kube_exec.h
-        include/generic.h)
+        include/generic.h
+        src/utils.c)
 
 find_package(libwebsockets CONFIG REQUIRED)
 find_package(yaml CONFIG REQUIRED)
