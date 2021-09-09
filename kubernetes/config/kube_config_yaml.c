@@ -53,6 +53,8 @@ mapping :: = MAPPING - START(node node) * MAPPING - END
 #define KEY_CLIENT_CERTIFICATE_DATA2 "clientCertificateData"
 #define KEY_CLIENT_KEY_DATA2 "clientKeyData"
 
+#define VALUE_TRUE_LOWERCASE_STRING "true"
+
 static int parse_kubeconfig_yaml_string_sequence(char ***p_strings, int *p_strings_count, yaml_document_t * document, yaml_node_t * node)
 {
     static char fname[] = "parse_kubeconfig_yaml_string_sequence()";
@@ -188,7 +190,7 @@ static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * proper
                 } else if (0 == strcmp(key->data.scalar.value, KEY_SERVER)) {
                     property->server = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_INSECURE_SKIP_TLS_VERIFY)) {
-                    property->insecure_skip_tls_verify = (0 == strcmp(value->data.scalar.value, "true")); //libyaml fails to parse true, but it can parse "true"!
+                    property->insecure_skip_tls_verify = (0 == strcmp(value->data.scalar.value, VALUE_TRUE_LOWERCASE_STRING)); //libyaml fails to parse true, but it can parse "true"!
                 }
             } else if (KUBECONFIG_PROPERTY_TYPE_USER == property->type) {
                 if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE_DATA)) {
