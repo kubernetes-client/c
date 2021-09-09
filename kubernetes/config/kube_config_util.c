@@ -44,11 +44,9 @@ char *kubeconfig_mk_cert_key_tempfile(const char *data)
         cert_key_data_bytes = strlen(cert_key_data);
     }
 
-    int fd;
-
 #ifndef _WIN32
     char tempfile_name_template[] = KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE;
-    fd = mkstemp(tempfile_name_template);
+    int fd = mkstemp(tempfile_name_template);
 #else
     char *tempdir_env = getenv("TEMP");
     int tmpFileNameSize = strlen(tempdir_env) + strlen(KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE) + 1;
@@ -56,7 +54,7 @@ char *kubeconfig_mk_cert_key_tempfile(const char *data)
     snprintf(tempfile_name_template, tmpFileNameSize, KUBE_CONFIG_TEMPFILE_NAME_TEMPLATE, tempdir_env);
     char *filename = _mktemp(tempfile_name_template);
     free(tempfile_name_template);
-    fd = _sopen( filename, O_CREAT|O_WRONLY, _SH_DENYWR );
+    int fd = _sopen( filename, O_CREAT|O_WRONLY, _SH_DENYWR );
 #endif
 
     if (-1 == fd) {
