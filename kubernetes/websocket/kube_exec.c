@@ -83,7 +83,7 @@ int kube_exec(wsclient_t * wsc, const char *namespace_, const char *pod_name, co
     char ws_path[WS_PATH_BUFFER_SIZE];
     memset(ws_path, 0, sizeof(ws_path));
     snprintf(ws_path, WS_PATH_BUFFER_SIZE, ws_path_template,
-             namespace_, pod_name, 1 == stdin ? TRUE_STRING : FALSE_STRING, 1 == stdout ? TRUE_STRING : FALSE_STRING, 1 == tty ? TRUE_STRING : FALSE_STRING, command_string_in_url);
+             namespace_, pod_name, 1 == _stdin ? TRUE_STRING : FALSE_STRING, 1 == _stdout ? TRUE_STRING : FALSE_STRING, 1 == tty ? TRUE_STRING : FALSE_STRING, command_string_in_url);
 
     if (container_name && container_name[0] != '\0') {
         int length_of_ws_path_with_container = strlen(ws_path) + strlen(CONTAINER_PREFIX) + strlen(container_name);

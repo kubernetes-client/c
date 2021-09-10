@@ -186,7 +186,7 @@ static int kubeconfig_exec(kubeconfig_property_t * current_user)
         goto end;
     }
 
-end:
+  end:
     exec_credential_free(exec_output);
     exec_output = NULL;
     return rc;
@@ -292,7 +292,7 @@ static int kuberconfig_auth_provider(kubeconfig_property_t * current_user, kubec
     }
     current_user->token = strdup(token);
 
-end:
+  end:
     free_authn_plugin(plugin);
     plugin = NULL;
     return rc;
@@ -386,7 +386,7 @@ int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApi
         }
     }
 
-end:
+  end:
     kubeconfig_free(kubeconfig);
     kubeconfig = NULL;
     return rc;

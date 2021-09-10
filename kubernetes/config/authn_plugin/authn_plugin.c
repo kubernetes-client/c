@@ -54,7 +54,7 @@ authn_plugin_t *create_authn_plugin(const char *name)
 
     return plugin;
 
-error:
+  error:
     free_authn_plugin(plugin);
     plugin = NULL;
     return plugin;
