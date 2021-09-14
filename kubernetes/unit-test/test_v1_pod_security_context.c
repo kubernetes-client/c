@@ -17,6 +17,7 @@
 v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optional);
 
 #include "test_v1_se_linux_options.c"
+#include "test_v1_seccomp_profile.c"
 #include "test_v1_windows_security_context_options.c"
 
 
@@ -25,11 +26,14 @@ v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optio
   if (include_optional) {
     v1_pod_security_context = v1_pod_security_context_create(
       56,
+      "0",
       56,
       1,
       56,
        // false, not to have infinite recursion
       instantiate_v1_se_linux_options(0),
+       // false, not to have infinite recursion
+      instantiate_v1_seccomp_profile(0),
       list_create(),
       list_create(),
        // false, not to have infinite recursion
@@ -38,9 +42,11 @@ v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optio
   } else {
     v1_pod_security_context = v1_pod_security_context_create(
       56,
+      "0",
       56,
       1,
       56,
+      NULL,
       NULL,
       list_create(),
       list_create(),

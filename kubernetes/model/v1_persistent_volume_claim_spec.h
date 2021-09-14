@@ -24,6 +24,7 @@ typedef struct v1_persistent_volume_claim_spec_t v1_persistent_volume_claim_spec
 typedef struct v1_persistent_volume_claim_spec_t {
     list_t *access_modes; //primitive container
     struct v1_typed_local_object_reference_t *data_source; //model
+    struct v1_typed_local_object_reference_t *data_source_ref; //model
     struct v1_resource_requirements_t *resources; //model
     struct v1_label_selector_t *selector; //model
     char *storage_class_name; // string
@@ -35,6 +36,7 @@ typedef struct v1_persistent_volume_claim_spec_t {
 v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create(
     list_t *access_modes,
     v1_typed_local_object_reference_t *data_source,
+    v1_typed_local_object_reference_t *data_source_ref,
     v1_resource_requirements_t *resources,
     v1_label_selector_t *selector,
     char *storage_class_name,

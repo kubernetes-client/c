@@ -7,8 +7,7 @@
 
 v1beta1_event_series_t *v1beta1_event_series_create(
     int count,
-    char *last_observed_time,
-    char *state
+    char *last_observed_time
     ) {
     v1beta1_event_series_t *v1beta1_event_series_local_var = malloc(sizeof(v1beta1_event_series_t));
     if (!v1beta1_event_series_local_var) {
@@ -16,7 +15,6 @@ v1beta1_event_series_t *v1beta1_event_series_create(
     }
     v1beta1_event_series_local_var->count = count;
     v1beta1_event_series_local_var->last_observed_time = last_observed_time;
-    v1beta1_event_series_local_var->state = state;
 
     return v1beta1_event_series_local_var;
 }
@@ -30,10 +28,6 @@ void v1beta1_event_series_free(v1beta1_event_series_t *v1beta1_event_series) {
     if (v1beta1_event_series->last_observed_time) {
         free(v1beta1_event_series->last_observed_time);
         v1beta1_event_series->last_observed_time = NULL;
-    }
-    if (v1beta1_event_series->state) {
-        free(v1beta1_event_series->state);
-        v1beta1_event_series->state = NULL;
     }
     free(v1beta1_event_series);
 }
@@ -58,16 +52,6 @@ cJSON *v1beta1_event_series_convertToJSON(v1beta1_event_series_t *v1beta1_event_
     
     if(cJSON_AddStringToObject(item, "lastObservedTime", v1beta1_event_series->last_observed_time) == NULL) {
     goto fail; //Date-Time
-    }
-
-
-    // v1beta1_event_series->state
-    if (!v1beta1_event_series->state) {
-        goto fail;
-    }
-    
-    if(cJSON_AddStringToObject(item, "state", v1beta1_event_series->state) == NULL) {
-    goto fail; //String
     }
 
     return item;
@@ -106,23 +90,10 @@ v1beta1_event_series_t *v1beta1_event_series_parseFromJSON(cJSON *v1beta1_event_
     goto end; //DateTime
     }
 
-    // v1beta1_event_series->state
-    cJSON *state = cJSON_GetObjectItemCaseSensitive(v1beta1_event_seriesJSON, "state");
-    if (!state) {
-        goto end;
-    }
-
-    
-    if(!cJSON_IsString(state))
-    {
-    goto end; //String
-    }
-
 
     v1beta1_event_series_local_var = v1beta1_event_series_create (
         count->valuedouble,
-        strdup(last_observed_time->valuestring),
-        strdup(state->valuestring)
+        strdup(last_observed_time->valuestring)
         );
 
     return v1beta1_event_series_local_var;

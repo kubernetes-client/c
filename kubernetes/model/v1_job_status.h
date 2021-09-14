@@ -16,26 +16,31 @@
 typedef struct v1_job_status_t v1_job_status_t;
 
 #include "v1_job_condition.h"
+#include "v1_uncounted_terminated_pods.h"
 
 
 
 typedef struct v1_job_status_t {
     int active; //numeric
+    char *completed_indexes; // string
     char *completion_time; //date time
     list_t *conditions; //nonprimitive container
     int failed; //numeric
     char *start_time; //date time
     int succeeded; //numeric
+    struct v1_uncounted_terminated_pods_t *uncounted_terminated_pods; //model
 
 } v1_job_status_t;
 
 v1_job_status_t *v1_job_status_create(
     int active,
+    char *completed_indexes,
     char *completion_time,
     list_t *conditions,
     int failed,
     char *start_time,
-    int succeeded
+    int succeeded,
+    v1_uncounted_terminated_pods_t *uncounted_terminated_pods
 );
 
 void v1_job_status_free(v1_job_status_t *v1_job_status);

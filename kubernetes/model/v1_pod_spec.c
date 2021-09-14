@@ -34,6 +34,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     v1_pod_security_context_t *security_context,
     char *service_account,
     char *service_account_name,
+    int set_hostname_as_fqdn,
     int share_process_namespace,
     char *subdomain,
     long termination_grace_period_seconds,
@@ -73,6 +74,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     v1_pod_spec_local_var->security_context = security_context;
     v1_pod_spec_local_var->service_account = service_account;
     v1_pod_spec_local_var->service_account_name = service_account_name;
+    v1_pod_spec_local_var->set_hostname_as_fqdn = set_hostname_as_fqdn;
     v1_pod_spec_local_var->share_process_namespace = share_process_namespace;
     v1_pod_spec_local_var->subdomain = subdomain;
     v1_pod_spec_local_var->termination_grace_period_seconds = termination_grace_period_seconds;
@@ -571,6 +573,14 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
      } 
 
 
+    // v1_pod_spec->set_hostname_as_fqdn
+    if(v1_pod_spec->set_hostname_as_fqdn) { 
+    if(cJSON_AddBoolToObject(item, "setHostnameAsFQDN", v1_pod_spec->set_hostname_as_fqdn) == NULL) {
+    goto fail; //Bool
+    }
+     } 
+
+
     // v1_pod_spec->share_process_namespace
     if(v1_pod_spec->share_process_namespace) { 
     if(cJSON_AddBoolToObject(item, "shareProcessNamespace", v1_pod_spec->share_process_namespace) == NULL) {
@@ -1019,6 +1029,15 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     }
     }
 
+    // v1_pod_spec->set_hostname_as_fqdn
+    cJSON *set_hostname_as_fqdn = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "setHostnameAsFQDN");
+    if (set_hostname_as_fqdn) { 
+    if(!cJSON_IsBool(set_hostname_as_fqdn))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1_pod_spec->share_process_namespace
     cJSON *share_process_namespace = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "shareProcessNamespace");
     if (share_process_namespace) { 
@@ -1142,6 +1161,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         security_context ? security_context_local_nonprim : NULL,
         service_account ? strdup(service_account->valuestring) : NULL,
         service_account_name ? strdup(service_account_name->valuestring) : NULL,
+        set_hostname_as_fqdn ? set_hostname_as_fqdn->valueint : 0,
         share_process_namespace ? share_process_namespace->valueint : 0,
         subdomain ? strdup(subdomain->valuestring) : NULL,
         termination_grace_period_seconds ? termination_grace_period_seconds->valuedouble : 0,

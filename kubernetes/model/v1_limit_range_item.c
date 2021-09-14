@@ -194,11 +194,13 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
 
 
     // v1_limit_range_item->type
-    if(v1_limit_range_item->type) { 
+    if (!v1_limit_range_item->type) {
+        goto fail;
+    }
+    
     if(cJSON_AddStringToObject(item, "type", v1_limit_range_item->type) == NULL) {
     goto fail; //String
     }
-     } 
 
     return item;
 fail:
@@ -324,11 +326,14 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
 
     // v1_limit_range_item->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "type");
-    if (type) { 
+    if (!type) {
+        goto end;
+    }
+
+    
     if(!cJSON_IsString(type))
     {
     goto end; //String
-    }
     }
 
 
@@ -338,7 +343,7 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
         max ? maxList : NULL,
         max_limit_request_ratio ? max_limit_request_ratioList : NULL,
         min ? minList : NULL,
-        type ? strdup(type->valuestring) : NULL
+        strdup(type->valuestring)
         );
 
     return v1_limit_range_item_local_var;

@@ -1,7 +1,7 @@
 /*
  * v1_component_status.h
  *
- * ComponentStatus (and ComponentStatusList) holds the cluster validation info.
+ * ComponentStatus (and ComponentStatusList) holds the cluster validation info. Deprecated: This API is deprecated in v1.19+
  */
 
 #ifndef _v1_component_status_H_

@@ -8,7 +8,9 @@
 v1beta1_endpoint_t *v1beta1_endpoint_create(
     list_t *addresses,
     v1beta1_endpoint_conditions_t *conditions,
+    v1beta1_endpoint_hints_t *hints,
     char *hostname,
+    char *node_name,
     v1_object_reference_t *target_ref,
     list_t* topology
     ) {
@@ -18,7 +20,9 @@ v1beta1_endpoint_t *v1beta1_endpoint_create(
     }
     v1beta1_endpoint_local_var->addresses = addresses;
     v1beta1_endpoint_local_var->conditions = conditions;
+    v1beta1_endpoint_local_var->hints = hints;
     v1beta1_endpoint_local_var->hostname = hostname;
+    v1beta1_endpoint_local_var->node_name = node_name;
     v1beta1_endpoint_local_var->target_ref = target_ref;
     v1beta1_endpoint_local_var->topology = topology;
 
@@ -42,9 +46,17 @@ void v1beta1_endpoint_free(v1beta1_endpoint_t *v1beta1_endpoint) {
         v1beta1_endpoint_conditions_free(v1beta1_endpoint->conditions);
         v1beta1_endpoint->conditions = NULL;
     }
+    if (v1beta1_endpoint->hints) {
+        v1beta1_endpoint_hints_free(v1beta1_endpoint->hints);
+        v1beta1_endpoint->hints = NULL;
+    }
     if (v1beta1_endpoint->hostname) {
         free(v1beta1_endpoint->hostname);
         v1beta1_endpoint->hostname = NULL;
+    }
+    if (v1beta1_endpoint->node_name) {
+        free(v1beta1_endpoint->node_name);
+        v1beta1_endpoint->node_name = NULL;
     }
     if (v1beta1_endpoint->target_ref) {
         v1_object_reference_free(v1beta1_endpoint->target_ref);
@@ -98,9 +110,30 @@ cJSON *v1beta1_endpoint_convertToJSON(v1beta1_endpoint_t *v1beta1_endpoint) {
      } 
 
 
+    // v1beta1_endpoint->hints
+    if(v1beta1_endpoint->hints) { 
+    cJSON *hints_local_JSON = v1beta1_endpoint_hints_convertToJSON(v1beta1_endpoint->hints);
+    if(hints_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "hints", hints_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+     } 
+
+
     // v1beta1_endpoint->hostname
     if(v1beta1_endpoint->hostname) { 
     if(cJSON_AddStringToObject(item, "hostname", v1beta1_endpoint->hostname) == NULL) {
+    goto fail; //String
+    }
+     } 
+
+
+    // v1beta1_endpoint->node_name
+    if(v1beta1_endpoint->node_name) { 
+    if(cJSON_AddStringToObject(item, "nodeName", v1beta1_endpoint->node_name) == NULL) {
     goto fail; //String
     }
      } 
@@ -180,10 +213,26 @@ v1beta1_endpoint_t *v1beta1_endpoint_parseFromJSON(cJSON *v1beta1_endpointJSON){
     conditions_local_nonprim = v1beta1_endpoint_conditions_parseFromJSON(conditions); //nonprimitive
     }
 
+    // v1beta1_endpoint->hints
+    cJSON *hints = cJSON_GetObjectItemCaseSensitive(v1beta1_endpointJSON, "hints");
+    v1beta1_endpoint_hints_t *hints_local_nonprim = NULL;
+    if (hints) { 
+    hints_local_nonprim = v1beta1_endpoint_hints_parseFromJSON(hints); //nonprimitive
+    }
+
     // v1beta1_endpoint->hostname
     cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1beta1_endpointJSON, "hostname");
     if (hostname) { 
     if(!cJSON_IsString(hostname))
+    {
+    goto end; //String
+    }
+    }
+
+    // v1beta1_endpoint->node_name
+    cJSON *node_name = cJSON_GetObjectItemCaseSensitive(v1beta1_endpointJSON, "nodeName");
+    if (node_name) { 
+    if(!cJSON_IsString(node_name))
     {
     goto end; //String
     }
@@ -222,7 +271,9 @@ v1beta1_endpoint_t *v1beta1_endpoint_parseFromJSON(cJSON *v1beta1_endpointJSON){
     v1beta1_endpoint_local_var = v1beta1_endpoint_create (
         addressesList,
         conditions ? conditions_local_nonprim : NULL,
+        hints ? hints_local_nonprim : NULL,
         hostname ? strdup(hostname->valuestring) : NULL,
+        node_name ? strdup(node_name->valuestring) : NULL,
         target_ref ? target_ref_local_nonprim : NULL,
         topology ? topologyList : NULL
         );
@@ -232,6 +283,10 @@ end:
     if (conditions_local_nonprim) {
         v1beta1_endpoint_conditions_free(conditions_local_nonprim);
         conditions_local_nonprim = NULL;
+    }
+    if (hints_local_nonprim) {
+        v1beta1_endpoint_hints_free(hints_local_nonprim);
+        hints_local_nonprim = NULL;
     }
     if (target_ref_local_nonprim) {
         v1_object_reference_free(target_ref_local_nonprim);

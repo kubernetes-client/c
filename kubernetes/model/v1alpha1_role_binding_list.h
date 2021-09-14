@@ -1,7 +1,7 @@
 /*
  * v1alpha1_role_binding_list.h
  *
- * RoleBindingList is a collection of RoleBindings Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 RoleBindingList, and will no longer be served in v1.20.
+ * RoleBindingList is a collection of RoleBindings Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 RoleBindingList, and will no longer be served in v1.22.
  */
 
 #ifndef _v1alpha1_role_binding_list_H_

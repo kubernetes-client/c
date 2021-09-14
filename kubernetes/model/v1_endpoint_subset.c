@@ -43,7 +43,7 @@ void v1_endpoint_subset_free(v1_endpoint_subset_t *v1_endpoint_subset) {
     }
     if (v1_endpoint_subset->ports) {
         list_ForEach(listEntry, v1_endpoint_subset->ports) {
-            v1_endpoint_port_free(listEntry->data);
+            core_v1_endpoint_port_free(listEntry->data);
         }
         list_free(v1_endpoint_subset->ports);
         v1_endpoint_subset->ports = NULL;
@@ -104,7 +104,7 @@ cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset
     listEntry_t *portsListEntry;
     if (v1_endpoint_subset->ports) {
     list_ForEach(portsListEntry, v1_endpoint_subset->ports) {
-    cJSON *itemLocal = v1_endpoint_port_convertToJSON(portsListEntry->data);
+    cJSON *itemLocal = core_v1_endpoint_port_convertToJSON(portsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
@@ -185,7 +185,7 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
         if(!cJSON_IsObject(ports_local_nonprimitive)){
             goto end;
         }
-        v1_endpoint_port_t *portsItem = v1_endpoint_port_parseFromJSON(ports_local_nonprimitive);
+        core_v1_endpoint_port_t *portsItem = core_v1_endpoint_port_parseFromJSON(ports_local_nonprimitive);
 
         list_addElement(portsList, portsItem);
     }

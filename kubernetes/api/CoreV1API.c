@@ -6146,8 +6146,8 @@ end:
 
 // create an Event
 //
-v1_event_t*
-CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , v1_event_t * body , char * pretty , char * dryRun , char * fieldManager )
+core_v1_event_t*
+CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -6215,7 +6215,7 @@ CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , v1_e
     if (body != NULL)
     {
         //string
-        localVarSingleItemJSON_body = v1_event_convertToJSON(body);
+        localVarSingleItemJSON_body = core_v1_event_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
@@ -6245,7 +6245,7 @@ CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , v1_e
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_event_t *elementToReturn = v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
+    core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -6997,8 +6997,8 @@ end:
 
 // create eviction of a Pod
 //
-v1beta1_eviction_t*
-CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_eviction_t * body , char * dryRun , char * fieldManager , char * pretty )
+v1_eviction_t*
+CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char * _namespace , v1_eviction_t * body , char * dryRun , char * fieldManager , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -7076,7 +7076,7 @@ CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char
     if (body != NULL)
     {
         //string
-        localVarSingleItemJSON_body = v1beta1_eviction_convertToJSON(body);
+        localVarSingleItemJSON_body = v1_eviction_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
@@ -7106,7 +7106,7 @@ CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_eviction_t *elementToReturn = v1beta1_eviction_parseFromJSON(CoreV1APIlocalVarJSON);
+    v1_eviction_t *elementToReturn = v1_eviction_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -8184,8 +8184,8 @@ end:
 
 // create token of a ServiceAccount
 //
-v1_token_request_t*
-CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * name , char * _namespace , v1_token_request_t * body , char * dryRun , char * fieldManager , char * pretty )
+authentication_v1_token_request_t*
+CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * name , char * _namespace , authentication_v1_token_request_t * body , char * dryRun , char * fieldManager , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -8263,7 +8263,7 @@ CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * nam
     if (body != NULL)
     {
         //string
-        localVarSingleItemJSON_body = v1_token_request_convertToJSON(body);
+        localVarSingleItemJSON_body = authentication_v1_token_request_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
@@ -8293,7 +8293,7 @@ CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * nam
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_token_request_t *elementToReturn = v1_token_request_parseFromJSON(CoreV1APIlocalVarJSON);
+    authentication_v1_token_request_t *elementToReturn = authentication_v1_token_request_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -8678,7 +8678,7 @@ end:
 // delete collection of ConfigMap
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -8829,6 +8829,18 @@ CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char * _na
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -9014,6 +9026,18 @@ CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char * _na
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -9036,7 +9060,7 @@ end:
 // delete collection of Endpoints
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -9187,6 +9211,18 @@ CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char * _na
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -9372,6 +9408,18 @@ CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char * _na
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -9394,7 +9442,7 @@ end:
 // delete collection of Event
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -9545,6 +9593,18 @@ CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char * _namesp
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -9730,6 +9790,18 @@ CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char * _namesp
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -9752,7 +9824,7 @@ end:
 // delete collection of LimitRange
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -9903,6 +9975,18 @@ CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char * _n
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -10088,6 +10172,18 @@ CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char * _n
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -10110,7 +10206,7 @@ end:
 // delete collection of PersistentVolumeClaim
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10261,6 +10357,18 @@ CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -10446,6 +10554,18 @@ CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -10468,7 +10588,7 @@ end:
 // delete collection of Pod
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10619,6 +10739,18 @@ CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char * _namespac
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -10804,6 +10936,18 @@ CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char * _namespac
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -10826,7 +10970,7 @@ end:
 // delete collection of PodTemplate
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -10977,6 +11121,18 @@ CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char * _
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -11162,6 +11318,18 @@ CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char * _
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -11184,7 +11352,7 @@ end:
 // delete collection of ReplicationController
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -11335,6 +11503,18 @@ CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -11520,6 +11700,18 @@ CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -11542,7 +11734,7 @@ end:
 // delete collection of ResourceQuota
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -11693,6 +11885,18 @@ CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -11878,6 +12082,18 @@ CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -11900,7 +12116,7 @@ end:
 // delete collection of Secret
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -12051,6 +12267,18 @@ CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char * _names
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -12236,6 +12464,18 @@ CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char * _names
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -12258,7 +12498,7 @@ end:
 // delete collection of ServiceAccount
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -12409,6 +12649,18 @@ CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char 
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -12594,6 +12846,18 @@ CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -12616,7 +12880,7 @@ end:
 // delete collection of Node
 //
 v1_status_t*
-CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -12757,6 +13021,18 @@ CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char * pretty , char * _c
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -12941,6 +13217,18 @@ CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char * pretty , char * _c
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -12963,7 +13251,7 @@ end:
 // delete collection of PersistentVolume
 //
 v1_status_t*
-CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -13104,6 +13392,18 @@ CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char * pretty
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -13287,6 +13587,18 @@ CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char * pretty
     if(keyPairQuery_resourceVersion){
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
+    }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -14428,7 +14740,7 @@ end:
 
 // delete a PersistentVolumeClaim
 //
-v1_status_t*
+v1_persistent_volume_claim_t*
 CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
@@ -14560,7 +14872,7 @@ CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * n
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+    v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -14654,7 +14966,7 @@ end:
 
 // delete a Pod
 //
-v1_status_t*
+v1_pod_t*
 CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
@@ -14786,7 +15098,7 @@ CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char * name , char * _name
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -14880,7 +15192,7 @@ end:
 
 // delete a PodTemplate
 //
-v1_status_t*
+v1_pod_template_t*
 CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
@@ -15012,7 +15324,7 @@ CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char * name , char
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+    v1_pod_template_t *elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -15332,7 +15644,7 @@ end:
 
 // delete a ResourceQuota
 //
-v1_status_t*
+v1_resource_quota_t*
 CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
@@ -15464,7 +15776,7 @@ CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char * name , ch
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+    v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -16010,7 +16322,7 @@ end:
 
 // delete a ServiceAccount
 //
-v1_status_t*
+v1_service_account_t*
 CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
@@ -16142,7 +16454,7 @@ CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char * name , c
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+    v1_service_account_t *elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -16451,7 +16763,7 @@ end:
 
 // delete a PersistentVolume
 //
-v1_status_t*
+v1_persistent_volume_t*
 CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
@@ -16573,7 +16885,7 @@ CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char * name , char * pr
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+    v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -16732,7 +17044,7 @@ end:
 // list objects of kind ComponentStatus
 //
 v1_component_status_list_t*
-CoreV1API_listComponentStatus(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listComponentStatus(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -16833,6 +17145,18 @@ CoreV1API_listComponentStatus(apiClient_t *apiClient, int allowWatchBookmarks , 
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -16985,6 +17309,18 @@ CoreV1API_listComponentStatus(apiClient_t *apiClient, int allowWatchBookmarks , 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -17019,7 +17355,7 @@ end:
 // list or watch objects of kind ConfigMap
 //
 v1_config_map_list_t*
-CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -17120,6 +17456,18 @@ CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -17272,6 +17620,18 @@ CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -17306,7 +17666,7 @@ end:
 // list or watch objects of kind Endpoints
 //
 v1_endpoints_list_t*
-CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -17407,6 +17767,18 @@ CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -17559,6 +17931,18 @@ CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -17592,8 +17976,8 @@ end:
 
 // list or watch objects of kind Event
 //
-v1_event_list_t*
-CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+core_v1_event_list_t*
+CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -17697,6 +18081,18 @@ CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int allowWatchBookma
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -17744,7 +18140,7 @@ CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int allowWatchBookma
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_event_list_t *elementToReturn = v1_event_list_parseFromJSON(CoreV1APIlocalVarJSON);
+    core_v1_event_list_t *elementToReturn = core_v1_event_list_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -17846,6 +18242,18 @@ CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int allowWatchBookma
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -17880,7 +18288,7 @@ end:
 // list or watch objects of kind LimitRange
 //
 v1_limit_range_list_t*
-CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -17981,6 +18389,18 @@ CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int allowWatchB
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -18133,6 +18553,18 @@ CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int allowWatchB
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -18167,7 +18599,7 @@ end:
 // list or watch objects of kind Namespace
 //
 v1_namespace_list_t*
-CoreV1API_listNamespace(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespace(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -18268,6 +18700,18 @@ CoreV1API_listNamespace(apiClient_t *apiClient, char * pretty , int allowWatchBo
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -18420,6 +18864,18 @@ CoreV1API_listNamespace(apiClient_t *apiClient, char * pretty , int allowWatchBo
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -18454,7 +18910,7 @@ end:
 // list or watch objects of kind ConfigMap
 //
 v1_config_map_list_t*
-CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -18565,6 +19021,18 @@ CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , ch
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -18718,6 +19186,18 @@ CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , ch
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -18752,7 +19232,7 @@ end:
 // list or watch objects of kind Endpoints
 //
 v1_endpoints_list_t*
-CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -18863,6 +19343,18 @@ CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , ch
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -19016,6 +19508,18 @@ CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , ch
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -19049,8 +19553,8 @@ end:
 
 // list or watch objects of kind Event
 //
-v1_event_list_t*
-CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+core_v1_event_list_t*
+CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -19164,6 +19668,18 @@ CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char * _namespace , char *
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -19211,7 +19727,7 @@ CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char * _namespace , char *
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_event_list_t *elementToReturn = v1_event_list_parseFromJSON(CoreV1APIlocalVarJSON);
+    core_v1_event_list_t *elementToReturn = core_v1_event_list_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -19314,6 +19830,18 @@ CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char * _namespace , char *
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -19348,7 +19876,7 @@ end:
 // list or watch objects of kind LimitRange
 //
 v1_limit_range_list_t*
-CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -19459,6 +19987,18 @@ CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , c
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -19612,6 +20152,18 @@ CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , c
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -19646,7 +20198,7 @@ end:
 // list or watch objects of kind PersistentVolumeClaim
 //
 v1_persistent_volume_claim_list_t*
-CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -19757,6 +20309,18 @@ CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _na
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -19910,6 +20474,18 @@ CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _na
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -19944,7 +20520,7 @@ end:
 // list or watch objects of kind Pod
 //
 v1_pod_list_t*
-CoreV1API_listNamespacedPod(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespacedPod(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -20055,6 +20631,18 @@ CoreV1API_listNamespacedPod(apiClient_t *apiClient, char * _namespace , char * p
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -20208,6 +20796,18 @@ CoreV1API_listNamespacedPod(apiClient_t *apiClient, char * _namespace , char * p
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -20242,7 +20842,7 @@ end:
 // list or watch objects of kind PodTemplate
 //
 v1_pod_template_list_t*
-CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -20353,6 +20953,18 @@ CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , 
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -20506,6 +21118,18 @@ CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -20540,7 +21164,7 @@ end:
 // list or watch objects of kind ReplicationController
 //
 v1_replication_controller_list_t*
-CoreV1API_listNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -20651,6 +21275,18 @@ CoreV1API_listNamespacedReplicationController(apiClient_t *apiClient, char * _na
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -20804,6 +21440,18 @@ CoreV1API_listNamespacedReplicationController(apiClient_t *apiClient, char * _na
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -20838,7 +21486,7 @@ end:
 // list or watch objects of kind ResourceQuota
 //
 v1_resource_quota_list_t*
-CoreV1API_listNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -20949,6 +21597,18 @@ CoreV1API_listNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace 
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -21102,6 +21762,18 @@ CoreV1API_listNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -21136,7 +21808,7 @@ end:
 // list or watch objects of kind Secret
 //
 v1_secret_list_t*
-CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -21247,6 +21919,18 @@ CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char * _namespace , char 
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -21400,6 +22084,18 @@ CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char * _namespace , char 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -21434,7 +22130,7 @@ end:
 // list or watch objects of kind Service
 //
 v1_service_list_t*
-CoreV1API_listNamespacedService(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespacedService(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -21545,6 +22241,18 @@ CoreV1API_listNamespacedService(apiClient_t *apiClient, char * _namespace , char
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -21698,6 +22406,18 @@ CoreV1API_listNamespacedService(apiClient_t *apiClient, char * _namespace , char
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -21732,7 +22452,7 @@ end:
 // list or watch objects of kind ServiceAccount
 //
 v1_service_account_list_t*
-CoreV1API_listNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -21843,6 +22563,18 @@ CoreV1API_listNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -21996,6 +22728,18 @@ CoreV1API_listNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -22030,7 +22774,7 @@ end:
 // list or watch objects of kind Node
 //
 v1_node_list_t*
-CoreV1API_listNode(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listNode(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -22131,6 +22875,18 @@ CoreV1API_listNode(apiClient_t *apiClient, char * pretty , int allowWatchBookmar
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -22283,6 +23039,18 @@ CoreV1API_listNode(apiClient_t *apiClient, char * pretty , int allowWatchBookmar
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -22317,7 +23085,7 @@ end:
 // list or watch objects of kind PersistentVolume
 //
 v1_persistent_volume_list_t*
-CoreV1API_listPersistentVolume(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listPersistentVolume(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -22418,6 +23186,18 @@ CoreV1API_listPersistentVolume(apiClient_t *apiClient, char * pretty , int allow
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -22570,6 +23350,18 @@ CoreV1API_listPersistentVolume(apiClient_t *apiClient, char * pretty , int allow
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -22604,7 +23396,7 @@ end:
 // list or watch objects of kind PersistentVolumeClaim
 //
 v1_persistent_volume_claim_list_t*
-CoreV1API_listPersistentVolumeClaimForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listPersistentVolumeClaimForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -22705,6 +23497,18 @@ CoreV1API_listPersistentVolumeClaimForAllNamespaces(apiClient_t *apiClient, int 
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -22857,6 +23661,18 @@ CoreV1API_listPersistentVolumeClaimForAllNamespaces(apiClient_t *apiClient, int 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -22891,7 +23707,7 @@ end:
 // list or watch objects of kind Pod
 //
 v1_pod_list_t*
-CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -22992,6 +23808,18 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -23144,6 +23972,18 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -23178,7 +24018,7 @@ end:
 // list or watch objects of kind PodTemplate
 //
 v1_pod_template_list_t*
-CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -23279,6 +24119,18 @@ CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *apiClient, int allowWatch
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -23431,6 +24283,18 @@ CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *apiClient, int allowWatch
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -23465,7 +24329,7 @@ end:
 // list or watch objects of kind ReplicationController
 //
 v1_replication_controller_list_t*
-CoreV1API_listReplicationControllerForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listReplicationControllerForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -23566,6 +24430,18 @@ CoreV1API_listReplicationControllerForAllNamespaces(apiClient_t *apiClient, int 
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -23718,6 +24594,18 @@ CoreV1API_listReplicationControllerForAllNamespaces(apiClient_t *apiClient, int 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -23752,7 +24640,7 @@ end:
 // list or watch objects of kind ResourceQuota
 //
 v1_resource_quota_list_t*
-CoreV1API_listResourceQuotaForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listResourceQuotaForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -23853,6 +24741,18 @@ CoreV1API_listResourceQuotaForAllNamespaces(apiClient_t *apiClient, int allowWat
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -24005,6 +24905,18 @@ CoreV1API_listResourceQuotaForAllNamespaces(apiClient_t *apiClient, int allowWat
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -24039,7 +24951,7 @@ end:
 // list or watch objects of kind Secret
 //
 v1_secret_list_t*
-CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -24140,6 +25052,18 @@ CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, int allowWatchBookm
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -24292,6 +25216,18 @@ CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, int allowWatchBookm
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -24326,7 +25262,7 @@ end:
 // list or watch objects of kind ServiceAccount
 //
 v1_service_account_list_t*
-CoreV1API_listServiceAccountForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listServiceAccountForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -24427,6 +25363,18 @@ CoreV1API_listServiceAccountForAllNamespaces(apiClient_t *apiClient, int allowWa
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -24579,6 +25527,18 @@ CoreV1API_listServiceAccountForAllNamespaces(apiClient_t *apiClient, int allowWa
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -24613,7 +25573,7 @@ end:
 // list or watch objects of kind Service
 //
 v1_service_list_t*
-CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -24714,6 +25674,18 @@ CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int allowWatchBook
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -24866,6 +25838,18 @@ CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int allowWatchBook
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -25003,6 +25987,9 @@ CoreV1API_patchNamespace(apiClient_t *apiClient, char * name , object_t * body ,
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -25194,6 +26181,9 @@ CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char * name , object_t * 
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -25395,6 +26385,9 @@ CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char * name , char * 
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -25598,6 +26591,9 @@ CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char * name , char * 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -25685,7 +26681,7 @@ end:
 
 // partially update the specified Event
 //
-v1_event_t*
+core_v1_event_t*
 CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
@@ -25800,12 +26796,15 @@ CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _nam
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_event_t *elementToReturn = v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
+    core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -26001,6 +27000,9 @@ CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char * name , char *
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -26204,6 +27206,9 @@ CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * na
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -26405,6 +27410,9 @@ CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, cha
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -26608,6 +27616,214 @@ CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char * name , char * _names
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
+    if (apiClient->response_code == 401) {
+        printf("%s\n","Unauthorized");
+    }
+    //nonprimitive not container
+    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+    cJSON_Delete(CoreV1APIlocalVarJSON);
+    if(elementToReturn == NULL) {
+        // return 0;
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_free(localVarQueryParameters);
+    
+    
+    list_free(localVarHeaderType);
+    list_free(localVarContentType);
+    free(localVarPath);
+    free(localVarToReplace_name);
+    free(localVarToReplace__namespace);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
+    free(localVarBodyParameters);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
+    }
+    if(keyQuery_dryRun){
+        free(keyQuery_dryRun);
+        keyQuery_dryRun = NULL;
+    }
+    if(valueQuery_dryRun){
+        free(valueQuery_dryRun);
+        valueQuery_dryRun = NULL;
+    }
+    if(keyPairQuery_dryRun){
+        keyValuePair_free(keyPairQuery_dryRun);
+        keyPairQuery_dryRun = NULL;
+    }
+    if(keyQuery_fieldManager){
+        free(keyQuery_fieldManager);
+        keyQuery_fieldManager = NULL;
+    }
+    if(valueQuery_fieldManager){
+        free(valueQuery_fieldManager);
+        valueQuery_fieldManager = NULL;
+    }
+    if(keyPairQuery_fieldManager){
+        keyValuePair_free(keyPairQuery_fieldManager);
+        keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_force){
+        free(keyQuery_force);
+        keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
+    if(keyPairQuery_force){
+        keyValuePair_free(keyPairQuery_force);
+        keyPairQuery_force = NULL;
+    }
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
+// partially update ephemeralcontainers of the specified Pod
+//
+v1_pod_t*
+CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+{
+    list_t    *localVarQueryParameters = list_create();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_create();
+    list_t *localVarContentType = list_create();
+    char      *localVarBodyParameters = NULL;
+
+    // create the path
+    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers")+1;
+    char *localVarPath = malloc(sizeOfPath);
+    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers");
+
+
+    // Path Params
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    if(name == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
+    sprintf(localVarToReplace_name, "{%s}", "name");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
+
+    // Path Params
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
+        goto end;
+    }
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery_dryRun = NULL;
+    char * valueQuery_dryRun = NULL;
+    keyValuePair_t *keyPairQuery_dryRun = 0;
+    if (dryRun)
+    {
+        keyQuery_dryRun = strdup("dryRun");
+        valueQuery_dryRun = strdup((dryRun));
+        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
+        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
+    }
+
+    // query parameters
+    char *keyQuery_fieldManager = NULL;
+    char * valueQuery_fieldManager = NULL;
+    keyValuePair_t *keyPairQuery_fieldManager = 0;
+    if (fieldManager)
+    {
+        keyQuery_fieldManager = strdup("fieldManager");
+        valueQuery_fieldManager = strdup((fieldManager));
+        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
+    }
+
+    // query parameters
+    char *keyQuery_force = NULL;
+    char * valueQuery_force = NULL;
+    keyValuePair_t *keyPairQuery_force = 0;
+    if (force)
+    {
+        keyQuery_force = strdup("force");
+        valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
+        list_addElement(localVarQueryParameters,keyPairQuery_force);
+    }
+
+    // Body Param
+    cJSON *localVarSingleItemJSON_body = NULL;
+    if (body != NULL)
+    {
+        //string
+        localVarSingleItemJSON_body = object_convertToJSON(body);
+        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/yaml"); //produces
+    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarContentType,"application/json-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    "PATCH");
+
+    if (apiClient->response_code == 200) {
+        printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -26809,6 +28025,9 @@ CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char * name , char * 
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -27012,6 +28231,9 @@ CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char * name , char 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -27213,6 +28435,9 @@ CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char * na
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -27416,6 +28641,9 @@ CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -27617,6 +28845,9 @@ CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, cha
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -27820,6 +29051,9 @@ CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -28021,6 +29255,9 @@ CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -28224,6 +29461,9 @@ CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char * name , char * _na
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -28425,6 +29665,9 @@ CoreV1API_patchNamespacedService(apiClient_t *apiClient, char * name , char * _n
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -28628,6 +29871,9 @@ CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char * name , ch
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -28830,6 +30076,9 @@ CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -29022,6 +30271,9 @@ CoreV1API_patchNode(apiClient_t *apiClient, char * name , object_t * body , char
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -29212,6 +30464,9 @@ CoreV1API_patchNodeStatus(apiClient_t *apiClient, char * name , object_t * body 
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -29404,6 +30659,9 @@ CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char * name , object_t *
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -29595,6 +30853,9 @@ CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char * name , obje
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -29782,7 +31043,7 @@ end:
 // read the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_readNamespace(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export )
+CoreV1API_readNamespace(apiClient_t *apiClient, char * name , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -29819,32 +31080,6 @@ CoreV1API_readNamespace(apiClient_t *apiClient, char * name , char * pretty , in
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -29897,30 +31132,6 @@ CoreV1API_readNamespace(apiClient_t *apiClient, char * name , char * pretty , in
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -30032,7 +31243,7 @@ end:
 // read the specified ConfigMap
 //
 v1_config_map_t*
-CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -30079,32 +31290,6 @@ CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -30159,30 +31344,6 @@ CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
-    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -30193,7 +31354,7 @@ end:
 // read the specified Endpoints
 //
 v1_endpoints_t*
-CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -30240,32 +31401,6 @@ CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -30320,30 +31455,6 @@ CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
-    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -30353,8 +31464,8 @@ end:
 
 // read the specified Event
 //
-v1_event_t*
-CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+core_v1_event_t*
+CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -30402,32 +31513,6 @@ CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char * name , char * _name
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
     }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
-    }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
@@ -30449,7 +31534,7 @@ CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char * name , char * _name
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_event_t *elementToReturn = v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
+    core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -30481,30 +31566,6 @@ CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char * name , char * _name
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
-    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -30515,7 +31576,7 @@ end:
 // read the specified LimitRange
 //
 v1_limit_range_t*
-CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -30562,32 +31623,6 @@ CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char * name , char * 
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -30642,30 +31677,6 @@ CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char * name , char * 
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
-    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -30676,7 +31687,7 @@ end:
 // read the specified PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -30723,32 +31734,6 @@ CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * nam
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -30802,30 +31787,6 @@ CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * nam
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -30948,7 +31909,7 @@ end:
 // read the specified Pod
 //
 v1_pod_t*
-CoreV1API_readNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+CoreV1API_readNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -30995,32 +31956,6 @@ CoreV1API_readNamespacedPod(apiClient_t *apiClient, char * name , char * _namesp
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -31075,29 +32010,116 @@ CoreV1API_readNamespacedPod(apiClient_t *apiClient, char * name , char * _namesp
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
+// read ephemeralcontainers of the specified Pod
+//
+v1_pod_t*
+CoreV1API_readNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+{
+    list_t    *localVarQueryParameters = list_create();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_create();
+    list_t *localVarContentType = NULL;
+    char      *localVarBodyParameters = NULL;
+
+    // create the path
+    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers")+1;
+    char *localVarPath = malloc(sizeOfPath);
+    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers");
+
+
+    // Path Params
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    if(name == NULL) {
+        goto end;
     }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
+    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
+    sprintf(localVarToReplace_name, "{%s}", "name");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
+
+    // Path Params
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
+        goto end;
     }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
     }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/yaml"); //produces
+    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    "GET");
+
+    if (apiClient->response_code == 200) {
+        printf("%s\n","OK");
     }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
+    if (apiClient->response_code == 401) {
+        printf("%s\n","Unauthorized");
     }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
+    //nonprimitive not container
+    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+    cJSON_Delete(CoreV1APIlocalVarJSON);
+    if(elementToReturn == NULL) {
+        // return 0;
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_free(localVarQueryParameters);
+    
+    
+    list_free(localVarHeaderType);
+    
+    free(localVarPath);
+    free(localVarToReplace_name);
+    free(localVarToReplace__namespace);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
     }
     return elementToReturn;
 end:
@@ -31525,7 +32547,7 @@ end:
 // read the specified PodTemplate
 //
 v1_pod_template_t*
-CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -31572,32 +32594,6 @@ CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char * name , char *
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -31652,30 +32648,6 @@ CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char * name , char *
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
-    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -31686,7 +32658,7 @@ end:
 // read the specified ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -31733,32 +32705,6 @@ CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char * nam
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -31812,30 +32758,6 @@ CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char * nam
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -32069,7 +32991,7 @@ end:
 // read the specified ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -32116,32 +33038,6 @@ CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char * name , char
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -32195,30 +33091,6 @@ CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char * name , char
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -32341,7 +33213,7 @@ end:
 // read the specified Secret
 //
 v1_secret_t*
-CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -32388,32 +33260,6 @@ CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char * name , char * _nam
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -32468,30 +33314,6 @@ CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char * name , char * _nam
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
-    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -32502,7 +33324,7 @@ end:
 // read the specified Service
 //
 v1_service_t*
-CoreV1API_readNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+CoreV1API_readNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -32549,32 +33371,6 @@ CoreV1API_readNamespacedService(apiClient_t *apiClient, char * name , char * _na
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -32629,30 +33425,6 @@ CoreV1API_readNamespacedService(apiClient_t *apiClient, char * name , char * _na
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
-    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -32663,7 +33435,7 @@ end:
 // read the specified ServiceAccount
 //
 v1_service_account_t*
-CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -32710,32 +33482,6 @@ CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char * name , cha
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -32789,30 +33535,6 @@ CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char * name , cha
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -32935,7 +33657,7 @@ end:
 // read the specified Node
 //
 v1_node_t*
-CoreV1API_readNode(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export )
+CoreV1API_readNode(apiClient_t *apiClient, char * name , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -32972,32 +33694,6 @@ CoreV1API_readNode(apiClient_t *apiClient, char * name , char * pretty , int exa
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -33050,30 +33746,6 @@ CoreV1API_readNode(apiClient_t *apiClient, char * name , char * pretty , int exa
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -33185,7 +33857,7 @@ end:
 // read the specified PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_readPersistentVolume(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export )
+CoreV1API_readPersistentVolume(apiClient_t *apiClient, char * name , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -33222,32 +33894,6 @@ CoreV1API_readPersistentVolume(apiClient_t *apiClient, char * name , char * pret
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -33300,30 +33946,6 @@ CoreV1API_readPersistentVolume(apiClient_t *apiClient, char * name , char * pret
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -34281,8 +34903,8 @@ end:
 
 // replace the specified Event
 //
-v1_event_t*
-CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , v1_event_t * body , char * pretty , char * dryRun , char * fieldManager )
+core_v1_event_t*
+CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -34360,7 +34982,7 @@ CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _n
     if (body != NULL)
     {
         //string
-        localVarSingleItemJSON_body = v1_event_convertToJSON(body);
+        localVarSingleItemJSON_body = core_v1_event_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
@@ -34387,7 +35009,7 @@ CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _n
     }
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_event_t *elementToReturn = v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
+    core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -34999,6 +35621,182 @@ CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char * name , char * _nam
     long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}")+1;
     char *localVarPath = malloc(sizeOfPath);
     snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}");
+
+
+    // Path Params
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    if(name == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
+    sprintf(localVarToReplace_name, "{%s}", "name");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
+
+    // Path Params
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
+        goto end;
+    }
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery_dryRun = NULL;
+    char * valueQuery_dryRun = NULL;
+    keyValuePair_t *keyPairQuery_dryRun = 0;
+    if (dryRun)
+    {
+        keyQuery_dryRun = strdup("dryRun");
+        valueQuery_dryRun = strdup((dryRun));
+        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
+        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
+    }
+
+    // query parameters
+    char *keyQuery_fieldManager = NULL;
+    char * valueQuery_fieldManager = NULL;
+    keyValuePair_t *keyPairQuery_fieldManager = 0;
+    if (fieldManager)
+    {
+        keyQuery_fieldManager = strdup("fieldManager");
+        valueQuery_fieldManager = strdup((fieldManager));
+        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
+    }
+
+    // Body Param
+    cJSON *localVarSingleItemJSON_body = NULL;
+    if (body != NULL)
+    {
+        //string
+        localVarSingleItemJSON_body = v1_pod_convertToJSON(body);
+        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/yaml"); //produces
+    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    "PUT");
+
+    if (apiClient->response_code == 200) {
+        printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
+    if (apiClient->response_code == 401) {
+        printf("%s\n","Unauthorized");
+    }
+    //nonprimitive not container
+    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+    cJSON_Delete(CoreV1APIlocalVarJSON);
+    if(elementToReturn == NULL) {
+        // return 0;
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_free(localVarQueryParameters);
+    
+    
+    list_free(localVarHeaderType);
+    
+    free(localVarPath);
+    free(localVarToReplace_name);
+    free(localVarToReplace__namespace);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
+    free(localVarBodyParameters);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
+    }
+    if(keyQuery_dryRun){
+        free(keyQuery_dryRun);
+        keyQuery_dryRun = NULL;
+    }
+    if(valueQuery_dryRun){
+        free(valueQuery_dryRun);
+        valueQuery_dryRun = NULL;
+    }
+    if(keyPairQuery_dryRun){
+        keyValuePair_free(keyPairQuery_dryRun);
+        keyPairQuery_dryRun = NULL;
+    }
+    if(keyQuery_fieldManager){
+        free(keyQuery_fieldManager);
+        keyQuery_fieldManager = NULL;
+    }
+    if(valueQuery_fieldManager){
+        free(valueQuery_fieldManager);
+        valueQuery_fieldManager = NULL;
+    }
+    if(keyPairQuery_fieldManager){
+        keyValuePair_free(keyPairQuery_fieldManager);
+        keyPairQuery_fieldManager = NULL;
+    }
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
+// replace ephemeralcontainers of the specified Pod
+//
+v1_pod_t*
+CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager )
+{
+    list_t    *localVarQueryParameters = list_create();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_create();
+    list_t *localVarContentType = NULL;
+    char      *localVarBodyParameters = NULL;
+
+    // create the path
+    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers")+1;
+    char *localVarPath = malloc(sizeOfPath);
+    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers");
 
 
     // Path Params

@@ -23,11 +23,13 @@ v1_service_status_t* instantiate_v1_service_status(int include_optional) {
   v1_service_status_t* v1_service_status = NULL;
   if (include_optional) {
     v1_service_status = v1_service_status_create(
+      list_create(),
        // false, not to have infinite recursion
       instantiate_v1_load_balancer_status(0)
     );
   } else {
     v1_service_status = v1_service_status_create(
+      list_create(),
       NULL
     );
   }

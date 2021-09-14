@@ -6,6 +6,7 @@
 
 
 v1_stateful_set_spec_t *v1_stateful_set_spec_create(
+    int min_ready_seconds,
     char *pod_management_policy,
     int replicas,
     int revision_history_limit,
@@ -19,6 +20,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_create(
     if (!v1_stateful_set_spec_local_var) {
         return NULL;
     }
+    v1_stateful_set_spec_local_var->min_ready_seconds = min_ready_seconds;
     v1_stateful_set_spec_local_var->pod_management_policy = pod_management_policy;
     v1_stateful_set_spec_local_var->replicas = replicas;
     v1_stateful_set_spec_local_var->revision_history_limit = revision_history_limit;
@@ -69,6 +71,14 @@ void v1_stateful_set_spec_free(v1_stateful_set_spec_t *v1_stateful_set_spec) {
 
 cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_set_spec) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1_stateful_set_spec->min_ready_seconds
+    if(v1_stateful_set_spec->min_ready_seconds) { 
+    if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_stateful_set_spec->min_ready_seconds) == NULL) {
+    goto fail; //Numeric
+    }
+     } 
+
 
     // v1_stateful_set_spec->pod_management_policy
     if(v1_stateful_set_spec->pod_management_policy) { 
@@ -178,6 +188,15 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     v1_stateful_set_spec_t *v1_stateful_set_spec_local_var = NULL;
 
+    // v1_stateful_set_spec->min_ready_seconds
+    cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "minReadySeconds");
+    if (min_ready_seconds) { 
+    if(!cJSON_IsNumber(min_ready_seconds))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1_stateful_set_spec->pod_management_policy
     cJSON *pod_management_policy = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "podManagementPolicy");
     if (pod_management_policy) { 
@@ -268,6 +287,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
 
     v1_stateful_set_spec_local_var = v1_stateful_set_spec_create (
+        min_ready_seconds ? min_ready_seconds->valuedouble : 0,
         pod_management_policy ? strdup(pod_management_policy->valuestring) : NULL,
         replicas ? replicas->valuedouble : 0,
         revision_history_limit ? revision_history_limit->valuedouble : 0,

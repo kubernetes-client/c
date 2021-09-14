@@ -1,7 +1,7 @@
 /*
  * v1_component_status_list.h
  *
- * Status of all the conditions for the component as a list of ComponentStatus objects.
+ * Status of all the conditions for the component as a list of ComponentStatus objects. Deprecated: This API is deprecated in v1.19+
  */
 
 #ifndef _v1_component_status_list_H_

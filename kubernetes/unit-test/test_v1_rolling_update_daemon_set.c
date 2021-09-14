@@ -22,10 +22,12 @@ v1_rolling_update_daemon_set_t* instantiate_v1_rolling_update_daemon_set(int inc
   v1_rolling_update_daemon_set_t* v1_rolling_update_daemon_set = NULL;
   if (include_optional) {
     v1_rolling_update_daemon_set = v1_rolling_update_daemon_set_create(
+      0,
       0
     );
   } else {
     v1_rolling_update_daemon_set = v1_rolling_update_daemon_set_create(
+      0,
       0
     );
   }

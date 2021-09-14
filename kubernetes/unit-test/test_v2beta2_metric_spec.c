@@ -16,6 +16,7 @@
 #include "../model/v2beta2_metric_spec.h"
 v2beta2_metric_spec_t* instantiate_v2beta2_metric_spec(int include_optional);
 
+#include "test_v2beta2_container_resource_metric_source.c"
 #include "test_v2beta2_external_metric_source.c"
 #include "test_v2beta2_object_metric_source.c"
 #include "test_v2beta2_pods_metric_source.c"
@@ -26,6 +27,8 @@ v2beta2_metric_spec_t* instantiate_v2beta2_metric_spec(int include_optional) {
   v2beta2_metric_spec_t* v2beta2_metric_spec = NULL;
   if (include_optional) {
     v2beta2_metric_spec = v2beta2_metric_spec_create(
+       // false, not to have infinite recursion
+      instantiate_v2beta2_container_resource_metric_source(0),
        // false, not to have infinite recursion
       instantiate_v2beta2_external_metric_source(0),
        // false, not to have infinite recursion
@@ -38,6 +41,7 @@ v2beta2_metric_spec_t* instantiate_v2beta2_metric_spec(int include_optional) {
     );
   } else {
     v2beta2_metric_spec = v2beta2_metric_spec_create(
+      NULL,
       NULL,
       NULL,
       NULL,

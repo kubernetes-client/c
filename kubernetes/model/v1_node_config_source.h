@@ -1,7 +1,7 @@
 /*
  * v1_node_config_source.h
  *
- * NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.
+ * NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil. This API is deprecated since 1.22
  */
 
 #ifndef _v1_node_config_source_H_

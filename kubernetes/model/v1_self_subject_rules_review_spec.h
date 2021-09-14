@@ -1,7 +1,7 @@
 /*
  * v1_self_subject_rules_review_spec.h
  *
- * 
+ * SelfSubjectRulesReviewSpec defines the specification for SelfSubjectRulesReview.
  */
 
 #ifndef _v1_self_subject_rules_review_spec_H_

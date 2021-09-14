@@ -6,6 +6,7 @@
 
 
 v1_stateful_set_status_t *v1_stateful_set_status_create(
+    int available_replicas,
     int collision_count,
     list_t *conditions,
     int current_replicas,
@@ -20,6 +21,7 @@ v1_stateful_set_status_t *v1_stateful_set_status_create(
     if (!v1_stateful_set_status_local_var) {
         return NULL;
     }
+    v1_stateful_set_status_local_var->available_replicas = available_replicas;
     v1_stateful_set_status_local_var->collision_count = collision_count;
     v1_stateful_set_status_local_var->conditions = conditions;
     v1_stateful_set_status_local_var->current_replicas = current_replicas;
@@ -59,6 +61,14 @@ void v1_stateful_set_status_free(v1_stateful_set_status_t *v1_stateful_set_statu
 
 cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_stateful_set_status) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1_stateful_set_status->available_replicas
+    if(v1_stateful_set_status->available_replicas) { 
+    if(cJSON_AddNumberToObject(item, "availableReplicas", v1_stateful_set_status->available_replicas) == NULL) {
+    goto fail; //Numeric
+    }
+     } 
+
 
     // v1_stateful_set_status->collision_count
     if(v1_stateful_set_status->collision_count) { 
@@ -156,6 +166,15 @@ fail:
 v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_stateful_set_statusJSON){
 
     v1_stateful_set_status_t *v1_stateful_set_status_local_var = NULL;
+
+    // v1_stateful_set_status->available_replicas
+    cJSON *available_replicas = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "availableReplicas");
+    if (available_replicas) { 
+    if(!cJSON_IsNumber(available_replicas))
+    {
+    goto end; //Numeric
+    }
+    }
 
     // v1_stateful_set_status->collision_count
     cJSON *collision_count = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "collisionCount");
@@ -256,6 +275,7 @@ v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_statefu
 
 
     v1_stateful_set_status_local_var = v1_stateful_set_status_create (
+        available_replicas ? available_replicas->valuedouble : 0,
         collision_count ? collision_count->valuedouble : 0,
         conditions ? conditionsList : NULL,
         current_replicas ? current_replicas->valuedouble : 0,

@@ -7,6 +7,8 @@
 
 v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_create(
     list_t *additional_printer_columns,
+    int deprecated,
+    char *deprecation_warning,
     char *name,
     v1_custom_resource_validation_t *schema,
     int served,
@@ -18,6 +20,8 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_c
         return NULL;
     }
     v1_custom_resource_definition_version_local_var->additional_printer_columns = additional_printer_columns;
+    v1_custom_resource_definition_version_local_var->deprecated = deprecated;
+    v1_custom_resource_definition_version_local_var->deprecation_warning = deprecation_warning;
     v1_custom_resource_definition_version_local_var->name = name;
     v1_custom_resource_definition_version_local_var->schema = schema;
     v1_custom_resource_definition_version_local_var->served = served;
@@ -39,6 +43,10 @@ void v1_custom_resource_definition_version_free(v1_custom_resource_definition_ve
         }
         list_free(v1_custom_resource_definition_version->additional_printer_columns);
         v1_custom_resource_definition_version->additional_printer_columns = NULL;
+    }
+    if (v1_custom_resource_definition_version->deprecation_warning) {
+        free(v1_custom_resource_definition_version->deprecation_warning);
+        v1_custom_resource_definition_version->deprecation_warning = NULL;
     }
     if (v1_custom_resource_definition_version->name) {
         free(v1_custom_resource_definition_version->name);
@@ -74,6 +82,22 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     }
     cJSON_AddItemToArray(additional_printer_columns, itemLocal);
     }
+    }
+     } 
+
+
+    // v1_custom_resource_definition_version->deprecated
+    if(v1_custom_resource_definition_version->deprecated) { 
+    if(cJSON_AddBoolToObject(item, "deprecated", v1_custom_resource_definition_version->deprecated) == NULL) {
+    goto fail; //Bool
+    }
+     } 
+
+
+    // v1_custom_resource_definition_version->deprecation_warning
+    if(v1_custom_resource_definition_version->deprecation_warning) { 
+    if(cJSON_AddStringToObject(item, "deprecationWarning", v1_custom_resource_definition_version->deprecation_warning) == NULL) {
+    goto fail; //String
     }
      } 
 
@@ -167,6 +191,24 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     }
     }
 
+    // v1_custom_resource_definition_version->deprecated
+    cJSON *deprecated = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "deprecated");
+    if (deprecated) { 
+    if(!cJSON_IsBool(deprecated))
+    {
+    goto end; //Bool
+    }
+    }
+
+    // v1_custom_resource_definition_version->deprecation_warning
+    cJSON *deprecation_warning = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "deprecationWarning");
+    if (deprecation_warning) { 
+    if(!cJSON_IsString(deprecation_warning))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_custom_resource_definition_version->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "name");
     if (!name) {
@@ -220,6 +262,8 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
 
     v1_custom_resource_definition_version_local_var = v1_custom_resource_definition_version_create (
         additional_printer_columns ? additional_printer_columnsList : NULL,
+        deprecated ? deprecated->valueint : 0,
+        deprecation_warning ? strdup(deprecation_warning->valuestring) : NULL,
         strdup(name->valuestring),
         schema ? schema_local_nonprim : NULL,
         served->valueint,

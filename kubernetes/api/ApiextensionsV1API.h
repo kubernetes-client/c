@@ -21,7 +21,7 @@ ApiextensionsV1API_createCustomResourceDefinition(apiClient_t *apiClient, v1_cus
 // delete collection of CustomResourceDefinition
 //
 v1_status_t*
-ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a CustomResourceDefinition
@@ -39,7 +39,7 @@ ApiextensionsV1API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind CustomResourceDefinition
 //
 v1_custom_resource_definition_list_t*
-ApiextensionsV1API_listCustomResourceDefinition(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+ApiextensionsV1API_listCustomResourceDefinition(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // partially update the specified CustomResourceDefinition
@@ -57,7 +57,7 @@ ApiextensionsV1API_patchCustomResourceDefinitionStatus(apiClient_t *apiClient, c
 // read the specified CustomResourceDefinition
 //
 v1_custom_resource_definition_t*
-ApiextensionsV1API_readCustomResourceDefinition(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
+ApiextensionsV1API_readCustomResourceDefinition(apiClient_t *apiClient, char * name , char * pretty );
 
 
 // read status of the specified CustomResourceDefinition

@@ -54,31 +54,31 @@ AppsV1API_createNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace 
 // delete collection of ControllerRevision
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of DaemonSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of Deployment
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of ReplicaSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of StatefulSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a ControllerRevision
@@ -120,61 +120,61 @@ AppsV1API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind ControllerRevision
 //
 v1_controller_revision_list_t*
-AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind DaemonSet
 //
 v1_daemon_set_list_t*
-AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Deployment
 //
 v1_deployment_list_t*
-AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ControllerRevision
 //
 v1_controller_revision_list_t*
-AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind DaemonSet
 //
 v1_daemon_set_list_t*
-AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Deployment
 //
 v1_deployment_list_t*
-AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ReplicaSet
 //
 v1_replica_set_list_t*
-AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind StatefulSet
 //
 v1_stateful_set_list_t*
-AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ReplicaSet
 //
 v1_replica_set_list_t*
-AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind StatefulSet
 //
 v1_stateful_set_list_t*
-AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // partially update the specified ControllerRevision
@@ -252,13 +252,13 @@ AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name ,
 // read the specified ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read status of the specified DaemonSet
@@ -270,7 +270,7 @@ AppsV1API_readNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , ch
 // read the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read scale of the specified Deployment
@@ -288,7 +288,7 @@ AppsV1API_readNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , c
 // read the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read scale of the specified ReplicaSet
@@ -306,7 +306,7 @@ AppsV1API_readNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , c
 // read the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read scale of the specified StatefulSet

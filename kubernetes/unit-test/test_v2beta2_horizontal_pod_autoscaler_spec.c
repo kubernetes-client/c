@@ -16,6 +16,7 @@
 #include "../model/v2beta2_horizontal_pod_autoscaler_spec.h"
 v2beta2_horizontal_pod_autoscaler_spec_t* instantiate_v2beta2_horizontal_pod_autoscaler_spec(int include_optional);
 
+#include "test_v2beta2_horizontal_pod_autoscaler_behavior.c"
 #include "test_v2beta2_cross_version_object_reference.c"
 
 
@@ -23,6 +24,8 @@ v2beta2_horizontal_pod_autoscaler_spec_t* instantiate_v2beta2_horizontal_pod_aut
   v2beta2_horizontal_pod_autoscaler_spec_t* v2beta2_horizontal_pod_autoscaler_spec = NULL;
   if (include_optional) {
     v2beta2_horizontal_pod_autoscaler_spec = v2beta2_horizontal_pod_autoscaler_spec_create(
+       // false, not to have infinite recursion
+      instantiate_v2beta2_horizontal_pod_autoscaler_behavior(0),
       56,
       list_create(),
       56,
@@ -31,6 +34,7 @@ v2beta2_horizontal_pod_autoscaler_spec_t* instantiate_v2beta2_horizontal_pod_aut
     );
   } else {
     v2beta2_horizontal_pod_autoscaler_spec = v2beta2_horizontal_pod_autoscaler_spec_create(
+      NULL,
       56,
       list_create(),
       56,

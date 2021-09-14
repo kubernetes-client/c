@@ -31,7 +31,7 @@ Name | Type | Description | Notes
 **scale_io** | [**v1_scale_io_persistent_volume_source_t**](v1_scale_io_persistent_volume_source.md) \* |  | [optional] 
 **storage_class_name** | **char \*** | Name of StorageClass to which this persistent volume belongs. Empty value means that this volume does not belong to any StorageClass. | [optional] 
 **storageos** | [**v1_storage_os_persistent_volume_source_t**](v1_storage_os_persistent_volume_source.md) \* |  | [optional] 
-**volume_mode** | **char \*** | volumeMode defines if a volume is intended to be used with a formatted filesystem or to remain in raw block state. Value of Filesystem is implied when not included in spec. This is a beta feature. | [optional] 
+**volume_mode** | **char \*** | volumeMode defines if a volume is intended to be used with a formatted filesystem or to remain in raw block state. Value of Filesystem is implied when not included in spec. | [optional] 
 **vsphere_volume** | [**v1_vsphere_virtual_disk_volume_source_t**](v1_vsphere_virtual_disk_volume_source.md) \* |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

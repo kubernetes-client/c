@@ -17,6 +17,7 @@
 v1_persistent_volume_claim_spec_t* instantiate_v1_persistent_volume_claim_spec(int include_optional);
 
 #include "test_v1_typed_local_object_reference.c"
+#include "test_v1_typed_local_object_reference.c"
 #include "test_v1_resource_requirements.c"
 #include "test_v1_label_selector.c"
 
@@ -26,6 +27,8 @@ v1_persistent_volume_claim_spec_t* instantiate_v1_persistent_volume_claim_spec(i
   if (include_optional) {
     v1_persistent_volume_claim_spec = v1_persistent_volume_claim_spec_create(
       list_create(),
+       // false, not to have infinite recursion
+      instantiate_v1_typed_local_object_reference(0),
        // false, not to have infinite recursion
       instantiate_v1_typed_local_object_reference(0),
        // false, not to have infinite recursion
@@ -39,6 +42,7 @@ v1_persistent_volume_claim_spec_t* instantiate_v1_persistent_volume_claim_spec(i
   } else {
     v1_persistent_volume_claim_spec = v1_persistent_volume_claim_spec_create(
       list_create(),
+      NULL,
       NULL,
       NULL,
       NULL,

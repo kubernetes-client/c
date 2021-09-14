@@ -1,7 +1,7 @@
 /*
  * v1alpha1_cluster_role_binding.h
  *
- * ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a ClusterRole in the global namespace, and adds who information via Subject. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 ClusterRoleBinding, and will no longer be served in v1.20.
+ * ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a ClusterRole in the global namespace, and adds who information via Subject. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 ClusterRoleBinding, and will no longer be served in v1.22.
  */
 
 #ifndef _v1alpha1_cluster_role_binding_H_
@@ -15,9 +15,9 @@
 
 typedef struct v1alpha1_cluster_role_binding_t v1alpha1_cluster_role_binding_t;
 
-#include "rbac_v1alpha1_subject.h"
 #include "v1_object_meta.h"
 #include "v1alpha1_role_ref.h"
+#include "v1alpha1_subject.h"
 
 
 

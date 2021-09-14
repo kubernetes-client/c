@@ -15,6 +15,7 @@ v1_volume_t *v1_volume_create(
     v1_csi_volume_source_t *csi,
     v1_downward_api_volume_source_t *downward_api,
     v1_empty_dir_volume_source_t *empty_dir,
+    v1_ephemeral_volume_source_t *ephemeral,
     v1_fc_volume_source_t *fc,
     v1_flex_volume_source_t *flex_volume,
     v1_flocker_volume_source_t *flocker,
@@ -49,6 +50,7 @@ v1_volume_t *v1_volume_create(
     v1_volume_local_var->csi = csi;
     v1_volume_local_var->downward_api = downward_api;
     v1_volume_local_var->empty_dir = empty_dir;
+    v1_volume_local_var->ephemeral = ephemeral;
     v1_volume_local_var->fc = fc;
     v1_volume_local_var->flex_volume = flex_volume;
     v1_volume_local_var->flocker = flocker;
@@ -114,6 +116,10 @@ void v1_volume_free(v1_volume_t *v1_volume) {
     if (v1_volume->empty_dir) {
         v1_empty_dir_volume_source_free(v1_volume->empty_dir);
         v1_volume->empty_dir = NULL;
+    }
+    if (v1_volume->ephemeral) {
+        v1_ephemeral_volume_source_free(v1_volume->ephemeral);
+        v1_volume->ephemeral = NULL;
     }
     if (v1_volume->fc) {
         v1_fc_volume_source_free(v1_volume->fc);
@@ -312,6 +318,19 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     goto fail; //model
     }
     cJSON_AddItemToObject(item, "emptyDir", empty_dir_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+     } 
+
+
+    // v1_volume->ephemeral
+    if(v1_volume->ephemeral) { 
+    cJSON *ephemeral_local_JSON = v1_ephemeral_volume_source_convertToJSON(v1_volume->ephemeral);
+    if(ephemeral_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "ephemeral", ephemeral_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -649,6 +668,13 @@ v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON){
     empty_dir_local_nonprim = v1_empty_dir_volume_source_parseFromJSON(empty_dir); //nonprimitive
     }
 
+    // v1_volume->ephemeral
+    cJSON *ephemeral = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "ephemeral");
+    v1_ephemeral_volume_source_t *ephemeral_local_nonprim = NULL;
+    if (ephemeral) { 
+    ephemeral_local_nonprim = v1_ephemeral_volume_source_parseFromJSON(ephemeral); //nonprimitive
+    }
+
     // v1_volume->fc
     cJSON *fc = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "fc");
     v1_fc_volume_source_t *fc_local_nonprim = NULL;
@@ -805,6 +831,7 @@ v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON){
         csi ? csi_local_nonprim : NULL,
         downward_api ? downward_api_local_nonprim : NULL,
         empty_dir ? empty_dir_local_nonprim : NULL,
+        ephemeral ? ephemeral_local_nonprim : NULL,
         fc ? fc_local_nonprim : NULL,
         flex_volume ? flex_volume_local_nonprim : NULL,
         flocker ? flocker_local_nonprim : NULL,
@@ -864,6 +891,10 @@ end:
     if (empty_dir_local_nonprim) {
         v1_empty_dir_volume_source_free(empty_dir_local_nonprim);
         empty_dir_local_nonprim = NULL;
+    }
+    if (ephemeral_local_nonprim) {
+        v1_ephemeral_volume_source_free(ephemeral_local_nonprim);
+        ephemeral_local_nonprim = NULL;
     }
     if (fc_local_nonprim) {
         v1_fc_volume_source_free(fc_local_nonprim);
