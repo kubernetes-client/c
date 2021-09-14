@@ -1,5 +1,5 @@
-INCLUDE:=-I../../kubernetes/include -I../../kubernetes/model -I../../kubernetes/api -I../../kubernetes/config
-LIBS:=-L../../kubernetes/build -lkubernetes -lyaml -lwebsockets -L/usr/local/lib
+INCLUDE:=-I../../kubernetes/
+LIBS:=-L../../kubernetes/build -lyaml -lwebsockets -lkubernetes -L/usr/local/lib
 CFLAGS:=-g
 BIN:=list_pod_bin
 

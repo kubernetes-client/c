@@ -1,6 +1,8 @@
 #define _GNU_SOURCE
 #include <stdlib.h>
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #include <sys/stat.h>
 #include <errno.h>
 #include "incluster_config.h"
@@ -43,13 +45,20 @@ static int setBasePathInCluster(char **pBasePath)
 {
     static char fname[] = "setBasePathInCluster()";
 
+#ifndef _WIN32
     const char *service_host_env = secure_getenv(SERVICE_HOST_ENV_NAME);
+#else
+    const char *service_host_env = getenv(SERVICE_HOST_ENV_NAME);
+#endif
     if (!service_host_env) {
         fprintf(stderr, "%s: Cannot retrieve the kubernetes service host inside a pod by the env %s.\n", fname, SERVICE_HOST_ENV_NAME);
         return -1;
     }
-
+#ifndef _WIN32
     const char *service_port_env = secure_getenv(SERVICE_PORT_ENV_NAME);
+#else
+    const char *service_port_env = getenv(SERVICE_PORT_ENV_NAME);
+#endif
     if (!service_port_env) {
         fprintf(stderr, "%s: Cannot retrieve the kubernetes service port inside a pod by the env %s.\n", fname, SERVICE_PORT_ENV_NAME);
         return -1;

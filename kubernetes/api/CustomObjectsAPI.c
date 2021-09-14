@@ -1997,7 +1997,7 @@ end:
 // list or watch cluster scoped custom objects
 //
 object_t*
-CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , char * version , char * plural , char * pretty , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , char * version , char * plural , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2054,6 +2054,19 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery_allowWatchBookmarks = NULL;
+    char * valueQuery_allowWatchBookmarks = NULL;
+    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
+    if (allowWatchBookmarks)
+    {
+        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
+        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
+        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
 
     // query parameters
@@ -2115,6 +2128,18 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -2195,6 +2220,18 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
+    if(keyQuery_allowWatchBookmarks){
+        free(keyQuery_allowWatchBookmarks);
+        keyQuery_allowWatchBookmarks = NULL;
+    }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
+    if(keyPairQuery_allowWatchBookmarks){
+        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
+        keyPairQuery_allowWatchBookmarks = NULL;
+    }
     if(keyQuery__continue){
         free(keyQuery__continue);
         keyQuery__continue = NULL;
@@ -2255,6 +2292,18 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2289,7 +2338,7 @@ end:
 // list or watch namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * pretty , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2359,6 +2408,19 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
     }
 
     // query parameters
+    char *keyQuery_allowWatchBookmarks = NULL;
+    char * valueQuery_allowWatchBookmarks = NULL;
+    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
+    if (allowWatchBookmarks)
+    {
+        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
+        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
+        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
+    }
+
+    // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
     keyValuePair_t *keyPairQuery__continue = 0;
@@ -2417,6 +2479,18 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -2498,6 +2572,18 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
+    if(keyQuery_allowWatchBookmarks){
+        free(keyQuery_allowWatchBookmarks);
+        keyQuery_allowWatchBookmarks = NULL;
+    }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
+    if(keyPairQuery_allowWatchBookmarks){
+        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
+        keyPairQuery_allowWatchBookmarks = NULL;
+    }
     if(keyQuery__continue){
         free(keyQuery__continue);
         keyQuery__continue = NULL;
@@ -2557,6 +2643,18 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
     if(keyPairQuery_resourceVersion){
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
+    }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);

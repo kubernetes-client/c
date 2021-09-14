@@ -20,7 +20,7 @@ v1_container_t *v1_container_create(
     v1_resource_requirements_t *resources,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,
-    int stdin,
+    int _stdin,
     int stdin_once,
     char *termination_message_path,
     char *termination_message_policy,
@@ -47,7 +47,7 @@ v1_container_t *v1_container_create(
     v1_container_local_var->resources = resources;
     v1_container_local_var->security_context = security_context;
     v1_container_local_var->startup_probe = startup_probe;
-    v1_container_local_var->stdin = stdin;
+    v1_container_local_var->_stdin = _stdin;
     v1_container_local_var->stdin_once = stdin_once;
     v1_container_local_var->termination_message_path = termination_message_path;
     v1_container_local_var->termination_message_policy = termination_message_policy;
@@ -366,9 +366,9 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
      } 
 
 
-    // v1_container->stdin
-    if(v1_container->stdin) { 
-    if(cJSON_AddBoolToObject(item, "stdin", v1_container->stdin) == NULL) {
+    // v1_container->_stdin
+    if(v1_container->_stdin) { 
+    if(cJSON_AddBoolToObject(item, "stdin", v1_container->_stdin) == NULL) {
     goto fail; //Bool
     }
      } 
@@ -643,10 +643,10 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     startup_probe_local_nonprim = v1_probe_parseFromJSON(startup_probe); //nonprimitive
     }
 
-    // v1_container->stdin
-    cJSON *stdin = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "stdin");
-    if (stdin) { 
-    if(!cJSON_IsBool(stdin))
+    // v1_container->_stdin
+    cJSON *_stdin = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "stdin");
+    if (_stdin) { 
+    if(!cJSON_IsBool(_stdin))
     {
     goto end; //Bool
     }
@@ -757,7 +757,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
         resources ? resources_local_nonprim : NULL,
         security_context ? security_context_local_nonprim : NULL,
         startup_probe ? startup_probe_local_nonprim : NULL,
-        stdin ? stdin->valueint : 0,
+        _stdin ? _stdin->valueint : 0,
         stdin_once ? stdin_once->valueint : 0,
         termination_message_path ? strdup(termination_message_path->valuestring) : NULL,
         termination_message_policy ? strdup(termination_message_policy->valuestring) : NULL,

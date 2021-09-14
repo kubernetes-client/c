@@ -16,7 +16,7 @@ void LogsAPI_logFileHandler(apiClient_t *apiClient, char * logpath);
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 **logpath** | **char \*** | path to the log | 
 
 ### Return type
@@ -42,7 +42,7 @@ void LogsAPI_logFileListHandler(apiClient_t *apiClient);
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration | 
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
 
 ### Return type
 

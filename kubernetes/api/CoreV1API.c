@@ -80,7 +80,7 @@ CoreV1API_connectDeleteNamespacedPodProxy(apiClient_t *apiClient, char * name , 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -193,7 +193,7 @@ CoreV1API_connectDeleteNamespacedPodProxyWithPath(apiClient_t *apiClient, char *
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -297,7 +297,7 @@ CoreV1API_connectDeleteNamespacedServiceProxy(apiClient_t *apiClient, char * nam
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -410,7 +410,7 @@ CoreV1API_connectDeleteNamespacedServiceProxyWithPath(apiClient_t *apiClient, ch
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -504,7 +504,7 @@ CoreV1API_connectDeleteNodeProxy(apiClient_t *apiClient, char * name , char * pa
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -606,7 +606,7 @@ CoreV1API_connectDeleteNodeProxyWithPath(apiClient_t *apiClient, char * name , c
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -644,7 +644,7 @@ end:
 // connect GET requests to attach of Pod
 //
 char*
-CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * name , char * _namespace , char * container , int stderr , int stdin , int stdout , int tty )
+CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * name , char * _namespace , char * container , int _stderr , int _stdin , int _stdout , int tty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -694,42 +694,42 @@ CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * name , ch
     }
 
     // query parameters
-    char *keyQuery_stderr = NULL;
-    char * valueQuery_stderr = NULL;
-    keyValuePair_t *keyPairQuery_stderr = 0;
-    if (stderr)
+    char *keyQuery__stderr = NULL;
+    char * valueQuery__stderr = NULL;
+    keyValuePair_t *keyPairQuery__stderr = 0;
+    if (_stderr)
     {
-        keyQuery_stderr = strdup("stderr");
-        valueQuery_stderr = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stderr, MAX_NUMBER_LENGTH, "%d", stderr);
-        keyPairQuery_stderr = keyValuePair_create(keyQuery_stderr, valueQuery_stderr);
-        list_addElement(localVarQueryParameters,keyPairQuery_stderr);
+        keyQuery__stderr = strdup("stderr");
+        valueQuery__stderr = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stderr, MAX_NUMBER_LENGTH, "%d", _stderr);
+        keyPairQuery__stderr = keyValuePair_create(keyQuery__stderr, valueQuery__stderr);
+        list_addElement(localVarQueryParameters,keyPairQuery__stderr);
     }
 
     // query parameters
-    char *keyQuery_stdin = NULL;
-    char * valueQuery_stdin = NULL;
-    keyValuePair_t *keyPairQuery_stdin = 0;
-    if (stdin)
+    char *keyQuery__stdin = NULL;
+    char * valueQuery__stdin = NULL;
+    keyValuePair_t *keyPairQuery__stdin = 0;
+    if (_stdin)
     {
-        keyQuery_stdin = strdup("stdin");
-        valueQuery_stdin = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stdin, MAX_NUMBER_LENGTH, "%d", stdin);
-        keyPairQuery_stdin = keyValuePair_create(keyQuery_stdin, valueQuery_stdin);
-        list_addElement(localVarQueryParameters,keyPairQuery_stdin);
+        keyQuery__stdin = strdup("stdin");
+        valueQuery__stdin = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stdin, MAX_NUMBER_LENGTH, "%d", _stdin);
+        keyPairQuery__stdin = keyValuePair_create(keyQuery__stdin, valueQuery__stdin);
+        list_addElement(localVarQueryParameters,keyPairQuery__stdin);
     }
 
     // query parameters
-    char *keyQuery_stdout = NULL;
-    char * valueQuery_stdout = NULL;
-    keyValuePair_t *keyPairQuery_stdout = 0;
-    if (stdout)
+    char *keyQuery__stdout = NULL;
+    char * valueQuery__stdout = NULL;
+    keyValuePair_t *keyPairQuery__stdout = 0;
+    if (_stdout)
     {
-        keyQuery_stdout = strdup("stdout");
-        valueQuery_stdout = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stdout, MAX_NUMBER_LENGTH, "%d", stdout);
-        keyPairQuery_stdout = keyValuePair_create(keyQuery_stdout, valueQuery_stdout);
-        list_addElement(localVarQueryParameters,keyPairQuery_stdout);
+        keyQuery__stdout = strdup("stdout");
+        valueQuery__stdout = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stdout, MAX_NUMBER_LENGTH, "%d", _stdout);
+        keyPairQuery__stdout = keyValuePair_create(keyQuery__stdout, valueQuery__stdout);
+        list_addElement(localVarQueryParameters,keyPairQuery__stdout);
     }
 
     // query parameters
@@ -761,7 +761,7 @@ CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * name , ch
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -789,41 +789,41 @@ CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * name , ch
         keyValuePair_free(keyPairQuery_container);
         keyPairQuery_container = NULL;
     }
-    if(keyQuery_stderr){
-        free(keyQuery_stderr);
-        keyQuery_stderr = NULL;
+    if(keyQuery__stderr){
+        free(keyQuery__stderr);
+        keyQuery__stderr = NULL;
     }
-    if(valueQuery_stderr){
-        free(valueQuery_stderr);
-        valueQuery_stderr = NULL;
+    if(valueQuery__stderr){
+        free(valueQuery__stderr);
+        valueQuery__stderr = NULL;
     }
-    if(keyPairQuery_stderr){
-        keyValuePair_free(keyPairQuery_stderr);
-        keyPairQuery_stderr = NULL;
+    if(keyPairQuery__stderr){
+        keyValuePair_free(keyPairQuery__stderr);
+        keyPairQuery__stderr = NULL;
     }
-    if(keyQuery_stdin){
-        free(keyQuery_stdin);
-        keyQuery_stdin = NULL;
+    if(keyQuery__stdin){
+        free(keyQuery__stdin);
+        keyQuery__stdin = NULL;
     }
-    if(valueQuery_stdin){
-        free(valueQuery_stdin);
-        valueQuery_stdin = NULL;
+    if(valueQuery__stdin){
+        free(valueQuery__stdin);
+        valueQuery__stdin = NULL;
     }
-    if(keyPairQuery_stdin){
-        keyValuePair_free(keyPairQuery_stdin);
-        keyPairQuery_stdin = NULL;
+    if(keyPairQuery__stdin){
+        keyValuePair_free(keyPairQuery__stdin);
+        keyPairQuery__stdin = NULL;
     }
-    if(keyQuery_stdout){
-        free(keyQuery_stdout);
-        keyQuery_stdout = NULL;
+    if(keyQuery__stdout){
+        free(keyQuery__stdout);
+        keyQuery__stdout = NULL;
     }
-    if(valueQuery_stdout){
-        free(valueQuery_stdout);
-        valueQuery_stdout = NULL;
+    if(valueQuery__stdout){
+        free(valueQuery__stdout);
+        valueQuery__stdout = NULL;
     }
-    if(keyPairQuery_stdout){
-        keyValuePair_free(keyPairQuery_stdout);
-        keyPairQuery_stdout = NULL;
+    if(keyPairQuery__stdout){
+        keyValuePair_free(keyPairQuery__stdout);
+        keyPairQuery__stdout = NULL;
     }
     if(keyQuery_tty){
         free(keyQuery_tty);
@@ -847,7 +847,7 @@ end:
 // connect GET requests to exec of Pod
 //
 char*
-CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name , char * _namespace , char * command , char * container , int stderr , int stdin , int stdout , int tty )
+CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name , char * _namespace , char * command , char * container , int _stderr , int _stdin , int _stdout , int tty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -909,42 +909,42 @@ CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name , char
     }
 
     // query parameters
-    char *keyQuery_stderr = NULL;
-    char * valueQuery_stderr = NULL;
-    keyValuePair_t *keyPairQuery_stderr = 0;
-    if (stderr)
+    char *keyQuery__stderr = NULL;
+    char * valueQuery__stderr = NULL;
+    keyValuePair_t *keyPairQuery__stderr = 0;
+    if (_stderr)
     {
-        keyQuery_stderr = strdup("stderr");
-        valueQuery_stderr = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stderr, MAX_NUMBER_LENGTH, "%d", stderr);
-        keyPairQuery_stderr = keyValuePair_create(keyQuery_stderr, valueQuery_stderr);
-        list_addElement(localVarQueryParameters,keyPairQuery_stderr);
+        keyQuery__stderr = strdup("stderr");
+        valueQuery__stderr = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stderr, MAX_NUMBER_LENGTH, "%d", _stderr);
+        keyPairQuery__stderr = keyValuePair_create(keyQuery__stderr, valueQuery__stderr);
+        list_addElement(localVarQueryParameters,keyPairQuery__stderr);
     }
 
     // query parameters
-    char *keyQuery_stdin = NULL;
-    char * valueQuery_stdin = NULL;
-    keyValuePair_t *keyPairQuery_stdin = 0;
-    if (stdin)
+    char *keyQuery__stdin = NULL;
+    char * valueQuery__stdin = NULL;
+    keyValuePair_t *keyPairQuery__stdin = 0;
+    if (_stdin)
     {
-        keyQuery_stdin = strdup("stdin");
-        valueQuery_stdin = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stdin, MAX_NUMBER_LENGTH, "%d", stdin);
-        keyPairQuery_stdin = keyValuePair_create(keyQuery_stdin, valueQuery_stdin);
-        list_addElement(localVarQueryParameters,keyPairQuery_stdin);
+        keyQuery__stdin = strdup("stdin");
+        valueQuery__stdin = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stdin, MAX_NUMBER_LENGTH, "%d", _stdin);
+        keyPairQuery__stdin = keyValuePair_create(keyQuery__stdin, valueQuery__stdin);
+        list_addElement(localVarQueryParameters,keyPairQuery__stdin);
     }
 
     // query parameters
-    char *keyQuery_stdout = NULL;
-    char * valueQuery_stdout = NULL;
-    keyValuePair_t *keyPairQuery_stdout = 0;
-    if (stdout)
+    char *keyQuery__stdout = NULL;
+    char * valueQuery__stdout = NULL;
+    keyValuePair_t *keyPairQuery__stdout = 0;
+    if (_stdout)
     {
-        keyQuery_stdout = strdup("stdout");
-        valueQuery_stdout = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stdout, MAX_NUMBER_LENGTH, "%d", stdout);
-        keyPairQuery_stdout = keyValuePair_create(keyQuery_stdout, valueQuery_stdout);
-        list_addElement(localVarQueryParameters,keyPairQuery_stdout);
+        keyQuery__stdout = strdup("stdout");
+        valueQuery__stdout = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stdout, MAX_NUMBER_LENGTH, "%d", _stdout);
+        keyPairQuery__stdout = keyValuePair_create(keyQuery__stdout, valueQuery__stdout);
+        list_addElement(localVarQueryParameters,keyPairQuery__stdout);
     }
 
     // query parameters
@@ -976,7 +976,7 @@ CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name , char
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1016,41 +1016,41 @@ CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name , char
         keyValuePair_free(keyPairQuery_container);
         keyPairQuery_container = NULL;
     }
-    if(keyQuery_stderr){
-        free(keyQuery_stderr);
-        keyQuery_stderr = NULL;
+    if(keyQuery__stderr){
+        free(keyQuery__stderr);
+        keyQuery__stderr = NULL;
     }
-    if(valueQuery_stderr){
-        free(valueQuery_stderr);
-        valueQuery_stderr = NULL;
+    if(valueQuery__stderr){
+        free(valueQuery__stderr);
+        valueQuery__stderr = NULL;
     }
-    if(keyPairQuery_stderr){
-        keyValuePair_free(keyPairQuery_stderr);
-        keyPairQuery_stderr = NULL;
+    if(keyPairQuery__stderr){
+        keyValuePair_free(keyPairQuery__stderr);
+        keyPairQuery__stderr = NULL;
     }
-    if(keyQuery_stdin){
-        free(keyQuery_stdin);
-        keyQuery_stdin = NULL;
+    if(keyQuery__stdin){
+        free(keyQuery__stdin);
+        keyQuery__stdin = NULL;
     }
-    if(valueQuery_stdin){
-        free(valueQuery_stdin);
-        valueQuery_stdin = NULL;
+    if(valueQuery__stdin){
+        free(valueQuery__stdin);
+        valueQuery__stdin = NULL;
     }
-    if(keyPairQuery_stdin){
-        keyValuePair_free(keyPairQuery_stdin);
-        keyPairQuery_stdin = NULL;
+    if(keyPairQuery__stdin){
+        keyValuePair_free(keyPairQuery__stdin);
+        keyPairQuery__stdin = NULL;
     }
-    if(keyQuery_stdout){
-        free(keyQuery_stdout);
-        keyQuery_stdout = NULL;
+    if(keyQuery__stdout){
+        free(keyQuery__stdout);
+        keyQuery__stdout = NULL;
     }
-    if(valueQuery_stdout){
-        free(valueQuery_stdout);
-        valueQuery_stdout = NULL;
+    if(valueQuery__stdout){
+        free(valueQuery__stdout);
+        valueQuery__stdout = NULL;
     }
-    if(keyPairQuery_stdout){
-        keyValuePair_free(keyPairQuery_stdout);
-        keyPairQuery_stdout = NULL;
+    if(keyPairQuery__stdout){
+        keyValuePair_free(keyPairQuery__stdout);
+        keyPairQuery__stdout = NULL;
     }
     if(keyQuery_tty){
         free(keyQuery_tty);
@@ -1140,7 +1140,7 @@ CoreV1API_connectGetNamespacedPodPortforward(apiClient_t *apiClient, char * name
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1243,7 +1243,7 @@ CoreV1API_connectGetNamespacedPodProxy(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1356,7 +1356,7 @@ CoreV1API_connectGetNamespacedPodProxyWithPath(apiClient_t *apiClient, char * na
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1460,7 +1460,7 @@ CoreV1API_connectGetNamespacedServiceProxy(apiClient_t *apiClient, char * name ,
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1573,7 +1573,7 @@ CoreV1API_connectGetNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1667,7 +1667,7 @@ CoreV1API_connectGetNodeProxy(apiClient_t *apiClient, char * name , char * path 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1769,7 +1769,7 @@ CoreV1API_connectGetNodeProxyWithPath(apiClient_t *apiClient, char * name , char
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1872,7 +1872,7 @@ CoreV1API_connectHeadNamespacedPodProxy(apiClient_t *apiClient, char * name , ch
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -1985,7 +1985,7 @@ CoreV1API_connectHeadNamespacedPodProxyWithPath(apiClient_t *apiClient, char * n
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2089,7 +2089,7 @@ CoreV1API_connectHeadNamespacedServiceProxy(apiClient_t *apiClient, char * name 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2202,7 +2202,7 @@ CoreV1API_connectHeadNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2296,7 +2296,7 @@ CoreV1API_connectHeadNodeProxy(apiClient_t *apiClient, char * name , char * path
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2398,7 +2398,7 @@ CoreV1API_connectHeadNodeProxyWithPath(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2501,7 +2501,7 @@ CoreV1API_connectOptionsNamespacedPodProxy(apiClient_t *apiClient, char * name ,
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2614,7 +2614,7 @@ CoreV1API_connectOptionsNamespacedPodProxyWithPath(apiClient_t *apiClient, char 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2718,7 +2718,7 @@ CoreV1API_connectOptionsNamespacedServiceProxy(apiClient_t *apiClient, char * na
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2831,7 +2831,7 @@ CoreV1API_connectOptionsNamespacedServiceProxyWithPath(apiClient_t *apiClient, c
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -2925,7 +2925,7 @@ CoreV1API_connectOptionsNodeProxy(apiClient_t *apiClient, char * name , char * p
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3027,7 +3027,7 @@ CoreV1API_connectOptionsNodeProxyWithPath(apiClient_t *apiClient, char * name , 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3130,7 +3130,7 @@ CoreV1API_connectPatchNamespacedPodProxy(apiClient_t *apiClient, char * name , c
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3243,7 +3243,7 @@ CoreV1API_connectPatchNamespacedPodProxyWithPath(apiClient_t *apiClient, char * 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3347,7 +3347,7 @@ CoreV1API_connectPatchNamespacedServiceProxy(apiClient_t *apiClient, char * name
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3460,7 +3460,7 @@ CoreV1API_connectPatchNamespacedServiceProxyWithPath(apiClient_t *apiClient, cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3554,7 +3554,7 @@ CoreV1API_connectPatchNodeProxy(apiClient_t *apiClient, char * name , char * pat
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3656,7 +3656,7 @@ CoreV1API_connectPatchNodeProxyWithPath(apiClient_t *apiClient, char * name , ch
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3694,7 +3694,7 @@ end:
 // connect POST requests to attach of Pod
 //
 char*
-CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * name , char * _namespace , char * container , int stderr , int stdin , int stdout , int tty )
+CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * name , char * _namespace , char * container , int _stderr , int _stdin , int _stdout , int tty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3744,42 +3744,42 @@ CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * name , c
     }
 
     // query parameters
-    char *keyQuery_stderr = NULL;
-    char * valueQuery_stderr = NULL;
-    keyValuePair_t *keyPairQuery_stderr = 0;
-    if (stderr)
+    char *keyQuery__stderr = NULL;
+    char * valueQuery__stderr = NULL;
+    keyValuePair_t *keyPairQuery__stderr = 0;
+    if (_stderr)
     {
-        keyQuery_stderr = strdup("stderr");
-        valueQuery_stderr = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stderr, MAX_NUMBER_LENGTH, "%d", stderr);
-        keyPairQuery_stderr = keyValuePair_create(keyQuery_stderr, valueQuery_stderr);
-        list_addElement(localVarQueryParameters,keyPairQuery_stderr);
+        keyQuery__stderr = strdup("stderr");
+        valueQuery__stderr = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stderr, MAX_NUMBER_LENGTH, "%d", _stderr);
+        keyPairQuery__stderr = keyValuePair_create(keyQuery__stderr, valueQuery__stderr);
+        list_addElement(localVarQueryParameters,keyPairQuery__stderr);
     }
 
     // query parameters
-    char *keyQuery_stdin = NULL;
-    char * valueQuery_stdin = NULL;
-    keyValuePair_t *keyPairQuery_stdin = 0;
-    if (stdin)
+    char *keyQuery__stdin = NULL;
+    char * valueQuery__stdin = NULL;
+    keyValuePair_t *keyPairQuery__stdin = 0;
+    if (_stdin)
     {
-        keyQuery_stdin = strdup("stdin");
-        valueQuery_stdin = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stdin, MAX_NUMBER_LENGTH, "%d", stdin);
-        keyPairQuery_stdin = keyValuePair_create(keyQuery_stdin, valueQuery_stdin);
-        list_addElement(localVarQueryParameters,keyPairQuery_stdin);
+        keyQuery__stdin = strdup("stdin");
+        valueQuery__stdin = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stdin, MAX_NUMBER_LENGTH, "%d", _stdin);
+        keyPairQuery__stdin = keyValuePair_create(keyQuery__stdin, valueQuery__stdin);
+        list_addElement(localVarQueryParameters,keyPairQuery__stdin);
     }
 
     // query parameters
-    char *keyQuery_stdout = NULL;
-    char * valueQuery_stdout = NULL;
-    keyValuePair_t *keyPairQuery_stdout = 0;
-    if (stdout)
+    char *keyQuery__stdout = NULL;
+    char * valueQuery__stdout = NULL;
+    keyValuePair_t *keyPairQuery__stdout = 0;
+    if (_stdout)
     {
-        keyQuery_stdout = strdup("stdout");
-        valueQuery_stdout = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stdout, MAX_NUMBER_LENGTH, "%d", stdout);
-        keyPairQuery_stdout = keyValuePair_create(keyQuery_stdout, valueQuery_stdout);
-        list_addElement(localVarQueryParameters,keyPairQuery_stdout);
+        keyQuery__stdout = strdup("stdout");
+        valueQuery__stdout = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stdout, MAX_NUMBER_LENGTH, "%d", _stdout);
+        keyPairQuery__stdout = keyValuePair_create(keyQuery__stdout, valueQuery__stdout);
+        list_addElement(localVarQueryParameters,keyPairQuery__stdout);
     }
 
     // query parameters
@@ -3811,7 +3811,7 @@ CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * name , c
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -3839,41 +3839,41 @@ CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * name , c
         keyValuePair_free(keyPairQuery_container);
         keyPairQuery_container = NULL;
     }
-    if(keyQuery_stderr){
-        free(keyQuery_stderr);
-        keyQuery_stderr = NULL;
+    if(keyQuery__stderr){
+        free(keyQuery__stderr);
+        keyQuery__stderr = NULL;
     }
-    if(valueQuery_stderr){
-        free(valueQuery_stderr);
-        valueQuery_stderr = NULL;
+    if(valueQuery__stderr){
+        free(valueQuery__stderr);
+        valueQuery__stderr = NULL;
     }
-    if(keyPairQuery_stderr){
-        keyValuePair_free(keyPairQuery_stderr);
-        keyPairQuery_stderr = NULL;
+    if(keyPairQuery__stderr){
+        keyValuePair_free(keyPairQuery__stderr);
+        keyPairQuery__stderr = NULL;
     }
-    if(keyQuery_stdin){
-        free(keyQuery_stdin);
-        keyQuery_stdin = NULL;
+    if(keyQuery__stdin){
+        free(keyQuery__stdin);
+        keyQuery__stdin = NULL;
     }
-    if(valueQuery_stdin){
-        free(valueQuery_stdin);
-        valueQuery_stdin = NULL;
+    if(valueQuery__stdin){
+        free(valueQuery__stdin);
+        valueQuery__stdin = NULL;
     }
-    if(keyPairQuery_stdin){
-        keyValuePair_free(keyPairQuery_stdin);
-        keyPairQuery_stdin = NULL;
+    if(keyPairQuery__stdin){
+        keyValuePair_free(keyPairQuery__stdin);
+        keyPairQuery__stdin = NULL;
     }
-    if(keyQuery_stdout){
-        free(keyQuery_stdout);
-        keyQuery_stdout = NULL;
+    if(keyQuery__stdout){
+        free(keyQuery__stdout);
+        keyQuery__stdout = NULL;
     }
-    if(valueQuery_stdout){
-        free(valueQuery_stdout);
-        valueQuery_stdout = NULL;
+    if(valueQuery__stdout){
+        free(valueQuery__stdout);
+        valueQuery__stdout = NULL;
     }
-    if(keyPairQuery_stdout){
-        keyValuePair_free(keyPairQuery_stdout);
-        keyPairQuery_stdout = NULL;
+    if(keyPairQuery__stdout){
+        keyValuePair_free(keyPairQuery__stdout);
+        keyPairQuery__stdout = NULL;
     }
     if(keyQuery_tty){
         free(keyQuery_tty);
@@ -3897,7 +3897,7 @@ end:
 // connect POST requests to exec of Pod
 //
 char*
-CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name , char * _namespace , char * command , char * container , int stderr , int stdin , int stdout , int tty )
+CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name , char * _namespace , char * command , char * container , int _stderr , int _stdin , int _stdout , int tty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3959,42 +3959,42 @@ CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name , cha
     }
 
     // query parameters
-    char *keyQuery_stderr = NULL;
-    char * valueQuery_stderr = NULL;
-    keyValuePair_t *keyPairQuery_stderr = 0;
-    if (stderr)
+    char *keyQuery__stderr = NULL;
+    char * valueQuery__stderr = NULL;
+    keyValuePair_t *keyPairQuery__stderr = 0;
+    if (_stderr)
     {
-        keyQuery_stderr = strdup("stderr");
-        valueQuery_stderr = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stderr, MAX_NUMBER_LENGTH, "%d", stderr);
-        keyPairQuery_stderr = keyValuePair_create(keyQuery_stderr, valueQuery_stderr);
-        list_addElement(localVarQueryParameters,keyPairQuery_stderr);
+        keyQuery__stderr = strdup("stderr");
+        valueQuery__stderr = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stderr, MAX_NUMBER_LENGTH, "%d", _stderr);
+        keyPairQuery__stderr = keyValuePair_create(keyQuery__stderr, valueQuery__stderr);
+        list_addElement(localVarQueryParameters,keyPairQuery__stderr);
     }
 
     // query parameters
-    char *keyQuery_stdin = NULL;
-    char * valueQuery_stdin = NULL;
-    keyValuePair_t *keyPairQuery_stdin = 0;
-    if (stdin)
+    char *keyQuery__stdin = NULL;
+    char * valueQuery__stdin = NULL;
+    keyValuePair_t *keyPairQuery__stdin = 0;
+    if (_stdin)
     {
-        keyQuery_stdin = strdup("stdin");
-        valueQuery_stdin = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stdin, MAX_NUMBER_LENGTH, "%d", stdin);
-        keyPairQuery_stdin = keyValuePair_create(keyQuery_stdin, valueQuery_stdin);
-        list_addElement(localVarQueryParameters,keyPairQuery_stdin);
+        keyQuery__stdin = strdup("stdin");
+        valueQuery__stdin = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stdin, MAX_NUMBER_LENGTH, "%d", _stdin);
+        keyPairQuery__stdin = keyValuePair_create(keyQuery__stdin, valueQuery__stdin);
+        list_addElement(localVarQueryParameters,keyPairQuery__stdin);
     }
 
     // query parameters
-    char *keyQuery_stdout = NULL;
-    char * valueQuery_stdout = NULL;
-    keyValuePair_t *keyPairQuery_stdout = 0;
-    if (stdout)
+    char *keyQuery__stdout = NULL;
+    char * valueQuery__stdout = NULL;
+    keyValuePair_t *keyPairQuery__stdout = 0;
+    if (_stdout)
     {
-        keyQuery_stdout = strdup("stdout");
-        valueQuery_stdout = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_stdout, MAX_NUMBER_LENGTH, "%d", stdout);
-        keyPairQuery_stdout = keyValuePair_create(keyQuery_stdout, valueQuery_stdout);
-        list_addElement(localVarQueryParameters,keyPairQuery_stdout);
+        keyQuery__stdout = strdup("stdout");
+        valueQuery__stdout = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery__stdout, MAX_NUMBER_LENGTH, "%d", _stdout);
+        keyPairQuery__stdout = keyValuePair_create(keyQuery__stdout, valueQuery__stdout);
+        list_addElement(localVarQueryParameters,keyPairQuery__stdout);
     }
 
     // query parameters
@@ -4026,7 +4026,7 @@ CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4066,41 +4066,41 @@ CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name , cha
         keyValuePair_free(keyPairQuery_container);
         keyPairQuery_container = NULL;
     }
-    if(keyQuery_stderr){
-        free(keyQuery_stderr);
-        keyQuery_stderr = NULL;
+    if(keyQuery__stderr){
+        free(keyQuery__stderr);
+        keyQuery__stderr = NULL;
     }
-    if(valueQuery_stderr){
-        free(valueQuery_stderr);
-        valueQuery_stderr = NULL;
+    if(valueQuery__stderr){
+        free(valueQuery__stderr);
+        valueQuery__stderr = NULL;
     }
-    if(keyPairQuery_stderr){
-        keyValuePair_free(keyPairQuery_stderr);
-        keyPairQuery_stderr = NULL;
+    if(keyPairQuery__stderr){
+        keyValuePair_free(keyPairQuery__stderr);
+        keyPairQuery__stderr = NULL;
     }
-    if(keyQuery_stdin){
-        free(keyQuery_stdin);
-        keyQuery_stdin = NULL;
+    if(keyQuery__stdin){
+        free(keyQuery__stdin);
+        keyQuery__stdin = NULL;
     }
-    if(valueQuery_stdin){
-        free(valueQuery_stdin);
-        valueQuery_stdin = NULL;
+    if(valueQuery__stdin){
+        free(valueQuery__stdin);
+        valueQuery__stdin = NULL;
     }
-    if(keyPairQuery_stdin){
-        keyValuePair_free(keyPairQuery_stdin);
-        keyPairQuery_stdin = NULL;
+    if(keyPairQuery__stdin){
+        keyValuePair_free(keyPairQuery__stdin);
+        keyPairQuery__stdin = NULL;
     }
-    if(keyQuery_stdout){
-        free(keyQuery_stdout);
-        keyQuery_stdout = NULL;
+    if(keyQuery__stdout){
+        free(keyQuery__stdout);
+        keyQuery__stdout = NULL;
     }
-    if(valueQuery_stdout){
-        free(valueQuery_stdout);
-        valueQuery_stdout = NULL;
+    if(valueQuery__stdout){
+        free(valueQuery__stdout);
+        valueQuery__stdout = NULL;
     }
-    if(keyPairQuery_stdout){
-        keyValuePair_free(keyPairQuery_stdout);
-        keyPairQuery_stdout = NULL;
+    if(keyPairQuery__stdout){
+        keyValuePair_free(keyPairQuery__stdout);
+        keyPairQuery__stdout = NULL;
     }
     if(keyQuery_tty){
         free(keyQuery_tty);
@@ -4190,7 +4190,7 @@ CoreV1API_connectPostNamespacedPodPortforward(apiClient_t *apiClient, char * nam
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4293,7 +4293,7 @@ CoreV1API_connectPostNamespacedPodProxy(apiClient_t *apiClient, char * name , ch
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4406,7 +4406,7 @@ CoreV1API_connectPostNamespacedPodProxyWithPath(apiClient_t *apiClient, char * n
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4510,7 +4510,7 @@ CoreV1API_connectPostNamespacedServiceProxy(apiClient_t *apiClient, char * name 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4623,7 +4623,7 @@ CoreV1API_connectPostNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4717,7 +4717,7 @@ CoreV1API_connectPostNodeProxy(apiClient_t *apiClient, char * name , char * path
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4819,7 +4819,7 @@ CoreV1API_connectPostNodeProxyWithPath(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -4922,7 +4922,7 @@ CoreV1API_connectPutNamespacedPodProxy(apiClient_t *apiClient, char * name , cha
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -5035,7 +5035,7 @@ CoreV1API_connectPutNamespacedPodProxyWithPath(apiClient_t *apiClient, char * na
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -5139,7 +5139,7 @@ CoreV1API_connectPutNamespacedServiceProxy(apiClient_t *apiClient, char * name ,
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -5252,7 +5252,7 @@ CoreV1API_connectPutNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -5346,7 +5346,7 @@ CoreV1API_connectPutNodeProxy(apiClient_t *apiClient, char * name , char * path 
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -5448,7 +5448,7 @@ CoreV1API_connectPutNodeProxyWithPath(apiClient_t *apiClient, char * name , char
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
@@ -31280,7 +31280,7 @@ CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char * name , char * _nam
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
-    //primitive reutrn type simple
+    //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {

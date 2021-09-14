@@ -31,7 +31,7 @@ git clone https://github.com/yaml/libyaml --depth 1 --branch release/0.2.5
 cd libyaml
 mkdir build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_TESTING=OFF ..
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_TESTING=OFF  -DBUILD_SHARED_LIBS=ON ..
 make
 sudo make install
 

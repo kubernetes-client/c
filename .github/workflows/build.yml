@@ -32,7 +32,7 @@ jobs:
         cd libyaml
         mkdir build
         cd build
-        cmake .. -DBUILD_TESTING=OFF
+        cmake .. -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON
         make -j $(cat /proc/cpuinfo | grep processor | wc -l)
         sudo make install
     - name: Build client library

@@ -42,7 +42,7 @@ typedef struct v1_ephemeral_container_t {
     struct v1_resource_requirements_t *resources; //model
     struct v1_security_context_t *security_context; //model
     struct v1_probe_t *startup_probe; //model
-    int stdin; //boolean
+    int _stdin; //boolean
     int stdin_once; //boolean
     char *target_container_name; // string
     char *termination_message_path; // string
@@ -69,7 +69,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_create(
     v1_resource_requirements_t *resources,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,
-    int stdin,
+    int _stdin,
     int stdin_once,
     char *target_container_name,
     char *termination_message_path,

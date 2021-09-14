@@ -1,5 +1,6 @@
 #include "../include/apiClient.h"
 #include "../include/generic.h"
+#include "../include/utils.h"
 
 genericClient_t* genericClient_create(apiClient_t *client, const char *apiGroup, const char* apiVersion, const char* resourcePlural) {
     genericClient_t *result = malloc(sizeof(genericClient_t));

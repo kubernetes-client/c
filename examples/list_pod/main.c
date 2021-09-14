@@ -1,6 +1,5 @@
-#include <kube_config.h>
-#include <apiClient.h>
-#include <CoreV1API.h>
+#include <config/kube_config.h>
+#include <api/CoreV1API.h>
 #include <stdio.h>
 
 void list_pod(apiClient_t * apiClient)
