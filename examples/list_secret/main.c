@@ -16,6 +16,7 @@ void list_secret(apiClient_t * apiClient)
                                                                    NULL,    // char * labelSelector
                                                                    0,   // int limit
                                                                    NULL,    // char * resourceVersion
+                                                                   NULL,    // char * resourceVersionMatch
                                                                    0,   // int timeoutSeconds
                                                                    0    //int watch
         );

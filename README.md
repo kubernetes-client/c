@@ -86,6 +86,7 @@ list all pods:
                                            NULL,    /* labelSelector */
                                            0,       /* limit */
                                            NULL,    /* resourceVersion */
+                                           NULL,    /* resourceVersionMatch */
                                            0,       /* timeoutSeconds */
                                            0        /* watch */
         );
@@ -130,6 +131,7 @@ list all pods in cluster:
                                            NULL,    /* labelSelector */
                                            0,       /* limit */
                                            NULL,    /* resourceVersion */
+                                           NULL,    /* resourceVersionMatch */
                                            0,       /* timeoutSeconds */
                                            0        /* watch */
         );
