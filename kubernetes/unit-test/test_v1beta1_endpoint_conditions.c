@@ -22,10 +22,14 @@ v1beta1_endpoint_conditions_t* instantiate_v1beta1_endpoint_conditions(int inclu
   v1beta1_endpoint_conditions_t* v1beta1_endpoint_conditions = NULL;
   if (include_optional) {
     v1beta1_endpoint_conditions = v1beta1_endpoint_conditions_create(
+      1,
+      1,
       1
     );
   } else {
     v1beta1_endpoint_conditions = v1beta1_endpoint_conditions_create(
+      1,
+      1,
       1
     );
   }

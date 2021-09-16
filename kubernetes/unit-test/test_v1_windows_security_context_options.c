@@ -24,12 +24,14 @@ v1_windows_security_context_options_t* instantiate_v1_windows_security_context_o
     v1_windows_security_context_options = v1_windows_security_context_options_create(
       "0",
       "0",
+      1,
       "0"
     );
   } else {
     v1_windows_security_context_options = v1_windows_security_context_options_create(
       "0",
       "0",
+      1,
       "0"
     );
   }

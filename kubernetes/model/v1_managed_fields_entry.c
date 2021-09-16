@@ -11,6 +11,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_create(
     object_t *fields_v1,
     char *manager,
     char *operation,
+    char *subresource,
     char *time
     ) {
     v1_managed_fields_entry_t *v1_managed_fields_entry_local_var = malloc(sizeof(v1_managed_fields_entry_t));
@@ -22,6 +23,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_create(
     v1_managed_fields_entry_local_var->fields_v1 = fields_v1;
     v1_managed_fields_entry_local_var->manager = manager;
     v1_managed_fields_entry_local_var->operation = operation;
+    v1_managed_fields_entry_local_var->subresource = subresource;
     v1_managed_fields_entry_local_var->time = time;
 
     return v1_managed_fields_entry_local_var;
@@ -52,6 +54,10 @@ void v1_managed_fields_entry_free(v1_managed_fields_entry_t *v1_managed_fields_e
     if (v1_managed_fields_entry->operation) {
         free(v1_managed_fields_entry->operation);
         v1_managed_fields_entry->operation = NULL;
+    }
+    if (v1_managed_fields_entry->subresource) {
+        free(v1_managed_fields_entry->subresource);
+        v1_managed_fields_entry->subresource = NULL;
     }
     if (v1_managed_fields_entry->time) {
         free(v1_managed_fields_entry->time);
@@ -103,6 +109,14 @@ cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_manag
     // v1_managed_fields_entry->operation
     if(v1_managed_fields_entry->operation) { 
     if(cJSON_AddStringToObject(item, "operation", v1_managed_fields_entry->operation) == NULL) {
+    goto fail; //String
+    }
+     } 
+
+
+    // v1_managed_fields_entry->subresource
+    if(v1_managed_fields_entry->subresource) { 
+    if(cJSON_AddStringToObject(item, "subresource", v1_managed_fields_entry->subresource) == NULL) {
     goto fail; //String
     }
      } 
@@ -170,6 +184,15 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
     }
     }
 
+    // v1_managed_fields_entry->subresource
+    cJSON *subresource = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "subresource");
+    if (subresource) { 
+    if(!cJSON_IsString(subresource))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_managed_fields_entry->time
     cJSON *time = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "time");
     if (time) { 
@@ -186,6 +209,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
         fields_v1 ? fields_v1_local_object : NULL,
         manager ? strdup(manager->valuestring) : NULL,
         operation ? strdup(operation->valuestring) : NULL,
+        subresource ? strdup(subresource->valuestring) : NULL,
         time ? strdup(time->valuestring) : NULL
         );
 

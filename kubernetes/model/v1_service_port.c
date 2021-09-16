@@ -6,6 +6,7 @@
 
 
 v1_service_port_t *v1_service_port_create(
+    char *app_protocol,
     char *name,
     int node_port,
     int port,
@@ -16,6 +17,7 @@ v1_service_port_t *v1_service_port_create(
     if (!v1_service_port_local_var) {
         return NULL;
     }
+    v1_service_port_local_var->app_protocol = app_protocol;
     v1_service_port_local_var->name = name;
     v1_service_port_local_var->node_port = node_port;
     v1_service_port_local_var->port = port;
@@ -31,6 +33,10 @@ void v1_service_port_free(v1_service_port_t *v1_service_port) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_service_port->app_protocol) {
+        free(v1_service_port->app_protocol);
+        v1_service_port->app_protocol = NULL;
+    }
     if (v1_service_port->name) {
         free(v1_service_port->name);
         v1_service_port->name = NULL;
@@ -48,6 +54,14 @@ void v1_service_port_free(v1_service_port_t *v1_service_port) {
 
 cJSON *v1_service_port_convertToJSON(v1_service_port_t *v1_service_port) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1_service_port->app_protocol
+    if(v1_service_port->app_protocol) { 
+    if(cJSON_AddStringToObject(item, "appProtocol", v1_service_port->app_protocol) == NULL) {
+    goto fail; //String
+    }
+     } 
+
 
     // v1_service_port->name
     if(v1_service_port->name) { 
@@ -107,6 +121,15 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
     v1_service_port_t *v1_service_port_local_var = NULL;
 
+    // v1_service_port->app_protocol
+    cJSON *app_protocol = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "appProtocol");
+    if (app_protocol) { 
+    if(!cJSON_IsString(app_protocol))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_service_port->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "name");
     if (name) { 
@@ -155,6 +178,7 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
 
     v1_service_port_local_var = v1_service_port_create (
+        app_protocol ? strdup(app_protocol->valuestring) : NULL,
         name ? strdup(name->valuestring) : NULL,
         node_port ? node_port->valuedouble : 0,
         port->valuedouble,

@@ -23,6 +23,7 @@ typedef struct v1_stateful_set_spec_t v1_stateful_set_spec_t;
 
 
 typedef struct v1_stateful_set_spec_t {
+    int min_ready_seconds; //numeric
     char *pod_management_policy; // string
     int replicas; //numeric
     int revision_history_limit; //numeric
@@ -35,6 +36,7 @@ typedef struct v1_stateful_set_spec_t {
 } v1_stateful_set_spec_t;
 
 v1_stateful_set_spec_t *v1_stateful_set_spec_create(
+    int min_ready_seconds,
     char *pod_management_policy,
     int replicas,
     int revision_history_limit,

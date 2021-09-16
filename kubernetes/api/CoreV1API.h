@@ -5,6 +5,9 @@
 #include "../external/cJSON.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
+#include "../model/authentication_v1_token_request.h"
+#include "../model/core_v1_event.h"
+#include "../model/core_v1_event_list.h"
 #include "../model/v1_api_resource_list.h"
 #include "../model/v1_binding.h"
 #include "../model/v1_component_status.h"
@@ -14,8 +17,7 @@
 #include "../model/v1_delete_options.h"
 #include "../model/v1_endpoints.h"
 #include "../model/v1_endpoints_list.h"
-#include "../model/v1_event.h"
-#include "../model/v1_event_list.h"
+#include "../model/v1_eviction.h"
 #include "../model/v1_limit_range.h"
 #include "../model/v1_limit_range_list.h"
 #include "../model/v1_namespace.h"
@@ -42,8 +44,6 @@
 #include "../model/v1_service_account_list.h"
 #include "../model/v1_service_list.h"
 #include "../model/v1_status.h"
-#include "../model/v1_token_request.h"
-#include "../model/v1beta1_eviction.h"
 
 
 // connect DELETE requests to proxy of Pod
@@ -360,8 +360,8 @@ CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , 
 
 // create an Event
 //
-v1_event_t*
-CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , v1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
+core_v1_event_t*
+CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // create a LimitRange
@@ -390,8 +390,8 @@ CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char * name , char 
 
 // create eviction of a Pod
 //
-v1beta1_eviction_t*
-CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_eviction_t * body , char * dryRun , char * fieldManager , char * pretty );
+v1_eviction_t*
+CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char * _namespace , v1_eviction_t * body , char * dryRun , char * fieldManager , char * pretty );
 
 
 // create a PodTemplate
@@ -432,8 +432,8 @@ CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char * _namespa
 
 // create token of a ServiceAccount
 //
-v1_token_request_t*
-CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * name , char * _namespace , v1_token_request_t * body , char * dryRun , char * fieldManager , char * pretty );
+authentication_v1_token_request_t*
+CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * name , char * _namespace , authentication_v1_token_request_t * body , char * dryRun , char * fieldManager , char * pretty );
 
 
 // create a Node
@@ -451,79 +451,79 @@ CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t 
 // delete collection of ConfigMap
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of Endpoints
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of Event
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of LimitRange
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of PersistentVolumeClaim
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of Pod
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of PodTemplate
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of ReplicationController
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of ResourceQuota
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of Secret
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of ServiceAccount
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of Node
 //
 v1_status_t*
-CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of PersistentVolume
 //
 v1_status_t*
-CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a Namespace
@@ -558,19 +558,19 @@ CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char * name , char 
 
 // delete a PersistentVolumeClaim
 //
-v1_status_t*
+v1_persistent_volume_claim_t*
 CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
 // delete a Pod
 //
-v1_status_t*
+v1_pod_t*
 CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
 // delete a PodTemplate
 //
-v1_status_t*
+v1_pod_template_t*
 CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
@@ -582,7 +582,7 @@ CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiClient, char * n
 
 // delete a ResourceQuota
 //
-v1_status_t*
+v1_resource_quota_t*
 CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
@@ -600,7 +600,7 @@ CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char * name , char * _
 
 // delete a ServiceAccount
 //
-v1_status_t*
+v1_service_account_t*
 CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
@@ -612,7 +612,7 @@ CoreV1API_deleteNode(apiClient_t *apiClient, char * name , char * pretty , char 
 
 // delete a PersistentVolume
 //
-v1_status_t*
+v1_persistent_volume_t*
 CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
@@ -625,169 +625,169 @@ CoreV1API_getAPIResources(apiClient_t *apiClient);
 // list objects of kind ComponentStatus
 //
 v1_component_status_list_t*
-CoreV1API_listComponentStatus(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listComponentStatus(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ConfigMap
 //
 v1_config_map_list_t*
-CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Endpoints
 //
 v1_endpoints_list_t*
-CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Event
 //
-v1_event_list_t*
-CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+core_v1_event_list_t*
+CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind LimitRange
 //
 v1_limit_range_list_t*
-CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Namespace
 //
 v1_namespace_list_t*
-CoreV1API_listNamespace(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespace(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ConfigMap
 //
 v1_config_map_list_t*
-CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Endpoints
 //
 v1_endpoints_list_t*
-CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Event
 //
-v1_event_list_t*
-CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+core_v1_event_list_t*
+CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind LimitRange
 //
 v1_limit_range_list_t*
-CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind PersistentVolumeClaim
 //
 v1_persistent_volume_claim_list_t*
-CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Pod
 //
 v1_pod_list_t*
-CoreV1API_listNamespacedPod(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedPod(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind PodTemplate
 //
 v1_pod_template_list_t*
-CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ReplicationController
 //
 v1_replication_controller_list_t*
-CoreV1API_listNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ResourceQuota
 //
 v1_resource_quota_list_t*
-CoreV1API_listNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Secret
 //
 v1_secret_list_t*
-CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Service
 //
 v1_service_list_t*
-CoreV1API_listNamespacedService(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedService(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ServiceAccount
 //
 v1_service_account_list_t*
-CoreV1API_listNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Node
 //
 v1_node_list_t*
-CoreV1API_listNode(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listNode(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind PersistentVolume
 //
 v1_persistent_volume_list_t*
-CoreV1API_listPersistentVolume(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listPersistentVolume(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind PersistentVolumeClaim
 //
 v1_persistent_volume_claim_list_t*
-CoreV1API_listPersistentVolumeClaimForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listPersistentVolumeClaimForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Pod
 //
 v1_pod_list_t*
-CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind PodTemplate
 //
 v1_pod_template_list_t*
-CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ReplicationController
 //
 v1_replication_controller_list_t*
-CoreV1API_listReplicationControllerForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listReplicationControllerForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ResourceQuota
 //
 v1_resource_quota_list_t*
-CoreV1API_listResourceQuotaForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listResourceQuotaForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Secret
 //
 v1_secret_list_t*
-CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind ServiceAccount
 //
 v1_service_account_list_t*
-CoreV1API_listServiceAccountForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listServiceAccountForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind Service
 //
 v1_service_list_t*
-CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // partially update the specified Namespace
@@ -816,7 +816,7 @@ CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char * name , char * 
 
 // partially update the specified Event
 //
-v1_event_t*
+core_v1_event_t*
 CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
 
 
@@ -842,6 +842,12 @@ CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, cha
 //
 v1_pod_t*
 CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+
+
+// partially update ephemeralcontainers of the specified Pod
+//
+v1_pod_t*
+CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
 
 
 // partially update status of the specified Pod
@@ -943,7 +949,7 @@ CoreV1API_readComponentStatus(apiClient_t *apiClient, char * name , char * prett
 // read the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_readNamespace(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
+CoreV1API_readNamespace(apiClient_t *apiClient, char * name , char * pretty );
 
 
 // read status of the specified Namespace
@@ -955,31 +961,31 @@ CoreV1API_readNamespaceStatus(apiClient_t *apiClient, char * name , char * prett
 // read the specified ConfigMap
 //
 v1_config_map_t*
-CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read the specified Endpoints
 //
 v1_endpoints_t*
-CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read the specified Event
 //
-v1_event_t*
-CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+core_v1_event_t*
+CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read the specified LimitRange
 //
 v1_limit_range_t*
-CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read the specified PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read status of the specified PersistentVolumeClaim
@@ -991,7 +997,13 @@ CoreV1API_readNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char
 // read the specified Pod
 //
 v1_pod_t*
-CoreV1API_readNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
+
+
+// read ephemeralcontainers of the specified Pod
+//
+v1_pod_t*
+CoreV1API_readNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read log of the specified Pod
@@ -1009,13 +1021,13 @@ CoreV1API_readNamespacedPodStatus(apiClient_t *apiClient, char * name , char * _
 // read the specified PodTemplate
 //
 v1_pod_template_t*
-CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read the specified ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read scale of the specified ReplicationController
@@ -1033,7 +1045,7 @@ CoreV1API_readNamespacedReplicationControllerStatus(apiClient_t *apiClient, char
 // read the specified ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read status of the specified ResourceQuota
@@ -1045,19 +1057,19 @@ CoreV1API_readNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name 
 // read the specified Secret
 //
 v1_secret_t*
-CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read the specified Service
 //
 v1_service_t*
-CoreV1API_readNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read the specified ServiceAccount
 //
 v1_service_account_t*
-CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read status of the specified Service
@@ -1069,7 +1081,7 @@ CoreV1API_readNamespacedServiceStatus(apiClient_t *apiClient, char * name , char
 // read the specified Node
 //
 v1_node_t*
-CoreV1API_readNode(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
+CoreV1API_readNode(apiClient_t *apiClient, char * name , char * pretty );
 
 
 // read status of the specified Node
@@ -1081,7 +1093,7 @@ CoreV1API_readNodeStatus(apiClient_t *apiClient, char * name , char * pretty );
 // read the specified PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_readPersistentVolume(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
+CoreV1API_readPersistentVolume(apiClient_t *apiClient, char * name , char * pretty );
 
 
 // read status of the specified PersistentVolume
@@ -1122,8 +1134,8 @@ CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char * name , char 
 
 // replace the specified Event
 //
-v1_event_t*
-CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , v1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
+core_v1_event_t*
+CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // replace the specified LimitRange
@@ -1148,6 +1160,12 @@ CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, c
 //
 v1_pod_t*
 CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager );
+
+
+// replace ephemeralcontainers of the specified Pod
+//
+v1_pod_t*
+CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager );
 
 
 // replace status of the specified Pod

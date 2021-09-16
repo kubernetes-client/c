@@ -16,6 +16,7 @@
 #include "../model/v1_job_status.h"
 v1_job_status_t* instantiate_v1_job_status(int include_optional);
 
+#include "test_v1_uncounted_terminated_pods.c"
 
 
 v1_job_status_t* instantiate_v1_job_status(int include_optional) {
@@ -23,20 +24,25 @@ v1_job_status_t* instantiate_v1_job_status(int include_optional) {
   if (include_optional) {
     v1_job_status = v1_job_status_create(
       56,
+      "0",
       "2013-10-20T19:20:30+01:00",
       list_create(),
       56,
       "2013-10-20T19:20:30+01:00",
-      56
+      56,
+       // false, not to have infinite recursion
+      instantiate_v1_uncounted_terminated_pods(0)
     );
   } else {
     v1_job_status = v1_job_status_create(
       56,
+      "0",
       "2013-10-20T19:20:30+01:00",
       list_create(),
       56,
       "2013-10-20T19:20:30+01:00",
-      56
+      56,
+      NULL
     );
   }
 

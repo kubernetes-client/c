@@ -20,12 +20,14 @@ typedef struct v1_network_policy_port_t v1_network_policy_port_t;
 
 
 typedef struct v1_network_policy_port_t {
+    int end_port; //numeric
     object_t *port; //object
     char *protocol; // string
 
 } v1_network_policy_port_t;
 
 v1_network_policy_port_t *v1_network_policy_port_create(
+    int end_port,
     object_t *port,
     char *protocol
 );

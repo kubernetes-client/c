@@ -27,6 +27,7 @@ v1_managed_fields_entry_t* instantiate_v1_managed_fields_entry(int include_optio
       0,
       "0",
       "0",
+      "0",
       "2013-10-20T19:20:30+01:00"
     );
   } else {
@@ -34,6 +35,7 @@ v1_managed_fields_entry_t* instantiate_v1_managed_fields_entry(int include_optio
       "0",
       "0",
       0,
+      "0",
       "0",
       "0",
       "2013-10-20T19:20:30+01:00"

@@ -13,6 +13,7 @@ v1_probe_t *v1_probe_create(
     int period_seconds,
     int success_threshold,
     v1_tcp_socket_action_t *tcp_socket,
+    long termination_grace_period_seconds,
     int timeout_seconds
     ) {
     v1_probe_t *v1_probe_local_var = malloc(sizeof(v1_probe_t));
@@ -26,6 +27,7 @@ v1_probe_t *v1_probe_create(
     v1_probe_local_var->period_seconds = period_seconds;
     v1_probe_local_var->success_threshold = success_threshold;
     v1_probe_local_var->tcp_socket = tcp_socket;
+    v1_probe_local_var->termination_grace_period_seconds = termination_grace_period_seconds;
     v1_probe_local_var->timeout_seconds = timeout_seconds;
 
     return v1_probe_local_var;
@@ -126,6 +128,14 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
      } 
 
 
+    // v1_probe->termination_grace_period_seconds
+    if(v1_probe->termination_grace_period_seconds) { 
+    if(cJSON_AddNumberToObject(item, "terminationGracePeriodSeconds", v1_probe->termination_grace_period_seconds) == NULL) {
+    goto fail; //Numeric
+    }
+     } 
+
+
     // v1_probe->timeout_seconds
     if(v1_probe->timeout_seconds) { 
     if(cJSON_AddNumberToObject(item, "timeoutSeconds", v1_probe->timeout_seconds) == NULL) {
@@ -202,6 +212,15 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     tcp_socket_local_nonprim = v1_tcp_socket_action_parseFromJSON(tcp_socket); //nonprimitive
     }
 
+    // v1_probe->termination_grace_period_seconds
+    cJSON *termination_grace_period_seconds = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "terminationGracePeriodSeconds");
+    if (termination_grace_period_seconds) { 
+    if(!cJSON_IsNumber(termination_grace_period_seconds))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1_probe->timeout_seconds
     cJSON *timeout_seconds = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "timeoutSeconds");
     if (timeout_seconds) { 
@@ -220,6 +239,7 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
         period_seconds ? period_seconds->valuedouble : 0,
         success_threshold ? success_threshold->valuedouble : 0,
         tcp_socket ? tcp_socket_local_nonprim : NULL,
+        termination_grace_period_seconds ? termination_grace_period_seconds->valuedouble : 0,
         timeout_seconds ? timeout_seconds->valuedouble : 0
         );
 

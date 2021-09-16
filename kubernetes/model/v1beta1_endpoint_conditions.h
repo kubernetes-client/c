@@ -20,11 +20,15 @@ typedef struct v1beta1_endpoint_conditions_t v1beta1_endpoint_conditions_t;
 
 typedef struct v1beta1_endpoint_conditions_t {
     int ready; //boolean
+    int serving; //boolean
+    int terminating; //boolean
 
 } v1beta1_endpoint_conditions_t;
 
 v1beta1_endpoint_conditions_t *v1beta1_endpoint_conditions_create(
-    int ready
+    int ready,
+    int serving,
+    int terminating
 );
 
 void v1beta1_endpoint_conditions_free(v1beta1_endpoint_conditions_t *v1beta1_endpoint_conditions);

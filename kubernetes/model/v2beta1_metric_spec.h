@@ -15,6 +15,7 @@
 
 typedef struct v2beta1_metric_spec_t v2beta1_metric_spec_t;
 
+#include "v2beta1_container_resource_metric_source.h"
 #include "v2beta1_external_metric_source.h"
 #include "v2beta1_object_metric_source.h"
 #include "v2beta1_pods_metric_source.h"
@@ -23,6 +24,7 @@ typedef struct v2beta1_metric_spec_t v2beta1_metric_spec_t;
 
 
 typedef struct v2beta1_metric_spec_t {
+    struct v2beta1_container_resource_metric_source_t *container_resource; //model
     struct v2beta1_external_metric_source_t *external; //model
     struct v2beta1_object_metric_source_t *object; //model
     struct v2beta1_pods_metric_source_t *pods; //model
@@ -32,6 +34,7 @@ typedef struct v2beta1_metric_spec_t {
 } v2beta1_metric_spec_t;
 
 v2beta1_metric_spec_t *v2beta1_metric_spec_create(
+    v2beta1_container_resource_metric_source_t *container_resource,
     v2beta1_external_metric_source_t *external,
     v2beta1_object_metric_source_t *object,
     v2beta1_pods_metric_source_t *pods,

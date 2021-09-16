@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **csi** | [**v1_csi_volume_source_t**](v1_csi_volume_source.md) \* |  | [optional] 
 **downward_api** | [**v1_downward_api_volume_source_t**](v1_downward_api_volume_source.md) \* |  | [optional] 
 **empty_dir** | [**v1_empty_dir_volume_source_t**](v1_empty_dir_volume_source.md) \* |  | [optional] 
+**ephemeral** | [**v1_ephemeral_volume_source_t**](v1_ephemeral_volume_source.md) \* |  | [optional] 
 **fc** | [**v1_fc_volume_source_t**](v1_fc_volume_source.md) \* |  | [optional] 
 **flex_volume** | [**v1_flex_volume_source_t**](v1_flex_volume_source.md) \* |  | [optional] 
 **flocker** | [**v1_flocker_volume_source_t**](v1_flocker_volume_source.md) \* |  | [optional] 

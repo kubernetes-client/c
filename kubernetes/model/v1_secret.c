@@ -8,6 +8,7 @@
 v1_secret_t *v1_secret_create(
     char *api_version,
     list_t* data,
+    int immutable,
     char *kind,
     v1_object_meta_t *metadata,
     list_t* string_data,
@@ -19,6 +20,7 @@ v1_secret_t *v1_secret_create(
     }
     v1_secret_local_var->api_version = api_version;
     v1_secret_local_var->data = data;
+    v1_secret_local_var->immutable = immutable;
     v1_secret_local_var->kind = kind;
     v1_secret_local_var->metadata = metadata;
     v1_secret_local_var->string_data = string_data;
@@ -99,6 +101,14 @@ cJSON *v1_secret_convertToJSON(v1_secret_t *v1_secret) {
             goto fail;
         }
     }
+    }
+     } 
+
+
+    // v1_secret->immutable
+    if(v1_secret->immutable) { 
+    if(cJSON_AddBoolToObject(item, "immutable", v1_secret->immutable) == NULL) {
+    goto fail; //Bool
     }
      } 
 
@@ -194,6 +204,15 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
     }
     }
 
+    // v1_secret->immutable
+    cJSON *immutable = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "immutable");
+    if (immutable) { 
+    if(!cJSON_IsBool(immutable))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1_secret->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "kind");
     if (kind) { 
@@ -245,6 +264,7 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
     v1_secret_local_var = v1_secret_create (
         api_version ? strdup(api_version->valuestring) : NULL,
         data ? dataList : NULL,
+        immutable ? immutable->valueint : 0,
         kind ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         string_data ? string_dataList : NULL,

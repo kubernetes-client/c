@@ -6,6 +6,7 @@
 
 
 v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec_create(
+    v2beta2_horizontal_pod_autoscaler_behavior_t *behavior,
     int max_replicas,
     list_t *metrics,
     int min_replicas,
@@ -15,6 +16,7 @@ v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec
     if (!v2beta2_horizontal_pod_autoscaler_spec_local_var) {
         return NULL;
     }
+    v2beta2_horizontal_pod_autoscaler_spec_local_var->behavior = behavior;
     v2beta2_horizontal_pod_autoscaler_spec_local_var->max_replicas = max_replicas;
     v2beta2_horizontal_pod_autoscaler_spec_local_var->metrics = metrics;
     v2beta2_horizontal_pod_autoscaler_spec_local_var->min_replicas = min_replicas;
@@ -29,6 +31,10 @@ void v2beta2_horizontal_pod_autoscaler_spec_free(v2beta2_horizontal_pod_autoscal
         return ;
     }
     listEntry_t *listEntry;
+    if (v2beta2_horizontal_pod_autoscaler_spec->behavior) {
+        v2beta2_horizontal_pod_autoscaler_behavior_free(v2beta2_horizontal_pod_autoscaler_spec->behavior);
+        v2beta2_horizontal_pod_autoscaler_spec->behavior = NULL;
+    }
     if (v2beta2_horizontal_pod_autoscaler_spec->metrics) {
         list_ForEach(listEntry, v2beta2_horizontal_pod_autoscaler_spec->metrics) {
             v2beta2_metric_spec_free(listEntry->data);
@@ -45,6 +51,19 @@ void v2beta2_horizontal_pod_autoscaler_spec_free(v2beta2_horizontal_pod_autoscal
 
 cJSON *v2beta2_horizontal_pod_autoscaler_spec_convertToJSON(v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec) {
     cJSON *item = cJSON_CreateObject();
+
+    // v2beta2_horizontal_pod_autoscaler_spec->behavior
+    if(v2beta2_horizontal_pod_autoscaler_spec->behavior) { 
+    cJSON *behavior_local_JSON = v2beta2_horizontal_pod_autoscaler_behavior_convertToJSON(v2beta2_horizontal_pod_autoscaler_spec->behavior);
+    if(behavior_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "behavior", behavior_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+     } 
+
 
     // v2beta2_horizontal_pod_autoscaler_spec->max_replicas
     if (!v2beta2_horizontal_pod_autoscaler_spec->max_replicas) {
@@ -110,6 +129,13 @@ v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec
 
     v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec_local_var = NULL;
 
+    // v2beta2_horizontal_pod_autoscaler_spec->behavior
+    cJSON *behavior = cJSON_GetObjectItemCaseSensitive(v2beta2_horizontal_pod_autoscaler_specJSON, "behavior");
+    v2beta2_horizontal_pod_autoscaler_behavior_t *behavior_local_nonprim = NULL;
+    if (behavior) { 
+    behavior_local_nonprim = v2beta2_horizontal_pod_autoscaler_behavior_parseFromJSON(behavior); //nonprimitive
+    }
+
     // v2beta2_horizontal_pod_autoscaler_spec->max_replicas
     cJSON *max_replicas = cJSON_GetObjectItemCaseSensitive(v2beta2_horizontal_pod_autoscaler_specJSON, "maxReplicas");
     if (!max_replicas) {
@@ -165,6 +191,7 @@ v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec
 
 
     v2beta2_horizontal_pod_autoscaler_spec_local_var = v2beta2_horizontal_pod_autoscaler_spec_create (
+        behavior ? behavior_local_nonprim : NULL,
         max_replicas->valuedouble,
         metrics ? metricsList : NULL,
         min_replicas ? min_replicas->valuedouble : 0,
@@ -173,6 +200,10 @@ v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec
 
     return v2beta2_horizontal_pod_autoscaler_spec_local_var;
 end:
+    if (behavior_local_nonprim) {
+        v2beta2_horizontal_pod_autoscaler_behavior_free(behavior_local_nonprim);
+        behavior_local_nonprim = NULL;
+    }
     if (scale_target_ref_local_nonprim) {
         v2beta2_cross_version_object_reference_free(scale_target_ref_local_nonprim);
         scale_target_ref_local_nonprim = NULL;

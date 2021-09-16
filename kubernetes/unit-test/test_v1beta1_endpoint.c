@@ -17,6 +17,7 @@
 v1beta1_endpoint_t* instantiate_v1beta1_endpoint(int include_optional);
 
 #include "test_v1beta1_endpoint_conditions.c"
+#include "test_v1beta1_endpoint_hints.c"
 #include "test_v1_object_reference.c"
 
 
@@ -27,6 +28,9 @@ v1beta1_endpoint_t* instantiate_v1beta1_endpoint(int include_optional) {
       list_create(),
        // false, not to have infinite recursion
       instantiate_v1beta1_endpoint_conditions(0),
+       // false, not to have infinite recursion
+      instantiate_v1beta1_endpoint_hints(0),
+      "0",
       "0",
        // false, not to have infinite recursion
       instantiate_v1_object_reference(0),
@@ -36,6 +40,8 @@ v1beta1_endpoint_t* instantiate_v1beta1_endpoint(int include_optional) {
     v1beta1_endpoint = v1beta1_endpoint_create(
       list_create(),
       NULL,
+      NULL,
+      "0",
       "0",
       NULL,
       list_create()

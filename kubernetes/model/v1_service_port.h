@@ -20,6 +20,7 @@ typedef struct v1_service_port_t v1_service_port_t;
 
 
 typedef struct v1_service_port_t {
+    char *app_protocol; // string
     char *name; // string
     int node_port; //numeric
     int port; //numeric
@@ -29,6 +30,7 @@ typedef struct v1_service_port_t {
 } v1_service_port_t;
 
 v1_service_port_t *v1_service_port_create(
+    char *app_protocol,
     char *name,
     int node_port,
     int port,

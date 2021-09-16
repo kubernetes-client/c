@@ -6,6 +6,7 @@
 
 
 v1_network_policy_port_t *v1_network_policy_port_create(
+    int end_port,
     object_t *port,
     char *protocol
     ) {
@@ -13,6 +14,7 @@ v1_network_policy_port_t *v1_network_policy_port_create(
     if (!v1_network_policy_port_local_var) {
         return NULL;
     }
+    v1_network_policy_port_local_var->end_port = end_port;
     v1_network_policy_port_local_var->port = port;
     v1_network_policy_port_local_var->protocol = protocol;
 
@@ -38,6 +40,14 @@ void v1_network_policy_port_free(v1_network_policy_port_t *v1_network_policy_por
 
 cJSON *v1_network_policy_port_convertToJSON(v1_network_policy_port_t *v1_network_policy_port) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1_network_policy_port->end_port
+    if(v1_network_policy_port->end_port) { 
+    if(cJSON_AddNumberToObject(item, "endPort", v1_network_policy_port->end_port) == NULL) {
+    goto fail; //Numeric
+    }
+     } 
+
 
     // v1_network_policy_port->port
     if(v1_network_policy_port->port) { 
@@ -71,6 +81,15 @@ v1_network_policy_port_t *v1_network_policy_port_parseFromJSON(cJSON *v1_network
 
     v1_network_policy_port_t *v1_network_policy_port_local_var = NULL;
 
+    // v1_network_policy_port->end_port
+    cJSON *end_port = cJSON_GetObjectItemCaseSensitive(v1_network_policy_portJSON, "endPort");
+    if (end_port) { 
+    if(!cJSON_IsNumber(end_port))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1_network_policy_port->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_network_policy_portJSON, "port");
     object_t *port_local_object = NULL;
@@ -89,6 +108,7 @@ v1_network_policy_port_t *v1_network_policy_port_parseFromJSON(cJSON *v1_network
 
 
     v1_network_policy_port_local_var = v1_network_policy_port_create (
+        end_port ? end_port->valuedouble : 0,
         port ? port_local_object : NULL,
         protocol ? strdup(protocol->valuestring) : NULL
         );

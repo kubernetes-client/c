@@ -25,6 +25,7 @@ typedef struct v1_managed_fields_entry_t {
     object_t *fields_v1; //object
     char *manager; // string
     char *operation; // string
+    char *subresource; // string
     char *time; //date time
 
 } v1_managed_fields_entry_t;
@@ -35,6 +36,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_create(
     object_t *fields_v1,
     char *manager,
     char *operation,
+    char *subresource,
     char *time
 );
 

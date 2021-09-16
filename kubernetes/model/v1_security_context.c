@@ -15,6 +15,7 @@ v1_security_context_t *v1_security_context_create(
     int run_as_non_root,
     long run_as_user,
     v1_se_linux_options_t *se_linux_options,
+    v1_seccomp_profile_t *seccomp_profile,
     v1_windows_security_context_options_t *windows_options
     ) {
     v1_security_context_t *v1_security_context_local_var = malloc(sizeof(v1_security_context_t));
@@ -30,6 +31,7 @@ v1_security_context_t *v1_security_context_create(
     v1_security_context_local_var->run_as_non_root = run_as_non_root;
     v1_security_context_local_var->run_as_user = run_as_user;
     v1_security_context_local_var->se_linux_options = se_linux_options;
+    v1_security_context_local_var->seccomp_profile = seccomp_profile;
     v1_security_context_local_var->windows_options = windows_options;
 
     return v1_security_context_local_var;
@@ -52,6 +54,10 @@ void v1_security_context_free(v1_security_context_t *v1_security_context) {
     if (v1_security_context->se_linux_options) {
         v1_se_linux_options_free(v1_security_context->se_linux_options);
         v1_security_context->se_linux_options = NULL;
+    }
+    if (v1_security_context->seccomp_profile) {
+        v1_seccomp_profile_free(v1_security_context->seccomp_profile);
+        v1_security_context->seccomp_profile = NULL;
     }
     if (v1_security_context->windows_options) {
         v1_windows_security_context_options_free(v1_security_context->windows_options);
@@ -139,6 +145,19 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
     goto fail; //model
     }
     cJSON_AddItemToObject(item, "seLinuxOptions", se_linux_options_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+     } 
+
+
+    // v1_security_context->seccomp_profile
+    if(v1_security_context->seccomp_profile) { 
+    cJSON *seccomp_profile_local_JSON = v1_seccomp_profile_convertToJSON(v1_security_context->seccomp_profile);
+    if(seccomp_profile_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "seccompProfile", seccomp_profile_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -246,6 +265,13 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
     se_linux_options_local_nonprim = v1_se_linux_options_parseFromJSON(se_linux_options); //nonprimitive
     }
 
+    // v1_security_context->seccomp_profile
+    cJSON *seccomp_profile = cJSON_GetObjectItemCaseSensitive(v1_security_contextJSON, "seccompProfile");
+    v1_seccomp_profile_t *seccomp_profile_local_nonprim = NULL;
+    if (seccomp_profile) { 
+    seccomp_profile_local_nonprim = v1_seccomp_profile_parseFromJSON(seccomp_profile); //nonprimitive
+    }
+
     // v1_security_context->windows_options
     cJSON *windows_options = cJSON_GetObjectItemCaseSensitive(v1_security_contextJSON, "windowsOptions");
     v1_windows_security_context_options_t *windows_options_local_nonprim = NULL;
@@ -264,6 +290,7 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
         run_as_non_root ? run_as_non_root->valueint : 0,
         run_as_user ? run_as_user->valuedouble : 0,
         se_linux_options ? se_linux_options_local_nonprim : NULL,
+        seccomp_profile ? seccomp_profile_local_nonprim : NULL,
         windows_options ? windows_options_local_nonprim : NULL
         );
 
@@ -276,6 +303,10 @@ end:
     if (se_linux_options_local_nonprim) {
         v1_se_linux_options_free(se_linux_options_local_nonprim);
         se_linux_options_local_nonprim = NULL;
+    }
+    if (seccomp_profile_local_nonprim) {
+        v1_seccomp_profile_free(seccomp_profile_local_nonprim);
+        seccomp_profile_local_nonprim = NULL;
     }
     if (windows_options_local_nonprim) {
         v1_windows_security_context_options_free(windows_options_local_nonprim);

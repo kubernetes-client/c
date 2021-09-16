@@ -23,6 +23,7 @@ v1_stateful_set_status_t* instantiate_v1_stateful_set_status(int include_optiona
   if (include_optional) {
     v1_stateful_set_status = v1_stateful_set_status_create(
       56,
+      56,
       list_create(),
       56,
       "0",
@@ -34,6 +35,7 @@ v1_stateful_set_status_t* instantiate_v1_stateful_set_status(int include_optiona
     );
   } else {
     v1_stateful_set_status = v1_stateful_set_status_create(
+      56,
       56,
       list_create(),
       56,

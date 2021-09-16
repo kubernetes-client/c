@@ -8,10 +8,12 @@
 v1_job_spec_t *v1_job_spec_create(
     long active_deadline_seconds,
     int backoff_limit,
+    char *completion_mode,
     int completions,
     int manual_selector,
     int parallelism,
     v1_label_selector_t *selector,
+    int suspend,
     v1_pod_template_spec_t *_template,
     int ttl_seconds_after_finished
     ) {
@@ -21,10 +23,12 @@ v1_job_spec_t *v1_job_spec_create(
     }
     v1_job_spec_local_var->active_deadline_seconds = active_deadline_seconds;
     v1_job_spec_local_var->backoff_limit = backoff_limit;
+    v1_job_spec_local_var->completion_mode = completion_mode;
     v1_job_spec_local_var->completions = completions;
     v1_job_spec_local_var->manual_selector = manual_selector;
     v1_job_spec_local_var->parallelism = parallelism;
     v1_job_spec_local_var->selector = selector;
+    v1_job_spec_local_var->suspend = suspend;
     v1_job_spec_local_var->_template = _template;
     v1_job_spec_local_var->ttl_seconds_after_finished = ttl_seconds_after_finished;
 
@@ -37,6 +41,10 @@ void v1_job_spec_free(v1_job_spec_t *v1_job_spec) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_job_spec->completion_mode) {
+        free(v1_job_spec->completion_mode);
+        v1_job_spec->completion_mode = NULL;
+    }
     if (v1_job_spec->selector) {
         v1_label_selector_free(v1_job_spec->selector);
         v1_job_spec->selector = NULL;
@@ -63,6 +71,14 @@ cJSON *v1_job_spec_convertToJSON(v1_job_spec_t *v1_job_spec) {
     if(v1_job_spec->backoff_limit) { 
     if(cJSON_AddNumberToObject(item, "backoffLimit", v1_job_spec->backoff_limit) == NULL) {
     goto fail; //Numeric
+    }
+     } 
+
+
+    // v1_job_spec->completion_mode
+    if(v1_job_spec->completion_mode) { 
+    if(cJSON_AddStringToObject(item, "completionMode", v1_job_spec->completion_mode) == NULL) {
+    goto fail; //String
     }
      } 
 
@@ -100,6 +116,14 @@ cJSON *v1_job_spec_convertToJSON(v1_job_spec_t *v1_job_spec) {
     cJSON_AddItemToObject(item, "selector", selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
+    }
+     } 
+
+
+    // v1_job_spec->suspend
+    if(v1_job_spec->suspend) { 
+    if(cJSON_AddBoolToObject(item, "suspend", v1_job_spec->suspend) == NULL) {
+    goto fail; //Bool
     }
      } 
 
@@ -156,6 +180,15 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
     }
     }
 
+    // v1_job_spec->completion_mode
+    cJSON *completion_mode = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "completionMode");
+    if (completion_mode) { 
+    if(!cJSON_IsString(completion_mode))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_job_spec->completions
     cJSON *completions = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "completions");
     if (completions) { 
@@ -190,6 +223,15 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
+    // v1_job_spec->suspend
+    cJSON *suspend = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "suspend");
+    if (suspend) { 
+    if(!cJSON_IsBool(suspend))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1_job_spec->_template
     cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "template");
     if (!_template) {
@@ -213,10 +255,12 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
     v1_job_spec_local_var = v1_job_spec_create (
         active_deadline_seconds ? active_deadline_seconds->valuedouble : 0,
         backoff_limit ? backoff_limit->valuedouble : 0,
+        completion_mode ? strdup(completion_mode->valuestring) : NULL,
         completions ? completions->valuedouble : 0,
         manual_selector ? manual_selector->valueint : 0,
         parallelism ? parallelism->valuedouble : 0,
         selector ? selector_local_nonprim : NULL,
+        suspend ? suspend->valueint : 0,
         _template_local_nonprim,
         ttl_seconds_after_finished ? ttl_seconds_after_finished->valuedouble : 0
         );

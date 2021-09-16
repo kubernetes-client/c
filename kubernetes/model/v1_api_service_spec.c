@@ -92,10 +92,7 @@ cJSON *v1_api_service_spec_convertToJSON(v1_api_service_spec_t *v1_api_service_s
 
 
     // v1_api_service_spec->service
-    if (!v1_api_service_spec->service) {
-        goto fail;
-    }
-    
+    if(v1_api_service_spec->service) { 
     cJSON *service_local_JSON = apiregistration_v1_service_reference_convertToJSON(v1_api_service_spec->service);
     if(service_local_JSON == NULL) {
     goto fail; //model
@@ -104,6 +101,7 @@ cJSON *v1_api_service_spec_convertToJSON(v1_api_service_spec_t *v1_api_service_s
     if(item->child == NULL) {
     goto fail;
     }
+     } 
 
 
     // v1_api_service_spec->version
@@ -176,13 +174,10 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     // v1_api_service_spec->service
     cJSON *service = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "service");
-    if (!service) {
-        goto end;
-    }
-
     apiregistration_v1_service_reference_t *service_local_nonprim = NULL;
-    
+    if (service) { 
     service_local_nonprim = apiregistration_v1_service_reference_parseFromJSON(service); //nonprimitive
+    }
 
     // v1_api_service_spec->version
     cJSON *version = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "version");
@@ -211,7 +206,7 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
         group ? strdup(group->valuestring) : NULL,
         group_priority_minimum->valuedouble,
         insecure_skip_tls_verify ? insecure_skip_tls_verify->valueint : 0,
-        service_local_nonprim,
+        service ? service_local_nonprim : NULL,
         version ? strdup(version->valuestring) : NULL,
         version_priority->valuedouble
         );

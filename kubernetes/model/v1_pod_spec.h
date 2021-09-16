@@ -58,6 +58,7 @@ typedef struct v1_pod_spec_t {
     struct v1_pod_security_context_t *security_context; //model
     char *service_account; // string
     char *service_account_name; // string
+    int set_hostname_as_fqdn; //boolean
     int share_process_namespace; //boolean
     char *subdomain; // string
     long termination_grace_period_seconds; //numeric
@@ -96,6 +97,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     v1_pod_security_context_t *security_context,
     char *service_account,
     char *service_account_name,
+    int set_hostname_as_fqdn,
     int share_process_namespace,
     char *subdomain,
     long termination_grace_period_seconds,

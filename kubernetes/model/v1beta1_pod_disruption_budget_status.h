@@ -15,10 +15,12 @@
 
 typedef struct v1beta1_pod_disruption_budget_status_t v1beta1_pod_disruption_budget_status_t;
 
+#include "v1_condition.h"
 
 
 
 typedef struct v1beta1_pod_disruption_budget_status_t {
+    list_t *conditions; //nonprimitive container
     int current_healthy; //numeric
     int desired_healthy; //numeric
     list_t* disrupted_pods; //map
@@ -29,6 +31,7 @@ typedef struct v1beta1_pod_disruption_budget_status_t {
 } v1beta1_pod_disruption_budget_status_t;
 
 v1beta1_pod_disruption_budget_status_t *v1beta1_pod_disruption_budget_status_create(
+    list_t *conditions,
     int current_healthy,
     int desired_healthy,
     list_t* disrupted_pods,

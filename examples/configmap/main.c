@@ -6,7 +6,7 @@
 #include <errno.h>
 #include <unistd.h>
 
-void create_configmap(apiClient_t * apiClient, const char *name, const char *namespace_)
+void create_configmap(apiClient_t * apiClient, char *name, char *namespace_)
 { 
     char *api_version = strdup("v1");
     char *kind = strdup("ConfigMap");
@@ -37,6 +37,7 @@ void create_configmap(apiClient_t * apiClient, const char *name, const char *nam
     v1_config_map_t *body = v1_config_map_create(api_version,
                                                  NULL,
                                                  data,
+                                                 1,
                                                  kind,
                                                  meta);
 
@@ -66,7 +67,7 @@ void create_configmap(apiClient_t * apiClient, const char *name, const char *nam
     }
 }
 
-void list_configmap(apiClient_t * apiClient, const char *namespace_)
+void list_configmap(apiClient_t * apiClient, char *namespace_)
 {
     v1_config_map_list_t *config_map_list = CoreV1API_listNamespacedConfigMap(apiClient,
                                                                               namespace_,    // char *namespace
@@ -77,6 +78,7 @@ void list_configmap(apiClient_t * apiClient, const char *namespace_)
                                                                               NULL, // char * labelSelector
                                                                               0,    // int limit
                                                                               NULL, // char * resourceVersion
+                                                                              NULL, // char * resourceVersionMatch
                                                                               0,    // int timeoutSeconds
                                                                               0 //int watch
         );
@@ -111,7 +113,7 @@ void list_configmap(apiClient_t * apiClient, const char *namespace_)
     }
 }
 
-void delete_configmap(apiClient_t * apiClient, const char *name, const char *namespace_)
+void delete_configmap(apiClient_t * apiClient, char *name, char *namespace_)
 {
     v1_status_t *status = CoreV1API_deleteNamespacedConfigMap(apiClient,
                                                         name,   // char *name

@@ -3,10 +3,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**api_group** | **char \*** | APIGroup holds the API group of the referenced subject. Defaults to \&quot;\&quot; for ServiceAccount subjects. Defaults to \&quot;rbac.authorization.k8s.io\&quot; for User and Group subjects. | [optional] 
-**kind** | **char \*** | Kind of object being referenced. Values defined by this API group are \&quot;User\&quot;, \&quot;Group\&quot;, and \&quot;ServiceAccount\&quot;. If the Authorizer does not recognized the kind value, the Authorizer should report an error. | 
-**name** | **char \*** | Name of the object being referenced. | 
-**_namespace** | **char \*** | Namespace of the referenced object.  If the object kind is non-namespace, such as \&quot;User\&quot; or \&quot;Group\&quot;, and this value is not empty the Authorizer should report an error. | [optional] 
+**group** | [**v1beta1_group_subject_t**](v1beta1_group_subject.md) \* |  | [optional] 
+**kind** | **char \*** | &#x60;kind&#x60; indicates which one of the other fields is non-empty. Required | 
+**service_account** | [**v1beta1_service_account_subject_t**](v1beta1_service_account_subject.md) \* |  | [optional] 
+**user** | [**v1beta1_user_subject_t**](v1beta1_user_subject.md) \* |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

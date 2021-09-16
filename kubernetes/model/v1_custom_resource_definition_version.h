@@ -23,6 +23,8 @@ typedef struct v1_custom_resource_definition_version_t v1_custom_resource_defini
 
 typedef struct v1_custom_resource_definition_version_t {
     list_t *additional_printer_columns; //nonprimitive container
+    int deprecated; //boolean
+    char *deprecation_warning; // string
     char *name; // string
     struct v1_custom_resource_validation_t *schema; //model
     int served; //boolean
@@ -33,6 +35,8 @@ typedef struct v1_custom_resource_definition_version_t {
 
 v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_create(
     list_t *additional_printer_columns,
+    int deprecated,
+    char *deprecation_warning,
     char *name,
     v1_custom_resource_validation_t *schema,
     int served,

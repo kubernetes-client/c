@@ -15,18 +15,21 @@
 
 typedef struct v1_load_balancer_ingress_t v1_load_balancer_ingress_t;
 
+#include "v1_port_status.h"
 
 
 
 typedef struct v1_load_balancer_ingress_t {
     char *hostname; // string
     char *ip; // string
+    list_t *ports; //nonprimitive container
 
 } v1_load_balancer_ingress_t;
 
 v1_load_balancer_ingress_t *v1_load_balancer_ingress_create(
     char *hostname,
-    char *ip
+    char *ip,
+    list_t *ports
 );
 
 void v1_load_balancer_ingress_free(v1_load_balancer_ingress_t *v1_load_balancer_ingress);

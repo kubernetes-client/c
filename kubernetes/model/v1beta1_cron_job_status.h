@@ -22,12 +22,14 @@ typedef struct v1beta1_cron_job_status_t v1beta1_cron_job_status_t;
 typedef struct v1beta1_cron_job_status_t {
     list_t *active; //nonprimitive container
     char *last_schedule_time; //date time
+    char *last_successful_time; //date time
 
 } v1beta1_cron_job_status_t;
 
 v1beta1_cron_job_status_t *v1beta1_cron_job_status_create(
     list_t *active,
-    char *last_schedule_time
+    char *last_schedule_time,
+    char *last_successful_time
 );
 
 void v1beta1_cron_job_status_free(v1beta1_cron_job_status_t *v1beta1_cron_job_status);

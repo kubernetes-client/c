@@ -47,86 +47,19 @@ set(SRCS
     model/object.c
     model/admissionregistration_v1_service_reference.c
     model/admissionregistration_v1_webhook_client_config.c
-    model/admissionregistration_v1beta1_service_reference.c
-    model/admissionregistration_v1beta1_webhook_client_config.c
     model/apiextensions_v1_service_reference.c
     model/apiextensions_v1_webhook_client_config.c
-    model/apiextensions_v1beta1_service_reference.c
-    model/apiextensions_v1beta1_webhook_client_config.c
     model/apiregistration_v1_service_reference.c
-    model/apiregistration_v1beta1_service_reference.c
-    model/apps_v1beta1_deployment.c
-    model/apps_v1beta1_deployment_condition.c
-    model/apps_v1beta1_deployment_list.c
-    model/apps_v1beta1_deployment_rollback.c
-    model/apps_v1beta1_deployment_spec.c
-    model/apps_v1beta1_deployment_status.c
-    model/apps_v1beta1_deployment_strategy.c
-    model/apps_v1beta1_rollback_config.c
-    model/apps_v1beta1_rolling_update_deployment.c
-    model/apps_v1beta1_scale.c
-    model/apps_v1beta1_scale_spec.c
-    model/apps_v1beta1_scale_status.c
-    model/extensions_v1beta1_allowed_csi_driver.c
-    model/extensions_v1beta1_allowed_flex_volume.c
-    model/extensions_v1beta1_allowed_host_path.c
-    model/extensions_v1beta1_deployment.c
-    model/extensions_v1beta1_deployment_condition.c
-    model/extensions_v1beta1_deployment_list.c
-    model/extensions_v1beta1_deployment_rollback.c
-    model/extensions_v1beta1_deployment_spec.c
-    model/extensions_v1beta1_deployment_status.c
-    model/extensions_v1beta1_deployment_strategy.c
-    model/extensions_v1beta1_fs_group_strategy_options.c
-    model/extensions_v1beta1_host_port_range.c
-    model/extensions_v1beta1_http_ingress_path.c
-    model/extensions_v1beta1_http_ingress_rule_value.c
-    model/extensions_v1beta1_id_range.c
-    model/extensions_v1beta1_ingress.c
-    model/extensions_v1beta1_ingress_backend.c
-    model/extensions_v1beta1_ingress_list.c
-    model/extensions_v1beta1_ingress_rule.c
-    model/extensions_v1beta1_ingress_spec.c
-    model/extensions_v1beta1_ingress_status.c
-    model/extensions_v1beta1_ingress_tls.c
-    model/extensions_v1beta1_pod_security_policy.c
-    model/extensions_v1beta1_pod_security_policy_list.c
-    model/extensions_v1beta1_pod_security_policy_spec.c
-    model/extensions_v1beta1_rollback_config.c
-    model/extensions_v1beta1_rolling_update_deployment.c
-    model/extensions_v1beta1_run_as_group_strategy_options.c
-    model/extensions_v1beta1_run_as_user_strategy_options.c
-    model/extensions_v1beta1_runtime_class_strategy_options.c
-    model/extensions_v1beta1_scale.c
-    model/extensions_v1beta1_scale_spec.c
-    model/extensions_v1beta1_scale_status.c
-    model/extensions_v1beta1_se_linux_strategy_options.c
-    model/extensions_v1beta1_supplemental_groups_strategy_options.c
-    model/flowcontrol_v1alpha1_subject.c
-    model/networking_v1beta1_http_ingress_path.c
-    model/networking_v1beta1_http_ingress_rule_value.c
-    model/networking_v1beta1_ingress.c
-    model/networking_v1beta1_ingress_backend.c
-    model/networking_v1beta1_ingress_list.c
-    model/networking_v1beta1_ingress_rule.c
-    model/networking_v1beta1_ingress_spec.c
-    model/networking_v1beta1_ingress_status.c
-    model/networking_v1beta1_ingress_tls.c
-    model/policy_v1beta1_allowed_csi_driver.c
-    model/policy_v1beta1_allowed_flex_volume.c
-    model/policy_v1beta1_allowed_host_path.c
-    model/policy_v1beta1_fs_group_strategy_options.c
-    model/policy_v1beta1_host_port_range.c
-    model/policy_v1beta1_id_range.c
-    model/policy_v1beta1_pod_security_policy.c
-    model/policy_v1beta1_pod_security_policy_list.c
-    model/policy_v1beta1_pod_security_policy_spec.c
-    model/policy_v1beta1_run_as_group_strategy_options.c
-    model/policy_v1beta1_run_as_user_strategy_options.c
-    model/policy_v1beta1_runtime_class_strategy_options.c
-    model/policy_v1beta1_se_linux_strategy_options.c
-    model/policy_v1beta1_supplemental_groups_strategy_options.c
-    model/rbac_v1alpha1_subject.c
+    model/authentication_v1_token_request.c
+    model/core_v1_endpoint_port.c
+    model/core_v1_event.c
+    model/core_v1_event_list.c
+    model/core_v1_event_series.c
+    model/discovery_v1_endpoint_port.c
+    model/events_v1_event.c
+    model/events_v1_event_list.c
+    model/events_v1_event_series.c
+    model/storage_v1_token_request.c
     model/v1_affinity.c
     model/v1_aggregation_rule.c
     model/v1_api_group.c
@@ -149,6 +82,11 @@ set(SRCS
     model/v1_capabilities.c
     model/v1_ceph_fs_persistent_volume_source.c
     model/v1_ceph_fs_volume_source.c
+    model/v1_certificate_signing_request.c
+    model/v1_certificate_signing_request_condition.c
+    model/v1_certificate_signing_request_list.c
+    model/v1_certificate_signing_request_spec.c
+    model/v1_certificate_signing_request_status.c
     model/v1_cinder_persistent_volume_source.c
     model/v1_cinder_volume_source.c
     model/v1_client_ip_config.c
@@ -159,6 +97,7 @@ set(SRCS
     model/v1_component_condition.c
     model/v1_component_status.c
     model/v1_component_status_list.c
+    model/v1_condition.c
     model/v1_config_map.c
     model/v1_config_map_env_source.c
     model/v1_config_map_key_selector.c
@@ -176,7 +115,14 @@ set(SRCS
     model/v1_container_status.c
     model/v1_controller_revision.c
     model/v1_controller_revision_list.c
+    model/v1_cron_job.c
+    model/v1_cron_job_list.c
+    model/v1_cron_job_spec.c
+    model/v1_cron_job_status.c
     model/v1_cross_version_object_reference.c
+    model/v1_csi_driver.c
+    model/v1_csi_driver_list.c
+    model/v1_csi_driver_spec.c
     model/v1_csi_node.c
     model/v1_csi_node_driver.c
     model/v1_csi_node_list.c
@@ -213,8 +159,12 @@ set(SRCS
     model/v1_downward_api_volume_file.c
     model/v1_downward_api_volume_source.c
     model/v1_empty_dir_volume_source.c
+    model/v1_endpoint.c
     model/v1_endpoint_address.c
-    model/v1_endpoint_port.c
+    model/v1_endpoint_conditions.c
+    model/v1_endpoint_hints.c
+    model/v1_endpoint_slice.c
+    model/v1_endpoint_slice_list.c
     model/v1_endpoint_subset.c
     model/v1_endpoints.c
     model/v1_endpoints_list.c
@@ -222,16 +172,16 @@ set(SRCS
     model/v1_env_var.c
     model/v1_env_var_source.c
     model/v1_ephemeral_container.c
-    model/v1_event.c
-    model/v1_event_list.c
-    model/v1_event_series.c
+    model/v1_ephemeral_volume_source.c
     model/v1_event_source.c
+    model/v1_eviction.c
     model/v1_exec_action.c
     model/v1_external_documentation.c
     model/v1_fc_volume_source.c
     model/v1_flex_persistent_volume_source.c
     model/v1_flex_volume_source.c
     model/v1_flocker_volume_source.c
+    model/v1_for_zone.c
     model/v1_gce_persistent_disk_volume_source.c
     model/v1_git_repo_volume_source.c
     model/v1_glusterfs_persistent_volume_source.c
@@ -246,6 +196,20 @@ set(SRCS
     model/v1_host_path_volume_source.c
     model/v1_http_get_action.c
     model/v1_http_header.c
+    model/v1_http_ingress_path.c
+    model/v1_http_ingress_rule_value.c
+    model/v1_ingress.c
+    model/v1_ingress_backend.c
+    model/v1_ingress_class.c
+    model/v1_ingress_class_list.c
+    model/v1_ingress_class_parameters_reference.c
+    model/v1_ingress_class_spec.c
+    model/v1_ingress_list.c
+    model/v1_ingress_rule.c
+    model/v1_ingress_service_backend.c
+    model/v1_ingress_spec.c
+    model/v1_ingress_status.c
+    model/v1_ingress_tls.c
     model/v1_ip_block.c
     model/v1_iscsi_persistent_volume_source.c
     model/v1_iscsi_volume_source.c
@@ -254,6 +218,7 @@ set(SRCS
     model/v1_job_list.c
     model/v1_job_spec.c
     model/v1_job_status.c
+    model/v1_job_template_spec.c
     model/v1_json_schema_props.c
     model/v1_key_to_path.c
     model/v1_label_selector.c
@@ -308,6 +273,7 @@ set(SRCS
     model/v1_object_field_selector.c
     model/v1_object_meta.c
     model/v1_object_reference.c
+    model/v1_overhead.c
     model/v1_owner_reference.c
     model/v1_persistent_volume.c
     model/v1_persistent_volume_claim.c
@@ -315,6 +281,7 @@ set(SRCS
     model/v1_persistent_volume_claim_list.c
     model/v1_persistent_volume_claim_spec.c
     model/v1_persistent_volume_claim_status.c
+    model/v1_persistent_volume_claim_template.c
     model/v1_persistent_volume_claim_volume_source.c
     model/v1_persistent_volume_list.c
     model/v1_persistent_volume_spec.c
@@ -325,6 +292,10 @@ set(SRCS
     model/v1_pod_affinity_term.c
     model/v1_pod_anti_affinity.c
     model/v1_pod_condition.c
+    model/v1_pod_disruption_budget.c
+    model/v1_pod_disruption_budget_list.c
+    model/v1_pod_disruption_budget_spec.c
+    model/v1_pod_disruption_budget_status.c
     model/v1_pod_dns_config.c
     model/v1_pod_dns_config_option.c
     model/v1_pod_ip.c
@@ -337,6 +308,7 @@ set(SRCS
     model/v1_pod_template_list.c
     model/v1_pod_template_spec.c
     model/v1_policy_rule.c
+    model/v1_port_status.c
     model/v1_portworx_volume_source.c
     model/v1_preconditions.c
     model/v1_preferred_scheduling_term.c
@@ -374,14 +346,18 @@ set(SRCS
     model/v1_rolling_update_deployment.c
     model/v1_rolling_update_stateful_set_strategy.c
     model/v1_rule_with_operations.c
+    model/v1_runtime_class.c
+    model/v1_runtime_class_list.c
     model/v1_scale.c
     model/v1_scale_io_persistent_volume_source.c
     model/v1_scale_io_volume_source.c
     model/v1_scale_spec.c
     model/v1_scale_status.c
+    model/v1_scheduling.c
     model/v1_scope_selector.c
     model/v1_scoped_resource_selector_requirement.c
     model/v1_se_linux_options.c
+    model/v1_seccomp_profile.c
     model/v1_secret.c
     model/v1_secret_env_source.c
     model/v1_secret_key_selector.c
@@ -399,6 +375,7 @@ set(SRCS
     model/v1_service_account.c
     model/v1_service_account_list.c
     model/v1_service_account_token_projection.c
+    model/v1_service_backend_port.c
     model/v1_service_list.c
     model/v1_service_port.c
     model/v1_service_spec.c
@@ -425,7 +402,6 @@ set(SRCS
     model/v1_sysctl.c
     model/v1_taint.c
     model/v1_tcp_socket_action.c
-    model/v1_token_request.c
     model/v1_token_request_spec.c
     model/v1_token_request_status.c
     model/v1_token_review.c
@@ -436,6 +412,7 @@ set(SRCS
     model/v1_topology_selector_term.c
     model/v1_topology_spread_constraint.c
     model/v1_typed_local_object_reference.c
+    model/v1_uncounted_terminated_pods.c
     model/v1_user_info.c
     model/v1_validating_webhook.c
     model/v1_validating_webhook_configuration.c
@@ -458,40 +435,16 @@ set(SRCS
     model/v1_weighted_pod_affinity_term.c
     model/v1_windows_security_context_options.c
     model/v1alpha1_aggregation_rule.c
-    model/v1alpha1_audit_sink.c
-    model/v1alpha1_audit_sink_list.c
-    model/v1alpha1_audit_sink_spec.c
     model/v1alpha1_cluster_role.c
     model/v1alpha1_cluster_role_binding.c
     model/v1alpha1_cluster_role_binding_list.c
     model/v1alpha1_cluster_role_list.c
-    model/v1alpha1_flow_distinguisher_method.c
-    model/v1alpha1_flow_schema.c
-    model/v1alpha1_flow_schema_condition.c
-    model/v1alpha1_flow_schema_list.c
-    model/v1alpha1_flow_schema_spec.c
-    model/v1alpha1_flow_schema_status.c
-    model/v1alpha1_group_subject.c
-    model/v1alpha1_limit_response.c
-    model/v1alpha1_limited_priority_level_configuration.c
-    model/v1alpha1_non_resource_policy_rule.c
+    model/v1alpha1_csi_storage_capacity.c
+    model/v1alpha1_csi_storage_capacity_list.c
     model/v1alpha1_overhead.c
-    model/v1alpha1_pod_preset.c
-    model/v1alpha1_pod_preset_list.c
-    model/v1alpha1_pod_preset_spec.c
-    model/v1alpha1_policy.c
     model/v1alpha1_policy_rule.c
-    model/v1alpha1_policy_rules_with_subjects.c
     model/v1alpha1_priority_class.c
     model/v1alpha1_priority_class_list.c
-    model/v1alpha1_priority_level_configuration.c
-    model/v1alpha1_priority_level_configuration_condition.c
-    model/v1alpha1_priority_level_configuration_list.c
-    model/v1alpha1_priority_level_configuration_reference.c
-    model/v1alpha1_priority_level_configuration_spec.c
-    model/v1alpha1_priority_level_configuration_status.c
-    model/v1alpha1_queuing_configuration.c
-    model/v1alpha1_resource_policy_rule.c
     model/v1alpha1_role.c
     model/v1alpha1_role_binding.c
     model/v1alpha1_role_binding_list.c
@@ -501,186 +454,81 @@ set(SRCS
     model/v1alpha1_runtime_class_list.c
     model/v1alpha1_runtime_class_spec.c
     model/v1alpha1_scheduling.c
-    model/v1alpha1_service_account_subject.c
-    model/v1alpha1_service_reference.c
-    model/v1alpha1_user_subject.c
+    model/v1alpha1_server_storage_version.c
+    model/v1alpha1_storage_version.c
+    model/v1alpha1_storage_version_condition.c
+    model/v1alpha1_storage_version_list.c
+    model/v1alpha1_storage_version_status.c
+    model/v1alpha1_subject.c
     model/v1alpha1_volume_attachment.c
     model/v1alpha1_volume_attachment_list.c
     model/v1alpha1_volume_attachment_source.c
     model/v1alpha1_volume_attachment_spec.c
     model/v1alpha1_volume_attachment_status.c
     model/v1alpha1_volume_error.c
-    model/v1alpha1_webhook.c
-    model/v1alpha1_webhook_client_config.c
-    model/v1alpha1_webhook_throttle_config.c
-    model/v1beta1_aggregation_rule.c
-    model/v1beta1_api_service.c
-    model/v1beta1_api_service_condition.c
-    model/v1beta1_api_service_list.c
-    model/v1beta1_api_service_spec.c
-    model/v1beta1_api_service_status.c
-    model/v1beta1_certificate_signing_request.c
-    model/v1beta1_certificate_signing_request_condition.c
-    model/v1beta1_certificate_signing_request_list.c
-    model/v1beta1_certificate_signing_request_spec.c
-    model/v1beta1_certificate_signing_request_status.c
-    model/v1beta1_cluster_role.c
-    model/v1beta1_cluster_role_binding.c
-    model/v1beta1_cluster_role_binding_list.c
-    model/v1beta1_cluster_role_list.c
-    model/v1beta1_controller_revision.c
-    model/v1beta1_controller_revision_list.c
+    model/v1beta1_allowed_csi_driver.c
+    model/v1beta1_allowed_flex_volume.c
+    model/v1beta1_allowed_host_path.c
     model/v1beta1_cron_job.c
     model/v1beta1_cron_job_list.c
     model/v1beta1_cron_job_spec.c
     model/v1beta1_cron_job_status.c
-    model/v1beta1_csi_driver.c
-    model/v1beta1_csi_driver_list.c
-    model/v1beta1_csi_driver_spec.c
-    model/v1beta1_csi_node.c
-    model/v1beta1_csi_node_driver.c
-    model/v1beta1_csi_node_list.c
-    model/v1beta1_csi_node_spec.c
-    model/v1beta1_custom_resource_column_definition.c
-    model/v1beta1_custom_resource_conversion.c
-    model/v1beta1_custom_resource_definition.c
-    model/v1beta1_custom_resource_definition_condition.c
-    model/v1beta1_custom_resource_definition_list.c
-    model/v1beta1_custom_resource_definition_names.c
-    model/v1beta1_custom_resource_definition_spec.c
-    model/v1beta1_custom_resource_definition_status.c
-    model/v1beta1_custom_resource_definition_version.c
-    model/v1beta1_custom_resource_subresource_scale.c
-    model/v1beta1_custom_resource_subresources.c
-    model/v1beta1_custom_resource_validation.c
-    model/v1beta1_daemon_set.c
-    model/v1beta1_daemon_set_condition.c
-    model/v1beta1_daemon_set_list.c
-    model/v1beta1_daemon_set_spec.c
-    model/v1beta1_daemon_set_status.c
-    model/v1beta1_daemon_set_update_strategy.c
+    model/v1beta1_csi_storage_capacity.c
+    model/v1beta1_csi_storage_capacity_list.c
     model/v1beta1_endpoint.c
     model/v1beta1_endpoint_conditions.c
+    model/v1beta1_endpoint_hints.c
     model/v1beta1_endpoint_port.c
     model/v1beta1_endpoint_slice.c
     model/v1beta1_endpoint_slice_list.c
     model/v1beta1_event.c
     model/v1beta1_event_list.c
     model/v1beta1_event_series.c
-    model/v1beta1_eviction.c
-    model/v1beta1_external_documentation.c
-    model/v1beta1_ip_block.c
+    model/v1beta1_flow_distinguisher_method.c
+    model/v1beta1_flow_schema.c
+    model/v1beta1_flow_schema_condition.c
+    model/v1beta1_flow_schema_list.c
+    model/v1beta1_flow_schema_spec.c
+    model/v1beta1_flow_schema_status.c
+    model/v1beta1_for_zone.c
+    model/v1beta1_fs_group_strategy_options.c
+    model/v1beta1_group_subject.c
+    model/v1beta1_host_port_range.c
+    model/v1beta1_id_range.c
     model/v1beta1_job_template_spec.c
-    model/v1beta1_json_schema_props.c
-    model/v1beta1_lease.c
-    model/v1beta1_lease_list.c
-    model/v1beta1_lease_spec.c
-    model/v1beta1_local_subject_access_review.c
-    model/v1beta1_mutating_webhook.c
-    model/v1beta1_mutating_webhook_configuration.c
-    model/v1beta1_mutating_webhook_configuration_list.c
-    model/v1beta1_network_policy.c
-    model/v1beta1_network_policy_egress_rule.c
-    model/v1beta1_network_policy_ingress_rule.c
-    model/v1beta1_network_policy_list.c
-    model/v1beta1_network_policy_peer.c
-    model/v1beta1_network_policy_port.c
-    model/v1beta1_network_policy_spec.c
-    model/v1beta1_non_resource_attributes.c
-    model/v1beta1_non_resource_rule.c
+    model/v1beta1_limit_response.c
+    model/v1beta1_limited_priority_level_configuration.c
+    model/v1beta1_non_resource_policy_rule.c
     model/v1beta1_overhead.c
     model/v1beta1_pod_disruption_budget.c
     model/v1beta1_pod_disruption_budget_list.c
     model/v1beta1_pod_disruption_budget_spec.c
     model/v1beta1_pod_disruption_budget_status.c
-    model/v1beta1_policy_rule.c
-    model/v1beta1_priority_class.c
-    model/v1beta1_priority_class_list.c
-    model/v1beta1_replica_set.c
-    model/v1beta1_replica_set_condition.c
-    model/v1beta1_replica_set_list.c
-    model/v1beta1_replica_set_spec.c
-    model/v1beta1_replica_set_status.c
-    model/v1beta1_resource_attributes.c
-    model/v1beta1_resource_rule.c
-    model/v1beta1_role.c
-    model/v1beta1_role_binding.c
-    model/v1beta1_role_binding_list.c
-    model/v1beta1_role_list.c
-    model/v1beta1_role_ref.c
-    model/v1beta1_rolling_update_daemon_set.c
-    model/v1beta1_rolling_update_stateful_set_strategy.c
-    model/v1beta1_rule_with_operations.c
+    model/v1beta1_pod_security_policy.c
+    model/v1beta1_pod_security_policy_list.c
+    model/v1beta1_pod_security_policy_spec.c
+    model/v1beta1_policy_rules_with_subjects.c
+    model/v1beta1_priority_level_configuration.c
+    model/v1beta1_priority_level_configuration_condition.c
+    model/v1beta1_priority_level_configuration_list.c
+    model/v1beta1_priority_level_configuration_reference.c
+    model/v1beta1_priority_level_configuration_spec.c
+    model/v1beta1_priority_level_configuration_status.c
+    model/v1beta1_queuing_configuration.c
+    model/v1beta1_resource_policy_rule.c
+    model/v1beta1_run_as_group_strategy_options.c
+    model/v1beta1_run_as_user_strategy_options.c
     model/v1beta1_runtime_class.c
     model/v1beta1_runtime_class_list.c
+    model/v1beta1_runtime_class_strategy_options.c
     model/v1beta1_scheduling.c
-    model/v1beta1_self_subject_access_review.c
-    model/v1beta1_self_subject_access_review_spec.c
-    model/v1beta1_self_subject_rules_review.c
-    model/v1beta1_self_subject_rules_review_spec.c
-    model/v1beta1_stateful_set.c
-    model/v1beta1_stateful_set_condition.c
-    model/v1beta1_stateful_set_list.c
-    model/v1beta1_stateful_set_spec.c
-    model/v1beta1_stateful_set_status.c
-    model/v1beta1_stateful_set_update_strategy.c
-    model/v1beta1_storage_class.c
-    model/v1beta1_storage_class_list.c
+    model/v1beta1_se_linux_strategy_options.c
+    model/v1beta1_service_account_subject.c
     model/v1beta1_subject.c
-    model/v1beta1_subject_access_review.c
-    model/v1beta1_subject_access_review_spec.c
-    model/v1beta1_subject_access_review_status.c
-    model/v1beta1_subject_rules_review_status.c
-    model/v1beta1_token_review.c
-    model/v1beta1_token_review_spec.c
-    model/v1beta1_token_review_status.c
-    model/v1beta1_user_info.c
-    model/v1beta1_validating_webhook.c
-    model/v1beta1_validating_webhook_configuration.c
-    model/v1beta1_validating_webhook_configuration_list.c
-    model/v1beta1_volume_attachment.c
-    model/v1beta1_volume_attachment_list.c
-    model/v1beta1_volume_attachment_source.c
-    model/v1beta1_volume_attachment_spec.c
-    model/v1beta1_volume_attachment_status.c
-    model/v1beta1_volume_error.c
-    model/v1beta1_volume_node_resources.c
-    model/v1beta2_controller_revision.c
-    model/v1beta2_controller_revision_list.c
-    model/v1beta2_daemon_set.c
-    model/v1beta2_daemon_set_condition.c
-    model/v1beta2_daemon_set_list.c
-    model/v1beta2_daemon_set_spec.c
-    model/v1beta2_daemon_set_status.c
-    model/v1beta2_daemon_set_update_strategy.c
-    model/v1beta2_deployment.c
-    model/v1beta2_deployment_condition.c
-    model/v1beta2_deployment_list.c
-    model/v1beta2_deployment_spec.c
-    model/v1beta2_deployment_status.c
-    model/v1beta2_deployment_strategy.c
-    model/v1beta2_replica_set.c
-    model/v1beta2_replica_set_condition.c
-    model/v1beta2_replica_set_list.c
-    model/v1beta2_replica_set_spec.c
-    model/v1beta2_replica_set_status.c
-    model/v1beta2_rolling_update_daemon_set.c
-    model/v1beta2_rolling_update_deployment.c
-    model/v1beta2_rolling_update_stateful_set_strategy.c
-    model/v1beta2_scale.c
-    model/v1beta2_scale_spec.c
-    model/v1beta2_scale_status.c
-    model/v1beta2_stateful_set.c
-    model/v1beta2_stateful_set_condition.c
-    model/v1beta2_stateful_set_list.c
-    model/v1beta2_stateful_set_spec.c
-    model/v1beta2_stateful_set_status.c
-    model/v1beta2_stateful_set_update_strategy.c
-    model/v2alpha1_cron_job.c
-    model/v2alpha1_cron_job_list.c
-    model/v2alpha1_cron_job_spec.c
-    model/v2alpha1_cron_job_status.c
-    model/v2alpha1_job_template_spec.c
+    model/v1beta1_supplemental_groups_strategy_options.c
+    model/v1beta1_user_subject.c
+    model/v2beta1_container_resource_metric_source.c
+    model/v2beta1_container_resource_metric_status.c
     model/v2beta1_cross_version_object_reference.c
     model/v2beta1_external_metric_source.c
     model/v2beta1_external_metric_status.c
@@ -697,14 +545,19 @@ set(SRCS
     model/v2beta1_pods_metric_status.c
     model/v2beta1_resource_metric_source.c
     model/v2beta1_resource_metric_status.c
+    model/v2beta2_container_resource_metric_source.c
+    model/v2beta2_container_resource_metric_status.c
     model/v2beta2_cross_version_object_reference.c
     model/v2beta2_external_metric_source.c
     model/v2beta2_external_metric_status.c
     model/v2beta2_horizontal_pod_autoscaler.c
+    model/v2beta2_horizontal_pod_autoscaler_behavior.c
     model/v2beta2_horizontal_pod_autoscaler_condition.c
     model/v2beta2_horizontal_pod_autoscaler_list.c
     model/v2beta2_horizontal_pod_autoscaler_spec.c
     model/v2beta2_horizontal_pod_autoscaler_status.c
+    model/v2beta2_hpa_scaling_policy.c
+    model/v2beta2_hpa_scaling_rules.c
     model/v2beta2_metric_identifier.c
     model/v2beta2_metric_spec.c
     model/v2beta2_metric_status.c
@@ -719,26 +572,17 @@ set(SRCS
     model/version_info.c
     api/AdmissionregistrationAPI.c
     api/AdmissionregistrationV1API.c
-    api/AdmissionregistrationV1beta1API.c
     api/ApiextensionsAPI.c
     api/ApiextensionsV1API.c
-    api/ApiextensionsV1beta1API.c
     api/ApiregistrationAPI.c
     api/ApiregistrationV1API.c
-    api/ApiregistrationV1beta1API.c
     api/ApisAPI.c
     api/AppsAPI.c
     api/AppsV1API.c
-    api/AppsV1beta1API.c
-    api/AppsV1beta2API.c
-    api/AuditregistrationAPI.c
-    api/AuditregistrationV1alpha1API.c
     api/AuthenticationAPI.c
     api/AuthenticationV1API.c
-    api/AuthenticationV1beta1API.c
     api/AuthorizationAPI.c
     api/AuthorizationV1API.c
-    api/AuthorizationV1beta1API.c
     api/AutoscalingAPI.c
     api/AutoscalingV1API.c
     api/AutoscalingV2beta1API.c
@@ -746,47 +590,46 @@ set(SRCS
     api/BatchAPI.c
     api/BatchV1API.c
     api/BatchV1beta1API.c
-    api/BatchV2alpha1API.c
     api/CertificatesAPI.c
-    api/CertificatesV1beta1API.c
+    api/CertificatesV1API.c
     api/CoordinationAPI.c
     api/CoordinationV1API.c
-    api/CoordinationV1beta1API.c
     api/CoreAPI.c
     api/CoreV1API.c
     api/CustomObjectsAPI.c
     api/DiscoveryAPI.c
+    api/DiscoveryV1API.c
     api/DiscoveryV1beta1API.c
     api/EventsAPI.c
+    api/EventsV1API.c
     api/EventsV1beta1API.c
-    api/ExtensionsAPI.c
-    api/ExtensionsV1beta1API.c
     api/FlowcontrolApiserverAPI.c
-    api/FlowcontrolApiserverV1alpha1API.c
+    api/FlowcontrolApiserverV1beta1API.c
+    api/InternalApiserverAPI.c
+    api/InternalApiserverV1alpha1API.c
     api/LogsAPI.c
     api/NetworkingAPI.c
     api/NetworkingV1API.c
-    api/NetworkingV1beta1API.c
     api/NodeAPI.c
+    api/NodeV1API.c
     api/NodeV1alpha1API.c
     api/NodeV1beta1API.c
+    api/OpenidAPI.c
     api/PolicyAPI.c
+    api/PolicyV1API.c
     api/PolicyV1beta1API.c
     api/RbacAuthorizationAPI.c
     api/RbacAuthorizationV1API.c
     api/RbacAuthorizationV1alpha1API.c
-    api/RbacAuthorizationV1beta1API.c
     api/SchedulingAPI.c
     api/SchedulingV1API.c
     api/SchedulingV1alpha1API.c
-    api/SchedulingV1beta1API.c
-    api/SettingsAPI.c
-    api/SettingsV1alpha1API.c
     api/StorageAPI.c
     api/StorageV1API.c
     api/StorageV1alpha1API.c
     api/StorageV1beta1API.c
     api/VersionAPI.c
+    api/WellKnownAPI.c
 
 )
 
@@ -799,86 +642,19 @@ set(HDRS
     model/object.h
     model/admissionregistration_v1_service_reference.h
     model/admissionregistration_v1_webhook_client_config.h
-    model/admissionregistration_v1beta1_service_reference.h
-    model/admissionregistration_v1beta1_webhook_client_config.h
     model/apiextensions_v1_service_reference.h
     model/apiextensions_v1_webhook_client_config.h
-    model/apiextensions_v1beta1_service_reference.h
-    model/apiextensions_v1beta1_webhook_client_config.h
     model/apiregistration_v1_service_reference.h
-    model/apiregistration_v1beta1_service_reference.h
-    model/apps_v1beta1_deployment.h
-    model/apps_v1beta1_deployment_condition.h
-    model/apps_v1beta1_deployment_list.h
-    model/apps_v1beta1_deployment_rollback.h
-    model/apps_v1beta1_deployment_spec.h
-    model/apps_v1beta1_deployment_status.h
-    model/apps_v1beta1_deployment_strategy.h
-    model/apps_v1beta1_rollback_config.h
-    model/apps_v1beta1_rolling_update_deployment.h
-    model/apps_v1beta1_scale.h
-    model/apps_v1beta1_scale_spec.h
-    model/apps_v1beta1_scale_status.h
-    model/extensions_v1beta1_allowed_csi_driver.h
-    model/extensions_v1beta1_allowed_flex_volume.h
-    model/extensions_v1beta1_allowed_host_path.h
-    model/extensions_v1beta1_deployment.h
-    model/extensions_v1beta1_deployment_condition.h
-    model/extensions_v1beta1_deployment_list.h
-    model/extensions_v1beta1_deployment_rollback.h
-    model/extensions_v1beta1_deployment_spec.h
-    model/extensions_v1beta1_deployment_status.h
-    model/extensions_v1beta1_deployment_strategy.h
-    model/extensions_v1beta1_fs_group_strategy_options.h
-    model/extensions_v1beta1_host_port_range.h
-    model/extensions_v1beta1_http_ingress_path.h
-    model/extensions_v1beta1_http_ingress_rule_value.h
-    model/extensions_v1beta1_id_range.h
-    model/extensions_v1beta1_ingress.h
-    model/extensions_v1beta1_ingress_backend.h
-    model/extensions_v1beta1_ingress_list.h
-    model/extensions_v1beta1_ingress_rule.h
-    model/extensions_v1beta1_ingress_spec.h
-    model/extensions_v1beta1_ingress_status.h
-    model/extensions_v1beta1_ingress_tls.h
-    model/extensions_v1beta1_pod_security_policy.h
-    model/extensions_v1beta1_pod_security_policy_list.h
-    model/extensions_v1beta1_pod_security_policy_spec.h
-    model/extensions_v1beta1_rollback_config.h
-    model/extensions_v1beta1_rolling_update_deployment.h
-    model/extensions_v1beta1_run_as_group_strategy_options.h
-    model/extensions_v1beta1_run_as_user_strategy_options.h
-    model/extensions_v1beta1_runtime_class_strategy_options.h
-    model/extensions_v1beta1_scale.h
-    model/extensions_v1beta1_scale_spec.h
-    model/extensions_v1beta1_scale_status.h
-    model/extensions_v1beta1_se_linux_strategy_options.h
-    model/extensions_v1beta1_supplemental_groups_strategy_options.h
-    model/flowcontrol_v1alpha1_subject.h
-    model/networking_v1beta1_http_ingress_path.h
-    model/networking_v1beta1_http_ingress_rule_value.h
-    model/networking_v1beta1_ingress.h
-    model/networking_v1beta1_ingress_backend.h
-    model/networking_v1beta1_ingress_list.h
-    model/networking_v1beta1_ingress_rule.h
-    model/networking_v1beta1_ingress_spec.h
-    model/networking_v1beta1_ingress_status.h
-    model/networking_v1beta1_ingress_tls.h
-    model/policy_v1beta1_allowed_csi_driver.h
-    model/policy_v1beta1_allowed_flex_volume.h
-    model/policy_v1beta1_allowed_host_path.h
-    model/policy_v1beta1_fs_group_strategy_options.h
-    model/policy_v1beta1_host_port_range.h
-    model/policy_v1beta1_id_range.h
-    model/policy_v1beta1_pod_security_policy.h
-    model/policy_v1beta1_pod_security_policy_list.h
-    model/policy_v1beta1_pod_security_policy_spec.h
-    model/policy_v1beta1_run_as_group_strategy_options.h
-    model/policy_v1beta1_run_as_user_strategy_options.h
-    model/policy_v1beta1_runtime_class_strategy_options.h
-    model/policy_v1beta1_se_linux_strategy_options.h
-    model/policy_v1beta1_supplemental_groups_strategy_options.h
-    model/rbac_v1alpha1_subject.h
+    model/authentication_v1_token_request.h
+    model/core_v1_endpoint_port.h
+    model/core_v1_event.h
+    model/core_v1_event_list.h
+    model/core_v1_event_series.h
+    model/discovery_v1_endpoint_port.h
+    model/events_v1_event.h
+    model/events_v1_event_list.h
+    model/events_v1_event_series.h
+    model/storage_v1_token_request.h
     model/v1_affinity.h
     model/v1_aggregation_rule.h
     model/v1_api_group.h
@@ -901,6 +677,11 @@ set(HDRS
     model/v1_capabilities.h
     model/v1_ceph_fs_persistent_volume_source.h
     model/v1_ceph_fs_volume_source.h
+    model/v1_certificate_signing_request.h
+    model/v1_certificate_signing_request_condition.h
+    model/v1_certificate_signing_request_list.h
+    model/v1_certificate_signing_request_spec.h
+    model/v1_certificate_signing_request_status.h
     model/v1_cinder_persistent_volume_source.h
     model/v1_cinder_volume_source.h
     model/v1_client_ip_config.h
@@ -911,6 +692,7 @@ set(HDRS
     model/v1_component_condition.h
     model/v1_component_status.h
     model/v1_component_status_list.h
+    model/v1_condition.h
     model/v1_config_map.h
     model/v1_config_map_env_source.h
     model/v1_config_map_key_selector.h
@@ -928,7 +710,14 @@ set(HDRS
     model/v1_container_status.h
     model/v1_controller_revision.h
     model/v1_controller_revision_list.h
+    model/v1_cron_job.h
+    model/v1_cron_job_list.h
+    model/v1_cron_job_spec.h
+    model/v1_cron_job_status.h
     model/v1_cross_version_object_reference.h
+    model/v1_csi_driver.h
+    model/v1_csi_driver_list.h
+    model/v1_csi_driver_spec.h
     model/v1_csi_node.h
     model/v1_csi_node_driver.h
     model/v1_csi_node_list.h
@@ -965,8 +754,12 @@ set(HDRS
     model/v1_downward_api_volume_file.h
     model/v1_downward_api_volume_source.h
     model/v1_empty_dir_volume_source.h
+    model/v1_endpoint.h
     model/v1_endpoint_address.h
-    model/v1_endpoint_port.h
+    model/v1_endpoint_conditions.h
+    model/v1_endpoint_hints.h
+    model/v1_endpoint_slice.h
+    model/v1_endpoint_slice_list.h
     model/v1_endpoint_subset.h
     model/v1_endpoints.h
     model/v1_endpoints_list.h
@@ -974,16 +767,16 @@ set(HDRS
     model/v1_env_var.h
     model/v1_env_var_source.h
     model/v1_ephemeral_container.h
-    model/v1_event.h
-    model/v1_event_list.h
-    model/v1_event_series.h
+    model/v1_ephemeral_volume_source.h
     model/v1_event_source.h
+    model/v1_eviction.h
     model/v1_exec_action.h
     model/v1_external_documentation.h
     model/v1_fc_volume_source.h
     model/v1_flex_persistent_volume_source.h
     model/v1_flex_volume_source.h
     model/v1_flocker_volume_source.h
+    model/v1_for_zone.h
     model/v1_gce_persistent_disk_volume_source.h
     model/v1_git_repo_volume_source.h
     model/v1_glusterfs_persistent_volume_source.h
@@ -998,6 +791,20 @@ set(HDRS
     model/v1_host_path_volume_source.h
     model/v1_http_get_action.h
     model/v1_http_header.h
+    model/v1_http_ingress_path.h
+    model/v1_http_ingress_rule_value.h
+    model/v1_ingress.h
+    model/v1_ingress_backend.h
+    model/v1_ingress_class.h
+    model/v1_ingress_class_list.h
+    model/v1_ingress_class_parameters_reference.h
+    model/v1_ingress_class_spec.h
+    model/v1_ingress_list.h
+    model/v1_ingress_rule.h
+    model/v1_ingress_service_backend.h
+    model/v1_ingress_spec.h
+    model/v1_ingress_status.h
+    model/v1_ingress_tls.h
     model/v1_ip_block.h
     model/v1_iscsi_persistent_volume_source.h
     model/v1_iscsi_volume_source.h
@@ -1006,6 +813,7 @@ set(HDRS
     model/v1_job_list.h
     model/v1_job_spec.h
     model/v1_job_status.h
+    model/v1_job_template_spec.h
     model/v1_json_schema_props.h
     model/v1_key_to_path.h
     model/v1_label_selector.h
@@ -1060,6 +868,7 @@ set(HDRS
     model/v1_object_field_selector.h
     model/v1_object_meta.h
     model/v1_object_reference.h
+    model/v1_overhead.h
     model/v1_owner_reference.h
     model/v1_persistent_volume.h
     model/v1_persistent_volume_claim.h
@@ -1067,6 +876,7 @@ set(HDRS
     model/v1_persistent_volume_claim_list.h
     model/v1_persistent_volume_claim_spec.h
     model/v1_persistent_volume_claim_status.h
+    model/v1_persistent_volume_claim_template.h
     model/v1_persistent_volume_claim_volume_source.h
     model/v1_persistent_volume_list.h
     model/v1_persistent_volume_spec.h
@@ -1077,6 +887,10 @@ set(HDRS
     model/v1_pod_affinity_term.h
     model/v1_pod_anti_affinity.h
     model/v1_pod_condition.h
+    model/v1_pod_disruption_budget.h
+    model/v1_pod_disruption_budget_list.h
+    model/v1_pod_disruption_budget_spec.h
+    model/v1_pod_disruption_budget_status.h
     model/v1_pod_dns_config.h
     model/v1_pod_dns_config_option.h
     model/v1_pod_ip.h
@@ -1089,6 +903,7 @@ set(HDRS
     model/v1_pod_template_list.h
     model/v1_pod_template_spec.h
     model/v1_policy_rule.h
+    model/v1_port_status.h
     model/v1_portworx_volume_source.h
     model/v1_preconditions.h
     model/v1_preferred_scheduling_term.h
@@ -1126,14 +941,18 @@ set(HDRS
     model/v1_rolling_update_deployment.h
     model/v1_rolling_update_stateful_set_strategy.h
     model/v1_rule_with_operations.h
+    model/v1_runtime_class.h
+    model/v1_runtime_class_list.h
     model/v1_scale.h
     model/v1_scale_io_persistent_volume_source.h
     model/v1_scale_io_volume_source.h
     model/v1_scale_spec.h
     model/v1_scale_status.h
+    model/v1_scheduling.h
     model/v1_scope_selector.h
     model/v1_scoped_resource_selector_requirement.h
     model/v1_se_linux_options.h
+    model/v1_seccomp_profile.h
     model/v1_secret.h
     model/v1_secret_env_source.h
     model/v1_secret_key_selector.h
@@ -1151,6 +970,7 @@ set(HDRS
     model/v1_service_account.h
     model/v1_service_account_list.h
     model/v1_service_account_token_projection.h
+    model/v1_service_backend_port.h
     model/v1_service_list.h
     model/v1_service_port.h
     model/v1_service_spec.h
@@ -1177,7 +997,6 @@ set(HDRS
     model/v1_sysctl.h
     model/v1_taint.h
     model/v1_tcp_socket_action.h
-    model/v1_token_request.h
     model/v1_token_request_spec.h
     model/v1_token_request_status.h
     model/v1_token_review.h
@@ -1188,6 +1007,7 @@ set(HDRS
     model/v1_topology_selector_term.h
     model/v1_topology_spread_constraint.h
     model/v1_typed_local_object_reference.h
+    model/v1_uncounted_terminated_pods.h
     model/v1_user_info.h
     model/v1_validating_webhook.h
     model/v1_validating_webhook_configuration.h
@@ -1210,40 +1030,16 @@ set(HDRS
     model/v1_weighted_pod_affinity_term.h
     model/v1_windows_security_context_options.h
     model/v1alpha1_aggregation_rule.h
-    model/v1alpha1_audit_sink.h
-    model/v1alpha1_audit_sink_list.h
-    model/v1alpha1_audit_sink_spec.h
     model/v1alpha1_cluster_role.h
     model/v1alpha1_cluster_role_binding.h
     model/v1alpha1_cluster_role_binding_list.h
     model/v1alpha1_cluster_role_list.h
-    model/v1alpha1_flow_distinguisher_method.h
-    model/v1alpha1_flow_schema.h
-    model/v1alpha1_flow_schema_condition.h
-    model/v1alpha1_flow_schema_list.h
-    model/v1alpha1_flow_schema_spec.h
-    model/v1alpha1_flow_schema_status.h
-    model/v1alpha1_group_subject.h
-    model/v1alpha1_limit_response.h
-    model/v1alpha1_limited_priority_level_configuration.h
-    model/v1alpha1_non_resource_policy_rule.h
+    model/v1alpha1_csi_storage_capacity.h
+    model/v1alpha1_csi_storage_capacity_list.h
     model/v1alpha1_overhead.h
-    model/v1alpha1_pod_preset.h
-    model/v1alpha1_pod_preset_list.h
-    model/v1alpha1_pod_preset_spec.h
-    model/v1alpha1_policy.h
     model/v1alpha1_policy_rule.h
-    model/v1alpha1_policy_rules_with_subjects.h
     model/v1alpha1_priority_class.h
     model/v1alpha1_priority_class_list.h
-    model/v1alpha1_priority_level_configuration.h
-    model/v1alpha1_priority_level_configuration_condition.h
-    model/v1alpha1_priority_level_configuration_list.h
-    model/v1alpha1_priority_level_configuration_reference.h
-    model/v1alpha1_priority_level_configuration_spec.h
-    model/v1alpha1_priority_level_configuration_status.h
-    model/v1alpha1_queuing_configuration.h
-    model/v1alpha1_resource_policy_rule.h
     model/v1alpha1_role.h
     model/v1alpha1_role_binding.h
     model/v1alpha1_role_binding_list.h
@@ -1253,186 +1049,81 @@ set(HDRS
     model/v1alpha1_runtime_class_list.h
     model/v1alpha1_runtime_class_spec.h
     model/v1alpha1_scheduling.h
-    model/v1alpha1_service_account_subject.h
-    model/v1alpha1_service_reference.h
-    model/v1alpha1_user_subject.h
+    model/v1alpha1_server_storage_version.h
+    model/v1alpha1_storage_version.h
+    model/v1alpha1_storage_version_condition.h
+    model/v1alpha1_storage_version_list.h
+    model/v1alpha1_storage_version_status.h
+    model/v1alpha1_subject.h
     model/v1alpha1_volume_attachment.h
     model/v1alpha1_volume_attachment_list.h
     model/v1alpha1_volume_attachment_source.h
     model/v1alpha1_volume_attachment_spec.h
     model/v1alpha1_volume_attachment_status.h
     model/v1alpha1_volume_error.h
-    model/v1alpha1_webhook.h
-    model/v1alpha1_webhook_client_config.h
-    model/v1alpha1_webhook_throttle_config.h
-    model/v1beta1_aggregation_rule.h
-    model/v1beta1_api_service.h
-    model/v1beta1_api_service_condition.h
-    model/v1beta1_api_service_list.h
-    model/v1beta1_api_service_spec.h
-    model/v1beta1_api_service_status.h
-    model/v1beta1_certificate_signing_request.h
-    model/v1beta1_certificate_signing_request_condition.h
-    model/v1beta1_certificate_signing_request_list.h
-    model/v1beta1_certificate_signing_request_spec.h
-    model/v1beta1_certificate_signing_request_status.h
-    model/v1beta1_cluster_role.h
-    model/v1beta1_cluster_role_binding.h
-    model/v1beta1_cluster_role_binding_list.h
-    model/v1beta1_cluster_role_list.h
-    model/v1beta1_controller_revision.h
-    model/v1beta1_controller_revision_list.h
+    model/v1beta1_allowed_csi_driver.h
+    model/v1beta1_allowed_flex_volume.h
+    model/v1beta1_allowed_host_path.h
     model/v1beta1_cron_job.h
     model/v1beta1_cron_job_list.h
     model/v1beta1_cron_job_spec.h
     model/v1beta1_cron_job_status.h
-    model/v1beta1_csi_driver.h
-    model/v1beta1_csi_driver_list.h
-    model/v1beta1_csi_driver_spec.h
-    model/v1beta1_csi_node.h
-    model/v1beta1_csi_node_driver.h
-    model/v1beta1_csi_node_list.h
-    model/v1beta1_csi_node_spec.h
-    model/v1beta1_custom_resource_column_definition.h
-    model/v1beta1_custom_resource_conversion.h
-    model/v1beta1_custom_resource_definition.h
-    model/v1beta1_custom_resource_definition_condition.h
-    model/v1beta1_custom_resource_definition_list.h
-    model/v1beta1_custom_resource_definition_names.h
-    model/v1beta1_custom_resource_definition_spec.h
-    model/v1beta1_custom_resource_definition_status.h
-    model/v1beta1_custom_resource_definition_version.h
-    model/v1beta1_custom_resource_subresource_scale.h
-    model/v1beta1_custom_resource_subresources.h
-    model/v1beta1_custom_resource_validation.h
-    model/v1beta1_daemon_set.h
-    model/v1beta1_daemon_set_condition.h
-    model/v1beta1_daemon_set_list.h
-    model/v1beta1_daemon_set_spec.h
-    model/v1beta1_daemon_set_status.h
-    model/v1beta1_daemon_set_update_strategy.h
+    model/v1beta1_csi_storage_capacity.h
+    model/v1beta1_csi_storage_capacity_list.h
     model/v1beta1_endpoint.h
     model/v1beta1_endpoint_conditions.h
+    model/v1beta1_endpoint_hints.h
     model/v1beta1_endpoint_port.h
     model/v1beta1_endpoint_slice.h
     model/v1beta1_endpoint_slice_list.h
     model/v1beta1_event.h
     model/v1beta1_event_list.h
     model/v1beta1_event_series.h
-    model/v1beta1_eviction.h
-    model/v1beta1_external_documentation.h
-    model/v1beta1_ip_block.h
+    model/v1beta1_flow_distinguisher_method.h
+    model/v1beta1_flow_schema.h
+    model/v1beta1_flow_schema_condition.h
+    model/v1beta1_flow_schema_list.h
+    model/v1beta1_flow_schema_spec.h
+    model/v1beta1_flow_schema_status.h
+    model/v1beta1_for_zone.h
+    model/v1beta1_fs_group_strategy_options.h
+    model/v1beta1_group_subject.h
+    model/v1beta1_host_port_range.h
+    model/v1beta1_id_range.h
     model/v1beta1_job_template_spec.h
-    model/v1beta1_json_schema_props.h
-    model/v1beta1_lease.h
-    model/v1beta1_lease_list.h
-    model/v1beta1_lease_spec.h
-    model/v1beta1_local_subject_access_review.h
-    model/v1beta1_mutating_webhook.h
-    model/v1beta1_mutating_webhook_configuration.h
-    model/v1beta1_mutating_webhook_configuration_list.h
-    model/v1beta1_network_policy.h
-    model/v1beta1_network_policy_egress_rule.h
-    model/v1beta1_network_policy_ingress_rule.h
-    model/v1beta1_network_policy_list.h
-    model/v1beta1_network_policy_peer.h
-    model/v1beta1_network_policy_port.h
-    model/v1beta1_network_policy_spec.h
-    model/v1beta1_non_resource_attributes.h
-    model/v1beta1_non_resource_rule.h
+    model/v1beta1_limit_response.h
+    model/v1beta1_limited_priority_level_configuration.h
+    model/v1beta1_non_resource_policy_rule.h
     model/v1beta1_overhead.h
     model/v1beta1_pod_disruption_budget.h
     model/v1beta1_pod_disruption_budget_list.h
     model/v1beta1_pod_disruption_budget_spec.h
     model/v1beta1_pod_disruption_budget_status.h
-    model/v1beta1_policy_rule.h
-    model/v1beta1_priority_class.h
-    model/v1beta1_priority_class_list.h
-    model/v1beta1_replica_set.h
-    model/v1beta1_replica_set_condition.h
-    model/v1beta1_replica_set_list.h
-    model/v1beta1_replica_set_spec.h
-    model/v1beta1_replica_set_status.h
-    model/v1beta1_resource_attributes.h
-    model/v1beta1_resource_rule.h
-    model/v1beta1_role.h
-    model/v1beta1_role_binding.h
-    model/v1beta1_role_binding_list.h
-    model/v1beta1_role_list.h
-    model/v1beta1_role_ref.h
-    model/v1beta1_rolling_update_daemon_set.h
-    model/v1beta1_rolling_update_stateful_set_strategy.h
-    model/v1beta1_rule_with_operations.h
+    model/v1beta1_pod_security_policy.h
+    model/v1beta1_pod_security_policy_list.h
+    model/v1beta1_pod_security_policy_spec.h
+    model/v1beta1_policy_rules_with_subjects.h
+    model/v1beta1_priority_level_configuration.h
+    model/v1beta1_priority_level_configuration_condition.h
+    model/v1beta1_priority_level_configuration_list.h
+    model/v1beta1_priority_level_configuration_reference.h
+    model/v1beta1_priority_level_configuration_spec.h
+    model/v1beta1_priority_level_configuration_status.h
+    model/v1beta1_queuing_configuration.h
+    model/v1beta1_resource_policy_rule.h
+    model/v1beta1_run_as_group_strategy_options.h
+    model/v1beta1_run_as_user_strategy_options.h
     model/v1beta1_runtime_class.h
     model/v1beta1_runtime_class_list.h
+    model/v1beta1_runtime_class_strategy_options.h
     model/v1beta1_scheduling.h
-    model/v1beta1_self_subject_access_review.h
-    model/v1beta1_self_subject_access_review_spec.h
-    model/v1beta1_self_subject_rules_review.h
-    model/v1beta1_self_subject_rules_review_spec.h
-    model/v1beta1_stateful_set.h
-    model/v1beta1_stateful_set_condition.h
-    model/v1beta1_stateful_set_list.h
-    model/v1beta1_stateful_set_spec.h
-    model/v1beta1_stateful_set_status.h
-    model/v1beta1_stateful_set_update_strategy.h
-    model/v1beta1_storage_class.h
-    model/v1beta1_storage_class_list.h
+    model/v1beta1_se_linux_strategy_options.h
+    model/v1beta1_service_account_subject.h
     model/v1beta1_subject.h
-    model/v1beta1_subject_access_review.h
-    model/v1beta1_subject_access_review_spec.h
-    model/v1beta1_subject_access_review_status.h
-    model/v1beta1_subject_rules_review_status.h
-    model/v1beta1_token_review.h
-    model/v1beta1_token_review_spec.h
-    model/v1beta1_token_review_status.h
-    model/v1beta1_user_info.h
-    model/v1beta1_validating_webhook.h
-    model/v1beta1_validating_webhook_configuration.h
-    model/v1beta1_validating_webhook_configuration_list.h
-    model/v1beta1_volume_attachment.h
-    model/v1beta1_volume_attachment_list.h
-    model/v1beta1_volume_attachment_source.h
-    model/v1beta1_volume_attachment_spec.h
-    model/v1beta1_volume_attachment_status.h
-    model/v1beta1_volume_error.h
-    model/v1beta1_volume_node_resources.h
-    model/v1beta2_controller_revision.h
-    model/v1beta2_controller_revision_list.h
-    model/v1beta2_daemon_set.h
-    model/v1beta2_daemon_set_condition.h
-    model/v1beta2_daemon_set_list.h
-    model/v1beta2_daemon_set_spec.h
-    model/v1beta2_daemon_set_status.h
-    model/v1beta2_daemon_set_update_strategy.h
-    model/v1beta2_deployment.h
-    model/v1beta2_deployment_condition.h
-    model/v1beta2_deployment_list.h
-    model/v1beta2_deployment_spec.h
-    model/v1beta2_deployment_status.h
-    model/v1beta2_deployment_strategy.h
-    model/v1beta2_replica_set.h
-    model/v1beta2_replica_set_condition.h
-    model/v1beta2_replica_set_list.h
-    model/v1beta2_replica_set_spec.h
-    model/v1beta2_replica_set_status.h
-    model/v1beta2_rolling_update_daemon_set.h
-    model/v1beta2_rolling_update_deployment.h
-    model/v1beta2_rolling_update_stateful_set_strategy.h
-    model/v1beta2_scale.h
-    model/v1beta2_scale_spec.h
-    model/v1beta2_scale_status.h
-    model/v1beta2_stateful_set.h
-    model/v1beta2_stateful_set_condition.h
-    model/v1beta2_stateful_set_list.h
-    model/v1beta2_stateful_set_spec.h
-    model/v1beta2_stateful_set_status.h
-    model/v1beta2_stateful_set_update_strategy.h
-    model/v2alpha1_cron_job.h
-    model/v2alpha1_cron_job_list.h
-    model/v2alpha1_cron_job_spec.h
-    model/v2alpha1_cron_job_status.h
-    model/v2alpha1_job_template_spec.h
+    model/v1beta1_supplemental_groups_strategy_options.h
+    model/v1beta1_user_subject.h
+    model/v2beta1_container_resource_metric_source.h
+    model/v2beta1_container_resource_metric_status.h
     model/v2beta1_cross_version_object_reference.h
     model/v2beta1_external_metric_source.h
     model/v2beta1_external_metric_status.h
@@ -1449,14 +1140,19 @@ set(HDRS
     model/v2beta1_pods_metric_status.h
     model/v2beta1_resource_metric_source.h
     model/v2beta1_resource_metric_status.h
+    model/v2beta2_container_resource_metric_source.h
+    model/v2beta2_container_resource_metric_status.h
     model/v2beta2_cross_version_object_reference.h
     model/v2beta2_external_metric_source.h
     model/v2beta2_external_metric_status.h
     model/v2beta2_horizontal_pod_autoscaler.h
+    model/v2beta2_horizontal_pod_autoscaler_behavior.h
     model/v2beta2_horizontal_pod_autoscaler_condition.h
     model/v2beta2_horizontal_pod_autoscaler_list.h
     model/v2beta2_horizontal_pod_autoscaler_spec.h
     model/v2beta2_horizontal_pod_autoscaler_status.h
+    model/v2beta2_hpa_scaling_policy.h
+    model/v2beta2_hpa_scaling_rules.h
     model/v2beta2_metric_identifier.h
     model/v2beta2_metric_spec.h
     model/v2beta2_metric_status.h
@@ -1471,26 +1167,17 @@ set(HDRS
     model/version_info.h
     api/AdmissionregistrationAPI.h
     api/AdmissionregistrationV1API.h
-    api/AdmissionregistrationV1beta1API.h
     api/ApiextensionsAPI.h
     api/ApiextensionsV1API.h
-    api/ApiextensionsV1beta1API.h
     api/ApiregistrationAPI.h
     api/ApiregistrationV1API.h
-    api/ApiregistrationV1beta1API.h
     api/ApisAPI.h
     api/AppsAPI.h
     api/AppsV1API.h
-    api/AppsV1beta1API.h
-    api/AppsV1beta2API.h
-    api/AuditregistrationAPI.h
-    api/AuditregistrationV1alpha1API.h
     api/AuthenticationAPI.h
     api/AuthenticationV1API.h
-    api/AuthenticationV1beta1API.h
     api/AuthorizationAPI.h
     api/AuthorizationV1API.h
-    api/AuthorizationV1beta1API.h
     api/AutoscalingAPI.h
     api/AutoscalingV1API.h
     api/AutoscalingV2beta1API.h
@@ -1498,47 +1185,46 @@ set(HDRS
     api/BatchAPI.h
     api/BatchV1API.h
     api/BatchV1beta1API.h
-    api/BatchV2alpha1API.h
     api/CertificatesAPI.h
-    api/CertificatesV1beta1API.h
+    api/CertificatesV1API.h
     api/CoordinationAPI.h
     api/CoordinationV1API.h
-    api/CoordinationV1beta1API.h
     api/CoreAPI.h
     api/CoreV1API.h
     api/CustomObjectsAPI.h
     api/DiscoveryAPI.h
+    api/DiscoveryV1API.h
     api/DiscoveryV1beta1API.h
     api/EventsAPI.h
+    api/EventsV1API.h
     api/EventsV1beta1API.h
-    api/ExtensionsAPI.h
-    api/ExtensionsV1beta1API.h
     api/FlowcontrolApiserverAPI.h
-    api/FlowcontrolApiserverV1alpha1API.h
+    api/FlowcontrolApiserverV1beta1API.h
+    api/InternalApiserverAPI.h
+    api/InternalApiserverV1alpha1API.h
     api/LogsAPI.h
     api/NetworkingAPI.h
     api/NetworkingV1API.h
-    api/NetworkingV1beta1API.h
     api/NodeAPI.h
+    api/NodeV1API.h
     api/NodeV1alpha1API.h
     api/NodeV1beta1API.h
+    api/OpenidAPI.h
     api/PolicyAPI.h
+    api/PolicyV1API.h
     api/PolicyV1beta1API.h
     api/RbacAuthorizationAPI.h
     api/RbacAuthorizationV1API.h
     api/RbacAuthorizationV1alpha1API.h
-    api/RbacAuthorizationV1beta1API.h
     api/SchedulingAPI.h
     api/SchedulingV1API.h
     api/SchedulingV1alpha1API.h
-    api/SchedulingV1beta1API.h
-    api/SettingsAPI.h
-    api/SettingsV1alpha1API.h
     api/StorageAPI.h
     api/StorageV1API.h
     api/StorageV1alpha1API.h
     api/StorageV1beta1API.h
     api/VersionAPI.h
+    api/WellKnownAPI.h
 
 )
 
@@ -1617,26 +1303,17 @@ set(HDRS "")
 #set(SRCS
 #    unit-tests/manual-AdmissionregistrationAPI.c
 #    unit-tests/manual-AdmissionregistrationV1API.c
-#    unit-tests/manual-AdmissionregistrationV1beta1API.c
 #    unit-tests/manual-ApiextensionsAPI.c
 #    unit-tests/manual-ApiextensionsV1API.c
-#    unit-tests/manual-ApiextensionsV1beta1API.c
 #    unit-tests/manual-ApiregistrationAPI.c
 #    unit-tests/manual-ApiregistrationV1API.c
-#    unit-tests/manual-ApiregistrationV1beta1API.c
 #    unit-tests/manual-ApisAPI.c
 #    unit-tests/manual-AppsAPI.c
 #    unit-tests/manual-AppsV1API.c
-#    unit-tests/manual-AppsV1beta1API.c
-#    unit-tests/manual-AppsV1beta2API.c
-#    unit-tests/manual-AuditregistrationAPI.c
-#    unit-tests/manual-AuditregistrationV1alpha1API.c
 #    unit-tests/manual-AuthenticationAPI.c
 #    unit-tests/manual-AuthenticationV1API.c
-#    unit-tests/manual-AuthenticationV1beta1API.c
 #    unit-tests/manual-AuthorizationAPI.c
 #    unit-tests/manual-AuthorizationV1API.c
-#    unit-tests/manual-AuthorizationV1beta1API.c
 #    unit-tests/manual-AutoscalingAPI.c
 #    unit-tests/manual-AutoscalingV1API.c
 #    unit-tests/manual-AutoscalingV2beta1API.c
@@ -1644,47 +1321,46 @@ set(HDRS "")
 #    unit-tests/manual-BatchAPI.c
 #    unit-tests/manual-BatchV1API.c
 #    unit-tests/manual-BatchV1beta1API.c
-#    unit-tests/manual-BatchV2alpha1API.c
 #    unit-tests/manual-CertificatesAPI.c
-#    unit-tests/manual-CertificatesV1beta1API.c
+#    unit-tests/manual-CertificatesV1API.c
 #    unit-tests/manual-CoordinationAPI.c
 #    unit-tests/manual-CoordinationV1API.c
-#    unit-tests/manual-CoordinationV1beta1API.c
 #    unit-tests/manual-CoreAPI.c
 #    unit-tests/manual-CoreV1API.c
 #    unit-tests/manual-CustomObjectsAPI.c
 #    unit-tests/manual-DiscoveryAPI.c
+#    unit-tests/manual-DiscoveryV1API.c
 #    unit-tests/manual-DiscoveryV1beta1API.c
 #    unit-tests/manual-EventsAPI.c
+#    unit-tests/manual-EventsV1API.c
 #    unit-tests/manual-EventsV1beta1API.c
-#    unit-tests/manual-ExtensionsAPI.c
-#    unit-tests/manual-ExtensionsV1beta1API.c
 #    unit-tests/manual-FlowcontrolApiserverAPI.c
-#    unit-tests/manual-FlowcontrolApiserverV1alpha1API.c
+#    unit-tests/manual-FlowcontrolApiserverV1beta1API.c
+#    unit-tests/manual-InternalApiserverAPI.c
+#    unit-tests/manual-InternalApiserverV1alpha1API.c
 #    unit-tests/manual-LogsAPI.c
 #    unit-tests/manual-NetworkingAPI.c
 #    unit-tests/manual-NetworkingV1API.c
-#    unit-tests/manual-NetworkingV1beta1API.c
 #    unit-tests/manual-NodeAPI.c
+#    unit-tests/manual-NodeV1API.c
 #    unit-tests/manual-NodeV1alpha1API.c
 #    unit-tests/manual-NodeV1beta1API.c
+#    unit-tests/manual-OpenidAPI.c
 #    unit-tests/manual-PolicyAPI.c
+#    unit-tests/manual-PolicyV1API.c
 #    unit-tests/manual-PolicyV1beta1API.c
 #    unit-tests/manual-RbacAuthorizationAPI.c
 #    unit-tests/manual-RbacAuthorizationV1API.c
 #    unit-tests/manual-RbacAuthorizationV1alpha1API.c
-#    unit-tests/manual-RbacAuthorizationV1beta1API.c
 #    unit-tests/manual-SchedulingAPI.c
 #    unit-tests/manual-SchedulingV1API.c
 #    unit-tests/manual-SchedulingV1alpha1API.c
-#    unit-tests/manual-SchedulingV1beta1API.c
-#    unit-tests/manual-SettingsAPI.c
-#    unit-tests/manual-SettingsV1alpha1API.c
 #    unit-tests/manual-StorageAPI.c
 #    unit-tests/manual-StorageV1API.c
 #    unit-tests/manual-StorageV1alpha1API.c
 #    unit-tests/manual-StorageV1beta1API.c
 #    unit-tests/manual-VersionAPI.c
+#    unit-tests/manual-WellKnownAPI.c
 #)
 
 ##set header files

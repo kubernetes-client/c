@@ -9,6 +9,7 @@ v1_config_map_t *v1_config_map_create(
     char *api_version,
     list_t* binary_data,
     list_t* data,
+    int immutable,
     char *kind,
     v1_object_meta_t *metadata
     ) {
@@ -19,6 +20,7 @@ v1_config_map_t *v1_config_map_create(
     v1_config_map_local_var->api_version = api_version;
     v1_config_map_local_var->binary_data = binary_data;
     v1_config_map_local_var->data = data;
+    v1_config_map_local_var->immutable = immutable;
     v1_config_map_local_var->kind = kind;
     v1_config_map_local_var->metadata = metadata;
 
@@ -117,6 +119,14 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
      } 
 
 
+    // v1_config_map->immutable
+    if(v1_config_map->immutable) { 
+    if(cJSON_AddBoolToObject(item, "immutable", v1_config_map->immutable) == NULL) {
+    goto fail; //Bool
+    }
+     } 
+
+
     // v1_config_map->kind
     if(v1_config_map->kind) { 
     if(cJSON_AddStringToObject(item, "kind", v1_config_map->kind) == NULL) {
@@ -202,6 +212,15 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     }
     }
 
+    // v1_config_map->immutable
+    cJSON *immutable = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "immutable");
+    if (immutable) { 
+    if(!cJSON_IsBool(immutable))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1_config_map->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "kind");
     if (kind) { 
@@ -223,6 +242,7 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
         api_version ? strdup(api_version->valuestring) : NULL,
         binary_data ? binary_dataList : NULL,
         data ? dataList : NULL,
+        immutable ? immutable->valueint : 0,
         kind ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL
         );

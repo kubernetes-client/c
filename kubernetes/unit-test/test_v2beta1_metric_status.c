@@ -16,6 +16,7 @@
 #include "../model/v2beta1_metric_status.h"
 v2beta1_metric_status_t* instantiate_v2beta1_metric_status(int include_optional);
 
+#include "test_v2beta1_container_resource_metric_status.c"
 #include "test_v2beta1_external_metric_status.c"
 #include "test_v2beta1_object_metric_status.c"
 #include "test_v2beta1_pods_metric_status.c"
@@ -26,6 +27,8 @@ v2beta1_metric_status_t* instantiate_v2beta1_metric_status(int include_optional)
   v2beta1_metric_status_t* v2beta1_metric_status = NULL;
   if (include_optional) {
     v2beta1_metric_status = v2beta1_metric_status_create(
+       // false, not to have infinite recursion
+      instantiate_v2beta1_container_resource_metric_status(0),
        // false, not to have infinite recursion
       instantiate_v2beta1_external_metric_status(0),
        // false, not to have infinite recursion
@@ -38,6 +41,7 @@ v2beta1_metric_status_t* instantiate_v2beta1_metric_status(int include_optional)
     );
   } else {
     v2beta1_metric_status = v2beta1_metric_status_create(
+      NULL,
       NULL,
       NULL,
       NULL,

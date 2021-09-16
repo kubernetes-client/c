@@ -17,6 +17,7 @@
 v1_pod_affinity_term_t* instantiate_v1_pod_affinity_term(int include_optional);
 
 #include "test_v1_label_selector.c"
+#include "test_v1_label_selector.c"
 
 
 v1_pod_affinity_term_t* instantiate_v1_pod_affinity_term(int include_optional) {
@@ -25,11 +26,14 @@ v1_pod_affinity_term_t* instantiate_v1_pod_affinity_term(int include_optional) {
     v1_pod_affinity_term = v1_pod_affinity_term_create(
        // false, not to have infinite recursion
       instantiate_v1_label_selector(0),
+       // false, not to have infinite recursion
+      instantiate_v1_label_selector(0),
       list_create(),
       "0"
     );
   } else {
     v1_pod_affinity_term = v1_pod_affinity_term_create(
+      NULL,
       NULL,
       list_create(),
       "0"

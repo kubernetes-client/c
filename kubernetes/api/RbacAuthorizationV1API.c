@@ -1095,7 +1095,7 @@ end:
 // delete collection of ClusterRole
 //
 v1_status_t*
-RbacAuthorizationV1API_deleteCollectionClusterRole(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+RbacAuthorizationV1API_deleteCollectionClusterRole(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1236,6 +1236,18 @@ RbacAuthorizationV1API_deleteCollectionClusterRole(apiClient_t *apiClient, char 
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -1420,6 +1432,18 @@ RbacAuthorizationV1API_deleteCollectionClusterRole(apiClient_t *apiClient, char 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -1442,7 +1466,7 @@ end:
 // delete collection of ClusterRoleBinding
 //
 v1_status_t*
-RbacAuthorizationV1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+RbacAuthorizationV1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1583,6 +1607,18 @@ RbacAuthorizationV1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -1767,6 +1803,18 @@ RbacAuthorizationV1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -1789,7 +1837,7 @@ end:
 // delete collection of Role
 //
 v1_status_t*
-RbacAuthorizationV1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+RbacAuthorizationV1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1940,6 +1988,18 @@ RbacAuthorizationV1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, ch
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -2125,6 +2185,18 @@ RbacAuthorizationV1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, ch
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2147,7 +2219,7 @@ end:
 // delete collection of RoleBinding
 //
 v1_status_t*
-RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2298,6 +2370,18 @@ RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiCli
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -2482,6 +2566,18 @@ RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiCli
     if(keyPairQuery_resourceVersion){
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
+    }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -3022,7 +3118,7 @@ end:
 // list or watch objects of kind ClusterRole
 //
 v1_cluster_role_list_t*
-RbacAuthorizationV1API_listClusterRole(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+RbacAuthorizationV1API_listClusterRole(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3123,6 +3219,18 @@ RbacAuthorizationV1API_listClusterRole(apiClient_t *apiClient, char * pretty , i
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -3275,6 +3383,18 @@ RbacAuthorizationV1API_listClusterRole(apiClient_t *apiClient, char * pretty , i
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -3309,7 +3429,7 @@ end:
 // list or watch objects of kind ClusterRoleBinding
 //
 v1_cluster_role_binding_list_t*
-RbacAuthorizationV1API_listClusterRoleBinding(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+RbacAuthorizationV1API_listClusterRoleBinding(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3410,6 +3530,18 @@ RbacAuthorizationV1API_listClusterRoleBinding(apiClient_t *apiClient, char * pre
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -3562,6 +3694,18 @@ RbacAuthorizationV1API_listClusterRoleBinding(apiClient_t *apiClient, char * pre
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -3596,7 +3740,7 @@ end:
 // list or watch objects of kind Role
 //
 v1_role_list_t*
-RbacAuthorizationV1API_listNamespacedRole(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+RbacAuthorizationV1API_listNamespacedRole(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3710,6 +3854,18 @@ RbacAuthorizationV1API_listNamespacedRole(apiClient_t *apiClient, char * _namesp
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -3860,6 +4016,18 @@ RbacAuthorizationV1API_listNamespacedRole(apiClient_t *apiClient, char * _namesp
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -3894,7 +4062,7 @@ end:
 // list or watch objects of kind RoleBinding
 //
 v1_role_binding_list_t*
-RbacAuthorizationV1API_listNamespacedRoleBinding(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+RbacAuthorizationV1API_listNamespacedRoleBinding(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -4008,6 +4176,18 @@ RbacAuthorizationV1API_listNamespacedRoleBinding(apiClient_t *apiClient, char * 
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -4158,6 +4338,18 @@ RbacAuthorizationV1API_listNamespacedRoleBinding(apiClient_t *apiClient, char * 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -4192,7 +4384,7 @@ end:
 // list or watch objects of kind RoleBinding
 //
 v1_role_binding_list_t*
-RbacAuthorizationV1API_listRoleBindingForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+RbacAuthorizationV1API_listRoleBindingForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -4293,6 +4485,18 @@ RbacAuthorizationV1API_listRoleBindingForAllNamespaces(apiClient_t *apiClient, i
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -4445,6 +4649,18 @@ RbacAuthorizationV1API_listRoleBindingForAllNamespaces(apiClient_t *apiClient, i
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -4479,7 +4695,7 @@ end:
 // list or watch objects of kind Role
 //
 v1_role_list_t*
-RbacAuthorizationV1API_listRoleForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+RbacAuthorizationV1API_listRoleForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -4580,6 +4796,18 @@ RbacAuthorizationV1API_listRoleForAllNamespaces(apiClient_t *apiClient, int allo
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -4731,6 +4959,18 @@ RbacAuthorizationV1API_listRoleForAllNamespaces(apiClient_t *apiClient, int allo
     if(keyPairQuery_resourceVersion){
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
+    }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -4869,6 +5109,9 @@ RbacAuthorizationV1API_patchClusterRole(apiClient_t *apiClient, char * name , ob
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -5060,6 +5303,9 @@ RbacAuthorizationV1API_patchClusterRoleBinding(apiClient_t *apiClient, char * na
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -5262,6 +5508,9 @@ RbacAuthorizationV1API_patchNamespacedRole(apiClient_t *apiClient, char * name ,
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -5463,6 +5712,9 @@ RbacAuthorizationV1API_patchNamespacedRoleBinding(apiClient_t *apiClient, char *
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");

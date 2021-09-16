@@ -6,6 +6,7 @@
 
 
 v1beta1_pod_disruption_budget_status_t *v1beta1_pod_disruption_budget_status_create(
+    list_t *conditions,
     int current_healthy,
     int desired_healthy,
     list_t* disrupted_pods,
@@ -17,6 +18,7 @@ v1beta1_pod_disruption_budget_status_t *v1beta1_pod_disruption_budget_status_cre
     if (!v1beta1_pod_disruption_budget_status_local_var) {
         return NULL;
     }
+    v1beta1_pod_disruption_budget_status_local_var->conditions = conditions;
     v1beta1_pod_disruption_budget_status_local_var->current_healthy = current_healthy;
     v1beta1_pod_disruption_budget_status_local_var->desired_healthy = desired_healthy;
     v1beta1_pod_disruption_budget_status_local_var->disrupted_pods = disrupted_pods;
@@ -33,6 +35,13 @@ void v1beta1_pod_disruption_budget_status_free(v1beta1_pod_disruption_budget_sta
         return ;
     }
     listEntry_t *listEntry;
+    if (v1beta1_pod_disruption_budget_status->conditions) {
+        list_ForEach(listEntry, v1beta1_pod_disruption_budget_status->conditions) {
+            v1_condition_free(listEntry->data);
+        }
+        list_free(v1beta1_pod_disruption_budget_status->conditions);
+        v1beta1_pod_disruption_budget_status->conditions = NULL;
+    }
     if (v1beta1_pod_disruption_budget_status->disrupted_pods) {
         list_ForEach(listEntry, v1beta1_pod_disruption_budget_status->disrupted_pods) {
             keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
@@ -48,6 +57,26 @@ void v1beta1_pod_disruption_budget_status_free(v1beta1_pod_disruption_budget_sta
 
 cJSON *v1beta1_pod_disruption_budget_status_convertToJSON(v1beta1_pod_disruption_budget_status_t *v1beta1_pod_disruption_budget_status) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1beta1_pod_disruption_budget_status->conditions
+    if(v1beta1_pod_disruption_budget_status->conditions) { 
+    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    if(conditions == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *conditionsListEntry;
+    if (v1beta1_pod_disruption_budget_status->conditions) {
+    list_ForEach(conditionsListEntry, v1beta1_pod_disruption_budget_status->conditions) {
+    cJSON *itemLocal = v1_condition_convertToJSON(conditionsListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(conditions, itemLocal);
+    }
+    }
+     } 
+
 
     // v1beta1_pod_disruption_budget_status->current_healthy
     if (!v1beta1_pod_disruption_budget_status->current_healthy) {
@@ -123,6 +152,28 @@ fail:
 v1beta1_pod_disruption_budget_status_t *v1beta1_pod_disruption_budget_status_parseFromJSON(cJSON *v1beta1_pod_disruption_budget_statusJSON){
 
     v1beta1_pod_disruption_budget_status_t *v1beta1_pod_disruption_budget_status_local_var = NULL;
+
+    // v1beta1_pod_disruption_budget_status->conditions
+    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_disruption_budget_statusJSON, "conditions");
+    list_t *conditionsList;
+    if (conditions) { 
+    cJSON *conditions_local_nonprimitive;
+    if(!cJSON_IsArray(conditions)){
+        goto end; //nonprimitive container
+    }
+
+    conditionsList = list_create();
+
+    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    {
+        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+            goto end;
+        }
+        v1_condition_t *conditionsItem = v1_condition_parseFromJSON(conditions_local_nonprimitive);
+
+        list_addElement(conditionsList, conditionsItem);
+    }
+    }
 
     // v1beta1_pod_disruption_budget_status->current_healthy
     cJSON *current_healthy = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_disruption_budget_statusJSON, "currentHealthy");
@@ -200,6 +251,7 @@ v1beta1_pod_disruption_budget_status_t *v1beta1_pod_disruption_budget_status_par
 
 
     v1beta1_pod_disruption_budget_status_local_var = v1beta1_pod_disruption_budget_status_create (
+        conditions ? conditionsList : NULL,
         current_healthy->valuedouble,
         desired_healthy->valuedouble,
         disrupted_pods ? disrupted_podsList : NULL,
