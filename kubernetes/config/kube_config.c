@@ -110,18 +110,20 @@ static char *getWorkingConfigFile(const char *configFileNamePassedIn)
     if (configFileNamePassedIn) {
         configFileName = strdup(configFileNamePassedIn);
     } else {
-#ifdef __linux
-        kubeconfig_env = secure_getenv(ENV_KUBECONFIG);
-#else
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__APPLE__)
         kubeconfig_env = getenv(ENV_KUBECONFIG);
+#elif __linux
+        kubeconfig_env = secure_getenv(ENV_KUBECONFIG);
 #endif
         if (kubeconfig_env) {
             configFileName = strdup(kubeconfig_env);
         } else {
-#ifdef __linux
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__APPLE__)
+            homedir_env = getenv(ENV_HOME);
+#elif __linux
             homedir_env = secure_getenv(ENV_HOME);
 #else
-            homedir_env = getenv(ENV_HOME);
 #endif
             if (homedir_env) {
                 int configFileNameSize = strlen(homedir_env) + strlen(KUBE_CONFIG_DEFAULT_LOCATION) + 1;
