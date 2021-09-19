@@ -110,7 +110,7 @@ static char *getWorkingConfigFile(const char *configFileNamePassedIn)
     if (configFileNamePassedIn) {
         configFileName = strdup(configFileNamePassedIn);
     } else {
-#ifndef _WIN32
+#ifdef __linux
         kubeconfig_env = secure_getenv(ENV_KUBECONFIG);
 #else
         kubeconfig_env = getenv(ENV_KUBECONFIG);
@@ -118,7 +118,7 @@ static char *getWorkingConfigFile(const char *configFileNamePassedIn)
         if (kubeconfig_env) {
             configFileName = strdup(kubeconfig_env);
         } else {
-#ifndef _WIN32
+#ifdef __linux
             homedir_env = secure_getenv(ENV_HOME);
 #else
             homedir_env = getenv(ENV_HOME);
