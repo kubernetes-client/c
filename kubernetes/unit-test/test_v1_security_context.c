@@ -18,6 +18,7 @@ v1_security_context_t* instantiate_v1_security_context(int include_optional);
 
 #include "test_v1_capabilities.c"
 #include "test_v1_se_linux_options.c"
+#include "test_v1_seccomp_profile.c"
 #include "test_v1_windows_security_context_options.c"
 
 
@@ -37,6 +38,8 @@ v1_security_context_t* instantiate_v1_security_context(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_se_linux_options(0),
        // false, not to have infinite recursion
+      instantiate_v1_seccomp_profile(0),
+       // false, not to have infinite recursion
       instantiate_v1_windows_security_context_options(0)
     );
   } else {
@@ -49,6 +52,7 @@ v1_security_context_t* instantiate_v1_security_context(int include_optional) {
       56,
       1,
       56,
+      NULL,
       NULL,
       NULL
     );

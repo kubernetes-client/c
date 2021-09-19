@@ -23,11 +23,16 @@ v1_service_spec_t* instantiate_v1_service_spec(int include_optional) {
   v1_service_spec_t* v1_service_spec = NULL;
   if (include_optional) {
     v1_service_spec = v1_service_spec_create(
+      1,
       "0",
+      list_create(),
       list_create(),
       "0",
       "0",
       56,
+      "0",
+      list_create(),
+      "0",
       "0",
       "0",
       list_create(),
@@ -37,16 +42,20 @@ v1_service_spec_t* instantiate_v1_service_spec(int include_optional) {
       "0",
        // false, not to have infinite recursion
       instantiate_v1_session_affinity_config(0),
-      list_create(),
       "0"
     );
   } else {
     v1_service_spec = v1_service_spec_create(
+      1,
       "0",
+      list_create(),
       list_create(),
       "0",
       "0",
       56,
+      "0",
+      list_create(),
+      "0",
       "0",
       "0",
       list_create(),
@@ -55,7 +64,6 @@ v1_service_spec_t* instantiate_v1_service_spec(int include_optional) {
       list_create(),
       "0",
       NULL,
-      list_create(),
       "0"
     );
   }

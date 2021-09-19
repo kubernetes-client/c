@@ -20,6 +20,7 @@ typedef struct v1_stateful_set_status_t v1_stateful_set_status_t;
 
 
 typedef struct v1_stateful_set_status_t {
+    int available_replicas; //numeric
     int collision_count; //numeric
     list_t *conditions; //nonprimitive container
     int current_replicas; //numeric
@@ -33,6 +34,7 @@ typedef struct v1_stateful_set_status_t {
 } v1_stateful_set_status_t;
 
 v1_stateful_set_status_t *v1_stateful_set_status_create(
+    int available_replicas,
     int collision_count,
     list_t *conditions,
     int current_replicas,

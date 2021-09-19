@@ -21,14 +21,12 @@ typedef struct v1beta1_event_series_t v1beta1_event_series_t;
 typedef struct v1beta1_event_series_t {
     int count; //numeric
     char *last_observed_time; //date time
-    char *state; // string
 
 } v1beta1_event_series_t;
 
 v1beta1_event_series_t *v1beta1_event_series_create(
     int count,
-    char *last_observed_time,
-    char *state
+    char *last_observed_time
 );
 
 void v1beta1_event_series_free(v1beta1_event_series_t *v1beta1_event_series);

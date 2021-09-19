@@ -1,7 +1,7 @@
 /*
  * v1alpha1_cluster_role_list.h
  *
- * ClusterRoleList is a collection of ClusterRoles. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 ClusterRoles, and will no longer be served in v1.20.
+ * ClusterRoleList is a collection of ClusterRoles. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 ClusterRoles, and will no longer be served in v1.22.
  */
 
 #ifndef _v1alpha1_cluster_role_list_H_

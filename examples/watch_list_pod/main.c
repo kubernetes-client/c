@@ -80,6 +80,7 @@ void watch_list_pod(apiClient_t * apiClient)
                                 NULL,   /* labelSelector */
                                 0,  /* limit */
                                 NULL,   /* resourceVersion */
+                                NULL,   /* resourceVersionMatch */
                                 0,  /* timeoutSeconds */
                                 1   /* watch */
         );

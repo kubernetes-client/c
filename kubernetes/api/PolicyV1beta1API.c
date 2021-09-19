@@ -182,8 +182,8 @@ end:
 
 // create a PodSecurityPolicy
 //
-policy_v1beta1_pod_security_policy_t*
-PolicyV1beta1API_createPodSecurityPolicy(apiClient_t *apiClient, policy_v1beta1_pod_security_policy_t * body , char * pretty , char * dryRun , char * fieldManager )
+v1beta1_pod_security_policy_t*
+PolicyV1beta1API_createPodSecurityPolicy(apiClient_t *apiClient, v1beta1_pod_security_policy_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -241,7 +241,7 @@ PolicyV1beta1API_createPodSecurityPolicy(apiClient_t *apiClient, policy_v1beta1_
     if (body != NULL)
     {
         //string
-        localVarSingleItemJSON_body = policy_v1beta1_pod_security_policy_convertToJSON(body);
+        localVarSingleItemJSON_body = v1beta1_pod_security_policy_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
@@ -271,7 +271,7 @@ PolicyV1beta1API_createPodSecurityPolicy(apiClient_t *apiClient, policy_v1beta1_
     }
     //nonprimitive not container
     cJSON *PolicyV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    policy_v1beta1_pod_security_policy_t *elementToReturn = policy_v1beta1_pod_security_policy_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
+    v1beta1_pod_security_policy_t *elementToReturn = v1beta1_pod_security_policy_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
     cJSON_Delete(PolicyV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -340,7 +340,7 @@ end:
 // delete collection of PodDisruptionBudget
 //
 v1_status_t*
-PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -488,6 +488,18 @@ PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiC
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -676,6 +688,18 @@ PolicyV1beta1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiC
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -698,7 +722,7 @@ end:
 // delete collection of PodSecurityPolicy
 //
 v1_status_t*
-PolicyV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+PolicyV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -836,6 +860,18 @@ PolicyV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char 
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -1022,6 +1058,18 @@ PolicyV1beta1API_deleteCollectionPodSecurityPolicy(apiClient_t *apiClient, char 
     if(keyPairQuery_resourceVersion){
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
+    }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -1270,7 +1318,7 @@ end:
 
 // delete a PodSecurityPolicy
 //
-v1_status_t*
+v1beta1_pod_security_policy_t*
 PolicyV1beta1API_deletePodSecurityPolicy(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
@@ -1392,7 +1440,7 @@ PolicyV1beta1API_deletePodSecurityPolicy(apiClient_t *apiClient, char * name , c
     }
     //nonprimitive not container
     cJSON *PolicyV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
+    v1beta1_pod_security_policy_t *elementToReturn = v1beta1_pod_security_policy_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
     cJSON_Delete(PolicyV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -1551,7 +1599,7 @@ end:
 // list or watch objects of kind PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_list_t*
-PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1662,6 +1710,18 @@ PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -1815,6 +1875,18 @@ PolicyV1beta1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -1849,7 +1921,7 @@ end:
 // list or watch objects of kind PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_list_t*
-PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1950,6 +2022,18 @@ PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient,
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -2102,6 +2186,18 @@ PolicyV1beta1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient,
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2135,8 +2231,8 @@ end:
 
 // list or watch objects of kind PodSecurityPolicy
 //
-policy_v1beta1_pod_security_policy_list_t*
-PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+v1beta1_pod_security_policy_list_t*
+PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -2240,6 +2336,18 @@ PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , i
     }
 
     // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -2287,7 +2395,7 @@ PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , i
     }
     //nonprimitive not container
     cJSON *PolicyV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    policy_v1beta1_pod_security_policy_list_t *elementToReturn = policy_v1beta1_pod_security_policy_list_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
+    v1beta1_pod_security_policy_list_t *elementToReturn = v1beta1_pod_security_policy_list_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
     cJSON_Delete(PolicyV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -2388,6 +2496,18 @@ PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , i
     if(keyPairQuery_resourceVersion){
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
+    }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -2536,6 +2656,9 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -2739,6 +2862,9 @@ PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -2826,7 +2952,7 @@ end:
 
 // partially update the specified PodSecurityPolicy
 //
-policy_v1beta1_pod_security_policy_t*
+v1beta1_pod_security_policy_t*
 PolicyV1beta1API_patchPodSecurityPolicy(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
 {
     list_t    *localVarQueryParameters = list_create();
@@ -2931,12 +3057,15 @@ PolicyV1beta1API_patchPodSecurityPolicy(apiClient_t *apiClient, char * name , ob
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
     //nonprimitive not container
     cJSON *PolicyV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    policy_v1beta1_pod_security_policy_t *elementToReturn = policy_v1beta1_pod_security_policy_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
+    v1beta1_pod_security_policy_t *elementToReturn = v1beta1_pod_security_policy_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
     cJSON_Delete(PolicyV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -3018,7 +3147,7 @@ end:
 // read the specified PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3065,32 +3194,6 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3144,30 +3247,6 @@ PolicyV1beta1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char 
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -3289,8 +3368,8 @@ end:
 
 // read the specified PodSecurityPolicy
 //
-policy_v1beta1_pod_security_policy_t*
-PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export )
+v1beta1_pod_security_policy_t*
+PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3328,32 +3407,6 @@ PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , cha
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
     }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
-    }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
@@ -3375,7 +3428,7 @@ PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , cha
     }
     //nonprimitive not container
     cJSON *PolicyV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    policy_v1beta1_pod_security_policy_t *elementToReturn = policy_v1beta1_pod_security_policy_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
+    v1beta1_pod_security_policy_t *elementToReturn = v1beta1_pod_security_policy_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
     cJSON_Delete(PolicyV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -3405,30 +3458,6 @@ PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , cha
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:
@@ -3791,8 +3820,8 @@ end:
 
 // replace the specified PodSecurityPolicy
 //
-policy_v1beta1_pod_security_policy_t*
-PolicyV1beta1API_replacePodSecurityPolicy(apiClient_t *apiClient, char * name , policy_v1beta1_pod_security_policy_t * body , char * pretty , char * dryRun , char * fieldManager )
+v1beta1_pod_security_policy_t*
+PolicyV1beta1API_replacePodSecurityPolicy(apiClient_t *apiClient, char * name , v1beta1_pod_security_policy_t * body , char * pretty , char * dryRun , char * fieldManager )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -3860,7 +3889,7 @@ PolicyV1beta1API_replacePodSecurityPolicy(apiClient_t *apiClient, char * name , 
     if (body != NULL)
     {
         //string
-        localVarSingleItemJSON_body = policy_v1beta1_pod_security_policy_convertToJSON(body);
+        localVarSingleItemJSON_body = v1beta1_pod_security_policy_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
@@ -3887,7 +3916,7 @@ PolicyV1beta1API_replacePodSecurityPolicy(apiClient_t *apiClient, char * name , 
     }
     //nonprimitive not container
     cJSON *PolicyV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    policy_v1beta1_pod_security_policy_t *elementToReturn = policy_v1beta1_pod_security_policy_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
+    v1beta1_pod_security_policy_t *elementToReturn = v1beta1_pod_security_policy_parseFromJSON(PolicyV1beta1APIlocalVarJSON);
     cJSON_Delete(PolicyV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;

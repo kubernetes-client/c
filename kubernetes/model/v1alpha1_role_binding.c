@@ -49,7 +49,7 @@ void v1alpha1_role_binding_free(v1alpha1_role_binding_t *v1alpha1_role_binding) 
     }
     if (v1alpha1_role_binding->subjects) {
         list_ForEach(listEntry, v1alpha1_role_binding->subjects) {
-            rbac_v1alpha1_subject_free(listEntry->data);
+            v1alpha1_subject_free(listEntry->data);
         }
         list_free(v1alpha1_role_binding->subjects);
         v1alpha1_role_binding->subjects = NULL;
@@ -114,7 +114,7 @@ cJSON *v1alpha1_role_binding_convertToJSON(v1alpha1_role_binding_t *v1alpha1_rol
     listEntry_t *subjectsListEntry;
     if (v1alpha1_role_binding->subjects) {
     list_ForEach(subjectsListEntry, v1alpha1_role_binding->subjects) {
-    cJSON *itemLocal = rbac_v1alpha1_subject_convertToJSON(subjectsListEntry->data);
+    cJSON *itemLocal = v1alpha1_subject_convertToJSON(subjectsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
@@ -186,7 +186,7 @@ v1alpha1_role_binding_t *v1alpha1_role_binding_parseFromJSON(cJSON *v1alpha1_rol
         if(!cJSON_IsObject(subjects_local_nonprimitive)){
             goto end;
         }
-        rbac_v1alpha1_subject_t *subjectsItem = rbac_v1alpha1_subject_parseFromJSON(subjects_local_nonprimitive);
+        v1alpha1_subject_t *subjectsItem = v1alpha1_subject_parseFromJSON(subjects_local_nonprimitive);
 
         list_addElement(subjectsList, subjectsItem);
     }

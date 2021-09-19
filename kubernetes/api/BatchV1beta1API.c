@@ -183,7 +183,7 @@ end:
 // delete collection of CronJob
 //
 v1_status_t*
-BatchV1beta1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body )
+BatchV1beta1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -331,6 +331,18 @@ BatchV1beta1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -518,6 +530,18 @@ BatchV1beta1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *
     if(keyPairQuery_resourceVersion){
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
+    }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -832,7 +856,7 @@ end:
 // list or watch objects of kind CronJob
 //
 v1beta1_cron_job_list_t*
-BatchV1beta1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch )
+BatchV1beta1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -933,6 +957,18 @@ BatchV1beta1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int allowWat
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -1085,6 +1121,18 @@ BatchV1beta1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int allowWat
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -1119,7 +1167,7 @@ end:
 // list or watch objects of kind CronJob
 //
 v1beta1_cron_job_list_t*
-BatchV1beta1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch )
+BatchV1beta1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1230,6 +1278,18 @@ BatchV1beta1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace 
         valueQuery_resourceVersion = strdup((resourceVersion));
         keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
     }
 
     // query parameters
@@ -1383,6 +1443,18 @@ BatchV1beta1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace 
         keyValuePair_free(keyPairQuery_resourceVersion);
         keyPairQuery_resourceVersion = NULL;
     }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -1530,6 +1602,9 @@ BatchV1beta1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , cha
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
+    }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
     }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
@@ -1733,6 +1808,9 @@ BatchV1beta1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");
     }
+    if (apiClient->response_code == 201) {
+        printf("%s\n","Created");
+    }
     if (apiClient->response_code == 401) {
         printf("%s\n","Unauthorized");
     }
@@ -1821,7 +1899,7 @@ end:
 // read the specified CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export )
+BatchV1beta1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -1868,32 +1946,6 @@ BatchV1beta1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_exact = NULL;
-    char * valueQuery_exact = NULL;
-    keyValuePair_t *keyPairQuery_exact = 0;
-    if (exact)
-    {
-        keyQuery_exact = strdup("exact");
-        valueQuery_exact = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_exact, MAX_NUMBER_LENGTH, "%d", exact);
-        keyPairQuery_exact = keyValuePair_create(keyQuery_exact, valueQuery_exact);
-        list_addElement(localVarQueryParameters,keyPairQuery_exact);
-    }
-
-    // query parameters
-    char *keyQuery__export = NULL;
-    char * valueQuery__export = NULL;
-    keyValuePair_t *keyPairQuery__export = 0;
-    if (_export)
-    {
-        keyQuery__export = strdup("export");
-        valueQuery__export = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery__export, MAX_NUMBER_LENGTH, "%d", _export);
-        keyPairQuery__export = keyValuePair_create(keyQuery__export, valueQuery__export);
-        list_addElement(localVarQueryParameters,keyPairQuery__export);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1947,30 +1999,6 @@ BatchV1beta1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_exact){
-        free(keyQuery_exact);
-        keyQuery_exact = NULL;
-    }
-    if(valueQuery_exact){
-        free(valueQuery_exact);
-        valueQuery_exact = NULL;
-    }
-    if(keyPairQuery_exact){
-        keyValuePair_free(keyPairQuery_exact);
-        keyPairQuery_exact = NULL;
-    }
-    if(keyQuery__export){
-        free(keyQuery__export);
-        keyQuery__export = NULL;
-    }
-    if(valueQuery__export){
-        free(valueQuery__export);
-        valueQuery__export = NULL;
-    }
-    if(keyPairQuery__export){
-        keyValuePair_free(keyPairQuery__export);
-        keyPairQuery__export = NULL;
     }
     return elementToReturn;
 end:

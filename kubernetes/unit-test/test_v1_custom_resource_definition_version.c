@@ -25,6 +25,8 @@ v1_custom_resource_definition_version_t* instantiate_v1_custom_resource_definiti
   if (include_optional) {
     v1_custom_resource_definition_version = v1_custom_resource_definition_version_create(
       list_create(),
+      1,
+      "0",
       "0",
        // false, not to have infinite recursion
       instantiate_v1_custom_resource_validation(0),
@@ -36,6 +38,8 @@ v1_custom_resource_definition_version_t* instantiate_v1_custom_resource_definiti
   } else {
     v1_custom_resource_definition_version = v1_custom_resource_definition_version_create(
       list_create(),
+      1,
+      "0",
       "0",
       NULL,
       1,

@@ -16,23 +16,29 @@
 #include "../model/v1beta1_subject.h"
 v1beta1_subject_t* instantiate_v1beta1_subject(int include_optional);
 
+#include "test_v1beta1_group_subject.c"
+#include "test_v1beta1_service_account_subject.c"
+#include "test_v1beta1_user_subject.c"
 
 
 v1beta1_subject_t* instantiate_v1beta1_subject(int include_optional) {
   v1beta1_subject_t* v1beta1_subject = NULL;
   if (include_optional) {
     v1beta1_subject = v1beta1_subject_create(
+       // false, not to have infinite recursion
+      instantiate_v1beta1_group_subject(0),
       "0",
-      "0",
-      "0",
-      "0"
+       // false, not to have infinite recursion
+      instantiate_v1beta1_service_account_subject(0),
+       // false, not to have infinite recursion
+      instantiate_v1beta1_user_subject(0)
     );
   } else {
     v1beta1_subject = v1beta1_subject_create(
+      NULL,
       "0",
-      "0",
-      "0",
-      "0"
+      NULL,
+      NULL
     );
   }
 

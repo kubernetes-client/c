@@ -47,10 +47,7 @@ cJSON *v1_projected_volume_source_convertToJSON(v1_projected_volume_source_t *v1
 
 
     // v1_projected_volume_source->sources
-    if (!v1_projected_volume_source->sources) {
-        goto fail;
-    }
-    
+    if(v1_projected_volume_source->sources) { 
     cJSON *sources = cJSON_AddArrayToObject(item, "sources");
     if(sources == NULL) {
     goto fail; //nonprimitive container
@@ -66,6 +63,7 @@ cJSON *v1_projected_volume_source_convertToJSON(v1_projected_volume_source_t *v1
     cJSON_AddItemToArray(sources, itemLocal);
     }
     }
+     } 
 
     return item;
 fail:
@@ -90,12 +88,8 @@ v1_projected_volume_source_t *v1_projected_volume_source_parseFromJSON(cJSON *v1
 
     // v1_projected_volume_source->sources
     cJSON *sources = cJSON_GetObjectItemCaseSensitive(v1_projected_volume_sourceJSON, "sources");
-    if (!sources) {
-        goto end;
-    }
-
     list_t *sourcesList;
-    
+    if (sources) { 
     cJSON *sources_local_nonprimitive;
     if(!cJSON_IsArray(sources)){
         goto end; //nonprimitive container
@@ -112,11 +106,12 @@ v1_projected_volume_source_t *v1_projected_volume_source_parseFromJSON(cJSON *v1
 
         list_addElement(sourcesList, sourcesItem);
     }
+    }
 
 
     v1_projected_volume_source_local_var = v1_projected_volume_source_create (
         default_mode ? default_mode->valuedouble : 0,
-        sourcesList
+        sources ? sourcesList : NULL
         );
 
     return v1_projected_volume_source_local_var;

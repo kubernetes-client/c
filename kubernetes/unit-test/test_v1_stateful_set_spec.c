@@ -25,6 +25,7 @@ v1_stateful_set_spec_t* instantiate_v1_stateful_set_spec(int include_optional) {
   v1_stateful_set_spec_t* v1_stateful_set_spec = NULL;
   if (include_optional) {
     v1_stateful_set_spec = v1_stateful_set_spec_create(
+      56,
       "0",
       56,
       56,
@@ -39,6 +40,7 @@ v1_stateful_set_spec_t* instantiate_v1_stateful_set_spec(int include_optional) {
     );
   } else {
     v1_stateful_set_spec = v1_stateful_set_spec_create(
+      56,
       "0",
       56,
       56,

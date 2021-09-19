@@ -39,10 +39,7 @@ cJSON *v1_container_image_convertToJSON(v1_container_image_t *v1_container_image
     cJSON *item = cJSON_CreateObject();
 
     // v1_container_image->names
-    if (!v1_container_image->names) {
-        goto fail;
-    }
-    
+    if(v1_container_image->names) { 
     cJSON *names = cJSON_AddArrayToObject(item, "names");
     if(names == NULL) {
         goto fail; //primitive container
@@ -55,6 +52,7 @@ cJSON *v1_container_image_convertToJSON(v1_container_image_t *v1_container_image
         goto fail;
     }
     }
+     } 
 
 
     // v1_container_image->size_bytes
@@ -78,12 +76,8 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
 
     // v1_container_image->names
     cJSON *names = cJSON_GetObjectItemCaseSensitive(v1_container_imageJSON, "names");
-    if (!names) {
-        goto end;
-    }
-
     list_t *namesList;
-    
+    if (names) { 
     cJSON *names_local;
     if(!cJSON_IsArray(names)) {
         goto end;//primitive container
@@ -98,6 +92,7 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
         }
         list_addElement(namesList , strdup(names_local->valuestring));
     }
+    }
 
     // v1_container_image->size_bytes
     cJSON *size_bytes = cJSON_GetObjectItemCaseSensitive(v1_container_imageJSON, "sizeBytes");
@@ -110,7 +105,7 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
 
 
     v1_container_image_local_var = v1_container_image_create (
-        namesList,
+        names ? namesList : NULL,
         size_bytes ? size_bytes->valuedouble : 0
         );
 

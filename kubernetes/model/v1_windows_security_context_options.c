@@ -8,6 +8,7 @@
 v1_windows_security_context_options_t *v1_windows_security_context_options_create(
     char *gmsa_credential_spec,
     char *gmsa_credential_spec_name,
+    int host_process,
     char *run_as_user_name
     ) {
     v1_windows_security_context_options_t *v1_windows_security_context_options_local_var = malloc(sizeof(v1_windows_security_context_options_t));
@@ -16,6 +17,7 @@ v1_windows_security_context_options_t *v1_windows_security_context_options_creat
     }
     v1_windows_security_context_options_local_var->gmsa_credential_spec = gmsa_credential_spec;
     v1_windows_security_context_options_local_var->gmsa_credential_spec_name = gmsa_credential_spec_name;
+    v1_windows_security_context_options_local_var->host_process = host_process;
     v1_windows_security_context_options_local_var->run_as_user_name = run_as_user_name;
 
     return v1_windows_security_context_options_local_var;
@@ -61,6 +63,14 @@ cJSON *v1_windows_security_context_options_convertToJSON(v1_windows_security_con
      } 
 
 
+    // v1_windows_security_context_options->host_process
+    if(v1_windows_security_context_options->host_process) { 
+    if(cJSON_AddBoolToObject(item, "hostProcess", v1_windows_security_context_options->host_process) == NULL) {
+    goto fail; //Bool
+    }
+     } 
+
+
     // v1_windows_security_context_options->run_as_user_name
     if(v1_windows_security_context_options->run_as_user_name) { 
     if(cJSON_AddStringToObject(item, "runAsUserName", v1_windows_security_context_options->run_as_user_name) == NULL) {
@@ -98,6 +108,15 @@ v1_windows_security_context_options_t *v1_windows_security_context_options_parse
     }
     }
 
+    // v1_windows_security_context_options->host_process
+    cJSON *host_process = cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "hostProcess");
+    if (host_process) { 
+    if(!cJSON_IsBool(host_process))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1_windows_security_context_options->run_as_user_name
     cJSON *run_as_user_name = cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "runAsUserName");
     if (run_as_user_name) { 
@@ -111,6 +130,7 @@ v1_windows_security_context_options_t *v1_windows_security_context_options_parse
     v1_windows_security_context_options_local_var = v1_windows_security_context_options_create (
         gmsa_credential_spec ? strdup(gmsa_credential_spec->valuestring) : NULL,
         gmsa_credential_spec_name ? strdup(gmsa_credential_spec_name->valuestring) : NULL,
+        host_process ? host_process->valueint : 0,
         run_as_user_name ? strdup(run_as_user_name->valuestring) : NULL
         );
 

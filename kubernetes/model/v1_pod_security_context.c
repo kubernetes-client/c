@@ -7,10 +7,12 @@
 
 v1_pod_security_context_t *v1_pod_security_context_create(
     long fs_group,
+    char *fs_group_change_policy,
     long run_as_group,
     int run_as_non_root,
     long run_as_user,
     v1_se_linux_options_t *se_linux_options,
+    v1_seccomp_profile_t *seccomp_profile,
     list_t *supplemental_groups,
     list_t *sysctls,
     v1_windows_security_context_options_t *windows_options
@@ -20,10 +22,12 @@ v1_pod_security_context_t *v1_pod_security_context_create(
         return NULL;
     }
     v1_pod_security_context_local_var->fs_group = fs_group;
+    v1_pod_security_context_local_var->fs_group_change_policy = fs_group_change_policy;
     v1_pod_security_context_local_var->run_as_group = run_as_group;
     v1_pod_security_context_local_var->run_as_non_root = run_as_non_root;
     v1_pod_security_context_local_var->run_as_user = run_as_user;
     v1_pod_security_context_local_var->se_linux_options = se_linux_options;
+    v1_pod_security_context_local_var->seccomp_profile = seccomp_profile;
     v1_pod_security_context_local_var->supplemental_groups = supplemental_groups;
     v1_pod_security_context_local_var->sysctls = sysctls;
     v1_pod_security_context_local_var->windows_options = windows_options;
@@ -37,9 +41,17 @@ void v1_pod_security_context_free(v1_pod_security_context_t *v1_pod_security_con
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_pod_security_context->fs_group_change_policy) {
+        free(v1_pod_security_context->fs_group_change_policy);
+        v1_pod_security_context->fs_group_change_policy = NULL;
+    }
     if (v1_pod_security_context->se_linux_options) {
         v1_se_linux_options_free(v1_pod_security_context->se_linux_options);
         v1_pod_security_context->se_linux_options = NULL;
+    }
+    if (v1_pod_security_context->seccomp_profile) {
+        v1_seccomp_profile_free(v1_pod_security_context->seccomp_profile);
+        v1_pod_security_context->seccomp_profile = NULL;
     }
     if (v1_pod_security_context->supplemental_groups) {
         list_ForEach(listEntry, v1_pod_security_context->supplemental_groups) {
@@ -69,6 +81,14 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
     if(v1_pod_security_context->fs_group) { 
     if(cJSON_AddNumberToObject(item, "fsGroup", v1_pod_security_context->fs_group) == NULL) {
     goto fail; //Numeric
+    }
+     } 
+
+
+    // v1_pod_security_context->fs_group_change_policy
+    if(v1_pod_security_context->fs_group_change_policy) { 
+    if(cJSON_AddStringToObject(item, "fsGroupChangePolicy", v1_pod_security_context->fs_group_change_policy) == NULL) {
+    goto fail; //String
     }
      } 
 
@@ -104,6 +124,19 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
     goto fail; //model
     }
     cJSON_AddItemToObject(item, "seLinuxOptions", se_linux_options_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+     } 
+
+
+    // v1_pod_security_context->seccomp_profile
+    if(v1_pod_security_context->seccomp_profile) { 
+    cJSON *seccomp_profile_local_JSON = v1_seccomp_profile_convertToJSON(v1_pod_security_context->seccomp_profile);
+    if(seccomp_profile_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "seccompProfile", seccomp_profile_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -180,6 +213,15 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     }
     }
 
+    // v1_pod_security_context->fs_group_change_policy
+    cJSON *fs_group_change_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "fsGroupChangePolicy");
+    if (fs_group_change_policy) { 
+    if(!cJSON_IsString(fs_group_change_policy))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_pod_security_context->run_as_group
     cJSON *run_as_group = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "runAsGroup");
     if (run_as_group) { 
@@ -212,6 +254,13 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     v1_se_linux_options_t *se_linux_options_local_nonprim = NULL;
     if (se_linux_options) { 
     se_linux_options_local_nonprim = v1_se_linux_options_parseFromJSON(se_linux_options); //nonprimitive
+    }
+
+    // v1_pod_security_context->seccomp_profile
+    cJSON *seccomp_profile = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "seccompProfile");
+    v1_seccomp_profile_t *seccomp_profile_local_nonprim = NULL;
+    if (seccomp_profile) { 
+    seccomp_profile_local_nonprim = v1_seccomp_profile_parseFromJSON(seccomp_profile); //nonprimitive
     }
 
     // v1_pod_security_context->supplemental_groups
@@ -272,10 +321,12 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     v1_pod_security_context_local_var = v1_pod_security_context_create (
         fs_group ? fs_group->valuedouble : 0,
+        fs_group_change_policy ? strdup(fs_group_change_policy->valuestring) : NULL,
         run_as_group ? run_as_group->valuedouble : 0,
         run_as_non_root ? run_as_non_root->valueint : 0,
         run_as_user ? run_as_user->valuedouble : 0,
         se_linux_options ? se_linux_options_local_nonprim : NULL,
+        seccomp_profile ? seccomp_profile_local_nonprim : NULL,
         supplemental_groups ? supplemental_groupsList : NULL,
         sysctls ? sysctlsList : NULL,
         windows_options ? windows_options_local_nonprim : NULL
@@ -286,6 +337,10 @@ end:
     if (se_linux_options_local_nonprim) {
         v1_se_linux_options_free(se_linux_options_local_nonprim);
         se_linux_options_local_nonprim = NULL;
+    }
+    if (seccomp_profile_local_nonprim) {
+        v1_seccomp_profile_free(seccomp_profile_local_nonprim);
+        seccomp_profile_local_nonprim = NULL;
     }
     if (windows_options_local_nonprim) {
         v1_windows_security_context_options_free(windows_options_local_nonprim);

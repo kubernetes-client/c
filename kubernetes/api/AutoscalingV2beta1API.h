@@ -21,7 +21,7 @@ AutoscalingV2beta1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiCl
 // delete collection of HorizontalPodAutoscaler
 //
 v1_status_t*
-AutoscalingV2beta1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+AutoscalingV2beta1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a HorizontalPodAutoscaler
@@ -39,13 +39,13 @@ AutoscalingV2beta1API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind HorizontalPodAutoscaler
 //
 v2beta1_horizontal_pod_autoscaler_list_t*
-AutoscalingV2beta1API_listHorizontalPodAutoscalerForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , int timeoutSeconds , int watch );
+AutoscalingV2beta1API_listHorizontalPodAutoscalerForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind HorizontalPodAutoscaler
 //
 v2beta1_horizontal_pod_autoscaler_list_t*
-AutoscalingV2beta1API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+AutoscalingV2beta1API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // partially update the specified HorizontalPodAutoscaler
@@ -63,7 +63,7 @@ AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *
 // read the specified HorizontalPodAutoscaler
 //
 v2beta1_horizontal_pod_autoscaler_t*
-AutoscalingV2beta1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , int exact , int _export );
+AutoscalingV2beta1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
 // read status of the specified HorizontalPodAutoscaler

@@ -1,7 +1,7 @@
 /*
  * v1alpha1_role_list.h
  *
- * RoleList is a collection of Roles. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 RoleList, and will no longer be served in v1.20.
+ * RoleList is a collection of Roles. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 RoleList, and will no longer be served in v1.22.
  */
 
 #ifndef _v1alpha1_role_list_H_

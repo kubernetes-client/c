@@ -17,13 +17,16 @@ typedef struct v1beta1_endpoint_t v1beta1_endpoint_t;
 
 #include "v1_object_reference.h"
 #include "v1beta1_endpoint_conditions.h"
+#include "v1beta1_endpoint_hints.h"
 
 
 
 typedef struct v1beta1_endpoint_t {
     list_t *addresses; //primitive container
     struct v1beta1_endpoint_conditions_t *conditions; //model
+    struct v1beta1_endpoint_hints_t *hints; //model
     char *hostname; // string
+    char *node_name; // string
     struct v1_object_reference_t *target_ref; //model
     list_t* topology; //map
 
@@ -32,7 +35,9 @@ typedef struct v1beta1_endpoint_t {
 v1beta1_endpoint_t *v1beta1_endpoint_create(
     list_t *addresses,
     v1beta1_endpoint_conditions_t *conditions,
+    v1beta1_endpoint_hints_t *hints,
     char *hostname,
+    char *node_name,
     v1_object_reference_t *target_ref,
     list_t* topology
 );

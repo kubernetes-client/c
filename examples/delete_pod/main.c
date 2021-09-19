@@ -7,7 +7,7 @@
 
 void delete_a_pod(apiClient_t * apiClient)
 {
-    v1_status_t *status = CoreV1API_deleteNamespacedPod(apiClient,
+    v1_pod_t *pod = CoreV1API_deleteNamespacedPod(apiClient,
                                                         "test-pod-6",   // char *name
                                                         "default",  // char *namespace
                                                         NULL,   // char *pretty
@@ -23,14 +23,12 @@ void delete_a_pod(apiClient_t * apiClient)
     if (200 == apiClient->response_code || 202 == apiClient->response_code) {
         printf("The pod is deleted successfully.\n");
     } else {
-        if (status && status->message) {
-            printf("Failed to delete the pod. The error message: %s\n", status->message);
-        }
+        printf("Failed to delete the pod.\n");
     }
 
-    if (status) {
-        v1_status_free(status);
-        status = NULL;
+    if (pod) {
+        v1_pod_free(pod);
+        pod = NULL;
     }
 }
 

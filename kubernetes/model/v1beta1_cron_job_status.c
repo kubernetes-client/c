@@ -7,7 +7,8 @@
 
 v1beta1_cron_job_status_t *v1beta1_cron_job_status_create(
     list_t *active,
-    char *last_schedule_time
+    char *last_schedule_time,
+    char *last_successful_time
     ) {
     v1beta1_cron_job_status_t *v1beta1_cron_job_status_local_var = malloc(sizeof(v1beta1_cron_job_status_t));
     if (!v1beta1_cron_job_status_local_var) {
@@ -15,6 +16,7 @@ v1beta1_cron_job_status_t *v1beta1_cron_job_status_create(
     }
     v1beta1_cron_job_status_local_var->active = active;
     v1beta1_cron_job_status_local_var->last_schedule_time = last_schedule_time;
+    v1beta1_cron_job_status_local_var->last_successful_time = last_successful_time;
 
     return v1beta1_cron_job_status_local_var;
 }
@@ -35,6 +37,10 @@ void v1beta1_cron_job_status_free(v1beta1_cron_job_status_t *v1beta1_cron_job_st
     if (v1beta1_cron_job_status->last_schedule_time) {
         free(v1beta1_cron_job_status->last_schedule_time);
         v1beta1_cron_job_status->last_schedule_time = NULL;
+    }
+    if (v1beta1_cron_job_status->last_successful_time) {
+        free(v1beta1_cron_job_status->last_successful_time);
+        v1beta1_cron_job_status->last_successful_time = NULL;
     }
     free(v1beta1_cron_job_status);
 }
@@ -65,6 +71,14 @@ cJSON *v1beta1_cron_job_status_convertToJSON(v1beta1_cron_job_status_t *v1beta1_
     // v1beta1_cron_job_status->last_schedule_time
     if(v1beta1_cron_job_status->last_schedule_time) { 
     if(cJSON_AddStringToObject(item, "lastScheduleTime", v1beta1_cron_job_status->last_schedule_time) == NULL) {
+    goto fail; //Date-Time
+    }
+     } 
+
+
+    // v1beta1_cron_job_status->last_successful_time
+    if(v1beta1_cron_job_status->last_successful_time) { 
+    if(cJSON_AddStringToObject(item, "lastSuccessfulTime", v1beta1_cron_job_status->last_successful_time) == NULL) {
     goto fail; //Date-Time
     }
      } 
@@ -112,10 +126,20 @@ v1beta1_cron_job_status_t *v1beta1_cron_job_status_parseFromJSON(cJSON *v1beta1_
     }
     }
 
+    // v1beta1_cron_job_status->last_successful_time
+    cJSON *last_successful_time = cJSON_GetObjectItemCaseSensitive(v1beta1_cron_job_statusJSON, "lastSuccessfulTime");
+    if (last_successful_time) { 
+    if(!cJSON_IsString(last_successful_time))
+    {
+    goto end; //DateTime
+    }
+    }
+
 
     v1beta1_cron_job_status_local_var = v1beta1_cron_job_status_create (
         active ? activeList : NULL,
-        last_schedule_time ? strdup(last_schedule_time->valuestring) : NULL
+        last_schedule_time ? strdup(last_schedule_time->valuestring) : NULL,
+        last_successful_time ? strdup(last_successful_time->valuestring) : NULL
         );
 
     return v1beta1_cron_job_status_local_var;

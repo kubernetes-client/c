@@ -21,7 +21,7 @@ SchedulingV1API_createPriorityClass(apiClient_t *apiClient, v1_priority_class_t 
 // delete collection of PriorityClass
 //
 v1_status_t*
-SchedulingV1API_deleteCollectionPriorityClass(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , int timeoutSeconds , v1_delete_options_t * body );
+SchedulingV1API_deleteCollectionPriorityClass(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a PriorityClass
@@ -39,7 +39,7 @@ SchedulingV1API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind PriorityClass
 //
 v1_priority_class_list_t*
-SchedulingV1API_listPriorityClass(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , int timeoutSeconds , int watch );
+SchedulingV1API_listPriorityClass(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
 // partially update the specified PriorityClass
@@ -51,7 +51,7 @@ SchedulingV1API_patchPriorityClass(apiClient_t *apiClient, char * name , object_
 // read the specified PriorityClass
 //
 v1_priority_class_t*
-SchedulingV1API_readPriorityClass(apiClient_t *apiClient, char * name , char * pretty , int exact , int _export );
+SchedulingV1API_readPriorityClass(apiClient_t *apiClient, char * name , char * pretty );
 
 
 // replace the specified PriorityClass

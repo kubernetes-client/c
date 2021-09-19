@@ -1,7 +1,7 @@
 /*
  * v1_network_policy_peer.h
  *
- * NetworkPolicyPeer describes a peer to allow traffic from. Only certain combinations of fields are allowed
+ * NetworkPolicyPeer describes a peer to allow traffic to/from. Only certain combinations of fields are allowed
  */
 
 #ifndef _v1_network_policy_peer_H_

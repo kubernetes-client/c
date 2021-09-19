@@ -17,6 +17,7 @@ typedef struct v1_security_context_t v1_security_context_t;
 
 #include "v1_capabilities.h"
 #include "v1_se_linux_options.h"
+#include "v1_seccomp_profile.h"
 #include "v1_windows_security_context_options.h"
 
 
@@ -31,6 +32,7 @@ typedef struct v1_security_context_t {
     int run_as_non_root; //boolean
     long run_as_user; //numeric
     struct v1_se_linux_options_t *se_linux_options; //model
+    struct v1_seccomp_profile_t *seccomp_profile; //model
     struct v1_windows_security_context_options_t *windows_options; //model
 
 } v1_security_context_t;
@@ -45,6 +47,7 @@ v1_security_context_t *v1_security_context_create(
     int run_as_non_root,
     long run_as_user,
     v1_se_linux_options_t *se_linux_options,
+    v1_seccomp_profile_t *seccomp_profile,
     v1_windows_security_context_options_t *windows_options
 );
 

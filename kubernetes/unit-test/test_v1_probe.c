@@ -35,6 +35,7 @@ v1_probe_t* instantiate_v1_probe(int include_optional) {
       56,
        // false, not to have infinite recursion
       instantiate_v1_tcp_socket_action(0),
+      56,
       56
     );
   } else {
@@ -46,6 +47,7 @@ v1_probe_t* instantiate_v1_probe(int include_optional) {
       56,
       56,
       NULL,
+      56,
       56
     );
   }

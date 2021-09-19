@@ -21,6 +21,7 @@ typedef struct v1_windows_security_context_options_t v1_windows_security_context
 typedef struct v1_windows_security_context_options_t {
     char *gmsa_credential_spec; // string
     char *gmsa_credential_spec_name; // string
+    int host_process; //boolean
     char *run_as_user_name; // string
 
 } v1_windows_security_context_options_t;
@@ -28,6 +29,7 @@ typedef struct v1_windows_security_context_options_t {
 v1_windows_security_context_options_t *v1_windows_security_context_options_create(
     char *gmsa_credential_spec,
     char *gmsa_credential_spec_name,
+    int host_process,
     char *run_as_user_name
 );
 

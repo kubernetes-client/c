@@ -26,6 +26,7 @@ v1_config_map_t* instantiate_v1_config_map(int include_optional) {
       "0",
       list_create(),
       list_create(),
+      1,
       "0",
        // false, not to have infinite recursion
       instantiate_v1_object_meta(0)
@@ -35,6 +36,7 @@ v1_config_map_t* instantiate_v1_config_map(int include_optional) {
       "0",
       list_create(),
       list_create(),
+      1,
       "0",
       NULL
     );

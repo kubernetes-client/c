@@ -21,12 +21,17 @@ typedef struct v1_service_spec_t v1_service_spec_t;
 
 
 typedef struct v1_service_spec_t {
+    int allocate_load_balancer_node_ports; //boolean
     char *cluster_ip; // string
+    list_t *cluster_ips; //primitive container
     list_t *external_ips; //primitive container
     char *external_name; // string
     char *external_traffic_policy; // string
     int health_check_node_port; //numeric
-    char *ip_family; // string
+    char *internal_traffic_policy; // string
+    list_t *ip_families; //primitive container
+    char *ip_family_policy; // string
+    char *load_balancer_class; // string
     char *load_balancer_ip; // string
     list_t *load_balancer_source_ranges; //primitive container
     list_t *ports; //nonprimitive container
@@ -34,18 +39,22 @@ typedef struct v1_service_spec_t {
     list_t* selector; //map
     char *session_affinity; // string
     struct v1_session_affinity_config_t *session_affinity_config; //model
-    list_t *topology_keys; //primitive container
     char *type; // string
 
 } v1_service_spec_t;
 
 v1_service_spec_t *v1_service_spec_create(
+    int allocate_load_balancer_node_ports,
     char *cluster_ip,
+    list_t *cluster_ips,
     list_t *external_ips,
     char *external_name,
     char *external_traffic_policy,
     int health_check_node_port,
-    char *ip_family,
+    char *internal_traffic_policy,
+    list_t *ip_families,
+    char *ip_family_policy,
+    char *load_balancer_class,
     char *load_balancer_ip,
     list_t *load_balancer_source_ranges,
     list_t *ports,
@@ -53,7 +62,6 @@ v1_service_spec_t *v1_service_spec_create(
     list_t* selector,
     char *session_affinity,
     v1_session_affinity_config_t *session_affinity_config,
-    list_t *topology_keys,
     char *type
 );
 

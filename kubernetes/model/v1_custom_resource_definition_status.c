@@ -52,10 +52,7 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
     cJSON *item = cJSON_CreateObject();
 
     // v1_custom_resource_definition_status->accepted_names
-    if (!v1_custom_resource_definition_status->accepted_names) {
-        goto fail;
-    }
-    
+    if(v1_custom_resource_definition_status->accepted_names) { 
     cJSON *accepted_names_local_JSON = v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_definition_status->accepted_names);
     if(accepted_names_local_JSON == NULL) {
     goto fail; //model
@@ -64,6 +61,7 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
     if(item->child == NULL) {
     goto fail;
     }
+     } 
 
 
     // v1_custom_resource_definition_status->conditions
@@ -87,10 +85,7 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
 
 
     // v1_custom_resource_definition_status->stored_versions
-    if (!v1_custom_resource_definition_status->stored_versions) {
-        goto fail;
-    }
-    
+    if(v1_custom_resource_definition_status->stored_versions) { 
     cJSON *stored_versions = cJSON_AddArrayToObject(item, "storedVersions");
     if(stored_versions == NULL) {
         goto fail; //primitive container
@@ -103,6 +98,7 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
         goto fail;
     }
     }
+     } 
 
     return item;
 fail:
@@ -118,13 +114,10 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
 
     // v1_custom_resource_definition_status->accepted_names
     cJSON *accepted_names = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "acceptedNames");
-    if (!accepted_names) {
-        goto end;
-    }
-
     v1_custom_resource_definition_names_t *accepted_names_local_nonprim = NULL;
-    
+    if (accepted_names) { 
     accepted_names_local_nonprim = v1_custom_resource_definition_names_parseFromJSON(accepted_names); //nonprimitive
+    }
 
     // v1_custom_resource_definition_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "conditions");
@@ -150,12 +143,8 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
 
     // v1_custom_resource_definition_status->stored_versions
     cJSON *stored_versions = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "storedVersions");
-    if (!stored_versions) {
-        goto end;
-    }
-
     list_t *stored_versionsList;
-    
+    if (stored_versions) { 
     cJSON *stored_versions_local;
     if(!cJSON_IsArray(stored_versions)) {
         goto end;//primitive container
@@ -170,12 +159,13 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
         }
         list_addElement(stored_versionsList , strdup(stored_versions_local->valuestring));
     }
+    }
 
 
     v1_custom_resource_definition_status_local_var = v1_custom_resource_definition_status_create (
-        accepted_names_local_nonprim,
+        accepted_names ? accepted_names_local_nonprim : NULL,
         conditions ? conditionsList : NULL,
-        stored_versionsList
+        stored_versions ? stored_versionsList : NULL
         );
 
     return v1_custom_resource_definition_status_local_var;

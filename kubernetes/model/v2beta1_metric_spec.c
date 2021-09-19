@@ -6,6 +6,7 @@
 
 
 v2beta1_metric_spec_t *v2beta1_metric_spec_create(
+    v2beta1_container_resource_metric_source_t *container_resource,
     v2beta1_external_metric_source_t *external,
     v2beta1_object_metric_source_t *object,
     v2beta1_pods_metric_source_t *pods,
@@ -16,6 +17,7 @@ v2beta1_metric_spec_t *v2beta1_metric_spec_create(
     if (!v2beta1_metric_spec_local_var) {
         return NULL;
     }
+    v2beta1_metric_spec_local_var->container_resource = container_resource;
     v2beta1_metric_spec_local_var->external = external;
     v2beta1_metric_spec_local_var->object = object;
     v2beta1_metric_spec_local_var->pods = pods;
@@ -31,6 +33,10 @@ void v2beta1_metric_spec_free(v2beta1_metric_spec_t *v2beta1_metric_spec) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v2beta1_metric_spec->container_resource) {
+        v2beta1_container_resource_metric_source_free(v2beta1_metric_spec->container_resource);
+        v2beta1_metric_spec->container_resource = NULL;
+    }
     if (v2beta1_metric_spec->external) {
         v2beta1_external_metric_source_free(v2beta1_metric_spec->external);
         v2beta1_metric_spec->external = NULL;
@@ -56,6 +62,19 @@ void v2beta1_metric_spec_free(v2beta1_metric_spec_t *v2beta1_metric_spec) {
 
 cJSON *v2beta1_metric_spec_convertToJSON(v2beta1_metric_spec_t *v2beta1_metric_spec) {
     cJSON *item = cJSON_CreateObject();
+
+    // v2beta1_metric_spec->container_resource
+    if(v2beta1_metric_spec->container_resource) { 
+    cJSON *container_resource_local_JSON = v2beta1_container_resource_metric_source_convertToJSON(v2beta1_metric_spec->container_resource);
+    if(container_resource_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "containerResource", container_resource_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+     } 
+
 
     // v2beta1_metric_spec->external
     if(v2beta1_metric_spec->external) { 
@@ -130,6 +149,13 @@ v2beta1_metric_spec_t *v2beta1_metric_spec_parseFromJSON(cJSON *v2beta1_metric_s
 
     v2beta1_metric_spec_t *v2beta1_metric_spec_local_var = NULL;
 
+    // v2beta1_metric_spec->container_resource
+    cJSON *container_resource = cJSON_GetObjectItemCaseSensitive(v2beta1_metric_specJSON, "containerResource");
+    v2beta1_container_resource_metric_source_t *container_resource_local_nonprim = NULL;
+    if (container_resource) { 
+    container_resource_local_nonprim = v2beta1_container_resource_metric_source_parseFromJSON(container_resource); //nonprimitive
+    }
+
     // v2beta1_metric_spec->external
     cJSON *external = cJSON_GetObjectItemCaseSensitive(v2beta1_metric_specJSON, "external");
     v2beta1_external_metric_source_t *external_local_nonprim = NULL;
@@ -172,6 +198,7 @@ v2beta1_metric_spec_t *v2beta1_metric_spec_parseFromJSON(cJSON *v2beta1_metric_s
 
 
     v2beta1_metric_spec_local_var = v2beta1_metric_spec_create (
+        container_resource ? container_resource_local_nonprim : NULL,
         external ? external_local_nonprim : NULL,
         object ? object_local_nonprim : NULL,
         pods ? pods_local_nonprim : NULL,
@@ -181,6 +208,10 @@ v2beta1_metric_spec_t *v2beta1_metric_spec_parseFromJSON(cJSON *v2beta1_metric_s
 
     return v2beta1_metric_spec_local_var;
 end:
+    if (container_resource_local_nonprim) {
+        v2beta1_container_resource_metric_source_free(container_resource_local_nonprim);
+        container_resource_local_nonprim = NULL;
+    }
     if (external_local_nonprim) {
         v2beta1_external_metric_source_free(external_local_nonprim);
         external_local_nonprim = NULL;

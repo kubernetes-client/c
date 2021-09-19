@@ -23,14 +23,12 @@ v1beta1_event_series_t* instantiate_v1beta1_event_series(int include_optional) {
   if (include_optional) {
     v1beta1_event_series = v1beta1_event_series_create(
       56,
-      "2013-10-20T19:20:30+01:00",
-      "0"
+      "2013-10-20T19:20:30+01:00"
     );
   } else {
     v1beta1_event_series = v1beta1_event_series_create(
       56,
-      "2013-10-20T19:20:30+01:00",
-      "0"
+      "2013-10-20T19:20:30+01:00"
     );
   }
 

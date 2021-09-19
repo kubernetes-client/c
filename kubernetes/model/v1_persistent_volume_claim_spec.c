@@ -8,6 +8,7 @@
 v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create(
     list_t *access_modes,
     v1_typed_local_object_reference_t *data_source,
+    v1_typed_local_object_reference_t *data_source_ref,
     v1_resource_requirements_t *resources,
     v1_label_selector_t *selector,
     char *storage_class_name,
@@ -20,6 +21,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create(
     }
     v1_persistent_volume_claim_spec_local_var->access_modes = access_modes;
     v1_persistent_volume_claim_spec_local_var->data_source = data_source;
+    v1_persistent_volume_claim_spec_local_var->data_source_ref = data_source_ref;
     v1_persistent_volume_claim_spec_local_var->resources = resources;
     v1_persistent_volume_claim_spec_local_var->selector = selector;
     v1_persistent_volume_claim_spec_local_var->storage_class_name = storage_class_name;
@@ -45,6 +47,10 @@ void v1_persistent_volume_claim_spec_free(v1_persistent_volume_claim_spec_t *v1_
     if (v1_persistent_volume_claim_spec->data_source) {
         v1_typed_local_object_reference_free(v1_persistent_volume_claim_spec->data_source);
         v1_persistent_volume_claim_spec->data_source = NULL;
+    }
+    if (v1_persistent_volume_claim_spec->data_source_ref) {
+        v1_typed_local_object_reference_free(v1_persistent_volume_claim_spec->data_source_ref);
+        v1_persistent_volume_claim_spec->data_source_ref = NULL;
     }
     if (v1_persistent_volume_claim_spec->resources) {
         v1_resource_requirements_free(v1_persistent_volume_claim_spec->resources);
@@ -96,6 +102,19 @@ cJSON *v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_
     goto fail; //model
     }
     cJSON_AddItemToObject(item, "dataSource", data_source_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+     } 
+
+
+    // v1_persistent_volume_claim_spec->data_source_ref
+    if(v1_persistent_volume_claim_spec->data_source_ref) { 
+    cJSON *data_source_ref_local_JSON = v1_typed_local_object_reference_convertToJSON(v1_persistent_volume_claim_spec->data_source_ref);
+    if(data_source_ref_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "dataSourceRef", data_source_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -190,6 +209,13 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     data_source_local_nonprim = v1_typed_local_object_reference_parseFromJSON(data_source); //nonprimitive
     }
 
+    // v1_persistent_volume_claim_spec->data_source_ref
+    cJSON *data_source_ref = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "dataSourceRef");
+    v1_typed_local_object_reference_t *data_source_ref_local_nonprim = NULL;
+    if (data_source_ref) { 
+    data_source_ref_local_nonprim = v1_typed_local_object_reference_parseFromJSON(data_source_ref); //nonprimitive
+    }
+
     // v1_persistent_volume_claim_spec->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "resources");
     v1_resource_requirements_t *resources_local_nonprim = NULL;
@@ -235,6 +261,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     v1_persistent_volume_claim_spec_local_var = v1_persistent_volume_claim_spec_create (
         access_modes ? access_modesList : NULL,
         data_source ? data_source_local_nonprim : NULL,
+        data_source_ref ? data_source_ref_local_nonprim : NULL,
         resources ? resources_local_nonprim : NULL,
         selector ? selector_local_nonprim : NULL,
         storage_class_name ? strdup(storage_class_name->valuestring) : NULL,
@@ -247,6 +274,10 @@ end:
     if (data_source_local_nonprim) {
         v1_typed_local_object_reference_free(data_source_local_nonprim);
         data_source_local_nonprim = NULL;
+    }
+    if (data_source_ref_local_nonprim) {
+        v1_typed_local_object_reference_free(data_source_ref_local_nonprim);
+        data_source_ref_local_nonprim = NULL;
     }
     if (resources_local_nonprim) {
         v1_resource_requirements_free(resources_local_nonprim);

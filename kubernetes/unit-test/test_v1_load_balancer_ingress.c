@@ -23,12 +23,14 @@ v1_load_balancer_ingress_t* instantiate_v1_load_balancer_ingress(int include_opt
   if (include_optional) {
     v1_load_balancer_ingress = v1_load_balancer_ingress_create(
       "0",
-      "0"
+      "0",
+      list_create()
     );
   } else {
     v1_load_balancer_ingress = v1_load_balancer_ingress_create(
       "0",
-      "0"
+      "0",
+      list_create()
     );
   }
 

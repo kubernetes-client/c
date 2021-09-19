@@ -29,6 +29,7 @@ typedef struct v1_probe_t {
     int period_seconds; //numeric
     int success_threshold; //numeric
     struct v1_tcp_socket_action_t *tcp_socket; //model
+    long termination_grace_period_seconds; //numeric
     int timeout_seconds; //numeric
 
 } v1_probe_t;
@@ -41,6 +42,7 @@ v1_probe_t *v1_probe_create(
     int period_seconds,
     int success_threshold,
     v1_tcp_socket_action_t *tcp_socket,
+    long termination_grace_period_seconds,
     int timeout_seconds
 );
 

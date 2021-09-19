@@ -24,6 +24,7 @@ typedef struct v1_volume_t v1_volume_t;
 #include "v1_csi_volume_source.h"
 #include "v1_downward_api_volume_source.h"
 #include "v1_empty_dir_volume_source.h"
+#include "v1_ephemeral_volume_source.h"
 #include "v1_fc_volume_source.h"
 #include "v1_flex_volume_source.h"
 #include "v1_flocker_volume_source.h"
@@ -56,6 +57,7 @@ typedef struct v1_volume_t {
     struct v1_csi_volume_source_t *csi; //model
     struct v1_downward_api_volume_source_t *downward_api; //model
     struct v1_empty_dir_volume_source_t *empty_dir; //model
+    struct v1_ephemeral_volume_source_t *ephemeral; //model
     struct v1_fc_volume_source_t *fc; //model
     struct v1_flex_volume_source_t *flex_volume; //model
     struct v1_flocker_volume_source_t *flocker; //model
@@ -89,6 +91,7 @@ v1_volume_t *v1_volume_create(
     v1_csi_volume_source_t *csi,
     v1_downward_api_volume_source_t *downward_api,
     v1_empty_dir_volume_source_t *empty_dir,
+    v1_ephemeral_volume_source_t *ephemeral,
     v1_fc_volume_source_t *fc,
     v1_flex_volume_source_t *flex_volume,
     v1_flocker_volume_source_t *flocker,

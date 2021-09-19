@@ -25,6 +25,7 @@ v1_volume_t* instantiate_v1_volume(int include_optional);
 #include "test_v1_csi_volume_source.c"
 #include "test_v1_downward_api_volume_source.c"
 #include "test_v1_empty_dir_volume_source.c"
+#include "test_v1_ephemeral_volume_source.c"
 #include "test_v1_fc_volume_source.c"
 #include "test_v1_flex_volume_source.c"
 #include "test_v1_flocker_volume_source.c"
@@ -69,6 +70,8 @@ v1_volume_t* instantiate_v1_volume(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_empty_dir_volume_source(0),
        // false, not to have infinite recursion
+      instantiate_v1_ephemeral_volume_source(0),
+       // false, not to have infinite recursion
       instantiate_v1_fc_volume_source(0),
        // false, not to have infinite recursion
       instantiate_v1_flex_volume_source(0),
@@ -110,6 +113,7 @@ v1_volume_t* instantiate_v1_volume(int include_optional) {
     );
   } else {
     v1_volume = v1_volume_create(
+      NULL,
       NULL,
       NULL,
       NULL,
