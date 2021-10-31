@@ -33,7 +33,7 @@ void create_configmap(apiClient_t * apiClient, char *name, char *namespace_)
                                                    NULL,
                                                    NULL,
                                                    NULL);
-
+    list_t *abc = NULL; 
     v1_config_map_t *body = v1_config_map_create(api_version,
                                                  NULL,
                                                  data,
