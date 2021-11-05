@@ -101,13 +101,21 @@ v2beta2_object_metric_source_t *v2beta2_object_metric_source_parseFromJSON(cJSON
 
     v2beta2_object_metric_source_t *v2beta2_object_metric_source_local_var = NULL;
 
+    // define the local variable for v2beta2_object_metric_source->described_object
+    v2beta2_cross_version_object_reference_t *described_object_local_nonprim = NULL;
+
+    // define the local variable for v2beta2_object_metric_source->metric
+    v2beta2_metric_identifier_t *metric_local_nonprim = NULL;
+
+    // define the local variable for v2beta2_object_metric_source->target
+    v2beta2_metric_target_t *target_local_nonprim = NULL;
+
     // v2beta2_object_metric_source->described_object
     cJSON *described_object = cJSON_GetObjectItemCaseSensitive(v2beta2_object_metric_sourceJSON, "describedObject");
     if (!described_object) {
         goto end;
     }
 
-    v2beta2_cross_version_object_reference_t *described_object_local_nonprim = NULL;
     
     described_object_local_nonprim = v2beta2_cross_version_object_reference_parseFromJSON(described_object); //nonprimitive
 
@@ -117,7 +125,6 @@ v2beta2_object_metric_source_t *v2beta2_object_metric_source_parseFromJSON(cJSON
         goto end;
     }
 
-    v2beta2_metric_identifier_t *metric_local_nonprim = NULL;
     
     metric_local_nonprim = v2beta2_metric_identifier_parseFromJSON(metric); //nonprimitive
 
@@ -127,7 +134,6 @@ v2beta2_object_metric_source_t *v2beta2_object_metric_source_parseFromJSON(cJSON
         goto end;
     }
 
-    v2beta2_metric_target_t *target_local_nonprim = NULL;
     
     target_local_nonprim = v2beta2_metric_target_parseFromJSON(target); //nonprimitive
 

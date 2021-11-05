@@ -162,6 +162,12 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     v1_job_spec_t *v1_job_spec_local_var = NULL;
 
+    // define the local variable for v1_job_spec->selector
+    v1_label_selector_t *selector_local_nonprim = NULL;
+
+    // define the local variable for v1_job_spec->_template
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
+
     // v1_job_spec->active_deadline_seconds
     cJSON *active_deadline_seconds = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "activeDeadlineSeconds");
     if (active_deadline_seconds) { 
@@ -218,7 +224,6 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "selector");
-    v1_label_selector_t *selector_local_nonprim = NULL;
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
@@ -238,7 +243,6 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
         goto end;
     }
 
-    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     
     _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 

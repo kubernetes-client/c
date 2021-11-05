@@ -109,16 +109,23 @@ v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_conf
 
     v1_node_config_status_t *v1_node_config_status_local_var = NULL;
 
+    // define the local variable for v1_node_config_status->active
+    v1_node_config_source_t *active_local_nonprim = NULL;
+
+    // define the local variable for v1_node_config_status->assigned
+    v1_node_config_source_t *assigned_local_nonprim = NULL;
+
+    // define the local variable for v1_node_config_status->last_known_good
+    v1_node_config_source_t *last_known_good_local_nonprim = NULL;
+
     // v1_node_config_status->active
     cJSON *active = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "active");
-    v1_node_config_source_t *active_local_nonprim = NULL;
     if (active) { 
     active_local_nonprim = v1_node_config_source_parseFromJSON(active); //nonprimitive
     }
 
     // v1_node_config_status->assigned
     cJSON *assigned = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "assigned");
-    v1_node_config_source_t *assigned_local_nonprim = NULL;
     if (assigned) { 
     assigned_local_nonprim = v1_node_config_source_parseFromJSON(assigned); //nonprimitive
     }
@@ -134,7 +141,6 @@ v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_conf
 
     // v1_node_config_status->last_known_good
     cJSON *last_known_good = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "lastKnownGood");
-    v1_node_config_source_t *last_known_good_local_nonprim = NULL;
     if (last_known_good) { 
     last_known_good_local_nonprim = v1_node_config_source_parseFromJSON(last_known_good); //nonprimitive
     }

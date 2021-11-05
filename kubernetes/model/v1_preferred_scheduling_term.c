@@ -71,13 +71,15 @@ v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_parseFromJSON(cJSON
 
     v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_local_var = NULL;
 
+    // define the local variable for v1_preferred_scheduling_term->preference
+    v1_node_selector_term_t *preference_local_nonprim = NULL;
+
     // v1_preferred_scheduling_term->preference
     cJSON *preference = cJSON_GetObjectItemCaseSensitive(v1_preferred_scheduling_termJSON, "preference");
     if (!preference) {
         goto end;
     }
 
-    v1_node_selector_term_t *preference_local_nonprim = NULL;
     
     preference_local_nonprim = v1_node_selector_term_parseFromJSON(preference); //nonprimitive
 

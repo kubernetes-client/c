@@ -315,6 +315,15 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     v1_node_status_t *v1_node_status_local_var = NULL;
 
+    // define the local variable for v1_node_status->config
+    v1_node_config_status_t *config_local_nonprim = NULL;
+
+    // define the local variable for v1_node_status->daemon_endpoints
+    v1_node_daemon_endpoints_t *daemon_endpoints_local_nonprim = NULL;
+
+    // define the local variable for v1_node_status->node_info
+    v1_node_system_info_t *node_info_local_nonprim = NULL;
+
     // v1_node_status->addresses
     cJSON *addresses = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "addresses");
     list_t *addressesList;
@@ -405,14 +414,12 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->config
     cJSON *config = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "config");
-    v1_node_config_status_t *config_local_nonprim = NULL;
     if (config) { 
     config_local_nonprim = v1_node_config_status_parseFromJSON(config); //nonprimitive
     }
 
     // v1_node_status->daemon_endpoints
     cJSON *daemon_endpoints = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "daemonEndpoints");
-    v1_node_daemon_endpoints_t *daemon_endpoints_local_nonprim = NULL;
     if (daemon_endpoints) { 
     daemon_endpoints_local_nonprim = v1_node_daemon_endpoints_parseFromJSON(daemon_endpoints); //nonprimitive
     }
@@ -441,7 +448,6 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->node_info
     cJSON *node_info = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "nodeInfo");
-    v1_node_system_info_t *node_info_local_nonprim = NULL;
     if (node_info) { 
     node_info_local_nonprim = v1_node_system_info_parseFromJSON(node_info); //nonprimitive
     }

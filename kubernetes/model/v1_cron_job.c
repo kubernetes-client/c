@@ -123,6 +123,15 @@ v1_cron_job_t *v1_cron_job_parseFromJSON(cJSON *v1_cron_jobJSON){
 
     v1_cron_job_t *v1_cron_job_local_var = NULL;
 
+    // define the local variable for v1_cron_job->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_cron_job->spec
+    v1_cron_job_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_cron_job->status
+    v1_cron_job_status_t *status_local_nonprim = NULL;
+
     // v1_cron_job->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_cron_jobJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1_cron_job_t *v1_cron_job_parseFromJSON(cJSON *v1_cron_jobJSON){
 
     // v1_cron_job->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_cron_jobJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_cron_job->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_cron_jobJSON, "spec");
-    v1_cron_job_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_cron_job_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_cron_job->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_cron_jobJSON, "status");
-    v1_cron_job_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_cron_job_status_parseFromJSON(status); //nonprimitive
     }

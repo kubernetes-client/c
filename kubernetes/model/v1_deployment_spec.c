@@ -149,6 +149,15 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
 
     v1_deployment_spec_t *v1_deployment_spec_local_var = NULL;
 
+    // define the local variable for v1_deployment_spec->selector
+    v1_label_selector_t *selector_local_nonprim = NULL;
+
+    // define the local variable for v1_deployment_spec->strategy
+    v1_deployment_strategy_t *strategy_local_nonprim = NULL;
+
+    // define the local variable for v1_deployment_spec->_template
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
+
     // v1_deployment_spec->min_ready_seconds
     cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "minReadySeconds");
     if (min_ready_seconds) { 
@@ -200,13 +209,11 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
         goto end;
     }
 
-    v1_label_selector_t *selector_local_nonprim = NULL;
     
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
 
     // v1_deployment_spec->strategy
     cJSON *strategy = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "strategy");
-    v1_deployment_strategy_t *strategy_local_nonprim = NULL;
     if (strategy) { 
     strategy_local_nonprim = v1_deployment_strategy_parseFromJSON(strategy); //nonprimitive
     }
@@ -217,7 +224,6 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
         goto end;
     }
 
-    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     
     _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 

@@ -76,16 +76,20 @@ v1_pod_template_spec_t *v1_pod_template_spec_parseFromJSON(cJSON *v1_pod_templat
 
     v1_pod_template_spec_t *v1_pod_template_spec_local_var = NULL;
 
+    // define the local variable for v1_pod_template_spec->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_pod_template_spec->spec
+    v1_pod_spec_t *spec_local_nonprim = NULL;
+
     // v1_pod_template_spec->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_pod_template_specJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_pod_template_spec->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_pod_template_specJSON, "spec");
-    v1_pod_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_pod_spec_parseFromJSON(spec); //nonprimitive
     }

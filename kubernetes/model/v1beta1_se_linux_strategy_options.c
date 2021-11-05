@@ -73,6 +73,9 @@ v1beta1_se_linux_strategy_options_t *v1beta1_se_linux_strategy_options_parseFrom
 
     v1beta1_se_linux_strategy_options_t *v1beta1_se_linux_strategy_options_local_var = NULL;
 
+    // define the local variable for v1beta1_se_linux_strategy_options->se_linux_options
+    v1_se_linux_options_t *se_linux_options_local_nonprim = NULL;
+
     // v1beta1_se_linux_strategy_options->rule
     cJSON *rule = cJSON_GetObjectItemCaseSensitive(v1beta1_se_linux_strategy_optionsJSON, "rule");
     if (!rule) {
@@ -87,7 +90,6 @@ v1beta1_se_linux_strategy_options_t *v1beta1_se_linux_strategy_options_parseFrom
 
     // v1beta1_se_linux_strategy_options->se_linux_options
     cJSON *se_linux_options = cJSON_GetObjectItemCaseSensitive(v1beta1_se_linux_strategy_optionsJSON, "seLinuxOptions");
-    v1_se_linux_options_t *se_linux_options_local_nonprim = NULL;
     if (se_linux_options) { 
     se_linux_options_local_nonprim = v1_se_linux_options_parseFromJSON(se_linux_options); //nonprimitive
     }

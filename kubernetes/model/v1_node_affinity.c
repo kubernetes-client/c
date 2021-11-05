@@ -86,6 +86,9 @@ v1_node_affinity_t *v1_node_affinity_parseFromJSON(cJSON *v1_node_affinityJSON){
 
     v1_node_affinity_t *v1_node_affinity_local_var = NULL;
 
+    // define the local variable for v1_node_affinity->required_during_scheduling_ignored_during_execution
+    v1_node_selector_t *required_during_scheduling_ignored_during_execution_local_nonprim = NULL;
+
     // v1_node_affinity->preferred_during_scheduling_ignored_during_execution
     cJSON *preferred_during_scheduling_ignored_during_execution = cJSON_GetObjectItemCaseSensitive(v1_node_affinityJSON, "preferredDuringSchedulingIgnoredDuringExecution");
     list_t *preferred_during_scheduling_ignored_during_executionList;
@@ -110,7 +113,6 @@ v1_node_affinity_t *v1_node_affinity_parseFromJSON(cJSON *v1_node_affinityJSON){
 
     // v1_node_affinity->required_during_scheduling_ignored_during_execution
     cJSON *required_during_scheduling_ignored_during_execution = cJSON_GetObjectItemCaseSensitive(v1_node_affinityJSON, "requiredDuringSchedulingIgnoredDuringExecution");
-    v1_node_selector_t *required_during_scheduling_ignored_during_execution_local_nonprim = NULL;
     if (required_during_scheduling_ignored_during_execution) { 
     required_during_scheduling_ignored_during_execution_local_nonprim = v1_node_selector_parseFromJSON(required_during_scheduling_ignored_during_execution); //nonprimitive
     }

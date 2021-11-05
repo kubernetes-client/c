@@ -116,6 +116,9 @@ v1_limit_range_list_t *v1_limit_range_list_parseFromJSON(cJSON *v1_limit_range_l
 
     v1_limit_range_list_t *v1_limit_range_list_local_var = NULL;
 
+    // define the local variable for v1_limit_range_list->metadata
+    v1_list_meta_t *metadata_local_nonprim = NULL;
+
     // v1_limit_range_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_limit_range_listJSON, "apiVersion");
     if (api_version) { 
@@ -161,7 +164,6 @@ v1_limit_range_list_t *v1_limit_range_list_parseFromJSON(cJSON *v1_limit_range_l
 
     // v1_limit_range_list->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_limit_range_listJSON, "metadata");
-    v1_list_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }

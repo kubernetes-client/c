@@ -71,13 +71,15 @@ v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_parseFromJSON(cJS
 
     v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_local_var = NULL;
 
+    // define the local variable for v1_weighted_pod_affinity_term->pod_affinity_term
+    v1_pod_affinity_term_t *pod_affinity_term_local_nonprim = NULL;
+
     // v1_weighted_pod_affinity_term->pod_affinity_term
     cJSON *pod_affinity_term = cJSON_GetObjectItemCaseSensitive(v1_weighted_pod_affinity_termJSON, "podAffinityTerm");
     if (!pod_affinity_term) {
         goto end;
     }
 
-    v1_pod_affinity_term_t *pod_affinity_term_local_nonprim = NULL;
     
     pod_affinity_term_local_nonprim = v1_pod_affinity_term_parseFromJSON(pod_affinity_term); //nonprimitive
 

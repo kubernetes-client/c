@@ -123,6 +123,15 @@ v1_persistent_volume_claim_t *v1_persistent_volume_claim_parseFromJSON(cJSON *v1
 
     v1_persistent_volume_claim_t *v1_persistent_volume_claim_local_var = NULL;
 
+    // define the local variable for v1_persistent_volume_claim->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_claim->spec
+    v1_persistent_volume_claim_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_claim->status
+    v1_persistent_volume_claim_status_t *status_local_nonprim = NULL;
+
     // v1_persistent_volume_claim->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claimJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1_persistent_volume_claim_t *v1_persistent_volume_claim_parseFromJSON(cJSON *v1
 
     // v1_persistent_volume_claim->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claimJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_persistent_volume_claim->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claimJSON, "spec");
-    v1_persistent_volume_claim_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_persistent_volume_claim_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_persistent_volume_claim->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claimJSON, "status");
-    v1_persistent_volume_claim_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_persistent_volume_claim_status_parseFromJSON(status); //nonprimitive
     }

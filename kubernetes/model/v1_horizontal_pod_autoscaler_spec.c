@@ -91,6 +91,9 @@ v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_parseFrom
 
     v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_local_var = NULL;
 
+    // define the local variable for v1_horizontal_pod_autoscaler_spec->scale_target_ref
+    v1_cross_version_object_reference_t *scale_target_ref_local_nonprim = NULL;
+
     // v1_horizontal_pod_autoscaler_spec->max_replicas
     cJSON *max_replicas = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_specJSON, "maxReplicas");
     if (!max_replicas) {
@@ -118,7 +121,6 @@ v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_parseFrom
         goto end;
     }
 
-    v1_cross_version_object_reference_t *scale_target_ref_local_nonprim = NULL;
     
     scale_target_ref_local_nonprim = v1_cross_version_object_reference_parseFromJSON(scale_target_ref); //nonprimitive
 

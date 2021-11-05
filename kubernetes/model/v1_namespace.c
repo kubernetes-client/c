@@ -123,6 +123,15 @@ v1_namespace_t *v1_namespace_parseFromJSON(cJSON *v1_namespaceJSON){
 
     v1_namespace_t *v1_namespace_local_var = NULL;
 
+    // define the local variable for v1_namespace->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_namespace->spec
+    v1_namespace_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_namespace->status
+    v1_namespace_status_t *status_local_nonprim = NULL;
+
     // v1_namespace->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_namespaceJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1_namespace_t *v1_namespace_parseFromJSON(cJSON *v1_namespaceJSON){
 
     // v1_namespace->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_namespaceJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_namespace->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_namespaceJSON, "spec");
-    v1_namespace_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_namespace_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_namespace->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_namespaceJSON, "status");
-    v1_namespace_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_namespace_status_parseFromJSON(status); //nonprimitive
     }

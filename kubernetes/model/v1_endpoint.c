@@ -197,6 +197,15 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     v1_endpoint_t *v1_endpoint_local_var = NULL;
 
+    // define the local variable for v1_endpoint->conditions
+    v1_endpoint_conditions_t *conditions_local_nonprim = NULL;
+
+    // define the local variable for v1_endpoint->hints
+    v1_endpoint_hints_t *hints_local_nonprim = NULL;
+
+    // define the local variable for v1_endpoint->target_ref
+    v1_object_reference_t *target_ref_local_nonprim = NULL;
+
     // v1_endpoint->addresses
     cJSON *addresses = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "addresses");
     if (!addresses) {
@@ -222,7 +231,6 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     // v1_endpoint->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "conditions");
-    v1_endpoint_conditions_t *conditions_local_nonprim = NULL;
     if (conditions) { 
     conditions_local_nonprim = v1_endpoint_conditions_parseFromJSON(conditions); //nonprimitive
     }
@@ -251,7 +259,6 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     // v1_endpoint->hints
     cJSON *hints = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "hints");
-    v1_endpoint_hints_t *hints_local_nonprim = NULL;
     if (hints) { 
     hints_local_nonprim = v1_endpoint_hints_parseFromJSON(hints); //nonprimitive
     }
@@ -276,7 +283,6 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     // v1_endpoint->target_ref
     cJSON *target_ref = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "targetRef");
-    v1_object_reference_t *target_ref_local_nonprim = NULL;
     if (target_ref) { 
     target_ref_local_nonprim = v1_object_reference_parseFromJSON(target_ref); //nonprimitive
     }

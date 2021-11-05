@@ -67,6 +67,9 @@ v1beta1_limited_priority_level_configuration_t *v1beta1_limited_priority_level_c
 
     v1beta1_limited_priority_level_configuration_t *v1beta1_limited_priority_level_configuration_local_var = NULL;
 
+    // define the local variable for v1beta1_limited_priority_level_configuration->limit_response
+    v1beta1_limit_response_t *limit_response_local_nonprim = NULL;
+
     // v1beta1_limited_priority_level_configuration->assured_concurrency_shares
     cJSON *assured_concurrency_shares = cJSON_GetObjectItemCaseSensitive(v1beta1_limited_priority_level_configurationJSON, "assuredConcurrencyShares");
     if (assured_concurrency_shares) { 
@@ -78,7 +81,6 @@ v1beta1_limited_priority_level_configuration_t *v1beta1_limited_priority_level_c
 
     // v1beta1_limited_priority_level_configuration->limit_response
     cJSON *limit_response = cJSON_GetObjectItemCaseSensitive(v1beta1_limited_priority_level_configurationJSON, "limitResponse");
-    v1beta1_limit_response_t *limit_response_local_nonprim = NULL;
     if (limit_response) { 
     limit_response_local_nonprim = v1beta1_limit_response_parseFromJSON(limit_response); //nonprimitive
     }

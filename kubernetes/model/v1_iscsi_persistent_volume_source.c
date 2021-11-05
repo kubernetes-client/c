@@ -199,6 +199,9 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
 
     v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_local_var = NULL;
 
+    // define the local variable for v1_iscsi_persistent_volume_source->secret_ref
+    v1_secret_reference_t *secret_ref_local_nonprim = NULL;
+
     // v1_iscsi_persistent_volume_source->chap_auth_discovery
     cJSON *chap_auth_discovery = cJSON_GetObjectItemCaseSensitive(v1_iscsi_persistent_volume_sourceJSON, "chapAuthDiscovery");
     if (chap_auth_discovery) { 
@@ -299,7 +302,6 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
 
     // v1_iscsi_persistent_volume_source->secret_ref
     cJSON *secret_ref = cJSON_GetObjectItemCaseSensitive(v1_iscsi_persistent_volume_sourceJSON, "secretRef");
-    v1_secret_reference_t *secret_ref_local_nonprim = NULL;
     if (secret_ref) { 
     secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(secret_ref); //nonprimitive
     }

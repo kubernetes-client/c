@@ -71,9 +71,11 @@ v1_deployment_strategy_t *v1_deployment_strategy_parseFromJSON(cJSON *v1_deploym
 
     v1_deployment_strategy_t *v1_deployment_strategy_local_var = NULL;
 
+    // define the local variable for v1_deployment_strategy->rolling_update
+    v1_rolling_update_deployment_t *rolling_update_local_nonprim = NULL;
+
     // v1_deployment_strategy->rolling_update
     cJSON *rolling_update = cJSON_GetObjectItemCaseSensitive(v1_deployment_strategyJSON, "rollingUpdate");
-    v1_rolling_update_deployment_t *rolling_update_local_nonprim = NULL;
     if (rolling_update) { 
     rolling_update_local_nonprim = v1_rolling_update_deployment_parseFromJSON(rolling_update); //nonprimitive
     }

@@ -112,9 +112,11 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
 
     v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_local_var = NULL;
 
+    // define the local variable for v1_custom_resource_definition_status->accepted_names
+    v1_custom_resource_definition_names_t *accepted_names_local_nonprim = NULL;
+
     // v1_custom_resource_definition_status->accepted_names
     cJSON *accepted_names = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "acceptedNames");
-    v1_custom_resource_definition_names_t *accepted_names_local_nonprim = NULL;
     if (accepted_names) { 
     accepted_names_local_nonprim = v1_custom_resource_definition_names_parseFromJSON(accepted_names); //nonprimitive
     }

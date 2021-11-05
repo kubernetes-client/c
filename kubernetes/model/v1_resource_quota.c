@@ -123,6 +123,15 @@ v1_resource_quota_t *v1_resource_quota_parseFromJSON(cJSON *v1_resource_quotaJSO
 
     v1_resource_quota_t *v1_resource_quota_local_var = NULL;
 
+    // define the local variable for v1_resource_quota->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_resource_quota->spec
+    v1_resource_quota_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_resource_quota->status
+    v1_resource_quota_status_t *status_local_nonprim = NULL;
+
     // v1_resource_quota->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1_resource_quota_t *v1_resource_quota_parseFromJSON(cJSON *v1_resource_quotaJSO
 
     // v1_resource_quota->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_resource_quota->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "spec");
-    v1_resource_quota_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_resource_quota_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_resource_quota->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "status");
-    v1_resource_quota_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_resource_quota_status_parseFromJSON(status); //nonprimitive
     }

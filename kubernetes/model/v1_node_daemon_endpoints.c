@@ -57,9 +57,11 @@ v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_parseFromJSON(cJSON *v1_nod
 
     v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_local_var = NULL;
 
+    // define the local variable for v1_node_daemon_endpoints->kubelet_endpoint
+    v1_daemon_endpoint_t *kubelet_endpoint_local_nonprim = NULL;
+
     // v1_node_daemon_endpoints->kubelet_endpoint
     cJSON *kubelet_endpoint = cJSON_GetObjectItemCaseSensitive(v1_node_daemon_endpointsJSON, "kubeletEndpoint");
-    v1_daemon_endpoint_t *kubelet_endpoint_local_nonprim = NULL;
     if (kubelet_endpoint) { 
     kubelet_endpoint_local_nonprim = v1_daemon_endpoint_parseFromJSON(kubelet_endpoint); //nonprimitive
     }

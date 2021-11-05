@@ -158,6 +158,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     v1_job_status_t *v1_job_status_local_var = NULL;
 
+    // define the local variable for v1_job_status->uncounted_terminated_pods
+    v1_uncounted_terminated_pods_t *uncounted_terminated_pods_local_nonprim = NULL;
+
     // v1_job_status->active
     cJSON *active = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "active");
     if (active) { 
@@ -236,7 +239,6 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->uncounted_terminated_pods
     cJSON *uncounted_terminated_pods = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "uncountedTerminatedPods");
-    v1_uncounted_terminated_pods_t *uncounted_terminated_pods_local_nonprim = NULL;
     if (uncounted_terminated_pods) { 
     uncounted_terminated_pods_local_nonprim = v1_uncounted_terminated_pods_parseFromJSON(uncounted_terminated_pods); //nonprimitive
     }

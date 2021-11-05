@@ -161,6 +161,9 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
 
     v1_api_group_t *v1_api_group_local_var = NULL;
 
+    // define the local variable for v1_api_group->preferred_version
+    v1_group_version_for_discovery_t *preferred_version_local_nonprim = NULL;
+
     // v1_api_group->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "apiVersion");
     if (api_version) { 
@@ -193,7 +196,6 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
 
     // v1_api_group->preferred_version
     cJSON *preferred_version = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "preferredVersion");
-    v1_group_version_for_discovery_t *preferred_version_local_nonprim = NULL;
     if (preferred_version) { 
     preferred_version_local_nonprim = v1_group_version_for_discovery_parseFromJSON(preferred_version); //nonprimitive
     }

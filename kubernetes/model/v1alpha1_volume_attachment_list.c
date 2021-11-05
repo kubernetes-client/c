@@ -116,6 +116,9 @@ v1alpha1_volume_attachment_list_t *v1alpha1_volume_attachment_list_parseFromJSON
 
     v1alpha1_volume_attachment_list_t *v1alpha1_volume_attachment_list_local_var = NULL;
 
+    // define the local variable for v1alpha1_volume_attachment_list->metadata
+    v1_list_meta_t *metadata_local_nonprim = NULL;
+
     // v1alpha1_volume_attachment_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attachment_listJSON, "apiVersion");
     if (api_version) { 
@@ -161,7 +164,6 @@ v1alpha1_volume_attachment_list_t *v1alpha1_volume_attachment_list_parseFromJSON
 
     // v1alpha1_volume_attachment_list->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attachment_listJSON, "metadata");
-    v1_list_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }

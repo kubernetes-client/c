@@ -125,6 +125,15 @@ v1_subject_access_review_t *v1_subject_access_review_parseFromJSON(cJSON *v1_sub
 
     v1_subject_access_review_t *v1_subject_access_review_local_var = NULL;
 
+    // define the local variable for v1_subject_access_review->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_subject_access_review->spec
+    v1_subject_access_review_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_subject_access_review->status
+    v1_subject_access_review_status_t *status_local_nonprim = NULL;
+
     // v1_subject_access_review->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_subject_access_reviewJSON, "apiVersion");
     if (api_version) { 
@@ -145,7 +154,6 @@ v1_subject_access_review_t *v1_subject_access_review_parseFromJSON(cJSON *v1_sub
 
     // v1_subject_access_review->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_subject_access_reviewJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -156,13 +164,11 @@ v1_subject_access_review_t *v1_subject_access_review_parseFromJSON(cJSON *v1_sub
         goto end;
     }
 
-    v1_subject_access_review_spec_t *spec_local_nonprim = NULL;
     
     spec_local_nonprim = v1_subject_access_review_spec_parseFromJSON(spec); //nonprimitive
 
     // v1_subject_access_review->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_subject_access_reviewJSON, "status");
-    v1_subject_access_review_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_subject_access_review_status_parseFromJSON(status); //nonprimitive
     }

@@ -116,6 +116,9 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
 
     v1_controller_revision_t *v1_controller_revision_local_var = NULL;
 
+    // define the local variable for v1_controller_revision->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
     // v1_controller_revision->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "apiVersion");
     if (api_version) { 
@@ -143,7 +146,6 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
 
     // v1_controller_revision->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }

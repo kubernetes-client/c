@@ -149,37 +149,47 @@ v2beta2_metric_status_t *v2beta2_metric_status_parseFromJSON(cJSON *v2beta2_metr
 
     v2beta2_metric_status_t *v2beta2_metric_status_local_var = NULL;
 
+    // define the local variable for v2beta2_metric_status->container_resource
+    v2beta2_container_resource_metric_status_t *container_resource_local_nonprim = NULL;
+
+    // define the local variable for v2beta2_metric_status->external
+    v2beta2_external_metric_status_t *external_local_nonprim = NULL;
+
+    // define the local variable for v2beta2_metric_status->object
+    v2beta2_object_metric_status_t *object_local_nonprim = NULL;
+
+    // define the local variable for v2beta2_metric_status->pods
+    v2beta2_pods_metric_status_t *pods_local_nonprim = NULL;
+
+    // define the local variable for v2beta2_metric_status->resource
+    v2beta2_resource_metric_status_t *resource_local_nonprim = NULL;
+
     // v2beta2_metric_status->container_resource
     cJSON *container_resource = cJSON_GetObjectItemCaseSensitive(v2beta2_metric_statusJSON, "containerResource");
-    v2beta2_container_resource_metric_status_t *container_resource_local_nonprim = NULL;
     if (container_resource) { 
     container_resource_local_nonprim = v2beta2_container_resource_metric_status_parseFromJSON(container_resource); //nonprimitive
     }
 
     // v2beta2_metric_status->external
     cJSON *external = cJSON_GetObjectItemCaseSensitive(v2beta2_metric_statusJSON, "external");
-    v2beta2_external_metric_status_t *external_local_nonprim = NULL;
     if (external) { 
     external_local_nonprim = v2beta2_external_metric_status_parseFromJSON(external); //nonprimitive
     }
 
     // v2beta2_metric_status->object
     cJSON *object = cJSON_GetObjectItemCaseSensitive(v2beta2_metric_statusJSON, "object");
-    v2beta2_object_metric_status_t *object_local_nonprim = NULL;
     if (object) { 
     object_local_nonprim = v2beta2_object_metric_status_parseFromJSON(object); //nonprimitive
     }
 
     // v2beta2_metric_status->pods
     cJSON *pods = cJSON_GetObjectItemCaseSensitive(v2beta2_metric_statusJSON, "pods");
-    v2beta2_pods_metric_status_t *pods_local_nonprim = NULL;
     if (pods) { 
     pods_local_nonprim = v2beta2_pods_metric_status_parseFromJSON(pods); //nonprimitive
     }
 
     // v2beta2_metric_status->resource
     cJSON *resource = cJSON_GetObjectItemCaseSensitive(v2beta2_metric_statusJSON, "resource");
-    v2beta2_resource_metric_status_t *resource_local_nonprim = NULL;
     if (resource) { 
     resource_local_nonprim = v2beta2_resource_metric_status_parseFromJSON(resource); //nonprimitive
     }

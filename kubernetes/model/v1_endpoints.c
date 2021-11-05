@@ -114,6 +114,9 @@ v1_endpoints_t *v1_endpoints_parseFromJSON(cJSON *v1_endpointsJSON){
 
     v1_endpoints_t *v1_endpoints_local_var = NULL;
 
+    // define the local variable for v1_endpoints->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
     // v1_endpoints->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "apiVersion");
     if (api_version) { 
@@ -134,7 +137,6 @@ v1_endpoints_t *v1_endpoints_parseFromJSON(cJSON *v1_endpointsJSON){
 
     // v1_endpoints->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }

@@ -95,23 +95,29 @@ v1_container_state_t *v1_container_state_parseFromJSON(cJSON *v1_container_state
 
     v1_container_state_t *v1_container_state_local_var = NULL;
 
+    // define the local variable for v1_container_state->running
+    v1_container_state_running_t *running_local_nonprim = NULL;
+
+    // define the local variable for v1_container_state->terminated
+    v1_container_state_terminated_t *terminated_local_nonprim = NULL;
+
+    // define the local variable for v1_container_state->waiting
+    v1_container_state_waiting_t *waiting_local_nonprim = NULL;
+
     // v1_container_state->running
     cJSON *running = cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "running");
-    v1_container_state_running_t *running_local_nonprim = NULL;
     if (running) { 
     running_local_nonprim = v1_container_state_running_parseFromJSON(running); //nonprimitive
     }
 
     // v1_container_state->terminated
     cJSON *terminated = cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "terminated");
-    v1_container_state_terminated_t *terminated_local_nonprim = NULL;
     if (terminated) { 
     terminated_local_nonprim = v1_container_state_terminated_parseFromJSON(terminated); //nonprimitive
     }
 
     // v1_container_state->waiting
     cJSON *waiting = cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "waiting");
-    v1_container_state_waiting_t *waiting_local_nonprim = NULL;
     if (waiting) { 
     waiting_local_nonprim = v1_container_state_waiting_parseFromJSON(waiting); //nonprimitive
     }

@@ -123,6 +123,15 @@ v1_replication_controller_t *v1_replication_controller_parseFromJSON(cJSON *v1_r
 
     v1_replication_controller_t *v1_replication_controller_local_var = NULL;
 
+    // define the local variable for v1_replication_controller->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_replication_controller->spec
+    v1_replication_controller_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_replication_controller->status
+    v1_replication_controller_status_t *status_local_nonprim = NULL;
+
     // v1_replication_controller->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_replication_controllerJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1_replication_controller_t *v1_replication_controller_parseFromJSON(cJSON *v1_r
 
     // v1_replication_controller->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_replication_controllerJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_replication_controller->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_replication_controllerJSON, "spec");
-    v1_replication_controller_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_replication_controller_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_replication_controller->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_replication_controllerJSON, "status");
-    v1_replication_controller_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_replication_controller_status_parseFromJSON(status); //nonprimitive
     }

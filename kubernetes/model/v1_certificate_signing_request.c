@@ -125,6 +125,15 @@ v1_certificate_signing_request_t *v1_certificate_signing_request_parseFromJSON(c
 
     v1_certificate_signing_request_t *v1_certificate_signing_request_local_var = NULL;
 
+    // define the local variable for v1_certificate_signing_request->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_certificate_signing_request->spec
+    v1_certificate_signing_request_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_certificate_signing_request->status
+    v1_certificate_signing_request_status_t *status_local_nonprim = NULL;
+
     // v1_certificate_signing_request->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_requestJSON, "apiVersion");
     if (api_version) { 
@@ -145,7 +154,6 @@ v1_certificate_signing_request_t *v1_certificate_signing_request_parseFromJSON(c
 
     // v1_certificate_signing_request->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_requestJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -156,13 +164,11 @@ v1_certificate_signing_request_t *v1_certificate_signing_request_parseFromJSON(c
         goto end;
     }
 
-    v1_certificate_signing_request_spec_t *spec_local_nonprim = NULL;
     
     spec_local_nonprim = v1_certificate_signing_request_spec_parseFromJSON(spec); //nonprimitive
 
     // v1_certificate_signing_request->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_requestJSON, "status");
-    v1_certificate_signing_request_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_certificate_signing_request_status_parseFromJSON(status); //nonprimitive
     }

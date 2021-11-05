@@ -85,9 +85,11 @@ v1_webhook_conversion_t *v1_webhook_conversion_parseFromJSON(cJSON *v1_webhook_c
 
     v1_webhook_conversion_t *v1_webhook_conversion_local_var = NULL;
 
+    // define the local variable for v1_webhook_conversion->client_config
+    apiextensions_v1_webhook_client_config_t *client_config_local_nonprim = NULL;
+
     // v1_webhook_conversion->client_config
     cJSON *client_config = cJSON_GetObjectItemCaseSensitive(v1_webhook_conversionJSON, "clientConfig");
-    apiextensions_v1_webhook_client_config_t *client_config_local_nonprim = NULL;
     if (client_config) { 
     client_config_local_nonprim = apiextensions_v1_webhook_client_config_parseFromJSON(client_config); //nonprimitive
     }

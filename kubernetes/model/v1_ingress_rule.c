@@ -71,6 +71,9 @@ v1_ingress_rule_t *v1_ingress_rule_parseFromJSON(cJSON *v1_ingress_ruleJSON){
 
     v1_ingress_rule_t *v1_ingress_rule_local_var = NULL;
 
+    // define the local variable for v1_ingress_rule->http
+    v1_http_ingress_rule_value_t *http_local_nonprim = NULL;
+
     // v1_ingress_rule->host
     cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_ingress_ruleJSON, "host");
     if (host) { 
@@ -82,7 +85,6 @@ v1_ingress_rule_t *v1_ingress_rule_parseFromJSON(cJSON *v1_ingress_ruleJSON){
 
     // v1_ingress_rule->http
     cJSON *http = cJSON_GetObjectItemCaseSensitive(v1_ingress_ruleJSON, "http");
-    v1_http_ingress_rule_value_t *http_local_nonprim = NULL;
     if (http) { 
     http_local_nonprim = v1_http_ingress_rule_value_parseFromJSON(http); //nonprimitive
     }

@@ -124,6 +124,12 @@ v2beta1_object_metric_status_t *v2beta1_object_metric_status_parseFromJSON(cJSON
 
     v2beta1_object_metric_status_t *v2beta1_object_metric_status_local_var = NULL;
 
+    // define the local variable for v2beta1_object_metric_status->selector
+    v1_label_selector_t *selector_local_nonprim = NULL;
+
+    // define the local variable for v2beta1_object_metric_status->target
+    v2beta1_cross_version_object_reference_t *target_local_nonprim = NULL;
+
     // v2beta1_object_metric_status->average_value
     cJSON *average_value = cJSON_GetObjectItemCaseSensitive(v2beta1_object_metric_statusJSON, "averageValue");
     if (average_value) { 
@@ -159,7 +165,6 @@ v2beta1_object_metric_status_t *v2beta1_object_metric_status_parseFromJSON(cJSON
 
     // v2beta1_object_metric_status->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v2beta1_object_metric_statusJSON, "selector");
-    v1_label_selector_t *selector_local_nonprim = NULL;
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
@@ -170,7 +175,6 @@ v2beta1_object_metric_status_t *v2beta1_object_metric_status_parseFromJSON(cJSON
         goto end;
     }
 
-    v2beta1_cross_version_object_reference_t *target_local_nonprim = NULL;
     
     target_local_nonprim = v2beta1_cross_version_object_reference_parseFromJSON(target); //nonprimitive
 

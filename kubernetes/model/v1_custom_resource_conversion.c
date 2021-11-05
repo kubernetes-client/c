@@ -73,6 +73,9 @@ v1_custom_resource_conversion_t *v1_custom_resource_conversion_parseFromJSON(cJS
 
     v1_custom_resource_conversion_t *v1_custom_resource_conversion_local_var = NULL;
 
+    // define the local variable for v1_custom_resource_conversion->webhook
+    v1_webhook_conversion_t *webhook_local_nonprim = NULL;
+
     // v1_custom_resource_conversion->strategy
     cJSON *strategy = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_conversionJSON, "strategy");
     if (!strategy) {
@@ -87,7 +90,6 @@ v1_custom_resource_conversion_t *v1_custom_resource_conversion_parseFromJSON(cJS
 
     // v1_custom_resource_conversion->webhook
     cJSON *webhook = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_conversionJSON, "webhook");
-    v1_webhook_conversion_t *webhook_local_nonprim = NULL;
     if (webhook) { 
     webhook_local_nonprim = v1_webhook_conversion_parseFromJSON(webhook); //nonprimitive
     }

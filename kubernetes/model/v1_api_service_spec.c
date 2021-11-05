@@ -133,6 +133,9 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     v1_api_service_spec_t *v1_api_service_spec_local_var = NULL;
 
+    // define the local variable for v1_api_service_spec->service
+    apiregistration_v1_service_reference_t *service_local_nonprim = NULL;
+
     // v1_api_service_spec->ca_bundle
     cJSON *ca_bundle = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "caBundle");
     if (ca_bundle) { 
@@ -174,7 +177,6 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     // v1_api_service_spec->service
     cJSON *service = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "service");
-    apiregistration_v1_service_reference_t *service_local_nonprim = NULL;
     if (service) { 
     service_local_nonprim = apiregistration_v1_service_reference_parseFromJSON(service); //nonprimitive
     }

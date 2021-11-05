@@ -76,9 +76,11 @@ v1_custom_resource_subresources_t *v1_custom_resource_subresources_parseFromJSON
 
     v1_custom_resource_subresources_t *v1_custom_resource_subresources_local_var = NULL;
 
+    // define the local variable for v1_custom_resource_subresources->scale
+    v1_custom_resource_subresource_scale_t *scale_local_nonprim = NULL;
+
     // v1_custom_resource_subresources->scale
     cJSON *scale = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresourcesJSON, "scale");
-    v1_custom_resource_subresource_scale_t *scale_local_nonprim = NULL;
     if (scale) { 
     scale_local_nonprim = v1_custom_resource_subresource_scale_parseFromJSON(scale); //nonprimitive
     }

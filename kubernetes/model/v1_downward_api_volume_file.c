@@ -102,9 +102,14 @@ v1_downward_api_volume_file_t *v1_downward_api_volume_file_parseFromJSON(cJSON *
 
     v1_downward_api_volume_file_t *v1_downward_api_volume_file_local_var = NULL;
 
+    // define the local variable for v1_downward_api_volume_file->field_ref
+    v1_object_field_selector_t *field_ref_local_nonprim = NULL;
+
+    // define the local variable for v1_downward_api_volume_file->resource_field_ref
+    v1_resource_field_selector_t *resource_field_ref_local_nonprim = NULL;
+
     // v1_downward_api_volume_file->field_ref
     cJSON *field_ref = cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_fileJSON, "fieldRef");
-    v1_object_field_selector_t *field_ref_local_nonprim = NULL;
     if (field_ref) { 
     field_ref_local_nonprim = v1_object_field_selector_parseFromJSON(field_ref); //nonprimitive
     }
@@ -132,7 +137,6 @@ v1_downward_api_volume_file_t *v1_downward_api_volume_file_parseFromJSON(cJSON *
 
     // v1_downward_api_volume_file->resource_field_ref
     cJSON *resource_field_ref = cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_fileJSON, "resourceFieldRef");
-    v1_resource_field_selector_t *resource_field_ref_local_nonprim = NULL;
     if (resource_field_ref) { 
     resource_field_ref_local_nonprim = v1_resource_field_selector_parseFromJSON(resource_field_ref); //nonprimitive
     }

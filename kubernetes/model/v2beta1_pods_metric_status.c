@@ -89,6 +89,9 @@ v2beta1_pods_metric_status_t *v2beta1_pods_metric_status_parseFromJSON(cJSON *v2
 
     v2beta1_pods_metric_status_t *v2beta1_pods_metric_status_local_var = NULL;
 
+    // define the local variable for v2beta1_pods_metric_status->selector
+    v1_label_selector_t *selector_local_nonprim = NULL;
+
     // v2beta1_pods_metric_status->current_average_value
     cJSON *current_average_value = cJSON_GetObjectItemCaseSensitive(v2beta1_pods_metric_statusJSON, "currentAverageValue");
     if (!current_average_value) {
@@ -115,7 +118,6 @@ v2beta1_pods_metric_status_t *v2beta1_pods_metric_status_parseFromJSON(cJSON *v2
 
     // v2beta1_pods_metric_status->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v2beta1_pods_metric_statusJSON, "selector");
-    v1_label_selector_t *selector_local_nonprim = NULL;
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }

@@ -57,9 +57,11 @@ v1_volume_node_affinity_t *v1_volume_node_affinity_parseFromJSON(cJSON *v1_volum
 
     v1_volume_node_affinity_t *v1_volume_node_affinity_local_var = NULL;
 
+    // define the local variable for v1_volume_node_affinity->required
+    v1_node_selector_t *required_local_nonprim = NULL;
+
     // v1_volume_node_affinity->required
     cJSON *required = cJSON_GetObjectItemCaseSensitive(v1_volume_node_affinityJSON, "required");
-    v1_node_selector_t *required_local_nonprim = NULL;
     if (required) { 
     required_local_nonprim = v1_node_selector_parseFromJSON(required); //nonprimitive
     }

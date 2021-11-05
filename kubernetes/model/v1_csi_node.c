@@ -106,6 +106,12 @@ v1_csi_node_t *v1_csi_node_parseFromJSON(cJSON *v1_csi_nodeJSON){
 
     v1_csi_node_t *v1_csi_node_local_var = NULL;
 
+    // define the local variable for v1_csi_node->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_csi_node->spec
+    v1_csi_node_spec_t *spec_local_nonprim = NULL;
+
     // v1_csi_node->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_csi_nodeJSON, "apiVersion");
     if (api_version) { 
@@ -126,7 +132,6 @@ v1_csi_node_t *v1_csi_node_parseFromJSON(cJSON *v1_csi_nodeJSON){
 
     // v1_csi_node->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_csi_nodeJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -137,7 +142,6 @@ v1_csi_node_t *v1_csi_node_parseFromJSON(cJSON *v1_csi_nodeJSON){
         goto end;
     }
 
-    v1_csi_node_spec_t *spec_local_nonprim = NULL;
     
     spec_local_nonprim = v1_csi_node_spec_parseFromJSON(spec); //nonprimitive
 

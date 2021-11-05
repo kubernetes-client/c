@@ -76,16 +76,20 @@ v2beta2_horizontal_pod_autoscaler_behavior_t *v2beta2_horizontal_pod_autoscaler_
 
     v2beta2_horizontal_pod_autoscaler_behavior_t *v2beta2_horizontal_pod_autoscaler_behavior_local_var = NULL;
 
+    // define the local variable for v2beta2_horizontal_pod_autoscaler_behavior->scale_down
+    v2beta2_hpa_scaling_rules_t *scale_down_local_nonprim = NULL;
+
+    // define the local variable for v2beta2_horizontal_pod_autoscaler_behavior->scale_up
+    v2beta2_hpa_scaling_rules_t *scale_up_local_nonprim = NULL;
+
     // v2beta2_horizontal_pod_autoscaler_behavior->scale_down
     cJSON *scale_down = cJSON_GetObjectItemCaseSensitive(v2beta2_horizontal_pod_autoscaler_behaviorJSON, "scaleDown");
-    v2beta2_hpa_scaling_rules_t *scale_down_local_nonprim = NULL;
     if (scale_down) { 
     scale_down_local_nonprim = v2beta2_hpa_scaling_rules_parseFromJSON(scale_down); //nonprimitive
     }
 
     // v2beta2_horizontal_pod_autoscaler_behavior->scale_up
     cJSON *scale_up = cJSON_GetObjectItemCaseSensitive(v2beta2_horizontal_pod_autoscaler_behaviorJSON, "scaleUp");
-    v2beta2_hpa_scaling_rules_t *scale_up_local_nonprim = NULL;
     if (scale_up) { 
     scale_up_local_nonprim = v2beta2_hpa_scaling_rules_parseFromJSON(scale_up); //nonprimitive
     }

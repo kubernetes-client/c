@@ -101,6 +101,9 @@ v2beta1_external_metric_source_t *v2beta1_external_metric_source_parseFromJSON(c
 
     v2beta1_external_metric_source_t *v2beta1_external_metric_source_local_var = NULL;
 
+    // define the local variable for v2beta1_external_metric_source->metric_selector
+    v1_label_selector_t *metric_selector_local_nonprim = NULL;
+
     // v2beta1_external_metric_source->metric_name
     cJSON *metric_name = cJSON_GetObjectItemCaseSensitive(v2beta1_external_metric_sourceJSON, "metricName");
     if (!metric_name) {
@@ -115,7 +118,6 @@ v2beta1_external_metric_source_t *v2beta1_external_metric_source_parseFromJSON(c
 
     // v2beta1_external_metric_source->metric_selector
     cJSON *metric_selector = cJSON_GetObjectItemCaseSensitive(v2beta1_external_metric_sourceJSON, "metricSelector");
-    v1_label_selector_t *metric_selector_local_nonprim = NULL;
     if (metric_selector) { 
     metric_selector_local_nonprim = v1_label_selector_parseFromJSON(metric_selector); //nonprimitive
     }

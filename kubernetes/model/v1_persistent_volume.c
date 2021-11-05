@@ -123,6 +123,15 @@ v1_persistent_volume_t *v1_persistent_volume_parseFromJSON(cJSON *v1_persistent_
 
     v1_persistent_volume_t *v1_persistent_volume_local_var = NULL;
 
+    // define the local variable for v1_persistent_volume->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume->spec
+    v1_persistent_volume_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume->status
+    v1_persistent_volume_status_t *status_local_nonprim = NULL;
+
     // v1_persistent_volume->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_persistent_volumeJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1_persistent_volume_t *v1_persistent_volume_parseFromJSON(cJSON *v1_persistent_
 
     // v1_persistent_volume->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_persistent_volumeJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_persistent_volume->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_persistent_volumeJSON, "spec");
-    v1_persistent_volume_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_persistent_volume_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_persistent_volume->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_persistent_volumeJSON, "status");
-    v1_persistent_volume_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_persistent_volume_status_parseFromJSON(status); //nonprimitive
     }

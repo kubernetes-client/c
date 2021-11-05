@@ -118,16 +118,20 @@ v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinit
 
     v1_pod_affinity_term_t *v1_pod_affinity_term_local_var = NULL;
 
+    // define the local variable for v1_pod_affinity_term->label_selector
+    v1_label_selector_t *label_selector_local_nonprim = NULL;
+
+    // define the local variable for v1_pod_affinity_term->namespace_selector
+    v1_label_selector_t *namespace_selector_local_nonprim = NULL;
+
     // v1_pod_affinity_term->label_selector
     cJSON *label_selector = cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "labelSelector");
-    v1_label_selector_t *label_selector_local_nonprim = NULL;
     if (label_selector) { 
     label_selector_local_nonprim = v1_label_selector_parseFromJSON(label_selector); //nonprimitive
     }
 
     // v1_pod_affinity_term->namespace_selector
     cJSON *namespace_selector = cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "namespaceSelector");
-    v1_label_selector_t *namespace_selector_local_nonprim = NULL;
     if (namespace_selector) { 
     namespace_selector_local_nonprim = v1_label_selector_parseFromJSON(namespace_selector); //nonprimitive
     }

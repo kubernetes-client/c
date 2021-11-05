@@ -95,6 +95,9 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
 
     v1_token_request_spec_t *v1_token_request_spec_local_var = NULL;
 
+    // define the local variable for v1_token_request_spec->bound_object_ref
+    v1_bound_object_reference_t *bound_object_ref_local_nonprim = NULL;
+
     // v1_token_request_spec->audiences
     cJSON *audiences = cJSON_GetObjectItemCaseSensitive(v1_token_request_specJSON, "audiences");
     if (!audiences) {
@@ -120,7 +123,6 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
 
     // v1_token_request_spec->bound_object_ref
     cJSON *bound_object_ref = cJSON_GetObjectItemCaseSensitive(v1_token_request_specJSON, "boundObjectRef");
-    v1_bound_object_reference_t *bound_object_ref_local_nonprim = NULL;
     if (bound_object_ref) { 
     bound_object_ref_local_nonprim = v1_bound_object_reference_parseFromJSON(bound_object_ref); //nonprimitive
     }

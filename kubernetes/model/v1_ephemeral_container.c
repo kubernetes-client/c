@@ -479,6 +479,24 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     v1_ephemeral_container_t *v1_ephemeral_container_local_var = NULL;
 
+    // define the local variable for v1_ephemeral_container->lifecycle
+    v1_lifecycle_t *lifecycle_local_nonprim = NULL;
+
+    // define the local variable for v1_ephemeral_container->liveness_probe
+    v1_probe_t *liveness_probe_local_nonprim = NULL;
+
+    // define the local variable for v1_ephemeral_container->readiness_probe
+    v1_probe_t *readiness_probe_local_nonprim = NULL;
+
+    // define the local variable for v1_ephemeral_container->resources
+    v1_resource_requirements_t *resources_local_nonprim = NULL;
+
+    // define the local variable for v1_ephemeral_container->security_context
+    v1_security_context_t *security_context_local_nonprim = NULL;
+
+    // define the local variable for v1_ephemeral_container->startup_probe
+    v1_probe_t *startup_probe_local_nonprim = NULL;
+
     // v1_ephemeral_container->args
     cJSON *args = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "args");
     list_t *argsList;
@@ -583,14 +601,12 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     // v1_ephemeral_container->lifecycle
     cJSON *lifecycle = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "lifecycle");
-    v1_lifecycle_t *lifecycle_local_nonprim = NULL;
     if (lifecycle) { 
     lifecycle_local_nonprim = v1_lifecycle_parseFromJSON(lifecycle); //nonprimitive
     }
 
     // v1_ephemeral_container->liveness_probe
     cJSON *liveness_probe = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "livenessProbe");
-    v1_probe_t *liveness_probe_local_nonprim = NULL;
     if (liveness_probe) { 
     liveness_probe_local_nonprim = v1_probe_parseFromJSON(liveness_probe); //nonprimitive
     }
@@ -631,28 +647,24 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     // v1_ephemeral_container->readiness_probe
     cJSON *readiness_probe = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "readinessProbe");
-    v1_probe_t *readiness_probe_local_nonprim = NULL;
     if (readiness_probe) { 
     readiness_probe_local_nonprim = v1_probe_parseFromJSON(readiness_probe); //nonprimitive
     }
 
     // v1_ephemeral_container->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "resources");
-    v1_resource_requirements_t *resources_local_nonprim = NULL;
     if (resources) { 
     resources_local_nonprim = v1_resource_requirements_parseFromJSON(resources); //nonprimitive
     }
 
     // v1_ephemeral_container->security_context
     cJSON *security_context = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "securityContext");
-    v1_security_context_t *security_context_local_nonprim = NULL;
     if (security_context) { 
     security_context_local_nonprim = v1_security_context_parseFromJSON(security_context); //nonprimitive
     }
 
     // v1_ephemeral_container->startup_probe
     cJSON *startup_probe = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "startupProbe");
-    v1_probe_t *startup_probe_local_nonprim = NULL;
     if (startup_probe) { 
     startup_probe_local_nonprim = v1_probe_parseFromJSON(startup_probe); //nonprimitive
     }

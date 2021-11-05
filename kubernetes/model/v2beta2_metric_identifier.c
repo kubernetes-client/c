@@ -73,6 +73,9 @@ v2beta2_metric_identifier_t *v2beta2_metric_identifier_parseFromJSON(cJSON *v2be
 
     v2beta2_metric_identifier_t *v2beta2_metric_identifier_local_var = NULL;
 
+    // define the local variable for v2beta2_metric_identifier->selector
+    v1_label_selector_t *selector_local_nonprim = NULL;
+
     // v2beta2_metric_identifier->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v2beta2_metric_identifierJSON, "name");
     if (!name) {
@@ -87,7 +90,6 @@ v2beta2_metric_identifier_t *v2beta2_metric_identifier_parseFromJSON(cJSON *v2be
 
     // v2beta2_metric_identifier->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v2beta2_metric_identifierJSON, "selector");
-    v1_label_selector_t *selector_local_nonprim = NULL;
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }

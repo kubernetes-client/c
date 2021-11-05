@@ -123,6 +123,15 @@ v1_scale_t *v1_scale_parseFromJSON(cJSON *v1_scaleJSON){
 
     v1_scale_t *v1_scale_local_var = NULL;
 
+    // define the local variable for v1_scale->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_scale->spec
+    v1_scale_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_scale->status
+    v1_scale_status_t *status_local_nonprim = NULL;
+
     // v1_scale->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_scaleJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1_scale_t *v1_scale_parseFromJSON(cJSON *v1_scaleJSON){
 
     // v1_scale->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_scaleJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_scale->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_scaleJSON, "spec");
-    v1_scale_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_scale_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_scale->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_scaleJSON, "status");
-    v1_scale_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_scale_status_parseFromJSON(status); //nonprimitive
     }

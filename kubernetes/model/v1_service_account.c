@@ -153,6 +153,9 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     v1_service_account_t *v1_service_account_local_var = NULL;
 
+    // define the local variable for v1_service_account->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
     // v1_service_account->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "apiVersion");
     if (api_version) { 
@@ -204,7 +207,6 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     // v1_service_account->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }

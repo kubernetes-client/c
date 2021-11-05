@@ -116,6 +116,9 @@ core_v1_event_list_t *core_v1_event_list_parseFromJSON(cJSON *core_v1_event_list
 
     core_v1_event_list_t *core_v1_event_list_local_var = NULL;
 
+    // define the local variable for core_v1_event_list->metadata
+    v1_list_meta_t *metadata_local_nonprim = NULL;
+
     // core_v1_event_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(core_v1_event_listJSON, "apiVersion");
     if (api_version) { 
@@ -161,7 +164,6 @@ core_v1_event_list_t *core_v1_event_list_parseFromJSON(cJSON *core_v1_event_list
 
     // core_v1_event_list->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(core_v1_event_listJSON, "metadata");
-    v1_list_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }

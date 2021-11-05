@@ -620,6 +620,78 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     v1_persistent_volume_spec_t *v1_persistent_volume_spec_local_var = NULL;
 
+    // define the local variable for v1_persistent_volume_spec->aws_elastic_block_store
+    v1_aws_elastic_block_store_volume_source_t *aws_elastic_block_store_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->azure_disk
+    v1_azure_disk_volume_source_t *azure_disk_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->azure_file
+    v1_azure_file_persistent_volume_source_t *azure_file_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->cephfs
+    v1_ceph_fs_persistent_volume_source_t *cephfs_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->cinder
+    v1_cinder_persistent_volume_source_t *cinder_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->claim_ref
+    v1_object_reference_t *claim_ref_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->csi
+    v1_csi_persistent_volume_source_t *csi_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->fc
+    v1_fc_volume_source_t *fc_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->flex_volume
+    v1_flex_persistent_volume_source_t *flex_volume_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->flocker
+    v1_flocker_volume_source_t *flocker_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->gce_persistent_disk
+    v1_gce_persistent_disk_volume_source_t *gce_persistent_disk_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->glusterfs
+    v1_glusterfs_persistent_volume_source_t *glusterfs_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->host_path
+    v1_host_path_volume_source_t *host_path_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->iscsi
+    v1_iscsi_persistent_volume_source_t *iscsi_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->local
+    v1_local_volume_source_t *local_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->nfs
+    v1_nfs_volume_source_t *nfs_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->node_affinity
+    v1_volume_node_affinity_t *node_affinity_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->photon_persistent_disk
+    v1_photon_persistent_disk_volume_source_t *photon_persistent_disk_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->portworx_volume
+    v1_portworx_volume_source_t *portworx_volume_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->quobyte
+    v1_quobyte_volume_source_t *quobyte_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->rbd
+    v1_rbd_persistent_volume_source_t *rbd_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->scale_io
+    v1_scale_io_persistent_volume_source_t *scale_io_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->storageos
+    v1_storage_os_persistent_volume_source_t *storageos_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_spec->vsphere_volume
+    v1_vsphere_virtual_disk_volume_source_t *vsphere_volume_local_nonprim = NULL;
+
     // v1_persistent_volume_spec->access_modes
     cJSON *access_modes = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "accessModes");
     list_t *access_modesList;
@@ -642,21 +714,18 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->aws_elastic_block_store
     cJSON *aws_elastic_block_store = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "awsElasticBlockStore");
-    v1_aws_elastic_block_store_volume_source_t *aws_elastic_block_store_local_nonprim = NULL;
     if (aws_elastic_block_store) { 
     aws_elastic_block_store_local_nonprim = v1_aws_elastic_block_store_volume_source_parseFromJSON(aws_elastic_block_store); //nonprimitive
     }
 
     // v1_persistent_volume_spec->azure_disk
     cJSON *azure_disk = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "azureDisk");
-    v1_azure_disk_volume_source_t *azure_disk_local_nonprim = NULL;
     if (azure_disk) { 
     azure_disk_local_nonprim = v1_azure_disk_volume_source_parseFromJSON(azure_disk); //nonprimitive
     }
 
     // v1_persistent_volume_spec->azure_file
     cJSON *azure_file = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "azureFile");
-    v1_azure_file_persistent_volume_source_t *azure_file_local_nonprim = NULL;
     if (azure_file) { 
     azure_file_local_nonprim = v1_azure_file_persistent_volume_source_parseFromJSON(azure_file); //nonprimitive
     }
@@ -685,84 +754,72 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->cephfs
     cJSON *cephfs = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "cephfs");
-    v1_ceph_fs_persistent_volume_source_t *cephfs_local_nonprim = NULL;
     if (cephfs) { 
     cephfs_local_nonprim = v1_ceph_fs_persistent_volume_source_parseFromJSON(cephfs); //nonprimitive
     }
 
     // v1_persistent_volume_spec->cinder
     cJSON *cinder = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "cinder");
-    v1_cinder_persistent_volume_source_t *cinder_local_nonprim = NULL;
     if (cinder) { 
     cinder_local_nonprim = v1_cinder_persistent_volume_source_parseFromJSON(cinder); //nonprimitive
     }
 
     // v1_persistent_volume_spec->claim_ref
     cJSON *claim_ref = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "claimRef");
-    v1_object_reference_t *claim_ref_local_nonprim = NULL;
     if (claim_ref) { 
     claim_ref_local_nonprim = v1_object_reference_parseFromJSON(claim_ref); //nonprimitive
     }
 
     // v1_persistent_volume_spec->csi
     cJSON *csi = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "csi");
-    v1_csi_persistent_volume_source_t *csi_local_nonprim = NULL;
     if (csi) { 
     csi_local_nonprim = v1_csi_persistent_volume_source_parseFromJSON(csi); //nonprimitive
     }
 
     // v1_persistent_volume_spec->fc
     cJSON *fc = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "fc");
-    v1_fc_volume_source_t *fc_local_nonprim = NULL;
     if (fc) { 
     fc_local_nonprim = v1_fc_volume_source_parseFromJSON(fc); //nonprimitive
     }
 
     // v1_persistent_volume_spec->flex_volume
     cJSON *flex_volume = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "flexVolume");
-    v1_flex_persistent_volume_source_t *flex_volume_local_nonprim = NULL;
     if (flex_volume) { 
     flex_volume_local_nonprim = v1_flex_persistent_volume_source_parseFromJSON(flex_volume); //nonprimitive
     }
 
     // v1_persistent_volume_spec->flocker
     cJSON *flocker = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "flocker");
-    v1_flocker_volume_source_t *flocker_local_nonprim = NULL;
     if (flocker) { 
     flocker_local_nonprim = v1_flocker_volume_source_parseFromJSON(flocker); //nonprimitive
     }
 
     // v1_persistent_volume_spec->gce_persistent_disk
     cJSON *gce_persistent_disk = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "gcePersistentDisk");
-    v1_gce_persistent_disk_volume_source_t *gce_persistent_disk_local_nonprim = NULL;
     if (gce_persistent_disk) { 
     gce_persistent_disk_local_nonprim = v1_gce_persistent_disk_volume_source_parseFromJSON(gce_persistent_disk); //nonprimitive
     }
 
     // v1_persistent_volume_spec->glusterfs
     cJSON *glusterfs = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "glusterfs");
-    v1_glusterfs_persistent_volume_source_t *glusterfs_local_nonprim = NULL;
     if (glusterfs) { 
     glusterfs_local_nonprim = v1_glusterfs_persistent_volume_source_parseFromJSON(glusterfs); //nonprimitive
     }
 
     // v1_persistent_volume_spec->host_path
     cJSON *host_path = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "hostPath");
-    v1_host_path_volume_source_t *host_path_local_nonprim = NULL;
     if (host_path) { 
     host_path_local_nonprim = v1_host_path_volume_source_parseFromJSON(host_path); //nonprimitive
     }
 
     // v1_persistent_volume_spec->iscsi
     cJSON *iscsi = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "iscsi");
-    v1_iscsi_persistent_volume_source_t *iscsi_local_nonprim = NULL;
     if (iscsi) { 
     iscsi_local_nonprim = v1_iscsi_persistent_volume_source_parseFromJSON(iscsi); //nonprimitive
     }
 
     // v1_persistent_volume_spec->local
     cJSON *local = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "local");
-    v1_local_volume_source_t *local_local_nonprim = NULL;
     if (local) { 
     local_local_nonprim = v1_local_volume_source_parseFromJSON(local); //nonprimitive
     }
@@ -789,14 +846,12 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->nfs
     cJSON *nfs = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "nfs");
-    v1_nfs_volume_source_t *nfs_local_nonprim = NULL;
     if (nfs) { 
     nfs_local_nonprim = v1_nfs_volume_source_parseFromJSON(nfs); //nonprimitive
     }
 
     // v1_persistent_volume_spec->node_affinity
     cJSON *node_affinity = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "nodeAffinity");
-    v1_volume_node_affinity_t *node_affinity_local_nonprim = NULL;
     if (node_affinity) { 
     node_affinity_local_nonprim = v1_volume_node_affinity_parseFromJSON(node_affinity); //nonprimitive
     }
@@ -812,35 +867,30 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->photon_persistent_disk
     cJSON *photon_persistent_disk = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "photonPersistentDisk");
-    v1_photon_persistent_disk_volume_source_t *photon_persistent_disk_local_nonprim = NULL;
     if (photon_persistent_disk) { 
     photon_persistent_disk_local_nonprim = v1_photon_persistent_disk_volume_source_parseFromJSON(photon_persistent_disk); //nonprimitive
     }
 
     // v1_persistent_volume_spec->portworx_volume
     cJSON *portworx_volume = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "portworxVolume");
-    v1_portworx_volume_source_t *portworx_volume_local_nonprim = NULL;
     if (portworx_volume) { 
     portworx_volume_local_nonprim = v1_portworx_volume_source_parseFromJSON(portworx_volume); //nonprimitive
     }
 
     // v1_persistent_volume_spec->quobyte
     cJSON *quobyte = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "quobyte");
-    v1_quobyte_volume_source_t *quobyte_local_nonprim = NULL;
     if (quobyte) { 
     quobyte_local_nonprim = v1_quobyte_volume_source_parseFromJSON(quobyte); //nonprimitive
     }
 
     // v1_persistent_volume_spec->rbd
     cJSON *rbd = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "rbd");
-    v1_rbd_persistent_volume_source_t *rbd_local_nonprim = NULL;
     if (rbd) { 
     rbd_local_nonprim = v1_rbd_persistent_volume_source_parseFromJSON(rbd); //nonprimitive
     }
 
     // v1_persistent_volume_spec->scale_io
     cJSON *scale_io = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "scaleIO");
-    v1_scale_io_persistent_volume_source_t *scale_io_local_nonprim = NULL;
     if (scale_io) { 
     scale_io_local_nonprim = v1_scale_io_persistent_volume_source_parseFromJSON(scale_io); //nonprimitive
     }
@@ -856,7 +906,6 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->storageos
     cJSON *storageos = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "storageos");
-    v1_storage_os_persistent_volume_source_t *storageos_local_nonprim = NULL;
     if (storageos) { 
     storageos_local_nonprim = v1_storage_os_persistent_volume_source_parseFromJSON(storageos); //nonprimitive
     }
@@ -872,7 +921,6 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->vsphere_volume
     cJSON *vsphere_volume = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "vsphereVolume");
-    v1_vsphere_virtual_disk_volume_source_t *vsphere_volume_local_nonprim = NULL;
     if (vsphere_volume) { 
     vsphere_volume_local_nonprim = v1_vsphere_virtual_disk_volume_source_parseFromJSON(vsphere_volume); //nonprimitive
     }

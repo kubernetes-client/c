@@ -159,6 +159,9 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     v1_config_map_t *v1_config_map_local_var = NULL;
 
+    // define the local variable for v1_config_map->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
     // v1_config_map->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "apiVersion");
     if (api_version) { 
@@ -232,7 +235,6 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     // v1_config_map->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }

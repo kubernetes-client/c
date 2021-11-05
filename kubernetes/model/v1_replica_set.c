@@ -123,6 +123,15 @@ v1_replica_set_t *v1_replica_set_parseFromJSON(cJSON *v1_replica_setJSON){
 
     v1_replica_set_t *v1_replica_set_local_var = NULL;
 
+    // define the local variable for v1_replica_set->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_replica_set->spec
+    v1_replica_set_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_replica_set->status
+    v1_replica_set_status_t *status_local_nonprim = NULL;
+
     // v1_replica_set->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_replica_setJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1_replica_set_t *v1_replica_set_parseFromJSON(cJSON *v1_replica_setJSON){
 
     // v1_replica_set->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_replica_setJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_replica_set->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_replica_setJSON, "spec");
-    v1_replica_set_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_replica_set_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_replica_set->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_replica_setJSON, "status");
-    v1_replica_set_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_replica_set_status_parseFromJSON(status); //nonprimitive
     }

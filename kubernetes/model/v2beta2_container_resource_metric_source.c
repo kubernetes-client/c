@@ -91,6 +91,9 @@ v2beta2_container_resource_metric_source_t *v2beta2_container_resource_metric_so
 
     v2beta2_container_resource_metric_source_t *v2beta2_container_resource_metric_source_local_var = NULL;
 
+    // define the local variable for v2beta2_container_resource_metric_source->target
+    v2beta2_metric_target_t *target_local_nonprim = NULL;
+
     // v2beta2_container_resource_metric_source->container
     cJSON *container = cJSON_GetObjectItemCaseSensitive(v2beta2_container_resource_metric_sourceJSON, "container");
     if (!container) {
@@ -121,7 +124,6 @@ v2beta2_container_resource_metric_source_t *v2beta2_container_resource_metric_so
         goto end;
     }
 
-    v2beta2_metric_target_t *target_local_nonprim = NULL;
     
     target_local_nonprim = v2beta2_metric_target_parseFromJSON(target); //nonprimitive
 

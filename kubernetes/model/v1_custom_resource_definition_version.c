@@ -169,6 +169,12 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
 
     v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_local_var = NULL;
 
+    // define the local variable for v1_custom_resource_definition_version->schema
+    v1_custom_resource_validation_t *schema_local_nonprim = NULL;
+
+    // define the local variable for v1_custom_resource_definition_version->subresources
+    v1_custom_resource_subresources_t *subresources_local_nonprim = NULL;
+
     // v1_custom_resource_definition_version->additional_printer_columns
     cJSON *additional_printer_columns = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "additionalPrinterColumns");
     list_t *additional_printer_columnsList;
@@ -223,7 +229,6 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
 
     // v1_custom_resource_definition_version->schema
     cJSON *schema = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "schema");
-    v1_custom_resource_validation_t *schema_local_nonprim = NULL;
     if (schema) { 
     schema_local_nonprim = v1_custom_resource_validation_parseFromJSON(schema); //nonprimitive
     }
@@ -254,7 +259,6 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
 
     // v1_custom_resource_definition_version->subresources
     cJSON *subresources = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "subresources");
-    v1_custom_resource_subresources_t *subresources_local_nonprim = NULL;
     if (subresources) { 
     subresources_local_nonprim = v1_custom_resource_subresources_parseFromJSON(subresources); //nonprimitive
     }

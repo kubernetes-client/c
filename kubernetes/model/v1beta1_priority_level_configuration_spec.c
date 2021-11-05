@@ -73,9 +73,11 @@ v1beta1_priority_level_configuration_spec_t *v1beta1_priority_level_configuratio
 
     v1beta1_priority_level_configuration_spec_t *v1beta1_priority_level_configuration_spec_local_var = NULL;
 
+    // define the local variable for v1beta1_priority_level_configuration_spec->limited
+    v1beta1_limited_priority_level_configuration_t *limited_local_nonprim = NULL;
+
     // v1beta1_priority_level_configuration_spec->limited
     cJSON *limited = cJSON_GetObjectItemCaseSensitive(v1beta1_priority_level_configuration_specJSON, "limited");
-    v1beta1_limited_priority_level_configuration_t *limited_local_nonprim = NULL;
     if (limited) { 
     limited_local_nonprim = v1beta1_limited_priority_level_configuration_parseFromJSON(limited); //nonprimitive
     }

@@ -104,6 +104,12 @@ v1beta1_pod_security_policy_t *v1beta1_pod_security_policy_parseFromJSON(cJSON *
 
     v1beta1_pod_security_policy_t *v1beta1_pod_security_policy_local_var = NULL;
 
+    // define the local variable for v1beta1_pod_security_policy->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_pod_security_policy->spec
+    v1beta1_pod_security_policy_spec_t *spec_local_nonprim = NULL;
+
     // v1beta1_pod_security_policy->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_security_policyJSON, "apiVersion");
     if (api_version) { 
@@ -124,14 +130,12 @@ v1beta1_pod_security_policy_t *v1beta1_pod_security_policy_parseFromJSON(cJSON *
 
     // v1beta1_pod_security_policy->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_security_policyJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1beta1_pod_security_policy->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_security_policyJSON, "spec");
-    v1beta1_pod_security_policy_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1beta1_pod_security_policy_spec_parseFromJSON(spec); //nonprimitive
     }

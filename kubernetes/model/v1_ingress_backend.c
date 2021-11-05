@@ -76,16 +76,20 @@ v1_ingress_backend_t *v1_ingress_backend_parseFromJSON(cJSON *v1_ingress_backend
 
     v1_ingress_backend_t *v1_ingress_backend_local_var = NULL;
 
+    // define the local variable for v1_ingress_backend->resource
+    v1_typed_local_object_reference_t *resource_local_nonprim = NULL;
+
+    // define the local variable for v1_ingress_backend->service
+    v1_ingress_service_backend_t *service_local_nonprim = NULL;
+
     // v1_ingress_backend->resource
     cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1_ingress_backendJSON, "resource");
-    v1_typed_local_object_reference_t *resource_local_nonprim = NULL;
     if (resource) { 
     resource_local_nonprim = v1_typed_local_object_reference_parseFromJSON(resource); //nonprimitive
     }
 
     // v1_ingress_backend->service
     cJSON *service = cJSON_GetObjectItemCaseSensitive(v1_ingress_backendJSON, "service");
-    v1_ingress_service_backend_t *service_local_nonprim = NULL;
     if (service) { 
     service_local_nonprim = v1_ingress_service_backend_parseFromJSON(service); //nonprimitive
     }

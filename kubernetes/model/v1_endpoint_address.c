@@ -101,6 +101,9 @@ v1_endpoint_address_t *v1_endpoint_address_parseFromJSON(cJSON *v1_endpoint_addr
 
     v1_endpoint_address_t *v1_endpoint_address_local_var = NULL;
 
+    // define the local variable for v1_endpoint_address->target_ref
+    v1_object_reference_t *target_ref_local_nonprim = NULL;
+
     // v1_endpoint_address->hostname
     cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1_endpoint_addressJSON, "hostname");
     if (hostname) { 
@@ -133,7 +136,6 @@ v1_endpoint_address_t *v1_endpoint_address_parseFromJSON(cJSON *v1_endpoint_addr
 
     // v1_endpoint_address->target_ref
     cJSON *target_ref = cJSON_GetObjectItemCaseSensitive(v1_endpoint_addressJSON, "targetRef");
-    v1_object_reference_t *target_ref_local_nonprim = NULL;
     if (target_ref) { 
     target_ref_local_nonprim = v1_object_reference_parseFromJSON(target_ref); //nonprimitive
     }

@@ -91,6 +91,9 @@ v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(cJSON *v1_v
 
     v1_volume_attachment_spec_t *v1_volume_attachment_spec_local_var = NULL;
 
+    // define the local variable for v1_volume_attachment_spec->source
+    v1_volume_attachment_source_t *source_local_nonprim = NULL;
+
     // v1_volume_attachment_spec->attacher
     cJSON *attacher = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_specJSON, "attacher");
     if (!attacher) {
@@ -121,7 +124,6 @@ v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(cJSON *v1_v
         goto end;
     }
 
-    v1_volume_attachment_source_t *source_local_nonprim = NULL;
     
     source_local_nonprim = v1_volume_attachment_source_parseFromJSON(source); //nonprimitive
 

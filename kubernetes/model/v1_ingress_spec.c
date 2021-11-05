@@ -129,9 +129,11 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
 
     v1_ingress_spec_t *v1_ingress_spec_local_var = NULL;
 
+    // define the local variable for v1_ingress_spec->default_backend
+    v1_ingress_backend_t *default_backend_local_nonprim = NULL;
+
     // v1_ingress_spec->default_backend
     cJSON *default_backend = cJSON_GetObjectItemCaseSensitive(v1_ingress_specJSON, "defaultBackend");
-    v1_ingress_backend_t *default_backend_local_nonprim = NULL;
     if (default_backend) { 
     default_backend_local_nonprim = v1_ingress_backend_parseFromJSON(default_backend); //nonprimitive
     }

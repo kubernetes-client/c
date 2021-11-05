@@ -181,6 +181,9 @@ v1_scale_io_volume_source_t *v1_scale_io_volume_source_parseFromJSON(cJSON *v1_s
 
     v1_scale_io_volume_source_t *v1_scale_io_volume_source_local_var = NULL;
 
+    // define the local variable for v1_scale_io_volume_source->secret_ref
+    v1_local_object_reference_t *secret_ref_local_nonprim = NULL;
+
     // v1_scale_io_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "fsType");
     if (fs_type) { 
@@ -226,7 +229,6 @@ v1_scale_io_volume_source_t *v1_scale_io_volume_source_parseFromJSON(cJSON *v1_s
         goto end;
     }
 
-    v1_local_object_reference_t *secret_ref_local_nonprim = NULL;
     
     secret_ref_local_nonprim = v1_local_object_reference_parseFromJSON(secret_ref); //nonprimitive
 

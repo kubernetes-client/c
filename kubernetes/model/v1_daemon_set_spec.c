@@ -119,6 +119,15 @@ v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(cJSON *v1_daemon_set_spec
 
     v1_daemon_set_spec_t *v1_daemon_set_spec_local_var = NULL;
 
+    // define the local variable for v1_daemon_set_spec->selector
+    v1_label_selector_t *selector_local_nonprim = NULL;
+
+    // define the local variable for v1_daemon_set_spec->_template
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
+
+    // define the local variable for v1_daemon_set_spec->update_strategy
+    v1_daemon_set_update_strategy_t *update_strategy_local_nonprim = NULL;
+
     // v1_daemon_set_spec->min_ready_seconds
     cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "minReadySeconds");
     if (min_ready_seconds) { 
@@ -143,7 +152,6 @@ v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(cJSON *v1_daemon_set_spec
         goto end;
     }
 
-    v1_label_selector_t *selector_local_nonprim = NULL;
     
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
 
@@ -153,13 +161,11 @@ v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(cJSON *v1_daemon_set_spec
         goto end;
     }
 
-    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     
     _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 
     // v1_daemon_set_spec->update_strategy
     cJSON *update_strategy = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "updateStrategy");
-    v1_daemon_set_update_strategy_t *update_strategy_local_nonprim = NULL;
     if (update_strategy) { 
     update_strategy_local_nonprim = v1_daemon_set_update_strategy_parseFromJSON(update_strategy); //nonprimitive
     }

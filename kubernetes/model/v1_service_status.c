@@ -86,6 +86,9 @@ v1_service_status_t *v1_service_status_parseFromJSON(cJSON *v1_service_statusJSO
 
     v1_service_status_t *v1_service_status_local_var = NULL;
 
+    // define the local variable for v1_service_status->load_balancer
+    v1_load_balancer_status_t *load_balancer_local_nonprim = NULL;
+
     // v1_service_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_service_statusJSON, "conditions");
     list_t *conditionsList;
@@ -110,7 +113,6 @@ v1_service_status_t *v1_service_status_parseFromJSON(cJSON *v1_service_statusJSO
 
     // v1_service_status->load_balancer
     cJSON *load_balancer = cJSON_GetObjectItemCaseSensitive(v1_service_statusJSON, "loadBalancer");
-    v1_load_balancer_status_t *load_balancer_local_nonprim = NULL;
     if (load_balancer) { 
     load_balancer_local_nonprim = v1_load_balancer_status_parseFromJSON(load_balancer); //nonprimitive
     }

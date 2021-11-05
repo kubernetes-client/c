@@ -114,6 +114,9 @@ v1_role_t *v1_role_parseFromJSON(cJSON *v1_roleJSON){
 
     v1_role_t *v1_role_local_var = NULL;
 
+    // define the local variable for v1_role->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
     // v1_role->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_roleJSON, "apiVersion");
     if (api_version) { 
@@ -134,7 +137,6 @@ v1_role_t *v1_role_parseFromJSON(cJSON *v1_roleJSON){
 
     // v1_role->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_roleJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }

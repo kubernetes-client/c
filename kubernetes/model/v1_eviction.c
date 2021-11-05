@@ -104,6 +104,12 @@ v1_eviction_t *v1_eviction_parseFromJSON(cJSON *v1_evictionJSON){
 
     v1_eviction_t *v1_eviction_local_var = NULL;
 
+    // define the local variable for v1_eviction->delete_options
+    v1_delete_options_t *delete_options_local_nonprim = NULL;
+
+    // define the local variable for v1_eviction->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
     // v1_eviction->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "apiVersion");
     if (api_version) { 
@@ -115,7 +121,6 @@ v1_eviction_t *v1_eviction_parseFromJSON(cJSON *v1_evictionJSON){
 
     // v1_eviction->delete_options
     cJSON *delete_options = cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "deleteOptions");
-    v1_delete_options_t *delete_options_local_nonprim = NULL;
     if (delete_options) { 
     delete_options_local_nonprim = v1_delete_options_parseFromJSON(delete_options); //nonprimitive
     }
@@ -131,7 +136,6 @@ v1_eviction_t *v1_eviction_parseFromJSON(cJSON *v1_evictionJSON){
 
     // v1_eviction->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }

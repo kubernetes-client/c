@@ -75,13 +75,15 @@ v2beta2_resource_metric_status_t *v2beta2_resource_metric_status_parseFromJSON(c
 
     v2beta2_resource_metric_status_t *v2beta2_resource_metric_status_local_var = NULL;
 
+    // define the local variable for v2beta2_resource_metric_status->current
+    v2beta2_metric_value_status_t *current_local_nonprim = NULL;
+
     // v2beta2_resource_metric_status->current
     cJSON *current = cJSON_GetObjectItemCaseSensitive(v2beta2_resource_metric_statusJSON, "current");
     if (!current) {
         goto end;
     }
 
-    v2beta2_metric_value_status_t *current_local_nonprim = NULL;
     
     current_local_nonprim = v2beta2_metric_value_status_parseFromJSON(current); //nonprimitive
 

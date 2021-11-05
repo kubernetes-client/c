@@ -133,9 +133,14 @@ v1alpha1_cluster_role_t *v1alpha1_cluster_role_parseFromJSON(cJSON *v1alpha1_clu
 
     v1alpha1_cluster_role_t *v1alpha1_cluster_role_local_var = NULL;
 
+    // define the local variable for v1alpha1_cluster_role->aggregation_rule
+    v1alpha1_aggregation_rule_t *aggregation_rule_local_nonprim = NULL;
+
+    // define the local variable for v1alpha1_cluster_role->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
     // v1alpha1_cluster_role->aggregation_rule
     cJSON *aggregation_rule = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_roleJSON, "aggregationRule");
-    v1alpha1_aggregation_rule_t *aggregation_rule_local_nonprim = NULL;
     if (aggregation_rule) { 
     aggregation_rule_local_nonprim = v1alpha1_aggregation_rule_parseFromJSON(aggregation_rule); //nonprimitive
     }
@@ -160,7 +165,6 @@ v1alpha1_cluster_role_t *v1alpha1_cluster_role_parseFromJSON(cJSON *v1alpha1_clu
 
     // v1alpha1_cluster_role->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_roleJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }

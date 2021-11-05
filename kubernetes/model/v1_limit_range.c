@@ -104,6 +104,12 @@ v1_limit_range_t *v1_limit_range_parseFromJSON(cJSON *v1_limit_rangeJSON){
 
     v1_limit_range_t *v1_limit_range_local_var = NULL;
 
+    // define the local variable for v1_limit_range->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_limit_range->spec
+    v1_limit_range_spec_t *spec_local_nonprim = NULL;
+
     // v1_limit_range->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "apiVersion");
     if (api_version) { 
@@ -124,14 +130,12 @@ v1_limit_range_t *v1_limit_range_parseFromJSON(cJSON *v1_limit_rangeJSON){
 
     // v1_limit_range->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_limit_range->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "spec");
-    v1_limit_range_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_limit_range_spec_parseFromJSON(spec); //nonprimitive
     }

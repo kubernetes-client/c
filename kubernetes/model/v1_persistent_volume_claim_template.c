@@ -78,9 +78,14 @@ v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template_parse
 
     v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template_local_var = NULL;
 
+    // define the local variable for v1_persistent_volume_claim_template->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_claim_template->spec
+    v1_persistent_volume_claim_spec_t *spec_local_nonprim = NULL;
+
     // v1_persistent_volume_claim_template->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_templateJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -91,7 +96,6 @@ v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template_parse
         goto end;
     }
 
-    v1_persistent_volume_claim_spec_t *spec_local_nonprim = NULL;
     
     spec_local_nonprim = v1_persistent_volume_claim_spec_parseFromJSON(spec); //nonprimitive
 

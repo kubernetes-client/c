@@ -107,6 +107,9 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
 
     v1_token_review_status_t *v1_token_review_status_local_var = NULL;
 
+    // define the local variable for v1_token_review_status->user
+    v1_user_info_t *user_local_nonprim = NULL;
+
     // v1_token_review_status->audiences
     cJSON *audiences = cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "audiences");
     list_t *audiencesList;
@@ -147,7 +150,6 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
 
     // v1_token_review_status->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "user");
-    v1_user_info_t *user_local_nonprim = NULL;
     if (user) { 
     user_local_nonprim = v1_user_info_parseFromJSON(user); //nonprimitive
     }

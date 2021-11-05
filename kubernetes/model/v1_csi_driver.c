@@ -106,6 +106,12 @@ v1_csi_driver_t *v1_csi_driver_parseFromJSON(cJSON *v1_csi_driverJSON){
 
     v1_csi_driver_t *v1_csi_driver_local_var = NULL;
 
+    // define the local variable for v1_csi_driver->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_csi_driver->spec
+    v1_csi_driver_spec_t *spec_local_nonprim = NULL;
+
     // v1_csi_driver->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_csi_driverJSON, "apiVersion");
     if (api_version) { 
@@ -126,7 +132,6 @@ v1_csi_driver_t *v1_csi_driver_parseFromJSON(cJSON *v1_csi_driverJSON){
 
     // v1_csi_driver->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_csi_driverJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -137,7 +142,6 @@ v1_csi_driver_t *v1_csi_driver_parseFromJSON(cJSON *v1_csi_driverJSON){
         goto end;
     }
 
-    v1_csi_driver_spec_t *spec_local_nonprim = NULL;
     
     spec_local_nonprim = v1_csi_driver_spec_parseFromJSON(spec); //nonprimitive
 

@@ -116,6 +116,9 @@ v1_horizontal_pod_autoscaler_list_t *v1_horizontal_pod_autoscaler_list_parseFrom
 
     v1_horizontal_pod_autoscaler_list_t *v1_horizontal_pod_autoscaler_list_local_var = NULL;
 
+    // define the local variable for v1_horizontal_pod_autoscaler_list->metadata
+    v1_list_meta_t *metadata_local_nonprim = NULL;
+
     // v1_horizontal_pod_autoscaler_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_listJSON, "apiVersion");
     if (api_version) { 
@@ -161,7 +164,6 @@ v1_horizontal_pod_autoscaler_list_t *v1_horizontal_pod_autoscaler_list_parseFrom
 
     // v1_horizontal_pod_autoscaler_list->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_listJSON, "metadata");
-    v1_list_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }

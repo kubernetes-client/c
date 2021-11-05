@@ -89,13 +89,15 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
 
     v1_http_ingress_path_t *v1_http_ingress_path_local_var = NULL;
 
+    // define the local variable for v1_http_ingress_path->backend
+    v1_ingress_backend_t *backend_local_nonprim = NULL;
+
     // v1_http_ingress_path->backend
     cJSON *backend = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "backend");
     if (!backend) {
         goto end;
     }
 
-    v1_ingress_backend_t *backend_local_nonprim = NULL;
     
     backend_local_nonprim = v1_ingress_backend_parseFromJSON(backend); //nonprimitive
 

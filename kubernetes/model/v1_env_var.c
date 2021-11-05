@@ -87,6 +87,9 @@ v1_env_var_t *v1_env_var_parseFromJSON(cJSON *v1_env_varJSON){
 
     v1_env_var_t *v1_env_var_local_var = NULL;
 
+    // define the local variable for v1_env_var->value_from
+    v1_env_var_source_t *value_from_local_nonprim = NULL;
+
     // v1_env_var->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_env_varJSON, "name");
     if (!name) {
@@ -110,7 +113,6 @@ v1_env_var_t *v1_env_var_parseFromJSON(cJSON *v1_env_varJSON){
 
     // v1_env_var->value_from
     cJSON *value_from = cJSON_GetObjectItemCaseSensitive(v1_env_varJSON, "valueFrom");
-    v1_env_var_source_t *value_from_local_nonprim = NULL;
     if (value_from) { 
     value_from_local_nonprim = v1_env_var_source_parseFromJSON(value_from); //nonprimitive
     }

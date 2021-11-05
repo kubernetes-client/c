@@ -71,6 +71,9 @@ v1_ingress_class_spec_t *v1_ingress_class_spec_parseFromJSON(cJSON *v1_ingress_c
 
     v1_ingress_class_spec_t *v1_ingress_class_spec_local_var = NULL;
 
+    // define the local variable for v1_ingress_class_spec->parameters
+    v1_ingress_class_parameters_reference_t *parameters_local_nonprim = NULL;
+
     // v1_ingress_class_spec->controller
     cJSON *controller = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_specJSON, "controller");
     if (controller) { 
@@ -82,7 +85,6 @@ v1_ingress_class_spec_t *v1_ingress_class_spec_parseFromJSON(cJSON *v1_ingress_c
 
     // v1_ingress_class_spec->parameters
     cJSON *parameters = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_specJSON, "parameters");
-    v1_ingress_class_parameters_reference_t *parameters_local_nonprim = NULL;
     if (parameters) { 
     parameters_local_nonprim = v1_ingress_class_parameters_reference_parseFromJSON(parameters); //nonprimitive
     }

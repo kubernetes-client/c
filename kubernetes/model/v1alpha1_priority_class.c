@@ -135,6 +135,9 @@ v1alpha1_priority_class_t *v1alpha1_priority_class_parseFromJSON(cJSON *v1alpha1
 
     v1alpha1_priority_class_t *v1alpha1_priority_class_local_var = NULL;
 
+    // define the local variable for v1alpha1_priority_class->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
     // v1alpha1_priority_class->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_priority_classJSON, "apiVersion");
     if (api_version) { 
@@ -173,7 +176,6 @@ v1alpha1_priority_class_t *v1alpha1_priority_class_parseFromJSON(cJSON *v1alpha1
 
     // v1alpha1_priority_class->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_priority_classJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }

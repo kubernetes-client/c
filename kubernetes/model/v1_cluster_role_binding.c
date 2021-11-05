@@ -135,6 +135,12 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
 
     v1_cluster_role_binding_t *v1_cluster_role_binding_local_var = NULL;
 
+    // define the local variable for v1_cluster_role_binding->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_cluster_role_binding->role_ref
+    v1_role_ref_t *role_ref_local_nonprim = NULL;
+
     // v1_cluster_role_binding->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "apiVersion");
     if (api_version) { 
@@ -155,7 +161,6 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
 
     // v1_cluster_role_binding->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -166,7 +171,6 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
         goto end;
     }
 
-    v1_role_ref_t *role_ref_local_nonprim = NULL;
     
     role_ref_local_nonprim = v1_role_ref_parseFromJSON(role_ref); //nonprimitive
 

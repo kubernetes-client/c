@@ -155,9 +155,17 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
 
     v1_probe_t *v1_probe_local_var = NULL;
 
+    // define the local variable for v1_probe->exec
+    v1_exec_action_t *exec_local_nonprim = NULL;
+
+    // define the local variable for v1_probe->http_get
+    v1_http_get_action_t *http_get_local_nonprim = NULL;
+
+    // define the local variable for v1_probe->tcp_socket
+    v1_tcp_socket_action_t *tcp_socket_local_nonprim = NULL;
+
     // v1_probe->exec
     cJSON *exec = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "exec");
-    v1_exec_action_t *exec_local_nonprim = NULL;
     if (exec) { 
     exec_local_nonprim = v1_exec_action_parseFromJSON(exec); //nonprimitive
     }
@@ -173,7 +181,6 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
 
     // v1_probe->http_get
     cJSON *http_get = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "httpGet");
-    v1_http_get_action_t *http_get_local_nonprim = NULL;
     if (http_get) { 
     http_get_local_nonprim = v1_http_get_action_parseFromJSON(http_get); //nonprimitive
     }
@@ -207,7 +214,6 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
 
     // v1_probe->tcp_socket
     cJSON *tcp_socket = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "tcpSocket");
-    v1_tcp_socket_action_t *tcp_socket_local_nonprim = NULL;
     if (tcp_socket) { 
     tcp_socket_local_nonprim = v1_tcp_socket_action_parseFromJSON(tcp_socket); //nonprimitive
     }
