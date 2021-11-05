@@ -129,9 +129,14 @@ v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec
 
     v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec_local_var = NULL;
 
+    // define the local variable for v2beta2_horizontal_pod_autoscaler_spec->behavior
+    v2beta2_horizontal_pod_autoscaler_behavior_t *behavior_local_nonprim = NULL;
+
+    // define the local variable for v2beta2_horizontal_pod_autoscaler_spec->scale_target_ref
+    v2beta2_cross_version_object_reference_t *scale_target_ref_local_nonprim = NULL;
+
     // v2beta2_horizontal_pod_autoscaler_spec->behavior
     cJSON *behavior = cJSON_GetObjectItemCaseSensitive(v2beta2_horizontal_pod_autoscaler_specJSON, "behavior");
-    v2beta2_horizontal_pod_autoscaler_behavior_t *behavior_local_nonprim = NULL;
     if (behavior) { 
     behavior_local_nonprim = v2beta2_horizontal_pod_autoscaler_behavior_parseFromJSON(behavior); //nonprimitive
     }
@@ -185,7 +190,6 @@ v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec
         goto end;
     }
 
-    v2beta2_cross_version_object_reference_t *scale_target_ref_local_nonprim = NULL;
     
     scale_target_ref_local_nonprim = v2beta2_cross_version_object_reference_parseFromJSON(scale_target_ref); //nonprimitive
 

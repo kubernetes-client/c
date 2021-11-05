@@ -751,6 +751,12 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
 
     v1_json_schema_props_t *v1_json_schema_props_local_var = NULL;
 
+    // define the local variable for v1_json_schema_props->external_docs
+    v1_external_documentation_t *external_docs_local_nonprim = NULL;
+
+    // define the local variable for v1_json_schema_props->_not
+    v1_json_schema_props_t *_not_local_nonprim = NULL;
+
     // v1_json_schema_props->ref
     cJSON *ref = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "$ref");
     if (ref) { 
@@ -926,7 +932,6 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
 
     // v1_json_schema_props->external_docs
     cJSON *external_docs = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "externalDocs");
-    v1_external_documentation_t *external_docs_local_nonprim = NULL;
     if (external_docs) { 
     external_docs_local_nonprim = v1_external_documentation_parseFromJSON(external_docs); //nonprimitive
     }
@@ -1039,7 +1044,6 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
 
     // v1_json_schema_props->_not
     cJSON *_not = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "not");
-    v1_json_schema_props_t *_not_local_nonprim = NULL;
     if (_not) { 
     _not_local_nonprim = v1_json_schema_props_parseFromJSON(_not); //nonprimitive
     }

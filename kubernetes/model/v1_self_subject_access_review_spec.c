@@ -76,16 +76,20 @@ v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_parseFr
 
     v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_local_var = NULL;
 
+    // define the local variable for v1_self_subject_access_review_spec->non_resource_attributes
+    v1_non_resource_attributes_t *non_resource_attributes_local_nonprim = NULL;
+
+    // define the local variable for v1_self_subject_access_review_spec->resource_attributes
+    v1_resource_attributes_t *resource_attributes_local_nonprim = NULL;
+
     // v1_self_subject_access_review_spec->non_resource_attributes
     cJSON *non_resource_attributes = cJSON_GetObjectItemCaseSensitive(v1_self_subject_access_review_specJSON, "nonResourceAttributes");
-    v1_non_resource_attributes_t *non_resource_attributes_local_nonprim = NULL;
     if (non_resource_attributes) { 
     non_resource_attributes_local_nonprim = v1_non_resource_attributes_parseFromJSON(non_resource_attributes); //nonprimitive
     }
 
     // v1_self_subject_access_review_spec->resource_attributes
     cJSON *resource_attributes = cJSON_GetObjectItemCaseSensitive(v1_self_subject_access_review_specJSON, "resourceAttributes");
-    v1_resource_attributes_t *resource_attributes_local_nonprim = NULL;
     if (resource_attributes) { 
     resource_attributes_local_nonprim = v1_resource_attributes_parseFromJSON(resource_attributes); //nonprimitive
     }

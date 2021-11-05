@@ -115,9 +115,11 @@ v1_csi_node_driver_t *v1_csi_node_driver_parseFromJSON(cJSON *v1_csi_node_driver
 
     v1_csi_node_driver_t *v1_csi_node_driver_local_var = NULL;
 
+    // define the local variable for v1_csi_node_driver->allocatable
+    v1_volume_node_resources_t *allocatable_local_nonprim = NULL;
+
     // v1_csi_node_driver->allocatable
     cJSON *allocatable = cJSON_GetObjectItemCaseSensitive(v1_csi_node_driverJSON, "allocatable");
-    v1_volume_node_resources_t *allocatable_local_nonprim = NULL;
     if (allocatable) { 
     allocatable_local_nonprim = v1_volume_node_resources_parseFromJSON(allocatable); //nonprimitive
     }

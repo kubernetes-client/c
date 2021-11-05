@@ -75,6 +75,9 @@ v2beta2_resource_metric_source_t *v2beta2_resource_metric_source_parseFromJSON(c
 
     v2beta2_resource_metric_source_t *v2beta2_resource_metric_source_local_var = NULL;
 
+    // define the local variable for v2beta2_resource_metric_source->target
+    v2beta2_metric_target_t *target_local_nonprim = NULL;
+
     // v2beta2_resource_metric_source->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v2beta2_resource_metric_sourceJSON, "name");
     if (!name) {
@@ -93,7 +96,6 @@ v2beta2_resource_metric_source_t *v2beta2_resource_metric_source_parseFromJSON(c
         goto end;
     }
 
-    v2beta2_metric_target_t *target_local_nonprim = NULL;
     
     target_local_nonprim = v2beta2_metric_target_parseFromJSON(target); //nonprimitive
 

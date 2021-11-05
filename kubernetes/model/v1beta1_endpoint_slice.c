@@ -161,6 +161,9 @@ v1beta1_endpoint_slice_t *v1beta1_endpoint_slice_parseFromJSON(cJSON *v1beta1_en
 
     v1beta1_endpoint_slice_t *v1beta1_endpoint_slice_local_var = NULL;
 
+    // define the local variable for v1beta1_endpoint_slice->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
     // v1beta1_endpoint_slice->address_type
     cJSON *address_type = cJSON_GetObjectItemCaseSensitive(v1beta1_endpoint_sliceJSON, "addressType");
     if (!address_type) {
@@ -218,7 +221,6 @@ v1beta1_endpoint_slice_t *v1beta1_endpoint_slice_parseFromJSON(cJSON *v1beta1_en
 
     // v1beta1_endpoint_slice->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1beta1_endpoint_sliceJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }

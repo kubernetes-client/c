@@ -106,6 +106,12 @@ v1alpha1_runtime_class_t *v1alpha1_runtime_class_parseFromJSON(cJSON *v1alpha1_r
 
     v1alpha1_runtime_class_t *v1alpha1_runtime_class_local_var = NULL;
 
+    // define the local variable for v1alpha1_runtime_class->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1alpha1_runtime_class->spec
+    v1alpha1_runtime_class_spec_t *spec_local_nonprim = NULL;
+
     // v1alpha1_runtime_class->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_runtime_classJSON, "apiVersion");
     if (api_version) { 
@@ -126,7 +132,6 @@ v1alpha1_runtime_class_t *v1alpha1_runtime_class_parseFromJSON(cJSON *v1alpha1_r
 
     // v1alpha1_runtime_class->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_runtime_classJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -137,7 +142,6 @@ v1alpha1_runtime_class_t *v1alpha1_runtime_class_parseFromJSON(cJSON *v1alpha1_r
         goto end;
     }
 
-    v1alpha1_runtime_class_spec_t *spec_local_nonprim = NULL;
     
     spec_local_nonprim = v1alpha1_runtime_class_spec_parseFromJSON(spec); //nonprimitive
 

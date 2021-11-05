@@ -125,6 +125,15 @@ v1alpha1_volume_attachment_t *v1alpha1_volume_attachment_parseFromJSON(cJSON *v1
 
     v1alpha1_volume_attachment_t *v1alpha1_volume_attachment_local_var = NULL;
 
+    // define the local variable for v1alpha1_volume_attachment->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1alpha1_volume_attachment->spec
+    v1alpha1_volume_attachment_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1alpha1_volume_attachment->status
+    v1alpha1_volume_attachment_status_t *status_local_nonprim = NULL;
+
     // v1alpha1_volume_attachment->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attachmentJSON, "apiVersion");
     if (api_version) { 
@@ -145,7 +154,6 @@ v1alpha1_volume_attachment_t *v1alpha1_volume_attachment_parseFromJSON(cJSON *v1
 
     // v1alpha1_volume_attachment->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attachmentJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -156,13 +164,11 @@ v1alpha1_volume_attachment_t *v1alpha1_volume_attachment_parseFromJSON(cJSON *v1
         goto end;
     }
 
-    v1alpha1_volume_attachment_spec_t *spec_local_nonprim = NULL;
     
     spec_local_nonprim = v1alpha1_volume_attachment_spec_parseFromJSON(spec); //nonprimitive
 
     // v1alpha1_volume_attachment->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attachmentJSON, "status");
-    v1alpha1_volume_attachment_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1alpha1_volume_attachment_status_parseFromJSON(status); //nonprimitive
     }

@@ -73,9 +73,11 @@ v1beta1_limit_response_t *v1beta1_limit_response_parseFromJSON(cJSON *v1beta1_li
 
     v1beta1_limit_response_t *v1beta1_limit_response_local_var = NULL;
 
+    // define the local variable for v1beta1_limit_response->queuing
+    v1beta1_queuing_configuration_t *queuing_local_nonprim = NULL;
+
     // v1beta1_limit_response->queuing
     cJSON *queuing = cJSON_GetObjectItemCaseSensitive(v1beta1_limit_responseJSON, "queuing");
-    v1beta1_queuing_configuration_t *queuing_local_nonprim = NULL;
     if (queuing) { 
     queuing_local_nonprim = v1beta1_queuing_configuration_parseFromJSON(queuing); //nonprimitive
     }

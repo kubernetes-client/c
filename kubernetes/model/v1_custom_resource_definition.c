@@ -125,6 +125,15 @@ v1_custom_resource_definition_t *v1_custom_resource_definition_parseFromJSON(cJS
 
     v1_custom_resource_definition_t *v1_custom_resource_definition_local_var = NULL;
 
+    // define the local variable for v1_custom_resource_definition->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_custom_resource_definition->spec
+    v1_custom_resource_definition_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_custom_resource_definition->status
+    v1_custom_resource_definition_status_t *status_local_nonprim = NULL;
+
     // v1_custom_resource_definition->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "apiVersion");
     if (api_version) { 
@@ -145,7 +154,6 @@ v1_custom_resource_definition_t *v1_custom_resource_definition_parseFromJSON(cJS
 
     // v1_custom_resource_definition->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -156,13 +164,11 @@ v1_custom_resource_definition_t *v1_custom_resource_definition_parseFromJSON(cJS
         goto end;
     }
 
-    v1_custom_resource_definition_spec_t *spec_local_nonprim = NULL;
     
     spec_local_nonprim = v1_custom_resource_definition_spec_parseFromJSON(spec); //nonprimitive
 
     // v1_custom_resource_definition->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "status");
-    v1_custom_resource_definition_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_custom_resource_definition_status_parseFromJSON(status); //nonprimitive
     }

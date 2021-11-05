@@ -114,6 +114,9 @@ v1_validating_webhook_configuration_t *v1_validating_webhook_configuration_parse
 
     v1_validating_webhook_configuration_t *v1_validating_webhook_configuration_local_var = NULL;
 
+    // define the local variable for v1_validating_webhook_configuration->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
     // v1_validating_webhook_configuration->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_validating_webhook_configurationJSON, "apiVersion");
     if (api_version) { 
@@ -134,7 +137,6 @@ v1_validating_webhook_configuration_t *v1_validating_webhook_configuration_parse
 
     // v1_validating_webhook_configuration->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_validating_webhook_configurationJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }

@@ -156,6 +156,12 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
     v1_status_t *v1_status_local_var = NULL;
 
+    // define the local variable for v1_status->details
+    v1_status_details_t *details_local_nonprim = NULL;
+
+    // define the local variable for v1_status->metadata
+    v1_list_meta_t *metadata_local_nonprim = NULL;
+
     // v1_status->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "apiVersion");
     if (api_version) { 
@@ -176,7 +182,6 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
     // v1_status->details
     cJSON *details = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "details");
-    v1_status_details_t *details_local_nonprim = NULL;
     if (details) { 
     details_local_nonprim = v1_status_details_parseFromJSON(details); //nonprimitive
     }
@@ -201,7 +206,6 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
     // v1_status->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "metadata");
-    v1_list_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }

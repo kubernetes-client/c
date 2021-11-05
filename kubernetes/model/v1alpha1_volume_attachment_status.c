@@ -120,9 +120,14 @@ v1alpha1_volume_attachment_status_t *v1alpha1_volume_attachment_status_parseFrom
 
     v1alpha1_volume_attachment_status_t *v1alpha1_volume_attachment_status_local_var = NULL;
 
+    // define the local variable for v1alpha1_volume_attachment_status->attach_error
+    v1alpha1_volume_error_t *attach_error_local_nonprim = NULL;
+
+    // define the local variable for v1alpha1_volume_attachment_status->detach_error
+    v1alpha1_volume_error_t *detach_error_local_nonprim = NULL;
+
     // v1alpha1_volume_attachment_status->attach_error
     cJSON *attach_error = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attachment_statusJSON, "attachError");
-    v1alpha1_volume_error_t *attach_error_local_nonprim = NULL;
     if (attach_error) { 
     attach_error_local_nonprim = v1alpha1_volume_error_parseFromJSON(attach_error); //nonprimitive
     }
@@ -163,7 +168,6 @@ v1alpha1_volume_attachment_status_t *v1alpha1_volume_attachment_status_parseFrom
 
     // v1alpha1_volume_attachment_status->detach_error
     cJSON *detach_error = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attachment_statusJSON, "detachError");
-    v1alpha1_volume_error_t *detach_error_local_nonprim = NULL;
     if (detach_error) { 
     detach_error_local_nonprim = v1alpha1_volume_error_parseFromJSON(detach_error); //nonprimitive
     }

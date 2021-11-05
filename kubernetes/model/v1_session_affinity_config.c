@@ -57,9 +57,11 @@ v1_session_affinity_config_t *v1_session_affinity_config_parseFromJSON(cJSON *v1
 
     v1_session_affinity_config_t *v1_session_affinity_config_local_var = NULL;
 
+    // define the local variable for v1_session_affinity_config->client_ip
+    v1_client_ip_config_t *client_ip_local_nonprim = NULL;
+
     // v1_session_affinity_config->client_ip
     cJSON *client_ip = cJSON_GetObjectItemCaseSensitive(v1_session_affinity_configJSON, "clientIP");
-    v1_client_ip_config_t *client_ip_local_nonprim = NULL;
     if (client_ip) { 
     client_ip_local_nonprim = v1_client_ip_config_parseFromJSON(client_ip); //nonprimitive
     }

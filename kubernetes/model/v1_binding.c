@@ -106,6 +106,12 @@ v1_binding_t *v1_binding_parseFromJSON(cJSON *v1_bindingJSON){
 
     v1_binding_t *v1_binding_local_var = NULL;
 
+    // define the local variable for v1_binding->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_binding->target
+    v1_object_reference_t *target_local_nonprim = NULL;
+
     // v1_binding->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "apiVersion");
     if (api_version) { 
@@ -126,7 +132,6 @@ v1_binding_t *v1_binding_parseFromJSON(cJSON *v1_bindingJSON){
 
     // v1_binding->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -137,7 +142,6 @@ v1_binding_t *v1_binding_parseFromJSON(cJSON *v1_bindingJSON){
         goto end;
     }
 
-    v1_object_reference_t *target_local_nonprim = NULL;
     
     target_local_nonprim = v1_object_reference_parseFromJSON(target); //nonprimitive
 

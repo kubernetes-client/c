@@ -204,6 +204,15 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     v1_pod_security_context_t *v1_pod_security_context_local_var = NULL;
 
+    // define the local variable for v1_pod_security_context->se_linux_options
+    v1_se_linux_options_t *se_linux_options_local_nonprim = NULL;
+
+    // define the local variable for v1_pod_security_context->seccomp_profile
+    v1_seccomp_profile_t *seccomp_profile_local_nonprim = NULL;
+
+    // define the local variable for v1_pod_security_context->windows_options
+    v1_windows_security_context_options_t *windows_options_local_nonprim = NULL;
+
     // v1_pod_security_context->fs_group
     cJSON *fs_group = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "fsGroup");
     if (fs_group) { 
@@ -251,14 +260,12 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->se_linux_options
     cJSON *se_linux_options = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "seLinuxOptions");
-    v1_se_linux_options_t *se_linux_options_local_nonprim = NULL;
     if (se_linux_options) { 
     se_linux_options_local_nonprim = v1_se_linux_options_parseFromJSON(se_linux_options); //nonprimitive
     }
 
     // v1_pod_security_context->seccomp_profile
     cJSON *seccomp_profile = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "seccompProfile");
-    v1_seccomp_profile_t *seccomp_profile_local_nonprim = NULL;
     if (seccomp_profile) { 
     seccomp_profile_local_nonprim = v1_seccomp_profile_parseFromJSON(seccomp_profile); //nonprimitive
     }
@@ -313,7 +320,6 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->windows_options
     cJSON *windows_options = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "windowsOptions");
-    v1_windows_security_context_options_t *windows_options_local_nonprim = NULL;
     if (windows_options) { 
     windows_options_local_nonprim = v1_windows_security_context_options_parseFromJSON(windows_options); //nonprimitive
     }

@@ -127,6 +127,12 @@ v1alpha1_storage_version_t *v1alpha1_storage_version_parseFromJSON(cJSON *v1alph
 
     v1alpha1_storage_version_t *v1alpha1_storage_version_local_var = NULL;
 
+    // define the local variable for v1alpha1_storage_version->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1alpha1_storage_version->status
+    v1alpha1_storage_version_status_t *status_local_nonprim = NULL;
+
     // v1alpha1_storage_version->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_versionJSON, "apiVersion");
     if (api_version) { 
@@ -147,7 +153,6 @@ v1alpha1_storage_version_t *v1alpha1_storage_version_parseFromJSON(cJSON *v1alph
 
     // v1alpha1_storage_version->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_versionJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -168,7 +173,6 @@ v1alpha1_storage_version_t *v1alpha1_storage_version_parseFromJSON(cJSON *v1alph
         goto end;
     }
 
-    v1alpha1_storage_version_status_t *status_local_nonprim = NULL;
     
     status_local_nonprim = v1alpha1_storage_version_status_parseFromJSON(status); //nonprimitive
 

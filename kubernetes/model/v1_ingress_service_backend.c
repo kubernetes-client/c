@@ -73,6 +73,9 @@ v1_ingress_service_backend_t *v1_ingress_service_backend_parseFromJSON(cJSON *v1
 
     v1_ingress_service_backend_t *v1_ingress_service_backend_local_var = NULL;
 
+    // define the local variable for v1_ingress_service_backend->port
+    v1_service_backend_port_t *port_local_nonprim = NULL;
+
     // v1_ingress_service_backend->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_ingress_service_backendJSON, "name");
     if (!name) {
@@ -87,7 +90,6 @@ v1_ingress_service_backend_t *v1_ingress_service_backend_parseFromJSON(cJSON *v1
 
     // v1_ingress_service_backend->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_ingress_service_backendJSON, "port");
-    v1_service_backend_port_t *port_local_nonprim = NULL;
     if (port) { 
     port_local_nonprim = v1_service_backend_port_parseFromJSON(port); //nonprimitive
     }

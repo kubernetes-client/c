@@ -145,6 +145,9 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
 
     v1_delete_options_t *v1_delete_options_local_var = NULL;
 
+    // define the local variable for v1_delete_options->preconditions
+    v1_preconditions_t *preconditions_local_nonprim = NULL;
+
     // v1_delete_options->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "apiVersion");
     if (api_version) { 
@@ -203,7 +206,6 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
 
     // v1_delete_options->preconditions
     cJSON *preconditions = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "preconditions");
-    v1_preconditions_t *preconditions_local_nonprim = NULL;
     if (preconditions) { 
     preconditions_local_nonprim = v1_preconditions_parseFromJSON(preconditions); //nonprimitive
     }

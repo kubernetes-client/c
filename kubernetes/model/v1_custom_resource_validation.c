@@ -57,9 +57,11 @@ v1_custom_resource_validation_t *v1_custom_resource_validation_parseFromJSON(cJS
 
     v1_custom_resource_validation_t *v1_custom_resource_validation_local_var = NULL;
 
+    // define the local variable for v1_custom_resource_validation->open_apiv3_schema
+    v1_json_schema_props_t *open_apiv3_schema_local_nonprim = NULL;
+
     // v1_custom_resource_validation->open_apiv3_schema
     cJSON *open_apiv3_schema = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_validationJSON, "openAPIV3Schema");
-    v1_json_schema_props_t *open_apiv3_schema_local_nonprim = NULL;
     if (open_apiv3_schema) { 
     open_apiv3_schema_local_nonprim = v1_json_schema_props_parseFromJSON(open_apiv3_schema); //nonprimitive
     }

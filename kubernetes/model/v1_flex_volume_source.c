@@ -129,6 +129,9 @@ v1_flex_volume_source_t *v1_flex_volume_source_parseFromJSON(cJSON *v1_flex_volu
 
     v1_flex_volume_source_t *v1_flex_volume_source_local_var = NULL;
 
+    // define the local variable for v1_flex_volume_source->secret_ref
+    v1_local_object_reference_t *secret_ref_local_nonprim = NULL;
+
     // v1_flex_volume_source->driver
     cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1_flex_volume_sourceJSON, "driver");
     if (!driver) {
@@ -183,7 +186,6 @@ v1_flex_volume_source_t *v1_flex_volume_source_parseFromJSON(cJSON *v1_flex_volu
 
     // v1_flex_volume_source->secret_ref
     cJSON *secret_ref = cJSON_GetObjectItemCaseSensitive(v1_flex_volume_sourceJSON, "secretRef");
-    v1_local_object_reference_t *secret_ref_local_nonprim = NULL;
     if (secret_ref) { 
     secret_ref_local_nonprim = v1_local_object_reference_parseFromJSON(secret_ref); //nonprimitive
     }

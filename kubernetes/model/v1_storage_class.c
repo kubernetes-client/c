@@ -226,6 +226,9 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
 
     v1_storage_class_t *v1_storage_class_local_var = NULL;
 
+    // define the local variable for v1_storage_class->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
     // v1_storage_class->allow_volume_expansion
     cJSON *allow_volume_expansion = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "allowVolumeExpansion");
     if (allow_volume_expansion) { 
@@ -277,7 +280,6 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
 
     // v1_storage_class->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }

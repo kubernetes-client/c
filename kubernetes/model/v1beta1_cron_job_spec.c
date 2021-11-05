@@ -129,6 +129,9 @@ v1beta1_cron_job_spec_t *v1beta1_cron_job_spec_parseFromJSON(cJSON *v1beta1_cron
 
     v1beta1_cron_job_spec_t *v1beta1_cron_job_spec_local_var = NULL;
 
+    // define the local variable for v1beta1_cron_job_spec->job_template
+    v1beta1_job_template_spec_t *job_template_local_nonprim = NULL;
+
     // v1beta1_cron_job_spec->concurrency_policy
     cJSON *concurrency_policy = cJSON_GetObjectItemCaseSensitive(v1beta1_cron_job_specJSON, "concurrencyPolicy");
     if (concurrency_policy) { 
@@ -153,7 +156,6 @@ v1beta1_cron_job_spec_t *v1beta1_cron_job_spec_parseFromJSON(cJSON *v1beta1_cron
         goto end;
     }
 
-    v1beta1_job_template_spec_t *job_template_local_nonprim = NULL;
     
     job_template_local_nonprim = v1beta1_job_template_spec_parseFromJSON(job_template); //nonprimitive
 

@@ -109,6 +109,9 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
 
     v1_replication_controller_spec_t *v1_replication_controller_spec_local_var = NULL;
 
+    // define the local variable for v1_replication_controller_spec->_template
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
+
     // v1_replication_controller_spec->min_ready_seconds
     cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_specJSON, "minReadySeconds");
     if (min_ready_seconds) { 
@@ -151,7 +154,6 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
 
     // v1_replication_controller_spec->_template
     cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_specJSON, "template");
-    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     if (_template) { 
     _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
     }

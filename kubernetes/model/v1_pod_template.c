@@ -104,6 +104,12 @@ v1_pod_template_t *v1_pod_template_parseFromJSON(cJSON *v1_pod_templateJSON){
 
     v1_pod_template_t *v1_pod_template_local_var = NULL;
 
+    // define the local variable for v1_pod_template->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_pod_template->_template
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
+
     // v1_pod_template->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_pod_templateJSON, "apiVersion");
     if (api_version) { 
@@ -124,14 +130,12 @@ v1_pod_template_t *v1_pod_template_parseFromJSON(cJSON *v1_pod_templateJSON){
 
     // v1_pod_template->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_pod_templateJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_pod_template->_template
     cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_pod_templateJSON, "template");
-    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     if (_template) { 
     _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
     }

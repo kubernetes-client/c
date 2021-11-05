@@ -71,9 +71,11 @@ v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_parseFromJSON
 
     v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_local_var = NULL;
 
+    // define the local variable for v1_stateful_set_update_strategy->rolling_update
+    v1_rolling_update_stateful_set_strategy_t *rolling_update_local_nonprim = NULL;
+
     // v1_stateful_set_update_strategy->rolling_update
     cJSON *rolling_update = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_update_strategyJSON, "rollingUpdate");
-    v1_rolling_update_stateful_set_strategy_t *rolling_update_local_nonprim = NULL;
     if (rolling_update) { 
     rolling_update_local_nonprim = v1_rolling_update_stateful_set_strategy_parseFromJSON(rolling_update); //nonprimitive
     }

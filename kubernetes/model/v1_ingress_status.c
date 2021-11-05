@@ -57,9 +57,11 @@ v1_ingress_status_t *v1_ingress_status_parseFromJSON(cJSON *v1_ingress_statusJSO
 
     v1_ingress_status_t *v1_ingress_status_local_var = NULL;
 
+    // define the local variable for v1_ingress_status->load_balancer
+    v1_load_balancer_status_t *load_balancer_local_nonprim = NULL;
+
     // v1_ingress_status->load_balancer
     cJSON *load_balancer = cJSON_GetObjectItemCaseSensitive(v1_ingress_statusJSON, "loadBalancer");
-    v1_load_balancer_status_t *load_balancer_local_nonprim = NULL;
     if (load_balancer) { 
     load_balancer_local_nonprim = v1_load_balancer_status_parseFromJSON(load_balancer); //nonprimitive
     }

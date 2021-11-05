@@ -676,6 +676,15 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     v1_pod_spec_t *v1_pod_spec_local_var = NULL;
 
+    // define the local variable for v1_pod_spec->affinity
+    v1_affinity_t *affinity_local_nonprim = NULL;
+
+    // define the local variable for v1_pod_spec->dns_config
+    v1_pod_dns_config_t *dns_config_local_nonprim = NULL;
+
+    // define the local variable for v1_pod_spec->security_context
+    v1_pod_security_context_t *security_context_local_nonprim = NULL;
+
     // v1_pod_spec->active_deadline_seconds
     cJSON *active_deadline_seconds = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "activeDeadlineSeconds");
     if (active_deadline_seconds) { 
@@ -687,7 +696,6 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->affinity
     cJSON *affinity = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "affinity");
-    v1_affinity_t *affinity_local_nonprim = NULL;
     if (affinity) { 
     affinity_local_nonprim = v1_affinity_parseFromJSON(affinity); //nonprimitive
     }
@@ -728,7 +736,6 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->dns_config
     cJSON *dns_config = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "dnsConfig");
-    v1_pod_dns_config_t *dns_config_local_nonprim = NULL;
     if (dns_config) { 
     dns_config_local_nonprim = v1_pod_dns_config_parseFromJSON(dns_config); //nonprimitive
     }
@@ -1006,7 +1013,6 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->security_context
     cJSON *security_context = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "securityContext");
-    v1_pod_security_context_t *security_context_local_nonprim = NULL;
     if (security_context) { 
     security_context_local_nonprim = v1_pod_security_context_parseFromJSON(security_context); //nonprimitive
     }

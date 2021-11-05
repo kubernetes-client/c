@@ -95,23 +95,29 @@ v1_affinity_t *v1_affinity_parseFromJSON(cJSON *v1_affinityJSON){
 
     v1_affinity_t *v1_affinity_local_var = NULL;
 
+    // define the local variable for v1_affinity->node_affinity
+    v1_node_affinity_t *node_affinity_local_nonprim = NULL;
+
+    // define the local variable for v1_affinity->pod_affinity
+    v1_pod_affinity_t *pod_affinity_local_nonprim = NULL;
+
+    // define the local variable for v1_affinity->pod_anti_affinity
+    v1_pod_anti_affinity_t *pod_anti_affinity_local_nonprim = NULL;
+
     // v1_affinity->node_affinity
     cJSON *node_affinity = cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "nodeAffinity");
-    v1_node_affinity_t *node_affinity_local_nonprim = NULL;
     if (node_affinity) { 
     node_affinity_local_nonprim = v1_node_affinity_parseFromJSON(node_affinity); //nonprimitive
     }
 
     // v1_affinity->pod_affinity
     cJSON *pod_affinity = cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "podAffinity");
-    v1_pod_affinity_t *pod_affinity_local_nonprim = NULL;
     if (pod_affinity) { 
     pod_affinity_local_nonprim = v1_pod_affinity_parseFromJSON(pod_affinity); //nonprimitive
     }
 
     // v1_affinity->pod_anti_affinity
     cJSON *pod_anti_affinity = cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "podAntiAffinity");
-    v1_pod_anti_affinity_t *pod_anti_affinity_local_nonprim = NULL;
     if (pod_anti_affinity) { 
     pod_anti_affinity_local_nonprim = v1_pod_anti_affinity_parseFromJSON(pod_anti_affinity); //nonprimitive
     }

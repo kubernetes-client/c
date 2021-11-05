@@ -116,6 +116,9 @@ v1alpha1_role_binding_list_t *v1alpha1_role_binding_list_parseFromJSON(cJSON *v1
 
     v1alpha1_role_binding_list_t *v1alpha1_role_binding_list_local_var = NULL;
 
+    // define the local variable for v1alpha1_role_binding_list->metadata
+    v1_list_meta_t *metadata_local_nonprim = NULL;
+
     // v1alpha1_role_binding_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_role_binding_listJSON, "apiVersion");
     if (api_version) { 
@@ -161,7 +164,6 @@ v1alpha1_role_binding_list_t *v1alpha1_role_binding_list_parseFromJSON(cJSON *v1
 
     // v1alpha1_role_binding_list->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_role_binding_listJSON, "metadata");
-    v1_list_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }

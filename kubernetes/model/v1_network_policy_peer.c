@@ -95,23 +95,29 @@ v1_network_policy_peer_t *v1_network_policy_peer_parseFromJSON(cJSON *v1_network
 
     v1_network_policy_peer_t *v1_network_policy_peer_local_var = NULL;
 
+    // define the local variable for v1_network_policy_peer->ip_block
+    v1_ip_block_t *ip_block_local_nonprim = NULL;
+
+    // define the local variable for v1_network_policy_peer->namespace_selector
+    v1_label_selector_t *namespace_selector_local_nonprim = NULL;
+
+    // define the local variable for v1_network_policy_peer->pod_selector
+    v1_label_selector_t *pod_selector_local_nonprim = NULL;
+
     // v1_network_policy_peer->ip_block
     cJSON *ip_block = cJSON_GetObjectItemCaseSensitive(v1_network_policy_peerJSON, "ipBlock");
-    v1_ip_block_t *ip_block_local_nonprim = NULL;
     if (ip_block) { 
     ip_block_local_nonprim = v1_ip_block_parseFromJSON(ip_block); //nonprimitive
     }
 
     // v1_network_policy_peer->namespace_selector
     cJSON *namespace_selector = cJSON_GetObjectItemCaseSensitive(v1_network_policy_peerJSON, "namespaceSelector");
-    v1_label_selector_t *namespace_selector_local_nonprim = NULL;
     if (namespace_selector) { 
     namespace_selector_local_nonprim = v1_label_selector_parseFromJSON(namespace_selector); //nonprimitive
     }
 
     // v1_network_policy_peer->pod_selector
     cJSON *pod_selector = cJSON_GetObjectItemCaseSensitive(v1_network_policy_peerJSON, "podSelector");
-    v1_label_selector_t *pod_selector_local_nonprim = NULL;
     if (pod_selector) { 
     pod_selector_local_nonprim = v1_label_selector_parseFromJSON(pod_selector); //nonprimitive
     }

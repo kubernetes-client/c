@@ -123,6 +123,15 @@ v1beta1_pod_disruption_budget_t *v1beta1_pod_disruption_budget_parseFromJSON(cJS
 
     v1beta1_pod_disruption_budget_t *v1beta1_pod_disruption_budget_local_var = NULL;
 
+    // define the local variable for v1beta1_pod_disruption_budget->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_pod_disruption_budget->spec
+    v1beta1_pod_disruption_budget_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_pod_disruption_budget->status
+    v1beta1_pod_disruption_budget_status_t *status_local_nonprim = NULL;
+
     // v1beta1_pod_disruption_budget->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_disruption_budgetJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1beta1_pod_disruption_budget_t *v1beta1_pod_disruption_budget_parseFromJSON(cJS
 
     // v1beta1_pod_disruption_budget->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_disruption_budgetJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1beta1_pod_disruption_budget->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_disruption_budgetJSON, "spec");
-    v1beta1_pod_disruption_budget_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1beta1_pod_disruption_budget_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1beta1_pod_disruption_budget->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_disruption_budgetJSON, "status");
-    v1beta1_pod_disruption_budget_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1beta1_pod_disruption_budget_status_parseFromJSON(status); //nonprimitive
     }

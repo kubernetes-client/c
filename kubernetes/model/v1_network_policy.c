@@ -104,6 +104,12 @@ v1_network_policy_t *v1_network_policy_parseFromJSON(cJSON *v1_network_policyJSO
 
     v1_network_policy_t *v1_network_policy_local_var = NULL;
 
+    // define the local variable for v1_network_policy->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_network_policy->spec
+    v1_network_policy_spec_t *spec_local_nonprim = NULL;
+
     // v1_network_policy->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_network_policyJSON, "apiVersion");
     if (api_version) { 
@@ -124,14 +130,12 @@ v1_network_policy_t *v1_network_policy_parseFromJSON(cJSON *v1_network_policyJSO
 
     // v1_network_policy->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_network_policyJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_network_policy->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_network_policyJSON, "spec");
-    v1_network_policy_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_network_policy_spec_parseFromJSON(spec); //nonprimitive
     }

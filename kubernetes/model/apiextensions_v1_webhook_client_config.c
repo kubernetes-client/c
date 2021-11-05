@@ -85,6 +85,9 @@ apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config
 
     apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config_local_var = NULL;
 
+    // define the local variable for apiextensions_v1_webhook_client_config->service
+    apiextensions_v1_service_reference_t *service_local_nonprim = NULL;
+
     // apiextensions_v1_webhook_client_config->ca_bundle
     cJSON *ca_bundle = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "caBundle");
     if (ca_bundle) { 
@@ -96,7 +99,6 @@ apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config
 
     // apiextensions_v1_webhook_client_config->service
     cJSON *service = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "service");
-    apiextensions_v1_service_reference_t *service_local_nonprim = NULL;
     if (service) { 
     service_local_nonprim = apiextensions_v1_service_reference_parseFromJSON(service); //nonprimitive
     }

@@ -117,9 +117,14 @@ v1beta1_flow_schema_spec_t *v1beta1_flow_schema_spec_parseFromJSON(cJSON *v1beta
 
     v1beta1_flow_schema_spec_t *v1beta1_flow_schema_spec_local_var = NULL;
 
+    // define the local variable for v1beta1_flow_schema_spec->distinguisher_method
+    v1beta1_flow_distinguisher_method_t *distinguisher_method_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_flow_schema_spec->priority_level_configuration
+    v1beta1_priority_level_configuration_reference_t *priority_level_configuration_local_nonprim = NULL;
+
     // v1beta1_flow_schema_spec->distinguisher_method
     cJSON *distinguisher_method = cJSON_GetObjectItemCaseSensitive(v1beta1_flow_schema_specJSON, "distinguisherMethod");
-    v1beta1_flow_distinguisher_method_t *distinguisher_method_local_nonprim = NULL;
     if (distinguisher_method) { 
     distinguisher_method_local_nonprim = v1beta1_flow_distinguisher_method_parseFromJSON(distinguisher_method); //nonprimitive
     }
@@ -139,7 +144,6 @@ v1beta1_flow_schema_spec_t *v1beta1_flow_schema_spec_parseFromJSON(cJSON *v1beta
         goto end;
     }
 
-    v1beta1_priority_level_configuration_reference_t *priority_level_configuration_local_nonprim = NULL;
     
     priority_level_configuration_local_nonprim = v1beta1_priority_level_configuration_reference_parseFromJSON(priority_level_configuration); //nonprimitive
 

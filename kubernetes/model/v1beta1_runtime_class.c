@@ -139,6 +139,15 @@ v1beta1_runtime_class_t *v1beta1_runtime_class_parseFromJSON(cJSON *v1beta1_runt
 
     v1beta1_runtime_class_t *v1beta1_runtime_class_local_var = NULL;
 
+    // define the local variable for v1beta1_runtime_class->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_runtime_class->overhead
+    v1beta1_overhead_t *overhead_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_runtime_class->scheduling
+    v1beta1_scheduling_t *scheduling_local_nonprim = NULL;
+
     // v1beta1_runtime_class->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1beta1_runtime_classJSON, "apiVersion");
     if (api_version) { 
@@ -171,21 +180,18 @@ v1beta1_runtime_class_t *v1beta1_runtime_class_parseFromJSON(cJSON *v1beta1_runt
 
     // v1beta1_runtime_class->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1beta1_runtime_classJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1beta1_runtime_class->overhead
     cJSON *overhead = cJSON_GetObjectItemCaseSensitive(v1beta1_runtime_classJSON, "overhead");
-    v1beta1_overhead_t *overhead_local_nonprim = NULL;
     if (overhead) { 
     overhead_local_nonprim = v1beta1_overhead_parseFromJSON(overhead); //nonprimitive
     }
 
     // v1beta1_runtime_class->scheduling
     cJSON *scheduling = cJSON_GetObjectItemCaseSensitive(v1beta1_runtime_classJSON, "scheduling");
-    v1beta1_scheduling_t *scheduling_local_nonprim = NULL;
     if (scheduling) { 
     scheduling_local_nonprim = v1beta1_scheduling_parseFromJSON(scheduling); //nonprimitive
     }

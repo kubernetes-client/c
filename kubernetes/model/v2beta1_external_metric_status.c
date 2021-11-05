@@ -103,6 +103,9 @@ v2beta1_external_metric_status_t *v2beta1_external_metric_status_parseFromJSON(c
 
     v2beta1_external_metric_status_t *v2beta1_external_metric_status_local_var = NULL;
 
+    // define the local variable for v2beta1_external_metric_status->metric_selector
+    v1_label_selector_t *metric_selector_local_nonprim = NULL;
+
     // v2beta1_external_metric_status->current_average_value
     cJSON *current_average_value = cJSON_GetObjectItemCaseSensitive(v2beta1_external_metric_statusJSON, "currentAverageValue");
     if (current_average_value) { 
@@ -138,7 +141,6 @@ v2beta1_external_metric_status_t *v2beta1_external_metric_status_parseFromJSON(c
 
     // v2beta1_external_metric_status->metric_selector
     cJSON *metric_selector = cJSON_GetObjectItemCaseSensitive(v2beta1_external_metric_statusJSON, "metricSelector");
-    v1_label_selector_t *metric_selector_local_nonprim = NULL;
     if (metric_selector) { 
     metric_selector_local_nonprim = v1_label_selector_parseFromJSON(metric_selector); //nonprimitive
     }

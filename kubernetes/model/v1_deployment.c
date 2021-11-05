@@ -123,6 +123,15 @@ v1_deployment_t *v1_deployment_parseFromJSON(cJSON *v1_deploymentJSON){
 
     v1_deployment_t *v1_deployment_local_var = NULL;
 
+    // define the local variable for v1_deployment->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_deployment->spec
+    v1_deployment_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_deployment->status
+    v1_deployment_status_t *status_local_nonprim = NULL;
+
     // v1_deployment->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_deploymentJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1_deployment_t *v1_deployment_parseFromJSON(cJSON *v1_deploymentJSON){
 
     // v1_deployment->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_deploymentJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_deployment->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_deploymentJSON, "spec");
-    v1_deployment_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_deployment_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_deployment->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_deploymentJSON, "status");
-    v1_deployment_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_deployment_status_parseFromJSON(status); //nonprimitive
     }

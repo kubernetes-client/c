@@ -224,6 +224,15 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     v1_validating_webhook_t *v1_validating_webhook_local_var = NULL;
 
+    // define the local variable for v1_validating_webhook->client_config
+    admissionregistration_v1_webhook_client_config_t *client_config_local_nonprim = NULL;
+
+    // define the local variable for v1_validating_webhook->namespace_selector
+    v1_label_selector_t *namespace_selector_local_nonprim = NULL;
+
+    // define the local variable for v1_validating_webhook->object_selector
+    v1_label_selector_t *object_selector_local_nonprim = NULL;
+
     // v1_validating_webhook->admission_review_versions
     cJSON *admission_review_versions = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "admissionReviewVersions");
     if (!admission_review_versions) {
@@ -253,7 +262,6 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
         goto end;
     }
 
-    admissionregistration_v1_webhook_client_config_t *client_config_local_nonprim = NULL;
     
     client_config_local_nonprim = admissionregistration_v1_webhook_client_config_parseFromJSON(client_config); //nonprimitive
 
@@ -289,14 +297,12 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     // v1_validating_webhook->namespace_selector
     cJSON *namespace_selector = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "namespaceSelector");
-    v1_label_selector_t *namespace_selector_local_nonprim = NULL;
     if (namespace_selector) { 
     namespace_selector_local_nonprim = v1_label_selector_parseFromJSON(namespace_selector); //nonprimitive
     }
 
     // v1_validating_webhook->object_selector
     cJSON *object_selector = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "objectSelector");
-    v1_label_selector_t *object_selector_local_nonprim = NULL;
     if (object_selector) { 
     object_selector_local_nonprim = v1_label_selector_parseFromJSON(object_selector); //nonprimitive
     }

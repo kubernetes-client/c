@@ -111,9 +111,17 @@ v1beta1_subject_t *v1beta1_subject_parseFromJSON(cJSON *v1beta1_subjectJSON){
 
     v1beta1_subject_t *v1beta1_subject_local_var = NULL;
 
+    // define the local variable for v1beta1_subject->group
+    v1beta1_group_subject_t *group_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_subject->service_account
+    v1beta1_service_account_subject_t *service_account_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_subject->user
+    v1beta1_user_subject_t *user_local_nonprim = NULL;
+
     // v1beta1_subject->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1beta1_subjectJSON, "group");
-    v1beta1_group_subject_t *group_local_nonprim = NULL;
     if (group) { 
     group_local_nonprim = v1beta1_group_subject_parseFromJSON(group); //nonprimitive
     }
@@ -132,14 +140,12 @@ v1beta1_subject_t *v1beta1_subject_parseFromJSON(cJSON *v1beta1_subjectJSON){
 
     // v1beta1_subject->service_account
     cJSON *service_account = cJSON_GetObjectItemCaseSensitive(v1beta1_subjectJSON, "serviceAccount");
-    v1beta1_service_account_subject_t *service_account_local_nonprim = NULL;
     if (service_account) { 
     service_account_local_nonprim = v1beta1_service_account_subject_parseFromJSON(service_account); //nonprimitive
     }
 
     // v1beta1_subject->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1beta1_subjectJSON, "user");
-    v1beta1_user_subject_t *user_local_nonprim = NULL;
     if (user) { 
     user_local_nonprim = v1beta1_user_subject_parseFromJSON(user); //nonprimitive
     }

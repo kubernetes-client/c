@@ -116,6 +116,9 @@ v1beta1_pod_security_policy_list_t *v1beta1_pod_security_policy_list_parseFromJS
 
     v1beta1_pod_security_policy_list_t *v1beta1_pod_security_policy_list_local_var = NULL;
 
+    // define the local variable for v1beta1_pod_security_policy_list->metadata
+    v1_list_meta_t *metadata_local_nonprim = NULL;
+
     // v1beta1_pod_security_policy_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_security_policy_listJSON, "apiVersion");
     if (api_version) { 
@@ -161,7 +164,6 @@ v1beta1_pod_security_policy_list_t *v1beta1_pod_security_policy_list_parseFromJS
 
     // v1beta1_pod_security_policy_list->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_security_policy_listJSON, "metadata");
-    v1_list_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }

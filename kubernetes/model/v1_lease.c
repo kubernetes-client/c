@@ -104,6 +104,12 @@ v1_lease_t *v1_lease_parseFromJSON(cJSON *v1_leaseJSON){
 
     v1_lease_t *v1_lease_local_var = NULL;
 
+    // define the local variable for v1_lease->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_lease->spec
+    v1_lease_spec_t *spec_local_nonprim = NULL;
+
     // v1_lease->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_leaseJSON, "apiVersion");
     if (api_version) { 
@@ -124,14 +130,12 @@ v1_lease_t *v1_lease_parseFromJSON(cJSON *v1_leaseJSON){
 
     // v1_lease->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_leaseJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_lease->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_leaseJSON, "spec");
-    v1_lease_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_lease_spec_parseFromJSON(spec); //nonprimitive
     }

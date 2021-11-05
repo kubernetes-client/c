@@ -143,6 +143,9 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
 
     v1_network_policy_spec_t *v1_network_policy_spec_local_var = NULL;
 
+    // define the local variable for v1_network_policy_spec->pod_selector
+    v1_label_selector_t *pod_selector_local_nonprim = NULL;
+
     // v1_network_policy_spec->egress
     cJSON *egress = cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "egress");
     list_t *egressList;
@@ -193,7 +196,6 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
         goto end;
     }
 
-    v1_label_selector_t *pod_selector_local_nonprim = NULL;
     
     pod_selector_local_nonprim = v1_label_selector_parseFromJSON(pod_selector); //nonprimitive
 

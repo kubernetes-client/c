@@ -148,6 +148,12 @@ v1alpha1_csi_storage_capacity_t *v1alpha1_csi_storage_capacity_parseFromJSON(cJS
 
     v1alpha1_csi_storage_capacity_t *v1alpha1_csi_storage_capacity_local_var = NULL;
 
+    // define the local variable for v1alpha1_csi_storage_capacity->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1alpha1_csi_storage_capacity->node_topology
+    v1_label_selector_t *node_topology_local_nonprim = NULL;
+
     // v1alpha1_csi_storage_capacity->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_csi_storage_capacityJSON, "apiVersion");
     if (api_version) { 
@@ -186,14 +192,12 @@ v1alpha1_csi_storage_capacity_t *v1alpha1_csi_storage_capacity_parseFromJSON(cJS
 
     // v1alpha1_csi_storage_capacity->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_csi_storage_capacityJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1alpha1_csi_storage_capacity->node_topology
     cJSON *node_topology = cJSON_GetObjectItemCaseSensitive(v1alpha1_csi_storage_capacityJSON, "nodeTopology");
-    v1_label_selector_t *node_topology_local_nonprim = NULL;
     if (node_topology) { 
     node_topology_local_nonprim = v1_label_selector_parseFromJSON(node_topology); //nonprimitive
     }

@@ -202,16 +202,26 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
 
     v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_local_var = NULL;
 
+    // define the local variable for v1_csi_persistent_volume_source->controller_expand_secret_ref
+    v1_secret_reference_t *controller_expand_secret_ref_local_nonprim = NULL;
+
+    // define the local variable for v1_csi_persistent_volume_source->controller_publish_secret_ref
+    v1_secret_reference_t *controller_publish_secret_ref_local_nonprim = NULL;
+
+    // define the local variable for v1_csi_persistent_volume_source->node_publish_secret_ref
+    v1_secret_reference_t *node_publish_secret_ref_local_nonprim = NULL;
+
+    // define the local variable for v1_csi_persistent_volume_source->node_stage_secret_ref
+    v1_secret_reference_t *node_stage_secret_ref_local_nonprim = NULL;
+
     // v1_csi_persistent_volume_source->controller_expand_secret_ref
     cJSON *controller_expand_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "controllerExpandSecretRef");
-    v1_secret_reference_t *controller_expand_secret_ref_local_nonprim = NULL;
     if (controller_expand_secret_ref) { 
     controller_expand_secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(controller_expand_secret_ref); //nonprimitive
     }
 
     // v1_csi_persistent_volume_source->controller_publish_secret_ref
     cJSON *controller_publish_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "controllerPublishSecretRef");
-    v1_secret_reference_t *controller_publish_secret_ref_local_nonprim = NULL;
     if (controller_publish_secret_ref) { 
     controller_publish_secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(controller_publish_secret_ref); //nonprimitive
     }
@@ -239,14 +249,12 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
 
     // v1_csi_persistent_volume_source->node_publish_secret_ref
     cJSON *node_publish_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "nodePublishSecretRef");
-    v1_secret_reference_t *node_publish_secret_ref_local_nonprim = NULL;
     if (node_publish_secret_ref) { 
     node_publish_secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(node_publish_secret_ref); //nonprimitive
     }
 
     // v1_csi_persistent_volume_source->node_stage_secret_ref
     cJSON *node_stage_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "nodeStageSecretRef");
-    v1_secret_reference_t *node_stage_secret_ref_local_nonprim = NULL;
     if (node_stage_secret_ref) { 
     node_stage_secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(node_stage_secret_ref); //nonprimitive
     }

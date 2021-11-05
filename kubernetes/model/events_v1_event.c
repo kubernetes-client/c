@@ -299,6 +299,21 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     events_v1_event_t *events_v1_event_local_var = NULL;
 
+    // define the local variable for events_v1_event->deprecated_source
+    v1_event_source_t *deprecated_source_local_nonprim = NULL;
+
+    // define the local variable for events_v1_event->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for events_v1_event->regarding
+    v1_object_reference_t *regarding_local_nonprim = NULL;
+
+    // define the local variable for events_v1_event->related
+    v1_object_reference_t *related_local_nonprim = NULL;
+
+    // define the local variable for events_v1_event->series
+    events_v1_event_series_t *series_local_nonprim = NULL;
+
     // events_v1_event->action
     cJSON *action = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "action");
     if (action) { 
@@ -346,7 +361,6 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->deprecated_source
     cJSON *deprecated_source = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "deprecatedSource");
-    v1_event_source_t *deprecated_source_local_nonprim = NULL;
     if (deprecated_source) { 
     deprecated_source_local_nonprim = v1_event_source_parseFromJSON(deprecated_source); //nonprimitive
     }
@@ -374,7 +388,6 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -399,14 +412,12 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->regarding
     cJSON *regarding = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "regarding");
-    v1_object_reference_t *regarding_local_nonprim = NULL;
     if (regarding) { 
     regarding_local_nonprim = v1_object_reference_parseFromJSON(regarding); //nonprimitive
     }
 
     // events_v1_event->related
     cJSON *related = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "related");
-    v1_object_reference_t *related_local_nonprim = NULL;
     if (related) { 
     related_local_nonprim = v1_object_reference_parseFromJSON(related); //nonprimitive
     }
@@ -431,7 +442,6 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->series
     cJSON *series = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "series");
-    events_v1_event_series_t *series_local_nonprim = NULL;
     if (series) { 
     series_local_nonprim = events_v1_event_series_parseFromJSON(series); //nonprimitive
     }

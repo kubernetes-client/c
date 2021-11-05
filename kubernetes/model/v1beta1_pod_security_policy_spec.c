@@ -528,6 +528,24 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
 
     v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_local_var = NULL;
 
+    // define the local variable for v1beta1_pod_security_policy_spec->fs_group
+    v1beta1_fs_group_strategy_options_t *fs_group_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_pod_security_policy_spec->run_as_group
+    v1beta1_run_as_group_strategy_options_t *run_as_group_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_pod_security_policy_spec->run_as_user
+    v1beta1_run_as_user_strategy_options_t *run_as_user_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_pod_security_policy_spec->runtime_class
+    v1beta1_runtime_class_strategy_options_t *runtime_class_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_pod_security_policy_spec->se_linux
+    v1beta1_se_linux_strategy_options_t *se_linux_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_pod_security_policy_spec->supplemental_groups
+    v1beta1_supplemental_groups_strategy_options_t *supplemental_groups_local_nonprim = NULL;
+
     // v1beta1_pod_security_policy_spec->allow_privilege_escalation
     cJSON *allow_privilege_escalation = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_security_policy_specJSON, "allowPrivilegeEscalation");
     if (allow_privilege_escalation) { 
@@ -718,7 +736,6 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
         goto end;
     }
 
-    v1beta1_fs_group_strategy_options_t *fs_group_local_nonprim = NULL;
     
     fs_group_local_nonprim = v1beta1_fs_group_strategy_options_parseFromJSON(fs_group); //nonprimitive
 
@@ -811,7 +828,6 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
 
     // v1beta1_pod_security_policy_spec->run_as_group
     cJSON *run_as_group = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_security_policy_specJSON, "runAsGroup");
-    v1beta1_run_as_group_strategy_options_t *run_as_group_local_nonprim = NULL;
     if (run_as_group) { 
     run_as_group_local_nonprim = v1beta1_run_as_group_strategy_options_parseFromJSON(run_as_group); //nonprimitive
     }
@@ -822,13 +838,11 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
         goto end;
     }
 
-    v1beta1_run_as_user_strategy_options_t *run_as_user_local_nonprim = NULL;
     
     run_as_user_local_nonprim = v1beta1_run_as_user_strategy_options_parseFromJSON(run_as_user); //nonprimitive
 
     // v1beta1_pod_security_policy_spec->runtime_class
     cJSON *runtime_class = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_security_policy_specJSON, "runtimeClass");
-    v1beta1_runtime_class_strategy_options_t *runtime_class_local_nonprim = NULL;
     if (runtime_class) { 
     runtime_class_local_nonprim = v1beta1_runtime_class_strategy_options_parseFromJSON(runtime_class); //nonprimitive
     }
@@ -839,7 +853,6 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
         goto end;
     }
 
-    v1beta1_se_linux_strategy_options_t *se_linux_local_nonprim = NULL;
     
     se_linux_local_nonprim = v1beta1_se_linux_strategy_options_parseFromJSON(se_linux); //nonprimitive
 
@@ -849,7 +862,6 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
         goto end;
     }
 
-    v1beta1_supplemental_groups_strategy_options_t *supplemental_groups_local_nonprim = NULL;
     
     supplemental_groups_local_nonprim = v1beta1_supplemental_groups_strategy_options_parseFromJSON(supplemental_groups); //nonprimitive
 

@@ -90,9 +90,14 @@ v1_env_from_source_t *v1_env_from_source_parseFromJSON(cJSON *v1_env_from_source
 
     v1_env_from_source_t *v1_env_from_source_local_var = NULL;
 
+    // define the local variable for v1_env_from_source->config_map_ref
+    v1_config_map_env_source_t *config_map_ref_local_nonprim = NULL;
+
+    // define the local variable for v1_env_from_source->secret_ref
+    v1_secret_env_source_t *secret_ref_local_nonprim = NULL;
+
     // v1_env_from_source->config_map_ref
     cJSON *config_map_ref = cJSON_GetObjectItemCaseSensitive(v1_env_from_sourceJSON, "configMapRef");
-    v1_config_map_env_source_t *config_map_ref_local_nonprim = NULL;
     if (config_map_ref) { 
     config_map_ref_local_nonprim = v1_config_map_env_source_parseFromJSON(config_map_ref); //nonprimitive
     }
@@ -108,7 +113,6 @@ v1_env_from_source_t *v1_env_from_source_parseFromJSON(cJSON *v1_env_from_source
 
     // v1_env_from_source->secret_ref
     cJSON *secret_ref = cJSON_GetObjectItemCaseSensitive(v1_env_from_sourceJSON, "secretRef");
-    v1_secret_env_source_t *secret_ref_local_nonprim = NULL;
     if (secret_ref) { 
     secret_ref_local_nonprim = v1_secret_env_source_parseFromJSON(secret_ref); //nonprimitive
     }

@@ -57,9 +57,11 @@ v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_parseFromJSON(cJSON *v1
 
     v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_local_var = NULL;
 
+    // define the local variable for v1_ephemeral_volume_source->volume_claim_template
+    v1_persistent_volume_claim_template_t *volume_claim_template_local_nonprim = NULL;
+
     // v1_ephemeral_volume_source->volume_claim_template
     cJSON *volume_claim_template = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_volume_sourceJSON, "volumeClaimTemplate");
-    v1_persistent_volume_claim_template_t *volume_claim_template_local_nonprim = NULL;
     if (volume_claim_template) { 
     volume_claim_template_local_nonprim = v1_persistent_volume_claim_template_parseFromJSON(volume_claim_template); //nonprimitive
     }

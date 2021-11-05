@@ -89,6 +89,9 @@ v2beta1_pods_metric_source_t *v2beta1_pods_metric_source_parseFromJSON(cJSON *v2
 
     v2beta1_pods_metric_source_t *v2beta1_pods_metric_source_local_var = NULL;
 
+    // define the local variable for v2beta1_pods_metric_source->selector
+    v1_label_selector_t *selector_local_nonprim = NULL;
+
     // v2beta1_pods_metric_source->metric_name
     cJSON *metric_name = cJSON_GetObjectItemCaseSensitive(v2beta1_pods_metric_sourceJSON, "metricName");
     if (!metric_name) {
@@ -103,7 +106,6 @@ v2beta1_pods_metric_source_t *v2beta1_pods_metric_source_parseFromJSON(cJSON *v2
 
     // v2beta1_pods_metric_source->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v2beta1_pods_metric_sourceJSON, "selector");
-    v1_label_selector_t *selector_local_nonprim = NULL;
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }

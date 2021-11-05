@@ -129,6 +129,9 @@ v1_csi_volume_source_t *v1_csi_volume_source_parseFromJSON(cJSON *v1_csi_volume_
 
     v1_csi_volume_source_t *v1_csi_volume_source_local_var = NULL;
 
+    // define the local variable for v1_csi_volume_source->node_publish_secret_ref
+    v1_local_object_reference_t *node_publish_secret_ref_local_nonprim = NULL;
+
     // v1_csi_volume_source->driver
     cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1_csi_volume_sourceJSON, "driver");
     if (!driver) {
@@ -152,7 +155,6 @@ v1_csi_volume_source_t *v1_csi_volume_source_parseFromJSON(cJSON *v1_csi_volume_
 
     // v1_csi_volume_source->node_publish_secret_ref
     cJSON *node_publish_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_volume_sourceJSON, "nodePublishSecretRef");
-    v1_local_object_reference_t *node_publish_secret_ref_local_nonprim = NULL;
     if (node_publish_secret_ref) { 
     node_publish_secret_ref_local_nonprim = v1_local_object_reference_parseFromJSON(node_publish_secret_ref); //nonprimitive
     }

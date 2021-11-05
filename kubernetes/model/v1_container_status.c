@@ -172,6 +172,12 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     v1_container_status_t *v1_container_status_local_var = NULL;
 
+    // define the local variable for v1_container_status->last_state
+    v1_container_state_t *last_state_local_nonprim = NULL;
+
+    // define the local variable for v1_container_status->state
+    v1_container_state_t *state_local_nonprim = NULL;
+
     // v1_container_status->container_id
     cJSON *container_id = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "containerID");
     if (container_id) { 
@@ -207,7 +213,6 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->last_state
     cJSON *last_state = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "lastState");
-    v1_container_state_t *last_state_local_nonprim = NULL;
     if (last_state) { 
     last_state_local_nonprim = v1_container_state_parseFromJSON(last_state); //nonprimitive
     }
@@ -259,7 +264,6 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->state
     cJSON *state = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "state");
-    v1_container_state_t *state_local_nonprim = NULL;
     if (state) { 
     state_local_nonprim = v1_container_state_parseFromJSON(state); //nonprimitive
     }

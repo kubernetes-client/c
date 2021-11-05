@@ -98,6 +98,12 @@ v1_replica_set_spec_t *v1_replica_set_spec_parseFromJSON(cJSON *v1_replica_set_s
 
     v1_replica_set_spec_t *v1_replica_set_spec_local_var = NULL;
 
+    // define the local variable for v1_replica_set_spec->selector
+    v1_label_selector_t *selector_local_nonprim = NULL;
+
+    // define the local variable for v1_replica_set_spec->_template
+    v1_pod_template_spec_t *_template_local_nonprim = NULL;
+
     // v1_replica_set_spec->min_ready_seconds
     cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_replica_set_specJSON, "minReadySeconds");
     if (min_ready_seconds) { 
@@ -122,13 +128,11 @@ v1_replica_set_spec_t *v1_replica_set_spec_parseFromJSON(cJSON *v1_replica_set_s
         goto end;
     }
 
-    v1_label_selector_t *selector_local_nonprim = NULL;
     
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
 
     // v1_replica_set_spec->_template
     cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_replica_set_specJSON, "template");
-    v1_pod_template_spec_t *_template_local_nonprim = NULL;
     if (_template) { 
     _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
     }

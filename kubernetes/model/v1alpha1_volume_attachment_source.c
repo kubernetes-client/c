@@ -71,9 +71,11 @@ v1alpha1_volume_attachment_source_t *v1alpha1_volume_attachment_source_parseFrom
 
     v1alpha1_volume_attachment_source_t *v1alpha1_volume_attachment_source_local_var = NULL;
 
+    // define the local variable for v1alpha1_volume_attachment_source->inline_volume_spec
+    v1_persistent_volume_spec_t *inline_volume_spec_local_nonprim = NULL;
+
     // v1alpha1_volume_attachment_source->inline_volume_spec
     cJSON *inline_volume_spec = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attachment_sourceJSON, "inlineVolumeSpec");
-    v1_persistent_volume_spec_t *inline_volume_spec_local_nonprim = NULL;
     if (inline_volume_spec) { 
     inline_volume_spec_local_nonprim = v1_persistent_volume_spec_parseFromJSON(inline_volume_spec); //nonprimitive
     }

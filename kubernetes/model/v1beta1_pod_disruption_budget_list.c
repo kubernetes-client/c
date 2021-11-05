@@ -116,6 +116,9 @@ v1beta1_pod_disruption_budget_list_t *v1beta1_pod_disruption_budget_list_parseFr
 
     v1beta1_pod_disruption_budget_list_t *v1beta1_pod_disruption_budget_list_local_var = NULL;
 
+    // define the local variable for v1beta1_pod_disruption_budget_list->metadata
+    v1_list_meta_t *metadata_local_nonprim = NULL;
+
     // v1beta1_pod_disruption_budget_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_disruption_budget_listJSON, "apiVersion");
     if (api_version) { 
@@ -161,7 +164,6 @@ v1beta1_pod_disruption_budget_list_t *v1beta1_pod_disruption_budget_list_parseFr
 
     // v1beta1_pod_disruption_budget_list->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_disruption_budget_listJSON, "metadata");
-    v1_list_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }

@@ -151,9 +151,14 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
 
     v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_local_var = NULL;
 
+    // define the local variable for v1_custom_resource_definition_spec->conversion
+    v1_custom_resource_conversion_t *conversion_local_nonprim = NULL;
+
+    // define the local variable for v1_custom_resource_definition_spec->names
+    v1_custom_resource_definition_names_t *names_local_nonprim = NULL;
+
     // v1_custom_resource_definition_spec->conversion
     cJSON *conversion = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "conversion");
-    v1_custom_resource_conversion_t *conversion_local_nonprim = NULL;
     if (conversion) { 
     conversion_local_nonprim = v1_custom_resource_conversion_parseFromJSON(conversion); //nonprimitive
     }
@@ -176,7 +181,6 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
         goto end;
     }
 
-    v1_custom_resource_definition_names_t *names_local_nonprim = NULL;
     
     names_local_nonprim = v1_custom_resource_definition_names_parseFromJSON(names); //nonprimitive
 

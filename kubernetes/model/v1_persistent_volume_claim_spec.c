@@ -182,6 +182,18 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
 
     v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_local_var = NULL;
 
+    // define the local variable for v1_persistent_volume_claim_spec->data_source
+    v1_typed_local_object_reference_t *data_source_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_claim_spec->data_source_ref
+    v1_typed_local_object_reference_t *data_source_ref_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_claim_spec->resources
+    v1_resource_requirements_t *resources_local_nonprim = NULL;
+
+    // define the local variable for v1_persistent_volume_claim_spec->selector
+    v1_label_selector_t *selector_local_nonprim = NULL;
+
     // v1_persistent_volume_claim_spec->access_modes
     cJSON *access_modes = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "accessModes");
     list_t *access_modesList;
@@ -204,28 +216,24 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
 
     // v1_persistent_volume_claim_spec->data_source
     cJSON *data_source = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "dataSource");
-    v1_typed_local_object_reference_t *data_source_local_nonprim = NULL;
     if (data_source) { 
     data_source_local_nonprim = v1_typed_local_object_reference_parseFromJSON(data_source); //nonprimitive
     }
 
     // v1_persistent_volume_claim_spec->data_source_ref
     cJSON *data_source_ref = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "dataSourceRef");
-    v1_typed_local_object_reference_t *data_source_ref_local_nonprim = NULL;
     if (data_source_ref) { 
     data_source_ref_local_nonprim = v1_typed_local_object_reference_parseFromJSON(data_source_ref); //nonprimitive
     }
 
     // v1_persistent_volume_claim_spec->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "resources");
-    v1_resource_requirements_t *resources_local_nonprim = NULL;
     if (resources) { 
     resources_local_nonprim = v1_resource_requirements_parseFromJSON(resources); //nonprimitive
     }
 
     // v1_persistent_volume_claim_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "selector");
-    v1_label_selector_t *selector_local_nonprim = NULL;
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }

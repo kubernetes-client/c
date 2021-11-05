@@ -115,6 +115,9 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
 
     v1_resource_quota_spec_t *v1_resource_quota_spec_local_var = NULL;
 
+    // define the local variable for v1_resource_quota_spec->scope_selector
+    v1_scope_selector_t *scope_selector_local_nonprim = NULL;
+
     // v1_resource_quota_spec->hard
     cJSON *hard = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_specJSON, "hard");
     list_t *hardList;
@@ -139,7 +142,6 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
 
     // v1_resource_quota_spec->scope_selector
     cJSON *scope_selector = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_specJSON, "scopeSelector");
-    v1_scope_selector_t *scope_selector_local_nonprim = NULL;
     if (scope_selector) { 
     scope_selector_local_nonprim = v1_scope_selector_parseFromJSON(scope_selector); //nonprimitive
     }

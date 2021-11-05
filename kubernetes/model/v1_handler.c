@@ -95,23 +95,29 @@ v1_handler_t *v1_handler_parseFromJSON(cJSON *v1_handlerJSON){
 
     v1_handler_t *v1_handler_local_var = NULL;
 
+    // define the local variable for v1_handler->exec
+    v1_exec_action_t *exec_local_nonprim = NULL;
+
+    // define the local variable for v1_handler->http_get
+    v1_http_get_action_t *http_get_local_nonprim = NULL;
+
+    // define the local variable for v1_handler->tcp_socket
+    v1_tcp_socket_action_t *tcp_socket_local_nonprim = NULL;
+
     // v1_handler->exec
     cJSON *exec = cJSON_GetObjectItemCaseSensitive(v1_handlerJSON, "exec");
-    v1_exec_action_t *exec_local_nonprim = NULL;
     if (exec) { 
     exec_local_nonprim = v1_exec_action_parseFromJSON(exec); //nonprimitive
     }
 
     // v1_handler->http_get
     cJSON *http_get = cJSON_GetObjectItemCaseSensitive(v1_handlerJSON, "httpGet");
-    v1_http_get_action_t *http_get_local_nonprim = NULL;
     if (http_get) { 
     http_get_local_nonprim = v1_http_get_action_parseFromJSON(http_get); //nonprimitive
     }
 
     // v1_handler->tcp_socket
     cJSON *tcp_socket = cJSON_GetObjectItemCaseSensitive(v1_handlerJSON, "tcpSocket");
-    v1_tcp_socket_action_t *tcp_socket_local_nonprim = NULL;
     if (tcp_socket) { 
     tcp_socket_local_nonprim = v1_tcp_socket_action_parseFromJSON(tcp_socket); //nonprimitive
     }

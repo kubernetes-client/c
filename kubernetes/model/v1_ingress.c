@@ -123,6 +123,15 @@ v1_ingress_t *v1_ingress_parseFromJSON(cJSON *v1_ingressJSON){
 
     v1_ingress_t *v1_ingress_local_var = NULL;
 
+    // define the local variable for v1_ingress->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_ingress->spec
+    v1_ingress_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_ingress->status
+    v1_ingress_status_t *status_local_nonprim = NULL;
+
     // v1_ingress->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1_ingress_t *v1_ingress_parseFromJSON(cJSON *v1_ingressJSON){
 
     // v1_ingress->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_ingress->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "spec");
-    v1_ingress_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1_ingress_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_ingress->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "status");
-    v1_ingress_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_ingress_status_parseFromJSON(status); //nonprimitive
     }

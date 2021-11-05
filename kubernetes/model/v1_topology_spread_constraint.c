@@ -101,9 +101,11 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
 
     v1_topology_spread_constraint_t *v1_topology_spread_constraint_local_var = NULL;
 
+    // define the local variable for v1_topology_spread_constraint->label_selector
+    v1_label_selector_t *label_selector_local_nonprim = NULL;
+
     // v1_topology_spread_constraint->label_selector
     cJSON *label_selector = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "labelSelector");
-    v1_label_selector_t *label_selector_local_nonprim = NULL;
     if (label_selector) { 
     label_selector_local_nonprim = v1_label_selector_parseFromJSON(label_selector); //nonprimitive
     }

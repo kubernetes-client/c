@@ -123,6 +123,15 @@ v1beta1_priority_level_configuration_t *v1beta1_priority_level_configuration_par
 
     v1beta1_priority_level_configuration_t *v1beta1_priority_level_configuration_local_var = NULL;
 
+    // define the local variable for v1beta1_priority_level_configuration->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_priority_level_configuration->spec
+    v1beta1_priority_level_configuration_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1beta1_priority_level_configuration->status
+    v1beta1_priority_level_configuration_status_t *status_local_nonprim = NULL;
+
     // v1beta1_priority_level_configuration->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1beta1_priority_level_configurationJSON, "apiVersion");
     if (api_version) { 
@@ -143,21 +152,18 @@ v1beta1_priority_level_configuration_t *v1beta1_priority_level_configuration_par
 
     // v1beta1_priority_level_configuration->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1beta1_priority_level_configurationJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1beta1_priority_level_configuration->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1beta1_priority_level_configurationJSON, "spec");
-    v1beta1_priority_level_configuration_spec_t *spec_local_nonprim = NULL;
     if (spec) { 
     spec_local_nonprim = v1beta1_priority_level_configuration_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1beta1_priority_level_configuration->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1beta1_priority_level_configurationJSON, "status");
-    v1beta1_priority_level_configuration_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1beta1_priority_level_configuration_status_parseFromJSON(status); //nonprimitive
     }

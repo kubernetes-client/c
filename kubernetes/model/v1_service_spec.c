@@ -378,6 +378,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     v1_service_spec_t *v1_service_spec_local_var = NULL;
 
+    // define the local variable for v1_service_spec->session_affinity_config
+    v1_session_affinity_config_t *session_affinity_config_local_nonprim = NULL;
+
     // v1_service_spec->allocate_load_balancer_node_ports
     cJSON *allocate_load_balancer_node_ports = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "allocateLoadBalancerNodePorts");
     if (allocate_load_balancer_node_ports) { 
@@ -603,7 +606,6 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->session_affinity_config
     cJSON *session_affinity_config = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "sessionAffinityConfig");
-    v1_session_affinity_config_t *session_affinity_config_local_nonprim = NULL;
     if (session_affinity_config) { 
     session_affinity_config_local_nonprim = v1_session_affinity_config_parseFromJSON(session_affinity_config); //nonprimitive
     }

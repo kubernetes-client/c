@@ -125,6 +125,15 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
 
     authentication_v1_token_request_t *authentication_v1_token_request_local_var = NULL;
 
+    // define the local variable for authentication_v1_token_request->metadata
+    v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for authentication_v1_token_request->spec
+    v1_token_request_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for authentication_v1_token_request->status
+    v1_token_request_status_t *status_local_nonprim = NULL;
+
     // authentication_v1_token_request->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "apiVersion");
     if (api_version) { 
@@ -145,7 +154,6 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
 
     // authentication_v1_token_request->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "metadata");
-    v1_object_meta_t *metadata_local_nonprim = NULL;
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
@@ -156,13 +164,11 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
         goto end;
     }
 
-    v1_token_request_spec_t *spec_local_nonprim = NULL;
     
     spec_local_nonprim = v1_token_request_spec_parseFromJSON(spec); //nonprimitive
 
     // authentication_v1_token_request->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "status");
-    v1_token_request_status_t *status_local_nonprim = NULL;
     if (status) { 
     status_local_nonprim = v1_token_request_status_parseFromJSON(status); //nonprimitive
     }

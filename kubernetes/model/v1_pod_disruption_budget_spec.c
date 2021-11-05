@@ -95,6 +95,9 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(cJS
 
     v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_local_var = NULL;
 
+    // define the local variable for v1_pod_disruption_budget_spec->selector
+    v1_label_selector_t *selector_local_nonprim = NULL;
+
     // v1_pod_disruption_budget_spec->max_unavailable
     cJSON *max_unavailable = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "maxUnavailable");
     object_t *max_unavailable_local_object = NULL;
@@ -111,7 +114,6 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(cJS
 
     // v1_pod_disruption_budget_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "selector");
-    v1_label_selector_t *selector_local_nonprim = NULL;
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }

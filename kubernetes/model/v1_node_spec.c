@@ -164,9 +164,11 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     v1_node_spec_t *v1_node_spec_local_var = NULL;
 
+    // define the local variable for v1_node_spec->config_source
+    v1_node_config_source_t *config_source_local_nonprim = NULL;
+
     // v1_node_spec->config_source
     cJSON *config_source = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "configSource");
-    v1_node_config_source_t *config_source_local_nonprim = NULL;
     if (config_source) { 
     config_source_local_nonprim = v1_node_config_source_parseFromJSON(config_source); //nonprimitive
     }
