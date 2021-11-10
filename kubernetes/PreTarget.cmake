@@ -1,4 +1,11 @@
-set(VERSION 0.0.1)
+set(PROJECT_VERSION_MAJOR 0)
+set(PROJECT_VERSION_MINOR 0)
+set(PROJECT_VERSION_PATCH 1)
+
+set(PROJECT_PACKAGE_DESCRIPTION_SUMMARY "The Kubernetes client library for the C programming language.")
+set(PROJECT_PACKAGE_VENDOR "https://github.com/kubernetes-client")
+set(PROJECT_PACKAGE_CONTACT "https://github.com/kubernetes-client/c")
+set(PROJECT_PACKAGE_MAINTAINER "https://github.com/kubernetes-client/c")
 
 # config.h checks
 include(ConfigureChecks.cmake)
@@ -33,7 +40,7 @@ list(APPEND HDRS
         websocket/wsclient.h
         websocket/kube_exec.h
         include/generic.h
-        src/utils.c)
+        include/utils.h)
 
 find_package(libwebsockets CONFIG REQUIRED)
 find_package(yaml CONFIG REQUIRED)
