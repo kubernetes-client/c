@@ -1,7 +1,7 @@
-if (websockets_shared)
-    target_link_libraries(${WEBSOCKETS} websockets_shared)
+if (TARGET websockets_shared)
+    set(${WEBSOCKETS} websockets_shared)
 else()
-    target_link_libraries(${WEBSOCKETS} websockets)
+    set(${WEBSOCKETS} websockets)
 endif()
 
 target_link_libraries(${pkgName} PRIVATE yaml ${WEBSOCKETS})
