@@ -23,6 +23,7 @@ list(APPEND SRCS
         watch/watch_util.c
         websocket/wsclient.c
         websocket/kube_exec.c
+        model/int_or_string.c
         src/generic.c
         src/utils.c)
 
@@ -39,6 +40,7 @@ list(APPEND HDRS
         watch/watch_util.h
         websocket/wsclient.h
         websocket/kube_exec.h
+        model/int_or_string.h
         include/generic.h
         include/utils.h)
 
