@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include "int_or_string.h"
 
-int_or_string_t *int_or_string_create() {
+int_or_string_t *int_or_string_create()
+{
     int_or_string_t *ios = calloc(sizeof(int_or_string_t), 1);
     if (!ios) {
         return NULL;
@@ -12,9 +13,10 @@ int_or_string_t *int_or_string_create() {
     return ios;
 }
 
-void int_or_string_free(int_or_string_t *ios) {
+void int_or_string_free(int_or_string_t * ios)
+{
     if (!ios) {
-        return ;
+        return;
     }
     if (IOS_DATA_TYPE_STRING == ios->type && ios->s) {
         free(ios->s);
@@ -23,22 +25,24 @@ void int_or_string_free(int_or_string_t *ios) {
     free(ios);
 }
 
-cJSON *int_or_string_convertToJSON(int_or_string_t *ios) {
+cJSON *int_or_string_convertToJSON(int_or_string_t * ios)
+{
     if (IOS_DATA_TYPE_INT == ios->type) {
         return cJSON_CreateNumber(ios->i);
-    } 
-    if (IOS_DATA_TYPE_STRING == ios->type && ios->s){
+    }
+    if (IOS_DATA_TYPE_STRING == ios->type && ios->s) {
         return cJSON_CreateString(ios->s);
     }
     return NULL;
 }
 
-int_or_string_t *int_or_string_parseFromJSON(cJSON *cjson){
+int_or_string_t *int_or_string_parseFromJSON(cJSON * cjson)
+{
     int_or_string_t *ios = int_or_string_create();
     if (!ios) {
         return NULL;
     }
-    if(cJSON_IsNumber(cjson)) {
+    if (cJSON_IsNumber(cjson)) {
         ios->i = cjson->valuedouble;
         ios->type = IOS_DATA_TYPE_INT;
         return ios;
