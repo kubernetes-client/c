@@ -15,20 +15,20 @@
 
 typedef struct v1_network_policy_port_t v1_network_policy_port_t;
 
-#include "object.h"
+#include "int_or_string.h"
 
 
 
 typedef struct v1_network_policy_port_t {
     int end_port; //numeric
-    object_t *port; //object
+    int_or_string_t *port; // custom
     char *protocol; // string
 
 } v1_network_policy_port_t;
 
 v1_network_policy_port_t *v1_network_policy_port_create(
     int end_port,
-    object_t *port,
+    int_or_string_t *port,
     char *protocol
 );
 

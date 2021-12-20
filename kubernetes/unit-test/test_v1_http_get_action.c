@@ -25,7 +25,7 @@ v1_http_get_action_t* instantiate_v1_http_get_action(int include_optional) {
       "0",
       list_create(),
       "0",
-      0,
+      "0",
       "0"
     );
   } else {
@@ -33,7 +33,7 @@ v1_http_get_action_t* instantiate_v1_http_get_action(int include_optional) {
       "0",
       list_create(),
       "0",
-      0,
+      "0",
       "0"
     );
   }

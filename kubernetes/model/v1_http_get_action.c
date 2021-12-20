@@ -9,7 +9,7 @@ v1_http_get_action_t *v1_http_get_action_create(
     char *host,
     list_t *http_headers,
     char *path,
-    object_t *port,
+    int_or_string_t *port,
     char *scheme
     ) {
     v1_http_get_action_t *v1_http_get_action_local_var = malloc(sizeof(v1_http_get_action_t));
@@ -47,7 +47,7 @@ void v1_http_get_action_free(v1_http_get_action_t *v1_http_get_action) {
         v1_http_get_action->path = NULL;
     }
     if (v1_http_get_action->port) {
-        object_free(v1_http_get_action->port);
+        int_or_string_free(v1_http_get_action->port);
         v1_http_get_action->port = NULL;
     }
     if (v1_http_get_action->scheme) {
@@ -101,13 +101,13 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
         goto fail;
     }
     
-    cJSON *port_object = object_convertToJSON(v1_http_get_action->port);
-    if(port_object == NULL) {
-    goto fail; //model
+    cJSON *port_local_JSON = int_or_string_convertToJSON(v1_http_get_action->port);
+    if(port_local_JSON == NULL) {
+        goto fail; // custom
     }
-    cJSON_AddItemToObject(item, "port", port_object);
+    cJSON_AddItemToObject(item, "port", port_local_JSON);
     if(item->child == NULL) {
-    goto fail;
+        goto fail;
     }
 
 
@@ -129,6 +129,9 @@ fail:
 v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_actionJSON){
 
     v1_http_get_action_t *v1_http_get_action_local_var = NULL;
+
+    // define the local variable for v1_http_get_action->port
+    int_or_string_t *port_local_nonprim = NULL;
 
     // v1_http_get_action->host
     cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "host");
@@ -176,9 +179,8 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
         goto end;
     }
 
-    object_t *port_local_object = NULL;
     
-    port_local_object = object_parseFromJSON(port); //object
+    port_local_nonprim = int_or_string_parseFromJSON(port); //custom
 
     // v1_http_get_action->scheme
     cJSON *scheme = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "scheme");
@@ -194,12 +196,16 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
         host ? strdup(host->valuestring) : NULL,
         http_headers ? http_headersList : NULL,
         path ? strdup(path->valuestring) : NULL,
-        port_local_object,
+        port_local_nonprim,
         scheme ? strdup(scheme->valuestring) : NULL
         );
 
     return v1_http_get_action_local_var;
 end:
+    if (port_local_nonprim) {
+        int_or_string_free(port_local_nonprim);
+        port_local_nonprim = NULL;
+    }
     return NULL;
 
 }

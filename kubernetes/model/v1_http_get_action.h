@@ -15,7 +15,7 @@
 
 typedef struct v1_http_get_action_t v1_http_get_action_t;
 
-#include "object.h"
+#include "int_or_string.h"
 #include "v1_http_header.h"
 
 
@@ -24,7 +24,7 @@ typedef struct v1_http_get_action_t {
     char *host; // string
     list_t *http_headers; //nonprimitive container
     char *path; // string
-    object_t *port; //object
+    int_or_string_t *port; // custom
     char *scheme; // string
 
 } v1_http_get_action_t;
@@ -33,7 +33,7 @@ v1_http_get_action_t *v1_http_get_action_create(
     char *host,
     list_t *http_headers,
     char *path,
-    object_t *port,
+    int_or_string_t *port,
     char *scheme
 );
 

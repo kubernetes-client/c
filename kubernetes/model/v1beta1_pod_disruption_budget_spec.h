@@ -15,21 +15,21 @@
 
 typedef struct v1beta1_pod_disruption_budget_spec_t v1beta1_pod_disruption_budget_spec_t;
 
-#include "object.h"
+#include "int_or_string.h"
 #include "v1_label_selector.h"
 
 
 
 typedef struct v1beta1_pod_disruption_budget_spec_t {
-    object_t *max_unavailable; //object
-    object_t *min_available; //object
+    int_or_string_t *max_unavailable; // custom
+    int_or_string_t *min_available; // custom
     struct v1_label_selector_t *selector; //model
 
 } v1beta1_pod_disruption_budget_spec_t;
 
 v1beta1_pod_disruption_budget_spec_t *v1beta1_pod_disruption_budget_spec_create(
-    object_t *max_unavailable,
-    object_t *min_available,
+    int_or_string_t *max_unavailable,
+    int_or_string_t *min_available,
     v1_label_selector_t *selector
 );
 
