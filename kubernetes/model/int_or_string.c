@@ -10,6 +10,7 @@ int_or_string_t *int_or_string_create()
         return NULL;
     }
     ios->type = IOS_DATA_TYPE_INT;
+    ios->s = NULL;
     return ios;
 }
 
