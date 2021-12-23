@@ -23,13 +23,13 @@ v1_network_policy_port_t* instantiate_v1_network_policy_port(int include_optiona
   if (include_optional) {
     v1_network_policy_port = v1_network_policy_port_create(
       56,
-      0,
+      "0",
       "0"
     );
   } else {
     v1_network_policy_port = v1_network_policy_port_create(
       56,
-      0,
+      "0",
       "0"
     );
   }

@@ -15,19 +15,19 @@
 
 typedef struct v1_rolling_update_daemon_set_t v1_rolling_update_daemon_set_t;
 
-#include "object.h"
+#include "int_or_string.h"
 
 
 
 typedef struct v1_rolling_update_daemon_set_t {
-    object_t *max_surge; //object
-    object_t *max_unavailable; //object
+    int_or_string_t *max_surge; // custom
+    int_or_string_t *max_unavailable; // custom
 
 } v1_rolling_update_daemon_set_t;
 
 v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_create(
-    object_t *max_surge,
-    object_t *max_unavailable
+    int_or_string_t *max_surge,
+    int_or_string_t *max_unavailable
 );
 
 void v1_rolling_update_daemon_set_free(v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set);

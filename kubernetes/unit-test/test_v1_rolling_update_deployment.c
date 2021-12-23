@@ -22,13 +22,13 @@ v1_rolling_update_deployment_t* instantiate_v1_rolling_update_deployment(int inc
   v1_rolling_update_deployment_t* v1_rolling_update_deployment = NULL;
   if (include_optional) {
     v1_rolling_update_deployment = v1_rolling_update_deployment_create(
-      0,
-      0
+      "0",
+      "0"
     );
   } else {
     v1_rolling_update_deployment = v1_rolling_update_deployment_create(
-      0,
-      0
+      "0",
+      "0"
     );
   }
 

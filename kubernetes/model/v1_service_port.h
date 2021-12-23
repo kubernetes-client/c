@@ -15,7 +15,7 @@
 
 typedef struct v1_service_port_t v1_service_port_t;
 
-#include "object.h"
+#include "int_or_string.h"
 
 
 
@@ -25,7 +25,7 @@ typedef struct v1_service_port_t {
     int node_port; //numeric
     int port; //numeric
     char *protocol; // string
-    object_t *target_port; //object
+    int_or_string_t *target_port; // custom
 
 } v1_service_port_t;
 
@@ -35,7 +35,7 @@ v1_service_port_t *v1_service_port_create(
     int node_port,
     int port,
     char *protocol,
-    object_t *target_port
+    int_or_string_t *target_port
 );
 
 void v1_service_port_free(v1_service_port_t *v1_service_port);

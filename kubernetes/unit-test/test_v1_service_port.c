@@ -27,7 +27,7 @@ v1_service_port_t* instantiate_v1_service_port(int include_optional) {
       56,
       56,
       "0",
-      0
+      "0"
     );
   } else {
     v1_service_port = v1_service_port_create(
@@ -36,7 +36,7 @@ v1_service_port_t* instantiate_v1_service_port(int include_optional) {
       56,
       56,
       "0",
-      0
+      "0"
     );
   }
 

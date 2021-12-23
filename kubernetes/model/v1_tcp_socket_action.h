@@ -15,19 +15,19 @@
 
 typedef struct v1_tcp_socket_action_t v1_tcp_socket_action_t;
 
-#include "object.h"
+#include "int_or_string.h"
 
 
 
 typedef struct v1_tcp_socket_action_t {
     char *host; // string
-    object_t *port; //object
+    int_or_string_t *port; // custom
 
 } v1_tcp_socket_action_t;
 
 v1_tcp_socket_action_t *v1_tcp_socket_action_create(
     char *host,
-    object_t *port
+    int_or_string_t *port
 );
 
 void v1_tcp_socket_action_free(v1_tcp_socket_action_t *v1_tcp_socket_action);

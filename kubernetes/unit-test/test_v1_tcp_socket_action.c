@@ -23,12 +23,12 @@ v1_tcp_socket_action_t* instantiate_v1_tcp_socket_action(int include_optional) {
   if (include_optional) {
     v1_tcp_socket_action = v1_tcp_socket_action_create(
       "0",
-      0
+      "0"
     );
   } else {
     v1_tcp_socket_action = v1_tcp_socket_action_create(
       "0",
-      0
+      "0"
     );
   }
 

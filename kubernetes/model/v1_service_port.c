@@ -11,7 +11,7 @@ v1_service_port_t *v1_service_port_create(
     int node_port,
     int port,
     char *protocol,
-    object_t *target_port
+    int_or_string_t *target_port
     ) {
     v1_service_port_t *v1_service_port_local_var = malloc(sizeof(v1_service_port_t));
     if (!v1_service_port_local_var) {
@@ -46,7 +46,7 @@ void v1_service_port_free(v1_service_port_t *v1_service_port) {
         v1_service_port->protocol = NULL;
     }
     if (v1_service_port->target_port) {
-        object_free(v1_service_port->target_port);
+        int_or_string_free(v1_service_port->target_port);
         v1_service_port->target_port = NULL;
     }
     free(v1_service_port);
@@ -99,13 +99,13 @@ cJSON *v1_service_port_convertToJSON(v1_service_port_t *v1_service_port) {
 
     // v1_service_port->target_port
     if(v1_service_port->target_port) { 
-    cJSON *target_port_object = object_convertToJSON(v1_service_port->target_port);
-    if(target_port_object == NULL) {
-    goto fail; //model
+    cJSON *target_port_local_JSON = int_or_string_convertToJSON(v1_service_port->target_port);
+    if(target_port_local_JSON == NULL) {
+        goto fail; // custom
     }
-    cJSON_AddItemToObject(item, "targetPort", target_port_object);
+    cJSON_AddItemToObject(item, "targetPort", target_port_local_JSON);
     if(item->child == NULL) {
-    goto fail;
+        goto fail;
     }
      } 
 
@@ -120,6 +120,9 @@ fail:
 v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
     v1_service_port_t *v1_service_port_local_var = NULL;
+
+    // define the local variable for v1_service_port->target_port
+    int_or_string_t *target_port_local_nonprim = NULL;
 
     // v1_service_port->app_protocol
     cJSON *app_protocol = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "appProtocol");
@@ -171,9 +174,8 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
     // v1_service_port->target_port
     cJSON *target_port = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "targetPort");
-    object_t *target_port_local_object = NULL;
     if (target_port) { 
-    target_port_local_object = object_parseFromJSON(target_port); //object
+    target_port_local_nonprim = int_or_string_parseFromJSON(target_port); //custom
     }
 
 
@@ -183,11 +185,15 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
         node_port ? node_port->valuedouble : 0,
         port->valuedouble,
         protocol ? strdup(protocol->valuestring) : NULL,
-        target_port ? target_port_local_object : NULL
+        target_port ? target_port_local_nonprim : NULL
         );
 
     return v1_service_port_local_var;
 end:
+    if (target_port_local_nonprim) {
+        int_or_string_free(target_port_local_nonprim);
+        target_port_local_nonprim = NULL;
+    }
     return NULL;
 
 }
