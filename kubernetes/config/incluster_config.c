@@ -47,7 +47,7 @@ static int setBasePathInCluster(char **pBasePath)
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__APPLE__)
     const char *service_host_env = getenv(SERVICE_HOST_ENV_NAME);
-#elif __linux
+#elif __linux || defined(__EMSCRIPTEN__)
     const char *service_host_env = secure_getenv(SERVICE_HOST_ENV_NAME);
 #endif
     if (!service_host_env) {
@@ -56,7 +56,7 @@ static int setBasePathInCluster(char **pBasePath)
     }
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__APPLE__)
     const char *service_port_env = getenv(SERVICE_PORT_ENV_NAME);
-#elif __linux
+#elif __linux || defined(__EMSCRIPTEN__)
     const char *service_port_env = secure_getenv(SERVICE_PORT_ENV_NAME);
 #endif
     if (!service_port_env) {
