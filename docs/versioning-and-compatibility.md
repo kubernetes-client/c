@@ -14,11 +14,11 @@ The C client uses Semantic Versioning. We increment the major version number whe
 
 Key: 
 
-* `✓` Exactly the same features / API objects in both java-client and the Kubernetes
+* `✓` Exactly the same features / API objects in both the C client and the Kubernetes
   version.
-* `+` c-client has features or api objects that may not be present in the
+* `+` The C client has features or api objects that may not be present in the
   Kubernetes cluster, but everything they have in common will work.
-* `-` The Kubernetes cluster has features the c-client library can't use
+* `-` The Kubernetes cluster has features the C client library can't use
   (additional API objects, etc).
 * `x` The Kubernetes cluster has no guarantees to support the API client of
   this version, as it only promises _n_-2 version support. It is not tested,
