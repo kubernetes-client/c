@@ -24,7 +24,7 @@ v2beta1_horizontal_pod_autoscaler_spec_t* instantiate_v2beta1_horizontal_pod_aut
   if (include_optional) {
     v2beta1_horizontal_pod_autoscaler_spec = v2beta1_horizontal_pod_autoscaler_spec_create(
       56,
-      list_create(),
+      list_createList(),
       56,
        // false, not to have infinite recursion
       instantiate_v2beta1_cross_version_object_reference(0)
@@ -32,7 +32,7 @@ v2beta1_horizontal_pod_autoscaler_spec_t* instantiate_v2beta1_horizontal_pod_aut
   } else {
     v2beta1_horizontal_pod_autoscaler_spec = v2beta1_horizontal_pod_autoscaler_spec_create(
       56,
-      list_create(),
+      list_createList(),
       56,
       NULL
     );

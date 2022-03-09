@@ -23,7 +23,7 @@ v1_token_review_status_t* instantiate_v1_token_review_status(int include_optiona
   v1_token_review_status_t* v1_token_review_status = NULL;
   if (include_optional) {
     v1_token_review_status = v1_token_review_status_create(
-      list_create(),
+      list_createList(),
       1,
       "0",
        // false, not to have infinite recursion
@@ -31,7 +31,7 @@ v1_token_review_status_t* instantiate_v1_token_review_status(int include_optiona
     );
   } else {
     v1_token_review_status = v1_token_review_status_create(
-      list_create(),
+      list_createList(),
       1,
       "0",
       NULL

@@ -37,7 +37,7 @@ void v2beta2_horizontal_pod_autoscaler_list_free(v2beta2_horizontal_pod_autoscal
         list_ForEach(listEntry, v2beta2_horizontal_pod_autoscaler_list->items) {
             v2beta2_horizontal_pod_autoscaler_free(listEntry->data);
         }
-        list_free(v2beta2_horizontal_pod_autoscaler_list->items);
+        list_freeList(v2beta2_horizontal_pod_autoscaler_list->items);
         v2beta2_horizontal_pod_autoscaler_list->items = NULL;
     }
     if (v2beta2_horizontal_pod_autoscaler_list->kind) {
@@ -141,7 +141,7 @@ v2beta2_horizontal_pod_autoscaler_list_t *v2beta2_horizontal_pod_autoscaler_list
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

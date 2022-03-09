@@ -49,7 +49,7 @@ void v1_job_status_free(v1_job_status_t *v1_job_status) {
         list_ForEach(listEntry, v1_job_status->conditions) {
             v1_job_condition_free(listEntry->data);
         }
-        list_free(v1_job_status->conditions);
+        list_freeList(v1_job_status->conditions);
         v1_job_status->conditions = NULL;
     }
     if (v1_job_status->start_time) {
@@ -197,7 +197,7 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

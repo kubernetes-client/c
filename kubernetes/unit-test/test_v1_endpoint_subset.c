@@ -22,15 +22,15 @@ v1_endpoint_subset_t* instantiate_v1_endpoint_subset(int include_optional) {
   v1_endpoint_subset_t* v1_endpoint_subset = NULL;
   if (include_optional) {
     v1_endpoint_subset = v1_endpoint_subset_create(
-      list_create(),
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_endpoint_subset = v1_endpoint_subset_create(
-      list_create(),
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList(),
+      list_createList()
     );
   }
 

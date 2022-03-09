@@ -24,15 +24,15 @@ v1_subject_rules_review_status_t* instantiate_v1_subject_rules_review_status(int
     v1_subject_rules_review_status = v1_subject_rules_review_status_create(
       "0",
       1,
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_subject_rules_review_status = v1_subject_rules_review_status_create(
       "0",
       1,
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

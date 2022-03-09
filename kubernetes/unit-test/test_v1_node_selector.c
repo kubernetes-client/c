@@ -22,11 +22,11 @@ v1_node_selector_t* instantiate_v1_node_selector(int include_optional) {
   v1_node_selector_t* v1_node_selector = NULL;
   if (include_optional) {
     v1_node_selector = v1_node_selector_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1_node_selector = v1_node_selector_create(
-      list_create()
+      list_createList()
     );
   }
 

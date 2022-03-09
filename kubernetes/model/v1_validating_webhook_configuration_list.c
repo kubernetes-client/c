@@ -37,7 +37,7 @@ void v1_validating_webhook_configuration_list_free(v1_validating_webhook_configu
         list_ForEach(listEntry, v1_validating_webhook_configuration_list->items) {
             v1_validating_webhook_configuration_free(listEntry->data);
         }
-        list_free(v1_validating_webhook_configuration_list->items);
+        list_freeList(v1_validating_webhook_configuration_list->items);
         v1_validating_webhook_configuration_list->items = NULL;
     }
     if (v1_validating_webhook_configuration_list->kind) {
@@ -141,7 +141,7 @@ v1_validating_webhook_configuration_list_t *v1_validating_webhook_configuration_
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

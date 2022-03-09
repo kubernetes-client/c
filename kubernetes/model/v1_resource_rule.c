@@ -33,28 +33,28 @@ void v1_resource_rule_free(v1_resource_rule_t *v1_resource_rule) {
         list_ForEach(listEntry, v1_resource_rule->api_groups) {
             free(listEntry->data);
         }
-        list_free(v1_resource_rule->api_groups);
+        list_freeList(v1_resource_rule->api_groups);
         v1_resource_rule->api_groups = NULL;
     }
     if (v1_resource_rule->resource_names) {
         list_ForEach(listEntry, v1_resource_rule->resource_names) {
             free(listEntry->data);
         }
-        list_free(v1_resource_rule->resource_names);
+        list_freeList(v1_resource_rule->resource_names);
         v1_resource_rule->resource_names = NULL;
     }
     if (v1_resource_rule->resources) {
         list_ForEach(listEntry, v1_resource_rule->resources) {
             free(listEntry->data);
         }
-        list_free(v1_resource_rule->resources);
+        list_freeList(v1_resource_rule->resources);
         v1_resource_rule->resources = NULL;
     }
     if (v1_resource_rule->verbs) {
         list_ForEach(listEntry, v1_resource_rule->verbs) {
             free(listEntry->data);
         }
-        list_free(v1_resource_rule->verbs);
+        list_freeList(v1_resource_rule->verbs);
         v1_resource_rule->verbs = NULL;
     }
     free(v1_resource_rule);
@@ -152,7 +152,7 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
     if(!cJSON_IsArray(api_groups)) {
         goto end;//primitive container
     }
-    api_groupsList = list_create();
+    api_groupsList = list_createList();
 
     cJSON_ArrayForEach(api_groups_local, api_groups)
     {
@@ -172,7 +172,7 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
     if(!cJSON_IsArray(resource_names)) {
         goto end;//primitive container
     }
-    resource_namesList = list_create();
+    resource_namesList = list_createList();
 
     cJSON_ArrayForEach(resource_names_local, resource_names)
     {
@@ -192,7 +192,7 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
     if(!cJSON_IsArray(resources)) {
         goto end;//primitive container
     }
-    resourcesList = list_create();
+    resourcesList = list_createList();
 
     cJSON_ArrayForEach(resources_local, resources)
     {
@@ -216,7 +216,7 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
     if(!cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
-    verbsList = list_create();
+    verbsList = list_createList();
 
     cJSON_ArrayForEach(verbs_local, verbs)
     {

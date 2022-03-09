@@ -41,7 +41,7 @@ void v1_service_account_free(v1_service_account_t *v1_service_account) {
         list_ForEach(listEntry, v1_service_account->image_pull_secrets) {
             v1_local_object_reference_free(listEntry->data);
         }
-        list_free(v1_service_account->image_pull_secrets);
+        list_freeList(v1_service_account->image_pull_secrets);
         v1_service_account->image_pull_secrets = NULL;
     }
     if (v1_service_account->kind) {
@@ -56,7 +56,7 @@ void v1_service_account_free(v1_service_account_t *v1_service_account) {
         list_ForEach(listEntry, v1_service_account->secrets) {
             v1_object_reference_free(listEntry->data);
         }
-        list_free(v1_service_account->secrets);
+        list_freeList(v1_service_account->secrets);
         v1_service_account->secrets = NULL;
     }
     free(v1_service_account);
@@ -183,7 +183,7 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
         goto end; //nonprimitive container
     }
 
-    image_pull_secretsList = list_create();
+    image_pull_secretsList = list_createList();
 
     cJSON_ArrayForEach(image_pull_secrets_local_nonprimitive,image_pull_secrets )
     {
@@ -220,7 +220,7 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
         goto end; //nonprimitive container
     }
 
-    secretsList = list_create();
+    secretsList = list_createList();
 
     cJSON_ArrayForEach(secrets_local_nonprimitive,secrets )
     {

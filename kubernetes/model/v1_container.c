@@ -69,28 +69,28 @@ void v1_container_free(v1_container_t *v1_container) {
         list_ForEach(listEntry, v1_container->args) {
             free(listEntry->data);
         }
-        list_free(v1_container->args);
+        list_freeList(v1_container->args);
         v1_container->args = NULL;
     }
     if (v1_container->command) {
         list_ForEach(listEntry, v1_container->command) {
             free(listEntry->data);
         }
-        list_free(v1_container->command);
+        list_freeList(v1_container->command);
         v1_container->command = NULL;
     }
     if (v1_container->env) {
         list_ForEach(listEntry, v1_container->env) {
             v1_env_var_free(listEntry->data);
         }
-        list_free(v1_container->env);
+        list_freeList(v1_container->env);
         v1_container->env = NULL;
     }
     if (v1_container->env_from) {
         list_ForEach(listEntry, v1_container->env_from) {
             v1_env_from_source_free(listEntry->data);
         }
-        list_free(v1_container->env_from);
+        list_freeList(v1_container->env_from);
         v1_container->env_from = NULL;
     }
     if (v1_container->image) {
@@ -117,7 +117,7 @@ void v1_container_free(v1_container_t *v1_container) {
         list_ForEach(listEntry, v1_container->ports) {
             v1_container_port_free(listEntry->data);
         }
-        list_free(v1_container->ports);
+        list_freeList(v1_container->ports);
         v1_container->ports = NULL;
     }
     if (v1_container->readiness_probe) {
@@ -148,14 +148,14 @@ void v1_container_free(v1_container_t *v1_container) {
         list_ForEach(listEntry, v1_container->volume_devices) {
             v1_volume_device_free(listEntry->data);
         }
-        list_free(v1_container->volume_devices);
+        list_freeList(v1_container->volume_devices);
         v1_container->volume_devices = NULL;
     }
     if (v1_container->volume_mounts) {
         list_ForEach(listEntry, v1_container->volume_mounts) {
             v1_volume_mount_free(listEntry->data);
         }
-        list_free(v1_container->volume_mounts);
+        list_freeList(v1_container->volume_mounts);
         v1_container->volume_mounts = NULL;
     }
     if (v1_container->working_dir) {
@@ -491,7 +491,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     if(!cJSON_IsArray(args)) {
         goto end;//primitive container
     }
-    argsList = list_create();
+    argsList = list_createList();
 
     cJSON_ArrayForEach(args_local, args)
     {
@@ -511,7 +511,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     if(!cJSON_IsArray(command)) {
         goto end;//primitive container
     }
-    commandList = list_create();
+    commandList = list_createList();
 
     cJSON_ArrayForEach(command_local, command)
     {
@@ -532,7 +532,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
         goto end; //nonprimitive container
     }
 
-    envList = list_create();
+    envList = list_createList();
 
     cJSON_ArrayForEach(env_local_nonprimitive,env )
     {
@@ -554,7 +554,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
         goto end; //nonprimitive container
     }
 
-    env_fromList = list_create();
+    env_fromList = list_createList();
 
     cJSON_ArrayForEach(env_from_local_nonprimitive,env_from )
     {
@@ -618,7 +618,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
         goto end; //nonprimitive container
     }
 
-    portsList = list_create();
+    portsList = list_createList();
 
     cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {
@@ -709,7 +709,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
         goto end; //nonprimitive container
     }
 
-    volume_devicesList = list_create();
+    volume_devicesList = list_createList();
 
     cJSON_ArrayForEach(volume_devices_local_nonprimitive,volume_devices )
     {
@@ -731,7 +731,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
         goto end; //nonprimitive container
     }
 
-    volume_mountsList = list_create();
+    volume_mountsList = list_createList();
 
     cJSON_ArrayForEach(volume_mounts_local_nonprimitive,volume_mounts )
     {

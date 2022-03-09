@@ -29,14 +29,14 @@ void v1_node_selector_term_free(v1_node_selector_term_t *v1_node_selector_term) 
         list_ForEach(listEntry, v1_node_selector_term->match_expressions) {
             v1_node_selector_requirement_free(listEntry->data);
         }
-        list_free(v1_node_selector_term->match_expressions);
+        list_freeList(v1_node_selector_term->match_expressions);
         v1_node_selector_term->match_expressions = NULL;
     }
     if (v1_node_selector_term->match_fields) {
         list_ForEach(listEntry, v1_node_selector_term->match_fields) {
             v1_node_selector_requirement_free(listEntry->data);
         }
-        list_free(v1_node_selector_term->match_fields);
+        list_freeList(v1_node_selector_term->match_fields);
         v1_node_selector_term->match_fields = NULL;
     }
     free(v1_node_selector_term);
@@ -105,7 +105,7 @@ v1_node_selector_term_t *v1_node_selector_term_parseFromJSON(cJSON *v1_node_sele
         goto end; //nonprimitive container
     }
 
-    match_expressionsList = list_create();
+    match_expressionsList = list_createList();
 
     cJSON_ArrayForEach(match_expressions_local_nonprimitive,match_expressions )
     {
@@ -127,7 +127,7 @@ v1_node_selector_term_t *v1_node_selector_term_parseFromJSON(cJSON *v1_node_sele
         goto end; //nonprimitive container
     }
 
-    match_fieldsList = list_create();
+    match_fieldsList = list_createList();
 
     cJSON_ArrayForEach(match_fields_local_nonprimitive,match_fields )
     {

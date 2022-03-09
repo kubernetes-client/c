@@ -24,7 +24,7 @@ v1_endpoint_slice_list_t* instantiate_v1_endpoint_slice_list(int include_optiona
   if (include_optional) {
     v1_endpoint_slice_list = v1_endpoint_slice_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
        // false, not to have infinite recursion
       instantiate_v1_list_meta(0)
@@ -32,7 +32,7 @@ v1_endpoint_slice_list_t* instantiate_v1_endpoint_slice_list(int include_optiona
   } else {
     v1_endpoint_slice_list = v1_endpoint_slice_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
       NULL
     );

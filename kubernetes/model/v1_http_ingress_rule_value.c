@@ -27,7 +27,7 @@ void v1_http_ingress_rule_value_free(v1_http_ingress_rule_value_t *v1_http_ingre
         list_ForEach(listEntry, v1_http_ingress_rule_value->paths) {
             v1_http_ingress_path_free(listEntry->data);
         }
-        list_free(v1_http_ingress_rule_value->paths);
+        list_freeList(v1_http_ingress_rule_value->paths);
         v1_http_ingress_rule_value->paths = NULL;
     }
     free(v1_http_ingress_rule_value);
@@ -82,7 +82,7 @@ v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_parseFromJSON(cJSON *v1
         goto end; //nonprimitive container
     }
 
-    pathsList = list_create();
+    pathsList = list_createList();
 
     cJSON_ArrayForEach(paths_local_nonprimitive,paths )
     {

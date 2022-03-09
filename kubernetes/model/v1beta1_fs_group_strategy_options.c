@@ -29,7 +29,7 @@ void v1beta1_fs_group_strategy_options_free(v1beta1_fs_group_strategy_options_t 
         list_ForEach(listEntry, v1beta1_fs_group_strategy_options->ranges) {
             v1beta1_id_range_free(listEntry->data);
         }
-        list_free(v1beta1_fs_group_strategy_options->ranges);
+        list_freeList(v1beta1_fs_group_strategy_options->ranges);
         v1beta1_fs_group_strategy_options->ranges = NULL;
     }
     if (v1beta1_fs_group_strategy_options->rule) {
@@ -90,7 +90,7 @@ v1beta1_fs_group_strategy_options_t *v1beta1_fs_group_strategy_options_parseFrom
         goto end; //nonprimitive container
     }
 
-    rangesList = list_create();
+    rangesList = list_createList();
 
     cJSON_ArrayForEach(ranges_local_nonprimitive,ranges )
     {

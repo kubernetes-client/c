@@ -45,7 +45,7 @@ void v1_storage_class_free(v1_storage_class_t *v1_storage_class) {
         list_ForEach(listEntry, v1_storage_class->allowed_topologies) {
             v1_topology_selector_term_free(listEntry->data);
         }
-        list_free(v1_storage_class->allowed_topologies);
+        list_freeList(v1_storage_class->allowed_topologies);
         v1_storage_class->allowed_topologies = NULL;
     }
     if (v1_storage_class->api_version) {
@@ -64,7 +64,7 @@ void v1_storage_class_free(v1_storage_class_t *v1_storage_class) {
         list_ForEach(listEntry, v1_storage_class->mount_options) {
             free(listEntry->data);
         }
-        list_free(v1_storage_class->mount_options);
+        list_freeList(v1_storage_class->mount_options);
         v1_storage_class->mount_options = NULL;
     }
     if (v1_storage_class->parameters) {
@@ -74,7 +74,7 @@ void v1_storage_class_free(v1_storage_class_t *v1_storage_class) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_storage_class->parameters);
+        list_freeList(v1_storage_class->parameters);
         v1_storage_class->parameters = NULL;
     }
     if (v1_storage_class->provisioner) {
@@ -247,7 +247,7 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
         goto end; //nonprimitive container
     }
 
-    allowed_topologiesList = list_create();
+    allowed_topologiesList = list_createList();
 
     cJSON_ArrayForEach(allowed_topologies_local_nonprimitive,allowed_topologies )
     {
@@ -292,7 +292,7 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
     if(!cJSON_IsArray(mount_options)) {
         goto end;//primitive container
     }
-    mount_optionsList = list_create();
+    mount_optionsList = list_createList();
 
     cJSON_ArrayForEach(mount_options_local, mount_options)
     {
@@ -312,7 +312,7 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
     if(!cJSON_IsObject(parameters)) {
         goto end;//primitive map container
     }
-    parametersList = list_create();
+    parametersList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(parameters_local_map, parameters)
     {

@@ -44,7 +44,7 @@ void v1_config_map_free(v1_config_map_t *v1_config_map) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_config_map->binary_data);
+        list_freeList(v1_config_map->binary_data);
         v1_config_map->binary_data = NULL;
     }
     if (v1_config_map->data) {
@@ -54,7 +54,7 @@ void v1_config_map_free(v1_config_map_t *v1_config_map) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_config_map->data);
+        list_freeList(v1_config_map->data);
         v1_config_map->data = NULL;
     }
     if (v1_config_map->kind) {
@@ -179,7 +179,7 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     if(!cJSON_IsObject(binary_data)) {
         goto end;//primitive map container
     }
-    binary_dataList = list_create();
+    binary_dataList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(binary_data_local_map, binary_data)
     {
@@ -201,7 +201,7 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     if(!cJSON_IsObject(data)) {
         goto end;//primitive map container
     }
-    dataList = list_create();
+    dataList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(data_local_map, data)
     {

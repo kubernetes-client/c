@@ -46,7 +46,7 @@ void v1_flex_persistent_volume_source_free(v1_flex_persistent_volume_source_t *v
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_flex_persistent_volume_source->options);
+        list_freeList(v1_flex_persistent_volume_source->options);
         v1_flex_persistent_volume_source->options = NULL;
     }
     if (v1_flex_persistent_volume_source->secret_ref) {
@@ -161,7 +161,7 @@ v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJS
     if(!cJSON_IsObject(options)) {
         goto end;//primitive map container
     }
-    optionsList = list_create();
+    optionsList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(options_local_map, options)
     {

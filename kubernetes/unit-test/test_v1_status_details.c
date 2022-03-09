@@ -22,7 +22,7 @@ v1_status_details_t* instantiate_v1_status_details(int include_optional) {
   v1_status_details_t* v1_status_details = NULL;
   if (include_optional) {
     v1_status_details = v1_status_details_create(
-      list_create(),
+      list_createList(),
       "0",
       "0",
       "0",
@@ -31,7 +31,7 @@ v1_status_details_t* instantiate_v1_status_details(int include_optional) {
     );
   } else {
     v1_status_details = v1_status_details_create(
-      list_create(),
+      list_createList(),
       "0",
       "0",
       "0",

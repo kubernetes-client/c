@@ -36,14 +36,14 @@ void v1_user_info_free(v1_user_info_t *v1_user_info) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_user_info->extra);
+        list_freeList(v1_user_info->extra);
         v1_user_info->extra = NULL;
     }
     if (v1_user_info->groups) {
         list_ForEach(listEntry, v1_user_info->groups) {
             free(listEntry->data);
         }
-        list_free(v1_user_info->groups);
+        list_freeList(v1_user_info->groups);
         v1_user_info->groups = NULL;
     }
     if (v1_user_info->uid) {
@@ -128,7 +128,7 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     if(!cJSON_IsObject(extra)) {
         goto end;//primitive map container
     }
-    extraList = list_create();
+    extraList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(extra_local_map, extra)
     {
@@ -145,7 +145,7 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     if(!cJSON_IsArray(groups)) {
         goto end;//primitive container
     }
-    groupsList = list_create();
+    groupsList = list_createList();
 
     cJSON_ArrayForEach(groups_local, groups)
     {

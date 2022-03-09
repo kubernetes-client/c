@@ -23,14 +23,14 @@ v1_secret_volume_source_t* instantiate_v1_secret_volume_source(int include_optio
   if (include_optional) {
     v1_secret_volume_source = v1_secret_volume_source_create(
       56,
-      list_create(),
+      list_createList(),
       1,
       "0"
     );
   } else {
     v1_secret_volume_source = v1_secret_volume_source_create(
       56,
-      list_create(),
+      list_createList(),
       1,
       "0"
     );

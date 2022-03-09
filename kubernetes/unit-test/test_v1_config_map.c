@@ -24,8 +24,8 @@ v1_config_map_t* instantiate_v1_config_map(int include_optional) {
   if (include_optional) {
     v1_config_map = v1_config_map_create(
       "0",
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       1,
       "0",
        // false, not to have infinite recursion
@@ -34,8 +34,8 @@ v1_config_map_t* instantiate_v1_config_map(int include_optional) {
   } else {
     v1_config_map = v1_config_map_create(
       "0",
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       1,
       "0",
       NULL

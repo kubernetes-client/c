@@ -40,7 +40,7 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_limit_range_item->_default);
+        list_freeList(v1_limit_range_item->_default);
         v1_limit_range_item->_default = NULL;
     }
     if (v1_limit_range_item->default_request) {
@@ -50,7 +50,7 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_limit_range_item->default_request);
+        list_freeList(v1_limit_range_item->default_request);
         v1_limit_range_item->default_request = NULL;
     }
     if (v1_limit_range_item->max) {
@@ -60,7 +60,7 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_limit_range_item->max);
+        list_freeList(v1_limit_range_item->max);
         v1_limit_range_item->max = NULL;
     }
     if (v1_limit_range_item->max_limit_request_ratio) {
@@ -70,7 +70,7 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_limit_range_item->max_limit_request_ratio);
+        list_freeList(v1_limit_range_item->max_limit_request_ratio);
         v1_limit_range_item->max_limit_request_ratio = NULL;
     }
     if (v1_limit_range_item->min) {
@@ -80,7 +80,7 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_limit_range_item->min);
+        list_freeList(v1_limit_range_item->min);
         v1_limit_range_item->min = NULL;
     }
     if (v1_limit_range_item->type) {
@@ -222,7 +222,7 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     if(!cJSON_IsObject(_default)) {
         goto end;//primitive map container
     }
-    _defaultList = list_create();
+    _defaultList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(_default_local_map, _default)
     {
@@ -244,7 +244,7 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     if(!cJSON_IsObject(default_request)) {
         goto end;//primitive map container
     }
-    default_requestList = list_create();
+    default_requestList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(default_request_local_map, default_request)
     {
@@ -266,7 +266,7 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     if(!cJSON_IsObject(max)) {
         goto end;//primitive map container
     }
-    maxList = list_create();
+    maxList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(max_local_map, max)
     {
@@ -288,7 +288,7 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     if(!cJSON_IsObject(max_limit_request_ratio)) {
         goto end;//primitive map container
     }
-    max_limit_request_ratioList = list_create();
+    max_limit_request_ratioList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(max_limit_request_ratio_local_map, max_limit_request_ratio)
     {
@@ -310,7 +310,7 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     if(!cJSON_IsObject(min)) {
         goto end;//primitive map container
     }
-    minList = list_create();
+    minList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(min_local_map, min)
     {

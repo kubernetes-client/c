@@ -51,21 +51,21 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
         list_ForEach(listEntry, v1_pod_status->conditions) {
             v1_pod_condition_free(listEntry->data);
         }
-        list_free(v1_pod_status->conditions);
+        list_freeList(v1_pod_status->conditions);
         v1_pod_status->conditions = NULL;
     }
     if (v1_pod_status->container_statuses) {
         list_ForEach(listEntry, v1_pod_status->container_statuses) {
             v1_container_status_free(listEntry->data);
         }
-        list_free(v1_pod_status->container_statuses);
+        list_freeList(v1_pod_status->container_statuses);
         v1_pod_status->container_statuses = NULL;
     }
     if (v1_pod_status->ephemeral_container_statuses) {
         list_ForEach(listEntry, v1_pod_status->ephemeral_container_statuses) {
             v1_container_status_free(listEntry->data);
         }
-        list_free(v1_pod_status->ephemeral_container_statuses);
+        list_freeList(v1_pod_status->ephemeral_container_statuses);
         v1_pod_status->ephemeral_container_statuses = NULL;
     }
     if (v1_pod_status->host_ip) {
@@ -76,7 +76,7 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
         list_ForEach(listEntry, v1_pod_status->init_container_statuses) {
             v1_container_status_free(listEntry->data);
         }
-        list_free(v1_pod_status->init_container_statuses);
+        list_freeList(v1_pod_status->init_container_statuses);
         v1_pod_status->init_container_statuses = NULL;
     }
     if (v1_pod_status->message) {
@@ -99,7 +99,7 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
         list_ForEach(listEntry, v1_pod_status->pod_ips) {
             v1_pod_ip_free(listEntry->data);
         }
-        list_free(v1_pod_status->pod_ips);
+        list_freeList(v1_pod_status->pod_ips);
         v1_pod_status->pod_ips = NULL;
     }
     if (v1_pod_status->qos_class) {
@@ -304,7 +304,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
@@ -326,7 +326,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         goto end; //nonprimitive container
     }
 
-    container_statusesList = list_create();
+    container_statusesList = list_createList();
 
     cJSON_ArrayForEach(container_statuses_local_nonprimitive,container_statuses )
     {
@@ -348,7 +348,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         goto end; //nonprimitive container
     }
 
-    ephemeral_container_statusesList = list_create();
+    ephemeral_container_statusesList = list_createList();
 
     cJSON_ArrayForEach(ephemeral_container_statuses_local_nonprimitive,ephemeral_container_statuses )
     {
@@ -379,7 +379,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         goto end; //nonprimitive container
     }
 
-    init_container_statusesList = list_create();
+    init_container_statusesList = list_createList();
 
     cJSON_ArrayForEach(init_container_statuses_local_nonprimitive,init_container_statuses )
     {
@@ -437,7 +437,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         goto end; //nonprimitive container
     }
 
-    pod_ipsList = list_create();
+    pod_ipsList = list_createList();
 
     cJSON_ArrayForEach(pod_ips_local_nonprimitive,pod_ips )
     {

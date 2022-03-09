@@ -37,7 +37,7 @@ void v1alpha1_storage_version_list_free(v1alpha1_storage_version_list_t *v1alpha
         list_ForEach(listEntry, v1alpha1_storage_version_list->items) {
             v1alpha1_storage_version_free(listEntry->data);
         }
-        list_free(v1alpha1_storage_version_list->items);
+        list_freeList(v1alpha1_storage_version_list->items);
         v1alpha1_storage_version_list->items = NULL;
     }
     if (v1alpha1_storage_version_list->kind) {
@@ -141,7 +141,7 @@ v1alpha1_storage_version_list_t *v1alpha1_storage_version_list_parseFromJSON(cJS
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

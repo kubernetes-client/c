@@ -29,7 +29,7 @@ void v1_ingress_tls_free(v1_ingress_tls_t *v1_ingress_tls) {
         list_ForEach(listEntry, v1_ingress_tls->hosts) {
             free(listEntry->data);
         }
-        list_free(v1_ingress_tls->hosts);
+        list_freeList(v1_ingress_tls->hosts);
         v1_ingress_tls->hosts = NULL;
     }
     if (v1_ingress_tls->secret_name) {
@@ -86,7 +86,7 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
     if(!cJSON_IsArray(hosts)) {
         goto end;//primitive container
     }
-    hostsList = list_create();
+    hostsList = list_createList();
 
     cJSON_ArrayForEach(hosts_local, hosts)
     {

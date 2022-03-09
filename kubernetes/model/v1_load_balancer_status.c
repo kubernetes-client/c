@@ -27,7 +27,7 @@ void v1_load_balancer_status_free(v1_load_balancer_status_t *v1_load_balancer_st
         list_ForEach(listEntry, v1_load_balancer_status->ingress) {
             v1_load_balancer_ingress_free(listEntry->data);
         }
-        list_free(v1_load_balancer_status->ingress);
+        list_freeList(v1_load_balancer_status->ingress);
         v1_load_balancer_status->ingress = NULL;
     }
     free(v1_load_balancer_status);
@@ -76,7 +76,7 @@ v1_load_balancer_status_t *v1_load_balancer_status_parseFromJSON(cJSON *v1_load_
         goto end; //nonprimitive container
     }
 
-    ingressList = list_create();
+    ingressList = list_createList();
 
     cJSON_ArrayForEach(ingress_local_nonprimitive,ingress )
     {

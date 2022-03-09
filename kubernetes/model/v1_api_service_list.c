@@ -37,7 +37,7 @@ void v1_api_service_list_free(v1_api_service_list_t *v1_api_service_list) {
         list_ForEach(listEntry, v1_api_service_list->items) {
             v1_api_service_free(listEntry->data);
         }
-        list_free(v1_api_service_list->items);
+        list_freeList(v1_api_service_list->items);
         v1_api_service_list->items = NULL;
     }
     if (v1_api_service_list->kind) {
@@ -141,7 +141,7 @@ v1_api_service_list_t *v1_api_service_list_parseFromJSON(cJSON *v1_api_service_l
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

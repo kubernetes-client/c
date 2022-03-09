@@ -47,7 +47,7 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
         list_ForEach(listEntry, v1_node_status->addresses) {
             v1_node_address_free(listEntry->data);
         }
-        list_free(v1_node_status->addresses);
+        list_freeList(v1_node_status->addresses);
         v1_node_status->addresses = NULL;
     }
     if (v1_node_status->allocatable) {
@@ -57,7 +57,7 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_node_status->allocatable);
+        list_freeList(v1_node_status->allocatable);
         v1_node_status->allocatable = NULL;
     }
     if (v1_node_status->capacity) {
@@ -67,14 +67,14 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_node_status->capacity);
+        list_freeList(v1_node_status->capacity);
         v1_node_status->capacity = NULL;
     }
     if (v1_node_status->conditions) {
         list_ForEach(listEntry, v1_node_status->conditions) {
             v1_node_condition_free(listEntry->data);
         }
-        list_free(v1_node_status->conditions);
+        list_freeList(v1_node_status->conditions);
         v1_node_status->conditions = NULL;
     }
     if (v1_node_status->config) {
@@ -89,7 +89,7 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
         list_ForEach(listEntry, v1_node_status->images) {
             v1_container_image_free(listEntry->data);
         }
-        list_free(v1_node_status->images);
+        list_freeList(v1_node_status->images);
         v1_node_status->images = NULL;
     }
     if (v1_node_status->node_info) {
@@ -104,14 +104,14 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
         list_ForEach(listEntry, v1_node_status->volumes_attached) {
             v1_attached_volume_free(listEntry->data);
         }
-        list_free(v1_node_status->volumes_attached);
+        list_freeList(v1_node_status->volumes_attached);
         v1_node_status->volumes_attached = NULL;
     }
     if (v1_node_status->volumes_in_use) {
         list_ForEach(listEntry, v1_node_status->volumes_in_use) {
             free(listEntry->data);
         }
-        list_free(v1_node_status->volumes_in_use);
+        list_freeList(v1_node_status->volumes_in_use);
         v1_node_status->volumes_in_use = NULL;
     }
     free(v1_node_status);
@@ -333,7 +333,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
         goto end; //nonprimitive container
     }
 
-    addressesList = list_create();
+    addressesList = list_createList();
 
     cJSON_ArrayForEach(addresses_local_nonprimitive,addresses )
     {
@@ -354,7 +354,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     if(!cJSON_IsObject(allocatable)) {
         goto end;//primitive map container
     }
-    allocatableList = list_create();
+    allocatableList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(allocatable_local_map, allocatable)
     {
@@ -376,7 +376,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     if(!cJSON_IsObject(capacity)) {
         goto end;//primitive map container
     }
-    capacityList = list_create();
+    capacityList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(capacity_local_map, capacity)
     {
@@ -399,7 +399,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
@@ -433,7 +433,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
         goto end; //nonprimitive container
     }
 
-    imagesList = list_create();
+    imagesList = list_createList();
 
     cJSON_ArrayForEach(images_local_nonprimitive,images )
     {
@@ -470,7 +470,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
         goto end; //nonprimitive container
     }
 
-    volumes_attachedList = list_create();
+    volumes_attachedList = list_createList();
 
     cJSON_ArrayForEach(volumes_attached_local_nonprimitive,volumes_attached )
     {
@@ -491,7 +491,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     if(!cJSON_IsArray(volumes_in_use)) {
         goto end;//primitive container
     }
-    volumes_in_useList = list_create();
+    volumes_in_useList = list_createList();
 
     cJSON_ArrayForEach(volumes_in_use_local, volumes_in_use)
     {

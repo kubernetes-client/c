@@ -27,7 +27,7 @@ void v1beta1_flow_schema_status_free(v1beta1_flow_schema_status_t *v1beta1_flow_
         list_ForEach(listEntry, v1beta1_flow_schema_status->conditions) {
             v1beta1_flow_schema_condition_free(listEntry->data);
         }
-        list_free(v1beta1_flow_schema_status->conditions);
+        list_freeList(v1beta1_flow_schema_status->conditions);
         v1beta1_flow_schema_status->conditions = NULL;
     }
     free(v1beta1_flow_schema_status);
@@ -76,7 +76,7 @@ v1beta1_flow_schema_status_t *v1beta1_flow_schema_status_parseFromJSON(cJSON *v1
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

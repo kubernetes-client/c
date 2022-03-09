@@ -22,19 +22,19 @@ v1alpha1_policy_rule_t* instantiate_v1alpha1_policy_rule(int include_optional) {
   v1alpha1_policy_rule_t* v1alpha1_policy_rule = NULL;
   if (include_optional) {
     v1alpha1_policy_rule = v1alpha1_policy_rule_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList()
     );
   } else {
     v1alpha1_policy_rule = v1alpha1_policy_rule_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList()
     );
   }
 

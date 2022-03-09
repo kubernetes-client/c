@@ -31,7 +31,7 @@ void v1_cron_job_status_free(v1_cron_job_status_t *v1_cron_job_status) {
         list_ForEach(listEntry, v1_cron_job_status->active) {
             v1_object_reference_free(listEntry->data);
         }
-        list_free(v1_cron_job_status->active);
+        list_freeList(v1_cron_job_status->active);
         v1_cron_job_status->active = NULL;
     }
     if (v1_cron_job_status->last_schedule_time) {
@@ -104,7 +104,7 @@ v1_cron_job_status_t *v1_cron_job_status_parseFromJSON(cJSON *v1_cron_job_status
         goto end; //nonprimitive container
     }
 
-    activeList = list_create();
+    activeList = list_createList();
 
     cJSON_ArrayForEach(active_local_nonprimitive,active )
     {

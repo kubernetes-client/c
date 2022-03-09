@@ -45,7 +45,7 @@ void v1_daemon_set_status_free(v1_daemon_set_status_t *v1_daemon_set_status) {
         list_ForEach(listEntry, v1_daemon_set_status->conditions) {
             v1_daemon_set_condition_free(listEntry->data);
         }
-        list_free(v1_daemon_set_status->conditions);
+        list_freeList(v1_daemon_set_status->conditions);
         v1_daemon_set_status->conditions = NULL;
     }
     free(v1_daemon_set_status);
@@ -183,7 +183,7 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

@@ -27,14 +27,14 @@ v1_mutating_webhook_configuration_t* instantiate_v1_mutating_webhook_configurati
       "0",
        // false, not to have infinite recursion
       instantiate_v1_object_meta(0),
-      list_create()
+      list_createList()
     );
   } else {
     v1_mutating_webhook_configuration = v1_mutating_webhook_configuration_create(
       "0",
       "0",
       NULL,
-      list_create()
+      list_createList()
     );
   }
 

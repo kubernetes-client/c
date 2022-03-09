@@ -37,7 +37,7 @@ void v1_replication_controller_list_free(v1_replication_controller_list_t *v1_re
         list_ForEach(listEntry, v1_replication_controller_list->items) {
             v1_replication_controller_free(listEntry->data);
         }
-        list_free(v1_replication_controller_list->items);
+        list_freeList(v1_replication_controller_list->items);
         v1_replication_controller_list->items = NULL;
     }
     if (v1_replication_controller_list->kind) {
@@ -141,7 +141,7 @@ v1_replication_controller_list_t *v1_replication_controller_list_parseFromJSON(c
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

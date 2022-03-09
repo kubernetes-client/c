@@ -31,7 +31,7 @@ void v1_token_request_spec_free(v1_token_request_spec_t *v1_token_request_spec) 
         list_ForEach(listEntry, v1_token_request_spec->audiences) {
             free(listEntry->data);
         }
-        list_free(v1_token_request_spec->audiences);
+        list_freeList(v1_token_request_spec->audiences);
         v1_token_request_spec->audiences = NULL;
     }
     if (v1_token_request_spec->bound_object_ref) {
@@ -110,7 +110,7 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
     if(!cJSON_IsArray(audiences)) {
         goto end;//primitive container
     }
-    audiencesList = list_create();
+    audiencesList = list_createList();
 
     cJSON_ArrayForEach(audiences_local, audiences)
     {

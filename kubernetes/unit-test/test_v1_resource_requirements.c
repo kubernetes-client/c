@@ -22,13 +22,13 @@ v1_resource_requirements_t* instantiate_v1_resource_requirements(int include_opt
   v1_resource_requirements_t* v1_resource_requirements = NULL;
   if (include_optional) {
     v1_resource_requirements = v1_resource_requirements_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_resource_requirements = v1_resource_requirements_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

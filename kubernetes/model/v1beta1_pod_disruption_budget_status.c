@@ -39,7 +39,7 @@ void v1beta1_pod_disruption_budget_status_free(v1beta1_pod_disruption_budget_sta
         list_ForEach(listEntry, v1beta1_pod_disruption_budget_status->conditions) {
             v1_condition_free(listEntry->data);
         }
-        list_free(v1beta1_pod_disruption_budget_status->conditions);
+        list_freeList(v1beta1_pod_disruption_budget_status->conditions);
         v1beta1_pod_disruption_budget_status->conditions = NULL;
     }
     if (v1beta1_pod_disruption_budget_status->disrupted_pods) {
@@ -49,7 +49,7 @@ void v1beta1_pod_disruption_budget_status_free(v1beta1_pod_disruption_budget_sta
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1beta1_pod_disruption_budget_status->disrupted_pods);
+        list_freeList(v1beta1_pod_disruption_budget_status->disrupted_pods);
         v1beta1_pod_disruption_budget_status->disrupted_pods = NULL;
     }
     free(v1beta1_pod_disruption_budget_status);
@@ -162,7 +162,7 @@ v1beta1_pod_disruption_budget_status_t *v1beta1_pod_disruption_budget_status_par
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
@@ -207,7 +207,7 @@ v1beta1_pod_disruption_budget_status_t *v1beta1_pod_disruption_budget_status_par
     if(!cJSON_IsObject(disrupted_pods)) {
         goto end;//primitive map container
     }
-    disrupted_podsList = list_create();
+    disrupted_podsList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(disrupted_pods_local_map, disrupted_pods)
     {

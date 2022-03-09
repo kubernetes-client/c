@@ -22,13 +22,13 @@ v1_resource_quota_status_t* instantiate_v1_resource_quota_status(int include_opt
   v1_resource_quota_status_t* v1_resource_quota_status = NULL;
   if (include_optional) {
     v1_resource_quota_status = v1_resource_quota_status_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_resource_quota_status = v1_resource_quota_status_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

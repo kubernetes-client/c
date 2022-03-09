@@ -37,7 +37,7 @@ void v1_limit_range_list_free(v1_limit_range_list_t *v1_limit_range_list) {
         list_ForEach(listEntry, v1_limit_range_list->items) {
             v1_limit_range_free(listEntry->data);
         }
-        list_free(v1_limit_range_list->items);
+        list_freeList(v1_limit_range_list->items);
         v1_limit_range_list->items = NULL;
     }
     if (v1_limit_range_list->kind) {
@@ -141,7 +141,7 @@ v1_limit_range_list_t *v1_limit_range_list_parseFromJSON(cJSON *v1_limit_range_l
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

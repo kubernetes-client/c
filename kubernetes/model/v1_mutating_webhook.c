@@ -47,7 +47,7 @@ void v1_mutating_webhook_free(v1_mutating_webhook_t *v1_mutating_webhook) {
         list_ForEach(listEntry, v1_mutating_webhook->admission_review_versions) {
             free(listEntry->data);
         }
-        list_free(v1_mutating_webhook->admission_review_versions);
+        list_freeList(v1_mutating_webhook->admission_review_versions);
         v1_mutating_webhook->admission_review_versions = NULL;
     }
     if (v1_mutating_webhook->client_config) {
@@ -82,7 +82,7 @@ void v1_mutating_webhook_free(v1_mutating_webhook_t *v1_mutating_webhook) {
         list_ForEach(listEntry, v1_mutating_webhook->rules) {
             v1_rule_with_operations_free(listEntry->data);
         }
-        list_free(v1_mutating_webhook->rules);
+        list_freeList(v1_mutating_webhook->rules);
         v1_mutating_webhook->rules = NULL;
     }
     if (v1_mutating_webhook->side_effects) {
@@ -259,7 +259,7 @@ v1_mutating_webhook_t *v1_mutating_webhook_parseFromJSON(cJSON *v1_mutating_webh
     if(!cJSON_IsArray(admission_review_versions)) {
         goto end;//primitive container
     }
-    admission_review_versionsList = list_create();
+    admission_review_versionsList = list_createList();
 
     cJSON_ArrayForEach(admission_review_versions_local, admission_review_versions)
     {
@@ -339,7 +339,7 @@ v1_mutating_webhook_t *v1_mutating_webhook_parseFromJSON(cJSON *v1_mutating_webh
         goto end; //nonprimitive container
     }
 
-    rulesList = list_create();
+    rulesList = list_createList();
 
     cJSON_ArrayForEach(rules_local_nonprimitive,rules )
     {

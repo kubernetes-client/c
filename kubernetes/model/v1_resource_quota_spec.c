@@ -34,7 +34,7 @@ void v1_resource_quota_spec_free(v1_resource_quota_spec_t *v1_resource_quota_spe
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_resource_quota_spec->hard);
+        list_freeList(v1_resource_quota_spec->hard);
         v1_resource_quota_spec->hard = NULL;
     }
     if (v1_resource_quota_spec->scope_selector) {
@@ -45,7 +45,7 @@ void v1_resource_quota_spec_free(v1_resource_quota_spec_t *v1_resource_quota_spe
         list_ForEach(listEntry, v1_resource_quota_spec->scopes) {
             free(listEntry->data);
         }
-        list_free(v1_resource_quota_spec->scopes);
+        list_freeList(v1_resource_quota_spec->scopes);
         v1_resource_quota_spec->scopes = NULL;
     }
     free(v1_resource_quota_spec);
@@ -126,7 +126,7 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
     if(!cJSON_IsObject(hard)) {
         goto end;//primitive map container
     }
-    hardList = list_create();
+    hardList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(hard_local_map, hard)
     {
@@ -154,7 +154,7 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
     if(!cJSON_IsArray(scopes)) {
         goto end;//primitive container
     }
-    scopesList = list_create();
+    scopesList = list_createList();
 
     cJSON_ArrayForEach(scopes_local, scopes)
     {

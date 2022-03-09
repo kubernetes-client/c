@@ -27,7 +27,7 @@ void v1_topology_selector_term_free(v1_topology_selector_term_t *v1_topology_sel
         list_ForEach(listEntry, v1_topology_selector_term->match_label_expressions) {
             v1_topology_selector_label_requirement_free(listEntry->data);
         }
-        list_free(v1_topology_selector_term->match_label_expressions);
+        list_freeList(v1_topology_selector_term->match_label_expressions);
         v1_topology_selector_term->match_label_expressions = NULL;
     }
     free(v1_topology_selector_term);
@@ -76,7 +76,7 @@ v1_topology_selector_term_t *v1_topology_selector_term_parseFromJSON(cJSON *v1_t
         goto end; //nonprimitive container
     }
 
-    match_label_expressionsList = list_create();
+    match_label_expressionsList = list_createList();
 
     cJSON_ArrayForEach(match_label_expressions_local_nonprimitive,match_label_expressions )
     {

@@ -26,7 +26,7 @@ v1_rbd_volume_source_t* instantiate_v1_rbd_volume_source(int include_optional) {
       "0",
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0",
       1,
        // false, not to have infinite recursion
@@ -38,7 +38,7 @@ v1_rbd_volume_source_t* instantiate_v1_rbd_volume_source(int include_optional) {
       "0",
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0",
       1,
       NULL,

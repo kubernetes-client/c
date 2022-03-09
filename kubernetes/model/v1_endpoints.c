@@ -45,7 +45,7 @@ void v1_endpoints_free(v1_endpoints_t *v1_endpoints) {
         list_ForEach(listEntry, v1_endpoints->subsets) {
             v1_endpoint_subset_free(listEntry->data);
         }
-        list_free(v1_endpoints->subsets);
+        list_freeList(v1_endpoints->subsets);
         v1_endpoints->subsets = NULL;
     }
     free(v1_endpoints);
@@ -150,7 +150,7 @@ v1_endpoints_t *v1_endpoints_parseFromJSON(cJSON *v1_endpointsJSON){
         goto end; //nonprimitive container
     }
 
-    subsetsList = list_create();
+    subsetsList = list_createList();
 
     cJSON_ArrayForEach(subsets_local_nonprimitive,subsets )
     {

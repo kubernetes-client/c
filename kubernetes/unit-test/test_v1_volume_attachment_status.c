@@ -27,7 +27,7 @@ v1_volume_attachment_status_t* instantiate_v1_volume_attachment_status(int inclu
        // false, not to have infinite recursion
       instantiate_v1_volume_error(0),
       1,
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_volume_error(0)
     );
@@ -35,7 +35,7 @@ v1_volume_attachment_status_t* instantiate_v1_volume_attachment_status(int inclu
     v1_volume_attachment_status = v1_volume_attachment_status_create(
       NULL,
       1,
-      list_create(),
+      list_createList(),
       NULL
     );
   }

@@ -46,14 +46,14 @@ v1_persistent_volume_spec_t* instantiate_v1_persistent_volume_spec(int include_o
   v1_persistent_volume_spec_t* v1_persistent_volume_spec = NULL;
   if (include_optional) {
     v1_persistent_volume_spec = v1_persistent_volume_spec_create(
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_aws_elastic_block_store_volume_source(0),
        // false, not to have infinite recursion
       instantiate_v1_azure_disk_volume_source(0),
        // false, not to have infinite recursion
       instantiate_v1_azure_file_persistent_volume_source(0),
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_ceph_fs_persistent_volume_source(0),
        // false, not to have infinite recursion
@@ -78,7 +78,7 @@ v1_persistent_volume_spec_t* instantiate_v1_persistent_volume_spec(int include_o
       instantiate_v1_iscsi_persistent_volume_source(0),
        // false, not to have infinite recursion
       instantiate_v1_local_volume_source(0),
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_nfs_volume_source(0),
        // false, not to have infinite recursion
@@ -103,15 +103,11 @@ v1_persistent_volume_spec_t* instantiate_v1_persistent_volume_spec(int include_o
     );
   } else {
     v1_persistent_volume_spec = v1_persistent_volume_spec_create(
-      list_create(),
+      list_createList(),
       NULL,
       NULL,
       NULL,
-      list_create(),
-      NULL,
-      NULL,
-      NULL,
-      NULL,
+      list_createList(),
       NULL,
       NULL,
       NULL,
@@ -120,7 +116,11 @@ v1_persistent_volume_spec_t* instantiate_v1_persistent_volume_spec(int include_o
       NULL,
       NULL,
       NULL,
-      list_create(),
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      list_createList(),
       NULL,
       NULL,
       "0",

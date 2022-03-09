@@ -28,10 +28,10 @@ v1_container_t* instantiate_v1_container(int include_optional) {
   v1_container_t* v1_container = NULL;
   if (include_optional) {
     v1_container = v1_container_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       "0",
       "0",
        // false, not to have infinite recursion
@@ -39,7 +39,7 @@ v1_container_t* instantiate_v1_container(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_probe(0),
       "0",
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_probe(0),
        // false, not to have infinite recursion
@@ -53,22 +53,22 @@ v1_container_t* instantiate_v1_container(int include_optional) {
       "0",
       "0",
       1,
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "0"
     );
   } else {
     v1_container = v1_container_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       "0",
       "0",
       NULL,
       NULL,
       "0",
-      list_create(),
+      list_createList(),
       NULL,
       NULL,
       NULL,
@@ -78,8 +78,8 @@ v1_container_t* instantiate_v1_container(int include_optional) {
       "0",
       "0",
       1,
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "0"
     );
   }

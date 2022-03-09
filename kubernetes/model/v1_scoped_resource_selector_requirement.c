@@ -39,7 +39,7 @@ void v1_scoped_resource_selector_requirement_free(v1_scoped_resource_selector_re
         list_ForEach(listEntry, v1_scoped_resource_selector_requirement->values) {
             free(listEntry->data);
         }
-        list_free(v1_scoped_resource_selector_requirement->values);
+        list_freeList(v1_scoped_resource_selector_requirement->values);
         v1_scoped_resource_selector_requirement->values = NULL;
     }
     free(v1_scoped_resource_selector_requirement);
@@ -128,7 +128,7 @@ v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requireme
     if(!cJSON_IsArray(values)) {
         goto end;//primitive container
     }
-    valuesList = list_create();
+    valuesList = list_createList();
 
     cJSON_ArrayForEach(values_local, values)
     {

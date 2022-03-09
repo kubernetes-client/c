@@ -22,12 +22,12 @@ v1_host_alias_t* instantiate_v1_host_alias(int include_optional) {
   v1_host_alias_t* v1_host_alias = NULL;
   if (include_optional) {
     v1_host_alias = v1_host_alias_create(
-      list_create(),
+      list_createList(),
       "0"
     );
   } else {
     v1_host_alias = v1_host_alias_create(
-      list_create(),
+      list_createList(),
       "0"
     );
   }

@@ -24,7 +24,7 @@ v1_stateful_set_status_t* instantiate_v1_stateful_set_status(int include_optiona
     v1_stateful_set_status = v1_stateful_set_status_create(
       56,
       56,
-      list_create(),
+      list_createList(),
       56,
       "0",
       56,
@@ -37,7 +37,7 @@ v1_stateful_set_status_t* instantiate_v1_stateful_set_status(int include_optiona
     v1_stateful_set_status = v1_stateful_set_status_create(
       56,
       56,
-      list_create(),
+      list_createList(),
       56,
       "0",
       56,

@@ -37,7 +37,7 @@ void v1_network_policy_list_free(v1_network_policy_list_t *v1_network_policy_lis
         list_ForEach(listEntry, v1_network_policy_list->items) {
             v1_network_policy_free(listEntry->data);
         }
-        list_free(v1_network_policy_list->items);
+        list_freeList(v1_network_policy_list->items);
         v1_network_policy_list->items = NULL;
     }
     if (v1_network_policy_list->kind) {
@@ -141,7 +141,7 @@ v1_network_policy_list_t *v1_network_policy_list_parseFromJSON(cJSON *v1_network
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

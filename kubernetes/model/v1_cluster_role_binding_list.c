@@ -37,7 +37,7 @@ void v1_cluster_role_binding_list_free(v1_cluster_role_binding_list_t *v1_cluste
         list_ForEach(listEntry, v1_cluster_role_binding_list->items) {
             v1_cluster_role_binding_free(listEntry->data);
         }
-        list_free(v1_cluster_role_binding_list->items);
+        list_freeList(v1_cluster_role_binding_list->items);
         v1_cluster_role_binding_list->items = NULL;
     }
     if (v1_cluster_role_binding_list->kind) {
@@ -141,7 +141,7 @@ v1_cluster_role_binding_list_t *v1_cluster_role_binding_list_parseFromJSON(cJSON
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

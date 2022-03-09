@@ -23,14 +23,14 @@ v1_token_request_spec_t* instantiate_v1_token_request_spec(int include_optional)
   v1_token_request_spec_t* v1_token_request_spec = NULL;
   if (include_optional) {
     v1_token_request_spec = v1_token_request_spec_create(
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_bound_object_reference(0),
       56
     );
   } else {
     v1_token_request_spec = v1_token_request_spec_create(
-      list_create(),
+      list_createList(),
       NULL,
       56
     );

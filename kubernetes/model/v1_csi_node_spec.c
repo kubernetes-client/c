@@ -27,7 +27,7 @@ void v1_csi_node_spec_free(v1_csi_node_spec_t *v1_csi_node_spec) {
         list_ForEach(listEntry, v1_csi_node_spec->drivers) {
             v1_csi_node_driver_free(listEntry->data);
         }
-        list_free(v1_csi_node_spec->drivers);
+        list_freeList(v1_csi_node_spec->drivers);
         v1_csi_node_spec->drivers = NULL;
     }
     free(v1_csi_node_spec);
@@ -82,7 +82,7 @@ v1_csi_node_spec_t *v1_csi_node_spec_parseFromJSON(cJSON *v1_csi_node_specJSON){
         goto end; //nonprimitive container
     }
 
-    driversList = list_create();
+    driversList = list_createList();
 
     cJSON_ArrayForEach(drivers_local_nonprimitive,drivers )
     {

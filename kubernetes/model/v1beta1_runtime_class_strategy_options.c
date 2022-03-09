@@ -29,7 +29,7 @@ void v1beta1_runtime_class_strategy_options_free(v1beta1_runtime_class_strategy_
         list_ForEach(listEntry, v1beta1_runtime_class_strategy_options->allowed_runtime_class_names) {
             free(listEntry->data);
         }
-        list_free(v1beta1_runtime_class_strategy_options->allowed_runtime_class_names);
+        list_freeList(v1beta1_runtime_class_strategy_options->allowed_runtime_class_names);
         v1beta1_runtime_class_strategy_options->allowed_runtime_class_names = NULL;
     }
     if (v1beta1_runtime_class_strategy_options->default_runtime_class_name) {
@@ -92,7 +92,7 @@ v1beta1_runtime_class_strategy_options_t *v1beta1_runtime_class_strategy_options
     if(!cJSON_IsArray(allowed_runtime_class_names)) {
         goto end;//primitive container
     }
-    allowed_runtime_class_namesList = list_create();
+    allowed_runtime_class_namesList = list_createList();
 
     cJSON_ArrayForEach(allowed_runtime_class_names_local, allowed_runtime_class_names)
     {

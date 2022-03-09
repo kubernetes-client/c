@@ -22,13 +22,13 @@ v1_uncounted_terminated_pods_t* instantiate_v1_uncounted_terminated_pods(int inc
   v1_uncounted_terminated_pods_t* v1_uncounted_terminated_pods = NULL;
   if (include_optional) {
     v1_uncounted_terminated_pods = v1_uncounted_terminated_pods_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_uncounted_terminated_pods = v1_uncounted_terminated_pods_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

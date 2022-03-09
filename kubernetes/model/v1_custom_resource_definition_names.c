@@ -37,7 +37,7 @@ void v1_custom_resource_definition_names_free(v1_custom_resource_definition_name
         list_ForEach(listEntry, v1_custom_resource_definition_names->categories) {
             free(listEntry->data);
         }
-        list_free(v1_custom_resource_definition_names->categories);
+        list_freeList(v1_custom_resource_definition_names->categories);
         v1_custom_resource_definition_names->categories = NULL;
     }
     if (v1_custom_resource_definition_names->kind) {
@@ -56,7 +56,7 @@ void v1_custom_resource_definition_names_free(v1_custom_resource_definition_name
         list_ForEach(listEntry, v1_custom_resource_definition_names->short_names) {
             free(listEntry->data);
         }
-        list_free(v1_custom_resource_definition_names->short_names);
+        list_freeList(v1_custom_resource_definition_names->short_names);
         v1_custom_resource_definition_names->short_names = NULL;
     }
     if (v1_custom_resource_definition_names->singular) {
@@ -158,7 +158,7 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
     if(!cJSON_IsArray(categories)) {
         goto end;//primitive container
     }
-    categoriesList = list_create();
+    categoriesList = list_createList();
 
     cJSON_ArrayForEach(categories_local, categories)
     {
@@ -211,7 +211,7 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
     if(!cJSON_IsArray(short_names)) {
         goto end;//primitive container
     }
-    short_namesList = list_create();
+    short_namesList = list_createList();
 
     cJSON_ArrayForEach(short_names_local, short_names)
     {

@@ -22,13 +22,13 @@ v1_label_selector_t* instantiate_v1_label_selector(int include_optional) {
   v1_label_selector_t* v1_label_selector = NULL;
   if (include_optional) {
     v1_label_selector = v1_label_selector_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_label_selector = v1_label_selector_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

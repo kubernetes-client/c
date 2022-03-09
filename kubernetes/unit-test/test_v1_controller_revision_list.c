@@ -24,7 +24,7 @@ v1_controller_revision_list_t* instantiate_v1_controller_revision_list(int inclu
   if (include_optional) {
     v1_controller_revision_list = v1_controller_revision_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
        // false, not to have infinite recursion
       instantiate_v1_list_meta(0)
@@ -32,7 +32,7 @@ v1_controller_revision_list_t* instantiate_v1_controller_revision_list(int inclu
   } else {
     v1_controller_revision_list = v1_controller_revision_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
       NULL
     );

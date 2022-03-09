@@ -85,7 +85,7 @@ void v1_persistent_volume_spec_free(v1_persistent_volume_spec_t *v1_persistent_v
         list_ForEach(listEntry, v1_persistent_volume_spec->access_modes) {
             free(listEntry->data);
         }
-        list_free(v1_persistent_volume_spec->access_modes);
+        list_freeList(v1_persistent_volume_spec->access_modes);
         v1_persistent_volume_spec->access_modes = NULL;
     }
     if (v1_persistent_volume_spec->aws_elastic_block_store) {
@@ -107,7 +107,7 @@ void v1_persistent_volume_spec_free(v1_persistent_volume_spec_t *v1_persistent_v
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_persistent_volume_spec->capacity);
+        list_freeList(v1_persistent_volume_spec->capacity);
         v1_persistent_volume_spec->capacity = NULL;
     }
     if (v1_persistent_volume_spec->cephfs) {
@@ -162,7 +162,7 @@ void v1_persistent_volume_spec_free(v1_persistent_volume_spec_t *v1_persistent_v
         list_ForEach(listEntry, v1_persistent_volume_spec->mount_options) {
             free(listEntry->data);
         }
-        list_free(v1_persistent_volume_spec->mount_options);
+        list_freeList(v1_persistent_volume_spec->mount_options);
         v1_persistent_volume_spec->mount_options = NULL;
     }
     if (v1_persistent_volume_spec->nfs) {
@@ -700,7 +700,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     if(!cJSON_IsArray(access_modes)) {
         goto end;//primitive container
     }
-    access_modesList = list_create();
+    access_modesList = list_createList();
 
     cJSON_ArrayForEach(access_modes_local, access_modes)
     {
@@ -738,7 +738,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     if(!cJSON_IsObject(capacity)) {
         goto end;//primitive map container
     }
-    capacityList = list_create();
+    capacityList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(capacity_local_map, capacity)
     {
@@ -832,7 +832,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     if(!cJSON_IsArray(mount_options)) {
         goto end;//primitive container
     }
-    mount_optionsList = list_create();
+    mount_optionsList = list_createList();
 
     cJSON_ArrayForEach(mount_options_local, mount_options)
     {

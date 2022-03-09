@@ -32,7 +32,7 @@ void v1_resource_quota_status_free(v1_resource_quota_status_t *v1_resource_quota
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_resource_quota_status->hard);
+        list_freeList(v1_resource_quota_status->hard);
         v1_resource_quota_status->hard = NULL;
     }
     if (v1_resource_quota_status->used) {
@@ -42,7 +42,7 @@ void v1_resource_quota_status_free(v1_resource_quota_status_t *v1_resource_quota
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_resource_quota_status->used);
+        list_freeList(v1_resource_quota_status->used);
         v1_resource_quota_status->used = NULL;
     }
     free(v1_resource_quota_status);
@@ -110,7 +110,7 @@ v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(cJSON *v1_res
     if(!cJSON_IsObject(hard)) {
         goto end;//primitive map container
     }
-    hardList = list_create();
+    hardList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(hard_local_map, hard)
     {
@@ -132,7 +132,7 @@ v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(cJSON *v1_res
     if(!cJSON_IsObject(used)) {
         goto end;//primitive map container
     }
-    usedList = list_create();
+    usedList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(used_local_map, used)
     {

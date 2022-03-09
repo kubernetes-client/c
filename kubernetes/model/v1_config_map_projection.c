@@ -31,7 +31,7 @@ void v1_config_map_projection_free(v1_config_map_projection_t *v1_config_map_pro
         list_ForEach(listEntry, v1_config_map_projection->items) {
             v1_key_to_path_free(listEntry->data);
         }
-        list_free(v1_config_map_projection->items);
+        list_freeList(v1_config_map_projection->items);
         v1_config_map_projection->items = NULL;
     }
     if (v1_config_map_projection->name) {
@@ -100,7 +100,7 @@ v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(cJSON *v1_con
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

@@ -22,11 +22,11 @@ v1beta1_priority_level_configuration_status_t* instantiate_v1beta1_priority_leve
   v1beta1_priority_level_configuration_status_t* v1beta1_priority_level_configuration_status = NULL;
   if (include_optional) {
     v1beta1_priority_level_configuration_status = v1beta1_priority_level_configuration_status_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1beta1_priority_level_configuration_status = v1beta1_priority_level_configuration_status_create(
-      list_create()
+      list_createList()
     );
   }
 

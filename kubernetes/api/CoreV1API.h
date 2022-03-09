@@ -8,6 +8,7 @@
 #include "../model/authentication_v1_token_request.h"
 #include "../model/core_v1_event.h"
 #include "../model/core_v1_event_list.h"
+#include "../model/object.h"
 #include "../model/v1_api_resource_list.h"
 #include "../model/v1_binding.h"
 #include "../model/v1_component_status.h"

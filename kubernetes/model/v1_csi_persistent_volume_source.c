@@ -70,7 +70,7 @@ void v1_csi_persistent_volume_source_free(v1_csi_persistent_volume_source_t *v1_
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_csi_persistent_volume_source->volume_attributes);
+        list_freeList(v1_csi_persistent_volume_source->volume_attributes);
         v1_csi_persistent_volume_source->volume_attributes = NULL;
     }
     if (v1_csi_persistent_volume_source->volume_handle) {
@@ -276,7 +276,7 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
     if(!cJSON_IsObject(volume_attributes)) {
         goto end;//primitive map container
     }
-    volume_attributesList = list_create();
+    volume_attributesList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(volume_attributes_local_map, volume_attributes)
     {

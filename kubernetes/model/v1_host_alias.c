@@ -29,7 +29,7 @@ void v1_host_alias_free(v1_host_alias_t *v1_host_alias) {
         list_ForEach(listEntry, v1_host_alias->hostnames) {
             free(listEntry->data);
         }
-        list_free(v1_host_alias->hostnames);
+        list_freeList(v1_host_alias->hostnames);
         v1_host_alias->hostnames = NULL;
     }
     if (v1_host_alias->ip) {
@@ -86,7 +86,7 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
     if(!cJSON_IsArray(hostnames)) {
         goto end;//primitive container
     }
-    hostnamesList = list_create();
+    hostnamesList = list_createList();
 
     cJSON_ArrayForEach(hostnames_local, hostnames)
     {

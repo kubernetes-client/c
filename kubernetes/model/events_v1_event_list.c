@@ -37,7 +37,7 @@ void events_v1_event_list_free(events_v1_event_list_t *events_v1_event_list) {
         list_ForEach(listEntry, events_v1_event_list->items) {
             events_v1_event_free(listEntry->data);
         }
-        list_free(events_v1_event_list->items);
+        list_freeList(events_v1_event_list->items);
         events_v1_event_list->items = NULL;
     }
     if (events_v1_event_list->kind) {
@@ -141,7 +141,7 @@ events_v1_event_list_t *events_v1_event_list_parseFromJSON(cJSON *events_v1_even
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

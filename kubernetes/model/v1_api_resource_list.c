@@ -45,7 +45,7 @@ void v1_api_resource_list_free(v1_api_resource_list_t *v1_api_resource_list) {
         list_ForEach(listEntry, v1_api_resource_list->resources) {
             v1_api_resource_free(listEntry->data);
         }
-        list_free(v1_api_resource_list->resources);
+        list_freeList(v1_api_resource_list->resources);
         v1_api_resource_list->resources = NULL;
     }
     free(v1_api_resource_list);
@@ -156,7 +156,7 @@ v1_api_resource_list_t *v1_api_resource_list_parseFromJSON(cJSON *v1_api_resourc
         goto end; //nonprimitive container
     }
 
-    resourcesList = list_create();
+    resourcesList = list_createList();
 
     cJSON_ArrayForEach(resources_local_nonprimitive,resources )
     {

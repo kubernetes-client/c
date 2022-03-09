@@ -33,7 +33,7 @@ void v1_token_review_status_free(v1_token_review_status_t *v1_token_review_statu
         list_ForEach(listEntry, v1_token_review_status->audiences) {
             free(listEntry->data);
         }
-        list_free(v1_token_review_status->audiences);
+        list_freeList(v1_token_review_status->audiences);
         v1_token_review_status->audiences = NULL;
     }
     if (v1_token_review_status->error) {
@@ -118,7 +118,7 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
     if(!cJSON_IsArray(audiences)) {
         goto end;//primitive container
     }
-    audiencesList = list_create();
+    audiencesList = list_createList();
 
     cJSON_ArrayForEach(audiences_local, audiences)
     {

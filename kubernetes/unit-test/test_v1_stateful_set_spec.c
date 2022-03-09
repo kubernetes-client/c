@@ -36,7 +36,7 @@ v1_stateful_set_spec_t* instantiate_v1_stateful_set_spec(int include_optional) {
       instantiate_v1_pod_template_spec(0),
        // false, not to have infinite recursion
       instantiate_v1_stateful_set_update_strategy(0),
-      list_create()
+      list_createList()
     );
   } else {
     v1_stateful_set_spec = v1_stateful_set_spec_create(
@@ -48,7 +48,7 @@ v1_stateful_set_spec_t* instantiate_v1_stateful_set_spec(int include_optional) {
       "0",
       NULL,
       NULL,
-      list_create()
+      list_createList()
     );
   }
 

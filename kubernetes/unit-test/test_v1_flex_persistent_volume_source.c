@@ -25,7 +25,7 @@ v1_flex_persistent_volume_source_t* instantiate_v1_flex_persistent_volume_source
     v1_flex_persistent_volume_source = v1_flex_persistent_volume_source_create(
       "0",
       "0",
-      list_create(),
+      list_createList(),
       1,
        // false, not to have infinite recursion
       instantiate_v1_secret_reference(0)
@@ -34,7 +34,7 @@ v1_flex_persistent_volume_source_t* instantiate_v1_flex_persistent_volume_source
     v1_flex_persistent_volume_source = v1_flex_persistent_volume_source_create(
       "0",
       "0",
-      list_create(),
+      list_createList(),
       1,
       NULL
     );

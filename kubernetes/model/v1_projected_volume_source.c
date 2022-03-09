@@ -29,7 +29,7 @@ void v1_projected_volume_source_free(v1_projected_volume_source_t *v1_projected_
         list_ForEach(listEntry, v1_projected_volume_source->sources) {
             v1_volume_projection_free(listEntry->data);
         }
-        list_free(v1_projected_volume_source->sources);
+        list_freeList(v1_projected_volume_source->sources);
         v1_projected_volume_source->sources = NULL;
     }
     free(v1_projected_volume_source);
@@ -95,7 +95,7 @@ v1_projected_volume_source_t *v1_projected_volume_source_parseFromJSON(cJSON *v1
         goto end; //nonprimitive container
     }
 
-    sourcesList = list_create();
+    sourcesList = list_createList();
 
     cJSON_ArrayForEach(sources_local_nonprimitive,sources )
     {

@@ -25,7 +25,7 @@ v1_replication_controller_spec_t* instantiate_v1_replication_controller_spec(int
     v1_replication_controller_spec = v1_replication_controller_spec_create(
       56,
       56,
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_pod_template_spec(0)
     );
@@ -33,7 +33,7 @@ v1_replication_controller_spec_t* instantiate_v1_replication_controller_spec(int
     v1_replication_controller_spec = v1_replication_controller_spec_create(
       56,
       56,
-      list_create(),
+      list_createList(),
       NULL
     );
   }

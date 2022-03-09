@@ -37,7 +37,7 @@ void v1_endpoints_list_free(v1_endpoints_list_t *v1_endpoints_list) {
         list_ForEach(listEntry, v1_endpoints_list->items) {
             v1_endpoints_free(listEntry->data);
         }
-        list_free(v1_endpoints_list->items);
+        list_freeList(v1_endpoints_list->items);
         v1_endpoints_list->items = NULL;
     }
     if (v1_endpoints_list->kind) {
@@ -141,7 +141,7 @@ v1_endpoints_list_t *v1_endpoints_list_parseFromJSON(cJSON *v1_endpoints_listJSO
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

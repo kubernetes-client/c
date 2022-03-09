@@ -29,14 +29,14 @@ v1beta1_flow_schema_spec_t* instantiate_v1beta1_flow_schema_spec(int include_opt
       56,
        // false, not to have infinite recursion
       instantiate_v1beta1_priority_level_configuration_reference(0),
-      list_create()
+      list_createList()
     );
   } else {
     v1beta1_flow_schema_spec = v1beta1_flow_schema_spec_create(
       NULL,
       56,
       NULL,
-      list_create()
+      list_createList()
     );
   }
 

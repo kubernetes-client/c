@@ -22,8 +22,8 @@ v2beta1_horizontal_pod_autoscaler_status_t* instantiate_v2beta1_horizontal_pod_a
   v2beta1_horizontal_pod_autoscaler_status_t* v2beta1_horizontal_pod_autoscaler_status = NULL;
   if (include_optional) {
     v2beta1_horizontal_pod_autoscaler_status = v2beta1_horizontal_pod_autoscaler_status_create(
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       56,
       56,
       "2013-10-20T19:20:30+01:00",
@@ -31,8 +31,8 @@ v2beta1_horizontal_pod_autoscaler_status_t* instantiate_v2beta1_horizontal_pod_a
     );
   } else {
     v2beta1_horizontal_pod_autoscaler_status = v2beta1_horizontal_pod_autoscaler_status_create(
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       56,
       56,
       "2013-10-20T19:20:30+01:00",

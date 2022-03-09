@@ -37,7 +37,7 @@ void v1_csi_driver_list_free(v1_csi_driver_list_t *v1_csi_driver_list) {
         list_ForEach(listEntry, v1_csi_driver_list->items) {
             v1_csi_driver_free(listEntry->data);
         }
-        list_free(v1_csi_driver_list->items);
+        list_freeList(v1_csi_driver_list->items);
         v1_csi_driver_list->items = NULL;
     }
     if (v1_csi_driver_list->kind) {
@@ -141,7 +141,7 @@ v1_csi_driver_list_t *v1_csi_driver_list_parseFromJSON(cJSON *v1_csi_driver_list
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

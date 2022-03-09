@@ -24,7 +24,7 @@ v1_component_status_list_t* instantiate_v1_component_status_list(int include_opt
   if (include_optional) {
     v1_component_status_list = v1_component_status_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
        // false, not to have infinite recursion
       instantiate_v1_list_meta(0)
@@ -32,7 +32,7 @@ v1_component_status_list_t* instantiate_v1_component_status_list(int include_opt
   } else {
     v1_component_status_list = v1_component_status_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
       NULL
     );

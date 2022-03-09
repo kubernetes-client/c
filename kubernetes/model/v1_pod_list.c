@@ -37,7 +37,7 @@ void v1_pod_list_free(v1_pod_list_t *v1_pod_list) {
         list_ForEach(listEntry, v1_pod_list->items) {
             v1_pod_free(listEntry->data);
         }
-        list_free(v1_pod_list->items);
+        list_freeList(v1_pod_list->items);
         v1_pod_list->items = NULL;
     }
     if (v1_pod_list->kind) {
@@ -141,7 +141,7 @@ v1_pod_list_t *v1_pod_list_parseFromJSON(cJSON *v1_pod_listJSON){
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

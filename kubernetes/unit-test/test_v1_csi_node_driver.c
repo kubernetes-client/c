@@ -27,14 +27,14 @@ v1_csi_node_driver_t* instantiate_v1_csi_node_driver(int include_optional) {
       instantiate_v1_volume_node_resources(0),
       "0",
       "0",
-      list_create()
+      list_createList()
     );
   } else {
     v1_csi_node_driver = v1_csi_node_driver_create(
       NULL,
       "0",
       "0",
-      list_create()
+      list_createList()
     );
   }
 

@@ -25,12 +25,12 @@ v1_webhook_conversion_t* instantiate_v1_webhook_conversion(int include_optional)
     v1_webhook_conversion = v1_webhook_conversion_create(
        // false, not to have infinite recursion
       instantiate_apiextensions_v1_webhook_client_config(0),
-      list_create()
+      list_createList()
     );
   } else {
     v1_webhook_conversion = v1_webhook_conversion_create(
       NULL,
-      list_create()
+      list_createList()
     );
   }
 

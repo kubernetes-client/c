@@ -25,14 +25,14 @@ v1_custom_resource_definition_status_t* instantiate_v1_custom_resource_definitio
     v1_custom_resource_definition_status = v1_custom_resource_definition_status_create(
        // false, not to have infinite recursion
       instantiate_v1_custom_resource_definition_names(0),
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_custom_resource_definition_status = v1_custom_resource_definition_status_create(
       NULL,
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

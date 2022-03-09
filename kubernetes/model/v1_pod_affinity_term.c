@@ -41,7 +41,7 @@ void v1_pod_affinity_term_free(v1_pod_affinity_term_t *v1_pod_affinity_term) {
         list_ForEach(listEntry, v1_pod_affinity_term->namespaces) {
             free(listEntry->data);
         }
-        list_free(v1_pod_affinity_term->namespaces);
+        list_freeList(v1_pod_affinity_term->namespaces);
         v1_pod_affinity_term->namespaces = NULL;
     }
     if (v1_pod_affinity_term->topology_key) {
@@ -144,7 +144,7 @@ v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinit
     if(!cJSON_IsArray(namespaces)) {
         goto end;//primitive container
     }
-    namespacesList = list_create();
+    namespacesList = list_createList();
 
     cJSON_ArrayForEach(namespaces_local, namespaces)
     {

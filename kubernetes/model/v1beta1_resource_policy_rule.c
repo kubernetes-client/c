@@ -35,28 +35,28 @@ void v1beta1_resource_policy_rule_free(v1beta1_resource_policy_rule_t *v1beta1_r
         list_ForEach(listEntry, v1beta1_resource_policy_rule->api_groups) {
             free(listEntry->data);
         }
-        list_free(v1beta1_resource_policy_rule->api_groups);
+        list_freeList(v1beta1_resource_policy_rule->api_groups);
         v1beta1_resource_policy_rule->api_groups = NULL;
     }
     if (v1beta1_resource_policy_rule->namespaces) {
         list_ForEach(listEntry, v1beta1_resource_policy_rule->namespaces) {
             free(listEntry->data);
         }
-        list_free(v1beta1_resource_policy_rule->namespaces);
+        list_freeList(v1beta1_resource_policy_rule->namespaces);
         v1beta1_resource_policy_rule->namespaces = NULL;
     }
     if (v1beta1_resource_policy_rule->resources) {
         list_ForEach(listEntry, v1beta1_resource_policy_rule->resources) {
             free(listEntry->data);
         }
-        list_free(v1beta1_resource_policy_rule->resources);
+        list_freeList(v1beta1_resource_policy_rule->resources);
         v1beta1_resource_policy_rule->resources = NULL;
     }
     if (v1beta1_resource_policy_rule->verbs) {
         list_ForEach(listEntry, v1beta1_resource_policy_rule->verbs) {
             free(listEntry->data);
         }
-        list_free(v1beta1_resource_policy_rule->verbs);
+        list_freeList(v1beta1_resource_policy_rule->verbs);
         v1beta1_resource_policy_rule->verbs = NULL;
     }
     free(v1beta1_resource_policy_rule);
@@ -170,7 +170,7 @@ v1beta1_resource_policy_rule_t *v1beta1_resource_policy_rule_parseFromJSON(cJSON
     if(!cJSON_IsArray(api_groups)) {
         goto end;//primitive container
     }
-    api_groupsList = list_create();
+    api_groupsList = list_createList();
 
     cJSON_ArrayForEach(api_groups_local, api_groups)
     {
@@ -198,7 +198,7 @@ v1beta1_resource_policy_rule_t *v1beta1_resource_policy_rule_parseFromJSON(cJSON
     if(!cJSON_IsArray(namespaces)) {
         goto end;//primitive container
     }
-    namespacesList = list_create();
+    namespacesList = list_createList();
 
     cJSON_ArrayForEach(namespaces_local, namespaces)
     {
@@ -222,7 +222,7 @@ v1beta1_resource_policy_rule_t *v1beta1_resource_policy_rule_parseFromJSON(cJSON
     if(!cJSON_IsArray(resources)) {
         goto end;//primitive container
     }
-    resourcesList = list_create();
+    resourcesList = list_createList();
 
     cJSON_ArrayForEach(resources_local, resources)
     {
@@ -245,7 +245,7 @@ v1beta1_resource_policy_rule_t *v1beta1_resource_policy_rule_parseFromJSON(cJSON
     if(!cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
-    verbsList = list_create();
+    verbsList = list_createList();
 
     cJSON_ArrayForEach(verbs_local, verbs)
     {

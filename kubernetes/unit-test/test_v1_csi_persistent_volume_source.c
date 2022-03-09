@@ -37,7 +37,7 @@ v1_csi_persistent_volume_source_t* instantiate_v1_csi_persistent_volume_source(i
        // false, not to have infinite recursion
       instantiate_v1_secret_reference(0),
       1,
-      list_create(),
+      list_createList(),
       "0"
     );
   } else {
@@ -49,7 +49,7 @@ v1_csi_persistent_volume_source_t* instantiate_v1_csi_persistent_volume_source(i
       NULL,
       NULL,
       1,
-      list_create(),
+      list_createList(),
       "0"
     );
   }

@@ -29,14 +29,14 @@ void v1_pod_anti_affinity_free(v1_pod_anti_affinity_t *v1_pod_anti_affinity) {
         list_ForEach(listEntry, v1_pod_anti_affinity->preferred_during_scheduling_ignored_during_execution) {
             v1_weighted_pod_affinity_term_free(listEntry->data);
         }
-        list_free(v1_pod_anti_affinity->preferred_during_scheduling_ignored_during_execution);
+        list_freeList(v1_pod_anti_affinity->preferred_during_scheduling_ignored_during_execution);
         v1_pod_anti_affinity->preferred_during_scheduling_ignored_during_execution = NULL;
     }
     if (v1_pod_anti_affinity->required_during_scheduling_ignored_during_execution) {
         list_ForEach(listEntry, v1_pod_anti_affinity->required_during_scheduling_ignored_during_execution) {
             v1_pod_affinity_term_free(listEntry->data);
         }
-        list_free(v1_pod_anti_affinity->required_during_scheduling_ignored_during_execution);
+        list_freeList(v1_pod_anti_affinity->required_during_scheduling_ignored_during_execution);
         v1_pod_anti_affinity->required_during_scheduling_ignored_during_execution = NULL;
     }
     free(v1_pod_anti_affinity);
@@ -105,7 +105,7 @@ v1_pod_anti_affinity_t *v1_pod_anti_affinity_parseFromJSON(cJSON *v1_pod_anti_af
         goto end; //nonprimitive container
     }
 
-    preferred_during_scheduling_ignored_during_executionList = list_create();
+    preferred_during_scheduling_ignored_during_executionList = list_createList();
 
     cJSON_ArrayForEach(preferred_during_scheduling_ignored_during_execution_local_nonprimitive,preferred_during_scheduling_ignored_during_execution )
     {
@@ -127,7 +127,7 @@ v1_pod_anti_affinity_t *v1_pod_anti_affinity_parseFromJSON(cJSON *v1_pod_anti_af
         goto end; //nonprimitive container
     }
 
-    required_during_scheduling_ignored_during_executionList = list_create();
+    required_during_scheduling_ignored_during_executionList = list_createList();
 
     cJSON_ArrayForEach(required_during_scheduling_ignored_during_execution_local_nonprimitive,required_during_scheduling_ignored_during_execution )
     {

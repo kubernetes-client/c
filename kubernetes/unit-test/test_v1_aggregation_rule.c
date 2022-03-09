@@ -22,11 +22,11 @@ v1_aggregation_rule_t* instantiate_v1_aggregation_rule(int include_optional) {
   v1_aggregation_rule_t* v1_aggregation_rule = NULL;
   if (include_optional) {
     v1_aggregation_rule = v1_aggregation_rule_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1_aggregation_rule = v1_aggregation_rule_create(
-      list_create()
+      list_createList()
     );
   }
 

@@ -22,13 +22,13 @@ v1_pod_affinity_t* instantiate_v1_pod_affinity(int include_optional) {
   v1_pod_affinity_t* v1_pod_affinity = NULL;
   if (include_optional) {
     v1_pod_affinity = v1_pod_affinity_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_pod_affinity = v1_pod_affinity_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

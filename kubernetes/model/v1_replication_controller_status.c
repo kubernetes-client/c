@@ -37,7 +37,7 @@ void v1_replication_controller_status_free(v1_replication_controller_status_t *v
         list_ForEach(listEntry, v1_replication_controller_status->conditions) {
             v1_replication_controller_condition_free(listEntry->data);
         }
-        list_free(v1_replication_controller_status->conditions);
+        list_freeList(v1_replication_controller_status->conditions);
         v1_replication_controller_status->conditions = NULL;
     }
     free(v1_replication_controller_status);
@@ -137,7 +137,7 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

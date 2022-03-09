@@ -29,14 +29,14 @@ void v1_network_policy_egress_rule_free(v1_network_policy_egress_rule_t *v1_netw
         list_ForEach(listEntry, v1_network_policy_egress_rule->ports) {
             v1_network_policy_port_free(listEntry->data);
         }
-        list_free(v1_network_policy_egress_rule->ports);
+        list_freeList(v1_network_policy_egress_rule->ports);
         v1_network_policy_egress_rule->ports = NULL;
     }
     if (v1_network_policy_egress_rule->to) {
         list_ForEach(listEntry, v1_network_policy_egress_rule->to) {
             v1_network_policy_peer_free(listEntry->data);
         }
-        list_free(v1_network_policy_egress_rule->to);
+        list_freeList(v1_network_policy_egress_rule->to);
         v1_network_policy_egress_rule->to = NULL;
     }
     free(v1_network_policy_egress_rule);
@@ -105,7 +105,7 @@ v1_network_policy_egress_rule_t *v1_network_policy_egress_rule_parseFromJSON(cJS
         goto end; //nonprimitive container
     }
 
-    portsList = list_create();
+    portsList = list_createList();
 
     cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {
@@ -127,7 +127,7 @@ v1_network_policy_egress_rule_t *v1_network_policy_egress_rule_parseFromJSON(cJS
         goto end; //nonprimitive container
     }
 
-    toList = list_create();
+    toList = list_createList();
 
     cJSON_ArrayForEach(to_local_nonprimitive,to )
     {

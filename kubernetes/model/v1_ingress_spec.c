@@ -41,14 +41,14 @@ void v1_ingress_spec_free(v1_ingress_spec_t *v1_ingress_spec) {
         list_ForEach(listEntry, v1_ingress_spec->rules) {
             v1_ingress_rule_free(listEntry->data);
         }
-        list_free(v1_ingress_spec->rules);
+        list_freeList(v1_ingress_spec->rules);
         v1_ingress_spec->rules = NULL;
     }
     if (v1_ingress_spec->tls) {
         list_ForEach(listEntry, v1_ingress_spec->tls) {
             v1_ingress_tls_free(listEntry->data);
         }
-        list_free(v1_ingress_spec->tls);
+        list_freeList(v1_ingress_spec->tls);
         v1_ingress_spec->tls = NULL;
     }
     free(v1_ingress_spec);
@@ -156,7 +156,7 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
         goto end; //nonprimitive container
     }
 
-    rulesList = list_create();
+    rulesList = list_createList();
 
     cJSON_ArrayForEach(rules_local_nonprimitive,rules )
     {
@@ -178,7 +178,7 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
         goto end; //nonprimitive container
     }
 
-    tlsList = list_create();
+    tlsList = list_createList();
 
     cJSON_ArrayForEach(tls_local_nonprimitive,tls )
     {

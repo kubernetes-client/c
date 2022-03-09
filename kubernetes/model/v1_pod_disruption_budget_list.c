@@ -37,7 +37,7 @@ void v1_pod_disruption_budget_list_free(v1_pod_disruption_budget_list_t *v1_pod_
         list_ForEach(listEntry, v1_pod_disruption_budget_list->items) {
             v1_pod_disruption_budget_free(listEntry->data);
         }
-        list_free(v1_pod_disruption_budget_list->items);
+        list_freeList(v1_pod_disruption_budget_list->items);
         v1_pod_disruption_budget_list->items = NULL;
     }
     if (v1_pod_disruption_budget_list->kind) {
@@ -141,7 +141,7 @@ v1_pod_disruption_budget_list_t *v1_pod_disruption_budget_list_parseFromJSON(cJS
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

@@ -22,12 +22,12 @@ v1_container_image_t* instantiate_v1_container_image(int include_optional) {
   v1_container_image_t* v1_container_image = NULL;
   if (include_optional) {
     v1_container_image = v1_container_image_create(
-      list_create(),
+      list_createList(),
       56
     );
   } else {
     v1_container_image = v1_container_image_create(
-      list_create(),
+      list_createList(),
       56
     );
   }

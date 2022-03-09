@@ -41,7 +41,7 @@ void v1beta1_flow_schema_spec_free(v1beta1_flow_schema_spec_t *v1beta1_flow_sche
         list_ForEach(listEntry, v1beta1_flow_schema_spec->rules) {
             v1beta1_policy_rules_with_subjects_free(listEntry->data);
         }
-        list_free(v1beta1_flow_schema_spec->rules);
+        list_freeList(v1beta1_flow_schema_spec->rules);
         v1beta1_flow_schema_spec->rules = NULL;
     }
     free(v1beta1_flow_schema_spec);
@@ -156,7 +156,7 @@ v1beta1_flow_schema_spec_t *v1beta1_flow_schema_spec_parseFromJSON(cJSON *v1beta
         goto end; //nonprimitive container
     }
 
-    rulesList = list_create();
+    rulesList = list_createList();
 
     cJSON_ArrayForEach(rules_local_nonprimitive,rules )
     {

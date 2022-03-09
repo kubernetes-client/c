@@ -67,14 +67,14 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
         list_ForEach(listEntry, v1_service_spec->cluster_ips) {
             free(listEntry->data);
         }
-        list_free(v1_service_spec->cluster_ips);
+        list_freeList(v1_service_spec->cluster_ips);
         v1_service_spec->cluster_ips = NULL;
     }
     if (v1_service_spec->external_ips) {
         list_ForEach(listEntry, v1_service_spec->external_ips) {
             free(listEntry->data);
         }
-        list_free(v1_service_spec->external_ips);
+        list_freeList(v1_service_spec->external_ips);
         v1_service_spec->external_ips = NULL;
     }
     if (v1_service_spec->external_name) {
@@ -93,7 +93,7 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
         list_ForEach(listEntry, v1_service_spec->ip_families) {
             free(listEntry->data);
         }
-        list_free(v1_service_spec->ip_families);
+        list_freeList(v1_service_spec->ip_families);
         v1_service_spec->ip_families = NULL;
     }
     if (v1_service_spec->ip_family_policy) {
@@ -112,14 +112,14 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
         list_ForEach(listEntry, v1_service_spec->load_balancer_source_ranges) {
             free(listEntry->data);
         }
-        list_free(v1_service_spec->load_balancer_source_ranges);
+        list_freeList(v1_service_spec->load_balancer_source_ranges);
         v1_service_spec->load_balancer_source_ranges = NULL;
     }
     if (v1_service_spec->ports) {
         list_ForEach(listEntry, v1_service_spec->ports) {
             v1_service_port_free(listEntry->data);
         }
-        list_free(v1_service_spec->ports);
+        list_freeList(v1_service_spec->ports);
         v1_service_spec->ports = NULL;
     }
     if (v1_service_spec->selector) {
@@ -129,7 +129,7 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_service_spec->selector);
+        list_freeList(v1_service_spec->selector);
         v1_service_spec->selector = NULL;
     }
     if (v1_service_spec->session_affinity) {
@@ -407,7 +407,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     if(!cJSON_IsArray(cluster_ips)) {
         goto end;//primitive container
     }
-    cluster_ipsList = list_create();
+    cluster_ipsList = list_createList();
 
     cJSON_ArrayForEach(cluster_ips_local, cluster_ips)
     {
@@ -427,7 +427,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     if(!cJSON_IsArray(external_ips)) {
         goto end;//primitive container
     }
-    external_ipsList = list_create();
+    external_ipsList = list_createList();
 
     cJSON_ArrayForEach(external_ips_local, external_ips)
     {
@@ -483,7 +483,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     if(!cJSON_IsArray(ip_families)) {
         goto end;//primitive container
     }
-    ip_familiesList = list_create();
+    ip_familiesList = list_createList();
 
     cJSON_ArrayForEach(ip_families_local, ip_families)
     {
@@ -530,7 +530,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     if(!cJSON_IsArray(load_balancer_source_ranges)) {
         goto end;//primitive container
     }
-    load_balancer_source_rangesList = list_create();
+    load_balancer_source_rangesList = list_createList();
 
     cJSON_ArrayForEach(load_balancer_source_ranges_local, load_balancer_source_ranges)
     {
@@ -551,7 +551,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
         goto end; //nonprimitive container
     }
 
-    portsList = list_create();
+    portsList = list_createList();
 
     cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {
@@ -581,7 +581,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     if(!cJSON_IsObject(selector)) {
         goto end;//primitive map container
     }
-    selectorList = list_create();
+    selectorList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(selector_local_map, selector)
     {

@@ -22,13 +22,13 @@ v2beta2_hpa_scaling_rules_t* instantiate_v2beta2_hpa_scaling_rules(int include_o
   v2beta2_hpa_scaling_rules_t* v2beta2_hpa_scaling_rules = NULL;
   if (include_optional) {
     v2beta2_hpa_scaling_rules = v2beta2_hpa_scaling_rules_create(
-      list_create(),
+      list_createList(),
       "0",
       56
     );
   } else {
     v2beta2_hpa_scaling_rules = v2beta2_hpa_scaling_rules_create(
-      list_create(),
+      list_createList(),
       "0",
       56
     );

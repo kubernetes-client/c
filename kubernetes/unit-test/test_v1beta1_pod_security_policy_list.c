@@ -24,7 +24,7 @@ v1beta1_pod_security_policy_list_t* instantiate_v1beta1_pod_security_policy_list
   if (include_optional) {
     v1beta1_pod_security_policy_list = v1beta1_pod_security_policy_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
        // false, not to have infinite recursion
       instantiate_v1_list_meta(0)
@@ -32,7 +32,7 @@ v1beta1_pod_security_policy_list_t* instantiate_v1beta1_pod_security_policy_list
   } else {
     v1beta1_pod_security_policy_list = v1beta1_pod_security_policy_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
       NULL
     );

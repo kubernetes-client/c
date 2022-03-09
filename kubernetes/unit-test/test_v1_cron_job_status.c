@@ -22,13 +22,13 @@ v1_cron_job_status_t* instantiate_v1_cron_job_status(int include_optional) {
   v1_cron_job_status_t* v1_cron_job_status = NULL;
   if (include_optional) {
     v1_cron_job_status = v1_cron_job_status_create(
-      list_create(),
+      list_createList(),
       "2013-10-20T19:20:30+01:00",
       "2013-10-20T19:20:30+01:00"
     );
   } else {
     v1_cron_job_status = v1_cron_job_status_create(
-      list_create(),
+      list_createList(),
       "2013-10-20T19:20:30+01:00",
       "2013-10-20T19:20:30+01:00"
     );

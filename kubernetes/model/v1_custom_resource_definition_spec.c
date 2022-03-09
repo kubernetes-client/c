@@ -53,7 +53,7 @@ void v1_custom_resource_definition_spec_free(v1_custom_resource_definition_spec_
         list_ForEach(listEntry, v1_custom_resource_definition_spec->versions) {
             v1_custom_resource_definition_version_free(listEntry->data);
         }
-        list_free(v1_custom_resource_definition_spec->versions);
+        list_freeList(v1_custom_resource_definition_spec->versions);
         v1_custom_resource_definition_spec->versions = NULL;
     }
     free(v1_custom_resource_definition_spec);
@@ -218,7 +218,7 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
         goto end; //nonprimitive container
     }
 
-    versionsList = list_create();
+    versionsList = list_createList();
 
     cJSON_ArrayForEach(versions_local_nonprimitive,versions )
     {

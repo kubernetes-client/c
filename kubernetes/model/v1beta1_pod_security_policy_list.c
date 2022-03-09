@@ -37,7 +37,7 @@ void v1beta1_pod_security_policy_list_free(v1beta1_pod_security_policy_list_t *v
         list_ForEach(listEntry, v1beta1_pod_security_policy_list->items) {
             v1beta1_pod_security_policy_free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_list->items);
+        list_freeList(v1beta1_pod_security_policy_list->items);
         v1beta1_pod_security_policy_list->items = NULL;
     }
     if (v1beta1_pod_security_policy_list->kind) {
@@ -141,7 +141,7 @@ v1beta1_pod_security_policy_list_t *v1beta1_pod_security_policy_list_parseFromJS
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

@@ -23,7 +23,7 @@ v1_ceph_fs_persistent_volume_source_t* instantiate_v1_ceph_fs_persistent_volume_
   v1_ceph_fs_persistent_volume_source_t* v1_ceph_fs_persistent_volume_source = NULL;
   if (include_optional) {
     v1_ceph_fs_persistent_volume_source = v1_ceph_fs_persistent_volume_source_create(
-      list_create(),
+      list_createList(),
       "0",
       1,
       "0",
@@ -33,7 +33,7 @@ v1_ceph_fs_persistent_volume_source_t* instantiate_v1_ceph_fs_persistent_volume_
     );
   } else {
     v1_ceph_fs_persistent_volume_source = v1_ceph_fs_persistent_volume_source_create(
-      list_create(),
+      list_createList(),
       "0",
       1,
       "0",

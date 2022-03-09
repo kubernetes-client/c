@@ -37,7 +37,7 @@ void v1_pod_template_list_free(v1_pod_template_list_t *v1_pod_template_list) {
         list_ForEach(listEntry, v1_pod_template_list->items) {
             v1_pod_template_free(listEntry->data);
         }
-        list_free(v1_pod_template_list->items);
+        list_freeList(v1_pod_template_list->items);
         v1_pod_template_list->items = NULL;
     }
     if (v1_pod_template_list->kind) {
@@ -141,7 +141,7 @@ v1_pod_template_list_t *v1_pod_template_list_parseFromJSON(cJSON *v1_pod_templat
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

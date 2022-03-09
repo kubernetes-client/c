@@ -22,11 +22,11 @@ v1_exec_action_t* instantiate_v1_exec_action(int include_optional) {
   v1_exec_action_t* v1_exec_action = NULL;
   if (include_optional) {
     v1_exec_action = v1_exec_action_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1_exec_action = v1_exec_action_create(
-      list_create()
+      list_createList()
     );
   }
 

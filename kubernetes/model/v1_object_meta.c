@@ -60,7 +60,7 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_object_meta->annotations);
+        list_freeList(v1_object_meta->annotations);
         v1_object_meta->annotations = NULL;
     }
     if (v1_object_meta->cluster_name) {
@@ -79,7 +79,7 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
         list_ForEach(listEntry, v1_object_meta->finalizers) {
             free(listEntry->data);
         }
-        list_free(v1_object_meta->finalizers);
+        list_freeList(v1_object_meta->finalizers);
         v1_object_meta->finalizers = NULL;
     }
     if (v1_object_meta->generate_name) {
@@ -93,14 +93,14 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_object_meta->labels);
+        list_freeList(v1_object_meta->labels);
         v1_object_meta->labels = NULL;
     }
     if (v1_object_meta->managed_fields) {
         list_ForEach(listEntry, v1_object_meta->managed_fields) {
             v1_managed_fields_entry_free(listEntry->data);
         }
-        list_free(v1_object_meta->managed_fields);
+        list_freeList(v1_object_meta->managed_fields);
         v1_object_meta->managed_fields = NULL;
     }
     if (v1_object_meta->name) {
@@ -115,7 +115,7 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
         list_ForEach(listEntry, v1_object_meta->owner_references) {
             v1_owner_reference_free(listEntry->data);
         }
-        list_free(v1_object_meta->owner_references);
+        list_freeList(v1_object_meta->owner_references);
         v1_object_meta->owner_references = NULL;
     }
     if (v1_object_meta->resource_version) {
@@ -340,7 +340,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     if(!cJSON_IsObject(annotations)) {
         goto end;//primitive map container
     }
-    annotationsList = list_create();
+    annotationsList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(annotations_local_map, annotations)
     {
@@ -398,7 +398,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     if(!cJSON_IsArray(finalizers)) {
         goto end;//primitive container
     }
-    finalizersList = list_create();
+    finalizersList = list_createList();
 
     cJSON_ArrayForEach(finalizers_local, finalizers)
     {
@@ -436,7 +436,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     if(!cJSON_IsObject(labels)) {
         goto end;//primitive map container
     }
-    labelsList = list_create();
+    labelsList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(labels_local_map, labels)
     {
@@ -459,7 +459,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
         goto end; //nonprimitive container
     }
 
-    managed_fieldsList = list_create();
+    managed_fieldsList = list_createList();
 
     cJSON_ArrayForEach(managed_fields_local_nonprimitive,managed_fields )
     {
@@ -499,7 +499,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
         goto end; //nonprimitive container
     }
 
-    owner_referencesList = list_create();
+    owner_referencesList = list_createList();
 
     cJSON_ArrayForEach(owner_references_local_nonprimitive,owner_references )
     {

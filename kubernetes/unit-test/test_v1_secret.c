@@ -24,22 +24,22 @@ v1_secret_t* instantiate_v1_secret(int include_optional) {
   if (include_optional) {
     v1_secret = v1_secret_create(
       "0",
-      list_create(),
+      list_createList(),
       1,
       "0",
        // false, not to have infinite recursion
       instantiate_v1_object_meta(0),
-      list_create(),
+      list_createList(),
       "0"
     );
   } else {
     v1_secret = v1_secret_create(
       "0",
-      list_create(),
+      list_createList(),
       1,
       "0",
       NULL,
-      list_create(),
+      list_createList(),
       "0"
     );
   }

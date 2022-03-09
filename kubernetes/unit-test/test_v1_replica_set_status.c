@@ -23,7 +23,7 @@ v1_replica_set_status_t* instantiate_v1_replica_set_status(int include_optional)
   if (include_optional) {
     v1_replica_set_status = v1_replica_set_status_create(
       56,
-      list_create(),
+      list_createList(),
       56,
       56,
       56,
@@ -32,7 +32,7 @@ v1_replica_set_status_t* instantiate_v1_replica_set_status(int include_optional)
   } else {
     v1_replica_set_status = v1_replica_set_status_create(
       56,
-      list_create(),
+      list_createList(),
       56,
       56,
       56,

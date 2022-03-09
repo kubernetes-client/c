@@ -22,13 +22,13 @@ v1_scheduling_t* instantiate_v1_scheduling(int include_optional) {
   v1_scheduling_t* v1_scheduling = NULL;
   if (include_optional) {
     v1_scheduling = v1_scheduling_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_scheduling = v1_scheduling_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

@@ -37,7 +37,7 @@ void v1_secret_list_free(v1_secret_list_t *v1_secret_list) {
         list_ForEach(listEntry, v1_secret_list->items) {
             v1_secret_free(listEntry->data);
         }
-        list_free(v1_secret_list->items);
+        list_freeList(v1_secret_list->items);
         v1_secret_list->items = NULL;
     }
     if (v1_secret_list->kind) {
@@ -141,7 +141,7 @@ v1_secret_list_t *v1_secret_list_parseFromJSON(cJSON *v1_secret_listJSON){
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

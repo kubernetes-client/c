@@ -33,7 +33,7 @@ void v1_webhook_conversion_free(v1_webhook_conversion_t *v1_webhook_conversion) 
         list_ForEach(listEntry, v1_webhook_conversion->conversion_review_versions) {
             free(listEntry->data);
         }
-        list_free(v1_webhook_conversion->conversion_review_versions);
+        list_freeList(v1_webhook_conversion->conversion_review_versions);
         v1_webhook_conversion->conversion_review_versions = NULL;
     }
     free(v1_webhook_conversion);
@@ -106,7 +106,7 @@ v1_webhook_conversion_t *v1_webhook_conversion_parseFromJSON(cJSON *v1_webhook_c
     if(!cJSON_IsArray(conversion_review_versions)) {
         goto end;//primitive container
     }
-    conversion_review_versionsList = list_create();
+    conversion_review_versionsList = list_createList();
 
     cJSON_ArrayForEach(conversion_review_versions_local, conversion_review_versions)
     {

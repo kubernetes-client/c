@@ -28,10 +28,10 @@ v1_ephemeral_container_t* instantiate_v1_ephemeral_container(int include_optiona
   v1_ephemeral_container_t* v1_ephemeral_container = NULL;
   if (include_optional) {
     v1_ephemeral_container = v1_ephemeral_container_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       "0",
       "0",
        // false, not to have infinite recursion
@@ -39,7 +39,7 @@ v1_ephemeral_container_t* instantiate_v1_ephemeral_container(int include_optiona
        // false, not to have infinite recursion
       instantiate_v1_probe(0),
       "0",
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_probe(0),
        // false, not to have infinite recursion
@@ -54,22 +54,22 @@ v1_ephemeral_container_t* instantiate_v1_ephemeral_container(int include_optiona
       "0",
       "0",
       1,
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "0"
     );
   } else {
     v1_ephemeral_container = v1_ephemeral_container_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       "0",
       "0",
       NULL,
       NULL,
       "0",
-      list_create(),
+      list_createList(),
       NULL,
       NULL,
       NULL,
@@ -80,8 +80,8 @@ v1_ephemeral_container_t* instantiate_v1_ephemeral_container(int include_optiona
       "0",
       "0",
       1,
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "0"
     );
   }

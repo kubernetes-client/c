@@ -37,7 +37,7 @@ void v1_ingress_list_free(v1_ingress_list_t *v1_ingress_list) {
         list_ForEach(listEntry, v1_ingress_list->items) {
             v1_ingress_free(listEntry->data);
         }
-        list_free(v1_ingress_list->items);
+        list_freeList(v1_ingress_list->items);
         v1_ingress_list->items = NULL;
     }
     if (v1_ingress_list->kind) {
@@ -141,7 +141,7 @@ v1_ingress_list_t *v1_ingress_list_parseFromJSON(cJSON *v1_ingress_listJSON){
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

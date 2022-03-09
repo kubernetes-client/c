@@ -45,7 +45,7 @@ void v1_mutating_webhook_configuration_free(v1_mutating_webhook_configuration_t 
         list_ForEach(listEntry, v1_mutating_webhook_configuration->webhooks) {
             v1_mutating_webhook_free(listEntry->data);
         }
-        list_free(v1_mutating_webhook_configuration->webhooks);
+        list_freeList(v1_mutating_webhook_configuration->webhooks);
         v1_mutating_webhook_configuration->webhooks = NULL;
     }
     free(v1_mutating_webhook_configuration);
@@ -150,7 +150,7 @@ v1_mutating_webhook_configuration_t *v1_mutating_webhook_configuration_parseFrom
         goto end; //nonprimitive container
     }
 
-    webhooksList = list_create();
+    webhooksList = list_createList();
 
     cJSON_ArrayForEach(webhooks_local_nonprimitive,webhooks )
     {

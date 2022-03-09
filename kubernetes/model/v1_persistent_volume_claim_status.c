@@ -33,7 +33,7 @@ void v1_persistent_volume_claim_status_free(v1_persistent_volume_claim_status_t 
         list_ForEach(listEntry, v1_persistent_volume_claim_status->access_modes) {
             free(listEntry->data);
         }
-        list_free(v1_persistent_volume_claim_status->access_modes);
+        list_freeList(v1_persistent_volume_claim_status->access_modes);
         v1_persistent_volume_claim_status->access_modes = NULL;
     }
     if (v1_persistent_volume_claim_status->capacity) {
@@ -43,14 +43,14 @@ void v1_persistent_volume_claim_status_free(v1_persistent_volume_claim_status_t 
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_persistent_volume_claim_status->capacity);
+        list_freeList(v1_persistent_volume_claim_status->capacity);
         v1_persistent_volume_claim_status->capacity = NULL;
     }
     if (v1_persistent_volume_claim_status->conditions) {
         list_ForEach(listEntry, v1_persistent_volume_claim_status->conditions) {
             v1_persistent_volume_claim_condition_free(listEntry->data);
         }
-        list_free(v1_persistent_volume_claim_status->conditions);
+        list_freeList(v1_persistent_volume_claim_status->conditions);
         v1_persistent_volume_claim_status->conditions = NULL;
     }
     if (v1_persistent_volume_claim_status->phase) {
@@ -147,7 +147,7 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     if(!cJSON_IsArray(access_modes)) {
         goto end;//primitive container
     }
-    access_modesList = list_create();
+    access_modesList = list_createList();
 
     cJSON_ArrayForEach(access_modes_local, access_modes)
     {
@@ -167,7 +167,7 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     if(!cJSON_IsObject(capacity)) {
         goto end;//primitive map container
     }
-    capacityList = list_create();
+    capacityList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(capacity_local_map, capacity)
     {
@@ -190,7 +190,7 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

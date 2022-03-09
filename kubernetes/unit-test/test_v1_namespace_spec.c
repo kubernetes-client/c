@@ -22,11 +22,11 @@ v1_namespace_spec_t* instantiate_v1_namespace_spec(int include_optional) {
   v1_namespace_spec_t* v1_namespace_spec = NULL;
   if (include_optional) {
     v1_namespace_spec = v1_namespace_spec_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1_namespace_spec = v1_namespace_spec_create(
-      list_create()
+      list_createList()
     );
   }
 

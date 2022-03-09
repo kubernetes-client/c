@@ -22,11 +22,11 @@ v1_http_ingress_rule_value_t* instantiate_v1_http_ingress_rule_value(int include
   v1_http_ingress_rule_value_t* v1_http_ingress_rule_value = NULL;
   if (include_optional) {
     v1_http_ingress_rule_value = v1_http_ingress_rule_value_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1_http_ingress_rule_value = v1_http_ingress_rule_value_create(
-      list_create()
+      list_createList()
     );
   }
 

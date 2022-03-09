@@ -63,7 +63,7 @@ void v1_stateful_set_spec_free(v1_stateful_set_spec_t *v1_stateful_set_spec) {
         list_ForEach(listEntry, v1_stateful_set_spec->volume_claim_templates) {
             v1_persistent_volume_claim_free(listEntry->data);
         }
-        list_free(v1_stateful_set_spec->volume_claim_templates);
+        list_freeList(v1_stateful_set_spec->volume_claim_templates);
         v1_stateful_set_spec->volume_claim_templates = NULL;
     }
     free(v1_stateful_set_spec);
@@ -278,7 +278,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
         goto end; //nonprimitive container
     }
 
-    volume_claim_templatesList = list_create();
+    volume_claim_templatesList = list_createList();
 
     cJSON_ArrayForEach(volume_claim_templates_local_nonprimitive,volume_claim_templates )
     {

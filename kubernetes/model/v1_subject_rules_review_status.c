@@ -37,14 +37,14 @@ void v1_subject_rules_review_status_free(v1_subject_rules_review_status_t *v1_su
         list_ForEach(listEntry, v1_subject_rules_review_status->non_resource_rules) {
             v1_non_resource_rule_free(listEntry->data);
         }
-        list_free(v1_subject_rules_review_status->non_resource_rules);
+        list_freeList(v1_subject_rules_review_status->non_resource_rules);
         v1_subject_rules_review_status->non_resource_rules = NULL;
     }
     if (v1_subject_rules_review_status->resource_rules) {
         list_ForEach(listEntry, v1_subject_rules_review_status->resource_rules) {
             v1_resource_rule_free(listEntry->data);
         }
-        list_free(v1_subject_rules_review_status->resource_rules);
+        list_freeList(v1_subject_rules_review_status->resource_rules);
         v1_subject_rules_review_status->resource_rules = NULL;
     }
     free(v1_subject_rules_review_status);
@@ -160,7 +160,7 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
         goto end; //nonprimitive container
     }
 
-    non_resource_rulesList = list_create();
+    non_resource_rulesList = list_createList();
 
     cJSON_ArrayForEach(non_resource_rules_local_nonprimitive,non_resource_rules )
     {
@@ -185,7 +185,7 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
         goto end; //nonprimitive container
     }
 
-    resource_rulesList = list_create();
+    resource_rulesList = list_createList();
 
     cJSON_ArrayForEach(resource_rules_local_nonprimitive,resource_rules )
     {

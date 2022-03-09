@@ -25,10 +25,10 @@ v1_endpoint_t* instantiate_v1_endpoint(int include_optional) {
   v1_endpoint_t* v1_endpoint = NULL;
   if (include_optional) {
     v1_endpoint = v1_endpoint_create(
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_endpoint_conditions(0),
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_endpoint_hints(0),
       "0",
@@ -39,9 +39,9 @@ v1_endpoint_t* instantiate_v1_endpoint(int include_optional) {
     );
   } else {
     v1_endpoint = v1_endpoint_create(
-      list_create(),
+      list_createList(),
       NULL,
-      list_create(),
+      list_createList(),
       NULL,
       "0",
       "0",

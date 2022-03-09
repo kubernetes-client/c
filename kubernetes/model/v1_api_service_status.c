@@ -27,7 +27,7 @@ void v1_api_service_status_free(v1_api_service_status_t *v1_api_service_status) 
         list_ForEach(listEntry, v1_api_service_status->conditions) {
             v1_api_service_condition_free(listEntry->data);
         }
-        list_free(v1_api_service_status->conditions);
+        list_freeList(v1_api_service_status->conditions);
         v1_api_service_status->conditions = NULL;
     }
     free(v1_api_service_status);
@@ -76,7 +76,7 @@ v1_api_service_status_t *v1_api_service_status_parseFromJSON(cJSON *v1_api_servi
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

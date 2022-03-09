@@ -37,7 +37,7 @@ void v1beta1_endpoint_slice_list_free(v1beta1_endpoint_slice_list_t *v1beta1_end
         list_ForEach(listEntry, v1beta1_endpoint_slice_list->items) {
             v1beta1_endpoint_slice_free(listEntry->data);
         }
-        list_free(v1beta1_endpoint_slice_list->items);
+        list_freeList(v1beta1_endpoint_slice_list->items);
         v1beta1_endpoint_slice_list->items = NULL;
     }
     if (v1beta1_endpoint_slice_list->kind) {
@@ -141,7 +141,7 @@ v1beta1_endpoint_slice_list_t *v1beta1_endpoint_slice_list_parseFromJSON(cJSON *
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

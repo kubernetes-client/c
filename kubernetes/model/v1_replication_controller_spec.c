@@ -36,7 +36,7 @@ void v1_replication_controller_spec_free(v1_replication_controller_spec_t *v1_re
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_replication_controller_spec->selector);
+        list_freeList(v1_replication_controller_spec->selector);
         v1_replication_controller_spec->selector = NULL;
     }
     if (v1_replication_controller_spec->_template) {
@@ -138,7 +138,7 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
     if(!cJSON_IsObject(selector)) {
         goto end;//primitive map container
     }
-    selectorList = list_create();
+    selectorList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(selector_local_map, selector)
     {

@@ -22,11 +22,11 @@ v1_csi_node_spec_t* instantiate_v1_csi_node_spec(int include_optional) {
   v1_csi_node_spec_t* v1_csi_node_spec = NULL;
   if (include_optional) {
     v1_csi_node_spec = v1_csi_node_spec_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1_csi_node_spec = v1_csi_node_spec_create(
-      list_create()
+      list_createList()
     );
   }
 

@@ -57,14 +57,14 @@ void v1_pod_security_context_free(v1_pod_security_context_t *v1_pod_security_con
         list_ForEach(listEntry, v1_pod_security_context->supplemental_groups) {
             free(listEntry->data);
         }
-        list_free(v1_pod_security_context->supplemental_groups);
+        list_freeList(v1_pod_security_context->supplemental_groups);
         v1_pod_security_context->supplemental_groups = NULL;
     }
     if (v1_pod_security_context->sysctls) {
         list_ForEach(listEntry, v1_pod_security_context->sysctls) {
             v1_sysctl_free(listEntry->data);
         }
-        list_free(v1_pod_security_context->sysctls);
+        list_freeList(v1_pod_security_context->sysctls);
         v1_pod_security_context->sysctls = NULL;
     }
     if (v1_pod_security_context->windows_options) {
@@ -278,7 +278,7 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     if(!cJSON_IsArray(supplemental_groups)) {
         goto end;//primitive container
     }
-    supplemental_groupsList = list_create();
+    supplemental_groupsList = list_createList();
 
     cJSON_ArrayForEach(supplemental_groups_local, supplemental_groups)
     {
@@ -305,7 +305,7 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
         goto end; //nonprimitive container
     }
 
-    sysctlsList = list_create();
+    sysctlsList = list_createList();
 
     cJSON_ArrayForEach(sysctls_local_nonprimitive,sysctls )
     {

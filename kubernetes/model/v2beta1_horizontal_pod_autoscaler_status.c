@@ -37,14 +37,14 @@ void v2beta1_horizontal_pod_autoscaler_status_free(v2beta1_horizontal_pod_autosc
         list_ForEach(listEntry, v2beta1_horizontal_pod_autoscaler_status->conditions) {
             v2beta1_horizontal_pod_autoscaler_condition_free(listEntry->data);
         }
-        list_free(v2beta1_horizontal_pod_autoscaler_status->conditions);
+        list_freeList(v2beta1_horizontal_pod_autoscaler_status->conditions);
         v2beta1_horizontal_pod_autoscaler_status->conditions = NULL;
     }
     if (v2beta1_horizontal_pod_autoscaler_status->current_metrics) {
         list_ForEach(listEntry, v2beta1_horizontal_pod_autoscaler_status->current_metrics) {
             v2beta1_metric_status_free(listEntry->data);
         }
-        list_free(v2beta1_horizontal_pod_autoscaler_status->current_metrics);
+        list_freeList(v2beta1_horizontal_pod_autoscaler_status->current_metrics);
         v2beta1_horizontal_pod_autoscaler_status->current_metrics = NULL;
     }
     if (v2beta1_horizontal_pod_autoscaler_status->last_scale_time) {
@@ -159,7 +159,7 @@ v2beta1_horizontal_pod_autoscaler_status_t *v2beta1_horizontal_pod_autoscaler_st
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
@@ -180,7 +180,7 @@ v2beta1_horizontal_pod_autoscaler_status_t *v2beta1_horizontal_pod_autoscaler_st
         goto end; //nonprimitive container
     }
 
-    current_metricsList = list_create();
+    current_metricsList = list_createList();
 
     cJSON_ArrayForEach(current_metrics_local_nonprimitive,current_metrics )
     {

@@ -22,15 +22,15 @@ v1_pod_dns_config_t* instantiate_v1_pod_dns_config(int include_optional) {
   v1_pod_dns_config_t* v1_pod_dns_config = NULL;
   if (include_optional) {
     v1_pod_dns_config = v1_pod_dns_config_create(
-      list_create(),
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_pod_dns_config = v1_pod_dns_config_create(
-      list_create(),
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList(),
+      list_createList()
     );
   }
 

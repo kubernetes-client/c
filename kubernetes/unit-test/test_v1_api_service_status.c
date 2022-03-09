@@ -22,11 +22,11 @@ v1_api_service_status_t* instantiate_v1_api_service_status(int include_optional)
   v1_api_service_status_t* v1_api_service_status = NULL;
   if (include_optional) {
     v1_api_service_status = v1_api_service_status_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1_api_service_status = v1_api_service_status_create(
-      list_create()
+      list_createList()
     );
   }
 

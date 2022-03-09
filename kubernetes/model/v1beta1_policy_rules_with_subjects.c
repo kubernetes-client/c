@@ -31,21 +31,21 @@ void v1beta1_policy_rules_with_subjects_free(v1beta1_policy_rules_with_subjects_
         list_ForEach(listEntry, v1beta1_policy_rules_with_subjects->non_resource_rules) {
             v1beta1_non_resource_policy_rule_free(listEntry->data);
         }
-        list_free(v1beta1_policy_rules_with_subjects->non_resource_rules);
+        list_freeList(v1beta1_policy_rules_with_subjects->non_resource_rules);
         v1beta1_policy_rules_with_subjects->non_resource_rules = NULL;
     }
     if (v1beta1_policy_rules_with_subjects->resource_rules) {
         list_ForEach(listEntry, v1beta1_policy_rules_with_subjects->resource_rules) {
             v1beta1_resource_policy_rule_free(listEntry->data);
         }
-        list_free(v1beta1_policy_rules_with_subjects->resource_rules);
+        list_freeList(v1beta1_policy_rules_with_subjects->resource_rules);
         v1beta1_policy_rules_with_subjects->resource_rules = NULL;
     }
     if (v1beta1_policy_rules_with_subjects->subjects) {
         list_ForEach(listEntry, v1beta1_policy_rules_with_subjects->subjects) {
             v1beta1_subject_free(listEntry->data);
         }
-        list_free(v1beta1_policy_rules_with_subjects->subjects);
+        list_freeList(v1beta1_policy_rules_with_subjects->subjects);
         v1beta1_policy_rules_with_subjects->subjects = NULL;
     }
     free(v1beta1_policy_rules_with_subjects);
@@ -136,7 +136,7 @@ v1beta1_policy_rules_with_subjects_t *v1beta1_policy_rules_with_subjects_parseFr
         goto end; //nonprimitive container
     }
 
-    non_resource_rulesList = list_create();
+    non_resource_rulesList = list_createList();
 
     cJSON_ArrayForEach(non_resource_rules_local_nonprimitive,non_resource_rules )
     {
@@ -158,7 +158,7 @@ v1beta1_policy_rules_with_subjects_t *v1beta1_policy_rules_with_subjects_parseFr
         goto end; //nonprimitive container
     }
 
-    resource_rulesList = list_create();
+    resource_rulesList = list_createList();
 
     cJSON_ArrayForEach(resource_rules_local_nonprimitive,resource_rules )
     {
@@ -184,7 +184,7 @@ v1beta1_policy_rules_with_subjects_t *v1beta1_policy_rules_with_subjects_parseFr
         goto end; //nonprimitive container
     }
 
-    subjectsList = list_create();
+    subjectsList = list_createList();
 
     cJSON_ArrayForEach(subjects_local_nonprimitive,subjects )
     {

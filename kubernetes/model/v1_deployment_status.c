@@ -41,7 +41,7 @@ void v1_deployment_status_free(v1_deployment_status_t *v1_deployment_status) {
         list_ForEach(listEntry, v1_deployment_status->conditions) {
             v1_deployment_condition_free(listEntry->data);
         }
-        list_free(v1_deployment_status->conditions);
+        list_freeList(v1_deployment_status->conditions);
         v1_deployment_status->conditions = NULL;
     }
     free(v1_deployment_status);
@@ -164,7 +164,7 @@ v1_deployment_status_t *v1_deployment_status_parseFromJSON(cJSON *v1_deployment_
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

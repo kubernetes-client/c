@@ -22,12 +22,12 @@ v1_namespace_status_t* instantiate_v1_namespace_status(int include_optional) {
   v1_namespace_status_t* v1_namespace_status = NULL;
   if (include_optional) {
     v1_namespace_status = v1_namespace_status_create(
-      list_create(),
+      list_createList(),
       "0"
     );
   } else {
     v1_namespace_status = v1_namespace_status_create(
-      list_create(),
+      list_createList(),
       "0"
     );
   }

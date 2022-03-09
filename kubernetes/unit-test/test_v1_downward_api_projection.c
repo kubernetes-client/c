@@ -22,11 +22,11 @@ v1_downward_api_projection_t* instantiate_v1_downward_api_projection(int include
   v1_downward_api_projection_t* v1_downward_api_projection = NULL;
   if (include_optional) {
     v1_downward_api_projection = v1_downward_api_projection_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1_downward_api_projection = v1_downward_api_projection_create(
-      list_create()
+      list_createList()
     );
   }
 

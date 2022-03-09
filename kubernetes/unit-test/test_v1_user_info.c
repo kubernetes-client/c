@@ -22,15 +22,15 @@ v1_user_info_t* instantiate_v1_user_info(int include_optional) {
   v1_user_info_t* v1_user_info = NULL;
   if (include_optional) {
     v1_user_info = v1_user_info_create(
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "0",
       "0"
     );
   } else {
     v1_user_info = v1_user_info_create(
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "0",
       "0"
     );

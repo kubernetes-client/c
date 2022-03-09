@@ -29,7 +29,7 @@ void v1_container_image_free(v1_container_image_t *v1_container_image) {
         list_ForEach(listEntry, v1_container_image->names) {
             free(listEntry->data);
         }
-        list_free(v1_container_image->names);
+        list_freeList(v1_container_image->names);
         v1_container_image->names = NULL;
     }
     free(v1_container_image);
@@ -82,7 +82,7 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
     if(!cJSON_IsArray(names)) {
         goto end;//primitive container
     }
-    namesList = list_create();
+    namesList = list_createList();
 
     cJSON_ArrayForEach(names_local, names)
     {
