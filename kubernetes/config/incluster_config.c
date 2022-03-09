@@ -128,7 +128,7 @@ static int setApiKeysInCluster(list_t ** pApiKeys)
 {
     static char fname[] = "setApiKeysInCluster()";
 
-    list_t *apiKeys = list_create();
+    list_t *apiKeys = list_createList();
     if (!apiKeys) {
         fprintf(stderr, "%s: Cannot allocate the memory for api kyes for kubernetes service.\n", fname);
         return -1;

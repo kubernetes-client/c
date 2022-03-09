@@ -128,5 +128,5 @@ void clear_and_free_string_pair_list(list_t * list)
         keyValuePair_free(pair);
         pair = NULL;
     }
-    list_free(list);
+    list_freeList(list);
 }

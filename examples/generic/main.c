@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     free(update);
 
     const char *patchBody = "[{\"op\": \"replace\", \"path\": \"/metadata/labels/foo\", \"value\": \"qux\" }]";
-    list_t *contentType = list_create();
+    list_t *contentType = list_createList();
     // Kubernetes supports multiple content types:
     list_addElement(contentType, "application/json-patch+json");
     // list_addElement(contentType, "application/merge-patch+json");
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     // list_addElement(contentType, "application/apply-patch+yaml");
     char *patch = Generic_patchResource(genericClient, "test", patchBody, NULL, NULL, NULL, NULL, contentType);
     printf("%s\n", patch);
-    list_free(contentType);
+    list_freeList(contentType);
     free(patch);
 
     char *del = Generic_deleteResource(genericClient, "test");

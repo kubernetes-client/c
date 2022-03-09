@@ -173,7 +173,7 @@ static int refresh_oidc_token(kubeconfig_property_t * auth_provider, const char 
         return -1;
     }
 
-    list_t *content_type = list_create();
+    list_t *content_type = list_createList();
     if (!content_type) {
         fprintf(stderr, "%s: Cannot create list for content type.[%s]\n", fname, strerror(errno));
         return -1;
@@ -193,7 +193,7 @@ static int refresh_oidc_token(kubeconfig_property_t * auth_provider, const char 
     memset(basic_token_buffer, 0, sizeof(basic_token_buffer));
     snprintf(basic_token_buffer, sizeof(basic_token_buffer), BASIC_TOKEN_TEMPLATE, base64_credential);
 
-    list_t *api_keys = list_create();
+    list_t *api_keys = list_createList();
     if (!api_keys) {
         fprintf(stderr, "%s: Cannot create list for refresh token.[%s]\n", fname, strerror(errno));
         rc = -1;

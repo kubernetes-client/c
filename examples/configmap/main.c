@@ -11,7 +11,7 @@ void create_configmap(apiClient_t * apiClient, char *name, char *namespace_)
     char *api_version = strdup("v1");
     char *kind = strdup("ConfigMap");
 
-    list_t *data = list_create();
+    list_t *data = list_createList();
     keyValuePair_t *kv = keyValuePair_create(strdup("worker1"), strdup("1"));
     list_addElement(data, kv);
     kv = keyValuePair_create(strdup("worker2"), strdup("2"));
