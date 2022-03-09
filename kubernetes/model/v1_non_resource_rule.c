@@ -29,14 +29,14 @@ void v1_non_resource_rule_free(v1_non_resource_rule_t *v1_non_resource_rule) {
         list_ForEach(listEntry, v1_non_resource_rule->non_resource_urls) {
             free(listEntry->data);
         }
-        list_free(v1_non_resource_rule->non_resource_urls);
+        list_freeList(v1_non_resource_rule->non_resource_urls);
         v1_non_resource_rule->non_resource_urls = NULL;
     }
     if (v1_non_resource_rule->verbs) {
         list_ForEach(listEntry, v1_non_resource_rule->verbs) {
             free(listEntry->data);
         }
-        list_free(v1_non_resource_rule->verbs);
+        list_freeList(v1_non_resource_rule->verbs);
         v1_non_resource_rule->verbs = NULL;
     }
     free(v1_non_resource_rule);
@@ -100,7 +100,7 @@ v1_non_resource_rule_t *v1_non_resource_rule_parseFromJSON(cJSON *v1_non_resourc
     if(!cJSON_IsArray(non_resource_urls)) {
         goto end;//primitive container
     }
-    non_resource_urlsList = list_create();
+    non_resource_urlsList = list_createList();
 
     cJSON_ArrayForEach(non_resource_urls_local, non_resource_urls)
     {
@@ -124,7 +124,7 @@ v1_non_resource_rule_t *v1_non_resource_rule_parseFromJSON(cJSON *v1_non_resourc
     if(!cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
-    verbsList = list_create();
+    verbsList = list_createList();
 
     cJSON_ArrayForEach(verbs_local, verbs)
     {

@@ -26,7 +26,7 @@ v1_persistent_volume_claim_spec_t* instantiate_v1_persistent_volume_claim_spec(i
   v1_persistent_volume_claim_spec_t* v1_persistent_volume_claim_spec = NULL;
   if (include_optional) {
     v1_persistent_volume_claim_spec = v1_persistent_volume_claim_spec_create(
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_typed_local_object_reference(0),
        // false, not to have infinite recursion
@@ -41,7 +41,7 @@ v1_persistent_volume_claim_spec_t* instantiate_v1_persistent_volume_claim_spec(i
     );
   } else {
     v1_persistent_volume_claim_spec = v1_persistent_volume_claim_spec_create(
-      list_create(),
+      list_createList(),
       NULL,
       NULL,
       NULL,

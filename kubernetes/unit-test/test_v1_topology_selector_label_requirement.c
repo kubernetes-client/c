@@ -23,12 +23,12 @@ v1_topology_selector_label_requirement_t* instantiate_v1_topology_selector_label
   if (include_optional) {
     v1_topology_selector_label_requirement = v1_topology_selector_label_requirement_create(
       "0",
-      list_create()
+      list_createList()
     );
   } else {
     v1_topology_selector_label_requirement = v1_topology_selector_label_requirement_create(
       "0",
-      list_create()
+      list_createList()
     );
   }
 

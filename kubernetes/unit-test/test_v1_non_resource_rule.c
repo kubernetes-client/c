@@ -22,13 +22,13 @@ v1_non_resource_rule_t* instantiate_v1_non_resource_rule(int include_optional) {
   v1_non_resource_rule_t* v1_non_resource_rule = NULL;
   if (include_optional) {
     v1_non_resource_rule = v1_non_resource_rule_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_non_resource_rule = v1_non_resource_rule_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

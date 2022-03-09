@@ -22,18 +22,18 @@ v1_rule_with_operations_t* instantiate_v1_rule_with_operations(int include_optio
   v1_rule_with_operations_t* v1_rule_with_operations = NULL;
   if (include_optional) {
     v1_rule_with_operations = v1_rule_with_operations_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       "0"
     );
   } else {
     v1_rule_with_operations = v1_rule_with_operations_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       "0"
     );
   }

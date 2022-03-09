@@ -30,7 +30,7 @@ v1alpha1_cluster_role_t* instantiate_v1alpha1_cluster_role(int include_optional)
       "0",
        // false, not to have infinite recursion
       instantiate_v1_object_meta(0),
-      list_create()
+      list_createList()
     );
   } else {
     v1alpha1_cluster_role = v1alpha1_cluster_role_create(
@@ -38,7 +38,7 @@ v1alpha1_cluster_role_t* instantiate_v1alpha1_cluster_role(int include_optional)
       "0",
       "0",
       NULL,
-      list_create()
+      list_createList()
     );
   }
 

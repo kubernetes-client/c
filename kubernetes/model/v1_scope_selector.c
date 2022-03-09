@@ -27,7 +27,7 @@ void v1_scope_selector_free(v1_scope_selector_t *v1_scope_selector) {
         list_ForEach(listEntry, v1_scope_selector->match_expressions) {
             v1_scoped_resource_selector_requirement_free(listEntry->data);
         }
-        list_free(v1_scope_selector->match_expressions);
+        list_freeList(v1_scope_selector->match_expressions);
         v1_scope_selector->match_expressions = NULL;
     }
     free(v1_scope_selector);
@@ -76,7 +76,7 @@ v1_scope_selector_t *v1_scope_selector_parseFromJSON(cJSON *v1_scope_selectorJSO
         goto end; //nonprimitive container
     }
 
-    match_expressionsList = list_create();
+    match_expressionsList = list_createList();
 
     cJSON_ArrayForEach(match_expressions_local_nonprimitive,match_expressions )
     {

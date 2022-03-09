@@ -23,12 +23,12 @@ v1_ip_block_t* instantiate_v1_ip_block(int include_optional) {
   if (include_optional) {
     v1_ip_block = v1_ip_block_create(
       "0",
-      list_create()
+      list_createList()
     );
   } else {
     v1_ip_block = v1_ip_block_create(
       "0",
-      list_create()
+      list_createList()
     );
   }
 

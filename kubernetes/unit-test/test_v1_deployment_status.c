@@ -24,7 +24,7 @@ v1_deployment_status_t* instantiate_v1_deployment_status(int include_optional) {
     v1_deployment_status = v1_deployment_status_create(
       56,
       56,
-      list_create(),
+      list_createList(),
       56,
       56,
       56,
@@ -35,7 +35,7 @@ v1_deployment_status_t* instantiate_v1_deployment_status(int include_optional) {
     v1_deployment_status = v1_deployment_status_create(
       56,
       56,
-      list_create(),
+      list_createList(),
       56,
       56,
       56,

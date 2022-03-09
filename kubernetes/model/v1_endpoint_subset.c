@@ -31,21 +31,21 @@ void v1_endpoint_subset_free(v1_endpoint_subset_t *v1_endpoint_subset) {
         list_ForEach(listEntry, v1_endpoint_subset->addresses) {
             v1_endpoint_address_free(listEntry->data);
         }
-        list_free(v1_endpoint_subset->addresses);
+        list_freeList(v1_endpoint_subset->addresses);
         v1_endpoint_subset->addresses = NULL;
     }
     if (v1_endpoint_subset->not_ready_addresses) {
         list_ForEach(listEntry, v1_endpoint_subset->not_ready_addresses) {
             v1_endpoint_address_free(listEntry->data);
         }
-        list_free(v1_endpoint_subset->not_ready_addresses);
+        list_freeList(v1_endpoint_subset->not_ready_addresses);
         v1_endpoint_subset->not_ready_addresses = NULL;
     }
     if (v1_endpoint_subset->ports) {
         list_ForEach(listEntry, v1_endpoint_subset->ports) {
             core_v1_endpoint_port_free(listEntry->data);
         }
-        list_free(v1_endpoint_subset->ports);
+        list_freeList(v1_endpoint_subset->ports);
         v1_endpoint_subset->ports = NULL;
     }
     free(v1_endpoint_subset);
@@ -134,7 +134,7 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
         goto end; //nonprimitive container
     }
 
-    addressesList = list_create();
+    addressesList = list_createList();
 
     cJSON_ArrayForEach(addresses_local_nonprimitive,addresses )
     {
@@ -156,7 +156,7 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
         goto end; //nonprimitive container
     }
 
-    not_ready_addressesList = list_create();
+    not_ready_addressesList = list_createList();
 
     cJSON_ArrayForEach(not_ready_addresses_local_nonprimitive,not_ready_addresses )
     {
@@ -178,7 +178,7 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
         goto end; //nonprimitive container
     }
 
-    portsList = list_create();
+    portsList = list_createList();
 
     cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {

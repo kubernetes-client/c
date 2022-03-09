@@ -5,6 +5,7 @@
 #include "../external/cJSON.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
+#include "../model/object.h"
 #include "../model/v1_api_resource_list.h"
 #include "../model/v1_csi_driver.h"
 #include "../model/v1_csi_driver_list.h"

@@ -35,35 +35,35 @@ void v1_policy_rule_free(v1_policy_rule_t *v1_policy_rule) {
         list_ForEach(listEntry, v1_policy_rule->api_groups) {
             free(listEntry->data);
         }
-        list_free(v1_policy_rule->api_groups);
+        list_freeList(v1_policy_rule->api_groups);
         v1_policy_rule->api_groups = NULL;
     }
     if (v1_policy_rule->non_resource_urls) {
         list_ForEach(listEntry, v1_policy_rule->non_resource_urls) {
             free(listEntry->data);
         }
-        list_free(v1_policy_rule->non_resource_urls);
+        list_freeList(v1_policy_rule->non_resource_urls);
         v1_policy_rule->non_resource_urls = NULL;
     }
     if (v1_policy_rule->resource_names) {
         list_ForEach(listEntry, v1_policy_rule->resource_names) {
             free(listEntry->data);
         }
-        list_free(v1_policy_rule->resource_names);
+        list_freeList(v1_policy_rule->resource_names);
         v1_policy_rule->resource_names = NULL;
     }
     if (v1_policy_rule->resources) {
         list_ForEach(listEntry, v1_policy_rule->resources) {
             free(listEntry->data);
         }
-        list_free(v1_policy_rule->resources);
+        list_freeList(v1_policy_rule->resources);
         v1_policy_rule->resources = NULL;
     }
     if (v1_policy_rule->verbs) {
         list_ForEach(listEntry, v1_policy_rule->verbs) {
             free(listEntry->data);
         }
-        list_free(v1_policy_rule->verbs);
+        list_freeList(v1_policy_rule->verbs);
         v1_policy_rule->verbs = NULL;
     }
     free(v1_policy_rule);
@@ -178,7 +178,7 @@ v1_policy_rule_t *v1_policy_rule_parseFromJSON(cJSON *v1_policy_ruleJSON){
     if(!cJSON_IsArray(api_groups)) {
         goto end;//primitive container
     }
-    api_groupsList = list_create();
+    api_groupsList = list_createList();
 
     cJSON_ArrayForEach(api_groups_local, api_groups)
     {
@@ -198,7 +198,7 @@ v1_policy_rule_t *v1_policy_rule_parseFromJSON(cJSON *v1_policy_ruleJSON){
     if(!cJSON_IsArray(non_resource_urls)) {
         goto end;//primitive container
     }
-    non_resource_urlsList = list_create();
+    non_resource_urlsList = list_createList();
 
     cJSON_ArrayForEach(non_resource_urls_local, non_resource_urls)
     {
@@ -218,7 +218,7 @@ v1_policy_rule_t *v1_policy_rule_parseFromJSON(cJSON *v1_policy_ruleJSON){
     if(!cJSON_IsArray(resource_names)) {
         goto end;//primitive container
     }
-    resource_namesList = list_create();
+    resource_namesList = list_createList();
 
     cJSON_ArrayForEach(resource_names_local, resource_names)
     {
@@ -238,7 +238,7 @@ v1_policy_rule_t *v1_policy_rule_parseFromJSON(cJSON *v1_policy_ruleJSON){
     if(!cJSON_IsArray(resources)) {
         goto end;//primitive container
     }
-    resourcesList = list_create();
+    resourcesList = list_createList();
 
     cJSON_ArrayForEach(resources_local, resources)
     {
@@ -262,7 +262,7 @@ v1_policy_rule_t *v1_policy_rule_parseFromJSON(cJSON *v1_policy_ruleJSON){
     if(!cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
-    verbsList = list_create();
+    verbsList = list_createList();
 
     cJSON_ArrayForEach(verbs_local, verbs)
     {

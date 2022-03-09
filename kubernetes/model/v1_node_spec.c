@@ -51,7 +51,7 @@ void v1_node_spec_free(v1_node_spec_t *v1_node_spec) {
         list_ForEach(listEntry, v1_node_spec->pod_cidrs) {
             free(listEntry->data);
         }
-        list_free(v1_node_spec->pod_cidrs);
+        list_freeList(v1_node_spec->pod_cidrs);
         v1_node_spec->pod_cidrs = NULL;
     }
     if (v1_node_spec->provider_id) {
@@ -62,7 +62,7 @@ void v1_node_spec_free(v1_node_spec_t *v1_node_spec) {
         list_ForEach(listEntry, v1_node_spec->taints) {
             v1_taint_free(listEntry->data);
         }
-        list_free(v1_node_spec->taints);
+        list_freeList(v1_node_spec->taints);
         v1_node_spec->taints = NULL;
     }
     free(v1_node_spec);
@@ -199,7 +199,7 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     if(!cJSON_IsArray(pod_cidrs)) {
         goto end;//primitive container
     }
-    pod_cidrsList = list_create();
+    pod_cidrsList = list_createList();
 
     cJSON_ArrayForEach(pod_cidrs_local, pod_cidrs)
     {
@@ -229,7 +229,7 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
         goto end; //nonprimitive container
     }
 
-    taintsList = list_create();
+    taintsList = list_createList();
 
     cJSON_ArrayForEach(taints_local_nonprimitive,taints )
     {

@@ -37,7 +37,7 @@ void v1alpha1_cluster_role_list_free(v1alpha1_cluster_role_list_t *v1alpha1_clus
         list_ForEach(listEntry, v1alpha1_cluster_role_list->items) {
             v1alpha1_cluster_role_free(listEntry->data);
         }
-        list_free(v1alpha1_cluster_role_list->items);
+        list_freeList(v1alpha1_cluster_role_list->items);
         v1alpha1_cluster_role_list->items = NULL;
     }
     if (v1alpha1_cluster_role_list->kind) {
@@ -141,7 +141,7 @@ v1alpha1_cluster_role_list_t *v1alpha1_cluster_role_list_parseFromJSON(cJSON *v1
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

@@ -127,14 +127,14 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
         list_ForEach(listEntry, v1_json_schema_props->all_of) {
             v1_json_schema_props_free(listEntry->data);
         }
-        list_free(v1_json_schema_props->all_of);
+        list_freeList(v1_json_schema_props->all_of);
         v1_json_schema_props->all_of = NULL;
     }
     if (v1_json_schema_props->any_of) {
         list_ForEach(listEntry, v1_json_schema_props->any_of) {
             v1_json_schema_props_free(listEntry->data);
         }
-        list_free(v1_json_schema_props->any_of);
+        list_freeList(v1_json_schema_props->any_of);
         v1_json_schema_props->any_of = NULL;
     }
     if (v1_json_schema_props->_default) {
@@ -148,7 +148,7 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_json_schema_props->definitions);
+        list_freeList(v1_json_schema_props->definitions);
         v1_json_schema_props->definitions = NULL;
     }
     if (v1_json_schema_props->dependencies) {
@@ -158,7 +158,7 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_json_schema_props->dependencies);
+        list_freeList(v1_json_schema_props->dependencies);
         v1_json_schema_props->dependencies = NULL;
     }
     if (v1_json_schema_props->description) {
@@ -169,7 +169,7 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
         list_ForEach(listEntry, v1_json_schema_props->_enum) {
             object_free(listEntry->data);
         }
-        list_free(v1_json_schema_props->_enum);
+        list_freeList(v1_json_schema_props->_enum);
         v1_json_schema_props->_enum = NULL;
     }
     if (v1_json_schema_props->example) {
@@ -200,7 +200,7 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
         list_ForEach(listEntry, v1_json_schema_props->one_of) {
             v1_json_schema_props_free(listEntry->data);
         }
-        list_free(v1_json_schema_props->one_of);
+        list_freeList(v1_json_schema_props->one_of);
         v1_json_schema_props->one_of = NULL;
     }
     if (v1_json_schema_props->pattern) {
@@ -214,7 +214,7 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_json_schema_props->pattern_properties);
+        list_freeList(v1_json_schema_props->pattern_properties);
         v1_json_schema_props->pattern_properties = NULL;
     }
     if (v1_json_schema_props->properties) {
@@ -224,14 +224,14 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_json_schema_props->properties);
+        list_freeList(v1_json_schema_props->properties);
         v1_json_schema_props->properties = NULL;
     }
     if (v1_json_schema_props->required) {
         list_ForEach(listEntry, v1_json_schema_props->required) {
             free(listEntry->data);
         }
-        list_free(v1_json_schema_props->required);
+        list_freeList(v1_json_schema_props->required);
         v1_json_schema_props->required = NULL;
     }
     if (v1_json_schema_props->title) {
@@ -246,7 +246,7 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
         list_ForEach(listEntry, v1_json_schema_props->x_kubernetes_list_map_keys) {
             free(listEntry->data);
         }
-        list_free(v1_json_schema_props->x_kubernetes_list_map_keys);
+        list_freeList(v1_json_schema_props->x_kubernetes_list_map_keys);
         v1_json_schema_props->x_kubernetes_list_map_keys = NULL;
     }
     if (v1_json_schema_props->x_kubernetes_list_type) {
@@ -798,7 +798,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
         goto end; //nonprimitive container
     }
 
-    all_ofList = list_create();
+    all_ofList = list_createList();
 
     cJSON_ArrayForEach(all_of_local_nonprimitive,all_of )
     {
@@ -820,7 +820,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
         goto end; //nonprimitive container
     }
 
-    any_ofList = list_create();
+    any_ofList = list_createList();
 
     cJSON_ArrayForEach(any_of_local_nonprimitive,any_of )
     {
@@ -848,7 +848,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     if(!cJSON_IsObject(definitions)) {
         goto end;//primitive map container
     }
-    definitionsList = list_create();
+    definitionsList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(definitions_local_map, definitions)
     {
@@ -865,7 +865,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     if(!cJSON_IsObject(dependencies)) {
         goto end;//primitive map container
     }
-    dependenciesList = list_create();
+    dependenciesList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(dependencies_local_map, dependencies)
     {
@@ -892,7 +892,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
         goto end; //nonprimitive container
     }
 
-    _enumList = list_create();
+    _enumList = list_createList();
 
     cJSON_ArrayForEach(_enum_local_nonprimitive,_enum )
     {
@@ -1066,7 +1066,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
         goto end; //nonprimitive container
     }
 
-    one_ofList = list_create();
+    one_ofList = list_createList();
 
     cJSON_ArrayForEach(one_of_local_nonprimitive,one_of )
     {
@@ -1096,7 +1096,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     if(!cJSON_IsObject(pattern_properties)) {
         goto end;//primitive map container
     }
-    pattern_propertiesList = list_create();
+    pattern_propertiesList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(pattern_properties_local_map, pattern_properties)
     {
@@ -1113,7 +1113,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     if(!cJSON_IsObject(properties)) {
         goto end;//primitive map container
     }
-    propertiesList = list_create();
+    propertiesList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(properties_local_map, properties)
     {
@@ -1130,7 +1130,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     if(!cJSON_IsArray(required)) {
         goto end;//primitive container
     }
-    requiredList = list_create();
+    requiredList = list_createList();
 
     cJSON_ArrayForEach(required_local, required)
     {
@@ -1195,7 +1195,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     if(!cJSON_IsArray(x_kubernetes_list_map_keys)) {
         goto end;//primitive container
     }
-    x_kubernetes_list_map_keysList = list_create();
+    x_kubernetes_list_map_keysList = list_createList();
 
     cJSON_ArrayForEach(x_kubernetes_list_map_keys_local, x_kubernetes_list_map_keys)
     {

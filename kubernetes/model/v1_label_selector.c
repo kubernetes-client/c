@@ -29,7 +29,7 @@ void v1_label_selector_free(v1_label_selector_t *v1_label_selector) {
         list_ForEach(listEntry, v1_label_selector->match_expressions) {
             v1_label_selector_requirement_free(listEntry->data);
         }
-        list_free(v1_label_selector->match_expressions);
+        list_freeList(v1_label_selector->match_expressions);
         v1_label_selector->match_expressions = NULL;
     }
     if (v1_label_selector->match_labels) {
@@ -39,7 +39,7 @@ void v1_label_selector_free(v1_label_selector_t *v1_label_selector) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_label_selector->match_labels);
+        list_freeList(v1_label_selector->match_labels);
         v1_label_selector->match_labels = NULL;
     }
     free(v1_label_selector);
@@ -108,7 +108,7 @@ v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSO
         goto end; //nonprimitive container
     }
 
-    match_expressionsList = list_create();
+    match_expressionsList = list_createList();
 
     cJSON_ArrayForEach(match_expressions_local_nonprimitive,match_expressions )
     {
@@ -129,7 +129,7 @@ v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSO
     if(!cJSON_IsObject(match_labels)) {
         goto end;//primitive map container
     }
-    match_labelsList = list_create();
+    match_labelsList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(match_labels_local_map, match_labels)
     {

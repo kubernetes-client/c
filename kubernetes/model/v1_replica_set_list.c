@@ -37,7 +37,7 @@ void v1_replica_set_list_free(v1_replica_set_list_t *v1_replica_set_list) {
         list_ForEach(listEntry, v1_replica_set_list->items) {
             v1_replica_set_free(listEntry->data);
         }
-        list_free(v1_replica_set_list->items);
+        list_freeList(v1_replica_set_list->items);
         v1_replica_set_list->items = NULL;
     }
     if (v1_replica_set_list->kind) {
@@ -141,7 +141,7 @@ v1_replica_set_list_t *v1_replica_set_list_parseFromJSON(cJSON *v1_replica_set_l
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

@@ -22,11 +22,11 @@ v1_load_balancer_status_t* instantiate_v1_load_balancer_status(int include_optio
   v1_load_balancer_status_t* v1_load_balancer_status = NULL;
   if (include_optional) {
     v1_load_balancer_status = v1_load_balancer_status_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1_load_balancer_status = v1_load_balancer_status_create(
-      list_create()
+      list_createList()
     );
   }
 

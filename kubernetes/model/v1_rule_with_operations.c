@@ -35,28 +35,28 @@ void v1_rule_with_operations_free(v1_rule_with_operations_t *v1_rule_with_operat
         list_ForEach(listEntry, v1_rule_with_operations->api_groups) {
             free(listEntry->data);
         }
-        list_free(v1_rule_with_operations->api_groups);
+        list_freeList(v1_rule_with_operations->api_groups);
         v1_rule_with_operations->api_groups = NULL;
     }
     if (v1_rule_with_operations->api_versions) {
         list_ForEach(listEntry, v1_rule_with_operations->api_versions) {
             free(listEntry->data);
         }
-        list_free(v1_rule_with_operations->api_versions);
+        list_freeList(v1_rule_with_operations->api_versions);
         v1_rule_with_operations->api_versions = NULL;
     }
     if (v1_rule_with_operations->operations) {
         list_ForEach(listEntry, v1_rule_with_operations->operations) {
             free(listEntry->data);
         }
-        list_free(v1_rule_with_operations->operations);
+        list_freeList(v1_rule_with_operations->operations);
         v1_rule_with_operations->operations = NULL;
     }
     if (v1_rule_with_operations->resources) {
         list_ForEach(listEntry, v1_rule_with_operations->resources) {
             free(listEntry->data);
         }
-        list_free(v1_rule_with_operations->resources);
+        list_freeList(v1_rule_with_operations->resources);
         v1_rule_with_operations->resources = NULL;
     }
     if (v1_rule_with_operations->scope) {
@@ -164,7 +164,7 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
     if(!cJSON_IsArray(api_groups)) {
         goto end;//primitive container
     }
-    api_groupsList = list_create();
+    api_groupsList = list_createList();
 
     cJSON_ArrayForEach(api_groups_local, api_groups)
     {
@@ -184,7 +184,7 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
     if(!cJSON_IsArray(api_versions)) {
         goto end;//primitive container
     }
-    api_versionsList = list_create();
+    api_versionsList = list_createList();
 
     cJSON_ArrayForEach(api_versions_local, api_versions)
     {
@@ -204,7 +204,7 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
     if(!cJSON_IsArray(operations)) {
         goto end;//primitive container
     }
-    operationsList = list_create();
+    operationsList = list_createList();
 
     cJSON_ArrayForEach(operations_local, operations)
     {
@@ -224,7 +224,7 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
     if(!cJSON_IsArray(resources)) {
         goto end;//primitive container
     }
-    resourcesList = list_create();
+    resourcesList = list_createList();
 
     cJSON_ArrayForEach(resources_local, resources)
     {

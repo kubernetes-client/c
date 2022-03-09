@@ -23,14 +23,14 @@ v1_config_map_volume_source_t* instantiate_v1_config_map_volume_source(int inclu
   if (include_optional) {
     v1_config_map_volume_source = v1_config_map_volume_source_create(
       56,
-      list_create(),
+      list_createList(),
       "0",
       1
     );
   } else {
     v1_config_map_volume_source = v1_config_map_volume_source_create(
       56,
-      list_create(),
+      list_createList(),
       "0",
       1
     );

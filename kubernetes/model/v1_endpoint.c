@@ -41,7 +41,7 @@ void v1_endpoint_free(v1_endpoint_t *v1_endpoint) {
         list_ForEach(listEntry, v1_endpoint->addresses) {
             free(listEntry->data);
         }
-        list_free(v1_endpoint->addresses);
+        list_freeList(v1_endpoint->addresses);
         v1_endpoint->addresses = NULL;
     }
     if (v1_endpoint->conditions) {
@@ -55,7 +55,7 @@ void v1_endpoint_free(v1_endpoint_t *v1_endpoint) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_endpoint->deprecated_topology);
+        list_freeList(v1_endpoint->deprecated_topology);
         v1_endpoint->deprecated_topology = NULL;
     }
     if (v1_endpoint->hints) {
@@ -218,7 +218,7 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     if(!cJSON_IsArray(addresses)) {
         goto end;//primitive container
     }
-    addressesList = list_create();
+    addressesList = list_createList();
 
     cJSON_ArrayForEach(addresses_local, addresses)
     {
@@ -243,7 +243,7 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     if(!cJSON_IsObject(deprecated_topology)) {
         goto end;//primitive map container
     }
-    deprecated_topologyList = list_create();
+    deprecated_topologyList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(deprecated_topology_local_map, deprecated_topology)
     {

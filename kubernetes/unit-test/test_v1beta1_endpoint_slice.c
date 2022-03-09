@@ -25,20 +25,20 @@ v1beta1_endpoint_slice_t* instantiate_v1beta1_endpoint_slice(int include_optiona
     v1beta1_endpoint_slice = v1beta1_endpoint_slice_create(
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0",
        // false, not to have infinite recursion
       instantiate_v1_object_meta(0),
-      list_create()
+      list_createList()
     );
   } else {
     v1beta1_endpoint_slice = v1beta1_endpoint_slice_create(
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0",
       NULL,
-      list_create()
+      list_createList()
     );
   }
 

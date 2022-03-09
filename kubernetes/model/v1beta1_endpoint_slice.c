@@ -45,7 +45,7 @@ void v1beta1_endpoint_slice_free(v1beta1_endpoint_slice_t *v1beta1_endpoint_slic
         list_ForEach(listEntry, v1beta1_endpoint_slice->endpoints) {
             v1beta1_endpoint_free(listEntry->data);
         }
-        list_free(v1beta1_endpoint_slice->endpoints);
+        list_freeList(v1beta1_endpoint_slice->endpoints);
         v1beta1_endpoint_slice->endpoints = NULL;
     }
     if (v1beta1_endpoint_slice->kind) {
@@ -60,7 +60,7 @@ void v1beta1_endpoint_slice_free(v1beta1_endpoint_slice_t *v1beta1_endpoint_slic
         list_ForEach(listEntry, v1beta1_endpoint_slice->ports) {
             v1beta1_endpoint_port_free(listEntry->data);
         }
-        list_free(v1beta1_endpoint_slice->ports);
+        list_freeList(v1beta1_endpoint_slice->ports);
         v1beta1_endpoint_slice->ports = NULL;
     }
     free(v1beta1_endpoint_slice);
@@ -198,7 +198,7 @@ v1beta1_endpoint_slice_t *v1beta1_endpoint_slice_parseFromJSON(cJSON *v1beta1_en
         goto end; //nonprimitive container
     }
 
-    endpointsList = list_create();
+    endpointsList = list_createList();
 
     cJSON_ArrayForEach(endpoints_local_nonprimitive,endpoints )
     {
@@ -234,7 +234,7 @@ v1beta1_endpoint_slice_t *v1beta1_endpoint_slice_parseFromJSON(cJSON *v1beta1_en
         goto end; //nonprimitive container
     }
 
-    portsList = list_create();
+    portsList = list_createList();
 
     cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {

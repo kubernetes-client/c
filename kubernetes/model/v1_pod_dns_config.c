@@ -31,21 +31,21 @@ void v1_pod_dns_config_free(v1_pod_dns_config_t *v1_pod_dns_config) {
         list_ForEach(listEntry, v1_pod_dns_config->nameservers) {
             free(listEntry->data);
         }
-        list_free(v1_pod_dns_config->nameservers);
+        list_freeList(v1_pod_dns_config->nameservers);
         v1_pod_dns_config->nameservers = NULL;
     }
     if (v1_pod_dns_config->options) {
         list_ForEach(listEntry, v1_pod_dns_config->options) {
             v1_pod_dns_config_option_free(listEntry->data);
         }
-        list_free(v1_pod_dns_config->options);
+        list_freeList(v1_pod_dns_config->options);
         v1_pod_dns_config->options = NULL;
     }
     if (v1_pod_dns_config->searches) {
         list_ForEach(listEntry, v1_pod_dns_config->searches) {
             free(listEntry->data);
         }
-        list_free(v1_pod_dns_config->searches);
+        list_freeList(v1_pod_dns_config->searches);
         v1_pod_dns_config->searches = NULL;
     }
     free(v1_pod_dns_config);
@@ -127,7 +127,7 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
     if(!cJSON_IsArray(nameservers)) {
         goto end;//primitive container
     }
-    nameserversList = list_create();
+    nameserversList = list_createList();
 
     cJSON_ArrayForEach(nameservers_local, nameservers)
     {
@@ -148,7 +148,7 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
         goto end; //nonprimitive container
     }
 
-    optionsList = list_create();
+    optionsList = list_createList();
 
     cJSON_ArrayForEach(options_local_nonprimitive,options )
     {
@@ -169,7 +169,7 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
     if(!cJSON_IsArray(searches)) {
         goto end;//primitive container
     }
-    searchesList = list_create();
+    searchesList = list_createList();
 
     cJSON_ArrayForEach(searches_local, searches)
     {

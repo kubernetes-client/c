@@ -35,7 +35,7 @@ void v1_api_group_list_free(v1_api_group_list_t *v1_api_group_list) {
         list_ForEach(listEntry, v1_api_group_list->groups) {
             v1_api_group_free(listEntry->data);
         }
-        list_free(v1_api_group_list->groups);
+        list_freeList(v1_api_group_list->groups);
         v1_api_group_list->groups = NULL;
     }
     if (v1_api_group_list->kind) {
@@ -119,7 +119,7 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
         goto end; //nonprimitive container
     }
 
-    groupsList = list_create();
+    groupsList = list_createList();
 
     cJSON_ArrayForEach(groups_local_nonprimitive,groups )
     {

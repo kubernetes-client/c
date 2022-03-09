@@ -23,13 +23,13 @@ v1_node_affinity_t* instantiate_v1_node_affinity(int include_optional) {
   v1_node_affinity_t* v1_node_affinity = NULL;
   if (include_optional) {
     v1_node_affinity = v1_node_affinity_create(
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_node_selector(0)
     );
   } else {
     v1_node_affinity = v1_node_affinity_create(
-      list_create(),
+      list_createList(),
       NULL
     );
   }

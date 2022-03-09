@@ -40,7 +40,7 @@ void v1alpha1_volume_attachment_status_free(v1alpha1_volume_attachment_status_t 
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1alpha1_volume_attachment_status->attachment_metadata);
+        list_freeList(v1alpha1_volume_attachment_status->attachment_metadata);
         v1alpha1_volume_attachment_status->attachment_metadata = NULL;
     }
     if (v1alpha1_volume_attachment_status->detach_error) {
@@ -152,7 +152,7 @@ v1alpha1_volume_attachment_status_t *v1alpha1_volume_attachment_status_parseFrom
     if(!cJSON_IsObject(attachment_metadata)) {
         goto end;//primitive map container
     }
-    attachment_metadataList = list_create();
+    attachment_metadataList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(attachment_metadata_local_map, attachment_metadata)
     {

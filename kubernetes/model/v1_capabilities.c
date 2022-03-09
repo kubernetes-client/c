@@ -29,14 +29,14 @@ void v1_capabilities_free(v1_capabilities_t *v1_capabilities) {
         list_ForEach(listEntry, v1_capabilities->add) {
             free(listEntry->data);
         }
-        list_free(v1_capabilities->add);
+        list_freeList(v1_capabilities->add);
         v1_capabilities->add = NULL;
     }
     if (v1_capabilities->drop) {
         list_ForEach(listEntry, v1_capabilities->drop) {
             free(listEntry->data);
         }
-        list_free(v1_capabilities->drop);
+        list_freeList(v1_capabilities->drop);
         v1_capabilities->drop = NULL;
     }
     free(v1_capabilities);
@@ -98,7 +98,7 @@ v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
     if(!cJSON_IsArray(add)) {
         goto end;//primitive container
     }
-    addList = list_create();
+    addList = list_createList();
 
     cJSON_ArrayForEach(add_local, add)
     {
@@ -118,7 +118,7 @@ v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
     if(!cJSON_IsArray(drop)) {
         goto end;//primitive container
     }
-    dropList = list_create();
+    dropList = list_createList();
 
     cJSON_ArrayForEach(drop_local, drop)
     {

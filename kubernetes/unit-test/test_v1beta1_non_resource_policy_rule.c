@@ -22,13 +22,13 @@ v1beta1_non_resource_policy_rule_t* instantiate_v1beta1_non_resource_policy_rule
   v1beta1_non_resource_policy_rule_t* v1beta1_non_resource_policy_rule = NULL;
   if (include_optional) {
     v1beta1_non_resource_policy_rule = v1beta1_non_resource_policy_rule_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1beta1_non_resource_policy_rule = v1beta1_non_resource_policy_rule_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

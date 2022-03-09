@@ -30,7 +30,7 @@ void v1_overhead_free(v1_overhead_t *v1_overhead) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_overhead->pod_fixed);
+        list_freeList(v1_overhead->pod_fixed);
         v1_overhead->pod_fixed = NULL;
     }
     free(v1_overhead);
@@ -78,7 +78,7 @@ v1_overhead_t *v1_overhead_parseFromJSON(cJSON *v1_overheadJSON){
     if(!cJSON_IsObject(pod_fixed)) {
         goto end;//primitive map container
     }
-    pod_fixedList = list_create();
+    pod_fixedList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(pod_fixed_local_map, pod_fixed)
     {

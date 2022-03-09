@@ -29,7 +29,7 @@ void v1_node_affinity_free(v1_node_affinity_t *v1_node_affinity) {
         list_ForEach(listEntry, v1_node_affinity->preferred_during_scheduling_ignored_during_execution) {
             v1_preferred_scheduling_term_free(listEntry->data);
         }
-        list_free(v1_node_affinity->preferred_during_scheduling_ignored_during_execution);
+        list_freeList(v1_node_affinity->preferred_during_scheduling_ignored_during_execution);
         v1_node_affinity->preferred_during_scheduling_ignored_during_execution = NULL;
     }
     if (v1_node_affinity->required_during_scheduling_ignored_during_execution) {
@@ -98,7 +98,7 @@ v1_node_affinity_t *v1_node_affinity_parseFromJSON(cJSON *v1_node_affinityJSON){
         goto end; //nonprimitive container
     }
 
-    preferred_during_scheduling_ignored_during_executionList = list_create();
+    preferred_during_scheduling_ignored_during_executionList = list_createList();
 
     cJSON_ArrayForEach(preferred_during_scheduling_ignored_during_execution_local_nonprimitive,preferred_during_scheduling_ignored_during_execution )
     {

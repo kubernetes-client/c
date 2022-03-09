@@ -29,7 +29,7 @@ void v1_downward_api_volume_source_free(v1_downward_api_volume_source_t *v1_down
         list_ForEach(listEntry, v1_downward_api_volume_source->items) {
             v1_downward_api_volume_file_free(listEntry->data);
         }
-        list_free(v1_downward_api_volume_source->items);
+        list_freeList(v1_downward_api_volume_source->items);
         v1_downward_api_volume_source->items = NULL;
     }
     free(v1_downward_api_volume_source);
@@ -95,7 +95,7 @@ v1_downward_api_volume_source_t *v1_downward_api_volume_source_parseFromJSON(cJS
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

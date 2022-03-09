@@ -41,7 +41,7 @@ void v1_custom_resource_definition_version_free(v1_custom_resource_definition_ve
         list_ForEach(listEntry, v1_custom_resource_definition_version->additional_printer_columns) {
             v1_custom_resource_column_definition_free(listEntry->data);
         }
-        list_free(v1_custom_resource_definition_version->additional_printer_columns);
+        list_freeList(v1_custom_resource_definition_version->additional_printer_columns);
         v1_custom_resource_definition_version->additional_printer_columns = NULL;
     }
     if (v1_custom_resource_definition_version->deprecation_warning) {
@@ -184,7 +184,7 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
         goto end; //nonprimitive container
     }
 
-    additional_printer_columnsList = list_create();
+    additional_printer_columnsList = list_createList();
 
     cJSON_ArrayForEach(additional_printer_columns_local_nonprimitive,additional_printer_columns )
     {

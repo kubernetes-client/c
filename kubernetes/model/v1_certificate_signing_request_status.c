@@ -33,7 +33,7 @@ void v1_certificate_signing_request_status_free(v1_certificate_signing_request_s
         list_ForEach(listEntry, v1_certificate_signing_request_status->conditions) {
             v1_certificate_signing_request_condition_free(listEntry->data);
         }
-        list_free(v1_certificate_signing_request_status->conditions);
+        list_freeList(v1_certificate_signing_request_status->conditions);
         v1_certificate_signing_request_status->conditions = NULL;
     }
     free(v1_certificate_signing_request_status);
@@ -99,7 +99,7 @@ v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_p
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

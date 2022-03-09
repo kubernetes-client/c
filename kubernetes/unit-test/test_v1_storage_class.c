@@ -24,13 +24,13 @@ v1_storage_class_t* instantiate_v1_storage_class(int include_optional) {
   if (include_optional) {
     v1_storage_class = v1_storage_class_create(
       1,
-      list_create(),
+      list_createList(),
       "0",
       "0",
        // false, not to have infinite recursion
       instantiate_v1_object_meta(0),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "0",
       "0",
       "0"
@@ -38,12 +38,12 @@ v1_storage_class_t* instantiate_v1_storage_class(int include_optional) {
   } else {
     v1_storage_class = v1_storage_class_create(
       1,
-      list_create(),
+      list_createList(),
       "0",
       "0",
       NULL,
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "0",
       "0",
       "0"

@@ -45,7 +45,7 @@ void v1_csi_node_driver_free(v1_csi_node_driver_t *v1_csi_node_driver) {
         list_ForEach(listEntry, v1_csi_node_driver->topology_keys) {
             free(listEntry->data);
         }
-        list_free(v1_csi_node_driver->topology_keys);
+        list_freeList(v1_csi_node_driver->topology_keys);
         v1_csi_node_driver->topology_keys = NULL;
     }
     free(v1_csi_node_driver);
@@ -156,7 +156,7 @@ v1_csi_node_driver_t *v1_csi_node_driver_parseFromJSON(cJSON *v1_csi_node_driver
     if(!cJSON_IsArray(topology_keys)) {
         goto end;//primitive container
     }
-    topology_keysList = list_create();
+    topology_keysList = list_createList();
 
     cJSON_ArrayForEach(topology_keys_local, topology_keys)
     {

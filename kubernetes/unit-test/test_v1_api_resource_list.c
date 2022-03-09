@@ -25,14 +25,14 @@ v1_api_resource_list_t* instantiate_v1_api_resource_list(int include_optional) {
       "0",
       "0",
       "0",
-      list_create()
+      list_createList()
     );
   } else {
     v1_api_resource_list = v1_api_resource_list_create(
       "0",
       "0",
       "0",
-      list_create()
+      list_createList()
     );
   }
 

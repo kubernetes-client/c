@@ -23,23 +23,23 @@ v1_certificate_signing_request_spec_t* instantiate_v1_certificate_signing_reques
   if (include_optional) {
     v1_certificate_signing_request_spec = v1_certificate_signing_request_spec_create(
       56,
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "YQ==",
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0"
     );
   } else {
     v1_certificate_signing_request_spec = v1_certificate_signing_request_spec_create(
       56,
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "YQ==",
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0"
     );
   }

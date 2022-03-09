@@ -41,7 +41,7 @@ void v1_persistent_volume_claim_spec_free(v1_persistent_volume_claim_spec_t *v1_
         list_ForEach(listEntry, v1_persistent_volume_claim_spec->access_modes) {
             free(listEntry->data);
         }
-        list_free(v1_persistent_volume_claim_spec->access_modes);
+        list_freeList(v1_persistent_volume_claim_spec->access_modes);
         v1_persistent_volume_claim_spec->access_modes = NULL;
     }
     if (v1_persistent_volume_claim_spec->data_source) {
@@ -202,7 +202,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     if(!cJSON_IsArray(access_modes)) {
         goto end;//primitive container
     }
-    access_modesList = list_create();
+    access_modesList = list_createList();
 
     cJSON_ArrayForEach(access_modes_local, access_modes)
     {

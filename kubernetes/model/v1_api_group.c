@@ -53,14 +53,14 @@ void v1_api_group_free(v1_api_group_t *v1_api_group) {
         list_ForEach(listEntry, v1_api_group->server_address_by_client_cidrs) {
             v1_server_address_by_client_cidr_free(listEntry->data);
         }
-        list_free(v1_api_group->server_address_by_client_cidrs);
+        list_freeList(v1_api_group->server_address_by_client_cidrs);
         v1_api_group->server_address_by_client_cidrs = NULL;
     }
     if (v1_api_group->versions) {
         list_ForEach(listEntry, v1_api_group->versions) {
             v1_group_version_for_discovery_free(listEntry->data);
         }
-        list_free(v1_api_group->versions);
+        list_freeList(v1_api_group->versions);
         v1_api_group->versions = NULL;
     }
     free(v1_api_group);
@@ -209,7 +209,7 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
         goto end; //nonprimitive container
     }
 
-    server_address_by_client_cidrsList = list_create();
+    server_address_by_client_cidrsList = list_createList();
 
     cJSON_ArrayForEach(server_address_by_client_cidrs_local_nonprimitive,server_address_by_client_cidrs )
     {
@@ -235,7 +235,7 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
         goto end; //nonprimitive container
     }
 
-    versionsList = list_create();
+    versionsList = list_createList();
 
     cJSON_ArrayForEach(versions_local_nonprimitive,versions )
     {

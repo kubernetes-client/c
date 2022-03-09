@@ -37,7 +37,7 @@ void v1_replica_set_status_free(v1_replica_set_status_t *v1_replica_set_status) 
         list_ForEach(listEntry, v1_replica_set_status->conditions) {
             v1_replica_set_condition_free(listEntry->data);
         }
-        list_free(v1_replica_set_status->conditions);
+        list_freeList(v1_replica_set_status->conditions);
         v1_replica_set_status->conditions = NULL;
     }
     free(v1_replica_set_status);
@@ -137,7 +137,7 @@ v1_replica_set_status_t *v1_replica_set_status_parseFromJSON(cJSON *v1_replica_s
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

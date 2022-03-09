@@ -7,6 +7,7 @@
 #include "../include/binary.h"
 #include "../model/events_v1_event.h"
 #include "../model/events_v1_event_list.h"
+#include "../model/object.h"
 #include "../model/v1_api_resource_list.h"
 #include "../model/v1_delete_options.h"
 #include "../model/v1_status.h"

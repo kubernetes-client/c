@@ -27,7 +27,7 @@ void v1_downward_api_projection_free(v1_downward_api_projection_t *v1_downward_a
         list_ForEach(listEntry, v1_downward_api_projection->items) {
             v1_downward_api_volume_file_free(listEntry->data);
         }
-        list_free(v1_downward_api_projection->items);
+        list_freeList(v1_downward_api_projection->items);
         v1_downward_api_projection->items = NULL;
     }
     free(v1_downward_api_projection);
@@ -76,7 +76,7 @@ v1_downward_api_projection_t *v1_downward_api_projection_parseFromJSON(cJSON *v1
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

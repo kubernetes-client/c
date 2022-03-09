@@ -35,14 +35,14 @@ void v1_custom_resource_definition_status_free(v1_custom_resource_definition_sta
         list_ForEach(listEntry, v1_custom_resource_definition_status->conditions) {
             v1_custom_resource_definition_condition_free(listEntry->data);
         }
-        list_free(v1_custom_resource_definition_status->conditions);
+        list_freeList(v1_custom_resource_definition_status->conditions);
         v1_custom_resource_definition_status->conditions = NULL;
     }
     if (v1_custom_resource_definition_status->stored_versions) {
         list_ForEach(listEntry, v1_custom_resource_definition_status->stored_versions) {
             free(listEntry->data);
         }
-        list_free(v1_custom_resource_definition_status->stored_versions);
+        list_freeList(v1_custom_resource_definition_status->stored_versions);
         v1_custom_resource_definition_status->stored_versions = NULL;
     }
     free(v1_custom_resource_definition_status);
@@ -130,7 +130,7 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
@@ -151,7 +151,7 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
     if(!cJSON_IsArray(stored_versions)) {
         goto end;//primitive container
     }
-    stored_versionsList = list_create();
+    stored_versionsList = list_createList();
 
     cJSON_ArrayForEach(stored_versions_local, stored_versions)
     {

@@ -37,7 +37,7 @@ void v1_persistent_volume_claim_list_free(v1_persistent_volume_claim_list_t *v1_
         list_ForEach(listEntry, v1_persistent_volume_claim_list->items) {
             v1_persistent_volume_claim_free(listEntry->data);
         }
-        list_free(v1_persistent_volume_claim_list->items);
+        list_freeList(v1_persistent_volume_claim_list->items);
         v1_persistent_volume_claim_list->items = NULL;
     }
     if (v1_persistent_volume_claim_list->kind) {
@@ -141,7 +141,7 @@ v1_persistent_volume_claim_list_t *v1_persistent_volume_claim_list_parseFromJSON
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

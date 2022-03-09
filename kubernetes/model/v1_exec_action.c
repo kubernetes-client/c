@@ -27,7 +27,7 @@ void v1_exec_action_free(v1_exec_action_t *v1_exec_action) {
         list_ForEach(listEntry, v1_exec_action->command) {
             free(listEntry->data);
         }
-        list_free(v1_exec_action->command);
+        list_freeList(v1_exec_action->command);
         v1_exec_action->command = NULL;
     }
     free(v1_exec_action);
@@ -72,7 +72,7 @@ v1_exec_action_t *v1_exec_action_parseFromJSON(cJSON *v1_exec_actionJSON){
     if(!cJSON_IsArray(command)) {
         goto end;//primitive container
     }
-    commandList = list_create();
+    commandList = list_createList();
 
     cJSON_ArrayForEach(command_local, command)
     {

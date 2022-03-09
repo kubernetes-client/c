@@ -37,7 +37,7 @@ void v1_runtime_class_list_free(v1_runtime_class_list_t *v1_runtime_class_list) 
         list_ForEach(listEntry, v1_runtime_class_list->items) {
             v1_runtime_class_free(listEntry->data);
         }
-        list_free(v1_runtime_class_list->items);
+        list_freeList(v1_runtime_class_list->items);
         v1_runtime_class_list->items = NULL;
     }
     if (v1_runtime_class_list->kind) {
@@ -141,7 +141,7 @@ v1_runtime_class_list_t *v1_runtime_class_list_parseFromJSON(cJSON *v1_runtime_c
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

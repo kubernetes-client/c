@@ -23,16 +23,16 @@ v1_resource_quota_spec_t* instantiate_v1_resource_quota_spec(int include_optiona
   v1_resource_quota_spec_t* v1_resource_quota_spec = NULL;
   if (include_optional) {
     v1_resource_quota_spec = v1_resource_quota_spec_create(
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_scope_selector(0),
-      list_create()
+      list_createList()
     );
   } else {
     v1_resource_quota_spec = v1_resource_quota_spec_create(
-      list_create(),
+      list_createList(),
       NULL,
-      list_create()
+      list_createList()
     );
   }
 

@@ -99,7 +99,7 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         list_ForEach(listEntry, v1_pod_spec->containers) {
             v1_container_free(listEntry->data);
         }
-        list_free(v1_pod_spec->containers);
+        list_freeList(v1_pod_spec->containers);
         v1_pod_spec->containers = NULL;
     }
     if (v1_pod_spec->dns_config) {
@@ -114,14 +114,14 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         list_ForEach(listEntry, v1_pod_spec->ephemeral_containers) {
             v1_ephemeral_container_free(listEntry->data);
         }
-        list_free(v1_pod_spec->ephemeral_containers);
+        list_freeList(v1_pod_spec->ephemeral_containers);
         v1_pod_spec->ephemeral_containers = NULL;
     }
     if (v1_pod_spec->host_aliases) {
         list_ForEach(listEntry, v1_pod_spec->host_aliases) {
             v1_host_alias_free(listEntry->data);
         }
-        list_free(v1_pod_spec->host_aliases);
+        list_freeList(v1_pod_spec->host_aliases);
         v1_pod_spec->host_aliases = NULL;
     }
     if (v1_pod_spec->hostname) {
@@ -132,14 +132,14 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         list_ForEach(listEntry, v1_pod_spec->image_pull_secrets) {
             v1_local_object_reference_free(listEntry->data);
         }
-        list_free(v1_pod_spec->image_pull_secrets);
+        list_freeList(v1_pod_spec->image_pull_secrets);
         v1_pod_spec->image_pull_secrets = NULL;
     }
     if (v1_pod_spec->init_containers) {
         list_ForEach(listEntry, v1_pod_spec->init_containers) {
             v1_container_free(listEntry->data);
         }
-        list_free(v1_pod_spec->init_containers);
+        list_freeList(v1_pod_spec->init_containers);
         v1_pod_spec->init_containers = NULL;
     }
     if (v1_pod_spec->node_name) {
@@ -153,7 +153,7 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_pod_spec->node_selector);
+        list_freeList(v1_pod_spec->node_selector);
         v1_pod_spec->node_selector = NULL;
     }
     if (v1_pod_spec->overhead) {
@@ -163,7 +163,7 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_pod_spec->overhead);
+        list_freeList(v1_pod_spec->overhead);
         v1_pod_spec->overhead = NULL;
     }
     if (v1_pod_spec->preemption_policy) {
@@ -178,7 +178,7 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         list_ForEach(listEntry, v1_pod_spec->readiness_gates) {
             v1_pod_readiness_gate_free(listEntry->data);
         }
-        list_free(v1_pod_spec->readiness_gates);
+        list_freeList(v1_pod_spec->readiness_gates);
         v1_pod_spec->readiness_gates = NULL;
     }
     if (v1_pod_spec->restart_policy) {
@@ -213,21 +213,21 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         list_ForEach(listEntry, v1_pod_spec->tolerations) {
             v1_toleration_free(listEntry->data);
         }
-        list_free(v1_pod_spec->tolerations);
+        list_freeList(v1_pod_spec->tolerations);
         v1_pod_spec->tolerations = NULL;
     }
     if (v1_pod_spec->topology_spread_constraints) {
         list_ForEach(listEntry, v1_pod_spec->topology_spread_constraints) {
             v1_topology_spread_constraint_free(listEntry->data);
         }
-        list_free(v1_pod_spec->topology_spread_constraints);
+        list_freeList(v1_pod_spec->topology_spread_constraints);
         v1_pod_spec->topology_spread_constraints = NULL;
     }
     if (v1_pod_spec->volumes) {
         list_ForEach(listEntry, v1_pod_spec->volumes) {
             v1_volume_free(listEntry->data);
         }
-        list_free(v1_pod_spec->volumes);
+        list_freeList(v1_pod_spec->volumes);
         v1_pod_spec->volumes = NULL;
     }
     free(v1_pod_spec);
@@ -722,7 +722,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         goto end; //nonprimitive container
     }
 
-    containersList = list_create();
+    containersList = list_createList();
 
     cJSON_ArrayForEach(containers_local_nonprimitive,containers )
     {
@@ -767,7 +767,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         goto end; //nonprimitive container
     }
 
-    ephemeral_containersList = list_create();
+    ephemeral_containersList = list_createList();
 
     cJSON_ArrayForEach(ephemeral_containers_local_nonprimitive,ephemeral_containers )
     {
@@ -789,7 +789,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         goto end; //nonprimitive container
     }
 
-    host_aliasesList = list_create();
+    host_aliasesList = list_createList();
 
     cJSON_ArrayForEach(host_aliases_local_nonprimitive,host_aliases )
     {
@@ -847,7 +847,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         goto end; //nonprimitive container
     }
 
-    image_pull_secretsList = list_create();
+    image_pull_secretsList = list_createList();
 
     cJSON_ArrayForEach(image_pull_secrets_local_nonprimitive,image_pull_secrets )
     {
@@ -869,7 +869,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         goto end; //nonprimitive container
     }
 
-    init_containersList = list_create();
+    init_containersList = list_createList();
 
     cJSON_ArrayForEach(init_containers_local_nonprimitive,init_containers )
     {
@@ -899,7 +899,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     if(!cJSON_IsObject(node_selector)) {
         goto end;//primitive map container
     }
-    node_selectorList = list_create();
+    node_selectorList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(node_selector_local_map, node_selector)
     {
@@ -921,7 +921,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     if(!cJSON_IsObject(overhead)) {
         goto end;//primitive map container
     }
-    overheadList = list_create();
+    overheadList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(overhead_local_map, overhead)
     {
@@ -971,7 +971,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         goto end; //nonprimitive container
     }
 
-    readiness_gatesList = list_create();
+    readiness_gatesList = list_createList();
 
     cJSON_ArrayForEach(readiness_gates_local_nonprimitive,readiness_gates )
     {
@@ -1080,7 +1080,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         goto end; //nonprimitive container
     }
 
-    tolerationsList = list_create();
+    tolerationsList = list_createList();
 
     cJSON_ArrayForEach(tolerations_local_nonprimitive,tolerations )
     {
@@ -1102,7 +1102,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         goto end; //nonprimitive container
     }
 
-    topology_spread_constraintsList = list_create();
+    topology_spread_constraintsList = list_createList();
 
     cJSON_ArrayForEach(topology_spread_constraints_local_nonprimitive,topology_spread_constraints )
     {
@@ -1124,7 +1124,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         goto end; //nonprimitive container
     }
 
-    volumesList = list_create();
+    volumesList = list_createList();
 
     cJSON_ArrayForEach(volumes_local_nonprimitive,volumes )
     {

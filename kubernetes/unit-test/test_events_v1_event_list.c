@@ -24,7 +24,7 @@ events_v1_event_list_t* instantiate_events_v1_event_list(int include_optional) {
   if (include_optional) {
     events_v1_event_list = events_v1_event_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
        // false, not to have infinite recursion
       instantiate_v1_list_meta(0)
@@ -32,7 +32,7 @@ events_v1_event_list_t* instantiate_events_v1_event_list(int include_optional) {
   } else {
     events_v1_event_list = events_v1_event_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
       NULL
     );

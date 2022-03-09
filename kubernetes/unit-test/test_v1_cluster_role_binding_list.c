@@ -24,7 +24,7 @@ v1_cluster_role_binding_list_t* instantiate_v1_cluster_role_binding_list(int inc
   if (include_optional) {
     v1_cluster_role_binding_list = v1_cluster_role_binding_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
        // false, not to have infinite recursion
       instantiate_v1_list_meta(0)
@@ -32,7 +32,7 @@ v1_cluster_role_binding_list_t* instantiate_v1_cluster_role_binding_list(int inc
   } else {
     v1_cluster_role_binding_list = v1_cluster_role_binding_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0",
       NULL
     );

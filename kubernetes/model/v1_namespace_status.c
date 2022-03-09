@@ -29,7 +29,7 @@ void v1_namespace_status_free(v1_namespace_status_t *v1_namespace_status) {
         list_ForEach(listEntry, v1_namespace_status->conditions) {
             v1_namespace_condition_free(listEntry->data);
         }
-        list_free(v1_namespace_status->conditions);
+        list_freeList(v1_namespace_status->conditions);
         v1_namespace_status->conditions = NULL;
     }
     if (v1_namespace_status->phase) {
@@ -90,7 +90,7 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

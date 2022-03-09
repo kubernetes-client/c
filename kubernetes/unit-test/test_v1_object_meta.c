@@ -22,38 +22,38 @@ v1_object_meta_t* instantiate_v1_object_meta(int include_optional) {
   v1_object_meta_t* v1_object_meta = NULL;
   if (include_optional) {
     v1_object_meta = v1_object_meta_create(
-      list_create(),
+      list_createList(),
       "0",
       "2013-10-20T19:20:30+01:00",
       56,
       "2013-10-20T19:20:30+01:00",
-      list_create(),
+      list_createList(),
       "0",
       56,
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0",
       "0",
       "0"
     );
   } else {
     v1_object_meta = v1_object_meta_create(
-      list_create(),
+      list_createList(),
       "0",
       "2013-10-20T19:20:30+01:00",
       56,
       "2013-10-20T19:20:30+01:00",
-      list_create(),
+      list_createList(),
       "0",
       56,
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0",
       "0",
       "0"

@@ -25,7 +25,7 @@ v1_mutating_webhook_t* instantiate_v1_mutating_webhook(int include_optional) {
   v1_mutating_webhook_t* v1_mutating_webhook = NULL;
   if (include_optional) {
     v1_mutating_webhook = v1_mutating_webhook_create(
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_admissionregistration_v1_webhook_client_config(0),
       "0",
@@ -36,13 +36,13 @@ v1_mutating_webhook_t* instantiate_v1_mutating_webhook(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_label_selector(0),
       "0",
-      list_create(),
+      list_createList(),
       "0",
       56
     );
   } else {
     v1_mutating_webhook = v1_mutating_webhook_create(
-      list_create(),
+      list_createList(),
       NULL,
       "0",
       "0",
@@ -50,7 +50,7 @@ v1_mutating_webhook_t* instantiate_v1_mutating_webhook(int include_optional) {
       NULL,
       NULL,
       "0",
-      list_create(),
+      list_createList(),
       "0",
       56
     );

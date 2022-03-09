@@ -23,7 +23,7 @@ v1_replication_controller_status_t* instantiate_v1_replication_controller_status
   if (include_optional) {
     v1_replication_controller_status = v1_replication_controller_status_create(
       56,
-      list_create(),
+      list_createList(),
       56,
       56,
       56,
@@ -32,7 +32,7 @@ v1_replication_controller_status_t* instantiate_v1_replication_controller_status
   } else {
     v1_replication_controller_status = v1_replication_controller_status_create(
       56,
-      list_create(),
+      list_createList(),
       56,
       56,
       56,

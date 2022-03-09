@@ -23,12 +23,12 @@ v1_certificate_signing_request_status_t* instantiate_v1_certificate_signing_requ
   if (include_optional) {
     v1_certificate_signing_request_status = v1_certificate_signing_request_status_create(
       "YQ==",
-      list_create()
+      list_createList()
     );
   } else {
     v1_certificate_signing_request_status = v1_certificate_signing_request_status_create(
       "YQ==",
-      list_create()
+      list_createList()
     );
   }
 

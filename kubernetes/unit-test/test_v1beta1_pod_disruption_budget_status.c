@@ -22,20 +22,20 @@ v1beta1_pod_disruption_budget_status_t* instantiate_v1beta1_pod_disruption_budge
   v1beta1_pod_disruption_budget_status_t* v1beta1_pod_disruption_budget_status = NULL;
   if (include_optional) {
     v1beta1_pod_disruption_budget_status = v1beta1_pod_disruption_budget_status_create(
-      list_create(),
+      list_createList(),
       56,
       56,
-      list_create(),
+      list_createList(),
       56,
       56,
       56
     );
   } else {
     v1beta1_pod_disruption_budget_status = v1beta1_pod_disruption_budget_status_create(
-      list_create(),
+      list_createList(),
       56,
       56,
-      list_create(),
+      list_createList(),
       56,
       56,
       56

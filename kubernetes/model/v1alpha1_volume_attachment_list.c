@@ -37,7 +37,7 @@ void v1alpha1_volume_attachment_list_free(v1alpha1_volume_attachment_list_t *v1a
         list_ForEach(listEntry, v1alpha1_volume_attachment_list->items) {
             v1alpha1_volume_attachment_free(listEntry->data);
         }
-        list_free(v1alpha1_volume_attachment_list->items);
+        list_freeList(v1alpha1_volume_attachment_list->items);
         v1alpha1_volume_attachment_list->items = NULL;
     }
     if (v1alpha1_volume_attachment_list->kind) {
@@ -141,7 +141,7 @@ v1alpha1_volume_attachment_list_t *v1alpha1_volume_attachment_list_parseFromJSON
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

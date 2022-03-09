@@ -45,7 +45,7 @@ void v1_stateful_set_status_free(v1_stateful_set_status_t *v1_stateful_set_statu
         list_ForEach(listEntry, v1_stateful_set_status->conditions) {
             v1_stateful_set_condition_free(listEntry->data);
         }
-        list_free(v1_stateful_set_status->conditions);
+        list_freeList(v1_stateful_set_status->conditions);
         v1_stateful_set_status->conditions = NULL;
     }
     if (v1_stateful_set_status->current_revision) {
@@ -194,7 +194,7 @@ v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_statefu
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

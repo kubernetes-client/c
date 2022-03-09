@@ -27,7 +27,7 @@ void v1alpha1_aggregation_rule_free(v1alpha1_aggregation_rule_t *v1alpha1_aggreg
         list_ForEach(listEntry, v1alpha1_aggregation_rule->cluster_role_selectors) {
             v1_label_selector_free(listEntry->data);
         }
-        list_free(v1alpha1_aggregation_rule->cluster_role_selectors);
+        list_freeList(v1alpha1_aggregation_rule->cluster_role_selectors);
         v1alpha1_aggregation_rule->cluster_role_selectors = NULL;
     }
     free(v1alpha1_aggregation_rule);
@@ -76,7 +76,7 @@ v1alpha1_aggregation_rule_t *v1alpha1_aggregation_rule_parseFromJSON(cJSON *v1al
         goto end; //nonprimitive container
     }
 
-    cluster_role_selectorsList = list_create();
+    cluster_role_selectorsList = list_createList();
 
     cJSON_ArrayForEach(cluster_role_selectors_local_nonprimitive,cluster_role_selectors )
     {

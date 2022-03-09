@@ -23,14 +23,14 @@ v1alpha1_storage_version_status_t* instantiate_v1alpha1_storage_version_status(i
   if (include_optional) {
     v1alpha1_storage_version_status = v1alpha1_storage_version_status_create(
       "0",
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1alpha1_storage_version_status = v1alpha1_storage_version_status_create(
       "0",
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

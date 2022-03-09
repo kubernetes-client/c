@@ -22,13 +22,13 @@ v1alpha1_scheduling_t* instantiate_v1alpha1_scheduling(int include_optional) {
   v1alpha1_scheduling_t* v1alpha1_scheduling = NULL;
   if (include_optional) {
     v1alpha1_scheduling = v1alpha1_scheduling_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1alpha1_scheduling = v1alpha1_scheduling_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

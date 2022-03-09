@@ -22,13 +22,13 @@ v1_network_policy_egress_rule_t* instantiate_v1_network_policy_egress_rule(int i
   v1_network_policy_egress_rule_t* v1_network_policy_egress_rule = NULL;
   if (include_optional) {
     v1_network_policy_egress_rule = v1_network_policy_egress_rule_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_network_policy_egress_rule = v1_network_policy_egress_rule_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

@@ -45,7 +45,7 @@ void v1_api_resource_free(v1_api_resource_t *v1_api_resource) {
         list_ForEach(listEntry, v1_api_resource->categories) {
             free(listEntry->data);
         }
-        list_free(v1_api_resource->categories);
+        list_freeList(v1_api_resource->categories);
         v1_api_resource->categories = NULL;
     }
     if (v1_api_resource->group) {
@@ -64,7 +64,7 @@ void v1_api_resource_free(v1_api_resource_t *v1_api_resource) {
         list_ForEach(listEntry, v1_api_resource->short_names) {
             free(listEntry->data);
         }
-        list_free(v1_api_resource->short_names);
+        list_freeList(v1_api_resource->short_names);
         v1_api_resource->short_names = NULL;
     }
     if (v1_api_resource->singular_name) {
@@ -79,7 +79,7 @@ void v1_api_resource_free(v1_api_resource_t *v1_api_resource) {
         list_ForEach(listEntry, v1_api_resource->verbs) {
             free(listEntry->data);
         }
-        list_free(v1_api_resource->verbs);
+        list_freeList(v1_api_resource->verbs);
         v1_api_resource->verbs = NULL;
     }
     if (v1_api_resource->version) {
@@ -228,7 +228,7 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
     if(!cJSON_IsArray(categories)) {
         goto end;//primitive container
     }
-    categoriesList = list_create();
+    categoriesList = list_createList();
 
     cJSON_ArrayForEach(categories_local, categories)
     {
@@ -293,7 +293,7 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
     if(!cJSON_IsArray(short_names)) {
         goto end;//primitive container
     }
-    short_namesList = list_create();
+    short_namesList = list_createList();
 
     cJSON_ArrayForEach(short_names_local, short_names)
     {
@@ -338,7 +338,7 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
     if(!cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
-    verbsList = list_create();
+    verbsList = list_createList();
 
     cJSON_ArrayForEach(verbs_local, verbs)
     {

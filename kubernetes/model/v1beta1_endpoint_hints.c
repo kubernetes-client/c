@@ -27,7 +27,7 @@ void v1beta1_endpoint_hints_free(v1beta1_endpoint_hints_t *v1beta1_endpoint_hint
         list_ForEach(listEntry, v1beta1_endpoint_hints->for_zones) {
             v1beta1_for_zone_free(listEntry->data);
         }
-        list_free(v1beta1_endpoint_hints->for_zones);
+        list_freeList(v1beta1_endpoint_hints->for_zones);
         v1beta1_endpoint_hints->for_zones = NULL;
     }
     free(v1beta1_endpoint_hints);
@@ -76,7 +76,7 @@ v1beta1_endpoint_hints_t *v1beta1_endpoint_hints_parseFromJSON(cJSON *v1beta1_en
         goto end; //nonprimitive container
     }
 
-    for_zonesList = list_create();
+    for_zonesList = list_createList();
 
     cJSON_ArrayForEach(for_zones_local_nonprimitive,for_zones )
     {

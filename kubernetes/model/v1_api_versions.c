@@ -41,14 +41,14 @@ void v1_api_versions_free(v1_api_versions_t *v1_api_versions) {
         list_ForEach(listEntry, v1_api_versions->server_address_by_client_cidrs) {
             v1_server_address_by_client_cidr_free(listEntry->data);
         }
-        list_free(v1_api_versions->server_address_by_client_cidrs);
+        list_freeList(v1_api_versions->server_address_by_client_cidrs);
         v1_api_versions->server_address_by_client_cidrs = NULL;
     }
     if (v1_api_versions->versions) {
         list_ForEach(listEntry, v1_api_versions->versions) {
             free(listEntry->data);
         }
-        list_free(v1_api_versions->versions);
+        list_freeList(v1_api_versions->versions);
         v1_api_versions->versions = NULL;
     }
     free(v1_api_versions);
@@ -156,7 +156,7 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
         goto end; //nonprimitive container
     }
 
-    server_address_by_client_cidrsList = list_create();
+    server_address_by_client_cidrsList = list_createList();
 
     cJSON_ArrayForEach(server_address_by_client_cidrs_local_nonprimitive,server_address_by_client_cidrs )
     {
@@ -180,7 +180,7 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
     if(!cJSON_IsArray(versions)) {
         goto end;//primitive container
     }
-    versionsList = list_create();
+    versionsList = list_createList();
 
     cJSON_ArrayForEach(versions_local, versions)
     {

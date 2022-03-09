@@ -24,15 +24,15 @@ v1_api_versions_t* instantiate_v1_api_versions(int include_optional) {
     v1_api_versions = v1_api_versions_create(
       "0",
       "0",
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_api_versions = v1_api_versions_create(
       "0",
       "0",
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

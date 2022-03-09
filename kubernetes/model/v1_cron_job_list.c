@@ -37,7 +37,7 @@ void v1_cron_job_list_free(v1_cron_job_list_t *v1_cron_job_list) {
         list_ForEach(listEntry, v1_cron_job_list->items) {
             v1_cron_job_free(listEntry->data);
         }
-        list_free(v1_cron_job_list->items);
+        list_freeList(v1_cron_job_list->items);
         v1_cron_job_list->items = NULL;
     }
     if (v1_cron_job_list->kind) {
@@ -141,7 +141,7 @@ v1_cron_job_list_t *v1_cron_job_list_parseFromJSON(cJSON *v1_cron_job_listJSON){
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

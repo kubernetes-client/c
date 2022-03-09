@@ -22,11 +22,11 @@ v1_topology_selector_term_t* instantiate_v1_topology_selector_term(int include_o
   v1_topology_selector_term_t* v1_topology_selector_term = NULL;
   if (include_optional) {
     v1_topology_selector_term = v1_topology_selector_term_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1_topology_selector_term = v1_topology_selector_term_create(
-      list_create()
+      list_createList()
     );
   }
 

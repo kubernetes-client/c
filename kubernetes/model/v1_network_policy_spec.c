@@ -33,14 +33,14 @@ void v1_network_policy_spec_free(v1_network_policy_spec_t *v1_network_policy_spe
         list_ForEach(listEntry, v1_network_policy_spec->egress) {
             v1_network_policy_egress_rule_free(listEntry->data);
         }
-        list_free(v1_network_policy_spec->egress);
+        list_freeList(v1_network_policy_spec->egress);
         v1_network_policy_spec->egress = NULL;
     }
     if (v1_network_policy_spec->ingress) {
         list_ForEach(listEntry, v1_network_policy_spec->ingress) {
             v1_network_policy_ingress_rule_free(listEntry->data);
         }
-        list_free(v1_network_policy_spec->ingress);
+        list_freeList(v1_network_policy_spec->ingress);
         v1_network_policy_spec->ingress = NULL;
     }
     if (v1_network_policy_spec->pod_selector) {
@@ -51,7 +51,7 @@ void v1_network_policy_spec_free(v1_network_policy_spec_t *v1_network_policy_spe
         list_ForEach(listEntry, v1_network_policy_spec->policy_types) {
             free(listEntry->data);
         }
-        list_free(v1_network_policy_spec->policy_types);
+        list_freeList(v1_network_policy_spec->policy_types);
         v1_network_policy_spec->policy_types = NULL;
     }
     free(v1_network_policy_spec);
@@ -155,7 +155,7 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
         goto end; //nonprimitive container
     }
 
-    egressList = list_create();
+    egressList = list_createList();
 
     cJSON_ArrayForEach(egress_local_nonprimitive,egress )
     {
@@ -177,7 +177,7 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
         goto end; //nonprimitive container
     }
 
-    ingressList = list_create();
+    ingressList = list_createList();
 
     cJSON_ArrayForEach(ingress_local_nonprimitive,ingress )
     {
@@ -207,7 +207,7 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
     if(!cJSON_IsArray(policy_types)) {
         goto end;//primitive container
     }
-    policy_typesList = list_create();
+    policy_typesList = list_createList();
 
     cJSON_ArrayForEach(policy_types_local, policy_types)
     {

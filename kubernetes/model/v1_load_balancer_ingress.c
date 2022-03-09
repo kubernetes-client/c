@@ -39,7 +39,7 @@ void v1_load_balancer_ingress_free(v1_load_balancer_ingress_t *v1_load_balancer_
         list_ForEach(listEntry, v1_load_balancer_ingress->ports) {
             v1_port_status_free(listEntry->data);
         }
-        list_free(v1_load_balancer_ingress->ports);
+        list_freeList(v1_load_balancer_ingress->ports);
         v1_load_balancer_ingress->ports = NULL;
     }
     free(v1_load_balancer_ingress);
@@ -122,7 +122,7 @@ v1_load_balancer_ingress_t *v1_load_balancer_ingress_parseFromJSON(cJSON *v1_loa
         goto end; //nonprimitive container
     }
 
-    portsList = list_create();
+    portsList = list_createList();
 
     cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {

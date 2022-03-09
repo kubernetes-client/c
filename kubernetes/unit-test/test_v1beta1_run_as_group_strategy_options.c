@@ -22,12 +22,12 @@ v1beta1_run_as_group_strategy_options_t* instantiate_v1beta1_run_as_group_strate
   v1beta1_run_as_group_strategy_options_t* v1beta1_run_as_group_strategy_options = NULL;
   if (include_optional) {
     v1beta1_run_as_group_strategy_options = v1beta1_run_as_group_strategy_options_create(
-      list_create(),
+      list_createList(),
       "0"
     );
   } else {
     v1beta1_run_as_group_strategy_options = v1beta1_run_as_group_strategy_options_create(
-      list_create(),
+      list_createList(),
       "0"
     );
   }

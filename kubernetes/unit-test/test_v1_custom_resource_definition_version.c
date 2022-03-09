@@ -24,7 +24,7 @@ v1_custom_resource_definition_version_t* instantiate_v1_custom_resource_definiti
   v1_custom_resource_definition_version_t* v1_custom_resource_definition_version = NULL;
   if (include_optional) {
     v1_custom_resource_definition_version = v1_custom_resource_definition_version_create(
-      list_create(),
+      list_createList(),
       1,
       "0",
       "0",
@@ -37,7 +37,7 @@ v1_custom_resource_definition_version_t* instantiate_v1_custom_resource_definiti
     );
   } else {
     v1_custom_resource_definition_version = v1_custom_resource_definition_version_create(
-      list_create(),
+      list_createList(),
       1,
       "0",
       "0",

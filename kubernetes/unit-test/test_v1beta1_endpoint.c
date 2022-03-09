@@ -25,7 +25,7 @@ v1beta1_endpoint_t* instantiate_v1beta1_endpoint(int include_optional) {
   v1beta1_endpoint_t* v1beta1_endpoint = NULL;
   if (include_optional) {
     v1beta1_endpoint = v1beta1_endpoint_create(
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1beta1_endpoint_conditions(0),
        // false, not to have infinite recursion
@@ -34,17 +34,17 @@ v1beta1_endpoint_t* instantiate_v1beta1_endpoint(int include_optional) {
       "0",
        // false, not to have infinite recursion
       instantiate_v1_object_reference(0),
-      list_create()
+      list_createList()
     );
   } else {
     v1beta1_endpoint = v1beta1_endpoint_create(
-      list_create(),
+      list_createList(),
       NULL,
       NULL,
       "0",
       "0",
       NULL,
-      list_create()
+      list_createList()
     );
   }
 

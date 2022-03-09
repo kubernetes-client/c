@@ -43,14 +43,14 @@ void v1_csi_driver_spec_free(v1_csi_driver_spec_t *v1_csi_driver_spec) {
         list_ForEach(listEntry, v1_csi_driver_spec->token_requests) {
             storage_v1_token_request_free(listEntry->data);
         }
-        list_free(v1_csi_driver_spec->token_requests);
+        list_freeList(v1_csi_driver_spec->token_requests);
         v1_csi_driver_spec->token_requests = NULL;
     }
     if (v1_csi_driver_spec->volume_lifecycle_modes) {
         list_ForEach(listEntry, v1_csi_driver_spec->volume_lifecycle_modes) {
             free(listEntry->data);
         }
-        list_free(v1_csi_driver_spec->volume_lifecycle_modes);
+        list_freeList(v1_csi_driver_spec->volume_lifecycle_modes);
         v1_csi_driver_spec->volume_lifecycle_modes = NULL;
     }
     free(v1_csi_driver_spec);
@@ -201,7 +201,7 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
         goto end; //nonprimitive container
     }
 
-    token_requestsList = list_create();
+    token_requestsList = list_createList();
 
     cJSON_ArrayForEach(token_requests_local_nonprimitive,token_requests )
     {
@@ -222,7 +222,7 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
     if(!cJSON_IsArray(volume_lifecycle_modes)) {
         goto end;//primitive container
     }
-    volume_lifecycle_modesList = list_create();
+    volume_lifecycle_modesList = list_createList();
 
     cJSON_ArrayForEach(volume_lifecycle_modes_local, volume_lifecycle_modes)
     {

@@ -42,7 +42,7 @@ void kubernets_watch_handler(void **pData, long *pDataLen, KUBE_WATCH_EVENT_HAND
 {
     char *data = *(char **) pData;
 
-    list_t *watch_event_list = list_create();
+    list_t *watch_event_list = list_createList();
     if (!watch_event_list) {
         fprintf(stderr, "Cannot create a list for watch events.\n");
         return;

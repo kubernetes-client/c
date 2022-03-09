@@ -35,7 +35,7 @@ void v1alpha1_server_storage_version_free(v1alpha1_server_storage_version_t *v1a
         list_ForEach(listEntry, v1alpha1_server_storage_version->decodable_versions) {
             free(listEntry->data);
         }
-        list_free(v1alpha1_server_storage_version->decodable_versions);
+        list_freeList(v1alpha1_server_storage_version->decodable_versions);
         v1alpha1_server_storage_version->decodable_versions = NULL;
     }
     if (v1alpha1_server_storage_version->encoding_version) {
@@ -109,7 +109,7 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
     if(!cJSON_IsArray(decodable_versions)) {
         goto end;//primitive container
     }
-    decodable_versionsList = list_create();
+    decodable_versionsList = list_createList();
 
     cJSON_ArrayForEach(decodable_versions_local, decodable_versions)
     {

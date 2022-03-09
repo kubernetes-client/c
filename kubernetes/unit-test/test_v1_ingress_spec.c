@@ -26,15 +26,15 @@ v1_ingress_spec_t* instantiate_v1_ingress_spec(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_ingress_backend(0),
       "0",
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_ingress_spec = v1_ingress_spec_create(
       NULL,
       "0",
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

@@ -29,14 +29,14 @@ void v1_uncounted_terminated_pods_free(v1_uncounted_terminated_pods_t *v1_uncoun
         list_ForEach(listEntry, v1_uncounted_terminated_pods->failed) {
             free(listEntry->data);
         }
-        list_free(v1_uncounted_terminated_pods->failed);
+        list_freeList(v1_uncounted_terminated_pods->failed);
         v1_uncounted_terminated_pods->failed = NULL;
     }
     if (v1_uncounted_terminated_pods->succeeded) {
         list_ForEach(listEntry, v1_uncounted_terminated_pods->succeeded) {
             free(listEntry->data);
         }
-        list_free(v1_uncounted_terminated_pods->succeeded);
+        list_freeList(v1_uncounted_terminated_pods->succeeded);
         v1_uncounted_terminated_pods->succeeded = NULL;
     }
     free(v1_uncounted_terminated_pods);
@@ -98,7 +98,7 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON
     if(!cJSON_IsArray(failed)) {
         goto end;//primitive container
     }
-    failedList = list_create();
+    failedList = list_createList();
 
     cJSON_ArrayForEach(failed_local, failed)
     {
@@ -118,7 +118,7 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON
     if(!cJSON_IsArray(succeeded)) {
         goto end;//primitive container
     }
-    succeededList = list_create();
+    succeededList = list_createList();
 
     cJSON_ArrayForEach(succeeded_local, succeeded)
     {

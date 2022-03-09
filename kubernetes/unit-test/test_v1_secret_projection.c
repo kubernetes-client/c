@@ -22,13 +22,13 @@ v1_secret_projection_t* instantiate_v1_secret_projection(int include_optional) {
   v1_secret_projection_t* v1_secret_projection = NULL;
   if (include_optional) {
     v1_secret_projection = v1_secret_projection_create(
-      list_create(),
+      list_createList(),
       "0",
       1
     );
   } else {
     v1_secret_projection = v1_secret_projection_create(
-      list_create(),
+      list_createList(),
       "0",
       1
     );

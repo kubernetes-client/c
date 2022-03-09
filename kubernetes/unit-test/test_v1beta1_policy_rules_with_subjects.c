@@ -22,15 +22,15 @@ v1beta1_policy_rules_with_subjects_t* instantiate_v1beta1_policy_rules_with_subj
   v1beta1_policy_rules_with_subjects_t* v1beta1_policy_rules_with_subjects = NULL;
   if (include_optional) {
     v1beta1_policy_rules_with_subjects = v1beta1_policy_rules_with_subjects_create(
-      list_create(),
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList(),
+      list_createList()
     );
   } else {
     v1beta1_policy_rules_with_subjects = v1beta1_policy_rules_with_subjects_create(
-      list_create(),
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList(),
+      list_createList()
     );
   }
 

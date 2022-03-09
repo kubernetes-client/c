@@ -45,7 +45,7 @@ void v1alpha1_role_free(v1alpha1_role_t *v1alpha1_role) {
         list_ForEach(listEntry, v1alpha1_role->rules) {
             v1alpha1_policy_rule_free(listEntry->data);
         }
-        list_free(v1alpha1_role->rules);
+        list_freeList(v1alpha1_role->rules);
         v1alpha1_role->rules = NULL;
     }
     free(v1alpha1_role);
@@ -150,7 +150,7 @@ v1alpha1_role_t *v1alpha1_role_parseFromJSON(cJSON *v1alpha1_roleJSON){
         goto end; //nonprimitive container
     }
 
-    rulesList = list_create();
+    rulesList = list_createList();
 
     cJSON_ArrayForEach(rules_local_nonprimitive,rules )
     {

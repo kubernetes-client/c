@@ -43,7 +43,7 @@ void v1_delete_options_free(v1_delete_options_t *v1_delete_options) {
         list_ForEach(listEntry, v1_delete_options->dry_run) {
             free(listEntry->data);
         }
-        list_free(v1_delete_options->dry_run);
+        list_freeList(v1_delete_options->dry_run);
         v1_delete_options->dry_run = NULL;
     }
     if (v1_delete_options->kind) {
@@ -165,7 +165,7 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
     if(!cJSON_IsArray(dry_run)) {
         goto end;//primitive container
     }
-    dry_runList = list_create();
+    dry_runList = list_createList();
 
     cJSON_ArrayForEach(dry_run_local, dry_run)
     {

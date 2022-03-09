@@ -22,28 +22,28 @@ v1_api_resource_t* instantiate_v1_api_resource(int include_optional) {
   v1_api_resource_t* v1_api_resource = NULL;
   if (include_optional) {
     v1_api_resource = v1_api_resource_create(
-      list_create(),
+      list_createList(),
       "0",
       "0",
       "0",
       1,
-      list_create(),
+      list_createList(),
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0"
     );
   } else {
     v1_api_resource = v1_api_resource_create(
-      list_create(),
+      list_createList(),
       "0",
       "0",
       "0",
       1,
-      list_create(),
+      list_createList(),
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0"
     );
   }

@@ -46,7 +46,7 @@ void v1_secret_free(v1_secret_t *v1_secret) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_secret->data);
+        list_freeList(v1_secret->data);
         v1_secret->data = NULL;
     }
     if (v1_secret->kind) {
@@ -64,7 +64,7 @@ void v1_secret_free(v1_secret_t *v1_secret) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_secret->string_data);
+        list_freeList(v1_secret->string_data);
         v1_secret->string_data = NULL;
     }
     if (v1_secret->type) {
@@ -193,7 +193,7 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
     if(!cJSON_IsObject(data)) {
         goto end;//primitive map container
     }
-    dataList = list_create();
+    dataList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(data_local_map, data)
     {
@@ -239,7 +239,7 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
     if(!cJSON_IsObject(string_data)) {
         goto end;//primitive map container
     }
-    string_dataList = list_create();
+    string_dataList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(string_data_local_map, string_data)
     {

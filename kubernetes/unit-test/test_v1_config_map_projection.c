@@ -22,13 +22,13 @@ v1_config_map_projection_t* instantiate_v1_config_map_projection(int include_opt
   v1_config_map_projection_t* v1_config_map_projection = NULL;
   if (include_optional) {
     v1_config_map_projection = v1_config_map_projection_create(
-      list_create(),
+      list_createList(),
       "0",
       1
     );
   } else {
     v1_config_map_projection = v1_config_map_projection_create(
-      list_create(),
+      list_createList(),
       "0",
       1
     );

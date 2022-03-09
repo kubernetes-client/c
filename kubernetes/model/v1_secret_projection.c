@@ -31,7 +31,7 @@ void v1_secret_projection_free(v1_secret_projection_t *v1_secret_projection) {
         list_ForEach(listEntry, v1_secret_projection->items) {
             v1_key_to_path_free(listEntry->data);
         }
-        list_free(v1_secret_projection->items);
+        list_freeList(v1_secret_projection->items);
         v1_secret_projection->items = NULL;
     }
     if (v1_secret_projection->name) {
@@ -100,7 +100,7 @@ v1_secret_projection_t *v1_secret_projection_parseFromJSON(cJSON *v1_secret_proj
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

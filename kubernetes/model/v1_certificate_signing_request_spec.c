@@ -44,14 +44,14 @@ void v1_certificate_signing_request_spec_free(v1_certificate_signing_request_spe
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_certificate_signing_request_spec->extra);
+        list_freeList(v1_certificate_signing_request_spec->extra);
         v1_certificate_signing_request_spec->extra = NULL;
     }
     if (v1_certificate_signing_request_spec->groups) {
         list_ForEach(listEntry, v1_certificate_signing_request_spec->groups) {
             free(listEntry->data);
         }
-        list_free(v1_certificate_signing_request_spec->groups);
+        list_freeList(v1_certificate_signing_request_spec->groups);
         v1_certificate_signing_request_spec->groups = NULL;
     }
     if (v1_certificate_signing_request_spec->request) {
@@ -70,7 +70,7 @@ void v1_certificate_signing_request_spec_free(v1_certificate_signing_request_spe
         list_ForEach(listEntry, v1_certificate_signing_request_spec->usages) {
             free(listEntry->data);
         }
-        list_free(v1_certificate_signing_request_spec->usages);
+        list_freeList(v1_certificate_signing_request_spec->usages);
         v1_certificate_signing_request_spec->usages = NULL;
     }
     if (v1_certificate_signing_request_spec->username) {
@@ -205,7 +205,7 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
     if(!cJSON_IsObject(extra)) {
         goto end;//primitive map container
     }
-    extraList = list_create();
+    extraList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(extra_local_map, extra)
     {
@@ -222,7 +222,7 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
     if(!cJSON_IsArray(groups)) {
         goto end;//primitive container
     }
-    groupsList = list_create();
+    groupsList = list_createList();
 
     cJSON_ArrayForEach(groups_local, groups)
     {
@@ -275,7 +275,7 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
     if(!cJSON_IsArray(usages)) {
         goto end;//primitive container
     }
-    usagesList = list_create();
+    usagesList = list_createList();
 
     cJSON_ArrayForEach(usages_local, usages)
     {

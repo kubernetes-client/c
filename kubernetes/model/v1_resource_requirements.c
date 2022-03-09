@@ -32,7 +32,7 @@ void v1_resource_requirements_free(v1_resource_requirements_t *v1_resource_requi
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_resource_requirements->limits);
+        list_freeList(v1_resource_requirements->limits);
         v1_resource_requirements->limits = NULL;
     }
     if (v1_resource_requirements->requests) {
@@ -42,7 +42,7 @@ void v1_resource_requirements_free(v1_resource_requirements_t *v1_resource_requi
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1_resource_requirements->requests);
+        list_freeList(v1_resource_requirements->requests);
         v1_resource_requirements->requests = NULL;
     }
     free(v1_resource_requirements);
@@ -110,7 +110,7 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
     if(!cJSON_IsObject(limits)) {
         goto end;//primitive map container
     }
-    limitsList = list_create();
+    limitsList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(limits_local_map, limits)
     {
@@ -132,7 +132,7 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
     if(!cJSON_IsObject(requests)) {
         goto end;//primitive map container
     }
-    requestsList = list_create();
+    requestsList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(requests_local_map, requests)
     {

@@ -39,7 +39,7 @@ void v1beta1_endpoint_free(v1beta1_endpoint_t *v1beta1_endpoint) {
         list_ForEach(listEntry, v1beta1_endpoint->addresses) {
             free(listEntry->data);
         }
-        list_free(v1beta1_endpoint->addresses);
+        list_freeList(v1beta1_endpoint->addresses);
         v1beta1_endpoint->addresses = NULL;
     }
     if (v1beta1_endpoint->conditions) {
@@ -69,7 +69,7 @@ void v1beta1_endpoint_free(v1beta1_endpoint_t *v1beta1_endpoint) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1beta1_endpoint->topology);
+        list_freeList(v1beta1_endpoint->topology);
         v1beta1_endpoint->topology = NULL;
     }
     free(v1beta1_endpoint);
@@ -204,7 +204,7 @@ v1beta1_endpoint_t *v1beta1_endpoint_parseFromJSON(cJSON *v1beta1_endpointJSON){
     if(!cJSON_IsArray(addresses)) {
         goto end;//primitive container
     }
-    addressesList = list_create();
+    addressesList = list_createList();
 
     cJSON_ArrayForEach(addresses_local, addresses)
     {
@@ -259,7 +259,7 @@ v1beta1_endpoint_t *v1beta1_endpoint_parseFromJSON(cJSON *v1beta1_endpointJSON){
     if(!cJSON_IsObject(topology)) {
         goto end;//primitive map container
     }
-    topologyList = list_create();
+    topologyList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(topology_local_map, topology)
     {

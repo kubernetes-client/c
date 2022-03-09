@@ -22,11 +22,11 @@ v1beta1_endpoint_hints_t* instantiate_v1beta1_endpoint_hints(int include_optiona
   v1beta1_endpoint_hints_t* v1beta1_endpoint_hints = NULL;
   if (include_optional) {
     v1beta1_endpoint_hints = v1beta1_endpoint_hints_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1beta1_endpoint_hints = v1beta1_endpoint_hints_create(
-      list_create()
+      list_createList()
     );
   }
 

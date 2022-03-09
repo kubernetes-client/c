@@ -27,7 +27,7 @@ void v1_namespace_spec_free(v1_namespace_spec_t *v1_namespace_spec) {
         list_ForEach(listEntry, v1_namespace_spec->finalizers) {
             free(listEntry->data);
         }
-        list_free(v1_namespace_spec->finalizers);
+        list_freeList(v1_namespace_spec->finalizers);
         v1_namespace_spec->finalizers = NULL;
     }
     free(v1_namespace_spec);
@@ -72,7 +72,7 @@ v1_namespace_spec_t *v1_namespace_spec_parseFromJSON(cJSON *v1_namespace_specJSO
     if(!cJSON_IsArray(finalizers)) {
         goto end;//primitive container
     }
-    finalizersList = list_create();
+    finalizersList = list_createList();
 
     cJSON_ArrayForEach(finalizers_local, finalizers)
     {

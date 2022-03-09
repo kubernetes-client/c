@@ -29,7 +29,7 @@ void v1_service_status_free(v1_service_status_t *v1_service_status) {
         list_ForEach(listEntry, v1_service_status->conditions) {
             v1_condition_free(listEntry->data);
         }
-        list_free(v1_service_status->conditions);
+        list_freeList(v1_service_status->conditions);
         v1_service_status->conditions = NULL;
     }
     if (v1_service_status->load_balancer) {
@@ -98,7 +98,7 @@ v1_service_status_t *v1_service_status_parseFromJSON(cJSON *v1_service_statusJSO
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {

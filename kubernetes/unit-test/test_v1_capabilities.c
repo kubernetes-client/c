@@ -22,13 +22,13 @@ v1_capabilities_t* instantiate_v1_capabilities(int include_optional) {
   v1_capabilities_t* v1_capabilities = NULL;
   if (include_optional) {
     v1_capabilities = v1_capabilities_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_capabilities = v1_capabilities_create(
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

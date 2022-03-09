@@ -12,7 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Prepare
-      run: sudo apt-get install -y cppcheck
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cppcheck
     - name: Code static check for config
       run: sh ./code-check/code-static-check.sh ./kubernetes/config/
     - name: Code static check for examples
@@ -22,7 +24,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Prepare
-      run: sudo apt-get install -y indent
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y indent
     - name: Code style check for config
       run: |
         find ./kubernetes/config/ -type f -regextype posix-extended -regex ".*\.(c|h)" -exec sh ./code-check/code-style-check.sh {} \;

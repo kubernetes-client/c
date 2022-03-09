@@ -39,14 +39,14 @@ void v1_fc_volume_source_free(v1_fc_volume_source_t *v1_fc_volume_source) {
         list_ForEach(listEntry, v1_fc_volume_source->target_wwns) {
             free(listEntry->data);
         }
-        list_free(v1_fc_volume_source->target_wwns);
+        list_freeList(v1_fc_volume_source->target_wwns);
         v1_fc_volume_source->target_wwns = NULL;
     }
     if (v1_fc_volume_source->wwids) {
         list_ForEach(listEntry, v1_fc_volume_source->wwids) {
             free(listEntry->data);
         }
-        list_free(v1_fc_volume_source->wwids);
+        list_freeList(v1_fc_volume_source->wwids);
         v1_fc_volume_source->wwids = NULL;
     }
     free(v1_fc_volume_source);
@@ -159,7 +159,7 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
     if(!cJSON_IsArray(target_wwns)) {
         goto end;//primitive container
     }
-    target_wwnsList = list_create();
+    target_wwnsList = list_createList();
 
     cJSON_ArrayForEach(target_wwns_local, target_wwns)
     {
@@ -179,7 +179,7 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
     if(!cJSON_IsArray(wwids)) {
         goto end;//primitive container
     }
-    wwidsList = list_create();
+    wwidsList = list_createList();
 
     cJSON_ArrayForEach(wwids_local, wwids)
     {

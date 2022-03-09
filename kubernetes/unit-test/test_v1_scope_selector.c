@@ -22,11 +22,11 @@ v1_scope_selector_t* instantiate_v1_scope_selector(int include_optional) {
   v1_scope_selector_t* v1_scope_selector = NULL;
   if (include_optional) {
     v1_scope_selector = v1_scope_selector_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1_scope_selector = v1_scope_selector_create(
-      list_create()
+      list_createList()
     );
   }
 

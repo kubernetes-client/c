@@ -14,25 +14,25 @@ static void create_a_pod(apiClient_t * apiClient)
     podinfo->metadata->name = strdup("test-pod-8");
 
     /* set containers for pod */
-    list_t *containerlist = list_create();
+    list_t *containerlist = list_createList();
     v1_container_t *con = calloc(1, sizeof(v1_container_t));
     con->name = strdup("my-container");
     con->image = strdup("ubuntu:latest");
     con->image_pull_policy = strdup("IfNotPresent");
 
     /* set command for container */
-    list_t *commandlist = list_create();
+    list_t *commandlist = list_createList();
     char *cmd = strdup("sleep");
     list_addElement(commandlist, cmd);
     con->command = commandlist;
 
-    list_t *arglist = list_create();
+    list_t *arglist = list_createList();
     char *arg1 = strdup("3600");
     list_addElement(arglist, arg1);
     con->args = arglist;
 
     /* set volume mounts for container  */
-    list_t *volumemounts = list_create();
+    list_t *volumemounts = list_createList();
     v1_volume_mount_t *volmou = calloc(1, sizeof(v1_volume_mount_t));
     volmou->mount_path = strdup("/test");
     volmou->name = strdup("test");
@@ -43,7 +43,7 @@ static void create_a_pod(apiClient_t * apiClient)
     podinfo->spec->containers = containerlist;
 
     /* set volumes for pod */
-    list_t *volumelist = list_create();
+    list_t *volumelist = list_createList();
     v1_volume_t *volume = calloc(1, sizeof(v1_volume_t));
     volume->name = strdup("test");
 

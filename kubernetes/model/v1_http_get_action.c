@@ -39,7 +39,7 @@ void v1_http_get_action_free(v1_http_get_action_t *v1_http_get_action) {
         list_ForEach(listEntry, v1_http_get_action->http_headers) {
             v1_http_header_free(listEntry->data);
         }
-        list_free(v1_http_get_action->http_headers);
+        list_freeList(v1_http_get_action->http_headers);
         v1_http_get_action->http_headers = NULL;
     }
     if (v1_http_get_action->path) {
@@ -151,7 +151,7 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
         goto end; //nonprimitive container
     }
 
-    http_headersList = list_create();
+    http_headersList = list_createList();
 
     cJSON_ArrayForEach(http_headers_local_nonprimitive,http_headers )
     {

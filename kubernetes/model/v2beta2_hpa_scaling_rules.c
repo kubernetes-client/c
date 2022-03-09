@@ -31,7 +31,7 @@ void v2beta2_hpa_scaling_rules_free(v2beta2_hpa_scaling_rules_t *v2beta2_hpa_sca
         list_ForEach(listEntry, v2beta2_hpa_scaling_rules->policies) {
             v2beta2_hpa_scaling_policy_free(listEntry->data);
         }
-        list_free(v2beta2_hpa_scaling_rules->policies);
+        list_freeList(v2beta2_hpa_scaling_rules->policies);
         v2beta2_hpa_scaling_rules->policies = NULL;
     }
     if (v2beta2_hpa_scaling_rules->select_policy) {
@@ -100,7 +100,7 @@ v2beta2_hpa_scaling_rules_t *v2beta2_hpa_scaling_rules_parseFromJSON(cJSON *v2be
         goto end; //nonprimitive container
     }
 
-    policiesList = list_create();
+    policiesList = list_createList();
 
     cJSON_ArrayForEach(policies_local_nonprimitive,policies )
     {

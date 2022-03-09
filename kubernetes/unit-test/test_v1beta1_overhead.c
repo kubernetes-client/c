@@ -22,11 +22,11 @@ v1beta1_overhead_t* instantiate_v1beta1_overhead(int include_optional) {
   v1beta1_overhead_t* v1beta1_overhead = NULL;
   if (include_optional) {
     v1beta1_overhead = v1beta1_overhead_create(
-      list_create()
+      list_createList()
     );
   } else {
     v1beta1_overhead = v1beta1_overhead_create(
-      list_create()
+      list_createList()
     );
   }
 

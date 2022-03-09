@@ -53,7 +53,7 @@ void v1_rbd_persistent_volume_source_free(v1_rbd_persistent_volume_source_t *v1_
         list_ForEach(listEntry, v1_rbd_persistent_volume_source->monitors) {
             free(listEntry->data);
         }
-        list_free(v1_rbd_persistent_volume_source->monitors);
+        list_freeList(v1_rbd_persistent_volume_source->monitors);
         v1_rbd_persistent_volume_source->monitors = NULL;
     }
     if (v1_rbd_persistent_volume_source->pool) {
@@ -212,7 +212,7 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
     if(!cJSON_IsArray(monitors)) {
         goto end;//primitive container
     }
-    monitorsList = list_create();
+    monitorsList = list_createList();
 
     cJSON_ArrayForEach(monitors_local, monitors)
     {

@@ -22,20 +22,20 @@ v1_custom_resource_definition_names_t* instantiate_v1_custom_resource_definition
   v1_custom_resource_definition_names_t* v1_custom_resource_definition_names = NULL;
   if (include_optional) {
     v1_custom_resource_definition_names = v1_custom_resource_definition_names_create(
-      list_create(),
+      list_createList(),
       "0",
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0"
     );
   } else {
     v1_custom_resource_definition_names = v1_custom_resource_definition_names_create(
-      list_create(),
+      list_createList(),
       "0",
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0"
     );
   }

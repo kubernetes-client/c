@@ -33,7 +33,7 @@ void v1_secret_volume_source_free(v1_secret_volume_source_t *v1_secret_volume_so
         list_ForEach(listEntry, v1_secret_volume_source->items) {
             v1_key_to_path_free(listEntry->data);
         }
-        list_free(v1_secret_volume_source->items);
+        list_freeList(v1_secret_volume_source->items);
         v1_secret_volume_source->items = NULL;
     }
     if (v1_secret_volume_source->secret_name) {
@@ -119,7 +119,7 @@ v1_secret_volume_source_t *v1_secret_volume_source_parseFromJSON(cJSON *v1_secre
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

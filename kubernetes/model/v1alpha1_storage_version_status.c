@@ -35,14 +35,14 @@ void v1alpha1_storage_version_status_free(v1alpha1_storage_version_status_t *v1a
         list_ForEach(listEntry, v1alpha1_storage_version_status->conditions) {
             v1alpha1_storage_version_condition_free(listEntry->data);
         }
-        list_free(v1alpha1_storage_version_status->conditions);
+        list_freeList(v1alpha1_storage_version_status->conditions);
         v1alpha1_storage_version_status->conditions = NULL;
     }
     if (v1alpha1_storage_version_status->storage_versions) {
         list_ForEach(listEntry, v1alpha1_storage_version_status->storage_versions) {
             v1alpha1_server_storage_version_free(listEntry->data);
         }
-        list_free(v1alpha1_storage_version_status->storage_versions);
+        list_freeList(v1alpha1_storage_version_status->storage_versions);
         v1alpha1_storage_version_status->storage_versions = NULL;
     }
     free(v1alpha1_storage_version_status);
@@ -128,7 +128,7 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
@@ -150,7 +150,7 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
         goto end; //nonprimitive container
     }
 
-    storage_versionsList = list_create();
+    storage_versionsList = list_createList();
 
     cJSON_ArrayForEach(storage_versions_local_nonprimitive,storage_versions )
     {

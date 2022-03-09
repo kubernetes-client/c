@@ -37,7 +37,7 @@ void v1_status_details_free(v1_status_details_t *v1_status_details) {
         list_ForEach(listEntry, v1_status_details->causes) {
             v1_status_cause_free(listEntry->data);
         }
-        list_free(v1_status_details->causes);
+        list_freeList(v1_status_details->causes);
         v1_status_details->causes = NULL;
     }
     if (v1_status_details->group) {
@@ -142,7 +142,7 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
         goto end; //nonprimitive container
     }
 
-    causesList = list_create();
+    causesList = list_createList();
 
     cJSON_ArrayForEach(causes_local_nonprimitive,causes )
     {

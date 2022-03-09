@@ -24,8 +24,8 @@ v1_subject_access_review_spec_t* instantiate_v1_subject_access_review_spec(int i
   v1_subject_access_review_spec_t* v1_subject_access_review_spec = NULL;
   if (include_optional) {
     v1_subject_access_review_spec = v1_subject_access_review_spec_create(
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_non_resource_attributes(0),
        // false, not to have infinite recursion
@@ -35,8 +35,8 @@ v1_subject_access_review_spec_t* instantiate_v1_subject_access_review_spec(int i
     );
   } else {
     v1_subject_access_review_spec = v1_subject_access_review_spec_create(
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
       NULL,
       NULL,
       "0",

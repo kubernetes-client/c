@@ -33,7 +33,7 @@ void v1_config_map_volume_source_free(v1_config_map_volume_source_t *v1_config_m
         list_ForEach(listEntry, v1_config_map_volume_source->items) {
             v1_key_to_path_free(listEntry->data);
         }
-        list_free(v1_config_map_volume_source->items);
+        list_freeList(v1_config_map_volume_source->items);
         v1_config_map_volume_source->items = NULL;
     }
     if (v1_config_map_volume_source->name) {
@@ -119,7 +119,7 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
         goto end; //nonprimitive container
     }
 
-    itemsList = list_create();
+    itemsList = list_createList();
 
     cJSON_ArrayForEach(items_local_nonprimitive,items )
     {

@@ -22,12 +22,12 @@ v1_ingress_tls_t* instantiate_v1_ingress_tls(int include_optional) {
   v1_ingress_tls_t* v1_ingress_tls = NULL;
   if (include_optional) {
     v1_ingress_tls = v1_ingress_tls_create(
-      list_create(),
+      list_createList(),
       "0"
     );
   } else {
     v1_ingress_tls = v1_ingress_tls_create(
-      list_create(),
+      list_createList(),
       "0"
     );
   }

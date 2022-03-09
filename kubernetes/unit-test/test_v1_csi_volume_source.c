@@ -28,7 +28,7 @@ v1_csi_volume_source_t* instantiate_v1_csi_volume_source(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_local_object_reference(0),
       1,
-      list_create()
+      list_createList()
     );
   } else {
     v1_csi_volume_source = v1_csi_volume_source_create(
@@ -36,7 +36,7 @@ v1_csi_volume_source_t* instantiate_v1_csi_volume_source(int include_optional) {
       "0",
       NULL,
       1,
-      list_create()
+      list_createList()
     );
   }
 

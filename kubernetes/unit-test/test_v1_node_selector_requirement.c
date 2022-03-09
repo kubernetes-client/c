@@ -24,13 +24,13 @@ v1_node_selector_requirement_t* instantiate_v1_node_selector_requirement(int inc
     v1_node_selector_requirement = v1_node_selector_requirement_create(
       "0",
       "0",
-      list_create()
+      list_createList()
     );
   } else {
     v1_node_selector_requirement = v1_node_selector_requirement_create(
       "0",
       "0",
-      list_create()
+      list_createList()
     );
   }
 

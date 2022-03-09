@@ -30,7 +30,7 @@ v1_iscsi_persistent_volume_source_t* instantiate_v1_iscsi_persistent_volume_sour
       "0",
       "0",
       56,
-      list_create(),
+      list_createList(),
       1,
        // false, not to have infinite recursion
       instantiate_v1_secret_reference(0),
@@ -45,7 +45,7 @@ v1_iscsi_persistent_volume_source_t* instantiate_v1_iscsi_persistent_volume_sour
       "0",
       "0",
       56,
-      list_create(),
+      list_createList(),
       1,
       NULL,
       "0"

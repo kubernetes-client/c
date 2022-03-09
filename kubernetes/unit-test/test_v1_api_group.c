@@ -28,8 +28,8 @@ v1_api_group_t* instantiate_v1_api_group(int include_optional) {
       "0",
        // false, not to have infinite recursion
       instantiate_v1_group_version_for_discovery(0),
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_api_group = v1_api_group_create(
@@ -37,8 +37,8 @@ v1_api_group_t* instantiate_v1_api_group(int include_optional) {
       "0",
       "0",
       NULL,
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

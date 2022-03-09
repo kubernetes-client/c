@@ -24,7 +24,7 @@ v1_delete_options_t* instantiate_v1_delete_options(int include_optional) {
   if (include_optional) {
     v1_delete_options = v1_delete_options_create(
       "0",
-      list_create(),
+      list_createList(),
       56,
       "0",
       1,
@@ -35,7 +35,7 @@ v1_delete_options_t* instantiate_v1_delete_options(int include_optional) {
   } else {
     v1_delete_options = v1_delete_options_create(
       "0",
-      list_create(),
+      list_createList(),
       56,
       "0",
       1,

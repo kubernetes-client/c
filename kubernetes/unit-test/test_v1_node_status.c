@@ -25,34 +25,34 @@ v1_node_status_t* instantiate_v1_node_status(int include_optional) {
   v1_node_status_t* v1_node_status = NULL;
   if (include_optional) {
     v1_node_status = v1_node_status_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_node_config_status(0),
        // false, not to have infinite recursion
       instantiate_v1_node_daemon_endpoints(0),
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_node_system_info(0),
       "0",
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_node_status = v1_node_status_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       NULL,
       NULL,
-      list_create(),
+      list_createList(),
       NULL,
       "0",
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

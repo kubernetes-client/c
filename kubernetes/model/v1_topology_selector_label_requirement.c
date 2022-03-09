@@ -33,7 +33,7 @@ void v1_topology_selector_label_requirement_free(v1_topology_selector_label_requ
         list_ForEach(listEntry, v1_topology_selector_label_requirement->values) {
             free(listEntry->data);
         }
-        list_free(v1_topology_selector_label_requirement->values);
+        list_freeList(v1_topology_selector_label_requirement->values);
         v1_topology_selector_label_requirement->values = NULL;
     }
     free(v1_topology_selector_label_requirement);
@@ -106,7 +106,7 @@ v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement
     if(!cJSON_IsArray(values)) {
         goto end;//primitive container
     }
-    valuesList = list_create();
+    valuesList = list_createList();
 
     cJSON_ArrayForEach(values_local, values)
     {

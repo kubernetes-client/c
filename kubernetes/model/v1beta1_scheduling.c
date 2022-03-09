@@ -32,14 +32,14 @@ void v1beta1_scheduling_free(v1beta1_scheduling_t *v1beta1_scheduling) {
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
         }
-        list_free(v1beta1_scheduling->node_selector);
+        list_freeList(v1beta1_scheduling->node_selector);
         v1beta1_scheduling->node_selector = NULL;
     }
     if (v1beta1_scheduling->tolerations) {
         list_ForEach(listEntry, v1beta1_scheduling->tolerations) {
             v1_toleration_free(listEntry->data);
         }
-        list_free(v1beta1_scheduling->tolerations);
+        list_freeList(v1beta1_scheduling->tolerations);
         v1beta1_scheduling->tolerations = NULL;
     }
     free(v1beta1_scheduling);
@@ -107,7 +107,7 @@ v1beta1_scheduling_t *v1beta1_scheduling_parseFromJSON(cJSON *v1beta1_scheduling
     if(!cJSON_IsObject(node_selector)) {
         goto end;//primitive map container
     }
-    node_selectorList = list_create();
+    node_selectorList = list_createList();
     keyValuePair_t *localMapKeyPair;
     cJSON_ArrayForEach(node_selector_local_map, node_selector)
     {
@@ -130,7 +130,7 @@ v1beta1_scheduling_t *v1beta1_scheduling_parseFromJSON(cJSON *v1beta1_scheduling
         goto end; //nonprimitive container
     }
 
-    tolerationsList = list_create();
+    tolerationsList = list_createList();
 
     cJSON_ArrayForEach(tolerations_local_nonprimitive,tolerations )
     {

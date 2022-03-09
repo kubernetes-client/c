@@ -33,7 +33,7 @@ void v1_ip_block_free(v1_ip_block_t *v1_ip_block) {
         list_ForEach(listEntry, v1_ip_block->except) {
             free(listEntry->data);
         }
-        list_free(v1_ip_block->except);
+        list_freeList(v1_ip_block->except);
         v1_ip_block->except = NULL;
     }
     free(v1_ip_block);
@@ -100,7 +100,7 @@ v1_ip_block_t *v1_ip_block_parseFromJSON(cJSON *v1_ip_blockJSON){
     if(!cJSON_IsArray(except)) {
         goto end;//primitive container
     }
-    exceptList = list_create();
+    exceptList = list_createList();
 
     cJSON_ArrayForEach(except_local, except)
     {

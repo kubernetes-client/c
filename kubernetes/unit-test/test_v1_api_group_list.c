@@ -23,13 +23,13 @@ v1_api_group_list_t* instantiate_v1_api_group_list(int include_optional) {
   if (include_optional) {
     v1_api_group_list = v1_api_group_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0"
     );
   } else {
     v1_api_group_list = v1_api_group_list_create(
       "0",
-      list_create(),
+      list_createList(),
       "0"
     );
   }

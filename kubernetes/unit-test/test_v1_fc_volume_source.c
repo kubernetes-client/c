@@ -25,16 +25,16 @@ v1_fc_volume_source_t* instantiate_v1_fc_volume_source(int include_optional) {
       "0",
       56,
       1,
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   } else {
     v1_fc_volume_source = v1_fc_volume_source_create(
       "0",
       56,
       1,
-      list_create(),
-      list_create()
+      list_createList(),
+      list_createList()
     );
   }
 

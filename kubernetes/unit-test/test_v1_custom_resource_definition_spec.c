@@ -31,7 +31,7 @@ v1_custom_resource_definition_spec_t* instantiate_v1_custom_resource_definition_
       instantiate_v1_custom_resource_definition_names(0),
       1,
       "0",
-      list_create()
+      list_createList()
     );
   } else {
     v1_custom_resource_definition_spec = v1_custom_resource_definition_spec_create(
@@ -40,7 +40,7 @@ v1_custom_resource_definition_spec_t* instantiate_v1_custom_resource_definition_
       NULL,
       1,
       "0",
-      list_create()
+      list_createList()
     );
   }
 

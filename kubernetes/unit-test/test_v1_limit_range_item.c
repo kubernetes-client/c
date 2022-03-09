@@ -22,20 +22,20 @@ v1_limit_range_item_t* instantiate_v1_limit_range_item(int include_optional) {
   v1_limit_range_item_t* v1_limit_range_item = NULL;
   if (include_optional) {
     v1_limit_range_item = v1_limit_range_item_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       "0"
     );
   } else {
     v1_limit_range_item = v1_limit_range_item_create(
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       "0"
     );
   }

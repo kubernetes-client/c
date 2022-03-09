@@ -27,7 +27,7 @@ void v1_node_selector_free(v1_node_selector_t *v1_node_selector) {
         list_ForEach(listEntry, v1_node_selector->node_selector_terms) {
             v1_node_selector_term_free(listEntry->data);
         }
-        list_free(v1_node_selector->node_selector_terms);
+        list_freeList(v1_node_selector->node_selector_terms);
         v1_node_selector->node_selector_terms = NULL;
     }
     free(v1_node_selector);
@@ -82,7 +82,7 @@ v1_node_selector_t *v1_node_selector_parseFromJSON(cJSON *v1_node_selectorJSON){
         goto end; //nonprimitive container
     }
 
-    node_selector_termsList = list_create();
+    node_selector_termsList = list_createList();
 
     cJSON_ArrayForEach(node_selector_terms_local_nonprimitive,node_selector_terms )
     {

@@ -29,24 +29,24 @@ v1beta1_pod_security_policy_spec_t* instantiate_v1beta1_pod_security_policy_spec
   if (include_optional) {
     v1beta1_pod_security_policy_spec = v1beta1_pod_security_policy_spec_create(
       1,
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       1,
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1beta1_fs_group_strategy_options(0),
       1,
       1,
       1,
-      list_create(),
+      list_createList(),
       1,
       1,
-      list_create(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1beta1_run_as_group_strategy_options(0),
        // false, not to have infinite recursion
@@ -57,34 +57,34 @@ v1beta1_pod_security_policy_spec_t* instantiate_v1beta1_pod_security_policy_spec
       instantiate_v1beta1_se_linux_strategy_options(0),
        // false, not to have infinite recursion
       instantiate_v1beta1_supplemental_groups_strategy_options(0),
-      list_create()
+      list_createList()
     );
   } else {
     v1beta1_pod_security_policy_spec = v1beta1_pod_security_policy_spec_create(
       1,
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       1,
-      list_create(),
+      list_createList(),
       NULL,
       1,
       1,
       1,
-      list_create(),
+      list_createList(),
       1,
       1,
-      list_create(),
+      list_createList(),
       NULL,
       NULL,
       NULL,
       NULL,
       NULL,
-      list_create()
+      list_createList()
     );
   }
 

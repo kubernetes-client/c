@@ -22,16 +22,16 @@ v1_persistent_volume_claim_status_t* instantiate_v1_persistent_volume_claim_stat
   v1_persistent_volume_claim_status_t* v1_persistent_volume_claim_status = NULL;
   if (include_optional) {
     v1_persistent_volume_claim_status = v1_persistent_volume_claim_status_create(
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       "0"
     );
   } else {
     v1_persistent_volume_claim_status = v1_persistent_volume_claim_status_create(
-      list_create(),
-      list_create(),
-      list_create(),
+      list_createList(),
+      list_createList(),
+      list_createList(),
       "0"
     );
   }

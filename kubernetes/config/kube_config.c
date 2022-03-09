@@ -85,7 +85,7 @@ static int setApiKeys(list_t ** pApiKeys, const char *token)
 {
     static char fname[] = "setApiKeys()";
 
-    list_t *apiKeys = list_create();
+    list_t *apiKeys = list_createList();
     if (!apiKeys) {
         fprintf(stderr, "%s: Cannot allocate the memory for api key list for kubernetes service.\n", fname);
         return -1;

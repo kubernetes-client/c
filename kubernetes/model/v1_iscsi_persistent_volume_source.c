@@ -63,7 +63,7 @@ void v1_iscsi_persistent_volume_source_free(v1_iscsi_persistent_volume_source_t 
         list_ForEach(listEntry, v1_iscsi_persistent_volume_source->portals) {
             free(listEntry->data);
         }
-        list_free(v1_iscsi_persistent_volume_source->portals);
+        list_freeList(v1_iscsi_persistent_volume_source->portals);
         v1_iscsi_persistent_volume_source->portals = NULL;
     }
     if (v1_iscsi_persistent_volume_source->secret_ref) {
@@ -279,7 +279,7 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
     if(!cJSON_IsArray(portals)) {
         goto end;//primitive container
     }
-    portalsList = list_create();
+    portalsList = list_createList();
 
     cJSON_ArrayForEach(portals_local, portals)
     {

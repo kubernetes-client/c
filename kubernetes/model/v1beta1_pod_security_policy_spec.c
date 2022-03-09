@@ -73,56 +73,56 @@ void v1beta1_pod_security_policy_spec_free(v1beta1_pod_security_policy_spec_t *v
         list_ForEach(listEntry, v1beta1_pod_security_policy_spec->allowed_csi_drivers) {
             v1beta1_allowed_csi_driver_free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_spec->allowed_csi_drivers);
+        list_freeList(v1beta1_pod_security_policy_spec->allowed_csi_drivers);
         v1beta1_pod_security_policy_spec->allowed_csi_drivers = NULL;
     }
     if (v1beta1_pod_security_policy_spec->allowed_capabilities) {
         list_ForEach(listEntry, v1beta1_pod_security_policy_spec->allowed_capabilities) {
             free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_spec->allowed_capabilities);
+        list_freeList(v1beta1_pod_security_policy_spec->allowed_capabilities);
         v1beta1_pod_security_policy_spec->allowed_capabilities = NULL;
     }
     if (v1beta1_pod_security_policy_spec->allowed_flex_volumes) {
         list_ForEach(listEntry, v1beta1_pod_security_policy_spec->allowed_flex_volumes) {
             v1beta1_allowed_flex_volume_free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_spec->allowed_flex_volumes);
+        list_freeList(v1beta1_pod_security_policy_spec->allowed_flex_volumes);
         v1beta1_pod_security_policy_spec->allowed_flex_volumes = NULL;
     }
     if (v1beta1_pod_security_policy_spec->allowed_host_paths) {
         list_ForEach(listEntry, v1beta1_pod_security_policy_spec->allowed_host_paths) {
             v1beta1_allowed_host_path_free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_spec->allowed_host_paths);
+        list_freeList(v1beta1_pod_security_policy_spec->allowed_host_paths);
         v1beta1_pod_security_policy_spec->allowed_host_paths = NULL;
     }
     if (v1beta1_pod_security_policy_spec->allowed_proc_mount_types) {
         list_ForEach(listEntry, v1beta1_pod_security_policy_spec->allowed_proc_mount_types) {
             free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_spec->allowed_proc_mount_types);
+        list_freeList(v1beta1_pod_security_policy_spec->allowed_proc_mount_types);
         v1beta1_pod_security_policy_spec->allowed_proc_mount_types = NULL;
     }
     if (v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls) {
         list_ForEach(listEntry, v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls) {
             free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls);
+        list_freeList(v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls);
         v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls = NULL;
     }
     if (v1beta1_pod_security_policy_spec->default_add_capabilities) {
         list_ForEach(listEntry, v1beta1_pod_security_policy_spec->default_add_capabilities) {
             free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_spec->default_add_capabilities);
+        list_freeList(v1beta1_pod_security_policy_spec->default_add_capabilities);
         v1beta1_pod_security_policy_spec->default_add_capabilities = NULL;
     }
     if (v1beta1_pod_security_policy_spec->forbidden_sysctls) {
         list_ForEach(listEntry, v1beta1_pod_security_policy_spec->forbidden_sysctls) {
             free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_spec->forbidden_sysctls);
+        list_freeList(v1beta1_pod_security_policy_spec->forbidden_sysctls);
         v1beta1_pod_security_policy_spec->forbidden_sysctls = NULL;
     }
     if (v1beta1_pod_security_policy_spec->fs_group) {
@@ -133,14 +133,14 @@ void v1beta1_pod_security_policy_spec_free(v1beta1_pod_security_policy_spec_t *v
         list_ForEach(listEntry, v1beta1_pod_security_policy_spec->host_ports) {
             v1beta1_host_port_range_free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_spec->host_ports);
+        list_freeList(v1beta1_pod_security_policy_spec->host_ports);
         v1beta1_pod_security_policy_spec->host_ports = NULL;
     }
     if (v1beta1_pod_security_policy_spec->required_drop_capabilities) {
         list_ForEach(listEntry, v1beta1_pod_security_policy_spec->required_drop_capabilities) {
             free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_spec->required_drop_capabilities);
+        list_freeList(v1beta1_pod_security_policy_spec->required_drop_capabilities);
         v1beta1_pod_security_policy_spec->required_drop_capabilities = NULL;
     }
     if (v1beta1_pod_security_policy_spec->run_as_group) {
@@ -167,7 +167,7 @@ void v1beta1_pod_security_policy_spec_free(v1beta1_pod_security_policy_spec_t *v
         list_ForEach(listEntry, v1beta1_pod_security_policy_spec->volumes) {
             free(listEntry->data);
         }
-        list_free(v1beta1_pod_security_policy_spec->volumes);
+        list_freeList(v1beta1_pod_security_policy_spec->volumes);
         v1beta1_pod_security_policy_spec->volumes = NULL;
     }
     free(v1beta1_pod_security_policy_spec);
@@ -564,7 +564,7 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
         goto end; //nonprimitive container
     }
 
-    allowed_csi_driversList = list_create();
+    allowed_csi_driversList = list_createList();
 
     cJSON_ArrayForEach(allowed_csi_drivers_local_nonprimitive,allowed_csi_drivers )
     {
@@ -585,7 +585,7 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
     if(!cJSON_IsArray(allowed_capabilities)) {
         goto end;//primitive container
     }
-    allowed_capabilitiesList = list_create();
+    allowed_capabilitiesList = list_createList();
 
     cJSON_ArrayForEach(allowed_capabilities_local, allowed_capabilities)
     {
@@ -606,7 +606,7 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
         goto end; //nonprimitive container
     }
 
-    allowed_flex_volumesList = list_create();
+    allowed_flex_volumesList = list_createList();
 
     cJSON_ArrayForEach(allowed_flex_volumes_local_nonprimitive,allowed_flex_volumes )
     {
@@ -628,7 +628,7 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
         goto end; //nonprimitive container
     }
 
-    allowed_host_pathsList = list_create();
+    allowed_host_pathsList = list_createList();
 
     cJSON_ArrayForEach(allowed_host_paths_local_nonprimitive,allowed_host_paths )
     {
@@ -649,7 +649,7 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
     if(!cJSON_IsArray(allowed_proc_mount_types)) {
         goto end;//primitive container
     }
-    allowed_proc_mount_typesList = list_create();
+    allowed_proc_mount_typesList = list_createList();
 
     cJSON_ArrayForEach(allowed_proc_mount_types_local, allowed_proc_mount_types)
     {
@@ -669,7 +669,7 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
     if(!cJSON_IsArray(allowed_unsafe_sysctls)) {
         goto end;//primitive container
     }
-    allowed_unsafe_sysctlsList = list_create();
+    allowed_unsafe_sysctlsList = list_createList();
 
     cJSON_ArrayForEach(allowed_unsafe_sysctls_local, allowed_unsafe_sysctls)
     {
@@ -689,7 +689,7 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
     if(!cJSON_IsArray(default_add_capabilities)) {
         goto end;//primitive container
     }
-    default_add_capabilitiesList = list_create();
+    default_add_capabilitiesList = list_createList();
 
     cJSON_ArrayForEach(default_add_capabilities_local, default_add_capabilities)
     {
@@ -718,7 +718,7 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
     if(!cJSON_IsArray(forbidden_sysctls)) {
         goto end;//primitive container
     }
-    forbidden_sysctlsList = list_create();
+    forbidden_sysctlsList = list_createList();
 
     cJSON_ArrayForEach(forbidden_sysctls_local, forbidden_sysctls)
     {
@@ -775,7 +775,7 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
         goto end; //nonprimitive container
     }
 
-    host_portsList = list_create();
+    host_portsList = list_createList();
 
     cJSON_ArrayForEach(host_ports_local_nonprimitive,host_ports )
     {
@@ -814,7 +814,7 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
     if(!cJSON_IsArray(required_drop_capabilities)) {
         goto end;//primitive container
     }
-    required_drop_capabilitiesList = list_create();
+    required_drop_capabilitiesList = list_createList();
 
     cJSON_ArrayForEach(required_drop_capabilities_local, required_drop_capabilities)
     {
@@ -873,7 +873,7 @@ v1beta1_pod_security_policy_spec_t *v1beta1_pod_security_policy_spec_parseFromJS
     if(!cJSON_IsArray(volumes)) {
         goto end;//primitive container
     }
-    volumesList = list_create();
+    volumesList = list_createList();
 
     cJSON_ArrayForEach(volumes_local, volumes)
     {

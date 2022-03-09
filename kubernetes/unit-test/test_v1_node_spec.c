@@ -27,9 +27,9 @@ v1_node_spec_t* instantiate_v1_node_spec(int include_optional) {
       instantiate_v1_node_config_source(0),
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0",
-      list_create(),
+      list_createList(),
       1
     );
   } else {
@@ -37,9 +37,9 @@ v1_node_spec_t* instantiate_v1_node_spec(int include_optional) {
       NULL,
       "0",
       "0",
-      list_create(),
+      list_createList(),
       "0",
-      list_create(),
+      list_createList(),
       1
     );
   }

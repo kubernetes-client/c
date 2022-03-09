@@ -24,13 +24,13 @@ v1_label_selector_requirement_t* instantiate_v1_label_selector_requirement(int i
     v1_label_selector_requirement = v1_label_selector_requirement_create(
       "0",
       "0",
-      list_create()
+      list_createList()
     );
   } else {
     v1_label_selector_requirement = v1_label_selector_requirement_create(
       "0",
       "0",
-      list_create()
+      list_createList()
     );
   }
 

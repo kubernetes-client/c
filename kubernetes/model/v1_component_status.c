@@ -37,7 +37,7 @@ void v1_component_status_free(v1_component_status_t *v1_component_status) {
         list_ForEach(listEntry, v1_component_status->conditions) {
             v1_component_condition_free(listEntry->data);
         }
-        list_free(v1_component_status->conditions);
+        list_freeList(v1_component_status->conditions);
         v1_component_status->conditions = NULL;
     }
     if (v1_component_status->kind) {
@@ -135,7 +135,7 @@ v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_sta
         goto end; //nonprimitive container
     }
 
-    conditionsList = list_create();
+    conditionsList = list_createList();
 
     cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
