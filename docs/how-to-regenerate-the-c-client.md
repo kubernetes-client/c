@@ -52,6 +52,16 @@ cd $GEN_REPO_ROOT/openapi
 ./c.sh $OUTPUT_DIR $SETTING_FILE
 ```
 
+Optionally, delete the old model/api/unit-test files in the C client because some of them are deprecated in the new Kubernetes spec:
+
+```bash
+cd $CLIENT_REPO_ROOT/kubernetes
+find ./model -type f -not -name "int_or_string*" -exec rm -r {} \;
+find ./api -type f -not -name "int_or_string*" -exec rm -r {} \;
+find ./unit-test -type f -not -name "manual*" -exec rm -r {} \;
+cd -
+```
+
 Copy the generated files to overwrite the files in the C client:
 
 ```bash
