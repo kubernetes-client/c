@@ -1,11 +1,12 @@
 # Kubernetes Client Library for C
 
+[![Client Capabilities](https://img.shields.io/badge/Kubernetes%20client-Silver-blue.svg?style=flat&colorB=C0C0C0&colorA=306CE8)](https://github.com/kubernetes/design-proposals-archive/blob/main/api-machinery/csi-new-client-library-procedure.md#client-capabilities)
+[![Client Support Level](https://img.shields.io/badge/kubernetes%20client-beta-green.svg?style=flat&colorA=306CE8)](https://github.com/kubernetes/design-proposals-archive/blob/main/api-machinery/csi-new-client-library-procedure.md#client-support-level)
 [![Code Check](https://github.com/kubernetes-client/c/workflows/Code%20Check/badge.svg)](https://github.com/kubernetes-client/c/actions?query=workflow%3A%22Code+Check%22)
 [![Build](https://github.com/kubernetes-client/c/workflows/Build/badge.svg)](https://github.com/kubernetes-client/c/actions?query=workflow%3ABuild)
 
 This is the official Kubernetes client library for the C programming language.
-It is a work in progress and should be considered _alpha_ quality software at this
-time.
+It is a work in progress.
 
 ## Building the library
 ```bash
