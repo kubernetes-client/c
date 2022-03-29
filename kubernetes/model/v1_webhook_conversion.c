@@ -88,6 +88,9 @@ v1_webhook_conversion_t *v1_webhook_conversion_parseFromJSON(cJSON *v1_webhook_c
     // define the local variable for v1_webhook_conversion->client_config
     apiextensions_v1_webhook_client_config_t *client_config_local_nonprim = NULL;
 
+    // define the local list for v1_webhook_conversion->conversion_review_versions
+    list_t *conversion_review_versionsList = NULL;
+
     // v1_webhook_conversion->client_config
     cJSON *client_config = cJSON_GetObjectItemCaseSensitive(v1_webhook_conversionJSON, "clientConfig");
     if (client_config) { 
@@ -100,9 +103,8 @@ v1_webhook_conversion_t *v1_webhook_conversion_parseFromJSON(cJSON *v1_webhook_c
         goto end;
     }
 
-    list_t *conversion_review_versionsList;
     
-    cJSON *conversion_review_versions_local;
+    cJSON *conversion_review_versions_local = NULL;
     if(!cJSON_IsArray(conversion_review_versions)) {
         goto end;//primitive container
     }
@@ -128,6 +130,15 @@ end:
     if (client_config_local_nonprim) {
         apiextensions_v1_webhook_client_config_free(client_config_local_nonprim);
         client_config_local_nonprim = NULL;
+    }
+    if (conversion_review_versionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conversion_review_versionsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conversion_review_versionsList);
+        conversion_review_versionsList = NULL;
     }
     return NULL;
 

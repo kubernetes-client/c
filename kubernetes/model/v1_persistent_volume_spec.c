@@ -620,6 +620,9 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     v1_persistent_volume_spec_t *v1_persistent_volume_spec_local_var = NULL;
 
+    // define the local list for v1_persistent_volume_spec->access_modes
+    list_t *access_modesList = NULL;
+
     // define the local variable for v1_persistent_volume_spec->aws_elastic_block_store
     v1_aws_elastic_block_store_volume_source_t *aws_elastic_block_store_local_nonprim = NULL;
 
@@ -628,6 +631,9 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // define the local variable for v1_persistent_volume_spec->azure_file
     v1_azure_file_persistent_volume_source_t *azure_file_local_nonprim = NULL;
+
+    // define the local map for v1_persistent_volume_spec->capacity
+    list_t *capacityList = NULL;
 
     // define the local variable for v1_persistent_volume_spec->cephfs
     v1_ceph_fs_persistent_volume_source_t *cephfs_local_nonprim = NULL;
@@ -665,6 +671,9 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     // define the local variable for v1_persistent_volume_spec->local
     v1_local_volume_source_t *local_local_nonprim = NULL;
 
+    // define the local list for v1_persistent_volume_spec->mount_options
+    list_t *mount_optionsList = NULL;
+
     // define the local variable for v1_persistent_volume_spec->nfs
     v1_nfs_volume_source_t *nfs_local_nonprim = NULL;
 
@@ -694,9 +703,8 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->access_modes
     cJSON *access_modes = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "accessModes");
-    list_t *access_modesList;
     if (access_modes) { 
-    cJSON *access_modes_local;
+    cJSON *access_modes_local = NULL;
     if(!cJSON_IsArray(access_modes)) {
         goto end;//primitive container
     }
@@ -732,9 +740,8 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->capacity
     cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "capacity");
-    list_t *capacityList;
     if (capacity) { 
-    cJSON *capacity_local_map;
+    cJSON *capacity_local_map = NULL;
     if(!cJSON_IsObject(capacity)) {
         goto end;//primitive map container
     }
@@ -826,9 +833,8 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->mount_options
     cJSON *mount_options = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "mountOptions");
-    list_t *mount_optionsList;
     if (mount_options) { 
-    cJSON *mount_options_local;
+    cJSON *mount_options_local = NULL;
     if(!cJSON_IsArray(mount_options)) {
         goto end;//primitive container
     }
@@ -961,6 +967,15 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     return v1_persistent_volume_spec_local_var;
 end:
+    if (access_modesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, access_modesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(access_modesList);
+        access_modesList = NULL;
+    }
     if (aws_elastic_block_store_local_nonprim) {
         v1_aws_elastic_block_store_volume_source_free(aws_elastic_block_store_local_nonprim);
         aws_elastic_block_store_local_nonprim = NULL;
@@ -972,6 +987,20 @@ end:
     if (azure_file_local_nonprim) {
         v1_azure_file_persistent_volume_source_free(azure_file_local_nonprim);
         azure_file_local_nonprim = NULL;
+    }
+    if (capacityList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, capacityList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(capacityList);
+        capacityList = NULL;
     }
     if (cephfs_local_nonprim) {
         v1_ceph_fs_persistent_volume_source_free(cephfs_local_nonprim);
@@ -1020,6 +1049,15 @@ end:
     if (local_local_nonprim) {
         v1_local_volume_source_free(local_local_nonprim);
         local_local_nonprim = NULL;
+    }
+    if (mount_optionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, mount_optionsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(mount_optionsList);
+        mount_optionsList = NULL;
     }
     if (nfs_local_nonprim) {
         v1_nfs_volume_source_free(nfs_local_nonprim);

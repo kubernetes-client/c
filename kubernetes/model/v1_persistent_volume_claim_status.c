@@ -139,11 +139,19 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
 
     v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_local_var = NULL;
 
+    // define the local list for v1_persistent_volume_claim_status->access_modes
+    list_t *access_modesList = NULL;
+
+    // define the local map for v1_persistent_volume_claim_status->capacity
+    list_t *capacityList = NULL;
+
+    // define the local list for v1_persistent_volume_claim_status->conditions
+    list_t *conditionsList = NULL;
+
     // v1_persistent_volume_claim_status->access_modes
     cJSON *access_modes = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "accessModes");
-    list_t *access_modesList;
     if (access_modes) { 
-    cJSON *access_modes_local;
+    cJSON *access_modes_local = NULL;
     if(!cJSON_IsArray(access_modes)) {
         goto end;//primitive container
     }
@@ -161,9 +169,8 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
 
     // v1_persistent_volume_claim_status->capacity
     cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "capacity");
-    list_t *capacityList;
     if (capacity) { 
-    cJSON *capacity_local_map;
+    cJSON *capacity_local_map = NULL;
     if(!cJSON_IsObject(capacity)) {
         goto end;//primitive map container
     }
@@ -183,9 +190,8 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
 
     // v1_persistent_volume_claim_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "conditions");
-    list_t *conditionsList;
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive;
+    cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
@@ -222,6 +228,38 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
 
     return v1_persistent_volume_claim_status_local_var;
 end:
+    if (access_modesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, access_modesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(access_modesList);
+        access_modesList = NULL;
+    }
+    if (capacityList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, capacityList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(capacityList);
+        capacityList = NULL;
+    }
+    if (conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conditionsList) {
+            v1_persistent_volume_claim_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conditionsList);
+        conditionsList = NULL;
+    }
     return NULL;
 
 }

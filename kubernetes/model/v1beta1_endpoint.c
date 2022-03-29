@@ -183,6 +183,9 @@ v1beta1_endpoint_t *v1beta1_endpoint_parseFromJSON(cJSON *v1beta1_endpointJSON){
 
     v1beta1_endpoint_t *v1beta1_endpoint_local_var = NULL;
 
+    // define the local list for v1beta1_endpoint->addresses
+    list_t *addressesList = NULL;
+
     // define the local variable for v1beta1_endpoint->conditions
     v1beta1_endpoint_conditions_t *conditions_local_nonprim = NULL;
 
@@ -192,15 +195,17 @@ v1beta1_endpoint_t *v1beta1_endpoint_parseFromJSON(cJSON *v1beta1_endpointJSON){
     // define the local variable for v1beta1_endpoint->target_ref
     v1_object_reference_t *target_ref_local_nonprim = NULL;
 
+    // define the local map for v1beta1_endpoint->topology
+    list_t *topologyList = NULL;
+
     // v1beta1_endpoint->addresses
     cJSON *addresses = cJSON_GetObjectItemCaseSensitive(v1beta1_endpointJSON, "addresses");
     if (!addresses) {
         goto end;
     }
 
-    list_t *addressesList;
     
-    cJSON *addresses_local;
+    cJSON *addresses_local = NULL;
     if(!cJSON_IsArray(addresses)) {
         goto end;//primitive container
     }
@@ -253,9 +258,8 @@ v1beta1_endpoint_t *v1beta1_endpoint_parseFromJSON(cJSON *v1beta1_endpointJSON){
 
     // v1beta1_endpoint->topology
     cJSON *topology = cJSON_GetObjectItemCaseSensitive(v1beta1_endpointJSON, "topology");
-    list_t *topologyList;
     if (topology) { 
-    cJSON *topology_local_map;
+    cJSON *topology_local_map = NULL;
     if(!cJSON_IsObject(topology)) {
         goto end;//primitive map container
     }
@@ -286,6 +290,15 @@ v1beta1_endpoint_t *v1beta1_endpoint_parseFromJSON(cJSON *v1beta1_endpointJSON){
 
     return v1beta1_endpoint_local_var;
 end:
+    if (addressesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, addressesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(addressesList);
+        addressesList = NULL;
+    }
     if (conditions_local_nonprim) {
         v1beta1_endpoint_conditions_free(conditions_local_nonprim);
         conditions_local_nonprim = NULL;
@@ -297,6 +310,20 @@ end:
     if (target_ref_local_nonprim) {
         v1_object_reference_free(target_ref_local_nonprim);
         target_ref_local_nonprim = NULL;
+    }
+    if (topologyList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, topologyList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(topologyList);
+        topologyList = NULL;
     }
     return NULL;
 

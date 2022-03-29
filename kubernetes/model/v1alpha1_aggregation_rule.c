@@ -67,11 +67,13 @@ v1alpha1_aggregation_rule_t *v1alpha1_aggregation_rule_parseFromJSON(cJSON *v1al
 
     v1alpha1_aggregation_rule_t *v1alpha1_aggregation_rule_local_var = NULL;
 
+    // define the local list for v1alpha1_aggregation_rule->cluster_role_selectors
+    list_t *cluster_role_selectorsList = NULL;
+
     // v1alpha1_aggregation_rule->cluster_role_selectors
     cJSON *cluster_role_selectors = cJSON_GetObjectItemCaseSensitive(v1alpha1_aggregation_ruleJSON, "clusterRoleSelectors");
-    list_t *cluster_role_selectorsList;
     if (cluster_role_selectors) { 
-    cJSON *cluster_role_selectors_local_nonprimitive;
+    cJSON *cluster_role_selectors_local_nonprimitive = NULL;
     if(!cJSON_IsArray(cluster_role_selectors)){
         goto end; //nonprimitive container
     }
@@ -96,6 +98,15 @@ v1alpha1_aggregation_rule_t *v1alpha1_aggregation_rule_parseFromJSON(cJSON *v1al
 
     return v1alpha1_aggregation_rule_local_var;
 end:
+    if (cluster_role_selectorsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, cluster_role_selectorsList) {
+            v1_label_selector_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(cluster_role_selectorsList);
+        cluster_role_selectorsList = NULL;
+    }
     return NULL;
 
 }

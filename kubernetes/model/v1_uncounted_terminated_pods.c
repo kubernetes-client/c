@@ -90,11 +90,16 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON
 
     v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_local_var = NULL;
 
+    // define the local list for v1_uncounted_terminated_pods->failed
+    list_t *failedList = NULL;
+
+    // define the local list for v1_uncounted_terminated_pods->succeeded
+    list_t *succeededList = NULL;
+
     // v1_uncounted_terminated_pods->failed
     cJSON *failed = cJSON_GetObjectItemCaseSensitive(v1_uncounted_terminated_podsJSON, "failed");
-    list_t *failedList;
     if (failed) { 
-    cJSON *failed_local;
+    cJSON *failed_local = NULL;
     if(!cJSON_IsArray(failed)) {
         goto end;//primitive container
     }
@@ -112,9 +117,8 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON
 
     // v1_uncounted_terminated_pods->succeeded
     cJSON *succeeded = cJSON_GetObjectItemCaseSensitive(v1_uncounted_terminated_podsJSON, "succeeded");
-    list_t *succeededList;
     if (succeeded) { 
-    cJSON *succeeded_local;
+    cJSON *succeeded_local = NULL;
     if(!cJSON_IsArray(succeeded)) {
         goto end;//primitive container
     }
@@ -138,6 +142,24 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON
 
     return v1_uncounted_terminated_pods_local_var;
 end:
+    if (failedList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, failedList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(failedList);
+        failedList = NULL;
+    }
+    if (succeededList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, succeededList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(succeededList);
+        succeededList = NULL;
+    }
     return NULL;
 
 }

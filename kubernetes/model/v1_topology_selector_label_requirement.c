@@ -82,6 +82,9 @@ v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement
 
     v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement_local_var = NULL;
 
+    // define the local list for v1_topology_selector_label_requirement->values
+    list_t *valuesList = NULL;
+
     // v1_topology_selector_label_requirement->key
     cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_topology_selector_label_requirementJSON, "key");
     if (!key) {
@@ -100,9 +103,8 @@ v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement
         goto end;
     }
 
-    list_t *valuesList;
     
-    cJSON *values_local;
+    cJSON *values_local = NULL;
     if(!cJSON_IsArray(values)) {
         goto end;//primitive container
     }
@@ -125,6 +127,15 @@ v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement
 
     return v1_topology_selector_label_requirement_local_var;
 end:
+    if (valuesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, valuesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(valuesList);
+        valuesList = NULL;
+    }
     return NULL;
 
 }

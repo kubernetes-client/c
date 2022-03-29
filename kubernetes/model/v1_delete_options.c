@@ -145,6 +145,9 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
 
     v1_delete_options_t *v1_delete_options_local_var = NULL;
 
+    // define the local list for v1_delete_options->dry_run
+    list_t *dry_runList = NULL;
+
     // define the local variable for v1_delete_options->preconditions
     v1_preconditions_t *preconditions_local_nonprim = NULL;
 
@@ -159,9 +162,8 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
 
     // v1_delete_options->dry_run
     cJSON *dry_run = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "dryRun");
-    list_t *dry_runList;
     if (dry_run) { 
-    cJSON *dry_run_local;
+    cJSON *dry_run_local = NULL;
     if(!cJSON_IsArray(dry_run)) {
         goto end;//primitive container
     }
@@ -232,6 +234,15 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
 
     return v1_delete_options_local_var;
 end:
+    if (dry_runList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, dry_runList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(dry_runList);
+        dry_runList = NULL;
+    }
     if (preconditions_local_nonprim) {
         v1_preconditions_free(preconditions_local_nonprim);
         preconditions_local_nonprim = NULL;

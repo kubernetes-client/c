@@ -210,6 +210,12 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     // define the local variable for v1_pod_security_context->seccomp_profile
     v1_seccomp_profile_t *seccomp_profile_local_nonprim = NULL;
 
+    // define the local list for v1_pod_security_context->supplemental_groups
+    list_t *supplemental_groupsList = NULL;
+
+    // define the local list for v1_pod_security_context->sysctls
+    list_t *sysctlsList = NULL;
+
     // define the local variable for v1_pod_security_context->windows_options
     v1_windows_security_context_options_t *windows_options_local_nonprim = NULL;
 
@@ -272,9 +278,8 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->supplemental_groups
     cJSON *supplemental_groups = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "supplementalGroups");
-    list_t *supplemental_groupsList;
     if (supplemental_groups) { 
-    cJSON *supplemental_groups_local;
+    cJSON *supplemental_groups_local = NULL;
     if(!cJSON_IsArray(supplemental_groups)) {
         goto end;//primitive container
     }
@@ -298,9 +303,8 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->sysctls
     cJSON *sysctls = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "sysctls");
-    list_t *sysctlsList;
     if (sysctls) { 
-    cJSON *sysctls_local_nonprimitive;
+    cJSON *sysctls_local_nonprimitive = NULL;
     if(!cJSON_IsArray(sysctls)){
         goto end; //nonprimitive container
     }
@@ -347,6 +351,24 @@ end:
     if (seccomp_profile_local_nonprim) {
         v1_seccomp_profile_free(seccomp_profile_local_nonprim);
         seccomp_profile_local_nonprim = NULL;
+    }
+    if (supplemental_groupsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, supplemental_groupsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(supplemental_groupsList);
+        supplemental_groupsList = NULL;
+    }
+    if (sysctlsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, sysctlsList) {
+            v1_sysctl_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(sysctlsList);
+        sysctlsList = NULL;
     }
     if (windows_options_local_nonprim) {
         v1_windows_security_context_options_free(windows_options_local_nonprim);

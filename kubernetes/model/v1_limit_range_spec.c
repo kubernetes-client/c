@@ -69,15 +69,17 @@ v1_limit_range_spec_t *v1_limit_range_spec_parseFromJSON(cJSON *v1_limit_range_s
 
     v1_limit_range_spec_t *v1_limit_range_spec_local_var = NULL;
 
+    // define the local list for v1_limit_range_spec->limits
+    list_t *limitsList = NULL;
+
     // v1_limit_range_spec->limits
     cJSON *limits = cJSON_GetObjectItemCaseSensitive(v1_limit_range_specJSON, "limits");
     if (!limits) {
         goto end;
     }
 
-    list_t *limitsList;
     
-    cJSON *limits_local_nonprimitive;
+    cJSON *limits_local_nonprimitive = NULL;
     if(!cJSON_IsArray(limits)){
         goto end; //nonprimitive container
     }
@@ -101,6 +103,15 @@ v1_limit_range_spec_t *v1_limit_range_spec_parseFromJSON(cJSON *v1_limit_range_s
 
     return v1_limit_range_spec_local_var;
 end:
+    if (limitsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, limitsList) {
+            v1_limit_range_item_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(limitsList);
+        limitsList = NULL;
+    }
     return NULL;
 
 }

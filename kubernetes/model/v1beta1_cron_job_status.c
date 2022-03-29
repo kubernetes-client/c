@@ -95,11 +95,13 @@ v1beta1_cron_job_status_t *v1beta1_cron_job_status_parseFromJSON(cJSON *v1beta1_
 
     v1beta1_cron_job_status_t *v1beta1_cron_job_status_local_var = NULL;
 
+    // define the local list for v1beta1_cron_job_status->active
+    list_t *activeList = NULL;
+
     // v1beta1_cron_job_status->active
     cJSON *active = cJSON_GetObjectItemCaseSensitive(v1beta1_cron_job_statusJSON, "active");
-    list_t *activeList;
     if (active) { 
-    cJSON *active_local_nonprimitive;
+    cJSON *active_local_nonprimitive = NULL;
     if(!cJSON_IsArray(active)){
         goto end; //nonprimitive container
     }
@@ -144,6 +146,15 @@ v1beta1_cron_job_status_t *v1beta1_cron_job_status_parseFromJSON(cJSON *v1beta1_
 
     return v1beta1_cron_job_status_local_var;
 end:
+    if (activeList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, activeList) {
+            v1_object_reference_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(activeList);
+        activeList = NULL;
+    }
     return NULL;
 
 }

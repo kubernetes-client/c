@@ -158,6 +158,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     v1_job_status_t *v1_job_status_local_var = NULL;
 
+    // define the local list for v1_job_status->conditions
+    list_t *conditionsList = NULL;
+
     // define the local variable for v1_job_status->uncounted_terminated_pods
     v1_uncounted_terminated_pods_t *uncounted_terminated_pods_local_nonprim = NULL;
 
@@ -190,9 +193,8 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "conditions");
-    list_t *conditionsList;
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive;
+    cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
@@ -257,6 +259,15 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     return v1_job_status_local_var;
 end:
+    if (conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conditionsList) {
+            v1_job_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conditionsList);
+        conditionsList = NULL;
+    }
     if (uncounted_terminated_pods_local_nonprim) {
         v1_uncounted_terminated_pods_free(uncounted_terminated_pods_local_nonprim);
         uncounted_terminated_pods_local_nonprim = NULL;

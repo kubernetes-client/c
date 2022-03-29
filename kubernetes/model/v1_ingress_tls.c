@@ -78,11 +78,13 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
 
     v1_ingress_tls_t *v1_ingress_tls_local_var = NULL;
 
+    // define the local list for v1_ingress_tls->hosts
+    list_t *hostsList = NULL;
+
     // v1_ingress_tls->hosts
     cJSON *hosts = cJSON_GetObjectItemCaseSensitive(v1_ingress_tlsJSON, "hosts");
-    list_t *hostsList;
     if (hosts) { 
-    cJSON *hosts_local;
+    cJSON *hosts_local = NULL;
     if(!cJSON_IsArray(hosts)) {
         goto end;//primitive container
     }
@@ -115,6 +117,15 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
 
     return v1_ingress_tls_local_var;
 end:
+    if (hostsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, hostsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(hostsList);
+        hostsList = NULL;
+    }
     return NULL;
 
 }

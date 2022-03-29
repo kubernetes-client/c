@@ -116,6 +116,9 @@ v1_controller_revision_list_t *v1_controller_revision_list_parseFromJSON(cJSON *
 
     v1_controller_revision_list_t *v1_controller_revision_list_local_var = NULL;
 
+    // define the local list for v1_controller_revision_list->items
+    list_t *itemsList = NULL;
+
     // define the local variable for v1_controller_revision_list->metadata
     v1_list_meta_t *metadata_local_nonprim = NULL;
 
@@ -134,9 +137,8 @@ v1_controller_revision_list_t *v1_controller_revision_list_parseFromJSON(cJSON *
         goto end;
     }
 
-    list_t *itemsList;
     
-    cJSON *items_local_nonprimitive;
+    cJSON *items_local_nonprimitive = NULL;
     if(!cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
@@ -178,6 +180,15 @@ v1_controller_revision_list_t *v1_controller_revision_list_parseFromJSON(cJSON *
 
     return v1_controller_revision_list_local_var;
 end:
+    if (itemsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, itemsList) {
+            v1_controller_revision_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(itemsList);
+        itemsList = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_list_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

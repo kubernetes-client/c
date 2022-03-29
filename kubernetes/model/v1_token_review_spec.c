@@ -78,11 +78,13 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
 
     v1_token_review_spec_t *v1_token_review_spec_local_var = NULL;
 
+    // define the local list for v1_token_review_spec->audiences
+    list_t *audiencesList = NULL;
+
     // v1_token_review_spec->audiences
     cJSON *audiences = cJSON_GetObjectItemCaseSensitive(v1_token_review_specJSON, "audiences");
-    list_t *audiencesList;
     if (audiences) { 
-    cJSON *audiences_local;
+    cJSON *audiences_local = NULL;
     if(!cJSON_IsArray(audiences)) {
         goto end;//primitive container
     }
@@ -115,6 +117,15 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
 
     return v1_token_review_spec_local_var;
 end:
+    if (audiencesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, audiencesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(audiencesList);
+        audiencesList = NULL;
+    }
     return NULL;
 
 }

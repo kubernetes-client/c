@@ -129,6 +129,9 @@ v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJS
 
     v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_local_var = NULL;
 
+    // define the local map for v1_flex_persistent_volume_source->options
+    list_t *optionsList = NULL;
+
     // define the local variable for v1_flex_persistent_volume_source->secret_ref
     v1_secret_reference_t *secret_ref_local_nonprim = NULL;
 
@@ -155,9 +158,8 @@ v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJS
 
     // v1_flex_persistent_volume_source->options
     cJSON *options = cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "options");
-    list_t *optionsList;
     if (options) { 
-    cJSON *options_local_map;
+    cJSON *options_local_map = NULL;
     if(!cJSON_IsObject(options)) {
         goto end;//primitive map container
     }
@@ -201,6 +203,20 @@ v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJS
 
     return v1_flex_persistent_volume_source_local_var;
 end:
+    if (optionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, optionsList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(optionsList);
+        optionsList = NULL;
+    }
     if (secret_ref_local_nonprim) {
         v1_secret_reference_free(secret_ref_local_nonprim);
         secret_ref_local_nonprim = NULL;

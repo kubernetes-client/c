@@ -67,11 +67,13 @@ v1_api_service_status_t *v1_api_service_status_parseFromJSON(cJSON *v1_api_servi
 
     v1_api_service_status_t *v1_api_service_status_local_var = NULL;
 
+    // define the local list for v1_api_service_status->conditions
+    list_t *conditionsList = NULL;
+
     // v1_api_service_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_api_service_statusJSON, "conditions");
-    list_t *conditionsList;
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive;
+    cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
@@ -96,6 +98,15 @@ v1_api_service_status_t *v1_api_service_status_parseFromJSON(cJSON *v1_api_servi
 
     return v1_api_service_status_local_var;
 end:
+    if (conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conditionsList) {
+            v1_api_service_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conditionsList);
+        conditionsList = NULL;
+    }
     return NULL;
 
 }

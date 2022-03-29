@@ -80,6 +80,9 @@ v1_ip_block_t *v1_ip_block_parseFromJSON(cJSON *v1_ip_blockJSON){
 
     v1_ip_block_t *v1_ip_block_local_var = NULL;
 
+    // define the local list for v1_ip_block->except
+    list_t *exceptList = NULL;
+
     // v1_ip_block->cidr
     cJSON *cidr = cJSON_GetObjectItemCaseSensitive(v1_ip_blockJSON, "cidr");
     if (!cidr) {
@@ -94,9 +97,8 @@ v1_ip_block_t *v1_ip_block_parseFromJSON(cJSON *v1_ip_blockJSON){
 
     // v1_ip_block->except
     cJSON *except = cJSON_GetObjectItemCaseSensitive(v1_ip_blockJSON, "except");
-    list_t *exceptList;
     if (except) { 
-    cJSON *except_local;
+    cJSON *except_local = NULL;
     if(!cJSON_IsArray(except)) {
         goto end;//primitive container
     }
@@ -120,6 +122,15 @@ v1_ip_block_t *v1_ip_block_parseFromJSON(cJSON *v1_ip_blockJSON){
 
     return v1_ip_block_local_var;
 end:
+    if (exceptList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, exceptList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(exceptList);
+        exceptList = NULL;
+    }
     return NULL;
 
 }

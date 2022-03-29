@@ -125,6 +125,12 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
 
     v1_api_versions_t *v1_api_versions_local_var = NULL;
 
+    // define the local list for v1_api_versions->server_address_by_client_cidrs
+    list_t *server_address_by_client_cidrsList = NULL;
+
+    // define the local list for v1_api_versions->versions
+    list_t *versionsList = NULL;
+
     // v1_api_versions->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_versionsJSON, "apiVersion");
     if (api_version) { 
@@ -149,9 +155,8 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
         goto end;
     }
 
-    list_t *server_address_by_client_cidrsList;
     
-    cJSON *server_address_by_client_cidrs_local_nonprimitive;
+    cJSON *server_address_by_client_cidrs_local_nonprimitive = NULL;
     if(!cJSON_IsArray(server_address_by_client_cidrs)){
         goto end; //nonprimitive container
     }
@@ -174,9 +179,8 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
         goto end;
     }
 
-    list_t *versionsList;
     
-    cJSON *versions_local;
+    cJSON *versions_local = NULL;
     if(!cJSON_IsArray(versions)) {
         goto end;//primitive container
     }
@@ -201,6 +205,24 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
 
     return v1_api_versions_local_var;
 end:
+    if (server_address_by_client_cidrsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, server_address_by_client_cidrsList) {
+            v1_server_address_by_client_cidr_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(server_address_by_client_cidrsList);
+        server_address_by_client_cidrsList = NULL;
+    }
+    if (versionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, versionsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(versionsList);
+        versionsList = NULL;
+    }
     return NULL;
 
 }

@@ -150,11 +150,16 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
 
     v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_local_var = NULL;
 
+    // define the local list for v1_custom_resource_definition_names->categories
+    list_t *categoriesList = NULL;
+
+    // define the local list for v1_custom_resource_definition_names->short_names
+    list_t *short_namesList = NULL;
+
     // v1_custom_resource_definition_names->categories
     cJSON *categories = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_namesJSON, "categories");
-    list_t *categoriesList;
     if (categories) { 
-    cJSON *categories_local;
+    cJSON *categories_local = NULL;
     if(!cJSON_IsArray(categories)) {
         goto end;//primitive container
     }
@@ -205,9 +210,8 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
 
     // v1_custom_resource_definition_names->short_names
     cJSON *short_names = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_namesJSON, "shortNames");
-    list_t *short_namesList;
     if (short_names) { 
-    cJSON *short_names_local;
+    cJSON *short_names_local = NULL;
     if(!cJSON_IsArray(short_names)) {
         goto end;//primitive container
     }
@@ -244,6 +248,24 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
 
     return v1_custom_resource_definition_names_local_var;
 end:
+    if (categoriesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, categoriesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(categoriesList);
+        categoriesList = NULL;
+    }
+    if (short_namesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, short_namesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(short_namesList);
+        short_namesList = NULL;
+    }
     return NULL;
 
 }

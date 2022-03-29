@@ -96,11 +96,16 @@ v1_pod_anti_affinity_t *v1_pod_anti_affinity_parseFromJSON(cJSON *v1_pod_anti_af
 
     v1_pod_anti_affinity_t *v1_pod_anti_affinity_local_var = NULL;
 
+    // define the local list for v1_pod_anti_affinity->preferred_during_scheduling_ignored_during_execution
+    list_t *preferred_during_scheduling_ignored_during_executionList = NULL;
+
+    // define the local list for v1_pod_anti_affinity->required_during_scheduling_ignored_during_execution
+    list_t *required_during_scheduling_ignored_during_executionList = NULL;
+
     // v1_pod_anti_affinity->preferred_during_scheduling_ignored_during_execution
     cJSON *preferred_during_scheduling_ignored_during_execution = cJSON_GetObjectItemCaseSensitive(v1_pod_anti_affinityJSON, "preferredDuringSchedulingIgnoredDuringExecution");
-    list_t *preferred_during_scheduling_ignored_during_executionList;
     if (preferred_during_scheduling_ignored_during_execution) { 
-    cJSON *preferred_during_scheduling_ignored_during_execution_local_nonprimitive;
+    cJSON *preferred_during_scheduling_ignored_during_execution_local_nonprimitive = NULL;
     if(!cJSON_IsArray(preferred_during_scheduling_ignored_during_execution)){
         goto end; //nonprimitive container
     }
@@ -120,9 +125,8 @@ v1_pod_anti_affinity_t *v1_pod_anti_affinity_parseFromJSON(cJSON *v1_pod_anti_af
 
     // v1_pod_anti_affinity->required_during_scheduling_ignored_during_execution
     cJSON *required_during_scheduling_ignored_during_execution = cJSON_GetObjectItemCaseSensitive(v1_pod_anti_affinityJSON, "requiredDuringSchedulingIgnoredDuringExecution");
-    list_t *required_during_scheduling_ignored_during_executionList;
     if (required_during_scheduling_ignored_during_execution) { 
-    cJSON *required_during_scheduling_ignored_during_execution_local_nonprimitive;
+    cJSON *required_during_scheduling_ignored_during_execution_local_nonprimitive = NULL;
     if(!cJSON_IsArray(required_during_scheduling_ignored_during_execution)){
         goto end; //nonprimitive container
     }
@@ -148,6 +152,24 @@ v1_pod_anti_affinity_t *v1_pod_anti_affinity_parseFromJSON(cJSON *v1_pod_anti_af
 
     return v1_pod_anti_affinity_local_var;
 end:
+    if (preferred_during_scheduling_ignored_during_executionList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, preferred_during_scheduling_ignored_during_executionList) {
+            v1_weighted_pod_affinity_term_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(preferred_during_scheduling_ignored_during_executionList);
+        preferred_during_scheduling_ignored_during_executionList = NULL;
+    }
+    if (required_during_scheduling_ignored_during_executionList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, required_during_scheduling_ignored_during_executionList) {
+            v1_pod_affinity_term_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(required_during_scheduling_ignored_during_executionList);
+        required_during_scheduling_ignored_during_executionList = NULL;
+    }
     return NULL;
 
 }

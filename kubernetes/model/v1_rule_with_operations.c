@@ -156,11 +156,22 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
 
     v1_rule_with_operations_t *v1_rule_with_operations_local_var = NULL;
 
+    // define the local list for v1_rule_with_operations->api_groups
+    list_t *api_groupsList = NULL;
+
+    // define the local list for v1_rule_with_operations->api_versions
+    list_t *api_versionsList = NULL;
+
+    // define the local list for v1_rule_with_operations->operations
+    list_t *operationsList = NULL;
+
+    // define the local list for v1_rule_with_operations->resources
+    list_t *resourcesList = NULL;
+
     // v1_rule_with_operations->api_groups
     cJSON *api_groups = cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "apiGroups");
-    list_t *api_groupsList;
     if (api_groups) { 
-    cJSON *api_groups_local;
+    cJSON *api_groups_local = NULL;
     if(!cJSON_IsArray(api_groups)) {
         goto end;//primitive container
     }
@@ -178,9 +189,8 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
 
     // v1_rule_with_operations->api_versions
     cJSON *api_versions = cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "apiVersions");
-    list_t *api_versionsList;
     if (api_versions) { 
-    cJSON *api_versions_local;
+    cJSON *api_versions_local = NULL;
     if(!cJSON_IsArray(api_versions)) {
         goto end;//primitive container
     }
@@ -198,9 +208,8 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
 
     // v1_rule_with_operations->operations
     cJSON *operations = cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "operations");
-    list_t *operationsList;
     if (operations) { 
-    cJSON *operations_local;
+    cJSON *operations_local = NULL;
     if(!cJSON_IsArray(operations)) {
         goto end;//primitive container
     }
@@ -218,9 +227,8 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
 
     // v1_rule_with_operations->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "resources");
-    list_t *resourcesList;
     if (resources) { 
-    cJSON *resources_local;
+    cJSON *resources_local = NULL;
     if(!cJSON_IsArray(resources)) {
         goto end;//primitive container
     }
@@ -256,6 +264,42 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
 
     return v1_rule_with_operations_local_var;
 end:
+    if (api_groupsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, api_groupsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(api_groupsList);
+        api_groupsList = NULL;
+    }
+    if (api_versionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, api_versionsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(api_versionsList);
+        api_versionsList = NULL;
+    }
+    if (operationsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, operationsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(operationsList);
+        operationsList = NULL;
+    }
+    if (resourcesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, resourcesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(resourcesList);
+        resourcesList = NULL;
+    }
     return NULL;
 
 }

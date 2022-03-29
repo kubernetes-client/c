@@ -102,11 +102,16 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
 
     v1_resource_requirements_t *v1_resource_requirements_local_var = NULL;
 
+    // define the local map for v1_resource_requirements->limits
+    list_t *limitsList = NULL;
+
+    // define the local map for v1_resource_requirements->requests
+    list_t *requestsList = NULL;
+
     // v1_resource_requirements->limits
     cJSON *limits = cJSON_GetObjectItemCaseSensitive(v1_resource_requirementsJSON, "limits");
-    list_t *limitsList;
     if (limits) { 
-    cJSON *limits_local_map;
+    cJSON *limits_local_map = NULL;
     if(!cJSON_IsObject(limits)) {
         goto end;//primitive map container
     }
@@ -126,9 +131,8 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
 
     // v1_resource_requirements->requests
     cJSON *requests = cJSON_GetObjectItemCaseSensitive(v1_resource_requirementsJSON, "requests");
-    list_t *requestsList;
     if (requests) { 
-    cJSON *requests_local_map;
+    cJSON *requests_local_map = NULL;
     if(!cJSON_IsObject(requests)) {
         goto end;//primitive map container
     }
@@ -154,6 +158,34 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
 
     return v1_resource_requirements_local_var;
 end:
+    if (limitsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, limitsList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(limitsList);
+        limitsList = NULL;
+    }
+    if (requestsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, requestsList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(requestsList);
+        requestsList = NULL;
+    }
     return NULL;
 
 }

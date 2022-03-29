@@ -153,11 +153,16 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
 
     v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_local_var = NULL;
 
+    // define the local list for v1_pod_disruption_budget_status->conditions
+    list_t *conditionsList = NULL;
+
+    // define the local map for v1_pod_disruption_budget_status->disrupted_pods
+    list_t *disrupted_podsList = NULL;
+
     // v1_pod_disruption_budget_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "conditions");
-    list_t *conditionsList;
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive;
+    cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
@@ -201,9 +206,8 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
 
     // v1_pod_disruption_budget_status->disrupted_pods
     cJSON *disrupted_pods = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "disruptedPods");
-    list_t *disrupted_podsList;
     if (disrupted_pods) { 
-    cJSON *disrupted_pods_local_map;
+    cJSON *disrupted_pods_local_map = NULL;
     if(!cJSON_IsObject(disrupted_pods)) {
         goto end;//primitive map container
     }
@@ -262,6 +266,27 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
 
     return v1_pod_disruption_budget_status_local_var;
 end:
+    if (conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conditionsList) {
+            v1_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conditionsList);
+        conditionsList = NULL;
+    }
+    if (disrupted_podsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, disrupted_podsList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(disrupted_podsList);
+        disrupted_podsList = NULL;
+    }
     return NULL;
 
 }

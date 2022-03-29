@@ -197,6 +197,9 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     // define the local variable for v1_stateful_set_spec->update_strategy
     v1_stateful_set_update_strategy_t *update_strategy_local_nonprim = NULL;
 
+    // define the local list for v1_stateful_set_spec->volume_claim_templates
+    list_t *volume_claim_templatesList = NULL;
+
     // v1_stateful_set_spec->min_ready_seconds
     cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "minReadySeconds");
     if (min_ready_seconds) { 
@@ -271,9 +274,8 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     // v1_stateful_set_spec->volume_claim_templates
     cJSON *volume_claim_templates = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "volumeClaimTemplates");
-    list_t *volume_claim_templatesList;
     if (volume_claim_templates) { 
-    cJSON *volume_claim_templates_local_nonprimitive;
+    cJSON *volume_claim_templates_local_nonprimitive = NULL;
     if(!cJSON_IsArray(volume_claim_templates)){
         goto end; //nonprimitive container
     }
@@ -317,6 +319,15 @@ end:
     if (update_strategy_local_nonprim) {
         v1_stateful_set_update_strategy_free(update_strategy_local_nonprim);
         update_strategy_local_nonprim = NULL;
+    }
+    if (volume_claim_templatesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, volume_claim_templatesList) {
+            v1_persistent_volume_claim_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(volume_claim_templatesList);
+        volume_claim_templatesList = NULL;
     }
     return NULL;
 

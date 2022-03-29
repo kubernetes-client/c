@@ -64,11 +64,13 @@ v1_namespace_spec_t *v1_namespace_spec_parseFromJSON(cJSON *v1_namespace_specJSO
 
     v1_namespace_spec_t *v1_namespace_spec_local_var = NULL;
 
+    // define the local list for v1_namespace_spec->finalizers
+    list_t *finalizersList = NULL;
+
     // v1_namespace_spec->finalizers
     cJSON *finalizers = cJSON_GetObjectItemCaseSensitive(v1_namespace_specJSON, "finalizers");
-    list_t *finalizersList;
     if (finalizers) { 
-    cJSON *finalizers_local;
+    cJSON *finalizers_local = NULL;
     if(!cJSON_IsArray(finalizers)) {
         goto end;//primitive container
     }
@@ -91,6 +93,15 @@ v1_namespace_spec_t *v1_namespace_spec_parseFromJSON(cJSON *v1_namespace_specJSO
 
     return v1_namespace_spec_local_var;
 end:
+    if (finalizersList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, finalizersList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(finalizersList);
+        finalizersList = NULL;
+    }
     return NULL;
 
 }

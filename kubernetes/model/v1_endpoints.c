@@ -117,6 +117,9 @@ v1_endpoints_t *v1_endpoints_parseFromJSON(cJSON *v1_endpointsJSON){
     // define the local variable for v1_endpoints->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
+    // define the local list for v1_endpoints->subsets
+    list_t *subsetsList = NULL;
+
     // v1_endpoints->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "apiVersion");
     if (api_version) { 
@@ -143,9 +146,8 @@ v1_endpoints_t *v1_endpoints_parseFromJSON(cJSON *v1_endpointsJSON){
 
     // v1_endpoints->subsets
     cJSON *subsets = cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "subsets");
-    list_t *subsetsList;
     if (subsets) { 
-    cJSON *subsets_local_nonprimitive;
+    cJSON *subsets_local_nonprimitive = NULL;
     if(!cJSON_IsArray(subsets)){
         goto end; //nonprimitive container
     }
@@ -176,6 +178,15 @@ end:
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
+    }
+    if (subsetsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, subsetsList) {
+            v1_endpoint_subset_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(subsetsList);
+        subsetsList = NULL;
     }
     return NULL;
 

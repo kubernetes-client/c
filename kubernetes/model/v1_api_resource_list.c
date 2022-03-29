@@ -113,6 +113,9 @@ v1_api_resource_list_t *v1_api_resource_list_parseFromJSON(cJSON *v1_api_resourc
 
     v1_api_resource_list_t *v1_api_resource_list_local_var = NULL;
 
+    // define the local list for v1_api_resource_list->resources
+    list_t *resourcesList = NULL;
+
     // v1_api_resource_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_resource_listJSON, "apiVersion");
     if (api_version) { 
@@ -149,9 +152,8 @@ v1_api_resource_list_t *v1_api_resource_list_parseFromJSON(cJSON *v1_api_resourc
         goto end;
     }
 
-    list_t *resourcesList;
     
-    cJSON *resources_local_nonprimitive;
+    cJSON *resources_local_nonprimitive = NULL;
     if(!cJSON_IsArray(resources)){
         goto end; //nonprimitive container
     }
@@ -178,6 +180,15 @@ v1_api_resource_list_t *v1_api_resource_list_parseFromJSON(cJSON *v1_api_resourc
 
     return v1_api_resource_list_local_var;
 end:
+    if (resourcesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, resourcesList) {
+            v1_api_resource_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(resourcesList);
+        resourcesList = NULL;
+    }
     return NULL;
 
 }

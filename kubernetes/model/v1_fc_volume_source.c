@@ -124,6 +124,12 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
 
     v1_fc_volume_source_t *v1_fc_volume_source_local_var = NULL;
 
+    // define the local list for v1_fc_volume_source->target_wwns
+    list_t *target_wwnsList = NULL;
+
+    // define the local list for v1_fc_volume_source->wwids
+    list_t *wwidsList = NULL;
+
     // v1_fc_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "fsType");
     if (fs_type) { 
@@ -153,9 +159,8 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
 
     // v1_fc_volume_source->target_wwns
     cJSON *target_wwns = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "targetWWNs");
-    list_t *target_wwnsList;
     if (target_wwns) { 
-    cJSON *target_wwns_local;
+    cJSON *target_wwns_local = NULL;
     if(!cJSON_IsArray(target_wwns)) {
         goto end;//primitive container
     }
@@ -173,9 +178,8 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
 
     // v1_fc_volume_source->wwids
     cJSON *wwids = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "wwids");
-    list_t *wwidsList;
     if (wwids) { 
-    cJSON *wwids_local;
+    cJSON *wwids_local = NULL;
     if(!cJSON_IsArray(wwids)) {
         goto end;//primitive container
     }
@@ -202,6 +206,24 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
 
     return v1_fc_volume_source_local_var;
 end:
+    if (target_wwnsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, target_wwnsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(target_wwnsList);
+        target_wwnsList = NULL;
+    }
+    if (wwidsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, wwidsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(wwidsList);
+        wwidsList = NULL;
+    }
     return NULL;
 
 }

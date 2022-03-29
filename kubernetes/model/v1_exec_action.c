@@ -64,11 +64,13 @@ v1_exec_action_t *v1_exec_action_parseFromJSON(cJSON *v1_exec_actionJSON){
 
     v1_exec_action_t *v1_exec_action_local_var = NULL;
 
+    // define the local list for v1_exec_action->command
+    list_t *commandList = NULL;
+
     // v1_exec_action->command
     cJSON *command = cJSON_GetObjectItemCaseSensitive(v1_exec_actionJSON, "command");
-    list_t *commandList;
     if (command) { 
-    cJSON *command_local;
+    cJSON *command_local = NULL;
     if(!cJSON_IsArray(command)) {
         goto end;//primitive container
     }
@@ -91,6 +93,15 @@ v1_exec_action_t *v1_exec_action_parseFromJSON(cJSON *v1_exec_actionJSON){
 
     return v1_exec_action_local_var;
 end:
+    if (commandList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, commandList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(commandList);
+        commandList = NULL;
+    }
     return NULL;
 
 }

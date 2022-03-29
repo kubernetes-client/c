@@ -126,6 +126,12 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
 
     v1_subject_rules_review_status_t *v1_subject_rules_review_status_local_var = NULL;
 
+    // define the local list for v1_subject_rules_review_status->non_resource_rules
+    list_t *non_resource_rulesList = NULL;
+
+    // define the local list for v1_subject_rules_review_status->resource_rules
+    list_t *resource_rulesList = NULL;
+
     // v1_subject_rules_review_status->evaluation_error
     cJSON *evaluation_error = cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "evaluationError");
     if (evaluation_error) { 
@@ -153,9 +159,8 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
         goto end;
     }
 
-    list_t *non_resource_rulesList;
     
-    cJSON *non_resource_rules_local_nonprimitive;
+    cJSON *non_resource_rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(non_resource_rules)){
         goto end; //nonprimitive container
     }
@@ -178,9 +183,8 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
         goto end;
     }
 
-    list_t *resource_rulesList;
     
-    cJSON *resource_rules_local_nonprimitive;
+    cJSON *resource_rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(resource_rules)){
         goto end; //nonprimitive container
     }
@@ -207,6 +211,24 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
 
     return v1_subject_rules_review_status_local_var;
 end:
+    if (non_resource_rulesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, non_resource_rulesList) {
+            v1_non_resource_rule_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(non_resource_rulesList);
+        non_resource_rulesList = NULL;
+    }
+    if (resource_rulesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, resource_rulesList) {
+            v1_resource_rule_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(resource_rulesList);
+        resource_rulesList = NULL;
+    }
     return NULL;
 
 }

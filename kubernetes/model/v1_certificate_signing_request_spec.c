@@ -188,6 +188,15 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_local_var = NULL;
 
+    // define the local map for v1_certificate_signing_request_spec->extra
+    list_t *extraList = NULL;
+
+    // define the local list for v1_certificate_signing_request_spec->groups
+    list_t *groupsList = NULL;
+
+    // define the local list for v1_certificate_signing_request_spec->usages
+    list_t *usagesList = NULL;
+
     // v1_certificate_signing_request_spec->expiration_seconds
     cJSON *expiration_seconds = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "expirationSeconds");
     if (expiration_seconds) { 
@@ -199,9 +208,8 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     // v1_certificate_signing_request_spec->extra
     cJSON *extra = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "extra");
-    list_t *extraList;
     if (extra) { 
-    cJSON *extra_local_map;
+    cJSON *extra_local_map = NULL;
     if(!cJSON_IsObject(extra)) {
         goto end;//primitive map container
     }
@@ -216,9 +224,8 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     // v1_certificate_signing_request_spec->groups
     cJSON *groups = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "groups");
-    list_t *groupsList;
     if (groups) { 
-    cJSON *groups_local;
+    cJSON *groups_local = NULL;
     if(!cJSON_IsArray(groups)) {
         goto end;//primitive container
     }
@@ -269,9 +276,8 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     // v1_certificate_signing_request_spec->usages
     cJSON *usages = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "usages");
-    list_t *usagesList;
     if (usages) { 
-    cJSON *usages_local;
+    cJSON *usages_local = NULL;
     if(!cJSON_IsArray(usages)) {
         goto end;//primitive container
     }
@@ -310,6 +316,36 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     return v1_certificate_signing_request_spec_local_var;
 end:
+    if (extraList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, extraList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(extraList);
+        extraList = NULL;
+    }
+    if (groupsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, groupsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(groupsList);
+        groupsList = NULL;
+    }
+    if (usagesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, usagesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(usagesList);
+        usagesList = NULL;
+    }
     return NULL;
 
 }

@@ -130,6 +130,9 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
     v1_http_get_action_t *v1_http_get_action_local_var = NULL;
 
+    // define the local list for v1_http_get_action->http_headers
+    list_t *http_headersList = NULL;
+
     // define the local variable for v1_http_get_action->port
     int_or_string_t *port_local_nonprim = NULL;
 
@@ -144,9 +147,8 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
     // v1_http_get_action->http_headers
     cJSON *http_headers = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "httpHeaders");
-    list_t *http_headersList;
     if (http_headers) { 
-    cJSON *http_headers_local_nonprimitive;
+    cJSON *http_headers_local_nonprimitive = NULL;
     if(!cJSON_IsArray(http_headers)){
         goto end; //nonprimitive container
     }
@@ -202,6 +204,15 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
     return v1_http_get_action_local_var;
 end:
+    if (http_headersList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, http_headersList) {
+            v1_http_header_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(http_headersList);
+        http_headersList = NULL;
+    }
     if (port_local_nonprim) {
         int_or_string_free(port_local_nonprim);
         port_local_nonprim = NULL;

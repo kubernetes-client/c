@@ -97,6 +97,9 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
 
     v1_api_group_list_t *v1_api_group_list_local_var = NULL;
 
+    // define the local list for v1_api_group_list->groups
+    list_t *groupsList = NULL;
+
     // v1_api_group_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_group_listJSON, "apiVersion");
     if (api_version) { 
@@ -112,9 +115,8 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
         goto end;
     }
 
-    list_t *groupsList;
     
-    cJSON *groups_local_nonprimitive;
+    cJSON *groups_local_nonprimitive = NULL;
     if(!cJSON_IsArray(groups)){
         goto end; //nonprimitive container
     }
@@ -149,6 +151,15 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
 
     return v1_api_group_list_local_var;
 end:
+    if (groupsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, groupsList) {
+            v1_api_group_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(groupsList);
+        groupsList = NULL;
+    }
     return NULL;
 
 }

@@ -67,11 +67,13 @@ v1_topology_selector_term_t *v1_topology_selector_term_parseFromJSON(cJSON *v1_t
 
     v1_topology_selector_term_t *v1_topology_selector_term_local_var = NULL;
 
+    // define the local list for v1_topology_selector_term->match_label_expressions
+    list_t *match_label_expressionsList = NULL;
+
     // v1_topology_selector_term->match_label_expressions
     cJSON *match_label_expressions = cJSON_GetObjectItemCaseSensitive(v1_topology_selector_termJSON, "matchLabelExpressions");
-    list_t *match_label_expressionsList;
     if (match_label_expressions) { 
-    cJSON *match_label_expressions_local_nonprimitive;
+    cJSON *match_label_expressions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(match_label_expressions)){
         goto end; //nonprimitive container
     }
@@ -96,6 +98,15 @@ v1_topology_selector_term_t *v1_topology_selector_term_parseFromJSON(cJSON *v1_t
 
     return v1_topology_selector_term_local_var;
 end:
+    if (match_label_expressionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, match_label_expressionsList) {
+            v1_topology_selector_label_requirement_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(match_label_expressionsList);
+        match_label_expressionsList = NULL;
+    }
     return NULL;
 
 }

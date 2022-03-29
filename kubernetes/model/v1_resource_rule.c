@@ -144,11 +144,22 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
 
     v1_resource_rule_t *v1_resource_rule_local_var = NULL;
 
+    // define the local list for v1_resource_rule->api_groups
+    list_t *api_groupsList = NULL;
+
+    // define the local list for v1_resource_rule->resource_names
+    list_t *resource_namesList = NULL;
+
+    // define the local list for v1_resource_rule->resources
+    list_t *resourcesList = NULL;
+
+    // define the local list for v1_resource_rule->verbs
+    list_t *verbsList = NULL;
+
     // v1_resource_rule->api_groups
     cJSON *api_groups = cJSON_GetObjectItemCaseSensitive(v1_resource_ruleJSON, "apiGroups");
-    list_t *api_groupsList;
     if (api_groups) { 
-    cJSON *api_groups_local;
+    cJSON *api_groups_local = NULL;
     if(!cJSON_IsArray(api_groups)) {
         goto end;//primitive container
     }
@@ -166,9 +177,8 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
 
     // v1_resource_rule->resource_names
     cJSON *resource_names = cJSON_GetObjectItemCaseSensitive(v1_resource_ruleJSON, "resourceNames");
-    list_t *resource_namesList;
     if (resource_names) { 
-    cJSON *resource_names_local;
+    cJSON *resource_names_local = NULL;
     if(!cJSON_IsArray(resource_names)) {
         goto end;//primitive container
     }
@@ -186,9 +196,8 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
 
     // v1_resource_rule->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_resource_ruleJSON, "resources");
-    list_t *resourcesList;
     if (resources) { 
-    cJSON *resources_local;
+    cJSON *resources_local = NULL;
     if(!cJSON_IsArray(resources)) {
         goto end;//primitive container
     }
@@ -210,9 +219,8 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
         goto end;
     }
 
-    list_t *verbsList;
     
-    cJSON *verbs_local;
+    cJSON *verbs_local = NULL;
     if(!cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
@@ -237,6 +245,42 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
 
     return v1_resource_rule_local_var;
 end:
+    if (api_groupsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, api_groupsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(api_groupsList);
+        api_groupsList = NULL;
+    }
+    if (resource_namesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, resource_namesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(resource_namesList);
+        resource_namesList = NULL;
+    }
+    if (resourcesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, resourcesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(resourcesList);
+        resourcesList = NULL;
+    }
+    if (verbsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, verbsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(verbsList);
+        verbsList = NULL;
+    }
     return NULL;
 
 }

@@ -99,11 +99,16 @@ v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSO
 
     v1_label_selector_t *v1_label_selector_local_var = NULL;
 
+    // define the local list for v1_label_selector->match_expressions
+    list_t *match_expressionsList = NULL;
+
+    // define the local map for v1_label_selector->match_labels
+    list_t *match_labelsList = NULL;
+
     // v1_label_selector->match_expressions
     cJSON *match_expressions = cJSON_GetObjectItemCaseSensitive(v1_label_selectorJSON, "matchExpressions");
-    list_t *match_expressionsList;
     if (match_expressions) { 
-    cJSON *match_expressions_local_nonprimitive;
+    cJSON *match_expressions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(match_expressions)){
         goto end; //nonprimitive container
     }
@@ -123,9 +128,8 @@ v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSO
 
     // v1_label_selector->match_labels
     cJSON *match_labels = cJSON_GetObjectItemCaseSensitive(v1_label_selectorJSON, "matchLabels");
-    list_t *match_labelsList;
     if (match_labels) { 
-    cJSON *match_labels_local_map;
+    cJSON *match_labels_local_map = NULL;
     if(!cJSON_IsObject(match_labels)) {
         goto end;//primitive map container
     }
@@ -151,6 +155,29 @@ v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSO
 
     return v1_label_selector_local_var;
 end:
+    if (match_expressionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, match_expressionsList) {
+            v1_label_selector_requirement_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(match_expressionsList);
+        match_expressionsList = NULL;
+    }
+    if (match_labelsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, match_labelsList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(match_labelsList);
+        match_labelsList = NULL;
+    }
     return NULL;
 
 }

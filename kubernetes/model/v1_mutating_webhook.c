@@ -238,6 +238,9 @@ v1_mutating_webhook_t *v1_mutating_webhook_parseFromJSON(cJSON *v1_mutating_webh
 
     v1_mutating_webhook_t *v1_mutating_webhook_local_var = NULL;
 
+    // define the local list for v1_mutating_webhook->admission_review_versions
+    list_t *admission_review_versionsList = NULL;
+
     // define the local variable for v1_mutating_webhook->client_config
     admissionregistration_v1_webhook_client_config_t *client_config_local_nonprim = NULL;
 
@@ -247,15 +250,17 @@ v1_mutating_webhook_t *v1_mutating_webhook_parseFromJSON(cJSON *v1_mutating_webh
     // define the local variable for v1_mutating_webhook->object_selector
     v1_label_selector_t *object_selector_local_nonprim = NULL;
 
+    // define the local list for v1_mutating_webhook->rules
+    list_t *rulesList = NULL;
+
     // v1_mutating_webhook->admission_review_versions
     cJSON *admission_review_versions = cJSON_GetObjectItemCaseSensitive(v1_mutating_webhookJSON, "admissionReviewVersions");
     if (!admission_review_versions) {
         goto end;
     }
 
-    list_t *admission_review_versionsList;
     
-    cJSON *admission_review_versions_local;
+    cJSON *admission_review_versions_local = NULL;
     if(!cJSON_IsArray(admission_review_versions)) {
         goto end;//primitive container
     }
@@ -332,9 +337,8 @@ v1_mutating_webhook_t *v1_mutating_webhook_parseFromJSON(cJSON *v1_mutating_webh
 
     // v1_mutating_webhook->rules
     cJSON *rules = cJSON_GetObjectItemCaseSensitive(v1_mutating_webhookJSON, "rules");
-    list_t *rulesList;
     if (rules) { 
-    cJSON *rules_local_nonprimitive;
+    cJSON *rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(rules)){
         goto end; //nonprimitive container
     }
@@ -390,6 +394,15 @@ v1_mutating_webhook_t *v1_mutating_webhook_parseFromJSON(cJSON *v1_mutating_webh
 
     return v1_mutating_webhook_local_var;
 end:
+    if (admission_review_versionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, admission_review_versionsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(admission_review_versionsList);
+        admission_review_versionsList = NULL;
+    }
     if (client_config_local_nonprim) {
         admissionregistration_v1_webhook_client_config_free(client_config_local_nonprim);
         client_config_local_nonprim = NULL;
@@ -401,6 +414,15 @@ end:
     if (object_selector_local_nonprim) {
         v1_label_selector_free(object_selector_local_nonprim);
         object_selector_local_nonprim = NULL;
+    }
+    if (rulesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, rulesList) {
+            v1_rule_with_operations_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(rulesList);
+        rulesList = NULL;
     }
     return NULL;
 

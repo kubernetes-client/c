@@ -96,6 +96,9 @@ v1_label_selector_requirement_t *v1_label_selector_requirement_parseFromJSON(cJS
 
     v1_label_selector_requirement_t *v1_label_selector_requirement_local_var = NULL;
 
+    // define the local list for v1_label_selector_requirement->values
+    list_t *valuesList = NULL;
+
     // v1_label_selector_requirement->key
     cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_label_selector_requirementJSON, "key");
     if (!key) {
@@ -122,9 +125,8 @@ v1_label_selector_requirement_t *v1_label_selector_requirement_parseFromJSON(cJS
 
     // v1_label_selector_requirement->values
     cJSON *values = cJSON_GetObjectItemCaseSensitive(v1_label_selector_requirementJSON, "values");
-    list_t *valuesList;
     if (values) { 
-    cJSON *values_local;
+    cJSON *values_local = NULL;
     if(!cJSON_IsArray(values)) {
         goto end;//primitive container
     }
@@ -149,6 +151,15 @@ v1_label_selector_requirement_t *v1_label_selector_requirement_parseFromJSON(cJS
 
     return v1_label_selector_requirement_local_var;
 end:
+    if (valuesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, valuesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(valuesList);
+        valuesList = NULL;
+    }
     return NULL;
 
 }

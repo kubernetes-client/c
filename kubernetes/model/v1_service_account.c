@@ -153,8 +153,14 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     v1_service_account_t *v1_service_account_local_var = NULL;
 
+    // define the local list for v1_service_account->image_pull_secrets
+    list_t *image_pull_secretsList = NULL;
+
     // define the local variable for v1_service_account->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local list for v1_service_account->secrets
+    list_t *secretsList = NULL;
 
     // v1_service_account->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "apiVersion");
@@ -176,9 +182,8 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     // v1_service_account->image_pull_secrets
     cJSON *image_pull_secrets = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "imagePullSecrets");
-    list_t *image_pull_secretsList;
     if (image_pull_secrets) { 
-    cJSON *image_pull_secrets_local_nonprimitive;
+    cJSON *image_pull_secrets_local_nonprimitive = NULL;
     if(!cJSON_IsArray(image_pull_secrets)){
         goto end; //nonprimitive container
     }
@@ -213,9 +218,8 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     // v1_service_account->secrets
     cJSON *secrets = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "secrets");
-    list_t *secretsList;
     if (secrets) { 
-    cJSON *secrets_local_nonprimitive;
+    cJSON *secrets_local_nonprimitive = NULL;
     if(!cJSON_IsArray(secrets)){
         goto end; //nonprimitive container
     }
@@ -245,9 +249,27 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     return v1_service_account_local_var;
 end:
+    if (image_pull_secretsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, image_pull_secretsList) {
+            v1_local_object_reference_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(image_pull_secretsList);
+        image_pull_secretsList = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
+    }
+    if (secretsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, secretsList) {
+            v1_object_reference_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(secretsList);
+        secretsList = NULL;
     }
     return NULL;
 

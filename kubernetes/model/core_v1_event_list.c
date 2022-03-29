@@ -116,6 +116,9 @@ core_v1_event_list_t *core_v1_event_list_parseFromJSON(cJSON *core_v1_event_list
 
     core_v1_event_list_t *core_v1_event_list_local_var = NULL;
 
+    // define the local list for core_v1_event_list->items
+    list_t *itemsList = NULL;
+
     // define the local variable for core_v1_event_list->metadata
     v1_list_meta_t *metadata_local_nonprim = NULL;
 
@@ -134,9 +137,8 @@ core_v1_event_list_t *core_v1_event_list_parseFromJSON(cJSON *core_v1_event_list
         goto end;
     }
 
-    list_t *itemsList;
     
-    cJSON *items_local_nonprimitive;
+    cJSON *items_local_nonprimitive = NULL;
     if(!cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
@@ -178,6 +180,15 @@ core_v1_event_list_t *core_v1_event_list_parseFromJSON(cJSON *core_v1_event_list
 
     return core_v1_event_list_local_var;
 end:
+    if (itemsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, itemsList) {
+            core_v1_event_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(itemsList);
+        itemsList = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_list_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

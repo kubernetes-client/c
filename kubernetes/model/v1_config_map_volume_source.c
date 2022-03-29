@@ -101,6 +101,9 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
 
     v1_config_map_volume_source_t *v1_config_map_volume_source_local_var = NULL;
 
+    // define the local list for v1_config_map_volume_source->items
+    list_t *itemsList = NULL;
+
     // v1_config_map_volume_source->default_mode
     cJSON *default_mode = cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "defaultMode");
     if (default_mode) { 
@@ -112,9 +115,8 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
 
     // v1_config_map_volume_source->items
     cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "items");
-    list_t *itemsList;
     if (items) { 
-    cJSON *items_local_nonprimitive;
+    cJSON *items_local_nonprimitive = NULL;
     if(!cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
@@ -160,6 +162,15 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
 
     return v1_config_map_volume_source_local_var;
 end:
+    if (itemsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, itemsList) {
+            v1_key_to_path_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(itemsList);
+        itemsList = NULL;
+    }
     return NULL;
 
 }

@@ -115,14 +115,19 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
 
     v1_resource_quota_spec_t *v1_resource_quota_spec_local_var = NULL;
 
+    // define the local map for v1_resource_quota_spec->hard
+    list_t *hardList = NULL;
+
     // define the local variable for v1_resource_quota_spec->scope_selector
     v1_scope_selector_t *scope_selector_local_nonprim = NULL;
 
+    // define the local list for v1_resource_quota_spec->scopes
+    list_t *scopesList = NULL;
+
     // v1_resource_quota_spec->hard
     cJSON *hard = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_specJSON, "hard");
-    list_t *hardList;
     if (hard) { 
-    cJSON *hard_local_map;
+    cJSON *hard_local_map = NULL;
     if(!cJSON_IsObject(hard)) {
         goto end;//primitive map container
     }
@@ -148,9 +153,8 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
 
     // v1_resource_quota_spec->scopes
     cJSON *scopes = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_specJSON, "scopes");
-    list_t *scopesList;
     if (scopes) { 
-    cJSON *scopes_local;
+    cJSON *scopes_local = NULL;
     if(!cJSON_IsArray(scopes)) {
         goto end;//primitive container
     }
@@ -175,9 +179,32 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
 
     return v1_resource_quota_spec_local_var;
 end:
+    if (hardList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, hardList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(hardList);
+        hardList = NULL;
+    }
     if (scope_selector_local_nonprim) {
         v1_scope_selector_free(scope_selector_local_nonprim);
         scope_selector_local_nonprim = NULL;
+    }
+    if (scopesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, scopesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(scopesList);
+        scopesList = NULL;
     }
     return NULL;
 

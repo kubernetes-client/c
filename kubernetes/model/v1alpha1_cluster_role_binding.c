@@ -141,6 +141,9 @@ v1alpha1_cluster_role_binding_t *v1alpha1_cluster_role_binding_parseFromJSON(cJS
     // define the local variable for v1alpha1_cluster_role_binding->role_ref
     v1alpha1_role_ref_t *role_ref_local_nonprim = NULL;
 
+    // define the local list for v1alpha1_cluster_role_binding->subjects
+    list_t *subjectsList = NULL;
+
     // v1alpha1_cluster_role_binding->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_role_bindingJSON, "apiVersion");
     if (api_version) { 
@@ -176,9 +179,8 @@ v1alpha1_cluster_role_binding_t *v1alpha1_cluster_role_binding_parseFromJSON(cJS
 
     // v1alpha1_cluster_role_binding->subjects
     cJSON *subjects = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_role_bindingJSON, "subjects");
-    list_t *subjectsList;
     if (subjects) { 
-    cJSON *subjects_local_nonprimitive;
+    cJSON *subjects_local_nonprimitive = NULL;
     if(!cJSON_IsArray(subjects)){
         goto end; //nonprimitive container
     }
@@ -214,6 +216,15 @@ end:
     if (role_ref_local_nonprim) {
         v1alpha1_role_ref_free(role_ref_local_nonprim);
         role_ref_local_nonprim = NULL;
+    }
+    if (subjectsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, subjectsList) {
+            v1alpha1_subject_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(subjectsList);
+        subjectsList = NULL;
     }
     return NULL;
 

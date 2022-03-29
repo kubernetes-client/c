@@ -167,6 +167,12 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     // define the local variable for v1_node_spec->config_source
     v1_node_config_source_t *config_source_local_nonprim = NULL;
 
+    // define the local list for v1_node_spec->pod_cidrs
+    list_t *pod_cidrsList = NULL;
+
+    // define the local list for v1_node_spec->taints
+    list_t *taintsList = NULL;
+
     // v1_node_spec->config_source
     cJSON *config_source = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "configSource");
     if (config_source) { 
@@ -193,9 +199,8 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     // v1_node_spec->pod_cidrs
     cJSON *pod_cidrs = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "podCIDRs");
-    list_t *pod_cidrsList;
     if (pod_cidrs) { 
-    cJSON *pod_cidrs_local;
+    cJSON *pod_cidrs_local = NULL;
     if(!cJSON_IsArray(pod_cidrs)) {
         goto end;//primitive container
     }
@@ -222,9 +227,8 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     // v1_node_spec->taints
     cJSON *taints = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "taints");
-    list_t *taintsList;
     if (taints) { 
-    cJSON *taints_local_nonprimitive;
+    cJSON *taints_local_nonprimitive = NULL;
     if(!cJSON_IsArray(taints)){
         goto end; //nonprimitive container
     }
@@ -267,6 +271,24 @@ end:
     if (config_source_local_nonprim) {
         v1_node_config_source_free(config_source_local_nonprim);
         config_source_local_nonprim = NULL;
+    }
+    if (pod_cidrsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, pod_cidrsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(pod_cidrsList);
+        pod_cidrsList = NULL;
+    }
+    if (taintsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, taintsList) {
+            v1_taint_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(taintsList);
+        taintsList = NULL;
     }
     return NULL;
 

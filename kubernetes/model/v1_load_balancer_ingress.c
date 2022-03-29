@@ -95,6 +95,9 @@ v1_load_balancer_ingress_t *v1_load_balancer_ingress_parseFromJSON(cJSON *v1_loa
 
     v1_load_balancer_ingress_t *v1_load_balancer_ingress_local_var = NULL;
 
+    // define the local list for v1_load_balancer_ingress->ports
+    list_t *portsList = NULL;
+
     // v1_load_balancer_ingress->hostname
     cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1_load_balancer_ingressJSON, "hostname");
     if (hostname) { 
@@ -115,9 +118,8 @@ v1_load_balancer_ingress_t *v1_load_balancer_ingress_parseFromJSON(cJSON *v1_loa
 
     // v1_load_balancer_ingress->ports
     cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_load_balancer_ingressJSON, "ports");
-    list_t *portsList;
     if (ports) { 
-    cJSON *ports_local_nonprimitive;
+    cJSON *ports_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ports)){
         goto end; //nonprimitive container
     }
@@ -144,6 +146,15 @@ v1_load_balancer_ingress_t *v1_load_balancer_ingress_parseFromJSON(cJSON *v1_loa
 
     return v1_load_balancer_ingress_local_var;
 end:
+    if (portsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, portsList) {
+            v1_port_status_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(portsList);
+        portsList = NULL;
+    }
     return NULL;
 
 }

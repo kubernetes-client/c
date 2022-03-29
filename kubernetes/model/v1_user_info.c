@@ -120,11 +120,16 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
 
     v1_user_info_t *v1_user_info_local_var = NULL;
 
+    // define the local map for v1_user_info->extra
+    list_t *extraList = NULL;
+
+    // define the local list for v1_user_info->groups
+    list_t *groupsList = NULL;
+
     // v1_user_info->extra
     cJSON *extra = cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "extra");
-    list_t *extraList;
     if (extra) { 
-    cJSON *extra_local_map;
+    cJSON *extra_local_map = NULL;
     if(!cJSON_IsObject(extra)) {
         goto end;//primitive map container
     }
@@ -139,9 +144,8 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
 
     // v1_user_info->groups
     cJSON *groups = cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "groups");
-    list_t *groupsList;
     if (groups) { 
-    cJSON *groups_local;
+    cJSON *groups_local = NULL;
     if(!cJSON_IsArray(groups)) {
         goto end;//primitive container
     }
@@ -185,6 +189,27 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
 
     return v1_user_info_local_var;
 end:
+    if (extraList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, extraList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(extraList);
+        extraList = NULL;
+    }
+    if (groupsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, groupsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(groupsList);
+        groupsList = NULL;
+    }
     return NULL;
 
 }

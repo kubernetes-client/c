@@ -74,11 +74,13 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
 
     v1_container_image_t *v1_container_image_local_var = NULL;
 
+    // define the local list for v1_container_image->names
+    list_t *namesList = NULL;
+
     // v1_container_image->names
     cJSON *names = cJSON_GetObjectItemCaseSensitive(v1_container_imageJSON, "names");
-    list_t *namesList;
     if (names) { 
-    cJSON *names_local;
+    cJSON *names_local = NULL;
     if(!cJSON_IsArray(names)) {
         goto end;//primitive container
     }
@@ -111,6 +113,15 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
 
     return v1_container_image_local_var;
 end:
+    if (namesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, namesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(namesList);
+        namesList = NULL;
+    }
     return NULL;
 
 }

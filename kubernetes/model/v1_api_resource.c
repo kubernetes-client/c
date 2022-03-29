@@ -220,11 +220,19 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     v1_api_resource_t *v1_api_resource_local_var = NULL;
 
+    // define the local list for v1_api_resource->categories
+    list_t *categoriesList = NULL;
+
+    // define the local list for v1_api_resource->short_names
+    list_t *short_namesList = NULL;
+
+    // define the local list for v1_api_resource->verbs
+    list_t *verbsList = NULL;
+
     // v1_api_resource->categories
     cJSON *categories = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "categories");
-    list_t *categoriesList;
     if (categories) { 
-    cJSON *categories_local;
+    cJSON *categories_local = NULL;
     if(!cJSON_IsArray(categories)) {
         goto end;//primitive container
     }
@@ -287,9 +295,8 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     // v1_api_resource->short_names
     cJSON *short_names = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "shortNames");
-    list_t *short_namesList;
     if (short_names) { 
-    cJSON *short_names_local;
+    cJSON *short_names_local = NULL;
     if(!cJSON_IsArray(short_names)) {
         goto end;//primitive container
     }
@@ -332,9 +339,8 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
         goto end;
     }
 
-    list_t *verbsList;
     
-    cJSON *verbs_local;
+    cJSON *verbs_local = NULL;
     if(!cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
@@ -374,6 +380,33 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     return v1_api_resource_local_var;
 end:
+    if (categoriesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, categoriesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(categoriesList);
+        categoriesList = NULL;
+    }
+    if (short_namesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, short_namesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(short_namesList);
+        short_namesList = NULL;
+    }
+    if (verbsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, verbsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(verbsList);
+        verbsList = NULL;
+    }
     return NULL;
 
 }

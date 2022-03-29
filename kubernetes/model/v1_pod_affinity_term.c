@@ -124,6 +124,9 @@ v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinit
     // define the local variable for v1_pod_affinity_term->namespace_selector
     v1_label_selector_t *namespace_selector_local_nonprim = NULL;
 
+    // define the local list for v1_pod_affinity_term->namespaces
+    list_t *namespacesList = NULL;
+
     // v1_pod_affinity_term->label_selector
     cJSON *label_selector = cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "labelSelector");
     if (label_selector) { 
@@ -138,9 +141,8 @@ v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinit
 
     // v1_pod_affinity_term->namespaces
     cJSON *namespaces = cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "namespaces");
-    list_t *namespacesList;
     if (namespaces) { 
-    cJSON *namespaces_local;
+    cJSON *namespaces_local = NULL;
     if(!cJSON_IsArray(namespaces)) {
         goto end;//primitive container
     }
@@ -185,6 +187,15 @@ end:
     if (namespace_selector_local_nonprim) {
         v1_label_selector_free(namespace_selector_local_nonprim);
         namespace_selector_local_nonprim = NULL;
+    }
+    if (namespacesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, namespacesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(namespacesList);
+        namespacesList = NULL;
     }
     return NULL;
 

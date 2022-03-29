@@ -69,15 +69,17 @@ v1_node_selector_t *v1_node_selector_parseFromJSON(cJSON *v1_node_selectorJSON){
 
     v1_node_selector_t *v1_node_selector_local_var = NULL;
 
+    // define the local list for v1_node_selector->node_selector_terms
+    list_t *node_selector_termsList = NULL;
+
     // v1_node_selector->node_selector_terms
     cJSON *node_selector_terms = cJSON_GetObjectItemCaseSensitive(v1_node_selectorJSON, "nodeSelectorTerms");
     if (!node_selector_terms) {
         goto end;
     }
 
-    list_t *node_selector_termsList;
     
-    cJSON *node_selector_terms_local_nonprimitive;
+    cJSON *node_selector_terms_local_nonprimitive = NULL;
     if(!cJSON_IsArray(node_selector_terms)){
         goto end; //nonprimitive container
     }
@@ -101,6 +103,15 @@ v1_node_selector_t *v1_node_selector_parseFromJSON(cJSON *v1_node_selectorJSON){
 
     return v1_node_selector_local_var;
 end:
+    if (node_selector_termsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, node_selector_termsList) {
+            v1_node_selector_term_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(node_selector_termsList);
+        node_selector_termsList = NULL;
+    }
     return NULL;
 
 }

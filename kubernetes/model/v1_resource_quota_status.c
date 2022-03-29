@@ -102,11 +102,16 @@ v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(cJSON *v1_res
 
     v1_resource_quota_status_t *v1_resource_quota_status_local_var = NULL;
 
+    // define the local map for v1_resource_quota_status->hard
+    list_t *hardList = NULL;
+
+    // define the local map for v1_resource_quota_status->used
+    list_t *usedList = NULL;
+
     // v1_resource_quota_status->hard
     cJSON *hard = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_statusJSON, "hard");
-    list_t *hardList;
     if (hard) { 
-    cJSON *hard_local_map;
+    cJSON *hard_local_map = NULL;
     if(!cJSON_IsObject(hard)) {
         goto end;//primitive map container
     }
@@ -126,9 +131,8 @@ v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(cJSON *v1_res
 
     // v1_resource_quota_status->used
     cJSON *used = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_statusJSON, "used");
-    list_t *usedList;
     if (used) { 
-    cJSON *used_local_map;
+    cJSON *used_local_map = NULL;
     if(!cJSON_IsObject(used)) {
         goto end;//primitive map container
     }
@@ -154,6 +158,34 @@ v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(cJSON *v1_res
 
     return v1_resource_quota_status_local_var;
 end:
+    if (hardList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, hardList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(hardList);
+        hardList = NULL;
+    }
+    if (usedList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, usedList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(usedList);
+        usedList = NULL;
+    }
     return NULL;
 
 }

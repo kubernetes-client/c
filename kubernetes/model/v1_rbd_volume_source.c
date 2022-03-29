@@ -167,6 +167,9 @@ v1_rbd_volume_source_t *v1_rbd_volume_source_parseFromJSON(cJSON *v1_rbd_volume_
 
     v1_rbd_volume_source_t *v1_rbd_volume_source_local_var = NULL;
 
+    // define the local list for v1_rbd_volume_source->monitors
+    list_t *monitorsList = NULL;
+
     // define the local variable for v1_rbd_volume_source->secret_ref
     v1_local_object_reference_t *secret_ref_local_nonprim = NULL;
 
@@ -206,9 +209,8 @@ v1_rbd_volume_source_t *v1_rbd_volume_source_parseFromJSON(cJSON *v1_rbd_volume_
         goto end;
     }
 
-    list_t *monitorsList;
     
-    cJSON *monitors_local;
+    cJSON *monitors_local = NULL;
     if(!cJSON_IsArray(monitors)) {
         goto end;//primitive container
     }
@@ -270,6 +272,15 @@ v1_rbd_volume_source_t *v1_rbd_volume_source_parseFromJSON(cJSON *v1_rbd_volume_
 
     return v1_rbd_volume_source_local_var;
 end:
+    if (monitorsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, monitorsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(monitorsList);
+        monitorsList = NULL;
+    }
     if (secret_ref_local_nonprim) {
         v1_local_object_reference_free(secret_ref_local_nonprim);
         secret_ref_local_nonprim = NULL;

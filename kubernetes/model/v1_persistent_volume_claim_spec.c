@@ -182,6 +182,9 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
 
     v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_local_var = NULL;
 
+    // define the local list for v1_persistent_volume_claim_spec->access_modes
+    list_t *access_modesList = NULL;
+
     // define the local variable for v1_persistent_volume_claim_spec->data_source
     v1_typed_local_object_reference_t *data_source_local_nonprim = NULL;
 
@@ -196,9 +199,8 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
 
     // v1_persistent_volume_claim_spec->access_modes
     cJSON *access_modes = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "accessModes");
-    list_t *access_modesList;
     if (access_modes) { 
-    cJSON *access_modes_local;
+    cJSON *access_modes_local = NULL;
     if(!cJSON_IsArray(access_modes)) {
         goto end;//primitive container
     }
@@ -279,6 +281,15 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
 
     return v1_persistent_volume_claim_spec_local_var;
 end:
+    if (access_modesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, access_modesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(access_modesList);
+        access_modesList = NULL;
+    }
     if (data_source_local_nonprim) {
         v1_typed_local_object_reference_free(data_source_local_nonprim);
         data_source_local_nonprim = NULL;

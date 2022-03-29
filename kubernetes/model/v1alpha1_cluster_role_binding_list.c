@@ -116,6 +116,9 @@ v1alpha1_cluster_role_binding_list_t *v1alpha1_cluster_role_binding_list_parseFr
 
     v1alpha1_cluster_role_binding_list_t *v1alpha1_cluster_role_binding_list_local_var = NULL;
 
+    // define the local list for v1alpha1_cluster_role_binding_list->items
+    list_t *itemsList = NULL;
+
     // define the local variable for v1alpha1_cluster_role_binding_list->metadata
     v1_list_meta_t *metadata_local_nonprim = NULL;
 
@@ -134,9 +137,8 @@ v1alpha1_cluster_role_binding_list_t *v1alpha1_cluster_role_binding_list_parseFr
         goto end;
     }
 
-    list_t *itemsList;
     
-    cJSON *items_local_nonprimitive;
+    cJSON *items_local_nonprimitive = NULL;
     if(!cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
@@ -178,6 +180,15 @@ v1alpha1_cluster_role_binding_list_t *v1alpha1_cluster_role_binding_list_parseFr
 
     return v1alpha1_cluster_role_binding_list_local_var;
 end:
+    if (itemsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, itemsList) {
+            v1alpha1_cluster_role_binding_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(itemsList);
+        itemsList = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_list_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

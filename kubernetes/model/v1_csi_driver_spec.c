@@ -147,6 +147,12 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     v1_csi_driver_spec_t *v1_csi_driver_spec_local_var = NULL;
 
+    // define the local list for v1_csi_driver_spec->token_requests
+    list_t *token_requestsList = NULL;
+
+    // define the local list for v1_csi_driver_spec->volume_lifecycle_modes
+    list_t *volume_lifecycle_modesList = NULL;
+
     // v1_csi_driver_spec->attach_required
     cJSON *attach_required = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "attachRequired");
     if (attach_required) { 
@@ -194,9 +200,8 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     // v1_csi_driver_spec->token_requests
     cJSON *token_requests = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "tokenRequests");
-    list_t *token_requestsList;
     if (token_requests) { 
-    cJSON *token_requests_local_nonprimitive;
+    cJSON *token_requests_local_nonprimitive = NULL;
     if(!cJSON_IsArray(token_requests)){
         goto end; //nonprimitive container
     }
@@ -216,9 +221,8 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     // v1_csi_driver_spec->volume_lifecycle_modes
     cJSON *volume_lifecycle_modes = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "volumeLifecycleModes");
-    list_t *volume_lifecycle_modesList;
     if (volume_lifecycle_modes) { 
-    cJSON *volume_lifecycle_modes_local;
+    cJSON *volume_lifecycle_modes_local = NULL;
     if(!cJSON_IsArray(volume_lifecycle_modes)) {
         goto end;//primitive container
     }
@@ -247,6 +251,24 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     return v1_csi_driver_spec_local_var;
 end:
+    if (token_requestsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, token_requestsList) {
+            storage_v1_token_request_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(token_requestsList);
+        token_requestsList = NULL;
+    }
+    if (volume_lifecycle_modesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, volume_lifecycle_modesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(volume_lifecycle_modesList);
+        volume_lifecycle_modesList = NULL;
+    }
     return NULL;
 
 }

@@ -86,14 +86,16 @@ v1_node_affinity_t *v1_node_affinity_parseFromJSON(cJSON *v1_node_affinityJSON){
 
     v1_node_affinity_t *v1_node_affinity_local_var = NULL;
 
+    // define the local list for v1_node_affinity->preferred_during_scheduling_ignored_during_execution
+    list_t *preferred_during_scheduling_ignored_during_executionList = NULL;
+
     // define the local variable for v1_node_affinity->required_during_scheduling_ignored_during_execution
     v1_node_selector_t *required_during_scheduling_ignored_during_execution_local_nonprim = NULL;
 
     // v1_node_affinity->preferred_during_scheduling_ignored_during_execution
     cJSON *preferred_during_scheduling_ignored_during_execution = cJSON_GetObjectItemCaseSensitive(v1_node_affinityJSON, "preferredDuringSchedulingIgnoredDuringExecution");
-    list_t *preferred_during_scheduling_ignored_during_executionList;
     if (preferred_during_scheduling_ignored_during_execution) { 
-    cJSON *preferred_during_scheduling_ignored_during_execution_local_nonprimitive;
+    cJSON *preferred_during_scheduling_ignored_during_execution_local_nonprimitive = NULL;
     if(!cJSON_IsArray(preferred_during_scheduling_ignored_during_execution)){
         goto end; //nonprimitive container
     }
@@ -125,6 +127,15 @@ v1_node_affinity_t *v1_node_affinity_parseFromJSON(cJSON *v1_node_affinityJSON){
 
     return v1_node_affinity_local_var;
 end:
+    if (preferred_during_scheduling_ignored_during_executionList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, preferred_during_scheduling_ignored_during_executionList) {
+            v1_preferred_scheduling_term_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(preferred_during_scheduling_ignored_during_executionList);
+        preferred_during_scheduling_ignored_during_executionList = NULL;
+    }
     if (required_during_scheduling_ignored_during_execution_local_nonprim) {
         v1_node_selector_free(required_during_scheduling_ignored_during_execution_local_nonprim);
         required_during_scheduling_ignored_during_execution_local_nonprim = NULL;

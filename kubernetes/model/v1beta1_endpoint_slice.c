@@ -161,8 +161,14 @@ v1beta1_endpoint_slice_t *v1beta1_endpoint_slice_parseFromJSON(cJSON *v1beta1_en
 
     v1beta1_endpoint_slice_t *v1beta1_endpoint_slice_local_var = NULL;
 
+    // define the local list for v1beta1_endpoint_slice->endpoints
+    list_t *endpointsList = NULL;
+
     // define the local variable for v1beta1_endpoint_slice->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local list for v1beta1_endpoint_slice->ports
+    list_t *portsList = NULL;
 
     // v1beta1_endpoint_slice->address_type
     cJSON *address_type = cJSON_GetObjectItemCaseSensitive(v1beta1_endpoint_sliceJSON, "addressType");
@@ -191,9 +197,8 @@ v1beta1_endpoint_slice_t *v1beta1_endpoint_slice_parseFromJSON(cJSON *v1beta1_en
         goto end;
     }
 
-    list_t *endpointsList;
     
-    cJSON *endpoints_local_nonprimitive;
+    cJSON *endpoints_local_nonprimitive = NULL;
     if(!cJSON_IsArray(endpoints)){
         goto end; //nonprimitive container
     }
@@ -227,9 +232,8 @@ v1beta1_endpoint_slice_t *v1beta1_endpoint_slice_parseFromJSON(cJSON *v1beta1_en
 
     // v1beta1_endpoint_slice->ports
     cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1beta1_endpoint_sliceJSON, "ports");
-    list_t *portsList;
     if (ports) { 
-    cJSON *ports_local_nonprimitive;
+    cJSON *ports_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ports)){
         goto end; //nonprimitive container
     }
@@ -259,9 +263,27 @@ v1beta1_endpoint_slice_t *v1beta1_endpoint_slice_parseFromJSON(cJSON *v1beta1_en
 
     return v1beta1_endpoint_slice_local_var;
 end:
+    if (endpointsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, endpointsList) {
+            v1beta1_endpoint_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(endpointsList);
+        endpointsList = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
+    }
+    if (portsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, portsList) {
+            v1beta1_endpoint_port_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(portsList);
+        portsList = NULL;
     }
     return NULL;
 

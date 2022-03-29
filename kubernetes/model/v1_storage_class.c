@@ -226,8 +226,17 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
 
     v1_storage_class_t *v1_storage_class_local_var = NULL;
 
+    // define the local list for v1_storage_class->allowed_topologies
+    list_t *allowed_topologiesList = NULL;
+
     // define the local variable for v1_storage_class->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local list for v1_storage_class->mount_options
+    list_t *mount_optionsList = NULL;
+
+    // define the local map for v1_storage_class->parameters
+    list_t *parametersList = NULL;
 
     // v1_storage_class->allow_volume_expansion
     cJSON *allow_volume_expansion = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "allowVolumeExpansion");
@@ -240,9 +249,8 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
 
     // v1_storage_class->allowed_topologies
     cJSON *allowed_topologies = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "allowedTopologies");
-    list_t *allowed_topologiesList;
     if (allowed_topologies) { 
-    cJSON *allowed_topologies_local_nonprimitive;
+    cJSON *allowed_topologies_local_nonprimitive = NULL;
     if(!cJSON_IsArray(allowed_topologies)){
         goto end; //nonprimitive container
     }
@@ -286,9 +294,8 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
 
     // v1_storage_class->mount_options
     cJSON *mount_options = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "mountOptions");
-    list_t *mount_optionsList;
     if (mount_options) { 
-    cJSON *mount_options_local;
+    cJSON *mount_options_local = NULL;
     if(!cJSON_IsArray(mount_options)) {
         goto end;//primitive container
     }
@@ -306,9 +313,8 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
 
     // v1_storage_class->parameters
     cJSON *parameters = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "parameters");
-    list_t *parametersList;
     if (parameters) { 
-    cJSON *parameters_local_map;
+    cJSON *parameters_local_map = NULL;
     if(!cJSON_IsObject(parameters)) {
         goto end;//primitive map container
     }
@@ -372,9 +378,41 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
 
     return v1_storage_class_local_var;
 end:
+    if (allowed_topologiesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, allowed_topologiesList) {
+            v1_topology_selector_term_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(allowed_topologiesList);
+        allowed_topologiesList = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
+    }
+    if (mount_optionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, mount_optionsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(mount_optionsList);
+        mount_optionsList = NULL;
+    }
+    if (parametersList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, parametersList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(parametersList);
+        parametersList = NULL;
     }
     return NULL;
 

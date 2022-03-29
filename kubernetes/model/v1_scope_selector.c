@@ -67,11 +67,13 @@ v1_scope_selector_t *v1_scope_selector_parseFromJSON(cJSON *v1_scope_selectorJSO
 
     v1_scope_selector_t *v1_scope_selector_local_var = NULL;
 
+    // define the local list for v1_scope_selector->match_expressions
+    list_t *match_expressionsList = NULL;
+
     // v1_scope_selector->match_expressions
     cJSON *match_expressions = cJSON_GetObjectItemCaseSensitive(v1_scope_selectorJSON, "matchExpressions");
-    list_t *match_expressionsList;
     if (match_expressions) { 
-    cJSON *match_expressions_local_nonprimitive;
+    cJSON *match_expressions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(match_expressions)){
         goto end; //nonprimitive container
     }
@@ -96,6 +98,15 @@ v1_scope_selector_t *v1_scope_selector_parseFromJSON(cJSON *v1_scope_selectorJSO
 
     return v1_scope_selector_local_var;
 end:
+    if (match_expressionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, match_expressionsList) {
+            v1_scoped_resource_selector_requirement_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(match_expressionsList);
+        match_expressionsList = NULL;
+    }
     return NULL;
 
 }

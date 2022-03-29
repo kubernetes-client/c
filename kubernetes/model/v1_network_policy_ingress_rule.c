@@ -96,11 +96,16 @@ v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(c
 
     v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_local_var = NULL;
 
+    // define the local list for v1_network_policy_ingress_rule->from
+    list_t *fromList = NULL;
+
+    // define the local list for v1_network_policy_ingress_rule->ports
+    list_t *portsList = NULL;
+
     // v1_network_policy_ingress_rule->from
     cJSON *from = cJSON_GetObjectItemCaseSensitive(v1_network_policy_ingress_ruleJSON, "from");
-    list_t *fromList;
     if (from) { 
-    cJSON *from_local_nonprimitive;
+    cJSON *from_local_nonprimitive = NULL;
     if(!cJSON_IsArray(from)){
         goto end; //nonprimitive container
     }
@@ -120,9 +125,8 @@ v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(c
 
     // v1_network_policy_ingress_rule->ports
     cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_network_policy_ingress_ruleJSON, "ports");
-    list_t *portsList;
     if (ports) { 
-    cJSON *ports_local_nonprimitive;
+    cJSON *ports_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ports)){
         goto end; //nonprimitive container
     }
@@ -148,6 +152,24 @@ v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(c
 
     return v1_network_policy_ingress_rule_local_var;
 end:
+    if (fromList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, fromList) {
+            v1_network_policy_peer_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(fromList);
+        fromList = NULL;
+    }
+    if (portsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, portsList) {
+            v1_network_policy_port_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(portsList);
+        portsList = NULL;
+    }
     return NULL;
 
 }
