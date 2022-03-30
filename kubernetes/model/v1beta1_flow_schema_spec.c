@@ -123,6 +123,9 @@ v1beta1_flow_schema_spec_t *v1beta1_flow_schema_spec_parseFromJSON(cJSON *v1beta
     // define the local variable for v1beta1_flow_schema_spec->priority_level_configuration
     v1beta1_priority_level_configuration_reference_t *priority_level_configuration_local_nonprim = NULL;
 
+    // define the local list for v1beta1_flow_schema_spec->rules
+    list_t *rulesList = NULL;
+
     // v1beta1_flow_schema_spec->distinguisher_method
     cJSON *distinguisher_method = cJSON_GetObjectItemCaseSensitive(v1beta1_flow_schema_specJSON, "distinguisherMethod");
     if (distinguisher_method) { 
@@ -149,9 +152,8 @@ v1beta1_flow_schema_spec_t *v1beta1_flow_schema_spec_parseFromJSON(cJSON *v1beta
 
     // v1beta1_flow_schema_spec->rules
     cJSON *rules = cJSON_GetObjectItemCaseSensitive(v1beta1_flow_schema_specJSON, "rules");
-    list_t *rulesList;
     if (rules) { 
-    cJSON *rules_local_nonprimitive;
+    cJSON *rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(rules)){
         goto end; //nonprimitive container
     }
@@ -186,6 +188,15 @@ end:
     if (priority_level_configuration_local_nonprim) {
         v1beta1_priority_level_configuration_reference_free(priority_level_configuration_local_nonprim);
         priority_level_configuration_local_nonprim = NULL;
+    }
+    if (rulesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, rulesList) {
+            v1beta1_policy_rules_with_subjects_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(rulesList);
+        rulesList = NULL;
     }
     return NULL;
 

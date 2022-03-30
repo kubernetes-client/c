@@ -199,6 +199,9 @@ v1_iscsi_volume_source_t *v1_iscsi_volume_source_parseFromJSON(cJSON *v1_iscsi_v
 
     v1_iscsi_volume_source_t *v1_iscsi_volume_source_local_var = NULL;
 
+    // define the local list for v1_iscsi_volume_source->portals
+    list_t *portalsList = NULL;
+
     // define the local variable for v1_iscsi_volume_source->secret_ref
     v1_local_object_reference_t *secret_ref_local_nonprim = NULL;
 
@@ -273,9 +276,8 @@ v1_iscsi_volume_source_t *v1_iscsi_volume_source_parseFromJSON(cJSON *v1_iscsi_v
 
     // v1_iscsi_volume_source->portals
     cJSON *portals = cJSON_GetObjectItemCaseSensitive(v1_iscsi_volume_sourceJSON, "portals");
-    list_t *portalsList;
     if (portals) { 
-    cJSON *portals_local;
+    cJSON *portals_local = NULL;
     if(!cJSON_IsArray(portals)) {
         goto end;//primitive container
     }
@@ -335,6 +337,15 @@ v1_iscsi_volume_source_t *v1_iscsi_volume_source_parseFromJSON(cJSON *v1_iscsi_v
 
     return v1_iscsi_volume_source_local_var;
 end:
+    if (portalsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, portalsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(portalsList);
+        portalsList = NULL;
+    }
     if (secret_ref_local_nonprim) {
         v1_local_object_reference_free(secret_ref_local_nonprim);
         secret_ref_local_nonprim = NULL;

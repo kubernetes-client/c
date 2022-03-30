@@ -94,15 +94,20 @@ v1beta1_non_resource_policy_rule_t *v1beta1_non_resource_policy_rule_parseFromJS
 
     v1beta1_non_resource_policy_rule_t *v1beta1_non_resource_policy_rule_local_var = NULL;
 
+    // define the local list for v1beta1_non_resource_policy_rule->non_resource_urls
+    list_t *non_resource_urlsList = NULL;
+
+    // define the local list for v1beta1_non_resource_policy_rule->verbs
+    list_t *verbsList = NULL;
+
     // v1beta1_non_resource_policy_rule->non_resource_urls
     cJSON *non_resource_urls = cJSON_GetObjectItemCaseSensitive(v1beta1_non_resource_policy_ruleJSON, "nonResourceURLs");
     if (!non_resource_urls) {
         goto end;
     }
 
-    list_t *non_resource_urlsList;
     
-    cJSON *non_resource_urls_local;
+    cJSON *non_resource_urls_local = NULL;
     if(!cJSON_IsArray(non_resource_urls)) {
         goto end;//primitive container
     }
@@ -123,9 +128,8 @@ v1beta1_non_resource_policy_rule_t *v1beta1_non_resource_policy_rule_parseFromJS
         goto end;
     }
 
-    list_t *verbsList;
     
-    cJSON *verbs_local;
+    cJSON *verbs_local = NULL;
     if(!cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
@@ -148,6 +152,24 @@ v1beta1_non_resource_policy_rule_t *v1beta1_non_resource_policy_rule_parseFromJS
 
     return v1beta1_non_resource_policy_rule_local_var;
 end:
+    if (non_resource_urlsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, non_resource_urlsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(non_resource_urlsList);
+        non_resource_urlsList = NULL;
+    }
+    if (verbsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, verbsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(verbsList);
+        verbsList = NULL;
+    }
     return NULL;
 
 }

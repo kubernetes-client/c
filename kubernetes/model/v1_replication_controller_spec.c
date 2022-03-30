@@ -109,6 +109,9 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
 
     v1_replication_controller_spec_t *v1_replication_controller_spec_local_var = NULL;
 
+    // define the local map for v1_replication_controller_spec->selector
+    list_t *selectorList = NULL;
+
     // define the local variable for v1_replication_controller_spec->_template
     v1_pod_template_spec_t *_template_local_nonprim = NULL;
 
@@ -132,9 +135,8 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
 
     // v1_replication_controller_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_specJSON, "selector");
-    list_t *selectorList;
     if (selector) { 
-    cJSON *selector_local_map;
+    cJSON *selector_local_map = NULL;
     if(!cJSON_IsObject(selector)) {
         goto end;//primitive map container
     }
@@ -168,6 +170,20 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
 
     return v1_replication_controller_spec_local_var;
 end:
+    if (selectorList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, selectorList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(selectorList);
+        selectorList = NULL;
+    }
     if (_template_local_nonprim) {
         v1_pod_template_spec_free(_template_local_nonprim);
         _template_local_nonprim = NULL;

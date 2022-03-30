@@ -67,11 +67,13 @@ v1beta1_flow_schema_status_t *v1beta1_flow_schema_status_parseFromJSON(cJSON *v1
 
     v1beta1_flow_schema_status_t *v1beta1_flow_schema_status_local_var = NULL;
 
+    // define the local list for v1beta1_flow_schema_status->conditions
+    list_t *conditionsList = NULL;
+
     // v1beta1_flow_schema_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1beta1_flow_schema_statusJSON, "conditions");
-    list_t *conditionsList;
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive;
+    cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
@@ -96,6 +98,15 @@ v1beta1_flow_schema_status_t *v1beta1_flow_schema_status_parseFromJSON(cJSON *v1
 
     return v1beta1_flow_schema_status_local_var;
 end:
+    if (conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conditionsList) {
+            v1beta1_flow_schema_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conditionsList);
+        conditionsList = NULL;
+    }
     return NULL;
 
 }

@@ -159,6 +159,12 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     v1_config_map_t *v1_config_map_local_var = NULL;
 
+    // define the local map for v1_config_map->binary_data
+    list_t *binary_dataList = NULL;
+
+    // define the local map for v1_config_map->data
+    list_t *dataList = NULL;
+
     // define the local variable for v1_config_map->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
@@ -173,9 +179,8 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     // v1_config_map->binary_data
     cJSON *binary_data = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "binaryData");
-    list_t *binary_dataList;
     if (binary_data) { 
-    cJSON *binary_data_local_map;
+    cJSON *binary_data_local_map = NULL;
     if(!cJSON_IsObject(binary_data)) {
         goto end;//primitive map container
     }
@@ -195,9 +200,8 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     // v1_config_map->data
     cJSON *data = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "data");
-    list_t *dataList;
     if (data) { 
-    cJSON *data_local_map;
+    cJSON *data_local_map = NULL;
     if(!cJSON_IsObject(data)) {
         goto end;//primitive map container
     }
@@ -251,6 +255,34 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     return v1_config_map_local_var;
 end:
+    if (binary_dataList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, binary_dataList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(binary_dataList);
+        binary_dataList = NULL;
+    }
+    if (dataList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, dataList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(dataList);
+        dataList = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

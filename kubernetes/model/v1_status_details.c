@@ -133,11 +133,13 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
 
     v1_status_details_t *v1_status_details_local_var = NULL;
 
+    // define the local list for v1_status_details->causes
+    list_t *causesList = NULL;
+
     // v1_status_details->causes
     cJSON *causes = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "causes");
-    list_t *causesList;
     if (causes) { 
-    cJSON *causes_local_nonprimitive;
+    cJSON *causes_local_nonprimitive = NULL;
     if(!cJSON_IsArray(causes)){
         goto end; //nonprimitive container
     }
@@ -212,6 +214,15 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
 
     return v1_status_details_local_var;
 end:
+    if (causesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, causesList) {
+            v1_status_cause_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(causesList);
+        causesList = NULL;
+    }
     return NULL;
 
 }

@@ -165,6 +165,9 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     v1_daemon_set_status_t *v1_daemon_set_status_local_var = NULL;
 
+    // define the local list for v1_daemon_set_status->conditions
+    list_t *conditionsList = NULL;
+
     // v1_daemon_set_status->collision_count
     cJSON *collision_count = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "collisionCount");
     if (collision_count) { 
@@ -176,9 +179,8 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     // v1_daemon_set_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "conditions");
-    list_t *conditionsList;
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive;
+    cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
@@ -296,6 +298,15 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     return v1_daemon_set_status_local_var;
 end:
+    if (conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conditionsList) {
+            v1_daemon_set_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conditionsList);
+        conditionsList = NULL;
+    }
     return NULL;
 
 }

@@ -90,11 +90,16 @@ v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
 
     v1_capabilities_t *v1_capabilities_local_var = NULL;
 
+    // define the local list for v1_capabilities->add
+    list_t *addList = NULL;
+
+    // define the local list for v1_capabilities->drop
+    list_t *dropList = NULL;
+
     // v1_capabilities->add
     cJSON *add = cJSON_GetObjectItemCaseSensitive(v1_capabilitiesJSON, "add");
-    list_t *addList;
     if (add) { 
-    cJSON *add_local;
+    cJSON *add_local = NULL;
     if(!cJSON_IsArray(add)) {
         goto end;//primitive container
     }
@@ -112,9 +117,8 @@ v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
 
     // v1_capabilities->drop
     cJSON *drop = cJSON_GetObjectItemCaseSensitive(v1_capabilitiesJSON, "drop");
-    list_t *dropList;
     if (drop) { 
-    cJSON *drop_local;
+    cJSON *drop_local = NULL;
     if(!cJSON_IsArray(drop)) {
         goto end;//primitive container
     }
@@ -138,6 +142,24 @@ v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
 
     return v1_capabilities_local_var;
 end:
+    if (addList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, addList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(addList);
+        addList = NULL;
+    }
+    if (dropList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, dropList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(dropList);
+        dropList = NULL;
+    }
     return NULL;
 
 }

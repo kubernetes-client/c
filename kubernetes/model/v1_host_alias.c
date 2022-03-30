@@ -78,11 +78,13 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
 
     v1_host_alias_t *v1_host_alias_local_var = NULL;
 
+    // define the local list for v1_host_alias->hostnames
+    list_t *hostnamesList = NULL;
+
     // v1_host_alias->hostnames
     cJSON *hostnames = cJSON_GetObjectItemCaseSensitive(v1_host_aliasJSON, "hostnames");
-    list_t *hostnamesList;
     if (hostnames) { 
-    cJSON *hostnames_local;
+    cJSON *hostnames_local = NULL;
     if(!cJSON_IsArray(hostnames)) {
         goto end;//primitive container
     }
@@ -115,6 +117,15 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
 
     return v1_host_alias_local_var;
 end:
+    if (hostnamesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, hostnamesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(hostnamesList);
+        hostnamesList = NULL;
+    }
     return NULL;
 
 }

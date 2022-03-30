@@ -127,11 +127,19 @@ v1beta1_policy_rules_with_subjects_t *v1beta1_policy_rules_with_subjects_parseFr
 
     v1beta1_policy_rules_with_subjects_t *v1beta1_policy_rules_with_subjects_local_var = NULL;
 
+    // define the local list for v1beta1_policy_rules_with_subjects->non_resource_rules
+    list_t *non_resource_rulesList = NULL;
+
+    // define the local list for v1beta1_policy_rules_with_subjects->resource_rules
+    list_t *resource_rulesList = NULL;
+
+    // define the local list for v1beta1_policy_rules_with_subjects->subjects
+    list_t *subjectsList = NULL;
+
     // v1beta1_policy_rules_with_subjects->non_resource_rules
     cJSON *non_resource_rules = cJSON_GetObjectItemCaseSensitive(v1beta1_policy_rules_with_subjectsJSON, "nonResourceRules");
-    list_t *non_resource_rulesList;
     if (non_resource_rules) { 
-    cJSON *non_resource_rules_local_nonprimitive;
+    cJSON *non_resource_rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(non_resource_rules)){
         goto end; //nonprimitive container
     }
@@ -151,9 +159,8 @@ v1beta1_policy_rules_with_subjects_t *v1beta1_policy_rules_with_subjects_parseFr
 
     // v1beta1_policy_rules_with_subjects->resource_rules
     cJSON *resource_rules = cJSON_GetObjectItemCaseSensitive(v1beta1_policy_rules_with_subjectsJSON, "resourceRules");
-    list_t *resource_rulesList;
     if (resource_rules) { 
-    cJSON *resource_rules_local_nonprimitive;
+    cJSON *resource_rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(resource_rules)){
         goto end; //nonprimitive container
     }
@@ -177,9 +184,8 @@ v1beta1_policy_rules_with_subjects_t *v1beta1_policy_rules_with_subjects_parseFr
         goto end;
     }
 
-    list_t *subjectsList;
     
-    cJSON *subjects_local_nonprimitive;
+    cJSON *subjects_local_nonprimitive = NULL;
     if(!cJSON_IsArray(subjects)){
         goto end; //nonprimitive container
     }
@@ -205,6 +211,33 @@ v1beta1_policy_rules_with_subjects_t *v1beta1_policy_rules_with_subjects_parseFr
 
     return v1beta1_policy_rules_with_subjects_local_var;
 end:
+    if (non_resource_rulesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, non_resource_rulesList) {
+            v1beta1_non_resource_policy_rule_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(non_resource_rulesList);
+        non_resource_rulesList = NULL;
+    }
+    if (resource_rulesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, resource_rulesList) {
+            v1beta1_resource_policy_rule_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(resource_rulesList);
+        resource_rulesList = NULL;
+    }
+    if (subjectsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, subjectsList) {
+            v1beta1_subject_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(subjectsList);
+        subjectsList = NULL;
+    }
     return NULL;
 
 }

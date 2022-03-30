@@ -157,6 +157,9 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
     // define the local variable for v1_custom_resource_definition_spec->names
     v1_custom_resource_definition_names_t *names_local_nonprim = NULL;
 
+    // define the local list for v1_custom_resource_definition_spec->versions
+    list_t *versionsList = NULL;
+
     // v1_custom_resource_definition_spec->conversion
     cJSON *conversion = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "conversion");
     if (conversion) { 
@@ -211,9 +214,8 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
         goto end;
     }
 
-    list_t *versionsList;
     
-    cJSON *versions_local_nonprimitive;
+    cJSON *versions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(versions)){
         goto end; //nonprimitive container
     }
@@ -249,6 +251,15 @@ end:
     if (names_local_nonprim) {
         v1_custom_resource_definition_names_free(names_local_nonprim);
         names_local_nonprim = NULL;
+    }
+    if (versionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, versionsList) {
+            v1_custom_resource_definition_version_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(versionsList);
+        versionsList = NULL;
     }
     return NULL;
 

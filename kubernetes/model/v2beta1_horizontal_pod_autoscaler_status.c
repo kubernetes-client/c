@@ -146,15 +146,20 @@ v2beta1_horizontal_pod_autoscaler_status_t *v2beta1_horizontal_pod_autoscaler_st
 
     v2beta1_horizontal_pod_autoscaler_status_t *v2beta1_horizontal_pod_autoscaler_status_local_var = NULL;
 
+    // define the local list for v2beta1_horizontal_pod_autoscaler_status->conditions
+    list_t *conditionsList = NULL;
+
+    // define the local list for v2beta1_horizontal_pod_autoscaler_status->current_metrics
+    list_t *current_metricsList = NULL;
+
     // v2beta1_horizontal_pod_autoscaler_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v2beta1_horizontal_pod_autoscaler_statusJSON, "conditions");
     if (!conditions) {
         goto end;
     }
 
-    list_t *conditionsList;
     
-    cJSON *conditions_local_nonprimitive;
+    cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
@@ -173,9 +178,8 @@ v2beta1_horizontal_pod_autoscaler_status_t *v2beta1_horizontal_pod_autoscaler_st
 
     // v2beta1_horizontal_pod_autoscaler_status->current_metrics
     cJSON *current_metrics = cJSON_GetObjectItemCaseSensitive(v2beta1_horizontal_pod_autoscaler_statusJSON, "currentMetrics");
-    list_t *current_metricsList;
     if (current_metrics) { 
-    cJSON *current_metrics_local_nonprimitive;
+    cJSON *current_metrics_local_nonprimitive = NULL;
     if(!cJSON_IsArray(current_metrics)){
         goto end; //nonprimitive container
     }
@@ -247,6 +251,24 @@ v2beta1_horizontal_pod_autoscaler_status_t *v2beta1_horizontal_pod_autoscaler_st
 
     return v2beta1_horizontal_pod_autoscaler_status_local_var;
 end:
+    if (conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conditionsList) {
+            v2beta1_horizontal_pod_autoscaler_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conditionsList);
+        conditionsList = NULL;
+    }
+    if (current_metricsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, current_metricsList) {
+            v2beta1_metric_status_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(current_metricsList);
+        current_metricsList = NULL;
+    }
     return NULL;
 
 }

@@ -143,14 +143,22 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
 
     v1_network_policy_spec_t *v1_network_policy_spec_local_var = NULL;
 
+    // define the local list for v1_network_policy_spec->egress
+    list_t *egressList = NULL;
+
+    // define the local list for v1_network_policy_spec->ingress
+    list_t *ingressList = NULL;
+
     // define the local variable for v1_network_policy_spec->pod_selector
     v1_label_selector_t *pod_selector_local_nonprim = NULL;
 
+    // define the local list for v1_network_policy_spec->policy_types
+    list_t *policy_typesList = NULL;
+
     // v1_network_policy_spec->egress
     cJSON *egress = cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "egress");
-    list_t *egressList;
     if (egress) { 
-    cJSON *egress_local_nonprimitive;
+    cJSON *egress_local_nonprimitive = NULL;
     if(!cJSON_IsArray(egress)){
         goto end; //nonprimitive container
     }
@@ -170,9 +178,8 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
 
     // v1_network_policy_spec->ingress
     cJSON *ingress = cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "ingress");
-    list_t *ingressList;
     if (ingress) { 
-    cJSON *ingress_local_nonprimitive;
+    cJSON *ingress_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ingress)){
         goto end; //nonprimitive container
     }
@@ -201,9 +208,8 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
 
     // v1_network_policy_spec->policy_types
     cJSON *policy_types = cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "policyTypes");
-    list_t *policy_typesList;
     if (policy_types) { 
-    cJSON *policy_types_local;
+    cJSON *policy_types_local = NULL;
     if(!cJSON_IsArray(policy_types)) {
         goto end;//primitive container
     }
@@ -229,9 +235,36 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
 
     return v1_network_policy_spec_local_var;
 end:
+    if (egressList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, egressList) {
+            v1_network_policy_egress_rule_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(egressList);
+        egressList = NULL;
+    }
+    if (ingressList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, ingressList) {
+            v1_network_policy_ingress_rule_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(ingressList);
+        ingressList = NULL;
+    }
     if (pod_selector_local_nonprim) {
         v1_label_selector_free(pod_selector_local_nonprim);
         pod_selector_local_nonprim = NULL;
+    }
+    if (policy_typesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, policy_typesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(policy_typesList);
+        policy_typesList = NULL;
     }
     return NULL;
 

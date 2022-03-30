@@ -132,6 +132,9 @@ v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec
     // define the local variable for v2beta2_horizontal_pod_autoscaler_spec->behavior
     v2beta2_horizontal_pod_autoscaler_behavior_t *behavior_local_nonprim = NULL;
 
+    // define the local list for v2beta2_horizontal_pod_autoscaler_spec->metrics
+    list_t *metricsList = NULL;
+
     // define the local variable for v2beta2_horizontal_pod_autoscaler_spec->scale_target_ref
     v2beta2_cross_version_object_reference_t *scale_target_ref_local_nonprim = NULL;
 
@@ -155,9 +158,8 @@ v2beta2_horizontal_pod_autoscaler_spec_t *v2beta2_horizontal_pod_autoscaler_spec
 
     // v2beta2_horizontal_pod_autoscaler_spec->metrics
     cJSON *metrics = cJSON_GetObjectItemCaseSensitive(v2beta2_horizontal_pod_autoscaler_specJSON, "metrics");
-    list_t *metricsList;
     if (metrics) { 
-    cJSON *metrics_local_nonprimitive;
+    cJSON *metrics_local_nonprimitive = NULL;
     if(!cJSON_IsArray(metrics)){
         goto end; //nonprimitive container
     }
@@ -207,6 +209,15 @@ end:
     if (behavior_local_nonprim) {
         v2beta2_horizontal_pod_autoscaler_behavior_free(behavior_local_nonprim);
         behavior_local_nonprim = NULL;
+    }
+    if (metricsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, metricsList) {
+            v2beta2_metric_spec_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(metricsList);
+        metricsList = NULL;
     }
     if (scale_target_ref_local_nonprim) {
         v2beta2_cross_version_object_reference_free(scale_target_ref_local_nonprim);

@@ -95,6 +95,9 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
 
     v1_token_request_spec_t *v1_token_request_spec_local_var = NULL;
 
+    // define the local list for v1_token_request_spec->audiences
+    list_t *audiencesList = NULL;
+
     // define the local variable for v1_token_request_spec->bound_object_ref
     v1_bound_object_reference_t *bound_object_ref_local_nonprim = NULL;
 
@@ -104,9 +107,8 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
         goto end;
     }
 
-    list_t *audiencesList;
     
-    cJSON *audiences_local;
+    cJSON *audiences_local = NULL;
     if(!cJSON_IsArray(audiences)) {
         goto end;//primitive container
     }
@@ -145,6 +147,15 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
 
     return v1_token_request_spec_local_var;
 end:
+    if (audiencesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, audiencesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(audiencesList);
+        audiencesList = NULL;
+    }
     if (bound_object_ref_local_nonprim) {
         v1_bound_object_reference_free(bound_object_ref_local_nonprim);
         bound_object_ref_local_nonprim = NULL;

@@ -119,11 +119,19 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
 
     v1_pod_dns_config_t *v1_pod_dns_config_local_var = NULL;
 
+    // define the local list for v1_pod_dns_config->nameservers
+    list_t *nameserversList = NULL;
+
+    // define the local list for v1_pod_dns_config->options
+    list_t *optionsList = NULL;
+
+    // define the local list for v1_pod_dns_config->searches
+    list_t *searchesList = NULL;
+
     // v1_pod_dns_config->nameservers
     cJSON *nameservers = cJSON_GetObjectItemCaseSensitive(v1_pod_dns_configJSON, "nameservers");
-    list_t *nameserversList;
     if (nameservers) { 
-    cJSON *nameservers_local;
+    cJSON *nameservers_local = NULL;
     if(!cJSON_IsArray(nameservers)) {
         goto end;//primitive container
     }
@@ -141,9 +149,8 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
 
     // v1_pod_dns_config->options
     cJSON *options = cJSON_GetObjectItemCaseSensitive(v1_pod_dns_configJSON, "options");
-    list_t *optionsList;
     if (options) { 
-    cJSON *options_local_nonprimitive;
+    cJSON *options_local_nonprimitive = NULL;
     if(!cJSON_IsArray(options)){
         goto end; //nonprimitive container
     }
@@ -163,9 +170,8 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
 
     // v1_pod_dns_config->searches
     cJSON *searches = cJSON_GetObjectItemCaseSensitive(v1_pod_dns_configJSON, "searches");
-    list_t *searchesList;
     if (searches) { 
-    cJSON *searches_local;
+    cJSON *searches_local = NULL;
     if(!cJSON_IsArray(searches)) {
         goto end;//primitive container
     }
@@ -190,6 +196,33 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
 
     return v1_pod_dns_config_local_var;
 end:
+    if (nameserversList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, nameserversList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(nameserversList);
+        nameserversList = NULL;
+    }
+    if (optionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, optionsList) {
+            v1_pod_dns_config_option_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(optionsList);
+        optionsList = NULL;
+    }
+    if (searchesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, searchesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(searchesList);
+        searchesList = NULL;
+    }
     return NULL;
 
 }

@@ -67,11 +67,13 @@ v1beta1_endpoint_hints_t *v1beta1_endpoint_hints_parseFromJSON(cJSON *v1beta1_en
 
     v1beta1_endpoint_hints_t *v1beta1_endpoint_hints_local_var = NULL;
 
+    // define the local list for v1beta1_endpoint_hints->for_zones
+    list_t *for_zonesList = NULL;
+
     // v1beta1_endpoint_hints->for_zones
     cJSON *for_zones = cJSON_GetObjectItemCaseSensitive(v1beta1_endpoint_hintsJSON, "forZones");
-    list_t *for_zonesList;
     if (for_zones) { 
-    cJSON *for_zones_local_nonprimitive;
+    cJSON *for_zones_local_nonprimitive = NULL;
     if(!cJSON_IsArray(for_zones)){
         goto end; //nonprimitive container
     }
@@ -96,6 +98,15 @@ v1beta1_endpoint_hints_t *v1beta1_endpoint_hints_parseFromJSON(cJSON *v1beta1_en
 
     return v1beta1_endpoint_hints_local_var;
 end:
+    if (for_zonesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, for_zonesList) {
+            v1beta1_for_zone_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(for_zonesList);
+        for_zonesList = NULL;
+    }
     return NULL;
 
 }

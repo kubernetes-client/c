@@ -125,11 +125,19 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
 
     v1_endpoint_subset_t *v1_endpoint_subset_local_var = NULL;
 
+    // define the local list for v1_endpoint_subset->addresses
+    list_t *addressesList = NULL;
+
+    // define the local list for v1_endpoint_subset->not_ready_addresses
+    list_t *not_ready_addressesList = NULL;
+
+    // define the local list for v1_endpoint_subset->ports
+    list_t *portsList = NULL;
+
     // v1_endpoint_subset->addresses
     cJSON *addresses = cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "addresses");
-    list_t *addressesList;
     if (addresses) { 
-    cJSON *addresses_local_nonprimitive;
+    cJSON *addresses_local_nonprimitive = NULL;
     if(!cJSON_IsArray(addresses)){
         goto end; //nonprimitive container
     }
@@ -149,9 +157,8 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
 
     // v1_endpoint_subset->not_ready_addresses
     cJSON *not_ready_addresses = cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "notReadyAddresses");
-    list_t *not_ready_addressesList;
     if (not_ready_addresses) { 
-    cJSON *not_ready_addresses_local_nonprimitive;
+    cJSON *not_ready_addresses_local_nonprimitive = NULL;
     if(!cJSON_IsArray(not_ready_addresses)){
         goto end; //nonprimitive container
     }
@@ -171,9 +178,8 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
 
     // v1_endpoint_subset->ports
     cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "ports");
-    list_t *portsList;
     if (ports) { 
-    cJSON *ports_local_nonprimitive;
+    cJSON *ports_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ports)){
         goto end; //nonprimitive container
     }
@@ -200,6 +206,33 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
 
     return v1_endpoint_subset_local_var;
 end:
+    if (addressesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, addressesList) {
+            v1_endpoint_address_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(addressesList);
+        addressesList = NULL;
+    }
+    if (not_ready_addressesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, not_ready_addressesList) {
+            v1_endpoint_address_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(not_ready_addressesList);
+        not_ready_addressesList = NULL;
+    }
+    if (portsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, portsList) {
+            core_v1_endpoint_port_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(portsList);
+        portsList = NULL;
+    }
     return NULL;
 
 }

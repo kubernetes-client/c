@@ -110,6 +110,12 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
 
     v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_local_var = NULL;
 
+    // define the local list for v1alpha1_storage_version_status->conditions
+    list_t *conditionsList = NULL;
+
+    // define the local list for v1alpha1_storage_version_status->storage_versions
+    list_t *storage_versionsList = NULL;
+
     // v1alpha1_storage_version_status->common_encoding_version
     cJSON *common_encoding_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_statusJSON, "commonEncodingVersion");
     if (common_encoding_version) { 
@@ -121,9 +127,8 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
 
     // v1alpha1_storage_version_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_statusJSON, "conditions");
-    list_t *conditionsList;
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive;
+    cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
@@ -143,9 +148,8 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
 
     // v1alpha1_storage_version_status->storage_versions
     cJSON *storage_versions = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_statusJSON, "storageVersions");
-    list_t *storage_versionsList;
     if (storage_versions) { 
-    cJSON *storage_versions_local_nonprimitive;
+    cJSON *storage_versions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(storage_versions)){
         goto end; //nonprimitive container
     }
@@ -172,6 +176,24 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
 
     return v1alpha1_storage_version_status_local_var;
 end:
+    if (conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conditionsList) {
+            v1alpha1_storage_version_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conditionsList);
+        conditionsList = NULL;
+    }
+    if (storage_versionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, storage_versionsList) {
+            v1alpha1_server_storage_version_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(storage_versionsList);
+        storage_versionsList = NULL;
+    }
     return NULL;
 
 }

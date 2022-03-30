@@ -119,6 +119,9 @@ v1_replica_set_status_t *v1_replica_set_status_parseFromJSON(cJSON *v1_replica_s
 
     v1_replica_set_status_t *v1_replica_set_status_local_var = NULL;
 
+    // define the local list for v1_replica_set_status->conditions
+    list_t *conditionsList = NULL;
+
     // v1_replica_set_status->available_replicas
     cJSON *available_replicas = cJSON_GetObjectItemCaseSensitive(v1_replica_set_statusJSON, "availableReplicas");
     if (available_replicas) { 
@@ -130,9 +133,8 @@ v1_replica_set_status_t *v1_replica_set_status_parseFromJSON(cJSON *v1_replica_s
 
     // v1_replica_set_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_replica_set_statusJSON, "conditions");
-    list_t *conditionsList;
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive;
+    cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
@@ -201,6 +203,15 @@ v1_replica_set_status_t *v1_replica_set_status_parseFromJSON(cJSON *v1_replica_s
 
     return v1_replica_set_status_local_var;
 end:
+    if (conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conditionsList) {
+            v1_replica_set_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conditionsList);
+        conditionsList = NULL;
+    }
     return NULL;
 
 }

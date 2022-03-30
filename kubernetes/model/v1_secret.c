@@ -173,8 +173,14 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     v1_secret_t *v1_secret_local_var = NULL;
 
+    // define the local map for v1_secret->data
+    list_t *dataList = NULL;
+
     // define the local variable for v1_secret->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local map for v1_secret->string_data
+    list_t *string_dataList = NULL;
 
     // v1_secret->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "apiVersion");
@@ -187,9 +193,8 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     // v1_secret->data
     cJSON *data = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "data");
-    list_t *dataList;
     if (data) { 
-    cJSON *data_local_map;
+    cJSON *data_local_map = NULL;
     if(!cJSON_IsObject(data)) {
         goto end;//primitive map container
     }
@@ -233,9 +238,8 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     // v1_secret->string_data
     cJSON *string_data = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "stringData");
-    list_t *string_dataList;
     if (string_data) { 
-    cJSON *string_data_local_map;
+    cJSON *string_data_local_map = NULL;
     if(!cJSON_IsObject(string_data)) {
         goto end;//primitive map container
     }
@@ -275,9 +279,37 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     return v1_secret_local_var;
 end:
+    if (dataList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, dataList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(dataList);
+        dataList = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
+    }
+    if (string_dataList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, string_dataList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(string_dataList);
+        string_dataList = NULL;
     }
     return NULL;
 

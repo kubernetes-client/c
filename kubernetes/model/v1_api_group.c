@@ -164,6 +164,12 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
     // define the local variable for v1_api_group->preferred_version
     v1_group_version_for_discovery_t *preferred_version_local_nonprim = NULL;
 
+    // define the local list for v1_api_group->server_address_by_client_cidrs
+    list_t *server_address_by_client_cidrsList = NULL;
+
+    // define the local list for v1_api_group->versions
+    list_t *versionsList = NULL;
+
     // v1_api_group->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "apiVersion");
     if (api_version) { 
@@ -202,9 +208,8 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
 
     // v1_api_group->server_address_by_client_cidrs
     cJSON *server_address_by_client_cidrs = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "serverAddressByClientCIDRs");
-    list_t *server_address_by_client_cidrsList;
     if (server_address_by_client_cidrs) { 
-    cJSON *server_address_by_client_cidrs_local_nonprimitive;
+    cJSON *server_address_by_client_cidrs_local_nonprimitive = NULL;
     if(!cJSON_IsArray(server_address_by_client_cidrs)){
         goto end; //nonprimitive container
     }
@@ -228,9 +233,8 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
         goto end;
     }
 
-    list_t *versionsList;
     
-    cJSON *versions_local_nonprimitive;
+    cJSON *versions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(versions)){
         goto end; //nonprimitive container
     }
@@ -262,6 +266,24 @@ end:
     if (preferred_version_local_nonprim) {
         v1_group_version_for_discovery_free(preferred_version_local_nonprim);
         preferred_version_local_nonprim = NULL;
+    }
+    if (server_address_by_client_cidrsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, server_address_by_client_cidrsList) {
+            v1_server_address_by_client_cidr_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(server_address_by_client_cidrsList);
+        server_address_by_client_cidrsList = NULL;
+    }
+    if (versionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, versionsList) {
+            v1_group_version_for_discovery_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(versionsList);
+        versionsList = NULL;
     }
     return NULL;
 

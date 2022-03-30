@@ -96,11 +96,16 @@ v1_node_selector_term_t *v1_node_selector_term_parseFromJSON(cJSON *v1_node_sele
 
     v1_node_selector_term_t *v1_node_selector_term_local_var = NULL;
 
+    // define the local list for v1_node_selector_term->match_expressions
+    list_t *match_expressionsList = NULL;
+
+    // define the local list for v1_node_selector_term->match_fields
+    list_t *match_fieldsList = NULL;
+
     // v1_node_selector_term->match_expressions
     cJSON *match_expressions = cJSON_GetObjectItemCaseSensitive(v1_node_selector_termJSON, "matchExpressions");
-    list_t *match_expressionsList;
     if (match_expressions) { 
-    cJSON *match_expressions_local_nonprimitive;
+    cJSON *match_expressions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(match_expressions)){
         goto end; //nonprimitive container
     }
@@ -120,9 +125,8 @@ v1_node_selector_term_t *v1_node_selector_term_parseFromJSON(cJSON *v1_node_sele
 
     // v1_node_selector_term->match_fields
     cJSON *match_fields = cJSON_GetObjectItemCaseSensitive(v1_node_selector_termJSON, "matchFields");
-    list_t *match_fieldsList;
     if (match_fields) { 
-    cJSON *match_fields_local_nonprimitive;
+    cJSON *match_fields_local_nonprimitive = NULL;
     if(!cJSON_IsArray(match_fields)){
         goto end; //nonprimitive container
     }
@@ -148,6 +152,24 @@ v1_node_selector_term_t *v1_node_selector_term_parseFromJSON(cJSON *v1_node_sele
 
     return v1_node_selector_term_local_var;
 end:
+    if (match_expressionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, match_expressionsList) {
+            v1_node_selector_requirement_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(match_expressionsList);
+        match_expressionsList = NULL;
+    }
+    if (match_fieldsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, match_fieldsList) {
+            v1_node_selector_requirement_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(match_fieldsList);
+        match_fieldsList = NULL;
+    }
     return NULL;
 
 }

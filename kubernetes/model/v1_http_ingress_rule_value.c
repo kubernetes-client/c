@@ -69,15 +69,17 @@ v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_parseFromJSON(cJSON *v1
 
     v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_local_var = NULL;
 
+    // define the local list for v1_http_ingress_rule_value->paths
+    list_t *pathsList = NULL;
+
     // v1_http_ingress_rule_value->paths
     cJSON *paths = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_rule_valueJSON, "paths");
     if (!paths) {
         goto end;
     }
 
-    list_t *pathsList;
     
-    cJSON *paths_local_nonprimitive;
+    cJSON *paths_local_nonprimitive = NULL;
     if(!cJSON_IsArray(paths)){
         goto end; //nonprimitive container
     }
@@ -101,6 +103,15 @@ v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_parseFromJSON(cJSON *v1
 
     return v1_http_ingress_rule_value_local_var;
 end:
+    if (pathsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, pathsList) {
+            v1_http_ingress_path_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(pathsList);
+        pathsList = NULL;
+    }
     return NULL;
 
 }

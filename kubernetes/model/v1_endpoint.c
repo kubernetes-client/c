@@ -197,8 +197,14 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     v1_endpoint_t *v1_endpoint_local_var = NULL;
 
+    // define the local list for v1_endpoint->addresses
+    list_t *addressesList = NULL;
+
     // define the local variable for v1_endpoint->conditions
     v1_endpoint_conditions_t *conditions_local_nonprim = NULL;
+
+    // define the local map for v1_endpoint->deprecated_topology
+    list_t *deprecated_topologyList = NULL;
 
     // define the local variable for v1_endpoint->hints
     v1_endpoint_hints_t *hints_local_nonprim = NULL;
@@ -212,9 +218,8 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
         goto end;
     }
 
-    list_t *addressesList;
     
-    cJSON *addresses_local;
+    cJSON *addresses_local = NULL;
     if(!cJSON_IsArray(addresses)) {
         goto end;//primitive container
     }
@@ -237,9 +242,8 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     // v1_endpoint->deprecated_topology
     cJSON *deprecated_topology = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "deprecatedTopology");
-    list_t *deprecated_topologyList;
     if (deprecated_topology) { 
-    cJSON *deprecated_topology_local_map;
+    cJSON *deprecated_topology_local_map = NULL;
     if(!cJSON_IsObject(deprecated_topology)) {
         goto end;//primitive map container
     }
@@ -310,9 +314,32 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     return v1_endpoint_local_var;
 end:
+    if (addressesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, addressesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(addressesList);
+        addressesList = NULL;
+    }
     if (conditions_local_nonprim) {
         v1_endpoint_conditions_free(conditions_local_nonprim);
         conditions_local_nonprim = NULL;
+    }
+    if (deprecated_topologyList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, deprecated_topologyList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(deprecated_topologyList);
+        deprecated_topologyList = NULL;
     }
     if (hints_local_nonprim) {
         v1_endpoint_hints_free(hints_local_nonprim);

@@ -170,11 +170,25 @@ v1alpha1_policy_rule_t *v1alpha1_policy_rule_parseFromJSON(cJSON *v1alpha1_polic
 
     v1alpha1_policy_rule_t *v1alpha1_policy_rule_local_var = NULL;
 
+    // define the local list for v1alpha1_policy_rule->api_groups
+    list_t *api_groupsList = NULL;
+
+    // define the local list for v1alpha1_policy_rule->non_resource_urls
+    list_t *non_resource_urlsList = NULL;
+
+    // define the local list for v1alpha1_policy_rule->resource_names
+    list_t *resource_namesList = NULL;
+
+    // define the local list for v1alpha1_policy_rule->resources
+    list_t *resourcesList = NULL;
+
+    // define the local list for v1alpha1_policy_rule->verbs
+    list_t *verbsList = NULL;
+
     // v1alpha1_policy_rule->api_groups
     cJSON *api_groups = cJSON_GetObjectItemCaseSensitive(v1alpha1_policy_ruleJSON, "apiGroups");
-    list_t *api_groupsList;
     if (api_groups) { 
-    cJSON *api_groups_local;
+    cJSON *api_groups_local = NULL;
     if(!cJSON_IsArray(api_groups)) {
         goto end;//primitive container
     }
@@ -192,9 +206,8 @@ v1alpha1_policy_rule_t *v1alpha1_policy_rule_parseFromJSON(cJSON *v1alpha1_polic
 
     // v1alpha1_policy_rule->non_resource_urls
     cJSON *non_resource_urls = cJSON_GetObjectItemCaseSensitive(v1alpha1_policy_ruleJSON, "nonResourceURLs");
-    list_t *non_resource_urlsList;
     if (non_resource_urls) { 
-    cJSON *non_resource_urls_local;
+    cJSON *non_resource_urls_local = NULL;
     if(!cJSON_IsArray(non_resource_urls)) {
         goto end;//primitive container
     }
@@ -212,9 +225,8 @@ v1alpha1_policy_rule_t *v1alpha1_policy_rule_parseFromJSON(cJSON *v1alpha1_polic
 
     // v1alpha1_policy_rule->resource_names
     cJSON *resource_names = cJSON_GetObjectItemCaseSensitive(v1alpha1_policy_ruleJSON, "resourceNames");
-    list_t *resource_namesList;
     if (resource_names) { 
-    cJSON *resource_names_local;
+    cJSON *resource_names_local = NULL;
     if(!cJSON_IsArray(resource_names)) {
         goto end;//primitive container
     }
@@ -232,9 +244,8 @@ v1alpha1_policy_rule_t *v1alpha1_policy_rule_parseFromJSON(cJSON *v1alpha1_polic
 
     // v1alpha1_policy_rule->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1alpha1_policy_ruleJSON, "resources");
-    list_t *resourcesList;
     if (resources) { 
-    cJSON *resources_local;
+    cJSON *resources_local = NULL;
     if(!cJSON_IsArray(resources)) {
         goto end;//primitive container
     }
@@ -256,9 +267,8 @@ v1alpha1_policy_rule_t *v1alpha1_policy_rule_parseFromJSON(cJSON *v1alpha1_polic
         goto end;
     }
 
-    list_t *verbsList;
     
-    cJSON *verbs_local;
+    cJSON *verbs_local = NULL;
     if(!cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
@@ -284,6 +294,51 @@ v1alpha1_policy_rule_t *v1alpha1_policy_rule_parseFromJSON(cJSON *v1alpha1_polic
 
     return v1alpha1_policy_rule_local_var;
 end:
+    if (api_groupsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, api_groupsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(api_groupsList);
+        api_groupsList = NULL;
+    }
+    if (non_resource_urlsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, non_resource_urlsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(non_resource_urlsList);
+        non_resource_urlsList = NULL;
+    }
+    if (resource_namesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, resource_namesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(resource_namesList);
+        resource_namesList = NULL;
+    }
+    if (resourcesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, resourcesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(resourcesList);
+        resourcesList = NULL;
+    }
+    if (verbsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, verbsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(verbsList);
+        verbsList = NULL;
+    }
     return NULL;
 
 }

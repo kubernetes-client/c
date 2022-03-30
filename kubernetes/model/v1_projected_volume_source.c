@@ -77,6 +77,9 @@ v1_projected_volume_source_t *v1_projected_volume_source_parseFromJSON(cJSON *v1
 
     v1_projected_volume_source_t *v1_projected_volume_source_local_var = NULL;
 
+    // define the local list for v1_projected_volume_source->sources
+    list_t *sourcesList = NULL;
+
     // v1_projected_volume_source->default_mode
     cJSON *default_mode = cJSON_GetObjectItemCaseSensitive(v1_projected_volume_sourceJSON, "defaultMode");
     if (default_mode) { 
@@ -88,9 +91,8 @@ v1_projected_volume_source_t *v1_projected_volume_source_parseFromJSON(cJSON *v1
 
     // v1_projected_volume_source->sources
     cJSON *sources = cJSON_GetObjectItemCaseSensitive(v1_projected_volume_sourceJSON, "sources");
-    list_t *sourcesList;
     if (sources) { 
-    cJSON *sources_local_nonprimitive;
+    cJSON *sources_local_nonprimitive = NULL;
     if(!cJSON_IsArray(sources)){
         goto end; //nonprimitive container
     }
@@ -116,6 +118,15 @@ v1_projected_volume_source_t *v1_projected_volume_source_parseFromJSON(cJSON *v1
 
     return v1_projected_volume_source_local_var;
 end:
+    if (sourcesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, sourcesList) {
+            v1_volume_projection_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(sourcesList);
+        sourcesList = NULL;
+    }
     return NULL;
 
 }

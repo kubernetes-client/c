@@ -118,6 +118,9 @@ v1_csi_node_driver_t *v1_csi_node_driver_parseFromJSON(cJSON *v1_csi_node_driver
     // define the local variable for v1_csi_node_driver->allocatable
     v1_volume_node_resources_t *allocatable_local_nonprim = NULL;
 
+    // define the local list for v1_csi_node_driver->topology_keys
+    list_t *topology_keysList = NULL;
+
     // v1_csi_node_driver->allocatable
     cJSON *allocatable = cJSON_GetObjectItemCaseSensitive(v1_csi_node_driverJSON, "allocatable");
     if (allocatable) { 
@@ -150,9 +153,8 @@ v1_csi_node_driver_t *v1_csi_node_driver_parseFromJSON(cJSON *v1_csi_node_driver
 
     // v1_csi_node_driver->topology_keys
     cJSON *topology_keys = cJSON_GetObjectItemCaseSensitive(v1_csi_node_driverJSON, "topologyKeys");
-    list_t *topology_keysList;
     if (topology_keys) { 
-    cJSON *topology_keys_local;
+    cJSON *topology_keys_local = NULL;
     if(!cJSON_IsArray(topology_keys)) {
         goto end;//primitive container
     }
@@ -181,6 +183,15 @@ end:
     if (allocatable_local_nonprim) {
         v1_volume_node_resources_free(allocatable_local_nonprim);
         allocatable_local_nonprim = NULL;
+    }
+    if (topology_keysList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, topology_keysList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(topology_keysList);
+        topology_keysList = NULL;
     }
     return NULL;
 

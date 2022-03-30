@@ -117,6 +117,9 @@ v1_validating_webhook_configuration_t *v1_validating_webhook_configuration_parse
     // define the local variable for v1_validating_webhook_configuration->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
+    // define the local list for v1_validating_webhook_configuration->webhooks
+    list_t *webhooksList = NULL;
+
     // v1_validating_webhook_configuration->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_validating_webhook_configurationJSON, "apiVersion");
     if (api_version) { 
@@ -143,9 +146,8 @@ v1_validating_webhook_configuration_t *v1_validating_webhook_configuration_parse
 
     // v1_validating_webhook_configuration->webhooks
     cJSON *webhooks = cJSON_GetObjectItemCaseSensitive(v1_validating_webhook_configurationJSON, "webhooks");
-    list_t *webhooksList;
     if (webhooks) { 
-    cJSON *webhooks_local_nonprimitive;
+    cJSON *webhooks_local_nonprimitive = NULL;
     if(!cJSON_IsArray(webhooks)){
         goto end; //nonprimitive container
     }
@@ -176,6 +178,15 @@ end:
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
+    }
+    if (webhooksList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, webhooksList) {
+            v1_validating_webhook_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(webhooksList);
+        webhooksList = NULL;
     }
     return NULL;
 

@@ -69,15 +69,17 @@ v1_csi_node_spec_t *v1_csi_node_spec_parseFromJSON(cJSON *v1_csi_node_specJSON){
 
     v1_csi_node_spec_t *v1_csi_node_spec_local_var = NULL;
 
+    // define the local list for v1_csi_node_spec->drivers
+    list_t *driversList = NULL;
+
     // v1_csi_node_spec->drivers
     cJSON *drivers = cJSON_GetObjectItemCaseSensitive(v1_csi_node_specJSON, "drivers");
     if (!drivers) {
         goto end;
     }
 
-    list_t *driversList;
     
-    cJSON *drivers_local_nonprimitive;
+    cJSON *drivers_local_nonprimitive = NULL;
     if(!cJSON_IsArray(drivers)){
         goto end; //nonprimitive container
     }
@@ -101,6 +103,15 @@ v1_csi_node_spec_t *v1_csi_node_spec_parseFromJSON(cJSON *v1_csi_node_specJSON){
 
     return v1_csi_node_spec_local_var;
 end:
+    if (driversList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, driversList) {
+            v1_csi_node_driver_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(driversList);
+        driversList = NULL;
+    }
     return NULL;
 
 }

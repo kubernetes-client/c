@@ -679,11 +679,44 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // define the local variable for v1_pod_spec->affinity
     v1_affinity_t *affinity_local_nonprim = NULL;
 
+    // define the local list for v1_pod_spec->containers
+    list_t *containersList = NULL;
+
     // define the local variable for v1_pod_spec->dns_config
     v1_pod_dns_config_t *dns_config_local_nonprim = NULL;
 
+    // define the local list for v1_pod_spec->ephemeral_containers
+    list_t *ephemeral_containersList = NULL;
+
+    // define the local list for v1_pod_spec->host_aliases
+    list_t *host_aliasesList = NULL;
+
+    // define the local list for v1_pod_spec->image_pull_secrets
+    list_t *image_pull_secretsList = NULL;
+
+    // define the local list for v1_pod_spec->init_containers
+    list_t *init_containersList = NULL;
+
+    // define the local map for v1_pod_spec->node_selector
+    list_t *node_selectorList = NULL;
+
+    // define the local map for v1_pod_spec->overhead
+    list_t *overheadList = NULL;
+
+    // define the local list for v1_pod_spec->readiness_gates
+    list_t *readiness_gatesList = NULL;
+
     // define the local variable for v1_pod_spec->security_context
     v1_pod_security_context_t *security_context_local_nonprim = NULL;
+
+    // define the local list for v1_pod_spec->tolerations
+    list_t *tolerationsList = NULL;
+
+    // define the local list for v1_pod_spec->topology_spread_constraints
+    list_t *topology_spread_constraintsList = NULL;
+
+    // define the local list for v1_pod_spec->volumes
+    list_t *volumesList = NULL;
 
     // v1_pod_spec->active_deadline_seconds
     cJSON *active_deadline_seconds = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "activeDeadlineSeconds");
@@ -715,9 +748,8 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         goto end;
     }
 
-    list_t *containersList;
     
-    cJSON *containers_local_nonprimitive;
+    cJSON *containers_local_nonprimitive = NULL;
     if(!cJSON_IsArray(containers)){
         goto end; //nonprimitive container
     }
@@ -760,9 +792,8 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->ephemeral_containers
     cJSON *ephemeral_containers = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "ephemeralContainers");
-    list_t *ephemeral_containersList;
     if (ephemeral_containers) { 
-    cJSON *ephemeral_containers_local_nonprimitive;
+    cJSON *ephemeral_containers_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ephemeral_containers)){
         goto end; //nonprimitive container
     }
@@ -782,9 +813,8 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->host_aliases
     cJSON *host_aliases = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "hostAliases");
-    list_t *host_aliasesList;
     if (host_aliases) { 
-    cJSON *host_aliases_local_nonprimitive;
+    cJSON *host_aliases_local_nonprimitive = NULL;
     if(!cJSON_IsArray(host_aliases)){
         goto end; //nonprimitive container
     }
@@ -840,9 +870,8 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->image_pull_secrets
     cJSON *image_pull_secrets = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "imagePullSecrets");
-    list_t *image_pull_secretsList;
     if (image_pull_secrets) { 
-    cJSON *image_pull_secrets_local_nonprimitive;
+    cJSON *image_pull_secrets_local_nonprimitive = NULL;
     if(!cJSON_IsArray(image_pull_secrets)){
         goto end; //nonprimitive container
     }
@@ -862,9 +891,8 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->init_containers
     cJSON *init_containers = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "initContainers");
-    list_t *init_containersList;
     if (init_containers) { 
-    cJSON *init_containers_local_nonprimitive;
+    cJSON *init_containers_local_nonprimitive = NULL;
     if(!cJSON_IsArray(init_containers)){
         goto end; //nonprimitive container
     }
@@ -893,9 +921,8 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->node_selector
     cJSON *node_selector = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "nodeSelector");
-    list_t *node_selectorList;
     if (node_selector) { 
-    cJSON *node_selector_local_map;
+    cJSON *node_selector_local_map = NULL;
     if(!cJSON_IsObject(node_selector)) {
         goto end;//primitive map container
     }
@@ -915,9 +942,8 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->overhead
     cJSON *overhead = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "overhead");
-    list_t *overheadList;
     if (overhead) { 
-    cJSON *overhead_local_map;
+    cJSON *overhead_local_map = NULL;
     if(!cJSON_IsObject(overhead)) {
         goto end;//primitive map container
     }
@@ -964,9 +990,8 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->readiness_gates
     cJSON *readiness_gates = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "readinessGates");
-    list_t *readiness_gatesList;
     if (readiness_gates) { 
-    cJSON *readiness_gates_local_nonprimitive;
+    cJSON *readiness_gates_local_nonprimitive = NULL;
     if(!cJSON_IsArray(readiness_gates)){
         goto end; //nonprimitive container
     }
@@ -1073,9 +1098,8 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->tolerations
     cJSON *tolerations = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "tolerations");
-    list_t *tolerationsList;
     if (tolerations) { 
-    cJSON *tolerations_local_nonprimitive;
+    cJSON *tolerations_local_nonprimitive = NULL;
     if(!cJSON_IsArray(tolerations)){
         goto end; //nonprimitive container
     }
@@ -1095,9 +1119,8 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->topology_spread_constraints
     cJSON *topology_spread_constraints = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "topologySpreadConstraints");
-    list_t *topology_spread_constraintsList;
     if (topology_spread_constraints) { 
-    cJSON *topology_spread_constraints_local_nonprimitive;
+    cJSON *topology_spread_constraints_local_nonprimitive = NULL;
     if(!cJSON_IsArray(topology_spread_constraints)){
         goto end; //nonprimitive container
     }
@@ -1117,9 +1140,8 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->volumes
     cJSON *volumes = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "volumes");
-    list_t *volumesList;
     if (volumes) { 
-    cJSON *volumes_local_nonprimitive;
+    cJSON *volumes_local_nonprimitive = NULL;
     if(!cJSON_IsArray(volumes)){
         goto end; //nonprimitive container
     }
@@ -1182,13 +1204,122 @@ end:
         v1_affinity_free(affinity_local_nonprim);
         affinity_local_nonprim = NULL;
     }
+    if (containersList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, containersList) {
+            v1_container_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(containersList);
+        containersList = NULL;
+    }
     if (dns_config_local_nonprim) {
         v1_pod_dns_config_free(dns_config_local_nonprim);
         dns_config_local_nonprim = NULL;
     }
+    if (ephemeral_containersList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, ephemeral_containersList) {
+            v1_ephemeral_container_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(ephemeral_containersList);
+        ephemeral_containersList = NULL;
+    }
+    if (host_aliasesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, host_aliasesList) {
+            v1_host_alias_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(host_aliasesList);
+        host_aliasesList = NULL;
+    }
+    if (image_pull_secretsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, image_pull_secretsList) {
+            v1_local_object_reference_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(image_pull_secretsList);
+        image_pull_secretsList = NULL;
+    }
+    if (init_containersList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, init_containersList) {
+            v1_container_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(init_containersList);
+        init_containersList = NULL;
+    }
+    if (node_selectorList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, node_selectorList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(node_selectorList);
+        node_selectorList = NULL;
+    }
+    if (overheadList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, overheadList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(overheadList);
+        overheadList = NULL;
+    }
+    if (readiness_gatesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, readiness_gatesList) {
+            v1_pod_readiness_gate_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(readiness_gatesList);
+        readiness_gatesList = NULL;
+    }
     if (security_context_local_nonprim) {
         v1_pod_security_context_free(security_context_local_nonprim);
         security_context_local_nonprim = NULL;
+    }
+    if (tolerationsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, tolerationsList) {
+            v1_toleration_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(tolerationsList);
+        tolerationsList = NULL;
+    }
+    if (topology_spread_constraintsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, topology_spread_constraintsList) {
+            v1_topology_spread_constraint_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(topology_spread_constraintsList);
+        topology_spread_constraintsList = NULL;
+    }
+    if (volumesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, volumesList) {
+            v1_volume_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(volumesList);
+        volumesList = NULL;
     }
     return NULL;
 

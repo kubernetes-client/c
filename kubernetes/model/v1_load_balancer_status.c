@@ -67,11 +67,13 @@ v1_load_balancer_status_t *v1_load_balancer_status_parseFromJSON(cJSON *v1_load_
 
     v1_load_balancer_status_t *v1_load_balancer_status_local_var = NULL;
 
+    // define the local list for v1_load_balancer_status->ingress
+    list_t *ingressList = NULL;
+
     // v1_load_balancer_status->ingress
     cJSON *ingress = cJSON_GetObjectItemCaseSensitive(v1_load_balancer_statusJSON, "ingress");
-    list_t *ingressList;
     if (ingress) { 
-    cJSON *ingress_local_nonprimitive;
+    cJSON *ingress_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ingress)){
         goto end; //nonprimitive container
     }
@@ -96,6 +98,15 @@ v1_load_balancer_status_t *v1_load_balancer_status_parseFromJSON(cJSON *v1_load_
 
     return v1_load_balancer_status_local_var;
 end:
+    if (ingressList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, ingressList) {
+            v1_load_balancer_ingress_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(ingressList);
+        ingressList = NULL;
+    }
     return NULL;
 
 }

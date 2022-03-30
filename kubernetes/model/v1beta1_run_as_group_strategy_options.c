@@ -83,11 +83,13 @@ v1beta1_run_as_group_strategy_options_t *v1beta1_run_as_group_strategy_options_p
 
     v1beta1_run_as_group_strategy_options_t *v1beta1_run_as_group_strategy_options_local_var = NULL;
 
+    // define the local list for v1beta1_run_as_group_strategy_options->ranges
+    list_t *rangesList = NULL;
+
     // v1beta1_run_as_group_strategy_options->ranges
     cJSON *ranges = cJSON_GetObjectItemCaseSensitive(v1beta1_run_as_group_strategy_optionsJSON, "ranges");
-    list_t *rangesList;
     if (ranges) { 
-    cJSON *ranges_local_nonprimitive;
+    cJSON *ranges_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ranges)){
         goto end; //nonprimitive container
     }
@@ -125,6 +127,15 @@ v1beta1_run_as_group_strategy_options_t *v1beta1_run_as_group_strategy_options_p
 
     return v1beta1_run_as_group_strategy_options_local_var;
 end:
+    if (rangesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, rangesList) {
+            v1beta1_id_range_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(rangesList);
+        rangesList = NULL;
+    }
     return NULL;
 
 }

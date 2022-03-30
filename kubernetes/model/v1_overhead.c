@@ -70,11 +70,13 @@ v1_overhead_t *v1_overhead_parseFromJSON(cJSON *v1_overheadJSON){
 
     v1_overhead_t *v1_overhead_local_var = NULL;
 
+    // define the local map for v1_overhead->pod_fixed
+    list_t *pod_fixedList = NULL;
+
     // v1_overhead->pod_fixed
     cJSON *pod_fixed = cJSON_GetObjectItemCaseSensitive(v1_overheadJSON, "podFixed");
-    list_t *pod_fixedList;
     if (pod_fixed) { 
-    cJSON *pod_fixed_local_map;
+    cJSON *pod_fixed_local_map = NULL;
     if(!cJSON_IsObject(pod_fixed)) {
         goto end;//primitive map container
     }
@@ -99,6 +101,20 @@ v1_overhead_t *v1_overhead_parseFromJSON(cJSON *v1_overheadJSON){
 
     return v1_overhead_local_var;
 end:
+    if (pod_fixedList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, pod_fixedList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(pod_fixedList);
+        pod_fixedList = NULL;
+    }
     return NULL;
 
 }

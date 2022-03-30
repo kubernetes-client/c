@@ -332,11 +332,25 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     v1_object_meta_t *v1_object_meta_local_var = NULL;
 
+    // define the local map for v1_object_meta->annotations
+    list_t *annotationsList = NULL;
+
+    // define the local list for v1_object_meta->finalizers
+    list_t *finalizersList = NULL;
+
+    // define the local map for v1_object_meta->labels
+    list_t *labelsList = NULL;
+
+    // define the local list for v1_object_meta->managed_fields
+    list_t *managed_fieldsList = NULL;
+
+    // define the local list for v1_object_meta->owner_references
+    list_t *owner_referencesList = NULL;
+
     // v1_object_meta->annotations
     cJSON *annotations = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "annotations");
-    list_t *annotationsList;
     if (annotations) { 
-    cJSON *annotations_local_map;
+    cJSON *annotations_local_map = NULL;
     if(!cJSON_IsObject(annotations)) {
         goto end;//primitive map container
     }
@@ -392,9 +406,8 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->finalizers
     cJSON *finalizers = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "finalizers");
-    list_t *finalizersList;
     if (finalizers) { 
-    cJSON *finalizers_local;
+    cJSON *finalizers_local = NULL;
     if(!cJSON_IsArray(finalizers)) {
         goto end;//primitive container
     }
@@ -430,9 +443,8 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->labels
     cJSON *labels = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "labels");
-    list_t *labelsList;
     if (labels) { 
-    cJSON *labels_local_map;
+    cJSON *labels_local_map = NULL;
     if(!cJSON_IsObject(labels)) {
         goto end;//primitive map container
     }
@@ -452,9 +464,8 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->managed_fields
     cJSON *managed_fields = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "managedFields");
-    list_t *managed_fieldsList;
     if (managed_fields) { 
-    cJSON *managed_fields_local_nonprimitive;
+    cJSON *managed_fields_local_nonprimitive = NULL;
     if(!cJSON_IsArray(managed_fields)){
         goto end; //nonprimitive container
     }
@@ -492,9 +503,8 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->owner_references
     cJSON *owner_references = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "ownerReferences");
-    list_t *owner_referencesList;
     if (owner_references) { 
-    cJSON *owner_references_local_nonprimitive;
+    cJSON *owner_references_local_nonprimitive = NULL;
     if(!cJSON_IsArray(owner_references)){
         goto end; //nonprimitive container
     }
@@ -561,6 +571,61 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     return v1_object_meta_local_var;
 end:
+    if (annotationsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, annotationsList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(annotationsList);
+        annotationsList = NULL;
+    }
+    if (finalizersList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, finalizersList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(finalizersList);
+        finalizersList = NULL;
+    }
+    if (labelsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, labelsList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(labelsList);
+        labelsList = NULL;
+    }
+    if (managed_fieldsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, managed_fieldsList) {
+            v1_managed_fields_entry_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(managed_fieldsList);
+        managed_fieldsList = NULL;
+    }
+    if (owner_referencesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, owner_referencesList) {
+            v1_owner_reference_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(owner_referencesList);
+        owner_referencesList = NULL;
+    }
     return NULL;
 
 }

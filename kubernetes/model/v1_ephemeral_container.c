@@ -479,11 +479,26 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     v1_ephemeral_container_t *v1_ephemeral_container_local_var = NULL;
 
+    // define the local list for v1_ephemeral_container->args
+    list_t *argsList = NULL;
+
+    // define the local list for v1_ephemeral_container->command
+    list_t *commandList = NULL;
+
+    // define the local list for v1_ephemeral_container->env
+    list_t *envList = NULL;
+
+    // define the local list for v1_ephemeral_container->env_from
+    list_t *env_fromList = NULL;
+
     // define the local variable for v1_ephemeral_container->lifecycle
     v1_lifecycle_t *lifecycle_local_nonprim = NULL;
 
     // define the local variable for v1_ephemeral_container->liveness_probe
     v1_probe_t *liveness_probe_local_nonprim = NULL;
+
+    // define the local list for v1_ephemeral_container->ports
+    list_t *portsList = NULL;
 
     // define the local variable for v1_ephemeral_container->readiness_probe
     v1_probe_t *readiness_probe_local_nonprim = NULL;
@@ -497,11 +512,16 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     // define the local variable for v1_ephemeral_container->startup_probe
     v1_probe_t *startup_probe_local_nonprim = NULL;
 
+    // define the local list for v1_ephemeral_container->volume_devices
+    list_t *volume_devicesList = NULL;
+
+    // define the local list for v1_ephemeral_container->volume_mounts
+    list_t *volume_mountsList = NULL;
+
     // v1_ephemeral_container->args
     cJSON *args = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "args");
-    list_t *argsList;
     if (args) { 
-    cJSON *args_local;
+    cJSON *args_local = NULL;
     if(!cJSON_IsArray(args)) {
         goto end;//primitive container
     }
@@ -519,9 +539,8 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     // v1_ephemeral_container->command
     cJSON *command = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "command");
-    list_t *commandList;
     if (command) { 
-    cJSON *command_local;
+    cJSON *command_local = NULL;
     if(!cJSON_IsArray(command)) {
         goto end;//primitive container
     }
@@ -539,9 +558,8 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     // v1_ephemeral_container->env
     cJSON *env = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "env");
-    list_t *envList;
     if (env) { 
-    cJSON *env_local_nonprimitive;
+    cJSON *env_local_nonprimitive = NULL;
     if(!cJSON_IsArray(env)){
         goto end; //nonprimitive container
     }
@@ -561,9 +579,8 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     // v1_ephemeral_container->env_from
     cJSON *env_from = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "envFrom");
-    list_t *env_fromList;
     if (env_from) { 
-    cJSON *env_from_local_nonprimitive;
+    cJSON *env_from_local_nonprimitive = NULL;
     if(!cJSON_IsArray(env_from)){
         goto end; //nonprimitive container
     }
@@ -625,9 +642,8 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     // v1_ephemeral_container->ports
     cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "ports");
-    list_t *portsList;
     if (ports) { 
-    cJSON *ports_local_nonprimitive;
+    cJSON *ports_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ports)){
         goto end; //nonprimitive container
     }
@@ -725,9 +741,8 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     // v1_ephemeral_container->volume_devices
     cJSON *volume_devices = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "volumeDevices");
-    list_t *volume_devicesList;
     if (volume_devices) { 
-    cJSON *volume_devices_local_nonprimitive;
+    cJSON *volume_devices_local_nonprimitive = NULL;
     if(!cJSON_IsArray(volume_devices)){
         goto end; //nonprimitive container
     }
@@ -747,9 +762,8 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     // v1_ephemeral_container->volume_mounts
     cJSON *volume_mounts = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "volumeMounts");
-    list_t *volume_mountsList;
     if (volume_mounts) { 
-    cJSON *volume_mounts_local_nonprimitive;
+    cJSON *volume_mounts_local_nonprimitive = NULL;
     if(!cJSON_IsArray(volume_mounts)){
         goto end; //nonprimitive container
     }
@@ -805,6 +819,42 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     return v1_ephemeral_container_local_var;
 end:
+    if (argsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, argsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(argsList);
+        argsList = NULL;
+    }
+    if (commandList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, commandList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(commandList);
+        commandList = NULL;
+    }
+    if (envList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, envList) {
+            v1_env_var_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(envList);
+        envList = NULL;
+    }
+    if (env_fromList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, env_fromList) {
+            v1_env_from_source_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(env_fromList);
+        env_fromList = NULL;
+    }
     if (lifecycle_local_nonprim) {
         v1_lifecycle_free(lifecycle_local_nonprim);
         lifecycle_local_nonprim = NULL;
@@ -812,6 +862,15 @@ end:
     if (liveness_probe_local_nonprim) {
         v1_probe_free(liveness_probe_local_nonprim);
         liveness_probe_local_nonprim = NULL;
+    }
+    if (portsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, portsList) {
+            v1_container_port_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(portsList);
+        portsList = NULL;
     }
     if (readiness_probe_local_nonprim) {
         v1_probe_free(readiness_probe_local_nonprim);
@@ -828,6 +887,24 @@ end:
     if (startup_probe_local_nonprim) {
         v1_probe_free(startup_probe_local_nonprim);
         startup_probe_local_nonprim = NULL;
+    }
+    if (volume_devicesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, volume_devicesList) {
+            v1_volume_device_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(volume_devicesList);
+        volume_devicesList = NULL;
+    }
+    if (volume_mountsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, volume_mountsList) {
+            v1_volume_mount_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(volume_mountsList);
+        volume_mountsList = NULL;
     }
     return NULL;
 

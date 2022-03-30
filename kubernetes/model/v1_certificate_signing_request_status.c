@@ -81,6 +81,9 @@ v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_p
 
     v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_local_var = NULL;
 
+    // define the local list for v1_certificate_signing_request_status->conditions
+    list_t *conditionsList = NULL;
+
     // v1_certificate_signing_request_status->certificate
     cJSON *certificate = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_statusJSON, "certificate");
     if (certificate) { 
@@ -92,9 +95,8 @@ v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_p
 
     // v1_certificate_signing_request_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_statusJSON, "conditions");
-    list_t *conditionsList;
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive;
+    cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
@@ -120,6 +122,15 @@ v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_p
 
     return v1_certificate_signing_request_status_local_var;
 end:
+    if (conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conditionsList) {
+            v1_certificate_signing_request_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conditionsList);
+        conditionsList = NULL;
+    }
     return NULL;
 
 }

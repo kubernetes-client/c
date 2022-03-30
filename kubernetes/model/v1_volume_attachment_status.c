@@ -123,6 +123,9 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
     // define the local variable for v1_volume_attachment_status->attach_error
     v1_volume_error_t *attach_error_local_nonprim = NULL;
 
+    // define the local map for v1_volume_attachment_status->attachment_metadata
+    list_t *attachment_metadataList = NULL;
+
     // define the local variable for v1_volume_attachment_status->detach_error
     v1_volume_error_t *detach_error_local_nonprim = NULL;
 
@@ -146,9 +149,8 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
 
     // v1_volume_attachment_status->attachment_metadata
     cJSON *attachment_metadata = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attachmentMetadata");
-    list_t *attachment_metadataList;
     if (attachment_metadata) { 
-    cJSON *attachment_metadata_local_map;
+    cJSON *attachment_metadata_local_map = NULL;
     if(!cJSON_IsObject(attachment_metadata)) {
         goto end;//primitive map container
     }
@@ -185,6 +187,20 @@ end:
     if (attach_error_local_nonprim) {
         v1_volume_error_free(attach_error_local_nonprim);
         attach_error_local_nonprim = NULL;
+    }
+    if (attachment_metadataList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, attachment_metadataList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(attachment_metadataList);
+        attachment_metadataList = NULL;
     }
     if (detach_error_local_nonprim) {
         v1_volume_error_free(detach_error_local_nonprim);

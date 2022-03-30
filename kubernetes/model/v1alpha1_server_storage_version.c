@@ -92,6 +92,9 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
 
     v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_local_var = NULL;
 
+    // define the local list for v1alpha1_server_storage_version->decodable_versions
+    list_t *decodable_versionsList = NULL;
+
     // v1alpha1_server_storage_version->api_server_id
     cJSON *api_server_id = cJSON_GetObjectItemCaseSensitive(v1alpha1_server_storage_versionJSON, "apiServerID");
     if (api_server_id) { 
@@ -103,9 +106,8 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
 
     // v1alpha1_server_storage_version->decodable_versions
     cJSON *decodable_versions = cJSON_GetObjectItemCaseSensitive(v1alpha1_server_storage_versionJSON, "decodableVersions");
-    list_t *decodable_versionsList;
     if (decodable_versions) { 
-    cJSON *decodable_versions_local;
+    cJSON *decodable_versions_local = NULL;
     if(!cJSON_IsArray(decodable_versions)) {
         goto end;//primitive container
     }
@@ -139,6 +141,15 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
 
     return v1alpha1_server_storage_version_local_var;
 end:
+    if (decodable_versionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, decodable_versionsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(decodable_versionsList);
+        decodable_versionsList = NULL;
+    }
     return NULL;
 
 }

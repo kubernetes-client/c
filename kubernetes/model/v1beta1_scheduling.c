@@ -99,11 +99,16 @@ v1beta1_scheduling_t *v1beta1_scheduling_parseFromJSON(cJSON *v1beta1_scheduling
 
     v1beta1_scheduling_t *v1beta1_scheduling_local_var = NULL;
 
+    // define the local map for v1beta1_scheduling->node_selector
+    list_t *node_selectorList = NULL;
+
+    // define the local list for v1beta1_scheduling->tolerations
+    list_t *tolerationsList = NULL;
+
     // v1beta1_scheduling->node_selector
     cJSON *node_selector = cJSON_GetObjectItemCaseSensitive(v1beta1_schedulingJSON, "nodeSelector");
-    list_t *node_selectorList;
     if (node_selector) { 
-    cJSON *node_selector_local_map;
+    cJSON *node_selector_local_map = NULL;
     if(!cJSON_IsObject(node_selector)) {
         goto end;//primitive map container
     }
@@ -123,9 +128,8 @@ v1beta1_scheduling_t *v1beta1_scheduling_parseFromJSON(cJSON *v1beta1_scheduling
 
     // v1beta1_scheduling->tolerations
     cJSON *tolerations = cJSON_GetObjectItemCaseSensitive(v1beta1_schedulingJSON, "tolerations");
-    list_t *tolerationsList;
     if (tolerations) { 
-    cJSON *tolerations_local_nonprimitive;
+    cJSON *tolerations_local_nonprimitive = NULL;
     if(!cJSON_IsArray(tolerations)){
         goto end; //nonprimitive container
     }
@@ -151,6 +155,29 @@ v1beta1_scheduling_t *v1beta1_scheduling_parseFromJSON(cJSON *v1beta1_scheduling
 
     return v1beta1_scheduling_local_var;
 end:
+    if (node_selectorList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, node_selectorList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(node_selectorList);
+        node_selectorList = NULL;
+    }
+    if (tolerationsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, tolerationsList) {
+            v1_toleration_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(tolerationsList);
+        tolerationsList = NULL;
+    }
     return NULL;
 
 }

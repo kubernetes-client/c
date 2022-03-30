@@ -132,6 +132,12 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
     // define the local variable for v1_ingress_spec->default_backend
     v1_ingress_backend_t *default_backend_local_nonprim = NULL;
 
+    // define the local list for v1_ingress_spec->rules
+    list_t *rulesList = NULL;
+
+    // define the local list for v1_ingress_spec->tls
+    list_t *tlsList = NULL;
+
     // v1_ingress_spec->default_backend
     cJSON *default_backend = cJSON_GetObjectItemCaseSensitive(v1_ingress_specJSON, "defaultBackend");
     if (default_backend) { 
@@ -149,9 +155,8 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
 
     // v1_ingress_spec->rules
     cJSON *rules = cJSON_GetObjectItemCaseSensitive(v1_ingress_specJSON, "rules");
-    list_t *rulesList;
     if (rules) { 
-    cJSON *rules_local_nonprimitive;
+    cJSON *rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(rules)){
         goto end; //nonprimitive container
     }
@@ -171,9 +176,8 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
 
     // v1_ingress_spec->tls
     cJSON *tls = cJSON_GetObjectItemCaseSensitive(v1_ingress_specJSON, "tls");
-    list_t *tlsList;
     if (tls) { 
-    cJSON *tls_local_nonprimitive;
+    cJSON *tls_local_nonprimitive = NULL;
     if(!cJSON_IsArray(tls)){
         goto end; //nonprimitive container
     }
@@ -204,6 +208,24 @@ end:
     if (default_backend_local_nonprim) {
         v1_ingress_backend_free(default_backend_local_nonprim);
         default_backend_local_nonprim = NULL;
+    }
+    if (rulesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, rulesList) {
+            v1_ingress_rule_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(rulesList);
+        rulesList = NULL;
+    }
+    if (tlsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, tlsList) {
+            v1_ingress_tls_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(tlsList);
+        tlsList = NULL;
     }
     return NULL;
 

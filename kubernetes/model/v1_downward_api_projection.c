@@ -67,11 +67,13 @@ v1_downward_api_projection_t *v1_downward_api_projection_parseFromJSON(cJSON *v1
 
     v1_downward_api_projection_t *v1_downward_api_projection_local_var = NULL;
 
+    // define the local list for v1_downward_api_projection->items
+    list_t *itemsList = NULL;
+
     // v1_downward_api_projection->items
     cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_downward_api_projectionJSON, "items");
-    list_t *itemsList;
     if (items) { 
-    cJSON *items_local_nonprimitive;
+    cJSON *items_local_nonprimitive = NULL;
     if(!cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
@@ -96,6 +98,15 @@ v1_downward_api_projection_t *v1_downward_api_projection_parseFromJSON(cJSON *v1
 
     return v1_downward_api_projection_local_var;
 end:
+    if (itemsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, itemsList) {
+            v1_downward_api_volume_file_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(itemsList);
+        itemsList = NULL;
+    }
     return NULL;
 
 }

@@ -115,6 +115,12 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
     // define the local variable for v1_custom_resource_definition_status->accepted_names
     v1_custom_resource_definition_names_t *accepted_names_local_nonprim = NULL;
 
+    // define the local list for v1_custom_resource_definition_status->conditions
+    list_t *conditionsList = NULL;
+
+    // define the local list for v1_custom_resource_definition_status->stored_versions
+    list_t *stored_versionsList = NULL;
+
     // v1_custom_resource_definition_status->accepted_names
     cJSON *accepted_names = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "acceptedNames");
     if (accepted_names) { 
@@ -123,9 +129,8 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
 
     // v1_custom_resource_definition_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "conditions");
-    list_t *conditionsList;
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive;
+    cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
@@ -145,9 +150,8 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
 
     // v1_custom_resource_definition_status->stored_versions
     cJSON *stored_versions = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "storedVersions");
-    list_t *stored_versionsList;
     if (stored_versions) { 
-    cJSON *stored_versions_local;
+    cJSON *stored_versions_local = NULL;
     if(!cJSON_IsArray(stored_versions)) {
         goto end;//primitive container
     }
@@ -175,6 +179,24 @@ end:
     if (accepted_names_local_nonprim) {
         v1_custom_resource_definition_names_free(accepted_names_local_nonprim);
         accepted_names_local_nonprim = NULL;
+    }
+    if (conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, conditionsList) {
+            v1_custom_resource_definition_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(conditionsList);
+        conditionsList = NULL;
+    }
+    if (stored_versionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, stored_versionsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(stored_versionsList);
+        stored_versionsList = NULL;
     }
     return NULL;
 

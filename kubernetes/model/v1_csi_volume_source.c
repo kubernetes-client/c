@@ -132,6 +132,9 @@ v1_csi_volume_source_t *v1_csi_volume_source_parseFromJSON(cJSON *v1_csi_volume_
     // define the local variable for v1_csi_volume_source->node_publish_secret_ref
     v1_local_object_reference_t *node_publish_secret_ref_local_nonprim = NULL;
 
+    // define the local map for v1_csi_volume_source->volume_attributes
+    list_t *volume_attributesList = NULL;
+
     // v1_csi_volume_source->driver
     cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1_csi_volume_sourceJSON, "driver");
     if (!driver) {
@@ -170,9 +173,8 @@ v1_csi_volume_source_t *v1_csi_volume_source_parseFromJSON(cJSON *v1_csi_volume_
 
     // v1_csi_volume_source->volume_attributes
     cJSON *volume_attributes = cJSON_GetObjectItemCaseSensitive(v1_csi_volume_sourceJSON, "volumeAttributes");
-    list_t *volume_attributesList;
     if (volume_attributes) { 
-    cJSON *volume_attributes_local_map;
+    cJSON *volume_attributes_local_map = NULL;
     if(!cJSON_IsObject(volume_attributes)) {
         goto end;//primitive map container
     }
@@ -204,6 +206,20 @@ end:
     if (node_publish_secret_ref_local_nonprim) {
         v1_local_object_reference_free(node_publish_secret_ref_local_nonprim);
         node_publish_secret_ref_local_nonprim = NULL;
+    }
+    if (volume_attributesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, volume_attributesList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(volume_attributesList);
+        volume_attributesList = NULL;
     }
     return NULL;
 

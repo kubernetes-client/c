@@ -117,6 +117,9 @@ v1_role_t *v1_role_parseFromJSON(cJSON *v1_roleJSON){
     // define the local variable for v1_role->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
+    // define the local list for v1_role->rules
+    list_t *rulesList = NULL;
+
     // v1_role->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_roleJSON, "apiVersion");
     if (api_version) { 
@@ -143,9 +146,8 @@ v1_role_t *v1_role_parseFromJSON(cJSON *v1_roleJSON){
 
     // v1_role->rules
     cJSON *rules = cJSON_GetObjectItemCaseSensitive(v1_roleJSON, "rules");
-    list_t *rulesList;
     if (rules) { 
-    cJSON *rules_local_nonprimitive;
+    cJSON *rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(rules)){
         goto end; //nonprimitive container
     }
@@ -176,6 +178,15 @@ end:
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
+    }
+    if (rulesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, rulesList) {
+            v1_policy_rule_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(rulesList);
+        rulesList = NULL;
     }
     return NULL;
 

@@ -158,6 +158,12 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
 
     v1_subject_access_review_spec_t *v1_subject_access_review_spec_local_var = NULL;
 
+    // define the local map for v1_subject_access_review_spec->extra
+    list_t *extraList = NULL;
+
+    // define the local list for v1_subject_access_review_spec->groups
+    list_t *groupsList = NULL;
+
     // define the local variable for v1_subject_access_review_spec->non_resource_attributes
     v1_non_resource_attributes_t *non_resource_attributes_local_nonprim = NULL;
 
@@ -166,9 +172,8 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
 
     // v1_subject_access_review_spec->extra
     cJSON *extra = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "extra");
-    list_t *extraList;
     if (extra) { 
-    cJSON *extra_local_map;
+    cJSON *extra_local_map = NULL;
     if(!cJSON_IsObject(extra)) {
         goto end;//primitive map container
     }
@@ -183,9 +188,8 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
 
     // v1_subject_access_review_spec->groups
     cJSON *groups = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "groups");
-    list_t *groupsList;
     if (groups) { 
-    cJSON *groups_local;
+    cJSON *groups_local = NULL;
     if(!cJSON_IsArray(groups)) {
         goto end;//primitive container
     }
@@ -243,6 +247,27 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
 
     return v1_subject_access_review_spec_local_var;
 end:
+    if (extraList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, extraList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(extraList);
+        extraList = NULL;
+    }
+    if (groupsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, groupsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(groupsList);
+        groupsList = NULL;
+    }
     if (non_resource_attributes_local_nonprim) {
         v1_non_resource_attributes_free(non_resource_attributes_local_nonprim);
         non_resource_attributes_local_nonprim = NULL;

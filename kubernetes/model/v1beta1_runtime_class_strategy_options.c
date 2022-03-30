@@ -80,15 +80,17 @@ v1beta1_runtime_class_strategy_options_t *v1beta1_runtime_class_strategy_options
 
     v1beta1_runtime_class_strategy_options_t *v1beta1_runtime_class_strategy_options_local_var = NULL;
 
+    // define the local list for v1beta1_runtime_class_strategy_options->allowed_runtime_class_names
+    list_t *allowed_runtime_class_namesList = NULL;
+
     // v1beta1_runtime_class_strategy_options->allowed_runtime_class_names
     cJSON *allowed_runtime_class_names = cJSON_GetObjectItemCaseSensitive(v1beta1_runtime_class_strategy_optionsJSON, "allowedRuntimeClassNames");
     if (!allowed_runtime_class_names) {
         goto end;
     }
 
-    list_t *allowed_runtime_class_namesList;
     
-    cJSON *allowed_runtime_class_names_local;
+    cJSON *allowed_runtime_class_names_local = NULL;
     if(!cJSON_IsArray(allowed_runtime_class_names)) {
         goto end;//primitive container
     }
@@ -120,6 +122,15 @@ v1beta1_runtime_class_strategy_options_t *v1beta1_runtime_class_strategy_options
 
     return v1beta1_runtime_class_strategy_options_local_var;
 end:
+    if (allowed_runtime_class_namesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, allowed_runtime_class_namesList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(allowed_runtime_class_namesList);
+        allowed_runtime_class_namesList = NULL;
+    }
     return NULL;
 
 }

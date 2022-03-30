@@ -169,6 +169,9 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
 
     v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_local_var = NULL;
 
+    // define the local list for v1_custom_resource_definition_version->additional_printer_columns
+    list_t *additional_printer_columnsList = NULL;
+
     // define the local variable for v1_custom_resource_definition_version->schema
     v1_custom_resource_validation_t *schema_local_nonprim = NULL;
 
@@ -177,9 +180,8 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
 
     // v1_custom_resource_definition_version->additional_printer_columns
     cJSON *additional_printer_columns = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "additionalPrinterColumns");
-    list_t *additional_printer_columnsList;
     if (additional_printer_columns) { 
-    cJSON *additional_printer_columns_local_nonprimitive;
+    cJSON *additional_printer_columns_local_nonprimitive = NULL;
     if(!cJSON_IsArray(additional_printer_columns)){
         goto end; //nonprimitive container
     }
@@ -277,6 +279,15 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
 
     return v1_custom_resource_definition_version_local_var;
 end:
+    if (additional_printer_columnsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, additional_printer_columnsList) {
+            v1_custom_resource_column_definition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(additional_printer_columnsList);
+        additional_printer_columnsList = NULL;
+    }
     if (schema_local_nonprim) {
         v1_custom_resource_validation_free(schema_local_nonprim);
         schema_local_nonprim = NULL;

@@ -91,11 +91,13 @@ v2beta2_hpa_scaling_rules_t *v2beta2_hpa_scaling_rules_parseFromJSON(cJSON *v2be
 
     v2beta2_hpa_scaling_rules_t *v2beta2_hpa_scaling_rules_local_var = NULL;
 
+    // define the local list for v2beta2_hpa_scaling_rules->policies
+    list_t *policiesList = NULL;
+
     // v2beta2_hpa_scaling_rules->policies
     cJSON *policies = cJSON_GetObjectItemCaseSensitive(v2beta2_hpa_scaling_rulesJSON, "policies");
-    list_t *policiesList;
     if (policies) { 
-    cJSON *policies_local_nonprimitive;
+    cJSON *policies_local_nonprimitive = NULL;
     if(!cJSON_IsArray(policies)){
         goto end; //nonprimitive container
     }
@@ -140,6 +142,15 @@ v2beta2_hpa_scaling_rules_t *v2beta2_hpa_scaling_rules_parseFromJSON(cJSON *v2be
 
     return v2beta2_hpa_scaling_rules_local_var;
 end:
+    if (policiesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, policiesList) {
+            v2beta2_hpa_scaling_policy_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(policiesList);
+        policiesList = NULL;
+    }
     return NULL;
 
 }
