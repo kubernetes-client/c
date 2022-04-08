@@ -52,7 +52,7 @@ cd $GEN_REPO_ROOT/openapi
 ./c.sh $OUTPUT_DIR $SETTING_FILE
 ```
 
-Optionally, delete the old model/api/unit-test files in the C client because some of them are deprecated in the new Kubernetes spec:
+Delete the old model/api/unit-test files in the C client because some of them are deprecated in the new Kubernetes spec:
 
 ```bash
 cd $CLIENT_REPO_ROOT/kubernetes
@@ -67,6 +67,17 @@ Copy the generated files to overwrite the files in the C client:
 ```bash
 cp -rf $OUTPUT_DIR/* $CLIENT_REPO_ROOT/kubernetes/
 ```
+
+Update the version in $CLIENT_REPO_ROOT/kubernetes/PreTarget.cmake if needed:
+
+e.g.
+```cmake
+set(PROJECT_VERSION_MAJOR 0)
+set(PROJECT_VERSION_MINOR 1)
+set(PROJECT_VERSION_PATCH 0)
+```
+
+Update [Versioning and Compatibility](versioning-and-compatibility.md) if needed.
 
 Check the new/changed/deleted files:
 
