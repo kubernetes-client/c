@@ -46,6 +46,7 @@ void create_configmap(apiClient_t * apiClient, char *name, char *namespace_)
                                                                         body,
                                                                         NULL,
                                                                         NULL,
+                                                                        NULL,
                                                                         NULL);
 
     printf("%s: The return code of HTTP request=%ld\n", __func__, apiClient->response_code);
