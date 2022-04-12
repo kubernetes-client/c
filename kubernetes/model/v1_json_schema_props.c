@@ -48,7 +48,8 @@ v1_json_schema_props_t *v1_json_schema_props_create(
     list_t *x_kubernetes_list_map_keys,
     char *x_kubernetes_list_type,
     char *x_kubernetes_map_type,
-    int x_kubernetes_preserve_unknown_fields
+    int x_kubernetes_preserve_unknown_fields,
+    list_t *x_kubernetes_validations
     ) {
     v1_json_schema_props_t *v1_json_schema_props_local_var = malloc(sizeof(v1_json_schema_props_t));
     if (!v1_json_schema_props_local_var) {
@@ -97,6 +98,7 @@ v1_json_schema_props_t *v1_json_schema_props_create(
     v1_json_schema_props_local_var->x_kubernetes_list_type = x_kubernetes_list_type;
     v1_json_schema_props_local_var->x_kubernetes_map_type = x_kubernetes_map_type;
     v1_json_schema_props_local_var->x_kubernetes_preserve_unknown_fields = x_kubernetes_preserve_unknown_fields;
+    v1_json_schema_props_local_var->x_kubernetes_validations = x_kubernetes_validations;
 
     return v1_json_schema_props_local_var;
 }
@@ -256,6 +258,13 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
     if (v1_json_schema_props->x_kubernetes_map_type) {
         free(v1_json_schema_props->x_kubernetes_map_type);
         v1_json_schema_props->x_kubernetes_map_type = NULL;
+    }
+    if (v1_json_schema_props->x_kubernetes_validations) {
+        list_ForEach(listEntry, v1_json_schema_props->x_kubernetes_validations) {
+            v1_validation_rule_free(listEntry->data);
+        }
+        list_freeList(v1_json_schema_props->x_kubernetes_validations);
+        v1_json_schema_props->x_kubernetes_validations = NULL;
     }
     free(v1_json_schema_props);
 }
@@ -739,6 +748,26 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     }
      } 
 
+
+    // v1_json_schema_props->x_kubernetes_validations
+    if(v1_json_schema_props->x_kubernetes_validations) { 
+    cJSON *x_kubernetes_validations = cJSON_AddArrayToObject(item, "x-kubernetes-validations");
+    if(x_kubernetes_validations == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *x_kubernetes_validationsListEntry;
+    if (v1_json_schema_props->x_kubernetes_validations) {
+    list_ForEach(x_kubernetes_validationsListEntry, v1_json_schema_props->x_kubernetes_validations) {
+    cJSON *itemLocal = v1_validation_rule_convertToJSON(x_kubernetes_validationsListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(x_kubernetes_validations, itemLocal);
+    }
+    }
+     } 
+
     return item;
 fail:
     if (item) {
@@ -786,6 +815,9 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
 
     // define the local list for v1_json_schema_props->x_kubernetes_list_map_keys
     list_t *x_kubernetes_list_map_keysList = NULL;
+
+    // define the local list for v1_json_schema_props->x_kubernetes_validations
+    list_t *x_kubernetes_validationsList = NULL;
 
     // v1_json_schema_props->ref
     cJSON *ref = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "$ref");
@@ -1230,6 +1262,27 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     }
     }
 
+    // v1_json_schema_props->x_kubernetes_validations
+    cJSON *x_kubernetes_validations = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "x-kubernetes-validations");
+    if (x_kubernetes_validations) { 
+    cJSON *x_kubernetes_validations_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(x_kubernetes_validations)){
+        goto end; //nonprimitive container
+    }
+
+    x_kubernetes_validationsList = list_createList();
+
+    cJSON_ArrayForEach(x_kubernetes_validations_local_nonprimitive,x_kubernetes_validations )
+    {
+        if(!cJSON_IsObject(x_kubernetes_validations_local_nonprimitive)){
+            goto end;
+        }
+        v1_validation_rule_t *x_kubernetes_validationsItem = v1_validation_rule_parseFromJSON(x_kubernetes_validations_local_nonprimitive);
+
+        list_addElement(x_kubernetes_validationsList, x_kubernetes_validationsItem);
+    }
+    }
+
 
     v1_json_schema_props_local_var = v1_json_schema_props_create (
         ref ? strdup(ref->valuestring) : NULL,
@@ -1274,7 +1327,8 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
         x_kubernetes_list_map_keys ? x_kubernetes_list_map_keysList : NULL,
         x_kubernetes_list_type ? strdup(x_kubernetes_list_type->valuestring) : NULL,
         x_kubernetes_map_type ? strdup(x_kubernetes_map_type->valuestring) : NULL,
-        x_kubernetes_preserve_unknown_fields ? x_kubernetes_preserve_unknown_fields->valueint : 0
+        x_kubernetes_preserve_unknown_fields ? x_kubernetes_preserve_unknown_fields->valueint : 0,
+        x_kubernetes_validations ? x_kubernetes_validationsList : NULL
         );
 
     return v1_json_schema_props_local_var;
@@ -1361,6 +1415,15 @@ end:
         }
         list_freeList(x_kubernetes_list_map_keysList);
         x_kubernetes_list_map_keysList = NULL;
+    }
+    if (x_kubernetes_validationsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, x_kubernetes_validationsList) {
+            v1_validation_rule_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(x_kubernetes_validationsList);
+        x_kubernetes_validationsList = NULL;
     }
     return NULL;
 

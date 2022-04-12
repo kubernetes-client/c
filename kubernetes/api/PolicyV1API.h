@@ -16,7 +16,7 @@
 // create a PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , v1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager );
+PolicyV1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , v1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of PodDisruptionBudget
@@ -52,13 +52,13 @@ PolicyV1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient, int 
 // partially update the specified PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+PolicyV1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+PolicyV1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified PodDisruptionBudget
@@ -76,12 +76,12 @@ PolicyV1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char
 // replace the specified PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager );
+PolicyV1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager );
+PolicyV1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

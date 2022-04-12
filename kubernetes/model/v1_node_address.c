@@ -4,10 +4,27 @@
 #include "v1_node_address.h"
 
 
+char* typev1_node_address_ToString(kubernetes_v1_node_address_TYPE_e type) {
+    char* typeArray[] =  { "NULL", "ExternalDNS", "ExternalIP", "Hostname", "InternalDNS", "InternalIP" };
+	return typeArray[type];
+}
+
+kubernetes_v1_node_address_TYPE_e typev1_node_address_FromString(char* type){
+    int stringToReturn = 0;
+    char *typeArray[] =  { "NULL", "ExternalDNS", "ExternalIP", "Hostname", "InternalDNS", "InternalIP" };
+    size_t sizeofArray = sizeof(typeArray) / sizeof(typeArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(type, typeArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_node_address_t *v1_node_address_create(
     char *address,
-    char *type
+    kubernetes_v1_node_address_TYPE_e type
     ) {
     v1_node_address_t *v1_node_address_local_var = malloc(sizeof(v1_node_address_t));
     if (!v1_node_address_local_var) {
@@ -29,10 +46,6 @@ void v1_node_address_free(v1_node_address_t *v1_node_address) {
         free(v1_node_address->address);
         v1_node_address->address = NULL;
     }
-    if (v1_node_address->type) {
-        free(v1_node_address->type);
-        v1_node_address->type = NULL;
-    }
     free(v1_node_address);
 }
 
@@ -50,12 +63,10 @@ cJSON *v1_node_address_convertToJSON(v1_node_address_t *v1_node_address) {
 
 
     // v1_node_address->type
-    if (!v1_node_address->type) {
-        goto fail;
-    }
     
-    if(cJSON_AddStringToObject(item, "type", v1_node_address->type) == NULL) {
-    goto fail; //String
+    if(cJSON_AddStringToObject(item, "type", typev1_node_address_ToString(v1_node_address->type)) == NULL)
+    {
+    goto fail; //Enum
     }
 
     return item;
@@ -88,16 +99,18 @@ v1_node_address_t *v1_node_address_parseFromJSON(cJSON *v1_node_addressJSON){
         goto end;
     }
 
+    kubernetes_v1_node_address_TYPE_e typeVariable;
     
     if(!cJSON_IsString(type))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    typeVariable = typev1_node_address_FromString(type->valuestring);
 
 
     v1_node_address_local_var = v1_node_address_create (
         strdup(address->valuestring),
-        strdup(type->valuestring)
+        typeVariable
         );
 
     return v1_node_address_local_var;

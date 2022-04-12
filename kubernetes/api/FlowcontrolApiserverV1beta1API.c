@@ -15,7 +15,7 @@
 // create a FlowSchema
 //
 v1beta1_flow_schema_t*
-FlowcontrolApiserverV1beta1API_createFlowSchema(apiClient_t *apiClient, v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager )
+FlowcontrolApiserverV1beta1API_createFlowSchema(apiClient_t *apiClient, v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -68,6 +68,18 @@ FlowcontrolApiserverV1beta1API_createFlowSchema(apiClient_t *apiClient, v1beta1_
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -89,18 +101,22 @@ FlowcontrolApiserverV1beta1API_createFlowSchema(apiClient_t *apiClient, v1beta1_
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_flow_schema_t *elementToReturn = v1beta1_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -162,6 +178,18 @@ FlowcontrolApiserverV1beta1API_createFlowSchema(apiClient_t *apiClient, v1beta1_
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -172,7 +200,7 @@ end:
 // create a PriorityLevelConfiguration
 //
 v1beta1_priority_level_configuration_t*
-FlowcontrolApiserverV1beta1API_createPriorityLevelConfiguration(apiClient_t *apiClient, v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager )
+FlowcontrolApiserverV1beta1API_createPriorityLevelConfiguration(apiClient_t *apiClient, v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -225,6 +253,18 @@ FlowcontrolApiserverV1beta1API_createPriorityLevelConfiguration(apiClient_t *api
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -246,18 +286,22 @@ FlowcontrolApiserverV1beta1API_createPriorityLevelConfiguration(apiClient_t *api
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_priority_level_configuration_t *elementToReturn = v1beta1_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -318,6 +362,18 @@ FlowcontrolApiserverV1beta1API_createPriorityLevelConfiguration(apiClient_t *api
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:
@@ -515,12 +571,14 @@ FlowcontrolApiserverV1beta1API_deleteCollectionFlowSchema(apiClient_t *apiClient
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -886,12 +944,14 @@ FlowcontrolApiserverV1beta1API_deleteCollectionPriorityLevelConfiguration(apiCli
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -1181,15 +1241,18 @@ FlowcontrolApiserverV1beta1API_deleteFlowSchema(apiClient_t *apiClient, char * n
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -1396,15 +1459,18 @@ FlowcontrolApiserverV1beta1API_deletePriorityLevelConfiguration(apiClient_t *api
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -1530,12 +1596,14 @@ FlowcontrolApiserverV1beta1API_getAPIResources(apiClient_t *apiClient)
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -1721,12 +1789,14 @@ FlowcontrolApiserverV1beta1API_listFlowSchema(apiClient_t *apiClient, char * pre
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_flow_schema_list_t *elementToReturn = v1beta1_flow_schema_list_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -2032,12 +2102,14 @@ FlowcontrolApiserverV1beta1API_listPriorityLevelConfiguration(apiClient_t *apiCl
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_priority_level_configuration_list_t *elementToReturn = v1beta1_priority_level_configuration_list_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -2188,7 +2260,7 @@ end:
 // partially update the specified FlowSchema
 //
 v1beta1_flow_schema_t*
-FlowcontrolApiserverV1beta1API_patchFlowSchema(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+FlowcontrolApiserverV1beta1API_patchFlowSchema(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2252,6 +2324,18 @@ FlowcontrolApiserverV1beta1API_patchFlowSchema(apiClient_t *apiClient, char * na
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -2289,15 +2373,18 @@ FlowcontrolApiserverV1beta1API_patchFlowSchema(apiClient_t *apiClient, char * na
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_flow_schema_t *elementToReturn = v1beta1_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -2360,6 +2447,18 @@ FlowcontrolApiserverV1beta1API_patchFlowSchema(apiClient_t *apiClient, char * na
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -2382,7 +2481,7 @@ end:
 // partially update status of the specified FlowSchema
 //
 v1beta1_flow_schema_t*
-FlowcontrolApiserverV1beta1API_patchFlowSchemaStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+FlowcontrolApiserverV1beta1API_patchFlowSchemaStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2446,6 +2545,18 @@ FlowcontrolApiserverV1beta1API_patchFlowSchemaStatus(apiClient_t *apiClient, cha
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -2483,15 +2594,18 @@ FlowcontrolApiserverV1beta1API_patchFlowSchemaStatus(apiClient_t *apiClient, cha
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_flow_schema_t *elementToReturn = v1beta1_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -2554,6 +2668,18 @@ FlowcontrolApiserverV1beta1API_patchFlowSchemaStatus(apiClient_t *apiClient, cha
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -2576,7 +2702,7 @@ end:
 // partially update the specified PriorityLevelConfiguration
 //
 v1beta1_priority_level_configuration_t*
-FlowcontrolApiserverV1beta1API_patchPriorityLevelConfiguration(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+FlowcontrolApiserverV1beta1API_patchPriorityLevelConfiguration(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2640,6 +2766,18 @@ FlowcontrolApiserverV1beta1API_patchPriorityLevelConfiguration(apiClient_t *apiC
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -2677,15 +2815,18 @@ FlowcontrolApiserverV1beta1API_patchPriorityLevelConfiguration(apiClient_t *apiC
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_priority_level_configuration_t *elementToReturn = v1beta1_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -2748,6 +2889,18 @@ FlowcontrolApiserverV1beta1API_patchPriorityLevelConfiguration(apiClient_t *apiC
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -2770,7 +2923,7 @@ end:
 // partially update status of the specified PriorityLevelConfiguration
 //
 v1beta1_priority_level_configuration_t*
-FlowcontrolApiserverV1beta1API_patchPriorityLevelConfigurationStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+FlowcontrolApiserverV1beta1API_patchPriorityLevelConfigurationStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2834,6 +2987,18 @@ FlowcontrolApiserverV1beta1API_patchPriorityLevelConfigurationStatus(apiClient_t
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -2871,15 +3036,18 @@ FlowcontrolApiserverV1beta1API_patchPriorityLevelConfigurationStatus(apiClient_t
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_priority_level_configuration_t *elementToReturn = v1beta1_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -2941,6 +3109,18 @@ FlowcontrolApiserverV1beta1API_patchPriorityLevelConfigurationStatus(apiClient_t
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     if(keyQuery_force){
         free(keyQuery_force);
@@ -3015,12 +3195,14 @@ FlowcontrolApiserverV1beta1API_readFlowSchema(apiClient_t *apiClient, char * nam
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_flow_schema_t *elementToReturn = v1beta1_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -3115,12 +3297,14 @@ FlowcontrolApiserverV1beta1API_readFlowSchemaStatus(apiClient_t *apiClient, char
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_flow_schema_t *elementToReturn = v1beta1_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -3215,12 +3399,14 @@ FlowcontrolApiserverV1beta1API_readPriorityLevelConfiguration(apiClient_t *apiCl
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_priority_level_configuration_t *elementToReturn = v1beta1_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -3315,12 +3501,14 @@ FlowcontrolApiserverV1beta1API_readPriorityLevelConfigurationStatus(apiClient_t 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_priority_level_configuration_t *elementToReturn = v1beta1_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -3364,7 +3552,7 @@ end:
 // replace the specified FlowSchema
 //
 v1beta1_flow_schema_t*
-FlowcontrolApiserverV1beta1API_replaceFlowSchema(apiClient_t *apiClient, char * name , v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager )
+FlowcontrolApiserverV1beta1API_replaceFlowSchema(apiClient_t *apiClient, char * name , v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3427,6 +3615,18 @@ FlowcontrolApiserverV1beta1API_replaceFlowSchema(apiClient_t *apiClient, char * 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -3448,15 +3648,18 @@ FlowcontrolApiserverV1beta1API_replaceFlowSchema(apiClient_t *apiClient, char * 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_flow_schema_t *elementToReturn = v1beta1_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -3519,6 +3722,18 @@ FlowcontrolApiserverV1beta1API_replaceFlowSchema(apiClient_t *apiClient, char * 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -3529,7 +3744,7 @@ end:
 // replace status of the specified FlowSchema
 //
 v1beta1_flow_schema_t*
-FlowcontrolApiserverV1beta1API_replaceFlowSchemaStatus(apiClient_t *apiClient, char * name , v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager )
+FlowcontrolApiserverV1beta1API_replaceFlowSchemaStatus(apiClient_t *apiClient, char * name , v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3592,6 +3807,18 @@ FlowcontrolApiserverV1beta1API_replaceFlowSchemaStatus(apiClient_t *apiClient, c
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -3613,15 +3840,18 @@ FlowcontrolApiserverV1beta1API_replaceFlowSchemaStatus(apiClient_t *apiClient, c
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_flow_schema_t *elementToReturn = v1beta1_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -3684,6 +3914,18 @@ FlowcontrolApiserverV1beta1API_replaceFlowSchemaStatus(apiClient_t *apiClient, c
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -3694,7 +3936,7 @@ end:
 // replace the specified PriorityLevelConfiguration
 //
 v1beta1_priority_level_configuration_t*
-FlowcontrolApiserverV1beta1API_replacePriorityLevelConfiguration(apiClient_t *apiClient, char * name , v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager )
+FlowcontrolApiserverV1beta1API_replacePriorityLevelConfiguration(apiClient_t *apiClient, char * name , v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3757,6 +3999,18 @@ FlowcontrolApiserverV1beta1API_replacePriorityLevelConfiguration(apiClient_t *ap
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -3778,15 +4032,18 @@ FlowcontrolApiserverV1beta1API_replacePriorityLevelConfiguration(apiClient_t *ap
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_priority_level_configuration_t *elementToReturn = v1beta1_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -3849,6 +4106,18 @@ FlowcontrolApiserverV1beta1API_replacePriorityLevelConfiguration(apiClient_t *ap
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -3859,7 +4128,7 @@ end:
 // replace status of the specified PriorityLevelConfiguration
 //
 v1beta1_priority_level_configuration_t*
-FlowcontrolApiserverV1beta1API_replacePriorityLevelConfigurationStatus(apiClient_t *apiClient, char * name , v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager )
+FlowcontrolApiserverV1beta1API_replacePriorityLevelConfigurationStatus(apiClient_t *apiClient, char * name , v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3922,6 +4191,18 @@ FlowcontrolApiserverV1beta1API_replacePriorityLevelConfigurationStatus(apiClient
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -3943,15 +4224,18 @@ FlowcontrolApiserverV1beta1API_replacePriorityLevelConfigurationStatus(apiClient
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_priority_level_configuration_t *elementToReturn = v1beta1_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta1APIlocalVarJSON);
@@ -4013,6 +4297,18 @@ FlowcontrolApiserverV1beta1API_replacePriorityLevelConfigurationStatus(apiClient
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:

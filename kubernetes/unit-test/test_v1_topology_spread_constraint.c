@@ -27,14 +27,14 @@ v1_topology_spread_constraint_t* instantiate_v1_topology_spread_constraint(int i
       instantiate_v1_label_selector(0),
       56,
       "0",
-      "0"
+      kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_DoNotSchedule
     );
   } else {
     v1_topology_spread_constraint = v1_topology_spread_constraint_create(
       NULL,
       56,
       "0",
-      "0"
+      kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_DoNotSchedule
     );
   }
 

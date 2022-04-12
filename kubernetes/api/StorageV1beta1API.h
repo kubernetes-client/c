@@ -16,7 +16,7 @@
 // create a CSIStorageCapacity
 //
 v1beta1_csi_storage_capacity_t*
-StorageV1beta1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _namespace , v1beta1_csi_storage_capacity_t * body , char * pretty , char * dryRun , char * fieldManager );
+StorageV1beta1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _namespace , v1beta1_csi_storage_capacity_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of CSIStorageCapacity
@@ -52,7 +52,7 @@ StorageV1beta1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char 
 // partially update the specified CSIStorageCapacity
 //
 v1beta1_csi_storage_capacity_t*
-StorageV1beta1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+StorageV1beta1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified CSIStorageCapacity
@@ -64,6 +64,6 @@ StorageV1beta1API_readNamespacedCSIStorageCapacity(apiClient_t *apiClient, char 
 // replace the specified CSIStorageCapacity
 //
 v1beta1_csi_storage_capacity_t*
-StorageV1beta1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_csi_storage_capacity_t * body , char * pretty , char * dryRun , char * fieldManager );
+StorageV1beta1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_csi_storage_capacity_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

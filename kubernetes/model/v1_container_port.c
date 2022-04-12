@@ -4,13 +4,30 @@
 #include "v1_container_port.h"
 
 
+char* protocolv1_container_port_ToString(kubernetes_v1_container_port_PROTOCOL_e protocol) {
+    char* protocolArray[] =  { "NULL", "SCTP", "TCP", "UDP" };
+	return protocolArray[protocol];
+}
+
+kubernetes_v1_container_port_PROTOCOL_e protocolv1_container_port_FromString(char* protocol){
+    int stringToReturn = 0;
+    char *protocolArray[] =  { "NULL", "SCTP", "TCP", "UDP" };
+    size_t sizeofArray = sizeof(protocolArray) / sizeof(protocolArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(protocol, protocolArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_container_port_t *v1_container_port_create(
     int container_port,
     char *host_ip,
     int host_port,
     char *name,
-    char *protocol
+    kubernetes_v1_container_port_PROTOCOL_e protocol
     ) {
     v1_container_port_t *v1_container_port_local_var = malloc(sizeof(v1_container_port_t));
     if (!v1_container_port_local_var) {
@@ -38,10 +55,6 @@ void v1_container_port_free(v1_container_port_t *v1_container_port) {
     if (v1_container_port->name) {
         free(v1_container_port->name);
         v1_container_port->name = NULL;
-    }
-    if (v1_container_port->protocol) {
-        free(v1_container_port->protocol);
-        v1_container_port->protocol = NULL;
     }
     free(v1_container_port);
 }
@@ -84,11 +97,12 @@ cJSON *v1_container_port_convertToJSON(v1_container_port_t *v1_container_port) {
 
 
     // v1_container_port->protocol
-    if(v1_container_port->protocol) { 
-    if(cJSON_AddStringToObject(item, "protocol", v1_container_port->protocol) == NULL) {
-    goto fail; //String
+    
+    if(cJSON_AddStringToObject(item, "protocol", protocolv1_container_port_ToString(v1_container_port->protocol)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    
 
     return item;
 fail:
@@ -143,11 +157,13 @@ v1_container_port_t *v1_container_port_parseFromJSON(cJSON *v1_container_portJSO
 
     // v1_container_port->protocol
     cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "protocol");
+    kubernetes_v1_container_port_PROTOCOL_e protocolVariable;
     if (protocol) { 
     if(!cJSON_IsString(protocol))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    protocolVariable = protocolv1_container_port_FromString(protocol->valuestring);
     }
 
 
@@ -156,7 +172,7 @@ v1_container_port_t *v1_container_port_parseFromJSON(cJSON *v1_container_portJSO
         host_ip ? strdup(host_ip->valuestring) : NULL,
         host_port ? host_port->valuedouble : 0,
         name ? strdup(name->valuestring) : NULL,
-        protocol ? strdup(protocol->valuestring) : NULL
+        protocol ? protocolVariable : -1
         );
 
     return v1_container_port_local_var;

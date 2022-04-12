@@ -17,6 +17,7 @@ typedef struct v1_json_schema_props_t v1_json_schema_props_t;
 
 #include "object.h"
 #include "v1_external_documentation.h"
+#include "v1_validation_rule.h"
 
 
 
@@ -64,6 +65,7 @@ typedef struct v1_json_schema_props_t {
     char *x_kubernetes_list_type; // string
     char *x_kubernetes_map_type; // string
     int x_kubernetes_preserve_unknown_fields; //boolean
+    list_t *x_kubernetes_validations; //nonprimitive container
 
 } v1_json_schema_props_t;
 
@@ -110,7 +112,8 @@ v1_json_schema_props_t *v1_json_schema_props_create(
     list_t *x_kubernetes_list_map_keys,
     char *x_kubernetes_list_type,
     char *x_kubernetes_map_type,
-    int x_kubernetes_preserve_unknown_fields
+    int x_kubernetes_preserve_unknown_fields,
+    list_t *x_kubernetes_validations
 );
 
 void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props);

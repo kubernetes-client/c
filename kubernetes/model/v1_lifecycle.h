@@ -15,19 +15,19 @@
 
 typedef struct v1_lifecycle_t v1_lifecycle_t;
 
-#include "v1_handler.h"
+#include "v1_lifecycle_handler.h"
 
 
 
 typedef struct v1_lifecycle_t {
-    struct v1_handler_t *post_start; //model
-    struct v1_handler_t *pre_stop; //model
+    struct v1_lifecycle_handler_t *post_start; //model
+    struct v1_lifecycle_handler_t *pre_stop; //model
 
 } v1_lifecycle_t;
 
 v1_lifecycle_t *v1_lifecycle_create(
-    v1_handler_t *post_start,
-    v1_handler_t *pre_stop
+    v1_lifecycle_handler_t *post_start,
+    v1_lifecycle_handler_t *pre_stop
 );
 
 void v1_lifecycle_free(v1_lifecycle_t *v1_lifecycle);

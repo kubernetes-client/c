@@ -22,25 +22,25 @@
 // create a CSIDriver
 //
 v1_csi_driver_t*
-StorageV1API_createCSIDriver(apiClient_t *apiClient, v1_csi_driver_t * body , char * pretty , char * dryRun , char * fieldManager );
+StorageV1API_createCSIDriver(apiClient_t *apiClient, v1_csi_driver_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a CSINode
 //
 v1_csi_node_t*
-StorageV1API_createCSINode(apiClient_t *apiClient, v1_csi_node_t * body , char * pretty , char * dryRun , char * fieldManager );
+StorageV1API_createCSINode(apiClient_t *apiClient, v1_csi_node_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a StorageClass
 //
 v1_storage_class_t*
-StorageV1API_createStorageClass(apiClient_t *apiClient, v1_storage_class_t * body , char * pretty , char * dryRun , char * fieldManager );
+StorageV1API_createStorageClass(apiClient_t *apiClient, v1_storage_class_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a VolumeAttachment
 //
 v1_volume_attachment_t*
-StorageV1API_createVolumeAttachment(apiClient_t *apiClient, v1_volume_attachment_t * body , char * pretty , char * dryRun , char * fieldManager );
+StorageV1API_createVolumeAttachment(apiClient_t *apiClient, v1_volume_attachment_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete a CSIDriver
@@ -124,31 +124,31 @@ StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char * pretty , int al
 // partially update the specified CSIDriver
 //
 v1_csi_driver_t*
-StorageV1API_patchCSIDriver(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+StorageV1API_patchCSIDriver(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified CSINode
 //
 v1_csi_node_t*
-StorageV1API_patchCSINode(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+StorageV1API_patchCSINode(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified StorageClass
 //
 v1_storage_class_t*
-StorageV1API_patchStorageClass(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+StorageV1API_patchStorageClass(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified VolumeAttachment
 //
 v1_volume_attachment_t*
-StorageV1API_patchVolumeAttachment(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+StorageV1API_patchVolumeAttachment(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified VolumeAttachment
 //
 v1_volume_attachment_t*
-StorageV1API_patchVolumeAttachmentStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+StorageV1API_patchVolumeAttachmentStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified CSIDriver
@@ -184,30 +184,30 @@ StorageV1API_readVolumeAttachmentStatus(apiClient_t *apiClient, char * name , ch
 // replace the specified CSIDriver
 //
 v1_csi_driver_t*
-StorageV1API_replaceCSIDriver(apiClient_t *apiClient, char * name , v1_csi_driver_t * body , char * pretty , char * dryRun , char * fieldManager );
+StorageV1API_replaceCSIDriver(apiClient_t *apiClient, char * name , v1_csi_driver_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified CSINode
 //
 v1_csi_node_t*
-StorageV1API_replaceCSINode(apiClient_t *apiClient, char * name , v1_csi_node_t * body , char * pretty , char * dryRun , char * fieldManager );
+StorageV1API_replaceCSINode(apiClient_t *apiClient, char * name , v1_csi_node_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified StorageClass
 //
 v1_storage_class_t*
-StorageV1API_replaceStorageClass(apiClient_t *apiClient, char * name , v1_storage_class_t * body , char * pretty , char * dryRun , char * fieldManager );
+StorageV1API_replaceStorageClass(apiClient_t *apiClient, char * name , v1_storage_class_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified VolumeAttachment
 //
 v1_volume_attachment_t*
-StorageV1API_replaceVolumeAttachment(apiClient_t *apiClient, char * name , v1_volume_attachment_t * body , char * pretty , char * dryRun , char * fieldManager );
+StorageV1API_replaceVolumeAttachment(apiClient_t *apiClient, char * name , v1_volume_attachment_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified VolumeAttachment
 //
 v1_volume_attachment_t*
-StorageV1API_replaceVolumeAttachmentStatus(apiClient_t *apiClient, char * name , v1_volume_attachment_t * body , char * pretty , char * dryRun , char * fieldManager );
+StorageV1API_replaceVolumeAttachmentStatus(apiClient_t *apiClient, char * name , v1_volume_attachment_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

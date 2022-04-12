@@ -23,7 +23,7 @@ v1_cron_job_spec_t* instantiate_v1_cron_job_spec(int include_optional) {
   v1_cron_job_spec_t* v1_cron_job_spec = NULL;
   if (include_optional) {
     v1_cron_job_spec = v1_cron_job_spec_create(
-      "0",
+      kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_Allow,
       56,
        // false, not to have infinite recursion
       instantiate_v1_job_template_spec(0),
@@ -34,7 +34,7 @@ v1_cron_job_spec_t* instantiate_v1_cron_job_spec(int include_optional) {
     );
   } else {
     v1_cron_job_spec = v1_cron_job_spec_create(
-      "0",
+      kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_Allow,
       56,
       NULL,
       "0",

@@ -25,12 +25,12 @@ v1_daemon_set_update_strategy_t* instantiate_v1_daemon_set_update_strategy(int i
     v1_daemon_set_update_strategy = v1_daemon_set_update_strategy_create(
        // false, not to have infinite recursion
       instantiate_v1_rolling_update_daemon_set(0),
-      "0"
+      kubernetes_v1_daemon_set_update_strategy_TYPE_OnDelete
     );
   } else {
     v1_daemon_set_update_strategy = v1_daemon_set_update_strategy_create(
       NULL,
-      "0"
+      kubernetes_v1_daemon_set_update_strategy_TYPE_OnDelete
     );
   }
 

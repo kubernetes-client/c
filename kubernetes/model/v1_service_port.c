@@ -4,13 +4,30 @@
 #include "v1_service_port.h"
 
 
+char* protocolv1_service_port_ToString(kubernetes_v1_service_port_PROTOCOL_e protocol) {
+    char* protocolArray[] =  { "NULL", "SCTP", "TCP", "UDP" };
+	return protocolArray[protocol];
+}
+
+kubernetes_v1_service_port_PROTOCOL_e protocolv1_service_port_FromString(char* protocol){
+    int stringToReturn = 0;
+    char *protocolArray[] =  { "NULL", "SCTP", "TCP", "UDP" };
+    size_t sizeofArray = sizeof(protocolArray) / sizeof(protocolArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(protocol, protocolArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_service_port_t *v1_service_port_create(
     char *app_protocol,
     char *name,
     int node_port,
     int port,
-    char *protocol,
+    kubernetes_v1_service_port_PROTOCOL_e protocol,
     int_or_string_t *target_port
     ) {
     v1_service_port_t *v1_service_port_local_var = malloc(sizeof(v1_service_port_t));
@@ -40,10 +57,6 @@ void v1_service_port_free(v1_service_port_t *v1_service_port) {
     if (v1_service_port->name) {
         free(v1_service_port->name);
         v1_service_port->name = NULL;
-    }
-    if (v1_service_port->protocol) {
-        free(v1_service_port->protocol);
-        v1_service_port->protocol = NULL;
     }
     if (v1_service_port->target_port) {
         int_or_string_free(v1_service_port->target_port);
@@ -90,11 +103,12 @@ cJSON *v1_service_port_convertToJSON(v1_service_port_t *v1_service_port) {
 
 
     // v1_service_port->protocol
-    if(v1_service_port->protocol) { 
-    if(cJSON_AddStringToObject(item, "protocol", v1_service_port->protocol) == NULL) {
-    goto fail; //String
+    
+    if(cJSON_AddStringToObject(item, "protocol", protocolv1_service_port_ToString(v1_service_port->protocol)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    
 
 
     // v1_service_port->target_port
@@ -165,11 +179,13 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
     // v1_service_port->protocol
     cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "protocol");
+    kubernetes_v1_service_port_PROTOCOL_e protocolVariable;
     if (protocol) { 
     if(!cJSON_IsString(protocol))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    protocolVariable = protocolv1_service_port_FromString(protocol->valuestring);
     }
 
     // v1_service_port->target_port
@@ -184,7 +200,7 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
         name ? strdup(name->valuestring) : NULL,
         node_port ? node_port->valuedouble : 0,
         port->valuedouble,
-        protocol ? strdup(protocol->valuestring) : NULL,
+        protocol ? protocolVariable : -1,
         target_port ? target_port_local_nonprim : NULL
         );
 

@@ -68,7 +68,8 @@ v1_json_schema_props_t* instantiate_v1_json_schema_props(int include_optional) {
       list_createList(),
       "0",
       "0",
-      1
+      1,
+      list_createList()
     );
   } else {
     v1_json_schema_props = v1_json_schema_props_create(
@@ -114,7 +115,8 @@ v1_json_schema_props_t* instantiate_v1_json_schema_props(int include_optional) {
       list_createList(),
       "0",
       "0",
-      1
+      1,
+      list_createList()
     );
   }
 

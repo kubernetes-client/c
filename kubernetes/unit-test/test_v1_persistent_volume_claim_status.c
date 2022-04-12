@@ -25,6 +25,8 @@ v1_persistent_volume_claim_status_t* instantiate_v1_persistent_volume_claim_stat
       list_createList(),
       list_createList(),
       list_createList(),
+      list_createList(),
+      kubernetes_v1_persistent_volume_claim_status_PHASE_Bound,
       "0"
     );
   } else {
@@ -32,6 +34,8 @@ v1_persistent_volume_claim_status_t* instantiate_v1_persistent_volume_claim_stat
       list_createList(),
       list_createList(),
       list_createList(),
+      list_createList(),
+      kubernetes_v1_persistent_volume_claim_status_PHASE_Bound,
       "0"
     );
   }

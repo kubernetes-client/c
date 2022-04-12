@@ -4,9 +4,26 @@
 #include "v1_cron_job_spec.h"
 
 
+char* concurrency_policyv1_cron_job_spec_ToString(kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e concurrency_policy) {
+    char* concurrency_policyArray[] =  { "NULL", "Allow", "Forbid", "Replace" };
+	return concurrency_policyArray[concurrency_policy];
+}
+
+kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e concurrency_policyv1_cron_job_spec_FromString(char* concurrency_policy){
+    int stringToReturn = 0;
+    char *concurrency_policyArray[] =  { "NULL", "Allow", "Forbid", "Replace" };
+    size_t sizeofArray = sizeof(concurrency_policyArray) / sizeof(concurrency_policyArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(concurrency_policy, concurrency_policyArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_cron_job_spec_t *v1_cron_job_spec_create(
-    char *concurrency_policy,
+    kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e concurrency_policy,
     int failed_jobs_history_limit,
     v1_job_template_spec_t *job_template,
     char *schedule,
@@ -35,10 +52,6 @@ void v1_cron_job_spec_free(v1_cron_job_spec_t *v1_cron_job_spec) {
         return ;
     }
     listEntry_t *listEntry;
-    if (v1_cron_job_spec->concurrency_policy) {
-        free(v1_cron_job_spec->concurrency_policy);
-        v1_cron_job_spec->concurrency_policy = NULL;
-    }
     if (v1_cron_job_spec->job_template) {
         v1_job_template_spec_free(v1_cron_job_spec->job_template);
         v1_cron_job_spec->job_template = NULL;
@@ -54,11 +67,12 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_cron_job_spec->concurrency_policy
-    if(v1_cron_job_spec->concurrency_policy) { 
-    if(cJSON_AddStringToObject(item, "concurrencyPolicy", v1_cron_job_spec->concurrency_policy) == NULL) {
-    goto fail; //String
+    
+    if(cJSON_AddStringToObject(item, "concurrencyPolicy", concurrency_policyv1_cron_job_spec_ToString(v1_cron_job_spec->concurrency_policy)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    
 
 
     // v1_cron_job_spec->failed_jobs_history_limit
@@ -134,11 +148,13 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
     // v1_cron_job_spec->concurrency_policy
     cJSON *concurrency_policy = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "concurrencyPolicy");
+    kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e concurrency_policyVariable;
     if (concurrency_policy) { 
     if(!cJSON_IsString(concurrency_policy))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    concurrency_policyVariable = concurrency_policyv1_cron_job_spec_FromString(concurrency_policy->valuestring);
     }
 
     // v1_cron_job_spec->failed_jobs_history_limit
@@ -200,7 +216,7 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
 
     v1_cron_job_spec_local_var = v1_cron_job_spec_create (
-        concurrency_policy ? strdup(concurrency_policy->valuestring) : NULL,
+        concurrency_policy ? concurrency_policyVariable : -1,
         failed_jobs_history_limit ? failed_jobs_history_limit->valuedouble : 0,
         job_template_local_nonprim,
         strdup(schedule->valuestring),

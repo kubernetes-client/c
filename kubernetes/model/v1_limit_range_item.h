@@ -16,6 +16,14 @@
 typedef struct v1_limit_range_item_t v1_limit_range_item_t;
 
 
+// Enum TYPE for v1_limit_range_item
+
+typedef enum  { kubernetes_v1_limit_range_item_TYPE_NULL = 0, kubernetes_v1_limit_range_item_TYPE_Container, kubernetes_v1_limit_range_item_TYPE_PersistentVolumeClaim, kubernetes_v1_limit_range_item_TYPE_Pod } kubernetes_v1_limit_range_item_TYPE_e;
+
+char* v1_limit_range_item_type_ToString(kubernetes_v1_limit_range_item_TYPE_e type);
+
+kubernetes_v1_limit_range_item_TYPE_e v1_limit_range_item_type_FromString(char* type);
+
 
 
 typedef struct v1_limit_range_item_t {
@@ -24,7 +32,7 @@ typedef struct v1_limit_range_item_t {
     list_t* max; //map
     list_t* max_limit_request_ratio; //map
     list_t* min; //map
-    char *type; // string
+    kubernetes_v1_limit_range_item_TYPE_e type; //enum
 
 } v1_limit_range_item_t;
 
@@ -34,7 +42,7 @@ v1_limit_range_item_t *v1_limit_range_item_create(
     list_t* max,
     list_t* max_limit_request_ratio,
     list_t* min,
-    char *type
+    kubernetes_v1_limit_range_item_TYPE_e type
 );
 
 void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item);

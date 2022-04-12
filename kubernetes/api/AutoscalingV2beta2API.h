@@ -16,7 +16,7 @@
 // create a HorizontalPodAutoscaler
 //
 v2beta2_horizontal_pod_autoscaler_t*
-AutoscalingV2beta2API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , v2beta2_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager );
+AutoscalingV2beta2API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , v2beta2_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of HorizontalPodAutoscaler
@@ -52,13 +52,13 @@ AutoscalingV2beta2API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClie
 // partially update the specified HorizontalPodAutoscaler
 //
 v2beta2_horizontal_pod_autoscaler_t*
-AutoscalingV2beta2API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AutoscalingV2beta2API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified HorizontalPodAutoscaler
 //
 v2beta2_horizontal_pod_autoscaler_t*
-AutoscalingV2beta2API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AutoscalingV2beta2API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified HorizontalPodAutoscaler
@@ -76,12 +76,12 @@ AutoscalingV2beta2API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *a
 // replace the specified HorizontalPodAutoscaler
 //
 v2beta2_horizontal_pod_autoscaler_t*
-AutoscalingV2beta2API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , v2beta2_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager );
+AutoscalingV2beta2API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , v2beta2_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified HorizontalPodAutoscaler
 //
 v2beta2_horizontal_pod_autoscaler_t*
-AutoscalingV2beta2API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , v2beta2_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager );
+AutoscalingV2beta2API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , v2beta2_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

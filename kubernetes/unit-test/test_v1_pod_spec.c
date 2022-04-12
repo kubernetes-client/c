@@ -18,6 +18,7 @@ v1_pod_spec_t* instantiate_v1_pod_spec(int include_optional);
 
 #include "test_v1_affinity.c"
 #include "test_v1_pod_dns_config.c"
+#include "test_v1_pod_os.c"
 #include "test_v1_pod_security_context.c"
 
 
@@ -32,7 +33,7 @@ v1_pod_spec_t* instantiate_v1_pod_spec(int include_optional) {
       list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_pod_dns_config(0),
-      "0",
+      kubernetes_v1_pod_spec_DNSPOLICY_ClusterFirst,
       1,
       list_createList(),
       list_createList(),
@@ -44,12 +45,14 @@ v1_pod_spec_t* instantiate_v1_pod_spec(int include_optional) {
       list_createList(),
       "0",
       list_createList(),
+       // false, not to have infinite recursion
+      instantiate_v1_pod_os(0),
       list_createList(),
       "0",
       56,
       "0",
       list_createList(),
-      "0",
+      kubernetes_v1_pod_spec_RESTARTPOLICY_Always,
       "0",
       "0",
        // false, not to have infinite recursion
@@ -71,7 +74,7 @@ v1_pod_spec_t* instantiate_v1_pod_spec(int include_optional) {
       1,
       list_createList(),
       NULL,
-      "0",
+      kubernetes_v1_pod_spec_DNSPOLICY_ClusterFirst,
       1,
       list_createList(),
       list_createList(),
@@ -83,12 +86,13 @@ v1_pod_spec_t* instantiate_v1_pod_spec(int include_optional) {
       list_createList(),
       "0",
       list_createList(),
+      NULL,
       list_createList(),
       "0",
       56,
       "0",
       list_createList(),
-      "0",
+      kubernetes_v1_pod_spec_RESTARTPOLICY_Always,
       "0",
       "0",
       NULL,

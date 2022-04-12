@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **exec** | [**v1_exec_action_t**](v1_exec_action.md) \* |  | [optional] 
 **failure_threshold** | **int** | Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. | [optional] 
+**grpc** | [**v1_grpc_action_t**](v1_grpc_action.md) \* |  | [optional] 
 **http_get** | [**v1_http_get_action_t**](v1_http_get_action.md) \* |  | [optional] 
 **initial_delay_seconds** | **int** | Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes | [optional] 
 **period_seconds** | **int** | How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. | [optional] 

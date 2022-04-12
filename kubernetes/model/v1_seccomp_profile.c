@@ -4,10 +4,27 @@
 #include "v1_seccomp_profile.h"
 
 
+char* typev1_seccomp_profile_ToString(kubernetes_v1_seccomp_profile_TYPE_e type) {
+    char* typeArray[] =  { "NULL", "Localhost", "RuntimeDefault", "Unconfined" };
+	return typeArray[type];
+}
+
+kubernetes_v1_seccomp_profile_TYPE_e typev1_seccomp_profile_FromString(char* type){
+    int stringToReturn = 0;
+    char *typeArray[] =  { "NULL", "Localhost", "RuntimeDefault", "Unconfined" };
+    size_t sizeofArray = sizeof(typeArray) / sizeof(typeArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(type, typeArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_seccomp_profile_t *v1_seccomp_profile_create(
     char *localhost_profile,
-    char *type
+    kubernetes_v1_seccomp_profile_TYPE_e type
     ) {
     v1_seccomp_profile_t *v1_seccomp_profile_local_var = malloc(sizeof(v1_seccomp_profile_t));
     if (!v1_seccomp_profile_local_var) {
@@ -29,10 +46,6 @@ void v1_seccomp_profile_free(v1_seccomp_profile_t *v1_seccomp_profile) {
         free(v1_seccomp_profile->localhost_profile);
         v1_seccomp_profile->localhost_profile = NULL;
     }
-    if (v1_seccomp_profile->type) {
-        free(v1_seccomp_profile->type);
-        v1_seccomp_profile->type = NULL;
-    }
     free(v1_seccomp_profile);
 }
 
@@ -48,12 +61,10 @@ cJSON *v1_seccomp_profile_convertToJSON(v1_seccomp_profile_t *v1_seccomp_profile
 
 
     // v1_seccomp_profile->type
-    if (!v1_seccomp_profile->type) {
-        goto fail;
-    }
     
-    if(cJSON_AddStringToObject(item, "type", v1_seccomp_profile->type) == NULL) {
-    goto fail; //String
+    if(cJSON_AddStringToObject(item, "type", typev1_seccomp_profile_ToString(v1_seccomp_profile->type)) == NULL)
+    {
+    goto fail; //Enum
     }
 
     return item;
@@ -83,16 +94,18 @@ v1_seccomp_profile_t *v1_seccomp_profile_parseFromJSON(cJSON *v1_seccomp_profile
         goto end;
     }
 
+    kubernetes_v1_seccomp_profile_TYPE_e typeVariable;
     
     if(!cJSON_IsString(type))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    typeVariable = typev1_seccomp_profile_FromString(type->valuestring);
 
 
     v1_seccomp_profile_local_var = v1_seccomp_profile_create (
         localhost_profile ? strdup(localhost_profile->valuestring) : NULL,
-        strdup(type->valuestring)
+        typeVariable
         );
 
     return v1_seccomp_profile_local_var;

@@ -17,17 +17,25 @@ typedef struct v1_deployment_strategy_t v1_deployment_strategy_t;
 
 #include "v1_rolling_update_deployment.h"
 
+// Enum TYPE for v1_deployment_strategy
+
+typedef enum  { kubernetes_v1_deployment_strategy_TYPE_NULL = 0, kubernetes_v1_deployment_strategy_TYPE_Recreate, kubernetes_v1_deployment_strategy_TYPE_RollingUpdate } kubernetes_v1_deployment_strategy_TYPE_e;
+
+char* v1_deployment_strategy_type_ToString(kubernetes_v1_deployment_strategy_TYPE_e type);
+
+kubernetes_v1_deployment_strategy_TYPE_e v1_deployment_strategy_type_FromString(char* type);
+
 
 
 typedef struct v1_deployment_strategy_t {
     struct v1_rolling_update_deployment_t *rolling_update; //model
-    char *type; // string
+    kubernetes_v1_deployment_strategy_TYPE_e type; //enum
 
 } v1_deployment_strategy_t;
 
 v1_deployment_strategy_t *v1_deployment_strategy_create(
     v1_rolling_update_deployment_t *rolling_update,
-    char *type
+    kubernetes_v1_deployment_strategy_TYPE_e type
 );
 
 void v1_deployment_strategy_free(v1_deployment_strategy_t *v1_deployment_strategy);

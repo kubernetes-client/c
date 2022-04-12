@@ -16,10 +16,18 @@
 typedef struct v1_taint_t v1_taint_t;
 
 
+// Enum EFFECT for v1_taint
+
+typedef enum  { kubernetes_v1_taint_EFFECT_NULL = 0, kubernetes_v1_taint_EFFECT_NoExecute, kubernetes_v1_taint_EFFECT_NoSchedule, kubernetes_v1_taint_EFFECT_PreferNoSchedule } kubernetes_v1_taint_EFFECT_e;
+
+char* v1_taint_effect_ToString(kubernetes_v1_taint_EFFECT_e effect);
+
+kubernetes_v1_taint_EFFECT_e v1_taint_effect_FromString(char* effect);
+
 
 
 typedef struct v1_taint_t {
-    char *effect; // string
+    kubernetes_v1_taint_EFFECT_e effect; //enum
     char *key; // string
     char *time_added; //date time
     char *value; // string
@@ -27,7 +35,7 @@ typedef struct v1_taint_t {
 } v1_taint_t;
 
 v1_taint_t *v1_taint_create(
-    char *effect,
+    kubernetes_v1_taint_EFFECT_e effect,
     char *key,
     char *time_added,
     char *value

@@ -4,10 +4,27 @@
 #include "v1_namespace_status.h"
 
 
+char* phasev1_namespace_status_ToString(kubernetes_v1_namespace_status_PHASE_e phase) {
+    char* phaseArray[] =  { "NULL", "Active", "Terminating" };
+	return phaseArray[phase];
+}
+
+kubernetes_v1_namespace_status_PHASE_e phasev1_namespace_status_FromString(char* phase){
+    int stringToReturn = 0;
+    char *phaseArray[] =  { "NULL", "Active", "Terminating" };
+    size_t sizeofArray = sizeof(phaseArray) / sizeof(phaseArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(phase, phaseArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_namespace_status_t *v1_namespace_status_create(
     list_t *conditions,
-    char *phase
+    kubernetes_v1_namespace_status_PHASE_e phase
     ) {
     v1_namespace_status_t *v1_namespace_status_local_var = malloc(sizeof(v1_namespace_status_t));
     if (!v1_namespace_status_local_var) {
@@ -31,10 +48,6 @@ void v1_namespace_status_free(v1_namespace_status_t *v1_namespace_status) {
         }
         list_freeList(v1_namespace_status->conditions);
         v1_namespace_status->conditions = NULL;
-    }
-    if (v1_namespace_status->phase) {
-        free(v1_namespace_status->phase);
-        v1_namespace_status->phase = NULL;
     }
     free(v1_namespace_status);
 }
@@ -63,11 +76,12 @@ cJSON *v1_namespace_status_convertToJSON(v1_namespace_status_t *v1_namespace_sta
 
 
     // v1_namespace_status->phase
-    if(v1_namespace_status->phase) { 
-    if(cJSON_AddStringToObject(item, "phase", v1_namespace_status->phase) == NULL) {
-    goto fail; //String
+    
+    if(cJSON_AddStringToObject(item, "phase", phasev1_namespace_status_ToString(v1_namespace_status->phase)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    
 
     return item;
 fail:
@@ -107,17 +121,19 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
 
     // v1_namespace_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_namespace_statusJSON, "phase");
+    kubernetes_v1_namespace_status_PHASE_e phaseVariable;
     if (phase) { 
     if(!cJSON_IsString(phase))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    phaseVariable = phasev1_namespace_status_FromString(phase->valuestring);
     }
 
 
     v1_namespace_status_local_var = v1_namespace_status_create (
         conditions ? conditionsList : NULL,
-        phase ? strdup(phase->valuestring) : NULL
+        phase ? phaseVariable : -1
         );
 
     return v1_namespace_status_local_var;

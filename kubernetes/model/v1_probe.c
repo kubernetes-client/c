@@ -8,6 +8,7 @@
 v1_probe_t *v1_probe_create(
     v1_exec_action_t *exec,
     int failure_threshold,
+    v1_grpc_action_t *grpc,
     v1_http_get_action_t *http_get,
     int initial_delay_seconds,
     int period_seconds,
@@ -22,6 +23,7 @@ v1_probe_t *v1_probe_create(
     }
     v1_probe_local_var->exec = exec;
     v1_probe_local_var->failure_threshold = failure_threshold;
+    v1_probe_local_var->grpc = grpc;
     v1_probe_local_var->http_get = http_get;
     v1_probe_local_var->initial_delay_seconds = initial_delay_seconds;
     v1_probe_local_var->period_seconds = period_seconds;
@@ -42,6 +44,10 @@ void v1_probe_free(v1_probe_t *v1_probe) {
     if (v1_probe->exec) {
         v1_exec_action_free(v1_probe->exec);
         v1_probe->exec = NULL;
+    }
+    if (v1_probe->grpc) {
+        v1_grpc_action_free(v1_probe->grpc);
+        v1_probe->grpc = NULL;
     }
     if (v1_probe->http_get) {
         v1_http_get_action_free(v1_probe->http_get);
@@ -74,6 +80,19 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
     if(v1_probe->failure_threshold) { 
     if(cJSON_AddNumberToObject(item, "failureThreshold", v1_probe->failure_threshold) == NULL) {
     goto fail; //Numeric
+    }
+     } 
+
+
+    // v1_probe->grpc
+    if(v1_probe->grpc) { 
+    cJSON *grpc_local_JSON = v1_grpc_action_convertToJSON(v1_probe->grpc);
+    if(grpc_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "grpc", grpc_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
     }
      } 
 
@@ -158,6 +177,9 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     // define the local variable for v1_probe->exec
     v1_exec_action_t *exec_local_nonprim = NULL;
 
+    // define the local variable for v1_probe->grpc
+    v1_grpc_action_t *grpc_local_nonprim = NULL;
+
     // define the local variable for v1_probe->http_get
     v1_http_get_action_t *http_get_local_nonprim = NULL;
 
@@ -177,6 +199,12 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     {
     goto end; //Numeric
     }
+    }
+
+    // v1_probe->grpc
+    cJSON *grpc = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "grpc");
+    if (grpc) { 
+    grpc_local_nonprim = v1_grpc_action_parseFromJSON(grpc); //nonprimitive
     }
 
     // v1_probe->http_get
@@ -240,6 +268,7 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     v1_probe_local_var = v1_probe_create (
         exec ? exec_local_nonprim : NULL,
         failure_threshold ? failure_threshold->valuedouble : 0,
+        grpc ? grpc_local_nonprim : NULL,
         http_get ? http_get_local_nonprim : NULL,
         initial_delay_seconds ? initial_delay_seconds->valuedouble : 0,
         period_seconds ? period_seconds->valuedouble : 0,
@@ -254,6 +283,10 @@ end:
     if (exec_local_nonprim) {
         v1_exec_action_free(exec_local_nonprim);
         exec_local_nonprim = NULL;
+    }
+    if (grpc_local_nonprim) {
+        v1_grpc_action_free(grpc_local_nonprim);
+        grpc_local_nonprim = NULL;
     }
     if (http_get_local_nonprim) {
         v1_http_get_action_free(http_get_local_nonprim);

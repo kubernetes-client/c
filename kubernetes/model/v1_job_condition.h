@@ -16,6 +16,14 @@
 typedef struct v1_job_condition_t v1_job_condition_t;
 
 
+// Enum TYPE for v1_job_condition
+
+typedef enum  { kubernetes_v1_job_condition_TYPE_NULL = 0, kubernetes_v1_job_condition_TYPE_Complete, kubernetes_v1_job_condition_TYPE_Failed, kubernetes_v1_job_condition_TYPE_Suspended } kubernetes_v1_job_condition_TYPE_e;
+
+char* v1_job_condition_type_ToString(kubernetes_v1_job_condition_TYPE_e type);
+
+kubernetes_v1_job_condition_TYPE_e v1_job_condition_type_FromString(char* type);
+
 
 
 typedef struct v1_job_condition_t {
@@ -24,7 +32,7 @@ typedef struct v1_job_condition_t {
     char *message; // string
     char *reason; // string
     char *status; // string
-    char *type; // string
+    kubernetes_v1_job_condition_TYPE_e type; //enum
 
 } v1_job_condition_t;
 
@@ -34,7 +42,7 @@ v1_job_condition_t *v1_job_condition_create(
     char *message,
     char *reason,
     char *status,
-    char *type
+    kubernetes_v1_job_condition_TYPE_e type
 );
 
 void v1_job_condition_free(v1_job_condition_t *v1_job_condition);

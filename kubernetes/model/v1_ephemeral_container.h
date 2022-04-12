@@ -1,7 +1,7 @@
 /*
  * v1_ephemeral_container.h
  *
- * An EphemeralContainer is a container that may be added temporarily to an existing pod for user-initiated activities such as debugging. Ephemeral containers have no resource or scheduling guarantees, and they will not be restarted when they exit or when a pod is removed or restarted. If an ephemeral container causes a pod to exceed its resource allocation, the pod may be evicted. Ephemeral containers may not be added by directly updating the pod spec. They must be added via the pod&#39;s ephemeralcontainers subresource, and they will appear in the pod spec once added. This is an alpha feature enabled by the EphemeralContainers feature flag.
+ * An EphemeralContainer is a temporary container that you may add to an existing Pod for user-initiated activities such as debugging. Ephemeral containers have no resource or scheduling guarantees, and they will not be restarted when they exit or when a Pod is removed or restarted. The kubelet may evict a Pod if an ephemeral container causes the Pod to exceed its resource allocation.  To add an ephemeral container, use the ephemeralcontainers subresource of an existing Pod. Ephemeral containers may not be removed or restarted.  This is a beta feature available on clusters that haven&#39;t disabled the EphemeralContainers feature gate.
  */
 
 #ifndef _v1_ephemeral_container_H_
@@ -25,6 +25,22 @@ typedef struct v1_ephemeral_container_t v1_ephemeral_container_t;
 #include "v1_volume_device.h"
 #include "v1_volume_mount.h"
 
+// Enum IMAGEPULLPOLICY for v1_ephemeral_container
+
+typedef enum  { kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_NULL = 0, kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_Always, kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_IfNotPresent, kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_Never } kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_e;
+
+char* v1_ephemeral_container_image_pull_policy_ToString(kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_e image_pull_policy);
+
+kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_e v1_ephemeral_container_image_pull_policy_FromString(char* image_pull_policy);
+
+// Enum TERMINATIONMESSAGEPOLICY for v1_ephemeral_container
+
+typedef enum  { kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_NULL = 0, kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_FallbackToLogsOnError, kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_File } kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_e;
+
+char* v1_ephemeral_container_termination_message_policy_ToString(kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_e termination_message_policy);
+
+kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_e v1_ephemeral_container_termination_message_policy_FromString(char* termination_message_policy);
+
 
 
 typedef struct v1_ephemeral_container_t {
@@ -33,7 +49,7 @@ typedef struct v1_ephemeral_container_t {
     list_t *env; //nonprimitive container
     list_t *env_from; //nonprimitive container
     char *image; // string
-    char *image_pull_policy; // string
+    kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_e image_pull_policy; //enum
     struct v1_lifecycle_t *lifecycle; //model
     struct v1_probe_t *liveness_probe; //model
     char *name; // string
@@ -46,7 +62,7 @@ typedef struct v1_ephemeral_container_t {
     int stdin_once; //boolean
     char *target_container_name; // string
     char *termination_message_path; // string
-    char *termination_message_policy; // string
+    kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_e termination_message_policy; //enum
     int tty; //boolean
     list_t *volume_devices; //nonprimitive container
     list_t *volume_mounts; //nonprimitive container
@@ -60,7 +76,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_create(
     list_t *env,
     list_t *env_from,
     char *image,
-    char *image_pull_policy,
+    kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_e image_pull_policy,
     v1_lifecycle_t *lifecycle,
     v1_probe_t *liveness_probe,
     char *name,
@@ -73,7 +89,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_create(
     int stdin_once,
     char *target_container_name,
     char *termination_message_path,
-    char *termination_message_policy,
+    kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_e termination_message_policy,
     int tty,
     list_t *volume_devices,
     list_t *volume_mounts,

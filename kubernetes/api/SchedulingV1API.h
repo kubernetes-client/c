@@ -16,7 +16,7 @@
 // create a PriorityClass
 //
 v1_priority_class_t*
-SchedulingV1API_createPriorityClass(apiClient_t *apiClient, v1_priority_class_t * body , char * pretty , char * dryRun , char * fieldManager );
+SchedulingV1API_createPriorityClass(apiClient_t *apiClient, v1_priority_class_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of PriorityClass
@@ -46,7 +46,7 @@ SchedulingV1API_listPriorityClass(apiClient_t *apiClient, char * pretty , int al
 // partially update the specified PriorityClass
 //
 v1_priority_class_t*
-SchedulingV1API_patchPriorityClass(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+SchedulingV1API_patchPriorityClass(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified PriorityClass
@@ -58,6 +58,6 @@ SchedulingV1API_readPriorityClass(apiClient_t *apiClient, char * name , char * p
 // replace the specified PriorityClass
 //
 v1_priority_class_t*
-SchedulingV1API_replacePriorityClass(apiClient_t *apiClient, char * name , v1_priority_class_t * body , char * pretty , char * dryRun , char * fieldManager );
+SchedulingV1API_replacePriorityClass(apiClient_t *apiClient, char * name , v1_priority_class_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

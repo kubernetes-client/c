@@ -15,7 +15,7 @@ Method | HTTP request | Description
 ```c
 // create a LocalSubjectAccessReview
 //
-v1_local_subject_access_review_t* AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClient, char * _namespace, v1_local_subject_access_review_t * body, char * dryRun, char * fieldManager, char * pretty);
+v1_local_subject_access_review_t* AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClient, char * _namespace, v1_local_subject_access_review_t * body, char * dryRun, char * fieldManager, char * fieldValidation, char * pretty);
 ```
 
 ### Parameters
@@ -26,6 +26,7 @@ Name | Type | Description  | Notes
 **body** | **[v1_local_subject_access_review_t](v1_local_subject_access_review.md) \*** |  | 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 
 ### Return type
@@ -48,7 +49,7 @@ Name | Type | Description  | Notes
 ```c
 // create a SelfSubjectAccessReview
 //
-v1_self_subject_access_review_t* AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self_subject_access_review_t * body, char * dryRun, char * fieldManager, char * pretty);
+v1_self_subject_access_review_t* AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self_subject_access_review_t * body, char * dryRun, char * fieldManager, char * fieldValidation, char * pretty);
 ```
 
 ### Parameters
@@ -58,6 +59,7 @@ Name | Type | Description  | Notes
 **body** | **[v1_self_subject_access_review_t](v1_self_subject_access_review.md) \*** |  | 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 
 ### Return type
@@ -80,7 +82,7 @@ Name | Type | Description  | Notes
 ```c
 // create a SelfSubjectRulesReview
 //
-v1_self_subject_rules_review_t* AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_subject_rules_review_t * body, char * dryRun, char * fieldManager, char * pretty);
+v1_self_subject_rules_review_t* AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_subject_rules_review_t * body, char * dryRun, char * fieldManager, char * fieldValidation, char * pretty);
 ```
 
 ### Parameters
@@ -90,6 +92,7 @@ Name | Type | Description  | Notes
 **body** | **[v1_self_subject_rules_review_t](v1_self_subject_rules_review.md) \*** |  | 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 
 ### Return type
@@ -112,7 +115,7 @@ Name | Type | Description  | Notes
 ```c
 // create a SubjectAccessReview
 //
-v1_subject_access_review_t* AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_access_review_t * body, char * dryRun, char * fieldManager, char * pretty);
+v1_subject_access_review_t* AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_access_review_t * body, char * dryRun, char * fieldManager, char * fieldValidation, char * pretty);
 ```
 
 ### Parameters
@@ -122,6 +125,7 @@ Name | Type | Description  | Notes
 **body** | **[v1_subject_access_review_t](v1_subject_access_review.md) \*** |  | 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 
 ### Return type

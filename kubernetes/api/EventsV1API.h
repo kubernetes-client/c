@@ -16,7 +16,7 @@
 // create an Event
 //
 events_v1_event_t*
-EventsV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , events_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
+EventsV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , events_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of Event
@@ -52,7 +52,7 @@ EventsV1API_listNamespacedEvent(apiClient_t *apiClient, char * _namespace , char
 // partially update the specified Event
 //
 events_v1_event_t*
-EventsV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+EventsV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified Event
@@ -64,6 +64,6 @@ EventsV1API_readNamespacedEvent(apiClient_t *apiClient, char * name , char * _na
 // replace the specified Event
 //
 events_v1_event_t*
-EventsV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , events_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
+EventsV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , events_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

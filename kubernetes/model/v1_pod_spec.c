@@ -4,6 +4,40 @@
 #include "v1_pod_spec.h"
 
 
+char* dns_policyv1_pod_spec_ToString(kubernetes_v1_pod_spec_DNSPOLICY_e dns_policy) {
+    char* dns_policyArray[] =  { "NULL", "ClusterFirst", "ClusterFirstWithHostNet", "Default", "None" };
+	return dns_policyArray[dns_policy];
+}
+
+kubernetes_v1_pod_spec_DNSPOLICY_e dns_policyv1_pod_spec_FromString(char* dns_policy){
+    int stringToReturn = 0;
+    char *dns_policyArray[] =  { "NULL", "ClusterFirst", "ClusterFirstWithHostNet", "Default", "None" };
+    size_t sizeofArray = sizeof(dns_policyArray) / sizeof(dns_policyArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(dns_policy, dns_policyArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
+char* restart_policyv1_pod_spec_ToString(kubernetes_v1_pod_spec_RESTARTPOLICY_e restart_policy) {
+    char* restart_policyArray[] =  { "NULL", "Always", "Never", "OnFailure" };
+	return restart_policyArray[restart_policy];
+}
+
+kubernetes_v1_pod_spec_RESTARTPOLICY_e restart_policyv1_pod_spec_FromString(char* restart_policy){
+    int stringToReturn = 0;
+    char *restart_policyArray[] =  { "NULL", "Always", "Never", "OnFailure" };
+    size_t sizeofArray = sizeof(restart_policyArray) / sizeof(restart_policyArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(restart_policy, restart_policyArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_pod_spec_t *v1_pod_spec_create(
     long active_deadline_seconds,
@@ -11,7 +45,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     int automount_service_account_token,
     list_t *containers,
     v1_pod_dns_config_t *dns_config,
-    char *dns_policy,
+    kubernetes_v1_pod_spec_DNSPOLICY_e dns_policy,
     int enable_service_links,
     list_t *ephemeral_containers,
     list_t *host_aliases,
@@ -23,12 +57,13 @@ v1_pod_spec_t *v1_pod_spec_create(
     list_t *init_containers,
     char *node_name,
     list_t* node_selector,
+    v1_pod_os_t *os,
     list_t* overhead,
     char *preemption_policy,
     int priority,
     char *priority_class_name,
     list_t *readiness_gates,
-    char *restart_policy,
+    kubernetes_v1_pod_spec_RESTARTPOLICY_e restart_policy,
     char *runtime_class_name,
     char *scheduler_name,
     v1_pod_security_context_t *security_context,
@@ -63,6 +98,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     v1_pod_spec_local_var->init_containers = init_containers;
     v1_pod_spec_local_var->node_name = node_name;
     v1_pod_spec_local_var->node_selector = node_selector;
+    v1_pod_spec_local_var->os = os;
     v1_pod_spec_local_var->overhead = overhead;
     v1_pod_spec_local_var->preemption_policy = preemption_policy;
     v1_pod_spec_local_var->priority = priority;
@@ -105,10 +141,6 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
     if (v1_pod_spec->dns_config) {
         v1_pod_dns_config_free(v1_pod_spec->dns_config);
         v1_pod_spec->dns_config = NULL;
-    }
-    if (v1_pod_spec->dns_policy) {
-        free(v1_pod_spec->dns_policy);
-        v1_pod_spec->dns_policy = NULL;
     }
     if (v1_pod_spec->ephemeral_containers) {
         list_ForEach(listEntry, v1_pod_spec->ephemeral_containers) {
@@ -156,6 +188,10 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         list_freeList(v1_pod_spec->node_selector);
         v1_pod_spec->node_selector = NULL;
     }
+    if (v1_pod_spec->os) {
+        v1_pod_os_free(v1_pod_spec->os);
+        v1_pod_spec->os = NULL;
+    }
     if (v1_pod_spec->overhead) {
         list_ForEach(listEntry, v1_pod_spec->overhead) {
             keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
@@ -180,10 +216,6 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         }
         list_freeList(v1_pod_spec->readiness_gates);
         v1_pod_spec->readiness_gates = NULL;
-    }
-    if (v1_pod_spec->restart_policy) {
-        free(v1_pod_spec->restart_policy);
-        v1_pod_spec->restart_policy = NULL;
     }
     if (v1_pod_spec->runtime_class_name) {
         free(v1_pod_spec->runtime_class_name);
@@ -301,11 +333,12 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
 
     // v1_pod_spec->dns_policy
-    if(v1_pod_spec->dns_policy) { 
-    if(cJSON_AddStringToObject(item, "dnsPolicy", v1_pod_spec->dns_policy) == NULL) {
-    goto fail; //String
+    
+    if(cJSON_AddStringToObject(item, "dnsPolicy", dns_policyv1_pod_spec_ToString(v1_pod_spec->dns_policy)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    
 
 
     // v1_pod_spec->enable_service_links
@@ -456,6 +489,19 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
      } 
 
 
+    // v1_pod_spec->os
+    if(v1_pod_spec->os) { 
+    cJSON *os_local_JSON = v1_pod_os_convertToJSON(v1_pod_spec->os);
+    if(os_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "os", os_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+     } 
+
+
     // v1_pod_spec->overhead
     if(v1_pod_spec->overhead) { 
     cJSON *overhead = cJSON_AddObjectToObject(item, "overhead");
@@ -521,11 +567,12 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
 
     // v1_pod_spec->restart_policy
-    if(v1_pod_spec->restart_policy) { 
-    if(cJSON_AddStringToObject(item, "restartPolicy", v1_pod_spec->restart_policy) == NULL) {
-    goto fail; //String
+    
+    if(cJSON_AddStringToObject(item, "restartPolicy", restart_policyv1_pod_spec_ToString(v1_pod_spec->restart_policy)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    
 
 
     // v1_pod_spec->runtime_class_name
@@ -700,6 +747,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // define the local map for v1_pod_spec->node_selector
     list_t *node_selectorList = NULL;
 
+    // define the local variable for v1_pod_spec->os
+    v1_pod_os_t *os_local_nonprim = NULL;
+
     // define the local map for v1_pod_spec->overhead
     list_t *overheadList = NULL;
 
@@ -774,11 +824,13 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->dns_policy
     cJSON *dns_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "dnsPolicy");
+    kubernetes_v1_pod_spec_DNSPOLICY_e dns_policyVariable;
     if (dns_policy) { 
     if(!cJSON_IsString(dns_policy))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    dns_policyVariable = dns_policyv1_pod_spec_FromString(dns_policy->valuestring);
     }
 
     // v1_pod_spec->enable_service_links
@@ -940,6 +992,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     }
     }
 
+    // v1_pod_spec->os
+    cJSON *os = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "os");
+    if (os) { 
+    os_local_nonprim = v1_pod_os_parseFromJSON(os); //nonprimitive
+    }
+
     // v1_pod_spec->overhead
     cJSON *overhead = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "overhead");
     if (overhead) { 
@@ -1011,11 +1069,13 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->restart_policy
     cJSON *restart_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "restartPolicy");
+    kubernetes_v1_pod_spec_RESTARTPOLICY_e restart_policyVariable;
     if (restart_policy) { 
     if(!cJSON_IsString(restart_policy))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    restart_policyVariable = restart_policyv1_pod_spec_FromString(restart_policy->valuestring);
     }
 
     // v1_pod_spec->runtime_class_name
@@ -1166,7 +1226,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         automount_service_account_token ? automount_service_account_token->valueint : 0,
         containersList,
         dns_config ? dns_config_local_nonprim : NULL,
-        dns_policy ? strdup(dns_policy->valuestring) : NULL,
+        dns_policy ? dns_policyVariable : -1,
         enable_service_links ? enable_service_links->valueint : 0,
         ephemeral_containers ? ephemeral_containersList : NULL,
         host_aliases ? host_aliasesList : NULL,
@@ -1178,12 +1238,13 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         init_containers ? init_containersList : NULL,
         node_name ? strdup(node_name->valuestring) : NULL,
         node_selector ? node_selectorList : NULL,
+        os ? os_local_nonprim : NULL,
         overhead ? overheadList : NULL,
         preemption_policy ? strdup(preemption_policy->valuestring) : NULL,
         priority ? priority->valuedouble : 0,
         priority_class_name ? strdup(priority_class_name->valuestring) : NULL,
         readiness_gates ? readiness_gatesList : NULL,
-        restart_policy ? strdup(restart_policy->valuestring) : NULL,
+        restart_policy ? restart_policyVariable : -1,
         runtime_class_name ? strdup(runtime_class_name->valuestring) : NULL,
         scheduler_name ? strdup(scheduler_name->valuestring) : NULL,
         security_context ? security_context_local_nonprim : NULL,
@@ -1266,6 +1327,10 @@ end:
         }
         list_freeList(node_selectorList);
         node_selectorList = NULL;
+    }
+    if (os_local_nonprim) {
+        v1_pod_os_free(os_local_nonprim);
+        os_local_nonprim = NULL;
     }
     if (overheadList) {
         listEntry_t *listEntry = NULL;

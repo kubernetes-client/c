@@ -58,10 +58,7 @@ cJSON *v2beta2_horizontal_pod_autoscaler_status_convertToJSON(v2beta2_horizontal
     cJSON *item = cJSON_CreateObject();
 
     // v2beta2_horizontal_pod_autoscaler_status->conditions
-    if (!v2beta2_horizontal_pod_autoscaler_status->conditions) {
-        goto fail;
-    }
-    
+    if(v2beta2_horizontal_pod_autoscaler_status->conditions) { 
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -77,6 +74,7 @@ cJSON *v2beta2_horizontal_pod_autoscaler_status_convertToJSON(v2beta2_horizontal
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
+     } 
 
 
     // v2beta2_horizontal_pod_autoscaler_status->current_metrics
@@ -154,11 +152,7 @@ v2beta2_horizontal_pod_autoscaler_status_t *v2beta2_horizontal_pod_autoscaler_st
 
     // v2beta2_horizontal_pod_autoscaler_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v2beta2_horizontal_pod_autoscaler_statusJSON, "conditions");
-    if (!conditions) {
-        goto end;
-    }
-
-    
+    if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
@@ -174,6 +168,7 @@ v2beta2_horizontal_pod_autoscaler_status_t *v2beta2_horizontal_pod_autoscaler_st
         v2beta2_horizontal_pod_autoscaler_condition_t *conditionsItem = v2beta2_horizontal_pod_autoscaler_condition_parseFromJSON(conditions_local_nonprimitive);
 
         list_addElement(conditionsList, conditionsItem);
+    }
     }
 
     // v2beta2_horizontal_pod_autoscaler_status->current_metrics
@@ -241,7 +236,7 @@ v2beta2_horizontal_pod_autoscaler_status_t *v2beta2_horizontal_pod_autoscaler_st
 
 
     v2beta2_horizontal_pod_autoscaler_status_local_var = v2beta2_horizontal_pod_autoscaler_status_create (
-        conditionsList,
+        conditions ? conditionsList : NULL,
         current_metrics ? current_metricsList : NULL,
         current_replicas->valuedouble,
         desired_replicas->valuedouble,

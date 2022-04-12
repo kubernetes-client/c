@@ -42,12 +42,14 @@ VersionAPI_getCode(apiClient_t *apiClient)
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *VersionAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     version_info_t *elementToReturn = version_info_parseFromJSON(VersionAPIlocalVarJSON);

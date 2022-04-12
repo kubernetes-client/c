@@ -18,13 +18,13 @@
 // create a CronJob
 //
 v1_cron_job_t*
-BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a Job
 //
 v1_job_t*
-BatchV1API_createNamespacedJob(apiClient_t *apiClient, char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV1API_createNamespacedJob(apiClient_t *apiClient, char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of CronJob
@@ -84,25 +84,25 @@ BatchV1API_listNamespacedJob(apiClient_t *apiClient, char * _namespace , char * 
 // partially update the specified CronJob
 //
 v1_cron_job_t*
-BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified CronJob
 //
 v1_cron_job_t*
-BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified Job
 //
 v1_job_t*
-BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified Job
 //
 v1_job_t*
-BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified CronJob
@@ -132,24 +132,24 @@ BatchV1API_readNamespacedJobStatus(apiClient_t *apiClient, char * name , char * 
 // replace the specified CronJob
 //
 v1_cron_job_t*
-BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified CronJob
 //
 v1_cron_job_t*
-BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified Job
 //
 v1_job_t*
-BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char * name , char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char * name , char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified Job
 //
 v1_job_t*
-BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

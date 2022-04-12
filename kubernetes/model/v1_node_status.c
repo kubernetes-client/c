@@ -4,6 +4,23 @@
 #include "v1_node_status.h"
 
 
+char* phasev1_node_status_ToString(kubernetes_v1_node_status_PHASE_e phase) {
+    char* phaseArray[] =  { "NULL", "Pending", "Running", "Terminated" };
+	return phaseArray[phase];
+}
+
+kubernetes_v1_node_status_PHASE_e phasev1_node_status_FromString(char* phase){
+    int stringToReturn = 0;
+    char *phaseArray[] =  { "NULL", "Pending", "Running", "Terminated" };
+    size_t sizeofArray = sizeof(phaseArray) / sizeof(phaseArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(phase, phaseArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_node_status_t *v1_node_status_create(
     list_t *addresses,
@@ -14,7 +31,7 @@ v1_node_status_t *v1_node_status_create(
     v1_node_daemon_endpoints_t *daemon_endpoints,
     list_t *images,
     v1_node_system_info_t *node_info,
-    char *phase,
+    kubernetes_v1_node_status_PHASE_e phase,
     list_t *volumes_attached,
     list_t *volumes_in_use
     ) {
@@ -95,10 +112,6 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
     if (v1_node_status->node_info) {
         v1_node_system_info_free(v1_node_status->node_info);
         v1_node_status->node_info = NULL;
-    }
-    if (v1_node_status->phase) {
-        free(v1_node_status->phase);
-        v1_node_status->phase = NULL;
     }
     if (v1_node_status->volumes_attached) {
         list_ForEach(listEntry, v1_node_status->volumes_attached) {
@@ -260,11 +273,12 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
 
     // v1_node_status->phase
-    if(v1_node_status->phase) { 
-    if(cJSON_AddStringToObject(item, "phase", v1_node_status->phase) == NULL) {
-    goto fail; //String
+    
+    if(cJSON_AddStringToObject(item, "phase", phasev1_node_status_ToString(v1_node_status->phase)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    
 
 
     // v1_node_status->volumes_attached
@@ -470,11 +484,13 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "phase");
+    kubernetes_v1_node_status_PHASE_e phaseVariable;
     if (phase) { 
     if(!cJSON_IsString(phase))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    phaseVariable = phasev1_node_status_FromString(phase->valuestring);
     }
 
     // v1_node_status->volumes_attached
@@ -527,7 +543,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
         daemon_endpoints ? daemon_endpoints_local_nonprim : NULL,
         images ? imagesList : NULL,
         node_info ? node_info_local_nonprim : NULL,
-        phase ? strdup(phase->valuestring) : NULL,
+        phase ? phaseVariable : -1,
         volumes_attached ? volumes_attachedList : NULL,
         volumes_in_use ? volumes_in_useList : NULL
         );
