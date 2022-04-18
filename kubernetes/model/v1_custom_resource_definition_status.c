@@ -52,7 +52,7 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
     cJSON *item = cJSON_CreateObject();
 
     // v1_custom_resource_definition_status->accepted_names
-    if(v1_custom_resource_definition_status->accepted_names) { 
+    if(v1_custom_resource_definition_status->accepted_names) {
     cJSON *accepted_names_local_JSON = v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_definition_status->accepted_names);
     if(accepted_names_local_JSON == NULL) {
     goto fail; //model
@@ -61,11 +61,11 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition_status->conditions
-    if(v1_custom_resource_definition_status->conditions) { 
+    if(v1_custom_resource_definition_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -81,11 +81,11 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition_status->stored_versions
-    if(v1_custom_resource_definition_status->stored_versions) { 
+    if(v1_custom_resource_definition_status->stored_versions) {
     cJSON *stored_versions = cJSON_AddArrayToObject(item, "storedVersions");
     if(stored_versions == NULL) {
         goto fail; //primitive container
@@ -98,7 +98,7 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

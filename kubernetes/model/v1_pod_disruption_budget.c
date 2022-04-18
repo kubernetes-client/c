@@ -58,23 +58,23 @@ cJSON *v1_pod_disruption_budget_convertToJSON(v1_pod_disruption_budget_t *v1_pod
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_disruption_budget->api_version
-    if(v1_pod_disruption_budget->api_version) { 
+    if(v1_pod_disruption_budget->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_pod_disruption_budget->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_disruption_budget->kind
-    if(v1_pod_disruption_budget->kind) { 
+    if(v1_pod_disruption_budget->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_pod_disruption_budget->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_disruption_budget->metadata
-    if(v1_pod_disruption_budget->metadata) { 
+    if(v1_pod_disruption_budget->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_pod_disruption_budget->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v1_pod_disruption_budget_convertToJSON(v1_pod_disruption_budget_t *v1_pod
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_disruption_budget->spec
-    if(v1_pod_disruption_budget->spec) { 
+    if(v1_pod_disruption_budget->spec) {
     cJSON *spec_local_JSON = v1_pod_disruption_budget_spec_convertToJSON(v1_pod_disruption_budget->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v1_pod_disruption_budget_convertToJSON(v1_pod_disruption_budget_t *v1_pod
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_disruption_budget->status
-    if(v1_pod_disruption_budget->status) { 
+    if(v1_pod_disruption_budget->status) {
     cJSON *status_local_JSON = v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v1_pod_disruption_budget_convertToJSON(v1_pod_disruption_budget_t *v1_pod
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

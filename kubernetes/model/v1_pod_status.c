@@ -147,7 +147,7 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_status->conditions
-    if(v1_pod_status->conditions) { 
+    if(v1_pod_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -163,11 +163,11 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_status->container_statuses
-    if(v1_pod_status->container_statuses) { 
+    if(v1_pod_status->container_statuses) {
     cJSON *container_statuses = cJSON_AddArrayToObject(item, "containerStatuses");
     if(container_statuses == NULL) {
     goto fail; //nonprimitive container
@@ -183,11 +183,11 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON_AddItemToArray(container_statuses, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_status->ephemeral_container_statuses
-    if(v1_pod_status->ephemeral_container_statuses) { 
+    if(v1_pod_status->ephemeral_container_statuses) {
     cJSON *ephemeral_container_statuses = cJSON_AddArrayToObject(item, "ephemeralContainerStatuses");
     if(ephemeral_container_statuses == NULL) {
     goto fail; //nonprimitive container
@@ -203,19 +203,19 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON_AddItemToArray(ephemeral_container_statuses, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_status->host_ip
-    if(v1_pod_status->host_ip) { 
+    if(v1_pod_status->host_ip) {
     if(cJSON_AddStringToObject(item, "hostIP", v1_pod_status->host_ip) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_status->init_container_statuses
-    if(v1_pod_status->init_container_statuses) { 
+    if(v1_pod_status->init_container_statuses) {
     cJSON *init_container_statuses = cJSON_AddArrayToObject(item, "initContainerStatuses");
     if(init_container_statuses == NULL) {
     goto fail; //nonprimitive container
@@ -231,44 +231,44 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON_AddItemToArray(init_container_statuses, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_status->message
-    if(v1_pod_status->message) { 
+    if(v1_pod_status->message) {
     if(cJSON_AddStringToObject(item, "message", v1_pod_status->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_status->nominated_node_name
-    if(v1_pod_status->nominated_node_name) { 
+    if(v1_pod_status->nominated_node_name) {
     if(cJSON_AddStringToObject(item, "nominatedNodeName", v1_pod_status->nominated_node_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_status->phase
-    
+    if(v1_pod_status->phase != kubernetes_v1_pod_status_PHASE_NULL) {
     if(cJSON_AddStringToObject(item, "phase", phasev1_pod_status_ToString(v1_pod_status->phase)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_pod_status->pod_ip
-    if(v1_pod_status->pod_ip) { 
+    if(v1_pod_status->pod_ip) {
     if(cJSON_AddStringToObject(item, "podIP", v1_pod_status->pod_ip) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_status->pod_ips
-    if(v1_pod_status->pod_ips) { 
+    if(v1_pod_status->pod_ips) {
     cJSON *pod_ips = cJSON_AddArrayToObject(item, "podIPs");
     if(pod_ips == NULL) {
     goto fail; //nonprimitive container
@@ -284,32 +284,32 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON_AddItemToArray(pod_ips, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_status->qos_class
-    
+    if(v1_pod_status->qos_class != kubernetes_v1_pod_status_QOSCLASS_NULL) {
     if(cJSON_AddStringToObject(item, "qosClass", qos_classv1_pod_status_ToString(v1_pod_status->qos_class)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_pod_status->reason
-    if(v1_pod_status->reason) { 
+    if(v1_pod_status->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_pod_status->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_status->start_time
-    if(v1_pod_status->start_time) { 
+    if(v1_pod_status->start_time) {
     if(cJSON_AddStringToObject(item, "startTime", v1_pod_status->start_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
     return item;
 fail:

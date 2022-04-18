@@ -85,7 +85,6 @@ cJSON *version_info_convertToJSON(version_info_t *version_info) {
     if (!version_info->build_date) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "buildDate", version_info->build_date) == NULL) {
     goto fail; //String
     }
@@ -95,7 +94,6 @@ cJSON *version_info_convertToJSON(version_info_t *version_info) {
     if (!version_info->compiler) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "compiler", version_info->compiler) == NULL) {
     goto fail; //String
     }
@@ -105,7 +103,6 @@ cJSON *version_info_convertToJSON(version_info_t *version_info) {
     if (!version_info->git_commit) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "gitCommit", version_info->git_commit) == NULL) {
     goto fail; //String
     }
@@ -115,7 +112,6 @@ cJSON *version_info_convertToJSON(version_info_t *version_info) {
     if (!version_info->git_tree_state) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "gitTreeState", version_info->git_tree_state) == NULL) {
     goto fail; //String
     }
@@ -125,7 +121,6 @@ cJSON *version_info_convertToJSON(version_info_t *version_info) {
     if (!version_info->git_version) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "gitVersion", version_info->git_version) == NULL) {
     goto fail; //String
     }
@@ -135,7 +130,6 @@ cJSON *version_info_convertToJSON(version_info_t *version_info) {
     if (!version_info->go_version) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "goVersion", version_info->go_version) == NULL) {
     goto fail; //String
     }
@@ -145,7 +139,6 @@ cJSON *version_info_convertToJSON(version_info_t *version_info) {
     if (!version_info->major) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "major", version_info->major) == NULL) {
     goto fail; //String
     }
@@ -155,7 +148,6 @@ cJSON *version_info_convertToJSON(version_info_t *version_info) {
     if (!version_info->minor) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "minor", version_info->minor) == NULL) {
     goto fail; //String
     }
@@ -165,7 +157,6 @@ cJSON *version_info_convertToJSON(version_info_t *version_info) {
     if (!version_info->platform) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "platform", version_info->platform) == NULL) {
     goto fail; //String
     }

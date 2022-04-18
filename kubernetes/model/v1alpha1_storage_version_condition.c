@@ -60,34 +60,33 @@ cJSON *v1alpha1_storage_version_condition_convertToJSON(v1alpha1_storage_version
     cJSON *item = cJSON_CreateObject();
 
     // v1alpha1_storage_version_condition->last_transition_time
-    if(v1alpha1_storage_version_condition->last_transition_time) { 
+    if(v1alpha1_storage_version_condition->last_transition_time) {
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v1alpha1_storage_version_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1alpha1_storage_version_condition->message
-    if(v1alpha1_storage_version_condition->message) { 
+    if(v1alpha1_storage_version_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1alpha1_storage_version_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1alpha1_storage_version_condition->observed_generation
-    if(v1alpha1_storage_version_condition->observed_generation) { 
+    if(v1alpha1_storage_version_condition->observed_generation) {
     if(cJSON_AddNumberToObject(item, "observedGeneration", v1alpha1_storage_version_condition->observed_generation) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1alpha1_storage_version_condition->reason
     if (!v1alpha1_storage_version_condition->reason) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "reason", v1alpha1_storage_version_condition->reason) == NULL) {
     goto fail; //String
     }
@@ -97,7 +96,6 @@ cJSON *v1alpha1_storage_version_condition_convertToJSON(v1alpha1_storage_version
     if (!v1alpha1_storage_version_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v1alpha1_storage_version_condition->status) == NULL) {
     goto fail; //String
     }
@@ -107,7 +105,6 @@ cJSON *v1alpha1_storage_version_condition_convertToJSON(v1alpha1_storage_version
     if (!v1alpha1_storage_version_condition->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v1alpha1_storage_version_condition->type) == NULL) {
     goto fail; //String
     }

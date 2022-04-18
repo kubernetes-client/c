@@ -107,7 +107,7 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
     cJSON *item = cJSON_CreateObject();
 
     // v1_limit_range_item->_default
-    if(v1_limit_range_item->_default) { 
+    if(v1_limit_range_item->_default) {
     cJSON *_default = cJSON_AddObjectToObject(item, "default");
     if(_default == NULL) {
         goto fail; //primitive map container
@@ -123,11 +123,11 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
         }
     }
     }
-     } 
+    }
 
 
     // v1_limit_range_item->default_request
-    if(v1_limit_range_item->default_request) { 
+    if(v1_limit_range_item->default_request) {
     cJSON *default_request = cJSON_AddObjectToObject(item, "defaultRequest");
     if(default_request == NULL) {
         goto fail; //primitive map container
@@ -143,11 +143,11 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
         }
     }
     }
-     } 
+    }
 
 
     // v1_limit_range_item->max
-    if(v1_limit_range_item->max) { 
+    if(v1_limit_range_item->max) {
     cJSON *max = cJSON_AddObjectToObject(item, "max");
     if(max == NULL) {
         goto fail; //primitive map container
@@ -163,11 +163,11 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
         }
     }
     }
-     } 
+    }
 
 
     // v1_limit_range_item->max_limit_request_ratio
-    if(v1_limit_range_item->max_limit_request_ratio) { 
+    if(v1_limit_range_item->max_limit_request_ratio) {
     cJSON *max_limit_request_ratio = cJSON_AddObjectToObject(item, "maxLimitRequestRatio");
     if(max_limit_request_ratio == NULL) {
         goto fail; //primitive map container
@@ -183,11 +183,11 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
         }
     }
     }
-     } 
+    }
 
 
     // v1_limit_range_item->min
-    if(v1_limit_range_item->min) { 
+    if(v1_limit_range_item->min) {
     cJSON *min = cJSON_AddObjectToObject(item, "min");
     if(min == NULL) {
         goto fail; //primitive map container
@@ -203,11 +203,13 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
         }
     }
     }
-     } 
+    }
 
 
     // v1_limit_range_item->type
-    
+    if (kubernetes_v1_limit_range_item_TYPE_NULL == v1_limit_range_item->type) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "type", typev1_limit_range_item_ToString(v1_limit_range_item->type)) == NULL)
     {
     goto fail; //Enum

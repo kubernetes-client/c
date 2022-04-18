@@ -52,26 +52,25 @@ cJSON *v1_component_condition_convertToJSON(v1_component_condition_t *v1_compone
     cJSON *item = cJSON_CreateObject();
 
     // v1_component_condition->error
-    if(v1_component_condition->error) { 
+    if(v1_component_condition->error) {
     if(cJSON_AddStringToObject(item, "error", v1_component_condition->error) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_component_condition->message
-    if(v1_component_condition->message) { 
+    if(v1_component_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1_component_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_component_condition->status
     if (!v1_component_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v1_component_condition->status) == NULL) {
     goto fail; //String
     }
@@ -81,7 +80,6 @@ cJSON *v1_component_condition_convertToJSON(v1_component_condition_t *v1_compone
     if (!v1_component_condition->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v1_component_condition->type) == NULL) {
     goto fail; //String
     }

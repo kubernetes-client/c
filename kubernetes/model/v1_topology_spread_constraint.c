@@ -61,7 +61,7 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
     cJSON *item = cJSON_CreateObject();
 
     // v1_topology_spread_constraint->label_selector
-    if(v1_topology_spread_constraint->label_selector) { 
+    if(v1_topology_spread_constraint->label_selector) {
     cJSON *label_selector_local_JSON = v1_label_selector_convertToJSON(v1_topology_spread_constraint->label_selector);
     if(label_selector_local_JSON == NULL) {
     goto fail; //model
@@ -70,14 +70,13 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_topology_spread_constraint->max_skew
     if (!v1_topology_spread_constraint->max_skew) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "maxSkew", v1_topology_spread_constraint->max_skew) == NULL) {
     goto fail; //Numeric
     }
@@ -87,14 +86,15 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
     if (!v1_topology_spread_constraint->topology_key) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "topologyKey", v1_topology_spread_constraint->topology_key) == NULL) {
     goto fail; //String
     }
 
 
     // v1_topology_spread_constraint->when_unsatisfiable
-    
+    if (kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_NULL == v1_topology_spread_constraint->when_unsatisfiable) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "whenUnsatisfiable", when_unsatisfiablev1_topology_spread_constraint_ToString(v1_topology_spread_constraint->when_unsatisfiable)) == NULL)
     {
     goto fail; //Enum

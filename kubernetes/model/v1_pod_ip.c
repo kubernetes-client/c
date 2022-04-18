@@ -34,11 +34,11 @@ cJSON *v1_pod_ip_convertToJSON(v1_pod_ip_t *v1_pod_ip) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_ip->ip
-    if(v1_pod_ip->ip) { 
+    if(v1_pod_ip->ip) {
     if(cJSON_AddStringToObject(item, "ip", v1_pod_ip->ip) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

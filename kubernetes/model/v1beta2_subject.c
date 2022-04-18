@@ -52,7 +52,7 @@ cJSON *v1beta2_subject_convertToJSON(v1beta2_subject_t *v1beta2_subject) {
     cJSON *item = cJSON_CreateObject();
 
     // v1beta2_subject->group
-    if(v1beta2_subject->group) { 
+    if(v1beta2_subject->group) {
     cJSON *group_local_JSON = v1beta2_group_subject_convertToJSON(v1beta2_subject->group);
     if(group_local_JSON == NULL) {
     goto fail; //model
@@ -61,21 +61,20 @@ cJSON *v1beta2_subject_convertToJSON(v1beta2_subject_t *v1beta2_subject) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta2_subject->kind
     if (!v1beta2_subject->kind) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kind", v1beta2_subject->kind) == NULL) {
     goto fail; //String
     }
 
 
     // v1beta2_subject->service_account
-    if(v1beta2_subject->service_account) { 
+    if(v1beta2_subject->service_account) {
     cJSON *service_account_local_JSON = v1beta2_service_account_subject_convertToJSON(v1beta2_subject->service_account);
     if(service_account_local_JSON == NULL) {
     goto fail; //model
@@ -84,11 +83,11 @@ cJSON *v1beta2_subject_convertToJSON(v1beta2_subject_t *v1beta2_subject) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta2_subject->user
-    if(v1beta2_subject->user) { 
+    if(v1beta2_subject->user) {
     cJSON *user_local_JSON = v1beta2_user_subject_convertToJSON(v1beta2_subject->user);
     if(user_local_JSON == NULL) {
     goto fail; //model
@@ -97,7 +96,7 @@ cJSON *v1beta2_subject_convertToJSON(v1beta2_subject_t *v1beta2_subject) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -66,23 +66,23 @@ cJSON *v1_service_account_convertToJSON(v1_service_account_t *v1_service_account
     cJSON *item = cJSON_CreateObject();
 
     // v1_service_account->api_version
-    if(v1_service_account->api_version) { 
+    if(v1_service_account->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_service_account->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_account->automount_service_account_token
-    if(v1_service_account->automount_service_account_token) { 
+    if(v1_service_account->automount_service_account_token) {
     if(cJSON_AddBoolToObject(item, "automountServiceAccountToken", v1_service_account->automount_service_account_token) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_service_account->image_pull_secrets
-    if(v1_service_account->image_pull_secrets) { 
+    if(v1_service_account->image_pull_secrets) {
     cJSON *image_pull_secrets = cJSON_AddArrayToObject(item, "imagePullSecrets");
     if(image_pull_secrets == NULL) {
     goto fail; //nonprimitive container
@@ -98,19 +98,19 @@ cJSON *v1_service_account_convertToJSON(v1_service_account_t *v1_service_account
     cJSON_AddItemToArray(image_pull_secrets, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_service_account->kind
-    if(v1_service_account->kind) { 
+    if(v1_service_account->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_service_account->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_account->metadata
-    if(v1_service_account->metadata) { 
+    if(v1_service_account->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_service_account->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -119,11 +119,11 @@ cJSON *v1_service_account_convertToJSON(v1_service_account_t *v1_service_account
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_service_account->secrets
-    if(v1_service_account->secrets) { 
+    if(v1_service_account->secrets) {
     cJSON *secrets = cJSON_AddArrayToObject(item, "secrets");
     if(secrets == NULL) {
     goto fail; //nonprimitive container
@@ -139,7 +139,7 @@ cJSON *v1_service_account_convertToJSON(v1_service_account_t *v1_service_account
     cJSON_AddItemToArray(secrets, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

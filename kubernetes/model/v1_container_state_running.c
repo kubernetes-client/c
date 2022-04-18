@@ -34,11 +34,11 @@ cJSON *v1_container_state_running_convertToJSON(v1_container_state_running_t *v1
     cJSON *item = cJSON_CreateObject();
 
     // v1_container_state_running->started_at
-    if(v1_container_state_running->started_at) { 
+    if(v1_container_state_running->started_at) {
     if(cJSON_AddStringToObject(item, "startedAt", v1_container_state_running->started_at) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
     return item;
 fail:

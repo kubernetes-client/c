@@ -55,7 +55,7 @@ cJSON *v1beta2_policy_rules_with_subjects_convertToJSON(v1beta2_policy_rules_wit
     cJSON *item = cJSON_CreateObject();
 
     // v1beta2_policy_rules_with_subjects->non_resource_rules
-    if(v1beta2_policy_rules_with_subjects->non_resource_rules) { 
+    if(v1beta2_policy_rules_with_subjects->non_resource_rules) {
     cJSON *non_resource_rules = cJSON_AddArrayToObject(item, "nonResourceRules");
     if(non_resource_rules == NULL) {
     goto fail; //nonprimitive container
@@ -71,11 +71,11 @@ cJSON *v1beta2_policy_rules_with_subjects_convertToJSON(v1beta2_policy_rules_wit
     cJSON_AddItemToArray(non_resource_rules, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1beta2_policy_rules_with_subjects->resource_rules
-    if(v1beta2_policy_rules_with_subjects->resource_rules) { 
+    if(v1beta2_policy_rules_with_subjects->resource_rules) {
     cJSON *resource_rules = cJSON_AddArrayToObject(item, "resourceRules");
     if(resource_rules == NULL) {
     goto fail; //nonprimitive container
@@ -91,14 +91,13 @@ cJSON *v1beta2_policy_rules_with_subjects_convertToJSON(v1beta2_policy_rules_wit
     cJSON_AddItemToArray(resource_rules, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1beta2_policy_rules_with_subjects->subjects
     if (!v1beta2_policy_rules_with_subjects->subjects) {
         goto fail;
     }
-    
     cJSON *subjects = cJSON_AddArrayToObject(item, "subjects");
     if(subjects == NULL) {
     goto fail; //nonprimitive container

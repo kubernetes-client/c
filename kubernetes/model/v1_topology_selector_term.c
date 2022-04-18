@@ -37,7 +37,7 @@ cJSON *v1_topology_selector_term_convertToJSON(v1_topology_selector_term_t *v1_t
     cJSON *item = cJSON_CreateObject();
 
     // v1_topology_selector_term->match_label_expressions
-    if(v1_topology_selector_term->match_label_expressions) { 
+    if(v1_topology_selector_term->match_label_expressions) {
     cJSON *match_label_expressions = cJSON_AddArrayToObject(item, "matchLabelExpressions");
     if(match_label_expressions == NULL) {
     goto fail; //nonprimitive container
@@ -53,7 +53,7 @@ cJSON *v1_topology_selector_term_convertToJSON(v1_topology_selector_term_t *v1_t
     cJSON_AddItemToArray(match_label_expressions, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

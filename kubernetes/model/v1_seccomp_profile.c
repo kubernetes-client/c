@@ -53,15 +53,17 @@ cJSON *v1_seccomp_profile_convertToJSON(v1_seccomp_profile_t *v1_seccomp_profile
     cJSON *item = cJSON_CreateObject();
 
     // v1_seccomp_profile->localhost_profile
-    if(v1_seccomp_profile->localhost_profile) { 
+    if(v1_seccomp_profile->localhost_profile) {
     if(cJSON_AddStringToObject(item, "localhostProfile", v1_seccomp_profile->localhost_profile) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_seccomp_profile->type
-    
+    if (kubernetes_v1_seccomp_profile_TYPE_NULL == v1_seccomp_profile->type) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "type", typev1_seccomp_profile_ToString(v1_seccomp_profile->type)) == NULL)
     {
     goto fail; //Enum

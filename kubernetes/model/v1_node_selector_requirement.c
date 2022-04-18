@@ -65,14 +65,15 @@ cJSON *v1_node_selector_requirement_convertToJSON(v1_node_selector_requirement_t
     if (!v1_node_selector_requirement->key) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "key", v1_node_selector_requirement->key) == NULL) {
     goto fail; //String
     }
 
 
     // v1_node_selector_requirement->_operator
-    
+    if (kubernetes_v1_node_selector_requirement_OPERATOR_NULL == v1_node_selector_requirement->_operator) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "operator", _operatorv1_node_selector_requirement_ToString(v1_node_selector_requirement->_operator)) == NULL)
     {
     goto fail; //Enum
@@ -80,7 +81,7 @@ cJSON *v1_node_selector_requirement_convertToJSON(v1_node_selector_requirement_t
 
 
     // v1_node_selector_requirement->values
-    if(v1_node_selector_requirement->values) { 
+    if(v1_node_selector_requirement->values) {
     cJSON *values = cJSON_AddArrayToObject(item, "values");
     if(values == NULL) {
         goto fail; //primitive container
@@ -93,7 +94,7 @@ cJSON *v1_node_selector_requirement_convertToJSON(v1_node_selector_requirement_t
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

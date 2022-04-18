@@ -36,19 +36,19 @@ cJSON *v1_config_map_env_source_convertToJSON(v1_config_map_env_source_t *v1_con
     cJSON *item = cJSON_CreateObject();
 
     // v1_config_map_env_source->name
-    if(v1_config_map_env_source->name) { 
+    if(v1_config_map_env_source->name) {
     if(cJSON_AddStringToObject(item, "name", v1_config_map_env_source->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_config_map_env_source->optional
-    if(v1_config_map_env_source->optional) { 
+    if(v1_config_map_env_source->optional) {
     if(cJSON_AddBoolToObject(item, "optional", v1_config_map_env_source->optional) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

@@ -37,7 +37,7 @@ cJSON *v1beta2_flow_schema_status_convertToJSON(v1beta2_flow_schema_status_t *v1
     cJSON *item = cJSON_CreateObject();
 
     // v1beta2_flow_schema_status->conditions
-    if(v1beta2_flow_schema_status->conditions) { 
+    if(v1beta2_flow_schema_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -53,7 +53,7 @@ cJSON *v1beta2_flow_schema_status_convertToJSON(v1beta2_flow_schema_status_t *v1
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

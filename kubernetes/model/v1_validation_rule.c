@@ -40,18 +40,17 @@ cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule
     cJSON *item = cJSON_CreateObject();
 
     // v1_validation_rule->message
-    if(v1_validation_rule->message) { 
+    if(v1_validation_rule->message) {
     if(cJSON_AddStringToObject(item, "message", v1_validation_rule->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_validation_rule->rule
     if (!v1_validation_rule->rule) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "rule", v1_validation_rule->rule) == NULL) {
     goto fail; //String
     }

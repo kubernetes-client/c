@@ -51,7 +51,6 @@ cJSON *apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_service
     if (!apiextensions_v1_service_reference->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", apiextensions_v1_service_reference->name) == NULL) {
     goto fail; //String
     }
@@ -61,26 +60,25 @@ cJSON *apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_service
     if (!apiextensions_v1_service_reference->_namespace) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "namespace", apiextensions_v1_service_reference->_namespace) == NULL) {
     goto fail; //String
     }
 
 
     // apiextensions_v1_service_reference->path
-    if(apiextensions_v1_service_reference->path) { 
+    if(apiextensions_v1_service_reference->path) {
     if(cJSON_AddStringToObject(item, "path", apiextensions_v1_service_reference->path) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // apiextensions_v1_service_reference->port
-    if(apiextensions_v1_service_reference->port) { 
+    if(apiextensions_v1_service_reference->port) {
     if(cJSON_AddNumberToObject(item, "port", apiextensions_v1_service_reference->port) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

@@ -30,11 +30,11 @@ cJSON *v1_client_ip_config_convertToJSON(v1_client_ip_config_t *v1_client_ip_con
     cJSON *item = cJSON_CreateObject();
 
     // v1_client_ip_config->timeout_seconds
-    if(v1_client_ip_config->timeout_seconds) { 
+    if(v1_client_ip_config->timeout_seconds) {
     if(cJSON_AddNumberToObject(item, "timeoutSeconds", v1_client_ip_config->timeout_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

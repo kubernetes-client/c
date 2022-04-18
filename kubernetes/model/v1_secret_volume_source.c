@@ -47,15 +47,15 @@ cJSON *v1_secret_volume_source_convertToJSON(v1_secret_volume_source_t *v1_secre
     cJSON *item = cJSON_CreateObject();
 
     // v1_secret_volume_source->default_mode
-    if(v1_secret_volume_source->default_mode) { 
+    if(v1_secret_volume_source->default_mode) {
     if(cJSON_AddNumberToObject(item, "defaultMode", v1_secret_volume_source->default_mode) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_secret_volume_source->items
-    if(v1_secret_volume_source->items) { 
+    if(v1_secret_volume_source->items) {
     cJSON *items = cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
@@ -71,23 +71,23 @@ cJSON *v1_secret_volume_source_convertToJSON(v1_secret_volume_source_t *v1_secre
     cJSON_AddItemToArray(items, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_secret_volume_source->optional
-    if(v1_secret_volume_source->optional) { 
+    if(v1_secret_volume_source->optional) {
     if(cJSON_AddBoolToObject(item, "optional", v1_secret_volume_source->optional) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_secret_volume_source->secret_name
-    if(v1_secret_volume_source->secret_name) { 
+    if(v1_secret_volume_source->secret_name) {
     if(cJSON_AddStringToObject(item, "secretName", v1_secret_volume_source->secret_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

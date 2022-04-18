@@ -58,43 +58,43 @@ cJSON *v1beta2_flow_schema_condition_convertToJSON(v1beta2_flow_schema_condition
     cJSON *item = cJSON_CreateObject();
 
     // v1beta2_flow_schema_condition->last_transition_time
-    if(v1beta2_flow_schema_condition->last_transition_time) { 
+    if(v1beta2_flow_schema_condition->last_transition_time) {
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v1beta2_flow_schema_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1beta2_flow_schema_condition->message
-    if(v1beta2_flow_schema_condition->message) { 
+    if(v1beta2_flow_schema_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1beta2_flow_schema_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta2_flow_schema_condition->reason
-    if(v1beta2_flow_schema_condition->reason) { 
+    if(v1beta2_flow_schema_condition->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1beta2_flow_schema_condition->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta2_flow_schema_condition->status
-    if(v1beta2_flow_schema_condition->status) { 
+    if(v1beta2_flow_schema_condition->status) {
     if(cJSON_AddStringToObject(item, "status", v1beta2_flow_schema_condition->status) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta2_flow_schema_condition->type
-    if(v1beta2_flow_schema_condition->type) { 
+    if(v1beta2_flow_schema_condition->type) {
     if(cJSON_AddStringToObject(item, "type", v1beta2_flow_schema_condition->type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

@@ -53,7 +53,7 @@ cJSON *v1_daemon_set_update_strategy_convertToJSON(v1_daemon_set_update_strategy
     cJSON *item = cJSON_CreateObject();
 
     // v1_daemon_set_update_strategy->rolling_update
-    if(v1_daemon_set_update_strategy->rolling_update) { 
+    if(v1_daemon_set_update_strategy->rolling_update) {
     cJSON *rolling_update_local_JSON = v1_rolling_update_daemon_set_convertToJSON(v1_daemon_set_update_strategy->rolling_update);
     if(rolling_update_local_JSON == NULL) {
     goto fail; //model
@@ -62,16 +62,16 @@ cJSON *v1_daemon_set_update_strategy_convertToJSON(v1_daemon_set_update_strategy
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_daemon_set_update_strategy->type
-    
+    if(v1_daemon_set_update_strategy->type != kubernetes_v1_daemon_set_update_strategy_TYPE_NULL) {
     if(cJSON_AddStringToObject(item, "type", typev1_daemon_set_update_strategy_ToString(v1_daemon_set_update_strategy->type)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
     return item;
 fail:

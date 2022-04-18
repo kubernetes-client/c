@@ -39,18 +39,17 @@ cJSON *storage_v1_token_request_convertToJSON(storage_v1_token_request_t *storag
     if (!storage_v1_token_request->audience) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "audience", storage_v1_token_request->audience) == NULL) {
     goto fail; //String
     }
 
 
     // storage_v1_token_request->expiration_seconds
-    if(storage_v1_token_request->expiration_seconds) { 
+    if(storage_v1_token_request->expiration_seconds) {
     if(cJSON_AddNumberToObject(item, "expirationSeconds", storage_v1_token_request->expiration_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

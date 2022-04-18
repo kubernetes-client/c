@@ -52,7 +52,7 @@ cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_proj
     cJSON *item = cJSON_CreateObject();
 
     // v1_volume_projection->config_map
-    if(v1_volume_projection->config_map) { 
+    if(v1_volume_projection->config_map) {
     cJSON *config_map_local_JSON = v1_config_map_projection_convertToJSON(v1_volume_projection->config_map);
     if(config_map_local_JSON == NULL) {
     goto fail; //model
@@ -61,11 +61,11 @@ cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_proj
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume_projection->downward_api
-    if(v1_volume_projection->downward_api) { 
+    if(v1_volume_projection->downward_api) {
     cJSON *downward_api_local_JSON = v1_downward_api_projection_convertToJSON(v1_volume_projection->downward_api);
     if(downward_api_local_JSON == NULL) {
     goto fail; //model
@@ -74,11 +74,11 @@ cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_proj
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume_projection->secret
-    if(v1_volume_projection->secret) { 
+    if(v1_volume_projection->secret) {
     cJSON *secret_local_JSON = v1_secret_projection_convertToJSON(v1_volume_projection->secret);
     if(secret_local_JSON == NULL) {
     goto fail; //model
@@ -87,11 +87,11 @@ cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_proj
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume_projection->service_account_token
-    if(v1_volume_projection->service_account_token) { 
+    if(v1_volume_projection->service_account_token) {
     cJSON *service_account_token_local_JSON = v1_service_account_token_projection_convertToJSON(v1_volume_projection->service_account_token);
     if(service_account_token_local_JSON == NULL) {
     goto fail; //model
@@ -100,7 +100,7 @@ cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_proj
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

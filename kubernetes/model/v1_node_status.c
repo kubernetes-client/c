@@ -134,7 +134,7 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_node_status->addresses
-    if(v1_node_status->addresses) { 
+    if(v1_node_status->addresses) {
     cJSON *addresses = cJSON_AddArrayToObject(item, "addresses");
     if(addresses == NULL) {
     goto fail; //nonprimitive container
@@ -150,11 +150,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     cJSON_AddItemToArray(addresses, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_node_status->allocatable
-    if(v1_node_status->allocatable) { 
+    if(v1_node_status->allocatable) {
     cJSON *allocatable = cJSON_AddObjectToObject(item, "allocatable");
     if(allocatable == NULL) {
         goto fail; //primitive map container
@@ -170,11 +170,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_node_status->capacity
-    if(v1_node_status->capacity) { 
+    if(v1_node_status->capacity) {
     cJSON *capacity = cJSON_AddObjectToObject(item, "capacity");
     if(capacity == NULL) {
         goto fail; //primitive map container
@@ -190,11 +190,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_node_status->conditions
-    if(v1_node_status->conditions) { 
+    if(v1_node_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -210,11 +210,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_node_status->config
-    if(v1_node_status->config) { 
+    if(v1_node_status->config) {
     cJSON *config_local_JSON = v1_node_config_status_convertToJSON(v1_node_status->config);
     if(config_local_JSON == NULL) {
     goto fail; //model
@@ -223,11 +223,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_node_status->daemon_endpoints
-    if(v1_node_status->daemon_endpoints) { 
+    if(v1_node_status->daemon_endpoints) {
     cJSON *daemon_endpoints_local_JSON = v1_node_daemon_endpoints_convertToJSON(v1_node_status->daemon_endpoints);
     if(daemon_endpoints_local_JSON == NULL) {
     goto fail; //model
@@ -236,11 +236,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_node_status->images
-    if(v1_node_status->images) { 
+    if(v1_node_status->images) {
     cJSON *images = cJSON_AddArrayToObject(item, "images");
     if(images == NULL) {
     goto fail; //nonprimitive container
@@ -256,11 +256,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     cJSON_AddItemToArray(images, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_node_status->node_info
-    if(v1_node_status->node_info) { 
+    if(v1_node_status->node_info) {
     cJSON *node_info_local_JSON = v1_node_system_info_convertToJSON(v1_node_status->node_info);
     if(node_info_local_JSON == NULL) {
     goto fail; //model
@@ -269,20 +269,20 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_node_status->phase
-    
+    if(v1_node_status->phase != kubernetes_v1_node_status_PHASE_NULL) {
     if(cJSON_AddStringToObject(item, "phase", phasev1_node_status_ToString(v1_node_status->phase)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_node_status->volumes_attached
-    if(v1_node_status->volumes_attached) { 
+    if(v1_node_status->volumes_attached) {
     cJSON *volumes_attached = cJSON_AddArrayToObject(item, "volumesAttached");
     if(volumes_attached == NULL) {
     goto fail; //nonprimitive container
@@ -298,11 +298,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     cJSON_AddItemToArray(volumes_attached, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_node_status->volumes_in_use
-    if(v1_node_status->volumes_in_use) { 
+    if(v1_node_status->volumes_in_use) {
     cJSON *volumes_in_use = cJSON_AddArrayToObject(item, "volumesInUse");
     if(volumes_in_use == NULL) {
         goto fail; //primitive container
@@ -315,7 +315,7 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

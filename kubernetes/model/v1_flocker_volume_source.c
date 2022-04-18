@@ -40,19 +40,19 @@ cJSON *v1_flocker_volume_source_convertToJSON(v1_flocker_volume_source_t *v1_flo
     cJSON *item = cJSON_CreateObject();
 
     // v1_flocker_volume_source->dataset_name
-    if(v1_flocker_volume_source->dataset_name) { 
+    if(v1_flocker_volume_source->dataset_name) {
     if(cJSON_AddStringToObject(item, "datasetName", v1_flocker_volume_source->dataset_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_flocker_volume_source->dataset_uuid
-    if(v1_flocker_volume_source->dataset_uuid) { 
+    if(v1_flocker_volume_source->dataset_uuid) {
     if(cJSON_AddStringToObject(item, "datasetUUID", v1_flocker_volume_source->dataset_uuid) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

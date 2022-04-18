@@ -37,7 +37,6 @@ cJSON *v1_pod_os_convertToJSON(v1_pod_os_t *v1_pod_os) {
     if (!v1_pod_os->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_pod_os->name) == NULL) {
     goto fail; //String
     }

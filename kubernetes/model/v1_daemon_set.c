@@ -58,23 +58,23 @@ cJSON *v1_daemon_set_convertToJSON(v1_daemon_set_t *v1_daemon_set) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_daemon_set->api_version
-    if(v1_daemon_set->api_version) { 
+    if(v1_daemon_set->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_daemon_set->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_daemon_set->kind
-    if(v1_daemon_set->kind) { 
+    if(v1_daemon_set->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_daemon_set->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_daemon_set->metadata
-    if(v1_daemon_set->metadata) { 
+    if(v1_daemon_set->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_daemon_set->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v1_daemon_set_convertToJSON(v1_daemon_set_t *v1_daemon_set) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_daemon_set->spec
-    if(v1_daemon_set->spec) { 
+    if(v1_daemon_set->spec) {
     cJSON *spec_local_JSON = v1_daemon_set_spec_convertToJSON(v1_daemon_set->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v1_daemon_set_convertToJSON(v1_daemon_set_t *v1_daemon_set) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_daemon_set->status
-    if(v1_daemon_set->status) { 
+    if(v1_daemon_set->status) {
     cJSON *status_local_JSON = v1_daemon_set_status_convertToJSON(v1_daemon_set->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v1_daemon_set_convertToJSON(v1_daemon_set_t *v1_daemon_set) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

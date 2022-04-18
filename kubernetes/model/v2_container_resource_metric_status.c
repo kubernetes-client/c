@@ -49,7 +49,6 @@ cJSON *v2_container_resource_metric_status_convertToJSON(v2_container_resource_m
     if (!v2_container_resource_metric_status->container) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "container", v2_container_resource_metric_status->container) == NULL) {
     goto fail; //String
     }
@@ -59,7 +58,6 @@ cJSON *v2_container_resource_metric_status_convertToJSON(v2_container_resource_m
     if (!v2_container_resource_metric_status->current) {
         goto fail;
     }
-    
     cJSON *current_local_JSON = v2_metric_value_status_convertToJSON(v2_container_resource_metric_status->current);
     if(current_local_JSON == NULL) {
     goto fail; //model
@@ -74,7 +72,6 @@ cJSON *v2_container_resource_metric_status_convertToJSON(v2_container_resource_m
     if (!v2_container_resource_metric_status->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v2_container_resource_metric_status->name) == NULL) {
     goto fail; //String
     }

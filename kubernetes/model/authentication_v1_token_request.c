@@ -58,23 +58,23 @@ cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_req
     cJSON *item = cJSON_CreateObject();
 
     // authentication_v1_token_request->api_version
-    if(authentication_v1_token_request->api_version) { 
+    if(authentication_v1_token_request->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", authentication_v1_token_request->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // authentication_v1_token_request->kind
-    if(authentication_v1_token_request->kind) { 
+    if(authentication_v1_token_request->kind) {
     if(cJSON_AddStringToObject(item, "kind", authentication_v1_token_request->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // authentication_v1_token_request->metadata
-    if(authentication_v1_token_request->metadata) { 
+    if(authentication_v1_token_request->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(authentication_v1_token_request->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,14 +83,13 @@ cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_req
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // authentication_v1_token_request->spec
     if (!authentication_v1_token_request->spec) {
         goto fail;
     }
-    
     cJSON *spec_local_JSON = v1_token_request_spec_convertToJSON(authentication_v1_token_request->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -102,7 +101,7 @@ cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_req
 
 
     // authentication_v1_token_request->status
-    if(authentication_v1_token_request->status) { 
+    if(authentication_v1_token_request->status) {
     cJSON *status_local_JSON = v1_token_request_status_convertToJSON(authentication_v1_token_request->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -111,7 +110,7 @@ cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_req
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

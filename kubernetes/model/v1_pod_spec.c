@@ -269,15 +269,15 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_spec->active_deadline_seconds
-    if(v1_pod_spec->active_deadline_seconds) { 
+    if(v1_pod_spec->active_deadline_seconds) {
     if(cJSON_AddNumberToObject(item, "activeDeadlineSeconds", v1_pod_spec->active_deadline_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_pod_spec->affinity
-    if(v1_pod_spec->affinity) { 
+    if(v1_pod_spec->affinity) {
     cJSON *affinity_local_JSON = v1_affinity_convertToJSON(v1_pod_spec->affinity);
     if(affinity_local_JSON == NULL) {
     goto fail; //model
@@ -286,22 +286,21 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_spec->automount_service_account_token
-    if(v1_pod_spec->automount_service_account_token) { 
+    if(v1_pod_spec->automount_service_account_token) {
     if(cJSON_AddBoolToObject(item, "automountServiceAccountToken", v1_pod_spec->automount_service_account_token) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_pod_spec->containers
     if (!v1_pod_spec->containers) {
         goto fail;
     }
-    
     cJSON *containers = cJSON_AddArrayToObject(item, "containers");
     if(containers == NULL) {
     goto fail; //nonprimitive container
@@ -320,7 +319,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
 
     // v1_pod_spec->dns_config
-    if(v1_pod_spec->dns_config) { 
+    if(v1_pod_spec->dns_config) {
     cJSON *dns_config_local_JSON = v1_pod_dns_config_convertToJSON(v1_pod_spec->dns_config);
     if(dns_config_local_JSON == NULL) {
     goto fail; //model
@@ -329,28 +328,28 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_spec->dns_policy
-    
+    if(v1_pod_spec->dns_policy != kubernetes_v1_pod_spec_DNSPOLICY_NULL) {
     if(cJSON_AddStringToObject(item, "dnsPolicy", dns_policyv1_pod_spec_ToString(v1_pod_spec->dns_policy)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_pod_spec->enable_service_links
-    if(v1_pod_spec->enable_service_links) { 
+    if(v1_pod_spec->enable_service_links) {
     if(cJSON_AddBoolToObject(item, "enableServiceLinks", v1_pod_spec->enable_service_links) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_pod_spec->ephemeral_containers
-    if(v1_pod_spec->ephemeral_containers) { 
+    if(v1_pod_spec->ephemeral_containers) {
     cJSON *ephemeral_containers = cJSON_AddArrayToObject(item, "ephemeralContainers");
     if(ephemeral_containers == NULL) {
     goto fail; //nonprimitive container
@@ -366,11 +365,11 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     cJSON_AddItemToArray(ephemeral_containers, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_spec->host_aliases
-    if(v1_pod_spec->host_aliases) { 
+    if(v1_pod_spec->host_aliases) {
     cJSON *host_aliases = cJSON_AddArrayToObject(item, "hostAliases");
     if(host_aliases == NULL) {
     goto fail; //nonprimitive container
@@ -386,43 +385,43 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     cJSON_AddItemToArray(host_aliases, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_spec->host_ipc
-    if(v1_pod_spec->host_ipc) { 
+    if(v1_pod_spec->host_ipc) {
     if(cJSON_AddBoolToObject(item, "hostIPC", v1_pod_spec->host_ipc) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_pod_spec->host_network
-    if(v1_pod_spec->host_network) { 
+    if(v1_pod_spec->host_network) {
     if(cJSON_AddBoolToObject(item, "hostNetwork", v1_pod_spec->host_network) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_pod_spec->host_pid
-    if(v1_pod_spec->host_pid) { 
+    if(v1_pod_spec->host_pid) {
     if(cJSON_AddBoolToObject(item, "hostPID", v1_pod_spec->host_pid) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_pod_spec->hostname
-    if(v1_pod_spec->hostname) { 
+    if(v1_pod_spec->hostname) {
     if(cJSON_AddStringToObject(item, "hostname", v1_pod_spec->hostname) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_spec->image_pull_secrets
-    if(v1_pod_spec->image_pull_secrets) { 
+    if(v1_pod_spec->image_pull_secrets) {
     cJSON *image_pull_secrets = cJSON_AddArrayToObject(item, "imagePullSecrets");
     if(image_pull_secrets == NULL) {
     goto fail; //nonprimitive container
@@ -438,11 +437,11 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     cJSON_AddItemToArray(image_pull_secrets, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_spec->init_containers
-    if(v1_pod_spec->init_containers) { 
+    if(v1_pod_spec->init_containers) {
     cJSON *init_containers = cJSON_AddArrayToObject(item, "initContainers");
     if(init_containers == NULL) {
     goto fail; //nonprimitive container
@@ -458,19 +457,19 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     cJSON_AddItemToArray(init_containers, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_spec->node_name
-    if(v1_pod_spec->node_name) { 
+    if(v1_pod_spec->node_name) {
     if(cJSON_AddStringToObject(item, "nodeName", v1_pod_spec->node_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_spec->node_selector
-    if(v1_pod_spec->node_selector) { 
+    if(v1_pod_spec->node_selector) {
     cJSON *node_selector = cJSON_AddObjectToObject(item, "nodeSelector");
     if(node_selector == NULL) {
         goto fail; //primitive map container
@@ -486,11 +485,11 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_pod_spec->os
-    if(v1_pod_spec->os) { 
+    if(v1_pod_spec->os) {
     cJSON *os_local_JSON = v1_pod_os_convertToJSON(v1_pod_spec->os);
     if(os_local_JSON == NULL) {
     goto fail; //model
@@ -499,11 +498,11 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_spec->overhead
-    if(v1_pod_spec->overhead) { 
+    if(v1_pod_spec->overhead) {
     cJSON *overhead = cJSON_AddObjectToObject(item, "overhead");
     if(overhead == NULL) {
         goto fail; //primitive map container
@@ -519,35 +518,35 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_pod_spec->preemption_policy
-    if(v1_pod_spec->preemption_policy) { 
+    if(v1_pod_spec->preemption_policy) {
     if(cJSON_AddStringToObject(item, "preemptionPolicy", v1_pod_spec->preemption_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_spec->priority
-    if(v1_pod_spec->priority) { 
+    if(v1_pod_spec->priority) {
     if(cJSON_AddNumberToObject(item, "priority", v1_pod_spec->priority) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_pod_spec->priority_class_name
-    if(v1_pod_spec->priority_class_name) { 
+    if(v1_pod_spec->priority_class_name) {
     if(cJSON_AddStringToObject(item, "priorityClassName", v1_pod_spec->priority_class_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_spec->readiness_gates
-    if(v1_pod_spec->readiness_gates) { 
+    if(v1_pod_spec->readiness_gates) {
     cJSON *readiness_gates = cJSON_AddArrayToObject(item, "readinessGates");
     if(readiness_gates == NULL) {
     goto fail; //nonprimitive container
@@ -563,36 +562,36 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     cJSON_AddItemToArray(readiness_gates, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_spec->restart_policy
-    
+    if(v1_pod_spec->restart_policy != kubernetes_v1_pod_spec_RESTARTPOLICY_NULL) {
     if(cJSON_AddStringToObject(item, "restartPolicy", restart_policyv1_pod_spec_ToString(v1_pod_spec->restart_policy)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_pod_spec->runtime_class_name
-    if(v1_pod_spec->runtime_class_name) { 
+    if(v1_pod_spec->runtime_class_name) {
     if(cJSON_AddStringToObject(item, "runtimeClassName", v1_pod_spec->runtime_class_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_spec->scheduler_name
-    if(v1_pod_spec->scheduler_name) { 
+    if(v1_pod_spec->scheduler_name) {
     if(cJSON_AddStringToObject(item, "schedulerName", v1_pod_spec->scheduler_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_spec->security_context
-    if(v1_pod_spec->security_context) { 
+    if(v1_pod_spec->security_context) {
     cJSON *security_context_local_JSON = v1_pod_security_context_convertToJSON(v1_pod_spec->security_context);
     if(security_context_local_JSON == NULL) {
     goto fail; //model
@@ -601,59 +600,59 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_spec->service_account
-    if(v1_pod_spec->service_account) { 
+    if(v1_pod_spec->service_account) {
     if(cJSON_AddStringToObject(item, "serviceAccount", v1_pod_spec->service_account) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_spec->service_account_name
-    if(v1_pod_spec->service_account_name) { 
+    if(v1_pod_spec->service_account_name) {
     if(cJSON_AddStringToObject(item, "serviceAccountName", v1_pod_spec->service_account_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_spec->set_hostname_as_fqdn
-    if(v1_pod_spec->set_hostname_as_fqdn) { 
+    if(v1_pod_spec->set_hostname_as_fqdn) {
     if(cJSON_AddBoolToObject(item, "setHostnameAsFQDN", v1_pod_spec->set_hostname_as_fqdn) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_pod_spec->share_process_namespace
-    if(v1_pod_spec->share_process_namespace) { 
+    if(v1_pod_spec->share_process_namespace) {
     if(cJSON_AddBoolToObject(item, "shareProcessNamespace", v1_pod_spec->share_process_namespace) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_pod_spec->subdomain
-    if(v1_pod_spec->subdomain) { 
+    if(v1_pod_spec->subdomain) {
     if(cJSON_AddStringToObject(item, "subdomain", v1_pod_spec->subdomain) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_spec->termination_grace_period_seconds
-    if(v1_pod_spec->termination_grace_period_seconds) { 
+    if(v1_pod_spec->termination_grace_period_seconds) {
     if(cJSON_AddNumberToObject(item, "terminationGracePeriodSeconds", v1_pod_spec->termination_grace_period_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_pod_spec->tolerations
-    if(v1_pod_spec->tolerations) { 
+    if(v1_pod_spec->tolerations) {
     cJSON *tolerations = cJSON_AddArrayToObject(item, "tolerations");
     if(tolerations == NULL) {
     goto fail; //nonprimitive container
@@ -669,11 +668,11 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     cJSON_AddItemToArray(tolerations, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_spec->topology_spread_constraints
-    if(v1_pod_spec->topology_spread_constraints) { 
+    if(v1_pod_spec->topology_spread_constraints) {
     cJSON *topology_spread_constraints = cJSON_AddArrayToObject(item, "topologySpreadConstraints");
     if(topology_spread_constraints == NULL) {
     goto fail; //nonprimitive container
@@ -689,11 +688,11 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     cJSON_AddItemToArray(topology_spread_constraints, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_spec->volumes
-    if(v1_pod_spec->volumes) { 
+    if(v1_pod_spec->volumes) {
     cJSON *volumes = cJSON_AddArrayToObject(item, "volumes");
     if(volumes == NULL) {
     goto fail; //nonprimitive container
@@ -709,7 +708,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     cJSON_AddItemToArray(volumes, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

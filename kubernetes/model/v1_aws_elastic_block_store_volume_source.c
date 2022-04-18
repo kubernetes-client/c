@@ -44,34 +44,33 @@ cJSON *v1_aws_elastic_block_store_volume_source_convertToJSON(v1_aws_elastic_blo
     cJSON *item = cJSON_CreateObject();
 
     // v1_aws_elastic_block_store_volume_source->fs_type
-    if(v1_aws_elastic_block_store_volume_source->fs_type) { 
+    if(v1_aws_elastic_block_store_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_aws_elastic_block_store_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_aws_elastic_block_store_volume_source->partition
-    if(v1_aws_elastic_block_store_volume_source->partition) { 
+    if(v1_aws_elastic_block_store_volume_source->partition) {
     if(cJSON_AddNumberToObject(item, "partition", v1_aws_elastic_block_store_volume_source->partition) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_aws_elastic_block_store_volume_source->read_only
-    if(v1_aws_elastic_block_store_volume_source->read_only) { 
+    if(v1_aws_elastic_block_store_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_aws_elastic_block_store_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_aws_elastic_block_store_volume_source->volume_id
     if (!v1_aws_elastic_block_store_volume_source->volume_id) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "volumeID", v1_aws_elastic_block_store_volume_source->volume_id) == NULL) {
     goto fail; //String
     }

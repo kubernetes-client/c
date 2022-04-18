@@ -46,7 +46,7 @@ cJSON *v1alpha1_runtime_class_spec_convertToJSON(v1alpha1_runtime_class_spec_t *
     cJSON *item = cJSON_CreateObject();
 
     // v1alpha1_runtime_class_spec->overhead
-    if(v1alpha1_runtime_class_spec->overhead) { 
+    if(v1alpha1_runtime_class_spec->overhead) {
     cJSON *overhead_local_JSON = v1alpha1_overhead_convertToJSON(v1alpha1_runtime_class_spec->overhead);
     if(overhead_local_JSON == NULL) {
     goto fail; //model
@@ -55,21 +55,20 @@ cJSON *v1alpha1_runtime_class_spec_convertToJSON(v1alpha1_runtime_class_spec_t *
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1alpha1_runtime_class_spec->runtime_handler
     if (!v1alpha1_runtime_class_spec->runtime_handler) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "runtimeHandler", v1alpha1_runtime_class_spec->runtime_handler) == NULL) {
     goto fail; //String
     }
 
 
     // v1alpha1_runtime_class_spec->scheduling
-    if(v1alpha1_runtime_class_spec->scheduling) { 
+    if(v1alpha1_runtime_class_spec->scheduling) {
     cJSON *scheduling_local_JSON = v1alpha1_scheduling_convertToJSON(v1alpha1_runtime_class_spec->scheduling);
     if(scheduling_local_JSON == NULL) {
     goto fail; //model
@@ -78,7 +77,7 @@ cJSON *v1alpha1_runtime_class_spec_convertToJSON(v1alpha1_runtime_class_spec_t *
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

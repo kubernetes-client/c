@@ -40,7 +40,6 @@ cJSON *v1_csi_node_spec_convertToJSON(v1_csi_node_spec_t *v1_csi_node_spec) {
     if (!v1_csi_node_spec->drivers) {
         goto fail;
     }
-    
     cJSON *drivers = cJSON_AddArrayToObject(item, "drivers");
     if(drivers == NULL) {
     goto fail; //nonprimitive container

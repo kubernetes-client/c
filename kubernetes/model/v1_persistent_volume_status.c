@@ -59,28 +59,28 @@ cJSON *v1_persistent_volume_status_convertToJSON(v1_persistent_volume_status_t *
     cJSON *item = cJSON_CreateObject();
 
     // v1_persistent_volume_status->message
-    if(v1_persistent_volume_status->message) { 
+    if(v1_persistent_volume_status->message) {
     if(cJSON_AddStringToObject(item, "message", v1_persistent_volume_status->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume_status->phase
-    
+    if(v1_persistent_volume_status->phase != kubernetes_v1_persistent_volume_status_PHASE_NULL) {
     if(cJSON_AddStringToObject(item, "phase", phasev1_persistent_volume_status_ToString(v1_persistent_volume_status->phase)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_persistent_volume_status->reason
-    if(v1_persistent_volume_status->reason) { 
+    if(v1_persistent_volume_status->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_persistent_volume_status->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

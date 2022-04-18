@@ -36,15 +36,15 @@ cJSON *v1beta2_limited_priority_level_configuration_convertToJSON(v1beta2_limite
     cJSON *item = cJSON_CreateObject();
 
     // v1beta2_limited_priority_level_configuration->assured_concurrency_shares
-    if(v1beta2_limited_priority_level_configuration->assured_concurrency_shares) { 
+    if(v1beta2_limited_priority_level_configuration->assured_concurrency_shares) {
     if(cJSON_AddNumberToObject(item, "assuredConcurrencyShares", v1beta2_limited_priority_level_configuration->assured_concurrency_shares) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1beta2_limited_priority_level_configuration->limit_response
-    if(v1beta2_limited_priority_level_configuration->limit_response) { 
+    if(v1beta2_limited_priority_level_configuration->limit_response) {
     cJSON *limit_response_local_JSON = v1beta2_limit_response_convertToJSON(v1beta2_limited_priority_level_configuration->limit_response);
     if(limit_response_local_JSON == NULL) {
     goto fail; //model
@@ -53,7 +53,7 @@ cJSON *v1beta2_limited_priority_level_configuration_convertToJSON(v1beta2_limite
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

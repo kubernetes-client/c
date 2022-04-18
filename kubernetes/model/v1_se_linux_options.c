@@ -52,35 +52,35 @@ cJSON *v1_se_linux_options_convertToJSON(v1_se_linux_options_t *v1_se_linux_opti
     cJSON *item = cJSON_CreateObject();
 
     // v1_se_linux_options->level
-    if(v1_se_linux_options->level) { 
+    if(v1_se_linux_options->level) {
     if(cJSON_AddStringToObject(item, "level", v1_se_linux_options->level) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_se_linux_options->role
-    if(v1_se_linux_options->role) { 
+    if(v1_se_linux_options->role) {
     if(cJSON_AddStringToObject(item, "role", v1_se_linux_options->role) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_se_linux_options->type
-    if(v1_se_linux_options->type) { 
+    if(v1_se_linux_options->type) {
     if(cJSON_AddStringToObject(item, "type", v1_se_linux_options->type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_se_linux_options->user
-    if(v1_se_linux_options->user) { 
+    if(v1_se_linux_options->user) {
     if(cJSON_AddStringToObject(item, "user", v1_se_linux_options->user) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

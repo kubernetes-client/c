@@ -67,27 +67,26 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_cron_job_spec->concurrency_policy
-    
+    if(v1_cron_job_spec->concurrency_policy != kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_NULL) {
     if(cJSON_AddStringToObject(item, "concurrencyPolicy", concurrency_policyv1_cron_job_spec_ToString(v1_cron_job_spec->concurrency_policy)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_cron_job_spec->failed_jobs_history_limit
-    if(v1_cron_job_spec->failed_jobs_history_limit) { 
+    if(v1_cron_job_spec->failed_jobs_history_limit) {
     if(cJSON_AddNumberToObject(item, "failedJobsHistoryLimit", v1_cron_job_spec->failed_jobs_history_limit) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_cron_job_spec->job_template
     if (!v1_cron_job_spec->job_template) {
         goto fail;
     }
-    
     cJSON *job_template_local_JSON = v1_job_template_spec_convertToJSON(v1_cron_job_spec->job_template);
     if(job_template_local_JSON == NULL) {
     goto fail; //model
@@ -102,34 +101,33 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
     if (!v1_cron_job_spec->schedule) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "schedule", v1_cron_job_spec->schedule) == NULL) {
     goto fail; //String
     }
 
 
     // v1_cron_job_spec->starting_deadline_seconds
-    if(v1_cron_job_spec->starting_deadline_seconds) { 
+    if(v1_cron_job_spec->starting_deadline_seconds) {
     if(cJSON_AddNumberToObject(item, "startingDeadlineSeconds", v1_cron_job_spec->starting_deadline_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_cron_job_spec->successful_jobs_history_limit
-    if(v1_cron_job_spec->successful_jobs_history_limit) { 
+    if(v1_cron_job_spec->successful_jobs_history_limit) {
     if(cJSON_AddNumberToObject(item, "successfulJobsHistoryLimit", v1_cron_job_spec->successful_jobs_history_limit) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_cron_job_spec->suspend
-    if(v1_cron_job_spec->suspend) { 
+    if(v1_cron_job_spec->suspend) {
     if(cJSON_AddBoolToObject(item, "suspend", v1_cron_job_spec->suspend) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

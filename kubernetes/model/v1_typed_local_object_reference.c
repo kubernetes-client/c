@@ -46,18 +46,17 @@ cJSON *v1_typed_local_object_reference_convertToJSON(v1_typed_local_object_refer
     cJSON *item = cJSON_CreateObject();
 
     // v1_typed_local_object_reference->api_group
-    if(v1_typed_local_object_reference->api_group) { 
+    if(v1_typed_local_object_reference->api_group) {
     if(cJSON_AddStringToObject(item, "apiGroup", v1_typed_local_object_reference->api_group) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_typed_local_object_reference->kind
     if (!v1_typed_local_object_reference->kind) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kind", v1_typed_local_object_reference->kind) == NULL) {
     goto fail; //String
     }
@@ -67,7 +66,6 @@ cJSON *v1_typed_local_object_reference_convertToJSON(v1_typed_local_object_refer
     if (!v1_typed_local_object_reference->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_typed_local_object_reference->name) == NULL) {
     goto fail; //String
     }

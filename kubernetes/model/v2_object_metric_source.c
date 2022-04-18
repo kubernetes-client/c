@@ -49,7 +49,6 @@ cJSON *v2_object_metric_source_convertToJSON(v2_object_metric_source_t *v2_objec
     if (!v2_object_metric_source->described_object) {
         goto fail;
     }
-    
     cJSON *described_object_local_JSON = v2_cross_version_object_reference_convertToJSON(v2_object_metric_source->described_object);
     if(described_object_local_JSON == NULL) {
     goto fail; //model
@@ -64,7 +63,6 @@ cJSON *v2_object_metric_source_convertToJSON(v2_object_metric_source_t *v2_objec
     if (!v2_object_metric_source->metric) {
         goto fail;
     }
-    
     cJSON *metric_local_JSON = v2_metric_identifier_convertToJSON(v2_object_metric_source->metric);
     if(metric_local_JSON == NULL) {
     goto fail; //model
@@ -79,7 +77,6 @@ cJSON *v2_object_metric_source_convertToJSON(v2_object_metric_source_t *v2_objec
     if (!v2_object_metric_source->target) {
         goto fail;
     }
-    
     cJSON *target_local_JSON = v2_metric_target_convertToJSON(v2_object_metric_source->target);
     if(target_local_JSON == NULL) {
     goto fail; //model

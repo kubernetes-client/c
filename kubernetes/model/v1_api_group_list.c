@@ -49,18 +49,17 @@ cJSON *v1_api_group_list_convertToJSON(v1_api_group_list_t *v1_api_group_list) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_api_group_list->api_version
-    if(v1_api_group_list->api_version) { 
+    if(v1_api_group_list->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_api_group_list->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_group_list->groups
     if (!v1_api_group_list->groups) {
         goto fail;
     }
-    
     cJSON *groups = cJSON_AddArrayToObject(item, "groups");
     if(groups == NULL) {
     goto fail; //nonprimitive container
@@ -79,11 +78,11 @@ cJSON *v1_api_group_list_convertToJSON(v1_api_group_list_t *v1_api_group_list) {
 
 
     // v1_api_group_list->kind
-    if(v1_api_group_list->kind) { 
+    if(v1_api_group_list->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_api_group_list->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

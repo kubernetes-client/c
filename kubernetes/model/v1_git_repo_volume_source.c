@@ -46,29 +46,28 @@ cJSON *v1_git_repo_volume_source_convertToJSON(v1_git_repo_volume_source_t *v1_g
     cJSON *item = cJSON_CreateObject();
 
     // v1_git_repo_volume_source->directory
-    if(v1_git_repo_volume_source->directory) { 
+    if(v1_git_repo_volume_source->directory) {
     if(cJSON_AddStringToObject(item, "directory", v1_git_repo_volume_source->directory) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_git_repo_volume_source->repository
     if (!v1_git_repo_volume_source->repository) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "repository", v1_git_repo_volume_source->repository) == NULL) {
     goto fail; //String
     }
 
 
     // v1_git_repo_volume_source->revision
-    if(v1_git_repo_volume_source->revision) { 
+    if(v1_git_repo_volume_source->revision) {
     if(cJSON_AddStringToObject(item, "revision", v1_git_repo_volume_source->revision) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

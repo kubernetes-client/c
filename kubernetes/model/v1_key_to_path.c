@@ -45,25 +45,23 @@ cJSON *v1_key_to_path_convertToJSON(v1_key_to_path_t *v1_key_to_path) {
     if (!v1_key_to_path->key) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "key", v1_key_to_path->key) == NULL) {
     goto fail; //String
     }
 
 
     // v1_key_to_path->mode
-    if(v1_key_to_path->mode) { 
+    if(v1_key_to_path->mode) {
     if(cJSON_AddNumberToObject(item, "mode", v1_key_to_path->mode) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_key_to_path->path
     if (!v1_key_to_path->path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "path", v1_key_to_path->path) == NULL) {
     goto fail; //String
     }

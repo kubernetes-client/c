@@ -52,23 +52,23 @@ cJSON *v1_csi_driver_convertToJSON(v1_csi_driver_t *v1_csi_driver) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_csi_driver->api_version
-    if(v1_csi_driver->api_version) { 
+    if(v1_csi_driver->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_csi_driver->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_csi_driver->kind
-    if(v1_csi_driver->kind) { 
+    if(v1_csi_driver->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_csi_driver->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_csi_driver->metadata
-    if(v1_csi_driver->metadata) { 
+    if(v1_csi_driver->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_csi_driver->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -77,14 +77,13 @@ cJSON *v1_csi_driver_convertToJSON(v1_csi_driver_t *v1_csi_driver) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_csi_driver->spec
     if (!v1_csi_driver->spec) {
         goto fail;
     }
-    
     cJSON *spec_local_JSON = v1_csi_driver_spec_convertToJSON(v1_csi_driver->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model

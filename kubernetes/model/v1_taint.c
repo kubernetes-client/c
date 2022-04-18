@@ -65,7 +65,9 @@ cJSON *v1_taint_convertToJSON(v1_taint_t *v1_taint) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_taint->effect
-    
+    if (kubernetes_v1_taint_EFFECT_NULL == v1_taint->effect) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "effect", effectv1_taint_ToString(v1_taint->effect)) == NULL)
     {
     goto fail; //Enum
@@ -76,26 +78,25 @@ cJSON *v1_taint_convertToJSON(v1_taint_t *v1_taint) {
     if (!v1_taint->key) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "key", v1_taint->key) == NULL) {
     goto fail; //String
     }
 
 
     // v1_taint->time_added
-    if(v1_taint->time_added) { 
+    if(v1_taint->time_added) {
     if(cJSON_AddStringToObject(item, "timeAdded", v1_taint->time_added) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_taint->value
-    if(v1_taint->value) { 
+    if(v1_taint->value) {
     if(cJSON_AddStringToObject(item, "value", v1_taint->value) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

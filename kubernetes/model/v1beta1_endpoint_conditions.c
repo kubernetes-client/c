@@ -34,27 +34,27 @@ cJSON *v1beta1_endpoint_conditions_convertToJSON(v1beta1_endpoint_conditions_t *
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_endpoint_conditions->ready
-    if(v1beta1_endpoint_conditions->ready) { 
+    if(v1beta1_endpoint_conditions->ready) {
     if(cJSON_AddBoolToObject(item, "ready", v1beta1_endpoint_conditions->ready) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1beta1_endpoint_conditions->serving
-    if(v1beta1_endpoint_conditions->serving) { 
+    if(v1beta1_endpoint_conditions->serving) {
     if(cJSON_AddBoolToObject(item, "serving", v1beta1_endpoint_conditions->serving) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1beta1_endpoint_conditions->terminating
-    if(v1beta1_endpoint_conditions->terminating) { 
+    if(v1beta1_endpoint_conditions->terminating) {
     if(cJSON_AddBoolToObject(item, "terminating", v1beta1_endpoint_conditions->terminating) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

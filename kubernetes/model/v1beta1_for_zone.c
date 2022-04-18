@@ -37,7 +37,6 @@ cJSON *v1beta1_for_zone_convertToJSON(v1beta1_for_zone_t *v1beta1_for_zone) {
     if (!v1beta1_for_zone->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1beta1_for_zone->name) == NULL) {
     goto fail; //String
     }

@@ -64,42 +64,41 @@ cJSON *v1_deployment_condition_convertToJSON(v1_deployment_condition_t *v1_deplo
     cJSON *item = cJSON_CreateObject();
 
     // v1_deployment_condition->last_transition_time
-    if(v1_deployment_condition->last_transition_time) { 
+    if(v1_deployment_condition->last_transition_time) {
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v1_deployment_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_deployment_condition->last_update_time
-    if(v1_deployment_condition->last_update_time) { 
+    if(v1_deployment_condition->last_update_time) {
     if(cJSON_AddStringToObject(item, "lastUpdateTime", v1_deployment_condition->last_update_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_deployment_condition->message
-    if(v1_deployment_condition->message) { 
+    if(v1_deployment_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1_deployment_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_deployment_condition->reason
-    if(v1_deployment_condition->reason) { 
+    if(v1_deployment_condition->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_deployment_condition->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_deployment_condition->status
     if (!v1_deployment_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v1_deployment_condition->status) == NULL) {
     goto fail; //String
     }
@@ -109,7 +108,6 @@ cJSON *v1_deployment_condition_convertToJSON(v1_deployment_condition_t *v1_deplo
     if (!v1_deployment_condition->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v1_deployment_condition->type) == NULL) {
     goto fail; //String
     }

@@ -58,23 +58,23 @@ cJSON *v1_deployment_convertToJSON(v1_deployment_t *v1_deployment) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_deployment->api_version
-    if(v1_deployment->api_version) { 
+    if(v1_deployment->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_deployment->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_deployment->kind
-    if(v1_deployment->kind) { 
+    if(v1_deployment->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_deployment->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_deployment->metadata
-    if(v1_deployment->metadata) { 
+    if(v1_deployment->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_deployment->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v1_deployment_convertToJSON(v1_deployment_t *v1_deployment) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_deployment->spec
-    if(v1_deployment->spec) { 
+    if(v1_deployment->spec) {
     cJSON *spec_local_JSON = v1_deployment_spec_convertToJSON(v1_deployment->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v1_deployment_convertToJSON(v1_deployment_t *v1_deployment) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_deployment->status
-    if(v1_deployment->status) { 
+    if(v1_deployment->status) {
     cJSON *status_local_JSON = v1_deployment_status_convertToJSON(v1_deployment->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v1_deployment_convertToJSON(v1_deployment_t *v1_deployment) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -46,15 +46,15 @@ cJSON *admissionregistration_v1_webhook_client_config_convertToJSON(admissionreg
     cJSON *item = cJSON_CreateObject();
 
     // admissionregistration_v1_webhook_client_config->ca_bundle
-    if(admissionregistration_v1_webhook_client_config->ca_bundle) { 
+    if(admissionregistration_v1_webhook_client_config->ca_bundle) {
     if(cJSON_AddStringToObject(item, "caBundle", admissionregistration_v1_webhook_client_config->ca_bundle) == NULL) {
     goto fail; //ByteArray
     }
-     } 
+    }
 
 
     // admissionregistration_v1_webhook_client_config->service
-    if(admissionregistration_v1_webhook_client_config->service) { 
+    if(admissionregistration_v1_webhook_client_config->service) {
     cJSON *service_local_JSON = admissionregistration_v1_service_reference_convertToJSON(admissionregistration_v1_webhook_client_config->service);
     if(service_local_JSON == NULL) {
     goto fail; //model
@@ -63,15 +63,15 @@ cJSON *admissionregistration_v1_webhook_client_config_convertToJSON(admissionreg
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // admissionregistration_v1_webhook_client_config->url
-    if(admissionregistration_v1_webhook_client_config->url) { 
+    if(admissionregistration_v1_webhook_client_config->url) {
     if(cJSON_AddStringToObject(item, "url", admissionregistration_v1_webhook_client_config->url) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

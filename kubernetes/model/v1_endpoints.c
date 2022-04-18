@@ -55,23 +55,23 @@ cJSON *v1_endpoints_convertToJSON(v1_endpoints_t *v1_endpoints) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_endpoints->api_version
-    if(v1_endpoints->api_version) { 
+    if(v1_endpoints->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_endpoints->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_endpoints->kind
-    if(v1_endpoints->kind) { 
+    if(v1_endpoints->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_endpoints->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_endpoints->metadata
-    if(v1_endpoints->metadata) { 
+    if(v1_endpoints->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_endpoints->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -80,11 +80,11 @@ cJSON *v1_endpoints_convertToJSON(v1_endpoints_t *v1_endpoints) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_endpoints->subsets
-    if(v1_endpoints->subsets) { 
+    if(v1_endpoints->subsets) {
     cJSON *subsets = cJSON_AddArrayToObject(item, "subsets");
     if(subsets == NULL) {
     goto fail; //nonprimitive container
@@ -100,7 +100,7 @@ cJSON *v1_endpoints_convertToJSON(v1_endpoints_t *v1_endpoints) {
     cJSON_AddItemToArray(subsets, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

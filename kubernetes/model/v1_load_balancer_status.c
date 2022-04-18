@@ -37,7 +37,7 @@ cJSON *v1_load_balancer_status_convertToJSON(v1_load_balancer_status_t *v1_load_
     cJSON *item = cJSON_CreateObject();
 
     // v1_load_balancer_status->ingress
-    if(v1_load_balancer_status->ingress) { 
+    if(v1_load_balancer_status->ingress) {
     cJSON *ingress = cJSON_AddArrayToObject(item, "ingress");
     if(ingress == NULL) {
     goto fail; //nonprimitive container
@@ -53,7 +53,7 @@ cJSON *v1_load_balancer_status_convertToJSON(v1_load_balancer_status_t *v1_load_
     cJSON_AddItemToArray(ingress, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

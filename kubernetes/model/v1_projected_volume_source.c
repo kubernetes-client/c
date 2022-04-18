@@ -39,15 +39,15 @@ cJSON *v1_projected_volume_source_convertToJSON(v1_projected_volume_source_t *v1
     cJSON *item = cJSON_CreateObject();
 
     // v1_projected_volume_source->default_mode
-    if(v1_projected_volume_source->default_mode) { 
+    if(v1_projected_volume_source->default_mode) {
     if(cJSON_AddNumberToObject(item, "defaultMode", v1_projected_volume_source->default_mode) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_projected_volume_source->sources
-    if(v1_projected_volume_source->sources) { 
+    if(v1_projected_volume_source->sources) {
     cJSON *sources = cJSON_AddArrayToObject(item, "sources");
     if(sources == NULL) {
     goto fail; //nonprimitive container
@@ -63,7 +63,7 @@ cJSON *v1_projected_volume_source_convertToJSON(v1_projected_volume_source_t *v1
     cJSON_AddItemToArray(sources, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

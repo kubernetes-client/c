@@ -73,25 +73,23 @@ cJSON *v1beta1_endpoint_slice_convertToJSON(v1beta1_endpoint_slice_t *v1beta1_en
     if (!v1beta1_endpoint_slice->address_type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "addressType", v1beta1_endpoint_slice->address_type) == NULL) {
     goto fail; //String
     }
 
 
     // v1beta1_endpoint_slice->api_version
-    if(v1beta1_endpoint_slice->api_version) { 
+    if(v1beta1_endpoint_slice->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1beta1_endpoint_slice->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_endpoint_slice->endpoints
     if (!v1beta1_endpoint_slice->endpoints) {
         goto fail;
     }
-    
     cJSON *endpoints = cJSON_AddArrayToObject(item, "endpoints");
     if(endpoints == NULL) {
     goto fail; //nonprimitive container
@@ -110,15 +108,15 @@ cJSON *v1beta1_endpoint_slice_convertToJSON(v1beta1_endpoint_slice_t *v1beta1_en
 
 
     // v1beta1_endpoint_slice->kind
-    if(v1beta1_endpoint_slice->kind) { 
+    if(v1beta1_endpoint_slice->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1beta1_endpoint_slice->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_endpoint_slice->metadata
-    if(v1beta1_endpoint_slice->metadata) { 
+    if(v1beta1_endpoint_slice->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1beta1_endpoint_slice->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -127,11 +125,11 @@ cJSON *v1beta1_endpoint_slice_convertToJSON(v1beta1_endpoint_slice_t *v1beta1_en
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_endpoint_slice->ports
-    if(v1beta1_endpoint_slice->ports) { 
+    if(v1beta1_endpoint_slice->ports) {
     cJSON *ports = cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
@@ -147,7 +145,7 @@ cJSON *v1beta1_endpoint_slice_convertToJSON(v1beta1_endpoint_slice_t *v1beta1_en
     cJSON_AddItemToArray(ports, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

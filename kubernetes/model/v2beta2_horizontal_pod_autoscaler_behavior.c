@@ -40,7 +40,7 @@ cJSON *v2beta2_horizontal_pod_autoscaler_behavior_convertToJSON(v2beta2_horizont
     cJSON *item = cJSON_CreateObject();
 
     // v2beta2_horizontal_pod_autoscaler_behavior->scale_down
-    if(v2beta2_horizontal_pod_autoscaler_behavior->scale_down) { 
+    if(v2beta2_horizontal_pod_autoscaler_behavior->scale_down) {
     cJSON *scale_down_local_JSON = v2beta2_hpa_scaling_rules_convertToJSON(v2beta2_horizontal_pod_autoscaler_behavior->scale_down);
     if(scale_down_local_JSON == NULL) {
     goto fail; //model
@@ -49,11 +49,11 @@ cJSON *v2beta2_horizontal_pod_autoscaler_behavior_convertToJSON(v2beta2_horizont
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2beta2_horizontal_pod_autoscaler_behavior->scale_up
-    if(v2beta2_horizontal_pod_autoscaler_behavior->scale_up) { 
+    if(v2beta2_horizontal_pod_autoscaler_behavior->scale_up) {
     cJSON *scale_up_local_JSON = v2beta2_hpa_scaling_rules_convertToJSON(v2beta2_horizontal_pod_autoscaler_behavior->scale_up);
     if(scale_up_local_JSON == NULL) {
     goto fail; //model
@@ -62,7 +62,7 @@ cJSON *v2beta2_horizontal_pod_autoscaler_behavior_convertToJSON(v2beta2_horizont
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

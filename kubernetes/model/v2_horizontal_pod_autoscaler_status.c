@@ -58,7 +58,7 @@ cJSON *v2_horizontal_pod_autoscaler_status_convertToJSON(v2_horizontal_pod_autos
     cJSON *item = cJSON_CreateObject();
 
     // v2_horizontal_pod_autoscaler_status->conditions
-    if(v2_horizontal_pod_autoscaler_status->conditions) { 
+    if(v2_horizontal_pod_autoscaler_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -74,11 +74,11 @@ cJSON *v2_horizontal_pod_autoscaler_status_convertToJSON(v2_horizontal_pod_autos
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v2_horizontal_pod_autoscaler_status->current_metrics
-    if(v2_horizontal_pod_autoscaler_status->current_metrics) { 
+    if(v2_horizontal_pod_autoscaler_status->current_metrics) {
     cJSON *current_metrics = cJSON_AddArrayToObject(item, "currentMetrics");
     if(current_metrics == NULL) {
     goto fail; //nonprimitive container
@@ -94,41 +94,40 @@ cJSON *v2_horizontal_pod_autoscaler_status_convertToJSON(v2_horizontal_pod_autos
     cJSON_AddItemToArray(current_metrics, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v2_horizontal_pod_autoscaler_status->current_replicas
-    if(v2_horizontal_pod_autoscaler_status->current_replicas) { 
+    if(v2_horizontal_pod_autoscaler_status->current_replicas) {
     if(cJSON_AddNumberToObject(item, "currentReplicas", v2_horizontal_pod_autoscaler_status->current_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v2_horizontal_pod_autoscaler_status->desired_replicas
     if (!v2_horizontal_pod_autoscaler_status->desired_replicas) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "desiredReplicas", v2_horizontal_pod_autoscaler_status->desired_replicas) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v2_horizontal_pod_autoscaler_status->last_scale_time
-    if(v2_horizontal_pod_autoscaler_status->last_scale_time) { 
+    if(v2_horizontal_pod_autoscaler_status->last_scale_time) {
     if(cJSON_AddStringToObject(item, "lastScaleTime", v2_horizontal_pod_autoscaler_status->last_scale_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v2_horizontal_pod_autoscaler_status->observed_generation
-    if(v2_horizontal_pod_autoscaler_status->observed_generation) { 
+    if(v2_horizontal_pod_autoscaler_status->observed_generation) {
     if(cJSON_AddNumberToObject(item, "observedGeneration", v2_horizontal_pod_autoscaler_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

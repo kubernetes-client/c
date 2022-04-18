@@ -39,7 +39,6 @@ cJSON *v1beta1_event_series_convertToJSON(v1beta1_event_series_t *v1beta1_event_
     if (!v1beta1_event_series->count) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "count", v1beta1_event_series->count) == NULL) {
     goto fail; //Numeric
     }
@@ -49,7 +48,6 @@ cJSON *v1beta1_event_series_convertToJSON(v1beta1_event_series_t *v1beta1_event_
     if (!v1beta1_event_series->last_observed_time) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "lastObservedTime", v1beta1_event_series->last_observed_time) == NULL) {
     goto fail; //Date-Time
     }

@@ -34,7 +34,7 @@ cJSON *v1_session_affinity_config_convertToJSON(v1_session_affinity_config_t *v1
     cJSON *item = cJSON_CreateObject();
 
     // v1_session_affinity_config->client_ip
-    if(v1_session_affinity_config->client_ip) { 
+    if(v1_session_affinity_config->client_ip) {
     cJSON *client_ip_local_JSON = v1_client_ip_config_convertToJSON(v1_session_affinity_config->client_ip);
     if(client_ip_local_JSON == NULL) {
     goto fail; //model
@@ -43,7 +43,7 @@ cJSON *v1_session_affinity_config_convertToJSON(v1_session_affinity_config_t *v1
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

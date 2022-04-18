@@ -55,7 +55,7 @@ cJSON *v1_resource_quota_spec_convertToJSON(v1_resource_quota_spec_t *v1_resourc
     cJSON *item = cJSON_CreateObject();
 
     // v1_resource_quota_spec->hard
-    if(v1_resource_quota_spec->hard) { 
+    if(v1_resource_quota_spec->hard) {
     cJSON *hard = cJSON_AddObjectToObject(item, "hard");
     if(hard == NULL) {
         goto fail; //primitive map container
@@ -71,11 +71,11 @@ cJSON *v1_resource_quota_spec_convertToJSON(v1_resource_quota_spec_t *v1_resourc
         }
     }
     }
-     } 
+    }
 
 
     // v1_resource_quota_spec->scope_selector
-    if(v1_resource_quota_spec->scope_selector) { 
+    if(v1_resource_quota_spec->scope_selector) {
     cJSON *scope_selector_local_JSON = v1_scope_selector_convertToJSON(v1_resource_quota_spec->scope_selector);
     if(scope_selector_local_JSON == NULL) {
     goto fail; //model
@@ -84,11 +84,11 @@ cJSON *v1_resource_quota_spec_convertToJSON(v1_resource_quota_spec_t *v1_resourc
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_resource_quota_spec->scopes
-    if(v1_resource_quota_spec->scopes) { 
+    if(v1_resource_quota_spec->scopes) {
     cJSON *scopes = cJSON_AddArrayToObject(item, "scopes");
     if(scopes == NULL) {
         goto fail; //primitive container
@@ -101,7 +101,7 @@ cJSON *v1_resource_quota_spec_convertToJSON(v1_resource_quota_spec_t *v1_resourc
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

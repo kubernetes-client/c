@@ -45,7 +45,7 @@ cJSON *v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_t *v2_hpa_scaling
     cJSON *item = cJSON_CreateObject();
 
     // v2_hpa_scaling_rules->policies
-    if(v2_hpa_scaling_rules->policies) { 
+    if(v2_hpa_scaling_rules->policies) {
     cJSON *policies = cJSON_AddArrayToObject(item, "policies");
     if(policies == NULL) {
     goto fail; //nonprimitive container
@@ -61,23 +61,23 @@ cJSON *v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_t *v2_hpa_scaling
     cJSON_AddItemToArray(policies, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v2_hpa_scaling_rules->select_policy
-    if(v2_hpa_scaling_rules->select_policy) { 
+    if(v2_hpa_scaling_rules->select_policy) {
     if(cJSON_AddStringToObject(item, "selectPolicy", v2_hpa_scaling_rules->select_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v2_hpa_scaling_rules->stabilization_window_seconds
-    if(v2_hpa_scaling_rules->stabilization_window_seconds) { 
+    if(v2_hpa_scaling_rules->stabilization_window_seconds) {
     if(cJSON_AddNumberToObject(item, "stabilizationWindowSeconds", v2_hpa_scaling_rules->stabilization_window_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

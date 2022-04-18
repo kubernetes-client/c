@@ -37,7 +37,7 @@ cJSON *v1_scope_selector_convertToJSON(v1_scope_selector_t *v1_scope_selector) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_scope_selector->match_expressions
-    if(v1_scope_selector->match_expressions) { 
+    if(v1_scope_selector->match_expressions) {
     cJSON *match_expressions = cJSON_AddArrayToObject(item, "matchExpressions");
     if(match_expressions == NULL) {
     goto fail; //nonprimitive container
@@ -53,7 +53,7 @@ cJSON *v1_scope_selector_convertToJSON(v1_scope_selector_t *v1_scope_selector) {
     cJSON_AddItemToArray(match_expressions, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

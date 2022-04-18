@@ -36,19 +36,19 @@ cJSON *v1_service_backend_port_convertToJSON(v1_service_backend_port_t *v1_servi
     cJSON *item = cJSON_CreateObject();
 
     // v1_service_backend_port->name
-    if(v1_service_backend_port->name) { 
+    if(v1_service_backend_port->name) {
     if(cJSON_AddStringToObject(item, "name", v1_service_backend_port->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_backend_port->number
-    if(v1_service_backend_port->number) { 
+    if(v1_service_backend_port->number) {
     if(cJSON_AddNumberToObject(item, "number", v1_service_backend_port->number) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

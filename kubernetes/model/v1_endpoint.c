@@ -88,7 +88,6 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
     if (!v1_endpoint->addresses) {
         goto fail;
     }
-    
     cJSON *addresses = cJSON_AddArrayToObject(item, "addresses");
     if(addresses == NULL) {
         goto fail; //primitive container
@@ -104,7 +103,7 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
 
 
     // v1_endpoint->conditions
-    if(v1_endpoint->conditions) { 
+    if(v1_endpoint->conditions) {
     cJSON *conditions_local_JSON = v1_endpoint_conditions_convertToJSON(v1_endpoint->conditions);
     if(conditions_local_JSON == NULL) {
     goto fail; //model
@@ -113,11 +112,11 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_endpoint->deprecated_topology
-    if(v1_endpoint->deprecated_topology) { 
+    if(v1_endpoint->deprecated_topology) {
     cJSON *deprecated_topology = cJSON_AddObjectToObject(item, "deprecatedTopology");
     if(deprecated_topology == NULL) {
         goto fail; //primitive map container
@@ -133,11 +132,11 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_endpoint->hints
-    if(v1_endpoint->hints) { 
+    if(v1_endpoint->hints) {
     cJSON *hints_local_JSON = v1_endpoint_hints_convertToJSON(v1_endpoint->hints);
     if(hints_local_JSON == NULL) {
     goto fail; //model
@@ -146,27 +145,27 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_endpoint->hostname
-    if(v1_endpoint->hostname) { 
+    if(v1_endpoint->hostname) {
     if(cJSON_AddStringToObject(item, "hostname", v1_endpoint->hostname) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_endpoint->node_name
-    if(v1_endpoint->node_name) { 
+    if(v1_endpoint->node_name) {
     if(cJSON_AddStringToObject(item, "nodeName", v1_endpoint->node_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_endpoint->target_ref
-    if(v1_endpoint->target_ref) { 
+    if(v1_endpoint->target_ref) {
     cJSON *target_ref_local_JSON = v1_object_reference_convertToJSON(v1_endpoint->target_ref);
     if(target_ref_local_JSON == NULL) {
     goto fail; //model
@@ -175,15 +174,15 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_endpoint->zone
-    if(v1_endpoint->zone) { 
+    if(v1_endpoint->zone) {
     if(cJSON_AddStringToObject(item, "zone", v1_endpoint->zone) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

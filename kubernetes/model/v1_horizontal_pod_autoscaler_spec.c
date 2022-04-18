@@ -43,25 +43,23 @@ cJSON *v1_horizontal_pod_autoscaler_spec_convertToJSON(v1_horizontal_pod_autosca
     if (!v1_horizontal_pod_autoscaler_spec->max_replicas) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "maxReplicas", v1_horizontal_pod_autoscaler_spec->max_replicas) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_horizontal_pod_autoscaler_spec->min_replicas
-    if(v1_horizontal_pod_autoscaler_spec->min_replicas) { 
+    if(v1_horizontal_pod_autoscaler_spec->min_replicas) {
     if(cJSON_AddNumberToObject(item, "minReplicas", v1_horizontal_pod_autoscaler_spec->min_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_horizontal_pod_autoscaler_spec->scale_target_ref
     if (!v1_horizontal_pod_autoscaler_spec->scale_target_ref) {
         goto fail;
     }
-    
     cJSON *scale_target_ref_local_JSON = v1_cross_version_object_reference_convertToJSON(v1_horizontal_pod_autoscaler_spec->scale_target_ref);
     if(scale_target_ref_local_JSON == NULL) {
     goto fail; //model
@@ -73,11 +71,11 @@ cJSON *v1_horizontal_pod_autoscaler_spec_convertToJSON(v1_horizontal_pod_autosca
 
 
     // v1_horizontal_pod_autoscaler_spec->target_cpu_utilization_percentage
-    if(v1_horizontal_pod_autoscaler_spec->target_cpu_utilization_percentage) { 
+    if(v1_horizontal_pod_autoscaler_spec->target_cpu_utilization_percentage) {
     if(cJSON_AddNumberToObject(item, "targetCPUUtilizationPercentage", v1_horizontal_pod_autoscaler_spec->target_cpu_utilization_percentage) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

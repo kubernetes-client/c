@@ -83,7 +83,9 @@ cJSON *v1_endpoint_slice_convertToJSON(v1_endpoint_slice_t *v1_endpoint_slice) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_endpoint_slice->address_type
-    
+    if (kubernetes_v1_endpoint_slice_ADDRESSTYPE_NULL == v1_endpoint_slice->address_type) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "addressType", address_typev1_endpoint_slice_ToString(v1_endpoint_slice->address_type)) == NULL)
     {
     goto fail; //Enum
@@ -91,18 +93,17 @@ cJSON *v1_endpoint_slice_convertToJSON(v1_endpoint_slice_t *v1_endpoint_slice) {
 
 
     // v1_endpoint_slice->api_version
-    if(v1_endpoint_slice->api_version) { 
+    if(v1_endpoint_slice->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_endpoint_slice->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_endpoint_slice->endpoints
     if (!v1_endpoint_slice->endpoints) {
         goto fail;
     }
-    
     cJSON *endpoints = cJSON_AddArrayToObject(item, "endpoints");
     if(endpoints == NULL) {
     goto fail; //nonprimitive container
@@ -121,15 +122,15 @@ cJSON *v1_endpoint_slice_convertToJSON(v1_endpoint_slice_t *v1_endpoint_slice) {
 
 
     // v1_endpoint_slice->kind
-    if(v1_endpoint_slice->kind) { 
+    if(v1_endpoint_slice->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_endpoint_slice->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_endpoint_slice->metadata
-    if(v1_endpoint_slice->metadata) { 
+    if(v1_endpoint_slice->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_endpoint_slice->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -138,11 +139,11 @@ cJSON *v1_endpoint_slice_convertToJSON(v1_endpoint_slice_t *v1_endpoint_slice) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_endpoint_slice->ports
-    if(v1_endpoint_slice->ports) { 
+    if(v1_endpoint_slice->ports) {
     cJSON *ports = cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
@@ -158,7 +159,7 @@ cJSON *v1_endpoint_slice_convertToJSON(v1_endpoint_slice_t *v1_endpoint_slice) {
     cJSON_AddItemToArray(ports, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

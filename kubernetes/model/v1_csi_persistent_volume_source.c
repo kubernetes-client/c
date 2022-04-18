@@ -84,7 +84,7 @@ cJSON *v1_csi_persistent_volume_source_convertToJSON(v1_csi_persistent_volume_so
     cJSON *item = cJSON_CreateObject();
 
     // v1_csi_persistent_volume_source->controller_expand_secret_ref
-    if(v1_csi_persistent_volume_source->controller_expand_secret_ref) { 
+    if(v1_csi_persistent_volume_source->controller_expand_secret_ref) {
     cJSON *controller_expand_secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_csi_persistent_volume_source->controller_expand_secret_ref);
     if(controller_expand_secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -93,11 +93,11 @@ cJSON *v1_csi_persistent_volume_source_convertToJSON(v1_csi_persistent_volume_so
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_csi_persistent_volume_source->controller_publish_secret_ref
-    if(v1_csi_persistent_volume_source->controller_publish_secret_ref) { 
+    if(v1_csi_persistent_volume_source->controller_publish_secret_ref) {
     cJSON *controller_publish_secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_csi_persistent_volume_source->controller_publish_secret_ref);
     if(controller_publish_secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -106,29 +106,28 @@ cJSON *v1_csi_persistent_volume_source_convertToJSON(v1_csi_persistent_volume_so
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_csi_persistent_volume_source->driver
     if (!v1_csi_persistent_volume_source->driver) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "driver", v1_csi_persistent_volume_source->driver) == NULL) {
     goto fail; //String
     }
 
 
     // v1_csi_persistent_volume_source->fs_type
-    if(v1_csi_persistent_volume_source->fs_type) { 
+    if(v1_csi_persistent_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_csi_persistent_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_csi_persistent_volume_source->node_publish_secret_ref
-    if(v1_csi_persistent_volume_source->node_publish_secret_ref) { 
+    if(v1_csi_persistent_volume_source->node_publish_secret_ref) {
     cJSON *node_publish_secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_csi_persistent_volume_source->node_publish_secret_ref);
     if(node_publish_secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -137,11 +136,11 @@ cJSON *v1_csi_persistent_volume_source_convertToJSON(v1_csi_persistent_volume_so
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_csi_persistent_volume_source->node_stage_secret_ref
-    if(v1_csi_persistent_volume_source->node_stage_secret_ref) { 
+    if(v1_csi_persistent_volume_source->node_stage_secret_ref) {
     cJSON *node_stage_secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_csi_persistent_volume_source->node_stage_secret_ref);
     if(node_stage_secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -150,19 +149,19 @@ cJSON *v1_csi_persistent_volume_source_convertToJSON(v1_csi_persistent_volume_so
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_csi_persistent_volume_source->read_only
-    if(v1_csi_persistent_volume_source->read_only) { 
+    if(v1_csi_persistent_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_csi_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_csi_persistent_volume_source->volume_attributes
-    if(v1_csi_persistent_volume_source->volume_attributes) { 
+    if(v1_csi_persistent_volume_source->volume_attributes) {
     cJSON *volume_attributes = cJSON_AddObjectToObject(item, "volumeAttributes");
     if(volume_attributes == NULL) {
         goto fail; //primitive map container
@@ -178,14 +177,13 @@ cJSON *v1_csi_persistent_volume_source_convertToJSON(v1_csi_persistent_volume_so
         }
     }
     }
-     } 
+    }
 
 
     // v1_csi_persistent_volume_source->volume_handle
     if (!v1_csi_persistent_volume_source->volume_handle) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "volumeHandle", v1_csi_persistent_volume_source->volume_handle) == NULL) {
     goto fail; //String
     }

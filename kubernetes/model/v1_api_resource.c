@@ -93,7 +93,7 @@ cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_api_resource->categories
-    if(v1_api_resource->categories) { 
+    if(v1_api_resource->categories) {
     cJSON *categories = cJSON_AddArrayToObject(item, "categories");
     if(categories == NULL) {
         goto fail; //primitive container
@@ -106,22 +106,21 @@ cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_api_resource->group
-    if(v1_api_resource->group) { 
+    if(v1_api_resource->group) {
     if(cJSON_AddStringToObject(item, "group", v1_api_resource->group) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_resource->kind
     if (!v1_api_resource->kind) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kind", v1_api_resource->kind) == NULL) {
     goto fail; //String
     }
@@ -131,7 +130,6 @@ cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource) {
     if (!v1_api_resource->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_api_resource->name) == NULL) {
     goto fail; //String
     }
@@ -141,14 +139,13 @@ cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource) {
     if (!v1_api_resource->namespaced) {
         goto fail;
     }
-    
     if(cJSON_AddBoolToObject(item, "namespaced", v1_api_resource->namespaced) == NULL) {
     goto fail; //Bool
     }
 
 
     // v1_api_resource->short_names
-    if(v1_api_resource->short_names) { 
+    if(v1_api_resource->short_names) {
     cJSON *short_names = cJSON_AddArrayToObject(item, "shortNames");
     if(short_names == NULL) {
         goto fail; //primitive container
@@ -161,32 +158,30 @@ cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_api_resource->singular_name
     if (!v1_api_resource->singular_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "singularName", v1_api_resource->singular_name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_api_resource->storage_version_hash
-    if(v1_api_resource->storage_version_hash) { 
+    if(v1_api_resource->storage_version_hash) {
     if(cJSON_AddStringToObject(item, "storageVersionHash", v1_api_resource->storage_version_hash) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_resource->verbs
     if (!v1_api_resource->verbs) {
         goto fail;
     }
-    
     cJSON *verbs = cJSON_AddArrayToObject(item, "verbs");
     if(verbs == NULL) {
         goto fail; //primitive container
@@ -202,11 +197,11 @@ cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource) {
 
 
     // v1_api_resource->version
-    if(v1_api_resource->version) { 
+    if(v1_api_resource->version) {
     if(cJSON_AddStringToObject(item, "version", v1_api_resource->version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

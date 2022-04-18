@@ -39,7 +39,6 @@ cJSON *v1_preferred_scheduling_term_convertToJSON(v1_preferred_scheduling_term_t
     if (!v1_preferred_scheduling_term->preference) {
         goto fail;
     }
-    
     cJSON *preference_local_JSON = v1_node_selector_term_convertToJSON(v1_preferred_scheduling_term->preference);
     if(preference_local_JSON == NULL) {
     goto fail; //model
@@ -54,7 +53,6 @@ cJSON *v1_preferred_scheduling_term_convertToJSON(v1_preferred_scheduling_term_t
     if (!v1_preferred_scheduling_term->weight) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "weight", v1_preferred_scheduling_term->weight) == NULL) {
     goto fail; //Numeric
     }

@@ -52,33 +52,32 @@ cJSON *v1_endpoint_address_convertToJSON(v1_endpoint_address_t *v1_endpoint_addr
     cJSON *item = cJSON_CreateObject();
 
     // v1_endpoint_address->hostname
-    if(v1_endpoint_address->hostname) { 
+    if(v1_endpoint_address->hostname) {
     if(cJSON_AddStringToObject(item, "hostname", v1_endpoint_address->hostname) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_endpoint_address->ip
     if (!v1_endpoint_address->ip) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "ip", v1_endpoint_address->ip) == NULL) {
     goto fail; //String
     }
 
 
     // v1_endpoint_address->node_name
-    if(v1_endpoint_address->node_name) { 
+    if(v1_endpoint_address->node_name) {
     if(cJSON_AddStringToObject(item, "nodeName", v1_endpoint_address->node_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_endpoint_address->target_ref
-    if(v1_endpoint_address->target_ref) { 
+    if(v1_endpoint_address->target_ref) {
     cJSON *target_ref_local_JSON = v1_object_reference_convertToJSON(v1_endpoint_address->target_ref);
     if(target_ref_local_JSON == NULL) {
     goto fail; //model
@@ -87,7 +86,7 @@ cJSON *v1_endpoint_address_convertToJSON(v1_endpoint_address_t *v1_endpoint_addr
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

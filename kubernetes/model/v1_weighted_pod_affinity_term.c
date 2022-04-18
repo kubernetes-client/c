@@ -39,7 +39,6 @@ cJSON *v1_weighted_pod_affinity_term_convertToJSON(v1_weighted_pod_affinity_term
     if (!v1_weighted_pod_affinity_term->pod_affinity_term) {
         goto fail;
     }
-    
     cJSON *pod_affinity_term_local_JSON = v1_pod_affinity_term_convertToJSON(v1_weighted_pod_affinity_term->pod_affinity_term);
     if(pod_affinity_term_local_JSON == NULL) {
     goto fail; //model
@@ -54,7 +53,6 @@ cJSON *v1_weighted_pod_affinity_term_convertToJSON(v1_weighted_pod_affinity_term
     if (!v1_weighted_pod_affinity_term->weight) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "weight", v1_weighted_pod_affinity_term->weight) == NULL) {
     goto fail; //Numeric
     }

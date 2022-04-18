@@ -56,31 +56,31 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
     cJSON *item = cJSON_CreateObject();
 
     // v1_fc_volume_source->fs_type
-    if(v1_fc_volume_source->fs_type) { 
+    if(v1_fc_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_fc_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_fc_volume_source->lun
-    if(v1_fc_volume_source->lun) { 
+    if(v1_fc_volume_source->lun) {
     if(cJSON_AddNumberToObject(item, "lun", v1_fc_volume_source->lun) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_fc_volume_source->read_only
-    if(v1_fc_volume_source->read_only) { 
+    if(v1_fc_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_fc_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_fc_volume_source->target_wwns
-    if(v1_fc_volume_source->target_wwns) { 
+    if(v1_fc_volume_source->target_wwns) {
     cJSON *target_wwns = cJSON_AddArrayToObject(item, "targetWWNs");
     if(target_wwns == NULL) {
         goto fail; //primitive container
@@ -93,11 +93,11 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_fc_volume_source->wwids
-    if(v1_fc_volume_source->wwids) { 
+    if(v1_fc_volume_source->wwids) {
     cJSON *wwids = cJSON_AddArrayToObject(item, "wwids");
     if(wwids == NULL) {
         goto fail; //primitive container
@@ -110,7 +110,7 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

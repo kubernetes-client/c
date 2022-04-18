@@ -48,35 +48,35 @@ cJSON *v1_list_meta_convertToJSON(v1_list_meta_t *v1_list_meta) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_list_meta->_continue
-    if(v1_list_meta->_continue) { 
+    if(v1_list_meta->_continue) {
     if(cJSON_AddStringToObject(item, "continue", v1_list_meta->_continue) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_list_meta->remaining_item_count
-    if(v1_list_meta->remaining_item_count) { 
+    if(v1_list_meta->remaining_item_count) {
     if(cJSON_AddNumberToObject(item, "remainingItemCount", v1_list_meta->remaining_item_count) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_list_meta->resource_version
-    if(v1_list_meta->resource_version) { 
+    if(v1_list_meta->resource_version) {
     if(cJSON_AddStringToObject(item, "resourceVersion", v1_list_meta->resource_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_list_meta->self_link
-    if(v1_list_meta->self_link) { 
+    if(v1_list_meta->self_link) {
     if(cJSON_AddStringToObject(item, "selfLink", v1_list_meta->self_link) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

@@ -52,23 +52,23 @@ cJSON *v1_lease_convertToJSON(v1_lease_t *v1_lease) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_lease->api_version
-    if(v1_lease->api_version) { 
+    if(v1_lease->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_lease->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_lease->kind
-    if(v1_lease->kind) { 
+    if(v1_lease->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_lease->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_lease->metadata
-    if(v1_lease->metadata) { 
+    if(v1_lease->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_lease->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -77,11 +77,11 @@ cJSON *v1_lease_convertToJSON(v1_lease_t *v1_lease) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_lease->spec
-    if(v1_lease->spec) { 
+    if(v1_lease->spec) {
     cJSON *spec_local_JSON = v1_lease_spec_convertToJSON(v1_lease->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -90,7 +90,7 @@ cJSON *v1_lease_convertToJSON(v1_lease_t *v1_lease) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

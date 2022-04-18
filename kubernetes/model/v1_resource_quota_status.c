@@ -52,7 +52,7 @@ cJSON *v1_resource_quota_status_convertToJSON(v1_resource_quota_status_t *v1_res
     cJSON *item = cJSON_CreateObject();
 
     // v1_resource_quota_status->hard
-    if(v1_resource_quota_status->hard) { 
+    if(v1_resource_quota_status->hard) {
     cJSON *hard = cJSON_AddObjectToObject(item, "hard");
     if(hard == NULL) {
         goto fail; //primitive map container
@@ -68,11 +68,11 @@ cJSON *v1_resource_quota_status_convertToJSON(v1_resource_quota_status_t *v1_res
         }
     }
     }
-     } 
+    }
 
 
     // v1_resource_quota_status->used
-    if(v1_resource_quota_status->used) { 
+    if(v1_resource_quota_status->used) {
     cJSON *used = cJSON_AddObjectToObject(item, "used");
     if(used == NULL) {
         goto fail; //primitive map container
@@ -88,7 +88,7 @@ cJSON *v1_resource_quota_status_convertToJSON(v1_resource_quota_status_t *v1_res
         }
     }
     }
-     } 
+    }
 
     return item;
 fail:

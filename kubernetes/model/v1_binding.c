@@ -52,23 +52,23 @@ cJSON *v1_binding_convertToJSON(v1_binding_t *v1_binding) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_binding->api_version
-    if(v1_binding->api_version) { 
+    if(v1_binding->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_binding->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_binding->kind
-    if(v1_binding->kind) { 
+    if(v1_binding->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_binding->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_binding->metadata
-    if(v1_binding->metadata) { 
+    if(v1_binding->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_binding->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -77,14 +77,13 @@ cJSON *v1_binding_convertToJSON(v1_binding_t *v1_binding) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_binding->target
     if (!v1_binding->target) {
         goto fail;
     }
-    
     cJSON *target_local_JSON = v1_object_reference_convertToJSON(v1_binding->target);
     if(target_local_JSON == NULL) {
     goto fail; //model

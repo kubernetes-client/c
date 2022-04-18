@@ -70,15 +70,15 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
     cJSON *item = cJSON_CreateObject();
 
     // v1_security_context->allow_privilege_escalation
-    if(v1_security_context->allow_privilege_escalation) { 
+    if(v1_security_context->allow_privilege_escalation) {
     if(cJSON_AddBoolToObject(item, "allowPrivilegeEscalation", v1_security_context->allow_privilege_escalation) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_security_context->capabilities
-    if(v1_security_context->capabilities) { 
+    if(v1_security_context->capabilities) {
     cJSON *capabilities_local_JSON = v1_capabilities_convertToJSON(v1_security_context->capabilities);
     if(capabilities_local_JSON == NULL) {
     goto fail; //model
@@ -87,59 +87,59 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_security_context->privileged
-    if(v1_security_context->privileged) { 
+    if(v1_security_context->privileged) {
     if(cJSON_AddBoolToObject(item, "privileged", v1_security_context->privileged) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_security_context->proc_mount
-    if(v1_security_context->proc_mount) { 
+    if(v1_security_context->proc_mount) {
     if(cJSON_AddStringToObject(item, "procMount", v1_security_context->proc_mount) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_security_context->read_only_root_filesystem
-    if(v1_security_context->read_only_root_filesystem) { 
+    if(v1_security_context->read_only_root_filesystem) {
     if(cJSON_AddBoolToObject(item, "readOnlyRootFilesystem", v1_security_context->read_only_root_filesystem) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_security_context->run_as_group
-    if(v1_security_context->run_as_group) { 
+    if(v1_security_context->run_as_group) {
     if(cJSON_AddNumberToObject(item, "runAsGroup", v1_security_context->run_as_group) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_security_context->run_as_non_root
-    if(v1_security_context->run_as_non_root) { 
+    if(v1_security_context->run_as_non_root) {
     if(cJSON_AddBoolToObject(item, "runAsNonRoot", v1_security_context->run_as_non_root) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_security_context->run_as_user
-    if(v1_security_context->run_as_user) { 
+    if(v1_security_context->run_as_user) {
     if(cJSON_AddNumberToObject(item, "runAsUser", v1_security_context->run_as_user) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_security_context->se_linux_options
-    if(v1_security_context->se_linux_options) { 
+    if(v1_security_context->se_linux_options) {
     cJSON *se_linux_options_local_JSON = v1_se_linux_options_convertToJSON(v1_security_context->se_linux_options);
     if(se_linux_options_local_JSON == NULL) {
     goto fail; //model
@@ -148,11 +148,11 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_security_context->seccomp_profile
-    if(v1_security_context->seccomp_profile) { 
+    if(v1_security_context->seccomp_profile) {
     cJSON *seccomp_profile_local_JSON = v1_seccomp_profile_convertToJSON(v1_security_context->seccomp_profile);
     if(seccomp_profile_local_JSON == NULL) {
     goto fail; //model
@@ -161,11 +161,11 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_security_context->windows_options
-    if(v1_security_context->windows_options) { 
+    if(v1_security_context->windows_options) {
     cJSON *windows_options_local_JSON = v1_windows_security_context_options_convertToJSON(v1_security_context->windows_options);
     if(windows_options_local_JSON == NULL) {
     goto fail; //model
@@ -174,7 +174,7 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

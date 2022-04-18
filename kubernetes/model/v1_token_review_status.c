@@ -51,7 +51,7 @@ cJSON *v1_token_review_status_convertToJSON(v1_token_review_status_t *v1_token_r
     cJSON *item = cJSON_CreateObject();
 
     // v1_token_review_status->audiences
-    if(v1_token_review_status->audiences) { 
+    if(v1_token_review_status->audiences) {
     cJSON *audiences = cJSON_AddArrayToObject(item, "audiences");
     if(audiences == NULL) {
         goto fail; //primitive container
@@ -64,27 +64,27 @@ cJSON *v1_token_review_status_convertToJSON(v1_token_review_status_t *v1_token_r
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_token_review_status->authenticated
-    if(v1_token_review_status->authenticated) { 
+    if(v1_token_review_status->authenticated) {
     if(cJSON_AddBoolToObject(item, "authenticated", v1_token_review_status->authenticated) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_token_review_status->error
-    if(v1_token_review_status->error) { 
+    if(v1_token_review_status->error) {
     if(cJSON_AddStringToObject(item, "error", v1_token_review_status->error) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_token_review_status->user
-    if(v1_token_review_status->user) { 
+    if(v1_token_review_status->user) {
     cJSON *user_local_JSON = v1_user_info_convertToJSON(v1_token_review_status->user);
     if(user_local_JSON == NULL) {
     goto fail; //model
@@ -93,7 +93,7 @@ cJSON *v1_token_review_status_convertToJSON(v1_token_review_status_t *v1_token_r
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

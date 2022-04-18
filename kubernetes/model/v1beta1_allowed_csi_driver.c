@@ -37,7 +37,6 @@ cJSON *v1beta1_allowed_csi_driver_convertToJSON(v1beta1_allowed_csi_driver_t *v1
     if (!v1beta1_allowed_csi_driver->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1beta1_allowed_csi_driver->name) == NULL) {
     goto fail; //String
     }

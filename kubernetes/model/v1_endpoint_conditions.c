@@ -34,27 +34,27 @@ cJSON *v1_endpoint_conditions_convertToJSON(v1_endpoint_conditions_t *v1_endpoin
     cJSON *item = cJSON_CreateObject();
 
     // v1_endpoint_conditions->ready
-    if(v1_endpoint_conditions->ready) { 
+    if(v1_endpoint_conditions->ready) {
     if(cJSON_AddBoolToObject(item, "ready", v1_endpoint_conditions->ready) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_endpoint_conditions->serving
-    if(v1_endpoint_conditions->serving) { 
+    if(v1_endpoint_conditions->serving) {
     if(cJSON_AddBoolToObject(item, "serving", v1_endpoint_conditions->serving) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_endpoint_conditions->terminating
-    if(v1_endpoint_conditions->terminating) { 
+    if(v1_endpoint_conditions->terminating) {
     if(cJSON_AddBoolToObject(item, "terminating", v1_endpoint_conditions->terminating) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

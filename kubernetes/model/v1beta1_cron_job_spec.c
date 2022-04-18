@@ -54,26 +54,25 @@ cJSON *v1beta1_cron_job_spec_convertToJSON(v1beta1_cron_job_spec_t *v1beta1_cron
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_cron_job_spec->concurrency_policy
-    if(v1beta1_cron_job_spec->concurrency_policy) { 
+    if(v1beta1_cron_job_spec->concurrency_policy) {
     if(cJSON_AddStringToObject(item, "concurrencyPolicy", v1beta1_cron_job_spec->concurrency_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_cron_job_spec->failed_jobs_history_limit
-    if(v1beta1_cron_job_spec->failed_jobs_history_limit) { 
+    if(v1beta1_cron_job_spec->failed_jobs_history_limit) {
     if(cJSON_AddNumberToObject(item, "failedJobsHistoryLimit", v1beta1_cron_job_spec->failed_jobs_history_limit) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1beta1_cron_job_spec->job_template
     if (!v1beta1_cron_job_spec->job_template) {
         goto fail;
     }
-    
     cJSON *job_template_local_JSON = v1beta1_job_template_spec_convertToJSON(v1beta1_cron_job_spec->job_template);
     if(job_template_local_JSON == NULL) {
     goto fail; //model
@@ -88,34 +87,33 @@ cJSON *v1beta1_cron_job_spec_convertToJSON(v1beta1_cron_job_spec_t *v1beta1_cron
     if (!v1beta1_cron_job_spec->schedule) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "schedule", v1beta1_cron_job_spec->schedule) == NULL) {
     goto fail; //String
     }
 
 
     // v1beta1_cron_job_spec->starting_deadline_seconds
-    if(v1beta1_cron_job_spec->starting_deadline_seconds) { 
+    if(v1beta1_cron_job_spec->starting_deadline_seconds) {
     if(cJSON_AddNumberToObject(item, "startingDeadlineSeconds", v1beta1_cron_job_spec->starting_deadline_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1beta1_cron_job_spec->successful_jobs_history_limit
-    if(v1beta1_cron_job_spec->successful_jobs_history_limit) { 
+    if(v1beta1_cron_job_spec->successful_jobs_history_limit) {
     if(cJSON_AddNumberToObject(item, "successfulJobsHistoryLimit", v1beta1_cron_job_spec->successful_jobs_history_limit) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1beta1_cron_job_spec->suspend
-    if(v1beta1_cron_job_spec->suspend) { 
+    if(v1beta1_cron_job_spec->suspend) {
     if(cJSON_AddBoolToObject(item, "suspend", v1beta1_cron_job_spec->suspend) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

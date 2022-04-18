@@ -70,59 +70,59 @@ cJSON *v1_resource_attributes_convertToJSON(v1_resource_attributes_t *v1_resourc
     cJSON *item = cJSON_CreateObject();
 
     // v1_resource_attributes->group
-    if(v1_resource_attributes->group) { 
+    if(v1_resource_attributes->group) {
     if(cJSON_AddStringToObject(item, "group", v1_resource_attributes->group) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_resource_attributes->name
-    if(v1_resource_attributes->name) { 
+    if(v1_resource_attributes->name) {
     if(cJSON_AddStringToObject(item, "name", v1_resource_attributes->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_resource_attributes->_namespace
-    if(v1_resource_attributes->_namespace) { 
+    if(v1_resource_attributes->_namespace) {
     if(cJSON_AddStringToObject(item, "namespace", v1_resource_attributes->_namespace) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_resource_attributes->resource
-    if(v1_resource_attributes->resource) { 
+    if(v1_resource_attributes->resource) {
     if(cJSON_AddStringToObject(item, "resource", v1_resource_attributes->resource) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_resource_attributes->subresource
-    if(v1_resource_attributes->subresource) { 
+    if(v1_resource_attributes->subresource) {
     if(cJSON_AddStringToObject(item, "subresource", v1_resource_attributes->subresource) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_resource_attributes->verb
-    if(v1_resource_attributes->verb) { 
+    if(v1_resource_attributes->verb) {
     if(cJSON_AddStringToObject(item, "verb", v1_resource_attributes->verb) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_resource_attributes->version
-    if(v1_resource_attributes->version) { 
+    if(v1_resource_attributes->version) {
     if(cJSON_AddStringToObject(item, "version", v1_resource_attributes->version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

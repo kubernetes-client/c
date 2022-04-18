@@ -52,23 +52,23 @@ cJSON *v1_network_policy_convertToJSON(v1_network_policy_t *v1_network_policy) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_network_policy->api_version
-    if(v1_network_policy->api_version) { 
+    if(v1_network_policy->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_network_policy->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_network_policy->kind
-    if(v1_network_policy->kind) { 
+    if(v1_network_policy->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_network_policy->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_network_policy->metadata
-    if(v1_network_policy->metadata) { 
+    if(v1_network_policy->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_network_policy->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -77,11 +77,11 @@ cJSON *v1_network_policy_convertToJSON(v1_network_policy_t *v1_network_policy) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_network_policy->spec
-    if(v1_network_policy->spec) { 
+    if(v1_network_policy->spec) {
     cJSON *spec_local_JSON = v1_network_policy_spec_convertToJSON(v1_network_policy->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -90,7 +90,7 @@ cJSON *v1_network_policy_convertToJSON(v1_network_policy_t *v1_network_policy) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

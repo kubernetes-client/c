@@ -66,43 +66,42 @@ cJSON *v1_container_port_convertToJSON(v1_container_port_t *v1_container_port) {
     if (!v1_container_port->container_port) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "containerPort", v1_container_port->container_port) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_container_port->host_ip
-    if(v1_container_port->host_ip) { 
+    if(v1_container_port->host_ip) {
     if(cJSON_AddStringToObject(item, "hostIP", v1_container_port->host_ip) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_container_port->host_port
-    if(v1_container_port->host_port) { 
+    if(v1_container_port->host_port) {
     if(cJSON_AddNumberToObject(item, "hostPort", v1_container_port->host_port) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_container_port->name
-    if(v1_container_port->name) { 
+    if(v1_container_port->name) {
     if(cJSON_AddStringToObject(item, "name", v1_container_port->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_container_port->protocol
-    
+    if(v1_container_port->protocol != kubernetes_v1_container_port_PROTOCOL_NULL) {
     if(cJSON_AddStringToObject(item, "protocol", protocolv1_container_port_ToString(v1_container_port->protocol)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
     return item;
 fail:

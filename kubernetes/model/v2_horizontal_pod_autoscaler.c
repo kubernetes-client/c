@@ -58,23 +58,23 @@ cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t
     cJSON *item = cJSON_CreateObject();
 
     // v2_horizontal_pod_autoscaler->api_version
-    if(v2_horizontal_pod_autoscaler->api_version) { 
+    if(v2_horizontal_pod_autoscaler->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v2_horizontal_pod_autoscaler->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v2_horizontal_pod_autoscaler->kind
-    if(v2_horizontal_pod_autoscaler->kind) { 
+    if(v2_horizontal_pod_autoscaler->kind) {
     if(cJSON_AddStringToObject(item, "kind", v2_horizontal_pod_autoscaler->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v2_horizontal_pod_autoscaler->metadata
-    if(v2_horizontal_pod_autoscaler->metadata) { 
+    if(v2_horizontal_pod_autoscaler->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v2_horizontal_pod_autoscaler->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2_horizontal_pod_autoscaler->spec
-    if(v2_horizontal_pod_autoscaler->spec) { 
+    if(v2_horizontal_pod_autoscaler->spec) {
     cJSON *spec_local_JSON = v2_horizontal_pod_autoscaler_spec_convertToJSON(v2_horizontal_pod_autoscaler->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2_horizontal_pod_autoscaler->status
-    if(v2_horizontal_pod_autoscaler->status) { 
+    if(v2_horizontal_pod_autoscaler->status) {
     cJSON *status_local_JSON = v2_horizontal_pod_autoscaler_status_convertToJSON(v2_horizontal_pod_autoscaler->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

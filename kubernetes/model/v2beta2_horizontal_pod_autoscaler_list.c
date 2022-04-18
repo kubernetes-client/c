@@ -55,18 +55,17 @@ cJSON *v2beta2_horizontal_pod_autoscaler_list_convertToJSON(v2beta2_horizontal_p
     cJSON *item = cJSON_CreateObject();
 
     // v2beta2_horizontal_pod_autoscaler_list->api_version
-    if(v2beta2_horizontal_pod_autoscaler_list->api_version) { 
+    if(v2beta2_horizontal_pod_autoscaler_list->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v2beta2_horizontal_pod_autoscaler_list->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v2beta2_horizontal_pod_autoscaler_list->items
     if (!v2beta2_horizontal_pod_autoscaler_list->items) {
         goto fail;
     }
-    
     cJSON *items = cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
@@ -85,15 +84,15 @@ cJSON *v2beta2_horizontal_pod_autoscaler_list_convertToJSON(v2beta2_horizontal_p
 
 
     // v2beta2_horizontal_pod_autoscaler_list->kind
-    if(v2beta2_horizontal_pod_autoscaler_list->kind) { 
+    if(v2beta2_horizontal_pod_autoscaler_list->kind) {
     if(cJSON_AddStringToObject(item, "kind", v2beta2_horizontal_pod_autoscaler_list->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v2beta2_horizontal_pod_autoscaler_list->metadata
-    if(v2beta2_horizontal_pod_autoscaler_list->metadata) { 
+    if(v2beta2_horizontal_pod_autoscaler_list->metadata) {
     cJSON *metadata_local_JSON = v1_list_meta_convertToJSON(v2beta2_horizontal_pod_autoscaler_list->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -102,7 +101,7 @@ cJSON *v2beta2_horizontal_pod_autoscaler_list_convertToJSON(v2beta2_horizontal_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

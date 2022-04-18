@@ -77,49 +77,50 @@ cJSON *v1_persistent_volume_claim_condition_convertToJSON(v1_persistent_volume_c
     cJSON *item = cJSON_CreateObject();
 
     // v1_persistent_volume_claim_condition->last_probe_time
-    if(v1_persistent_volume_claim_condition->last_probe_time) { 
+    if(v1_persistent_volume_claim_condition->last_probe_time) {
     if(cJSON_AddStringToObject(item, "lastProbeTime", v1_persistent_volume_claim_condition->last_probe_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_condition->last_transition_time
-    if(v1_persistent_volume_claim_condition->last_transition_time) { 
+    if(v1_persistent_volume_claim_condition->last_transition_time) {
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v1_persistent_volume_claim_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_condition->message
-    if(v1_persistent_volume_claim_condition->message) { 
+    if(v1_persistent_volume_claim_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1_persistent_volume_claim_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_condition->reason
-    if(v1_persistent_volume_claim_condition->reason) { 
+    if(v1_persistent_volume_claim_condition->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_persistent_volume_claim_condition->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_condition->status
     if (!v1_persistent_volume_claim_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v1_persistent_volume_claim_condition->status) == NULL) {
     goto fail; //String
     }
 
 
     // v1_persistent_volume_claim_condition->type
-    
+    if (kubernetes_v1_persistent_volume_claim_condition_TYPE_NULL == v1_persistent_volume_claim_condition->type) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "type", typev1_persistent_volume_claim_condition_ToString(v1_persistent_volume_claim_condition->type)) == NULL)
     {
     goto fail; //Enum

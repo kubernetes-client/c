@@ -64,7 +64,7 @@ cJSON *v2beta2_metric_status_convertToJSON(v2beta2_metric_status_t *v2beta2_metr
     cJSON *item = cJSON_CreateObject();
 
     // v2beta2_metric_status->container_resource
-    if(v2beta2_metric_status->container_resource) { 
+    if(v2beta2_metric_status->container_resource) {
     cJSON *container_resource_local_JSON = v2beta2_container_resource_metric_status_convertToJSON(v2beta2_metric_status->container_resource);
     if(container_resource_local_JSON == NULL) {
     goto fail; //model
@@ -73,11 +73,11 @@ cJSON *v2beta2_metric_status_convertToJSON(v2beta2_metric_status_t *v2beta2_metr
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2beta2_metric_status->external
-    if(v2beta2_metric_status->external) { 
+    if(v2beta2_metric_status->external) {
     cJSON *external_local_JSON = v2beta2_external_metric_status_convertToJSON(v2beta2_metric_status->external);
     if(external_local_JSON == NULL) {
     goto fail; //model
@@ -86,11 +86,11 @@ cJSON *v2beta2_metric_status_convertToJSON(v2beta2_metric_status_t *v2beta2_metr
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2beta2_metric_status->object
-    if(v2beta2_metric_status->object) { 
+    if(v2beta2_metric_status->object) {
     cJSON *object_local_JSON = v2beta2_object_metric_status_convertToJSON(v2beta2_metric_status->object);
     if(object_local_JSON == NULL) {
     goto fail; //model
@@ -99,11 +99,11 @@ cJSON *v2beta2_metric_status_convertToJSON(v2beta2_metric_status_t *v2beta2_metr
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2beta2_metric_status->pods
-    if(v2beta2_metric_status->pods) { 
+    if(v2beta2_metric_status->pods) {
     cJSON *pods_local_JSON = v2beta2_pods_metric_status_convertToJSON(v2beta2_metric_status->pods);
     if(pods_local_JSON == NULL) {
     goto fail; //model
@@ -112,11 +112,11 @@ cJSON *v2beta2_metric_status_convertToJSON(v2beta2_metric_status_t *v2beta2_metr
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2beta2_metric_status->resource
-    if(v2beta2_metric_status->resource) { 
+    if(v2beta2_metric_status->resource) {
     cJSON *resource_local_JSON = v2beta2_resource_metric_status_convertToJSON(v2beta2_metric_status->resource);
     if(resource_local_JSON == NULL) {
     goto fail; //model
@@ -125,14 +125,13 @@ cJSON *v2beta2_metric_status_convertToJSON(v2beta2_metric_status_t *v2beta2_metr
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2beta2_metric_status->type
     if (!v2beta2_metric_status->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v2beta2_metric_status->type) == NULL) {
     goto fail; //String
     }

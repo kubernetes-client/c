@@ -37,7 +37,7 @@ cJSON *v1beta1_endpoint_hints_convertToJSON(v1beta1_endpoint_hints_t *v1beta1_en
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_endpoint_hints->for_zones
-    if(v1beta1_endpoint_hints->for_zones) { 
+    if(v1beta1_endpoint_hints->for_zones) {
     cJSON *for_zones = cJSON_AddArrayToObject(item, "forZones");
     if(for_zones == NULL) {
     goto fail; //nonprimitive container
@@ -53,7 +53,7 @@ cJSON *v1beta1_endpoint_hints_convertToJSON(v1beta1_endpoint_hints_t *v1beta1_en
     cJSON_AddItemToArray(for_zones, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

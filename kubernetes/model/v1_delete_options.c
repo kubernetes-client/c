@@ -65,15 +65,15 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_delete_options->api_version
-    if(v1_delete_options->api_version) { 
+    if(v1_delete_options->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_delete_options->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_delete_options->dry_run
-    if(v1_delete_options->dry_run) { 
+    if(v1_delete_options->dry_run) {
     cJSON *dry_run = cJSON_AddArrayToObject(item, "dryRun");
     if(dry_run == NULL) {
         goto fail; //primitive container
@@ -86,35 +86,35 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_delete_options->grace_period_seconds
-    if(v1_delete_options->grace_period_seconds) { 
+    if(v1_delete_options->grace_period_seconds) {
     if(cJSON_AddNumberToObject(item, "gracePeriodSeconds", v1_delete_options->grace_period_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_delete_options->kind
-    if(v1_delete_options->kind) { 
+    if(v1_delete_options->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_delete_options->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_delete_options->orphan_dependents
-    if(v1_delete_options->orphan_dependents) { 
+    if(v1_delete_options->orphan_dependents) {
     if(cJSON_AddBoolToObject(item, "orphanDependents", v1_delete_options->orphan_dependents) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_delete_options->preconditions
-    if(v1_delete_options->preconditions) { 
+    if(v1_delete_options->preconditions) {
     cJSON *preconditions_local_JSON = v1_preconditions_convertToJSON(v1_delete_options->preconditions);
     if(preconditions_local_JSON == NULL) {
     goto fail; //model
@@ -123,15 +123,15 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_delete_options->propagation_policy
-    if(v1_delete_options->propagation_policy) { 
+    if(v1_delete_options->propagation_policy) {
     if(cJSON_AddStringToObject(item, "propagationPolicy", v1_delete_options->propagation_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

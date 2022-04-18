@@ -48,7 +48,7 @@ cJSON *v1_downward_api_volume_file_convertToJSON(v1_downward_api_volume_file_t *
     cJSON *item = cJSON_CreateObject();
 
     // v1_downward_api_volume_file->field_ref
-    if(v1_downward_api_volume_file->field_ref) { 
+    if(v1_downward_api_volume_file->field_ref) {
     cJSON *field_ref_local_JSON = v1_object_field_selector_convertToJSON(v1_downward_api_volume_file->field_ref);
     if(field_ref_local_JSON == NULL) {
     goto fail; //model
@@ -57,29 +57,28 @@ cJSON *v1_downward_api_volume_file_convertToJSON(v1_downward_api_volume_file_t *
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_downward_api_volume_file->mode
-    if(v1_downward_api_volume_file->mode) { 
+    if(v1_downward_api_volume_file->mode) {
     if(cJSON_AddNumberToObject(item, "mode", v1_downward_api_volume_file->mode) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_downward_api_volume_file->path
     if (!v1_downward_api_volume_file->path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "path", v1_downward_api_volume_file->path) == NULL) {
     goto fail; //String
     }
 
 
     // v1_downward_api_volume_file->resource_field_ref
-    if(v1_downward_api_volume_file->resource_field_ref) { 
+    if(v1_downward_api_volume_file->resource_field_ref) {
     cJSON *resource_field_ref_local_JSON = v1_resource_field_selector_convertToJSON(v1_downward_api_volume_file->resource_field_ref);
     if(resource_field_ref_local_JSON == NULL) {
     goto fail; //model
@@ -88,7 +87,7 @@ cJSON *v1_downward_api_volume_file_convertToJSON(v1_downward_api_volume_file_t *
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

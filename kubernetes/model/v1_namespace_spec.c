@@ -37,7 +37,7 @@ cJSON *v1_namespace_spec_convertToJSON(v1_namespace_spec_t *v1_namespace_spec) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_namespace_spec->finalizers
-    if(v1_namespace_spec->finalizers) { 
+    if(v1_namespace_spec->finalizers) {
     cJSON *finalizers = cJSON_AddArrayToObject(item, "finalizers");
     if(finalizers == NULL) {
         goto fail; //primitive container
@@ -50,7 +50,7 @@ cJSON *v1_namespace_spec_convertToJSON(v1_namespace_spec_t *v1_namespace_spec) {
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

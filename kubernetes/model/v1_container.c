@@ -195,7 +195,7 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_container->args
-    if(v1_container->args) { 
+    if(v1_container->args) {
     cJSON *args = cJSON_AddArrayToObject(item, "args");
     if(args == NULL) {
         goto fail; //primitive container
@@ -208,11 +208,11 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_container->command
-    if(v1_container->command) { 
+    if(v1_container->command) {
     cJSON *command = cJSON_AddArrayToObject(item, "command");
     if(command == NULL) {
         goto fail; //primitive container
@@ -225,11 +225,11 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_container->env
-    if(v1_container->env) { 
+    if(v1_container->env) {
     cJSON *env = cJSON_AddArrayToObject(item, "env");
     if(env == NULL) {
     goto fail; //nonprimitive container
@@ -245,11 +245,11 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     cJSON_AddItemToArray(env, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_container->env_from
-    if(v1_container->env_from) { 
+    if(v1_container->env_from) {
     cJSON *env_from = cJSON_AddArrayToObject(item, "envFrom");
     if(env_from == NULL) {
     goto fail; //nonprimitive container
@@ -265,28 +265,28 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     cJSON_AddItemToArray(env_from, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_container->image
-    if(v1_container->image) { 
+    if(v1_container->image) {
     if(cJSON_AddStringToObject(item, "image", v1_container->image) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_container->image_pull_policy
-    
+    if(v1_container->image_pull_policy != kubernetes_v1_container_IMAGEPULLPOLICY_NULL) {
     if(cJSON_AddStringToObject(item, "imagePullPolicy", image_pull_policyv1_container_ToString(v1_container->image_pull_policy)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_container->lifecycle
-    if(v1_container->lifecycle) { 
+    if(v1_container->lifecycle) {
     cJSON *lifecycle_local_JSON = v1_lifecycle_convertToJSON(v1_container->lifecycle);
     if(lifecycle_local_JSON == NULL) {
     goto fail; //model
@@ -295,11 +295,11 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_container->liveness_probe
-    if(v1_container->liveness_probe) { 
+    if(v1_container->liveness_probe) {
     cJSON *liveness_probe_local_JSON = v1_probe_convertToJSON(v1_container->liveness_probe);
     if(liveness_probe_local_JSON == NULL) {
     goto fail; //model
@@ -308,21 +308,20 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_container->name
     if (!v1_container->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_container->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_container->ports
-    if(v1_container->ports) { 
+    if(v1_container->ports) {
     cJSON *ports = cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
@@ -338,11 +337,11 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     cJSON_AddItemToArray(ports, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_container->readiness_probe
-    if(v1_container->readiness_probe) { 
+    if(v1_container->readiness_probe) {
     cJSON *readiness_probe_local_JSON = v1_probe_convertToJSON(v1_container->readiness_probe);
     if(readiness_probe_local_JSON == NULL) {
     goto fail; //model
@@ -351,11 +350,11 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_container->resources
-    if(v1_container->resources) { 
+    if(v1_container->resources) {
     cJSON *resources_local_JSON = v1_resource_requirements_convertToJSON(v1_container->resources);
     if(resources_local_JSON == NULL) {
     goto fail; //model
@@ -364,11 +363,11 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_container->security_context
-    if(v1_container->security_context) { 
+    if(v1_container->security_context) {
     cJSON *security_context_local_JSON = v1_security_context_convertToJSON(v1_container->security_context);
     if(security_context_local_JSON == NULL) {
     goto fail; //model
@@ -377,11 +376,11 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_container->startup_probe
-    if(v1_container->startup_probe) { 
+    if(v1_container->startup_probe) {
     cJSON *startup_probe_local_JSON = v1_probe_convertToJSON(v1_container->startup_probe);
     if(startup_probe_local_JSON == NULL) {
     goto fail; //model
@@ -390,52 +389,52 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_container->_stdin
-    if(v1_container->_stdin) { 
+    if(v1_container->_stdin) {
     if(cJSON_AddBoolToObject(item, "stdin", v1_container->_stdin) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_container->stdin_once
-    if(v1_container->stdin_once) { 
+    if(v1_container->stdin_once) {
     if(cJSON_AddBoolToObject(item, "stdinOnce", v1_container->stdin_once) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_container->termination_message_path
-    if(v1_container->termination_message_path) { 
+    if(v1_container->termination_message_path) {
     if(cJSON_AddStringToObject(item, "terminationMessagePath", v1_container->termination_message_path) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_container->termination_message_policy
-    
+    if(v1_container->termination_message_policy != kubernetes_v1_container_TERMINATIONMESSAGEPOLICY_NULL) {
     if(cJSON_AddStringToObject(item, "terminationMessagePolicy", termination_message_policyv1_container_ToString(v1_container->termination_message_policy)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_container->tty
-    if(v1_container->tty) { 
+    if(v1_container->tty) {
     if(cJSON_AddBoolToObject(item, "tty", v1_container->tty) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_container->volume_devices
-    if(v1_container->volume_devices) { 
+    if(v1_container->volume_devices) {
     cJSON *volume_devices = cJSON_AddArrayToObject(item, "volumeDevices");
     if(volume_devices == NULL) {
     goto fail; //nonprimitive container
@@ -451,11 +450,11 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     cJSON_AddItemToArray(volume_devices, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_container->volume_mounts
-    if(v1_container->volume_mounts) { 
+    if(v1_container->volume_mounts) {
     cJSON *volume_mounts = cJSON_AddArrayToObject(item, "volumeMounts");
     if(volume_mounts == NULL) {
     goto fail; //nonprimitive container
@@ -471,15 +470,15 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     cJSON_AddItemToArray(volume_mounts, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_container->working_dir
-    if(v1_container->working_dir) { 
+    if(v1_container->working_dir) {
     if(cJSON_AddStringToObject(item, "workingDir", v1_container->working_dir) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

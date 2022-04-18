@@ -75,7 +75,9 @@ cJSON *v1_scoped_resource_selector_requirement_convertToJSON(v1_scoped_resource_
     cJSON *item = cJSON_CreateObject();
 
     // v1_scoped_resource_selector_requirement->_operator
-    
+    if (kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_NULL == v1_scoped_resource_selector_requirement->_operator) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "operator", _operatorv1_scoped_resource_selector_requirement_ToString(v1_scoped_resource_selector_requirement->_operator)) == NULL)
     {
     goto fail; //Enum
@@ -83,7 +85,9 @@ cJSON *v1_scoped_resource_selector_requirement_convertToJSON(v1_scoped_resource_
 
 
     // v1_scoped_resource_selector_requirement->scope_name
-    
+    if (kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_NULL == v1_scoped_resource_selector_requirement->scope_name) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "scopeName", scope_namev1_scoped_resource_selector_requirement_ToString(v1_scoped_resource_selector_requirement->scope_name)) == NULL)
     {
     goto fail; //Enum
@@ -91,7 +95,7 @@ cJSON *v1_scoped_resource_selector_requirement_convertToJSON(v1_scoped_resource_
 
 
     // v1_scoped_resource_selector_requirement->values
-    if(v1_scoped_resource_selector_requirement->values) { 
+    if(v1_scoped_resource_selector_requirement->values) {
     cJSON *values = cJSON_AddArrayToObject(item, "values");
     if(values == NULL) {
         goto fail; //primitive container
@@ -104,7 +108,7 @@ cJSON *v1_scoped_resource_selector_requirement_convertToJSON(v1_scoped_resource_
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

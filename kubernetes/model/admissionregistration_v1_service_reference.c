@@ -51,7 +51,6 @@ cJSON *admissionregistration_v1_service_reference_convertToJSON(admissionregistr
     if (!admissionregistration_v1_service_reference->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", admissionregistration_v1_service_reference->name) == NULL) {
     goto fail; //String
     }
@@ -61,26 +60,25 @@ cJSON *admissionregistration_v1_service_reference_convertToJSON(admissionregistr
     if (!admissionregistration_v1_service_reference->_namespace) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "namespace", admissionregistration_v1_service_reference->_namespace) == NULL) {
     goto fail; //String
     }
 
 
     // admissionregistration_v1_service_reference->path
-    if(admissionregistration_v1_service_reference->path) { 
+    if(admissionregistration_v1_service_reference->path) {
     if(cJSON_AddStringToObject(item, "path", admissionregistration_v1_service_reference->path) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // admissionregistration_v1_service_reference->port
-    if(admissionregistration_v1_service_reference->port) { 
+    if(admissionregistration_v1_service_reference->port) {
     if(cJSON_AddNumberToObject(item, "port", admissionregistration_v1_service_reference->port) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

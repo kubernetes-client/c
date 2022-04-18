@@ -56,7 +56,7 @@ cJSON *v1_namespace_status_convertToJSON(v1_namespace_status_t *v1_namespace_sta
     cJSON *item = cJSON_CreateObject();
 
     // v1_namespace_status->conditions
-    if(v1_namespace_status->conditions) { 
+    if(v1_namespace_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -72,16 +72,16 @@ cJSON *v1_namespace_status_convertToJSON(v1_namespace_status_t *v1_namespace_sta
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_namespace_status->phase
-    
+    if(v1_namespace_status->phase != kubernetes_v1_namespace_status_PHASE_NULL) {
     if(cJSON_AddStringToObject(item, "phase", phasev1_namespace_status_ToString(v1_namespace_status->phase)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
     return item;
 fail:

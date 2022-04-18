@@ -39,18 +39,17 @@ cJSON *v1_persistent_volume_claim_volume_source_convertToJSON(v1_persistent_volu
     if (!v1_persistent_volume_claim_volume_source->claim_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "claimName", v1_persistent_volume_claim_volume_source->claim_name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_persistent_volume_claim_volume_source->read_only
-    if(v1_persistent_volume_claim_volume_source->read_only) { 
+    if(v1_persistent_volume_claim_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_persistent_volume_claim_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

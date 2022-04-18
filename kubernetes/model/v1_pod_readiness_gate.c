@@ -47,7 +47,9 @@ cJSON *v1_pod_readiness_gate_convertToJSON(v1_pod_readiness_gate_t *v1_pod_readi
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_readiness_gate->condition_type
-    
+    if (kubernetes_v1_pod_readiness_gate_CONDITIONTYPE_NULL == v1_pod_readiness_gate->condition_type) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "conditionType", condition_typev1_pod_readiness_gate_ToString(v1_pod_readiness_gate->condition_type)) == NULL)
     {
     goto fail; //Enum

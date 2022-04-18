@@ -49,7 +49,7 @@ cJSON *v1alpha1_scheduling_convertToJSON(v1alpha1_scheduling_t *v1alpha1_schedul
     cJSON *item = cJSON_CreateObject();
 
     // v1alpha1_scheduling->node_selector
-    if(v1alpha1_scheduling->node_selector) { 
+    if(v1alpha1_scheduling->node_selector) {
     cJSON *node_selector = cJSON_AddObjectToObject(item, "nodeSelector");
     if(node_selector == NULL) {
         goto fail; //primitive map container
@@ -65,11 +65,11 @@ cJSON *v1alpha1_scheduling_convertToJSON(v1alpha1_scheduling_t *v1alpha1_schedul
         }
     }
     }
-     } 
+    }
 
 
     // v1alpha1_scheduling->tolerations
-    if(v1alpha1_scheduling->tolerations) { 
+    if(v1alpha1_scheduling->tolerations) {
     cJSON *tolerations = cJSON_AddArrayToObject(item, "tolerations");
     if(tolerations == NULL) {
     goto fail; //nonprimitive container
@@ -85,7 +85,7 @@ cJSON *v1alpha1_scheduling_convertToJSON(v1alpha1_scheduling_t *v1alpha1_schedul
     cJSON_AddItemToArray(tolerations, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

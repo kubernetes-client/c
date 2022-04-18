@@ -77,49 +77,50 @@ cJSON *v1_job_condition_convertToJSON(v1_job_condition_t *v1_job_condition) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_job_condition->last_probe_time
-    if(v1_job_condition->last_probe_time) { 
+    if(v1_job_condition->last_probe_time) {
     if(cJSON_AddStringToObject(item, "lastProbeTime", v1_job_condition->last_probe_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_job_condition->last_transition_time
-    if(v1_job_condition->last_transition_time) { 
+    if(v1_job_condition->last_transition_time) {
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v1_job_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_job_condition->message
-    if(v1_job_condition->message) { 
+    if(v1_job_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1_job_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_job_condition->reason
-    if(v1_job_condition->reason) { 
+    if(v1_job_condition->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_job_condition->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_job_condition->status
     if (!v1_job_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v1_job_condition->status) == NULL) {
     goto fail; //String
     }
 
 
     // v1_job_condition->type
-    
+    if (kubernetes_v1_job_condition_TYPE_NULL == v1_job_condition->type) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "type", typev1_job_condition_ToString(v1_job_condition->type)) == NULL)
     {
     goto fail; //Enum

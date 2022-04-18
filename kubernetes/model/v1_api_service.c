@@ -58,23 +58,23 @@ cJSON *v1_api_service_convertToJSON(v1_api_service_t *v1_api_service) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_api_service->api_version
-    if(v1_api_service->api_version) { 
+    if(v1_api_service->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_api_service->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_service->kind
-    if(v1_api_service->kind) { 
+    if(v1_api_service->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_api_service->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_service->metadata
-    if(v1_api_service->metadata) { 
+    if(v1_api_service->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_api_service->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v1_api_service_convertToJSON(v1_api_service_t *v1_api_service) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_api_service->spec
-    if(v1_api_service->spec) { 
+    if(v1_api_service->spec) {
     cJSON *spec_local_JSON = v1_api_service_spec_convertToJSON(v1_api_service->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v1_api_service_convertToJSON(v1_api_service_t *v1_api_service) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_api_service->status
-    if(v1_api_service->status) { 
+    if(v1_api_service->status) {
     cJSON *status_local_JSON = v1_api_service_status_convertToJSON(v1_api_service->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v1_api_service_convertToJSON(v1_api_service_t *v1_api_service) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

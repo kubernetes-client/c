@@ -45,7 +45,7 @@ cJSON *v1_secret_projection_convertToJSON(v1_secret_projection_t *v1_secret_proj
     cJSON *item = cJSON_CreateObject();
 
     // v1_secret_projection->items
-    if(v1_secret_projection->items) { 
+    if(v1_secret_projection->items) {
     cJSON *items = cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
@@ -61,23 +61,23 @@ cJSON *v1_secret_projection_convertToJSON(v1_secret_projection_t *v1_secret_proj
     cJSON_AddItemToArray(items, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_secret_projection->name
-    if(v1_secret_projection->name) { 
+    if(v1_secret_projection->name) {
     if(cJSON_AddStringToObject(item, "name", v1_secret_projection->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_secret_projection->optional
-    if(v1_secret_projection->optional) { 
+    if(v1_secret_projection->optional) {
     if(cJSON_AddBoolToObject(item, "optional", v1_secret_projection->optional) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

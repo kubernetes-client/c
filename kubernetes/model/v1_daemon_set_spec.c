@@ -50,26 +50,25 @@ cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec
     cJSON *item = cJSON_CreateObject();
 
     // v1_daemon_set_spec->min_ready_seconds
-    if(v1_daemon_set_spec->min_ready_seconds) { 
+    if(v1_daemon_set_spec->min_ready_seconds) {
     if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_daemon_set_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_daemon_set_spec->revision_history_limit
-    if(v1_daemon_set_spec->revision_history_limit) { 
+    if(v1_daemon_set_spec->revision_history_limit) {
     if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_daemon_set_spec->revision_history_limit) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_daemon_set_spec->selector
     if (!v1_daemon_set_spec->selector) {
         goto fail;
     }
-    
     cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_daemon_set_spec->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
@@ -84,7 +83,6 @@ cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec
     if (!v1_daemon_set_spec->_template) {
         goto fail;
     }
-    
     cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_daemon_set_spec->_template);
     if(_template_local_JSON == NULL) {
     goto fail; //model
@@ -96,7 +94,7 @@ cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec
 
 
     // v1_daemon_set_spec->update_strategy
-    if(v1_daemon_set_spec->update_strategy) { 
+    if(v1_daemon_set_spec->update_strategy) {
     cJSON *update_strategy_local_JSON = v1_daemon_set_update_strategy_convertToJSON(v1_daemon_set_spec->update_strategy);
     if(update_strategy_local_JSON == NULL) {
     goto fail; //model
@@ -105,7 +103,7 @@ cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

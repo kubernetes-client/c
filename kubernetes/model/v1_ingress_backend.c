@@ -40,7 +40,7 @@ cJSON *v1_ingress_backend_convertToJSON(v1_ingress_backend_t *v1_ingress_backend
     cJSON *item = cJSON_CreateObject();
 
     // v1_ingress_backend->resource
-    if(v1_ingress_backend->resource) { 
+    if(v1_ingress_backend->resource) {
     cJSON *resource_local_JSON = v1_typed_local_object_reference_convertToJSON(v1_ingress_backend->resource);
     if(resource_local_JSON == NULL) {
     goto fail; //model
@@ -49,11 +49,11 @@ cJSON *v1_ingress_backend_convertToJSON(v1_ingress_backend_t *v1_ingress_backend
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ingress_backend->service
-    if(v1_ingress_backend->service) { 
+    if(v1_ingress_backend->service) {
     cJSON *service_local_JSON = v1_ingress_service_backend_convertToJSON(v1_ingress_backend->service);
     if(service_local_JSON == NULL) {
     goto fail; //model
@@ -62,7 +62,7 @@ cJSON *v1_ingress_backend_convertToJSON(v1_ingress_backend_t *v1_ingress_backend
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -40,7 +40,7 @@ cJSON *v1beta2_limit_response_convertToJSON(v1beta2_limit_response_t *v1beta2_li
     cJSON *item = cJSON_CreateObject();
 
     // v1beta2_limit_response->queuing
-    if(v1beta2_limit_response->queuing) { 
+    if(v1beta2_limit_response->queuing) {
     cJSON *queuing_local_JSON = v1beta2_queuing_configuration_convertToJSON(v1beta2_limit_response->queuing);
     if(queuing_local_JSON == NULL) {
     goto fail; //model
@@ -49,14 +49,13 @@ cJSON *v1beta2_limit_response_convertToJSON(v1beta2_limit_response_t *v1beta2_li
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta2_limit_response->type
     if (!v1beta2_limit_response->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v1beta2_limit_response->type) == NULL) {
     goto fail; //String
     }

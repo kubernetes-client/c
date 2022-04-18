@@ -55,18 +55,17 @@ cJSON *events_v1_event_list_convertToJSON(events_v1_event_list_t *events_v1_even
     cJSON *item = cJSON_CreateObject();
 
     // events_v1_event_list->api_version
-    if(events_v1_event_list->api_version) { 
+    if(events_v1_event_list->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", events_v1_event_list->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // events_v1_event_list->items
     if (!events_v1_event_list->items) {
         goto fail;
     }
-    
     cJSON *items = cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
@@ -85,15 +84,15 @@ cJSON *events_v1_event_list_convertToJSON(events_v1_event_list_t *events_v1_even
 
 
     // events_v1_event_list->kind
-    if(events_v1_event_list->kind) { 
+    if(events_v1_event_list->kind) {
     if(cJSON_AddStringToObject(item, "kind", events_v1_event_list->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // events_v1_event_list->metadata
-    if(events_v1_event_list->metadata) { 
+    if(events_v1_event_list->metadata) {
     cJSON *metadata_local_JSON = v1_list_meta_convertToJSON(events_v1_event_list->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -102,7 +101,7 @@ cJSON *events_v1_event_list_convertToJSON(events_v1_event_list_t *events_v1_even
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

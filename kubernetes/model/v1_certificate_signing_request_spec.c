@@ -84,15 +84,15 @@ cJSON *v1_certificate_signing_request_spec_convertToJSON(v1_certificate_signing_
     cJSON *item = cJSON_CreateObject();
 
     // v1_certificate_signing_request_spec->expiration_seconds
-    if(v1_certificate_signing_request_spec->expiration_seconds) { 
+    if(v1_certificate_signing_request_spec->expiration_seconds) {
     if(cJSON_AddNumberToObject(item, "expirationSeconds", v1_certificate_signing_request_spec->expiration_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_certificate_signing_request_spec->extra
-    if(v1_certificate_signing_request_spec->extra) { 
+    if(v1_certificate_signing_request_spec->extra) {
     cJSON *extra = cJSON_AddObjectToObject(item, "extra");
     if(extra == NULL) {
         goto fail; //primitive map container
@@ -104,11 +104,11 @@ cJSON *v1_certificate_signing_request_spec_convertToJSON(v1_certificate_signing_
         keyValuePair_t *localKeyValue = (keyValuePair_t*)extraListEntry->data;
     }
     }
-     } 
+    }
 
 
     // v1_certificate_signing_request_spec->groups
-    if(v1_certificate_signing_request_spec->groups) { 
+    if(v1_certificate_signing_request_spec->groups) {
     cJSON *groups = cJSON_AddArrayToObject(item, "groups");
     if(groups == NULL) {
         goto fail; //primitive container
@@ -121,14 +121,13 @@ cJSON *v1_certificate_signing_request_spec_convertToJSON(v1_certificate_signing_
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_certificate_signing_request_spec->request
     if (!v1_certificate_signing_request_spec->request) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "request", v1_certificate_signing_request_spec->request) == NULL) {
     goto fail; //ByteArray
     }
@@ -138,22 +137,21 @@ cJSON *v1_certificate_signing_request_spec_convertToJSON(v1_certificate_signing_
     if (!v1_certificate_signing_request_spec->signer_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "signerName", v1_certificate_signing_request_spec->signer_name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_certificate_signing_request_spec->uid
-    if(v1_certificate_signing_request_spec->uid) { 
+    if(v1_certificate_signing_request_spec->uid) {
     if(cJSON_AddStringToObject(item, "uid", v1_certificate_signing_request_spec->uid) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_certificate_signing_request_spec->usages
-    if(v1_certificate_signing_request_spec->usages) { 
+    if(v1_certificate_signing_request_spec->usages) {
     cJSON *usages = cJSON_AddArrayToObject(item, "usages");
     if(usages == NULL) {
         goto fail; //primitive container
@@ -166,15 +164,15 @@ cJSON *v1_certificate_signing_request_spec_convertToJSON(v1_certificate_signing_
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_certificate_signing_request_spec->username
-    if(v1_certificate_signing_request_spec->username) { 
+    if(v1_certificate_signing_request_spec->username) {
     if(cJSON_AddStringToObject(item, "username", v1_certificate_signing_request_spec->username) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

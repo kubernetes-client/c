@@ -45,26 +45,25 @@ cJSON *v1_secret_key_selector_convertToJSON(v1_secret_key_selector_t *v1_secret_
     if (!v1_secret_key_selector->key) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "key", v1_secret_key_selector->key) == NULL) {
     goto fail; //String
     }
 
 
     // v1_secret_key_selector->name
-    if(v1_secret_key_selector->name) { 
+    if(v1_secret_key_selector->name) {
     if(cJSON_AddStringToObject(item, "name", v1_secret_key_selector->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_secret_key_selector->optional
-    if(v1_secret_key_selector->optional) { 
+    if(v1_secret_key_selector->optional) {
     if(cJSON_AddBoolToObject(item, "optional", v1_secret_key_selector->optional) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

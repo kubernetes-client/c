@@ -34,27 +34,27 @@ cJSON *v1beta2_queuing_configuration_convertToJSON(v1beta2_queuing_configuration
     cJSON *item = cJSON_CreateObject();
 
     // v1beta2_queuing_configuration->hand_size
-    if(v1beta2_queuing_configuration->hand_size) { 
+    if(v1beta2_queuing_configuration->hand_size) {
     if(cJSON_AddNumberToObject(item, "handSize", v1beta2_queuing_configuration->hand_size) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1beta2_queuing_configuration->queue_length_limit
-    if(v1beta2_queuing_configuration->queue_length_limit) { 
+    if(v1beta2_queuing_configuration->queue_length_limit) {
     if(cJSON_AddNumberToObject(item, "queueLengthLimit", v1beta2_queuing_configuration->queue_length_limit) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1beta2_queuing_configuration->queues
-    if(v1beta2_queuing_configuration->queues) { 
+    if(v1beta2_queuing_configuration->queues) {
     if(cJSON_AddNumberToObject(item, "queues", v1beta2_queuing_configuration->queues) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

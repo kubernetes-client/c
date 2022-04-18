@@ -80,44 +80,42 @@ cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_s
     cJSON *item = cJSON_CreateObject();
 
     // v1_scale_io_volume_source->fs_type
-    if(v1_scale_io_volume_source->fs_type) { 
+    if(v1_scale_io_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_scale_io_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_scale_io_volume_source->gateway
     if (!v1_scale_io_volume_source->gateway) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "gateway", v1_scale_io_volume_source->gateway) == NULL) {
     goto fail; //String
     }
 
 
     // v1_scale_io_volume_source->protection_domain
-    if(v1_scale_io_volume_source->protection_domain) { 
+    if(v1_scale_io_volume_source->protection_domain) {
     if(cJSON_AddStringToObject(item, "protectionDomain", v1_scale_io_volume_source->protection_domain) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_scale_io_volume_source->read_only
-    if(v1_scale_io_volume_source->read_only) { 
+    if(v1_scale_io_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_scale_io_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_scale_io_volume_source->secret_ref
     if (!v1_scale_io_volume_source->secret_ref) {
         goto fail;
     }
-    
     cJSON *secret_ref_local_JSON = v1_local_object_reference_convertToJSON(v1_scale_io_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -129,45 +127,44 @@ cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_s
 
 
     // v1_scale_io_volume_source->ssl_enabled
-    if(v1_scale_io_volume_source->ssl_enabled) { 
+    if(v1_scale_io_volume_source->ssl_enabled) {
     if(cJSON_AddBoolToObject(item, "sslEnabled", v1_scale_io_volume_source->ssl_enabled) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_scale_io_volume_source->storage_mode
-    if(v1_scale_io_volume_source->storage_mode) { 
+    if(v1_scale_io_volume_source->storage_mode) {
     if(cJSON_AddStringToObject(item, "storageMode", v1_scale_io_volume_source->storage_mode) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_scale_io_volume_source->storage_pool
-    if(v1_scale_io_volume_source->storage_pool) { 
+    if(v1_scale_io_volume_source->storage_pool) {
     if(cJSON_AddStringToObject(item, "storagePool", v1_scale_io_volume_source->storage_pool) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_scale_io_volume_source->system
     if (!v1_scale_io_volume_source->system) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "system", v1_scale_io_volume_source->system) == NULL) {
     goto fail; //String
     }
 
 
     // v1_scale_io_volume_source->volume_name
-    if(v1_scale_io_volume_source->volume_name) { 
+    if(v1_scale_io_volume_source->volume_name) {
     if(cJSON_AddStringToObject(item, "volumeName", v1_scale_io_volume_source->volume_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

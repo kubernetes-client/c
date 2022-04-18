@@ -37,7 +37,7 @@ cJSON *v1beta1_priority_level_configuration_status_convertToJSON(v1beta1_priorit
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_priority_level_configuration_status->conditions
-    if(v1beta1_priority_level_configuration_status->conditions) { 
+    if(v1beta1_priority_level_configuration_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -53,7 +53,7 @@ cJSON *v1beta1_priority_level_configuration_status_convertToJSON(v1beta1_priorit
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

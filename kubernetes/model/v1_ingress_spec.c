@@ -58,7 +58,7 @@ cJSON *v1_ingress_spec_convertToJSON(v1_ingress_spec_t *v1_ingress_spec) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_ingress_spec->default_backend
-    if(v1_ingress_spec->default_backend) { 
+    if(v1_ingress_spec->default_backend) {
     cJSON *default_backend_local_JSON = v1_ingress_backend_convertToJSON(v1_ingress_spec->default_backend);
     if(default_backend_local_JSON == NULL) {
     goto fail; //model
@@ -67,19 +67,19 @@ cJSON *v1_ingress_spec_convertToJSON(v1_ingress_spec_t *v1_ingress_spec) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ingress_spec->ingress_class_name
-    if(v1_ingress_spec->ingress_class_name) { 
+    if(v1_ingress_spec->ingress_class_name) {
     if(cJSON_AddStringToObject(item, "ingressClassName", v1_ingress_spec->ingress_class_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ingress_spec->rules
-    if(v1_ingress_spec->rules) { 
+    if(v1_ingress_spec->rules) {
     cJSON *rules = cJSON_AddArrayToObject(item, "rules");
     if(rules == NULL) {
     goto fail; //nonprimitive container
@@ -95,11 +95,11 @@ cJSON *v1_ingress_spec_convertToJSON(v1_ingress_spec_t *v1_ingress_spec) {
     cJSON_AddItemToArray(rules, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_ingress_spec->tls
-    if(v1_ingress_spec->tls) { 
+    if(v1_ingress_spec->tls) {
     cJSON *tls = cJSON_AddArrayToObject(item, "tls");
     if(tls == NULL) {
     goto fail; //nonprimitive container
@@ -115,7 +115,7 @@ cJSON *v1_ingress_spec_convertToJSON(v1_ingress_spec_t *v1_ingress_spec) {
     cJSON_AddItemToArray(tls, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

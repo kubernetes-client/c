@@ -43,7 +43,7 @@ cJSON *v1_webhook_conversion_convertToJSON(v1_webhook_conversion_t *v1_webhook_c
     cJSON *item = cJSON_CreateObject();
 
     // v1_webhook_conversion->client_config
-    if(v1_webhook_conversion->client_config) { 
+    if(v1_webhook_conversion->client_config) {
     cJSON *client_config_local_JSON = apiextensions_v1_webhook_client_config_convertToJSON(v1_webhook_conversion->client_config);
     if(client_config_local_JSON == NULL) {
     goto fail; //model
@@ -52,14 +52,13 @@ cJSON *v1_webhook_conversion_convertToJSON(v1_webhook_conversion_t *v1_webhook_c
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_webhook_conversion->conversion_review_versions
     if (!v1_webhook_conversion->conversion_review_versions) {
         goto fail;
     }
-    
     cJSON *conversion_review_versions = cJSON_AddArrayToObject(item, "conversionReviewVersions");
     if(conversion_review_versions == NULL) {
         goto fail; //primitive container

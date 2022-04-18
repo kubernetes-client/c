@@ -73,7 +73,7 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
     cJSON *item = cJSON_CreateObject();
 
     // v1_subject_access_review_spec->extra
-    if(v1_subject_access_review_spec->extra) { 
+    if(v1_subject_access_review_spec->extra) {
     cJSON *extra = cJSON_AddObjectToObject(item, "extra");
     if(extra == NULL) {
         goto fail; //primitive map container
@@ -85,11 +85,11 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
         keyValuePair_t *localKeyValue = (keyValuePair_t*)extraListEntry->data;
     }
     }
-     } 
+    }
 
 
     // v1_subject_access_review_spec->groups
-    if(v1_subject_access_review_spec->groups) { 
+    if(v1_subject_access_review_spec->groups) {
     cJSON *groups = cJSON_AddArrayToObject(item, "groups");
     if(groups == NULL) {
         goto fail; //primitive container
@@ -102,11 +102,11 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_subject_access_review_spec->non_resource_attributes
-    if(v1_subject_access_review_spec->non_resource_attributes) { 
+    if(v1_subject_access_review_spec->non_resource_attributes) {
     cJSON *non_resource_attributes_local_JSON = v1_non_resource_attributes_convertToJSON(v1_subject_access_review_spec->non_resource_attributes);
     if(non_resource_attributes_local_JSON == NULL) {
     goto fail; //model
@@ -115,11 +115,11 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_subject_access_review_spec->resource_attributes
-    if(v1_subject_access_review_spec->resource_attributes) { 
+    if(v1_subject_access_review_spec->resource_attributes) {
     cJSON *resource_attributes_local_JSON = v1_resource_attributes_convertToJSON(v1_subject_access_review_spec->resource_attributes);
     if(resource_attributes_local_JSON == NULL) {
     goto fail; //model
@@ -128,23 +128,23 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_subject_access_review_spec->uid
-    if(v1_subject_access_review_spec->uid) { 
+    if(v1_subject_access_review_spec->uid) {
     if(cJSON_AddStringToObject(item, "uid", v1_subject_access_review_spec->uid) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_subject_access_review_spec->user
-    if(v1_subject_access_review_spec->user) { 
+    if(v1_subject_access_review_spec->user) {
     if(cJSON_AddStringToObject(item, "user", v1_subject_access_review_spec->user) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

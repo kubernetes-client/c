@@ -40,19 +40,19 @@ cJSON *v1_stateful_set_persistent_volume_claim_retention_policy_convertToJSON(v1
     cJSON *item = cJSON_CreateObject();
 
     // v1_stateful_set_persistent_volume_claim_retention_policy->when_deleted
-    if(v1_stateful_set_persistent_volume_claim_retention_policy->when_deleted) { 
+    if(v1_stateful_set_persistent_volume_claim_retention_policy->when_deleted) {
     if(cJSON_AddStringToObject(item, "whenDeleted", v1_stateful_set_persistent_volume_claim_retention_policy->when_deleted) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_stateful_set_persistent_volume_claim_retention_policy->when_scaled
-    if(v1_stateful_set_persistent_volume_claim_retention_policy->when_scaled) { 
+    if(v1_stateful_set_persistent_volume_claim_retention_policy->when_scaled) {
     if(cJSON_AddStringToObject(item, "whenScaled", v1_stateful_set_persistent_volume_claim_retention_policy->when_scaled) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

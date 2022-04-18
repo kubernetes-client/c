@@ -78,47 +78,47 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_security_context->fs_group
-    if(v1_pod_security_context->fs_group) { 
+    if(v1_pod_security_context->fs_group) {
     if(cJSON_AddNumberToObject(item, "fsGroup", v1_pod_security_context->fs_group) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_pod_security_context->fs_group_change_policy
-    if(v1_pod_security_context->fs_group_change_policy) { 
+    if(v1_pod_security_context->fs_group_change_policy) {
     if(cJSON_AddStringToObject(item, "fsGroupChangePolicy", v1_pod_security_context->fs_group_change_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_security_context->run_as_group
-    if(v1_pod_security_context->run_as_group) { 
+    if(v1_pod_security_context->run_as_group) {
     if(cJSON_AddNumberToObject(item, "runAsGroup", v1_pod_security_context->run_as_group) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_pod_security_context->run_as_non_root
-    if(v1_pod_security_context->run_as_non_root) { 
+    if(v1_pod_security_context->run_as_non_root) {
     if(cJSON_AddBoolToObject(item, "runAsNonRoot", v1_pod_security_context->run_as_non_root) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_pod_security_context->run_as_user
-    if(v1_pod_security_context->run_as_user) { 
+    if(v1_pod_security_context->run_as_user) {
     if(cJSON_AddNumberToObject(item, "runAsUser", v1_pod_security_context->run_as_user) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_pod_security_context->se_linux_options
-    if(v1_pod_security_context->se_linux_options) { 
+    if(v1_pod_security_context->se_linux_options) {
     cJSON *se_linux_options_local_JSON = v1_se_linux_options_convertToJSON(v1_pod_security_context->se_linux_options);
     if(se_linux_options_local_JSON == NULL) {
     goto fail; //model
@@ -127,11 +127,11 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_security_context->seccomp_profile
-    if(v1_pod_security_context->seccomp_profile) { 
+    if(v1_pod_security_context->seccomp_profile) {
     cJSON *seccomp_profile_local_JSON = v1_seccomp_profile_convertToJSON(v1_pod_security_context->seccomp_profile);
     if(seccomp_profile_local_JSON == NULL) {
     goto fail; //model
@@ -140,11 +140,11 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_security_context->supplemental_groups
-    if(v1_pod_security_context->supplemental_groups) { 
+    if(v1_pod_security_context->supplemental_groups) {
     cJSON *supplemental_groups = cJSON_AddArrayToObject(item, "supplementalGroups");
     if(supplemental_groups == NULL) {
         goto fail; //primitive container
@@ -157,11 +157,11 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_pod_security_context->sysctls
-    if(v1_pod_security_context->sysctls) { 
+    if(v1_pod_security_context->sysctls) {
     cJSON *sysctls = cJSON_AddArrayToObject(item, "sysctls");
     if(sysctls == NULL) {
     goto fail; //nonprimitive container
@@ -177,11 +177,11 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
     cJSON_AddItemToArray(sysctls, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_security_context->windows_options
-    if(v1_pod_security_context->windows_options) { 
+    if(v1_pod_security_context->windows_options) {
     cJSON *windows_options_local_JSON = v1_windows_security_context_options_convertToJSON(v1_pod_security_context->windows_options);
     if(windows_options_local_JSON == NULL) {
     goto fail; //model
@@ -190,7 +190,7 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -70,23 +70,23 @@ cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_manag
     cJSON *item = cJSON_CreateObject();
 
     // v1_managed_fields_entry->api_version
-    if(v1_managed_fields_entry->api_version) { 
+    if(v1_managed_fields_entry->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_managed_fields_entry->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_managed_fields_entry->fields_type
-    if(v1_managed_fields_entry->fields_type) { 
+    if(v1_managed_fields_entry->fields_type) {
     if(cJSON_AddStringToObject(item, "fieldsType", v1_managed_fields_entry->fields_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_managed_fields_entry->fields_v1
-    if(v1_managed_fields_entry->fields_v1) { 
+    if(v1_managed_fields_entry->fields_v1) {
     cJSON *fields_v1_object = object_convertToJSON(v1_managed_fields_entry->fields_v1);
     if(fields_v1_object == NULL) {
     goto fail; //model
@@ -95,39 +95,39 @@ cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_manag
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_managed_fields_entry->manager
-    if(v1_managed_fields_entry->manager) { 
+    if(v1_managed_fields_entry->manager) {
     if(cJSON_AddStringToObject(item, "manager", v1_managed_fields_entry->manager) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_managed_fields_entry->operation
-    if(v1_managed_fields_entry->operation) { 
+    if(v1_managed_fields_entry->operation) {
     if(cJSON_AddStringToObject(item, "operation", v1_managed_fields_entry->operation) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_managed_fields_entry->subresource
-    if(v1_managed_fields_entry->subresource) { 
+    if(v1_managed_fields_entry->subresource) {
     if(cJSON_AddStringToObject(item, "subresource", v1_managed_fields_entry->subresource) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_managed_fields_entry->time
-    if(v1_managed_fields_entry->time) { 
+    if(v1_managed_fields_entry->time) {
     if(cJSON_AddStringToObject(item, "time", v1_managed_fields_entry->time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
     return item;
 fail:

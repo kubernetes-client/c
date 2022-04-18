@@ -43,7 +43,6 @@ cJSON *v1_server_address_by_client_cidr_convertToJSON(v1_server_address_by_clien
     if (!v1_server_address_by_client_cidr->client_cidr) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "clientCIDR", v1_server_address_by_client_cidr->client_cidr) == NULL) {
     goto fail; //String
     }
@@ -53,7 +52,6 @@ cJSON *v1_server_address_by_client_cidr_convertToJSON(v1_server_address_by_clien
     if (!v1_server_address_by_client_cidr->server_address) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "serverAddress", v1_server_address_by_client_cidr->server_address) == NULL) {
     goto fail; //String
     }

@@ -58,23 +58,23 @@ cJSON *v1_custom_resource_definition_convertToJSON(v1_custom_resource_definition
     cJSON *item = cJSON_CreateObject();
 
     // v1_custom_resource_definition->api_version
-    if(v1_custom_resource_definition->api_version) { 
+    if(v1_custom_resource_definition->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_custom_resource_definition->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition->kind
-    if(v1_custom_resource_definition->kind) { 
+    if(v1_custom_resource_definition->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_custom_resource_definition->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition->metadata
-    if(v1_custom_resource_definition->metadata) { 
+    if(v1_custom_resource_definition->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_custom_resource_definition->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,14 +83,13 @@ cJSON *v1_custom_resource_definition_convertToJSON(v1_custom_resource_definition
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition->spec
     if (!v1_custom_resource_definition->spec) {
         goto fail;
     }
-    
     cJSON *spec_local_JSON = v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_definition->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -102,7 +101,7 @@ cJSON *v1_custom_resource_definition_convertToJSON(v1_custom_resource_definition
 
 
     // v1_custom_resource_definition->status
-    if(v1_custom_resource_definition->status) { 
+    if(v1_custom_resource_definition->status) {
     cJSON *status_local_JSON = v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_definition->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -111,7 +110,7 @@ cJSON *v1_custom_resource_definition_convertToJSON(v1_custom_resource_definition
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

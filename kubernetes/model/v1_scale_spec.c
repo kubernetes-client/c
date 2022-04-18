@@ -30,11 +30,11 @@ cJSON *v1_scale_spec_convertToJSON(v1_scale_spec_t *v1_scale_spec) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_scale_spec->replicas
-    if(v1_scale_spec->replicas) { 
+    if(v1_scale_spec->replicas) {
     if(cJSON_AddNumberToObject(item, "replicas", v1_scale_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

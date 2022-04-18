@@ -43,14 +43,13 @@ cJSON *v1_ingress_service_backend_convertToJSON(v1_ingress_service_backend_t *v1
     if (!v1_ingress_service_backend->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_ingress_service_backend->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_ingress_service_backend->port
-    if(v1_ingress_service_backend->port) { 
+    if(v1_ingress_service_backend->port) {
     cJSON *port_local_JSON = v1_service_backend_port_convertToJSON(v1_ingress_service_backend->port);
     if(port_local_JSON == NULL) {
     goto fail; //model
@@ -59,7 +58,7 @@ cJSON *v1_ingress_service_backend_convertToJSON(v1_ingress_service_backend_t *v1
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

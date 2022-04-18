@@ -70,18 +70,17 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     cJSON *item = cJSON_CreateObject();
 
     // v1_container_status->container_id
-    if(v1_container_status->container_id) { 
+    if(v1_container_status->container_id) {
     if(cJSON_AddStringToObject(item, "containerID", v1_container_status->container_id) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_container_status->image
     if (!v1_container_status->image) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "image", v1_container_status->image) == NULL) {
     goto fail; //String
     }
@@ -91,14 +90,13 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if (!v1_container_status->image_id) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "imageID", v1_container_status->image_id) == NULL) {
     goto fail; //String
     }
 
 
     // v1_container_status->last_state
-    if(v1_container_status->last_state) { 
+    if(v1_container_status->last_state) {
     cJSON *last_state_local_JSON = v1_container_state_convertToJSON(v1_container_status->last_state);
     if(last_state_local_JSON == NULL) {
     goto fail; //model
@@ -107,14 +105,13 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_container_status->name
     if (!v1_container_status->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_container_status->name) == NULL) {
     goto fail; //String
     }
@@ -124,7 +121,6 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if (!v1_container_status->ready) {
         goto fail;
     }
-    
     if(cJSON_AddBoolToObject(item, "ready", v1_container_status->ready) == NULL) {
     goto fail; //Bool
     }
@@ -134,22 +130,21 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if (!v1_container_status->restart_count) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "restartCount", v1_container_status->restart_count) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_container_status->started
-    if(v1_container_status->started) { 
+    if(v1_container_status->started) {
     if(cJSON_AddBoolToObject(item, "started", v1_container_status->started) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_container_status->state
-    if(v1_container_status->state) { 
+    if(v1_container_status->state) {
     cJSON *state_local_JSON = v1_container_state_convertToJSON(v1_container_status->state);
     if(state_local_JSON == NULL) {
     goto fail; //model
@@ -158,7 +153,7 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

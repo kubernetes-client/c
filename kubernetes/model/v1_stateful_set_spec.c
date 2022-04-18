@@ -92,15 +92,15 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     cJSON *item = cJSON_CreateObject();
 
     // v1_stateful_set_spec->min_ready_seconds
-    if(v1_stateful_set_spec->min_ready_seconds) { 
+    if(v1_stateful_set_spec->min_ready_seconds) {
     if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_stateful_set_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_stateful_set_spec->persistent_volume_claim_retention_policy
-    if(v1_stateful_set_spec->persistent_volume_claim_retention_policy) { 
+    if(v1_stateful_set_spec->persistent_volume_claim_retention_policy) {
     cJSON *persistent_volume_claim_retention_policy_local_JSON = v1_stateful_set_persistent_volume_claim_retention_policy_convertToJSON(v1_stateful_set_spec->persistent_volume_claim_retention_policy);
     if(persistent_volume_claim_retention_policy_local_JSON == NULL) {
     goto fail; //model
@@ -109,39 +109,38 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_stateful_set_spec->pod_management_policy
-    
+    if(v1_stateful_set_spec->pod_management_policy != kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_NULL) {
     if(cJSON_AddStringToObject(item, "podManagementPolicy", pod_management_policyv1_stateful_set_spec_ToString(v1_stateful_set_spec->pod_management_policy)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_stateful_set_spec->replicas
-    if(v1_stateful_set_spec->replicas) { 
+    if(v1_stateful_set_spec->replicas) {
     if(cJSON_AddNumberToObject(item, "replicas", v1_stateful_set_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_stateful_set_spec->revision_history_limit
-    if(v1_stateful_set_spec->revision_history_limit) { 
+    if(v1_stateful_set_spec->revision_history_limit) {
     if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_stateful_set_spec->revision_history_limit) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_stateful_set_spec->selector
     if (!v1_stateful_set_spec->selector) {
         goto fail;
     }
-    
     cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_stateful_set_spec->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
@@ -156,7 +155,6 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     if (!v1_stateful_set_spec->service_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "serviceName", v1_stateful_set_spec->service_name) == NULL) {
     goto fail; //String
     }
@@ -166,7 +164,6 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     if (!v1_stateful_set_spec->_template) {
         goto fail;
     }
-    
     cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_stateful_set_spec->_template);
     if(_template_local_JSON == NULL) {
     goto fail; //model
@@ -178,7 +175,7 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
 
     // v1_stateful_set_spec->update_strategy
-    if(v1_stateful_set_spec->update_strategy) { 
+    if(v1_stateful_set_spec->update_strategy) {
     cJSON *update_strategy_local_JSON = v1_stateful_set_update_strategy_convertToJSON(v1_stateful_set_spec->update_strategy);
     if(update_strategy_local_JSON == NULL) {
     goto fail; //model
@@ -187,11 +184,11 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_stateful_set_spec->volume_claim_templates
-    if(v1_stateful_set_spec->volume_claim_templates) { 
+    if(v1_stateful_set_spec->volume_claim_templates) {
     cJSON *volume_claim_templates = cJSON_AddArrayToObject(item, "volumeClaimTemplates");
     if(volume_claim_templates == NULL) {
     goto fail; //nonprimitive container
@@ -207,7 +204,7 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     cJSON_AddItemToArray(volume_claim_templates, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

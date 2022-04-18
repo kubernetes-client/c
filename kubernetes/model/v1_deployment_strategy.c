@@ -53,7 +53,7 @@ cJSON *v1_deployment_strategy_convertToJSON(v1_deployment_strategy_t *v1_deploym
     cJSON *item = cJSON_CreateObject();
 
     // v1_deployment_strategy->rolling_update
-    if(v1_deployment_strategy->rolling_update) { 
+    if(v1_deployment_strategy->rolling_update) {
     cJSON *rolling_update_local_JSON = v1_rolling_update_deployment_convertToJSON(v1_deployment_strategy->rolling_update);
     if(rolling_update_local_JSON == NULL) {
     goto fail; //model
@@ -62,16 +62,16 @@ cJSON *v1_deployment_strategy_convertToJSON(v1_deployment_strategy_t *v1_deploym
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_deployment_strategy->type
-    
+    if(v1_deployment_strategy->type != kubernetes_v1_deployment_strategy_TYPE_NULL) {
     if(cJSON_AddStringToObject(item, "type", typev1_deployment_strategy_ToString(v1_deployment_strategy->type)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
     return item;
 fail:

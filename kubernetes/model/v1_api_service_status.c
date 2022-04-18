@@ -37,7 +37,7 @@ cJSON *v1_api_service_status_convertToJSON(v1_api_service_status_t *v1_api_servi
     cJSON *item = cJSON_CreateObject();
 
     // v1_api_service_status->conditions
-    if(v1_api_service_status->conditions) { 
+    if(v1_api_service_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -53,7 +53,7 @@ cJSON *v1_api_service_status_convertToJSON(v1_api_service_status_t *v1_api_servi
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

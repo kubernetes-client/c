@@ -42,18 +42,17 @@ cJSON *v1_azure_file_volume_source_convertToJSON(v1_azure_file_volume_source_t *
     cJSON *item = cJSON_CreateObject();
 
     // v1_azure_file_volume_source->read_only
-    if(v1_azure_file_volume_source->read_only) { 
+    if(v1_azure_file_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_azure_file_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_azure_file_volume_source->secret_name
     if (!v1_azure_file_volume_source->secret_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "secretName", v1_azure_file_volume_source->secret_name) == NULL) {
     goto fail; //String
     }
@@ -63,7 +62,6 @@ cJSON *v1_azure_file_volume_source_convertToJSON(v1_azure_file_volume_source_t *
     if (!v1_azure_file_volume_source->share_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "shareName", v1_azure_file_volume_source->share_name) == NULL) {
     goto fail; //String
     }

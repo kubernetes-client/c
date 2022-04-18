@@ -61,7 +61,6 @@ cJSON *v1_config_map_node_config_source_convertToJSON(v1_config_map_node_config_
     if (!v1_config_map_node_config_source->kubelet_config_key) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kubeletConfigKey", v1_config_map_node_config_source->kubelet_config_key) == NULL) {
     goto fail; //String
     }
@@ -71,7 +70,6 @@ cJSON *v1_config_map_node_config_source_convertToJSON(v1_config_map_node_config_
     if (!v1_config_map_node_config_source->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_config_map_node_config_source->name) == NULL) {
     goto fail; //String
     }
@@ -81,26 +79,25 @@ cJSON *v1_config_map_node_config_source_convertToJSON(v1_config_map_node_config_
     if (!v1_config_map_node_config_source->_namespace) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "namespace", v1_config_map_node_config_source->_namespace) == NULL) {
     goto fail; //String
     }
 
 
     // v1_config_map_node_config_source->resource_version
-    if(v1_config_map_node_config_source->resource_version) { 
+    if(v1_config_map_node_config_source->resource_version) {
     if(cJSON_AddStringToObject(item, "resourceVersion", v1_config_map_node_config_source->resource_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_config_map_node_config_source->uid
-    if(v1_config_map_node_config_source->uid) { 
+    if(v1_config_map_node_config_source->uid) {
     if(cJSON_AddStringToObject(item, "uid", v1_config_map_node_config_source->uid) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

@@ -61,38 +61,37 @@ cJSON *core_v1_endpoint_port_convertToJSON(core_v1_endpoint_port_t *core_v1_endp
     cJSON *item = cJSON_CreateObject();
 
     // core_v1_endpoint_port->app_protocol
-    if(core_v1_endpoint_port->app_protocol) { 
+    if(core_v1_endpoint_port->app_protocol) {
     if(cJSON_AddStringToObject(item, "appProtocol", core_v1_endpoint_port->app_protocol) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // core_v1_endpoint_port->name
-    if(core_v1_endpoint_port->name) { 
+    if(core_v1_endpoint_port->name) {
     if(cJSON_AddStringToObject(item, "name", core_v1_endpoint_port->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // core_v1_endpoint_port->port
     if (!core_v1_endpoint_port->port) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "port", core_v1_endpoint_port->port) == NULL) {
     goto fail; //Numeric
     }
 
 
     // core_v1_endpoint_port->protocol
-    
+    if(core_v1_endpoint_port->protocol != kubernetes_core_v1_endpoint_port_PROTOCOL_NULL) {
     if(cJSON_AddStringToObject(item, "protocol", protocolcore_v1_endpoint_port_ToString(core_v1_endpoint_port->protocol)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
     return item;
 fail:

@@ -69,50 +69,49 @@ cJSON *v1_service_port_convertToJSON(v1_service_port_t *v1_service_port) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_service_port->app_protocol
-    if(v1_service_port->app_protocol) { 
+    if(v1_service_port->app_protocol) {
     if(cJSON_AddStringToObject(item, "appProtocol", v1_service_port->app_protocol) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_port->name
-    if(v1_service_port->name) { 
+    if(v1_service_port->name) {
     if(cJSON_AddStringToObject(item, "name", v1_service_port->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_port->node_port
-    if(v1_service_port->node_port) { 
+    if(v1_service_port->node_port) {
     if(cJSON_AddNumberToObject(item, "nodePort", v1_service_port->node_port) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_service_port->port
     if (!v1_service_port->port) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "port", v1_service_port->port) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_service_port->protocol
-    
+    if(v1_service_port->protocol != kubernetes_v1_service_port_PROTOCOL_NULL) {
     if(cJSON_AddStringToObject(item, "protocol", protocolv1_service_port_ToString(v1_service_port->protocol)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_service_port->target_port
-    if(v1_service_port->target_port) { 
+    if(v1_service_port->target_port) {
     cJSON *target_port_local_JSON = int_or_string_convertToJSON(v1_service_port->target_port);
     if(target_port_local_JSON == NULL) {
         goto fail; // custom
@@ -121,7 +120,7 @@ cJSON *v1_service_port_convertToJSON(v1_service_port_t *v1_service_port) {
     if(item->child == NULL) {
         goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

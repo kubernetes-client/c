@@ -55,25 +55,26 @@ cJSON *v1_port_status_convertToJSON(v1_port_status_t *v1_port_status) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_port_status->error
-    if(v1_port_status->error) { 
+    if(v1_port_status->error) {
     if(cJSON_AddStringToObject(item, "error", v1_port_status->error) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_port_status->port
     if (!v1_port_status->port) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "port", v1_port_status->port) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_port_status->protocol
-    
+    if (kubernetes_v1_port_status_PROTOCOL_NULL == v1_port_status->protocol) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "protocol", protocolv1_port_status_ToString(v1_port_status->protocol)) == NULL)
     {
     goto fail; //Enum

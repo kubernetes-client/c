@@ -69,7 +69,6 @@ cJSON *v1beta2_resource_policy_rule_convertToJSON(v1beta2_resource_policy_rule_t
     if (!v1beta2_resource_policy_rule->api_groups) {
         goto fail;
     }
-    
     cJSON *api_groups = cJSON_AddArrayToObject(item, "apiGroups");
     if(api_groups == NULL) {
         goto fail; //primitive container
@@ -85,15 +84,15 @@ cJSON *v1beta2_resource_policy_rule_convertToJSON(v1beta2_resource_policy_rule_t
 
 
     // v1beta2_resource_policy_rule->cluster_scope
-    if(v1beta2_resource_policy_rule->cluster_scope) { 
+    if(v1beta2_resource_policy_rule->cluster_scope) {
     if(cJSON_AddBoolToObject(item, "clusterScope", v1beta2_resource_policy_rule->cluster_scope) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1beta2_resource_policy_rule->namespaces
-    if(v1beta2_resource_policy_rule->namespaces) { 
+    if(v1beta2_resource_policy_rule->namespaces) {
     cJSON *namespaces = cJSON_AddArrayToObject(item, "namespaces");
     if(namespaces == NULL) {
         goto fail; //primitive container
@@ -106,14 +105,13 @@ cJSON *v1beta2_resource_policy_rule_convertToJSON(v1beta2_resource_policy_rule_t
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1beta2_resource_policy_rule->resources
     if (!v1beta2_resource_policy_rule->resources) {
         goto fail;
     }
-    
     cJSON *resources = cJSON_AddArrayToObject(item, "resources");
     if(resources == NULL) {
         goto fail; //primitive container
@@ -132,7 +130,6 @@ cJSON *v1beta2_resource_policy_rule_convertToJSON(v1beta2_resource_policy_rule_t
     if (!v1beta2_resource_policy_rule->verbs) {
         goto fail;
     }
-    
     cJSON *verbs = cJSON_AddArrayToObject(item, "verbs");
     if(verbs == NULL) {
         goto fail; //primitive container

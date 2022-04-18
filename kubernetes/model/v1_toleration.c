@@ -80,45 +80,45 @@ cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_toleration->effect
-    
+    if(v1_toleration->effect != kubernetes_v1_toleration_EFFECT_NULL) {
     if(cJSON_AddStringToObject(item, "effect", effectv1_toleration_ToString(v1_toleration->effect)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_toleration->key
-    if(v1_toleration->key) { 
+    if(v1_toleration->key) {
     if(cJSON_AddStringToObject(item, "key", v1_toleration->key) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_toleration->_operator
-    
+    if(v1_toleration->_operator != kubernetes_v1_toleration_OPERATOR_NULL) {
     if(cJSON_AddStringToObject(item, "operator", _operatorv1_toleration_ToString(v1_toleration->_operator)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_toleration->toleration_seconds
-    if(v1_toleration->toleration_seconds) { 
+    if(v1_toleration->toleration_seconds) {
     if(cJSON_AddNumberToObject(item, "tolerationSeconds", v1_toleration->toleration_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_toleration->value
-    if(v1_toleration->value) { 
+    if(v1_toleration->value) {
     if(cJSON_AddStringToObject(item, "value", v1_toleration->value) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

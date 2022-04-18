@@ -43,7 +43,6 @@ cJSON *v1_token_request_status_convertToJSON(v1_token_request_status_t *v1_token
     if (!v1_token_request_status->expiration_timestamp) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "expirationTimestamp", v1_token_request_status->expiration_timestamp) == NULL) {
     goto fail; //Date-Time
     }
@@ -53,7 +52,6 @@ cJSON *v1_token_request_status_convertToJSON(v1_token_request_status_t *v1_token
     if (!v1_token_request_status->token) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "token", v1_token_request_status->token) == NULL) {
     goto fail; //String
     }

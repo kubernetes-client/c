@@ -58,34 +58,33 @@ cJSON *v1_api_service_condition_convertToJSON(v1_api_service_condition_t *v1_api
     cJSON *item = cJSON_CreateObject();
 
     // v1_api_service_condition->last_transition_time
-    if(v1_api_service_condition->last_transition_time) { 
+    if(v1_api_service_condition->last_transition_time) {
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v1_api_service_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_api_service_condition->message
-    if(v1_api_service_condition->message) { 
+    if(v1_api_service_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1_api_service_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_service_condition->reason
-    if(v1_api_service_condition->reason) { 
+    if(v1_api_service_condition->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_api_service_condition->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_service_condition->status
     if (!v1_api_service_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v1_api_service_condition->status) == NULL) {
     goto fail; //String
     }
@@ -95,7 +94,6 @@ cJSON *v1_api_service_condition_convertToJSON(v1_api_service_condition_t *v1_api
     if (!v1_api_service_condition->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v1_api_service_condition->type) == NULL) {
     goto fail; //String
     }

@@ -55,15 +55,15 @@ cJSON *v1_component_status_convertToJSON(v1_component_status_t *v1_component_sta
     cJSON *item = cJSON_CreateObject();
 
     // v1_component_status->api_version
-    if(v1_component_status->api_version) { 
+    if(v1_component_status->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_component_status->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_component_status->conditions
-    if(v1_component_status->conditions) { 
+    if(v1_component_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -79,19 +79,19 @@ cJSON *v1_component_status_convertToJSON(v1_component_status_t *v1_component_sta
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_component_status->kind
-    if(v1_component_status->kind) { 
+    if(v1_component_status->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_component_status->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_component_status->metadata
-    if(v1_component_status->metadata) { 
+    if(v1_component_status->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_component_status->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -100,7 +100,7 @@ cJSON *v1_component_status_convertToJSON(v1_component_status_t *v1_component_sta
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

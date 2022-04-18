@@ -43,7 +43,7 @@ cJSON *v1beta1_run_as_group_strategy_options_convertToJSON(v1beta1_run_as_group_
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_run_as_group_strategy_options->ranges
-    if(v1beta1_run_as_group_strategy_options->ranges) { 
+    if(v1beta1_run_as_group_strategy_options->ranges) {
     cJSON *ranges = cJSON_AddArrayToObject(item, "ranges");
     if(ranges == NULL) {
     goto fail; //nonprimitive container
@@ -59,14 +59,13 @@ cJSON *v1beta1_run_as_group_strategy_options_convertToJSON(v1beta1_run_as_group_
     cJSON_AddItemToArray(ranges, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1beta1_run_as_group_strategy_options->rule
     if (!v1beta1_run_as_group_strategy_options->rule) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "rule", v1beta1_run_as_group_strategy_options->rule) == NULL) {
     goto fail; //String
     }

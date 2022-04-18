@@ -48,37 +48,36 @@ cJSON *v2beta2_metric_target_convertToJSON(v2beta2_metric_target_t *v2beta2_metr
     cJSON *item = cJSON_CreateObject();
 
     // v2beta2_metric_target->average_utilization
-    if(v2beta2_metric_target->average_utilization) { 
+    if(v2beta2_metric_target->average_utilization) {
     if(cJSON_AddNumberToObject(item, "averageUtilization", v2beta2_metric_target->average_utilization) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v2beta2_metric_target->average_value
-    if(v2beta2_metric_target->average_value) { 
+    if(v2beta2_metric_target->average_value) {
     if(cJSON_AddStringToObject(item, "averageValue", v2beta2_metric_target->average_value) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v2beta2_metric_target->type
     if (!v2beta2_metric_target->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v2beta2_metric_target->type) == NULL) {
     goto fail; //String
     }
 
 
     // v2beta2_metric_target->value
-    if(v2beta2_metric_target->value) { 
+    if(v2beta2_metric_target->value) {
     if(cJSON_AddStringToObject(item, "value", v2beta2_metric_target->value) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

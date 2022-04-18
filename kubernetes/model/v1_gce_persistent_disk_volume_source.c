@@ -44,37 +44,36 @@ cJSON *v1_gce_persistent_disk_volume_source_convertToJSON(v1_gce_persistent_disk
     cJSON *item = cJSON_CreateObject();
 
     // v1_gce_persistent_disk_volume_source->fs_type
-    if(v1_gce_persistent_disk_volume_source->fs_type) { 
+    if(v1_gce_persistent_disk_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_gce_persistent_disk_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_gce_persistent_disk_volume_source->partition
-    if(v1_gce_persistent_disk_volume_source->partition) { 
+    if(v1_gce_persistent_disk_volume_source->partition) {
     if(cJSON_AddNumberToObject(item, "partition", v1_gce_persistent_disk_volume_source->partition) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_gce_persistent_disk_volume_source->pd_name
     if (!v1_gce_persistent_disk_volume_source->pd_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "pdName", v1_gce_persistent_disk_volume_source->pd_name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_gce_persistent_disk_volume_source->read_only
-    if(v1_gce_persistent_disk_volume_source->read_only) { 
+    if(v1_gce_persistent_disk_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_gce_persistent_disk_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

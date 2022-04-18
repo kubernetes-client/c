@@ -40,19 +40,19 @@ cJSON *v1_preconditions_convertToJSON(v1_preconditions_t *v1_preconditions) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_preconditions->resource_version
-    if(v1_preconditions->resource_version) { 
+    if(v1_preconditions->resource_version) {
     if(cJSON_AddStringToObject(item, "resourceVersion", v1_preconditions->resource_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_preconditions->uid
-    if(v1_preconditions->uid) { 
+    if(v1_preconditions->uid) {
     if(cJSON_AddStringToObject(item, "uid", v1_preconditions->uid) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

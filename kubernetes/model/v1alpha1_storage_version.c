@@ -58,23 +58,23 @@ cJSON *v1alpha1_storage_version_convertToJSON(v1alpha1_storage_version_t *v1alph
     cJSON *item = cJSON_CreateObject();
 
     // v1alpha1_storage_version->api_version
-    if(v1alpha1_storage_version->api_version) { 
+    if(v1alpha1_storage_version->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1alpha1_storage_version->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1alpha1_storage_version->kind
-    if(v1alpha1_storage_version->kind) { 
+    if(v1alpha1_storage_version->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1alpha1_storage_version->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1alpha1_storage_version->metadata
-    if(v1alpha1_storage_version->metadata) { 
+    if(v1alpha1_storage_version->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha1_storage_version->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,14 +83,13 @@ cJSON *v1alpha1_storage_version_convertToJSON(v1alpha1_storage_version_t *v1alph
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1alpha1_storage_version->spec
     if (!v1alpha1_storage_version->spec) {
         goto fail;
     }
-    
     cJSON *spec_object = object_convertToJSON(v1alpha1_storage_version->spec);
     if(spec_object == NULL) {
     goto fail; //model
@@ -105,7 +104,6 @@ cJSON *v1alpha1_storage_version_convertToJSON(v1alpha1_storage_version_t *v1alph
     if (!v1alpha1_storage_version->status) {
         goto fail;
     }
-    
     cJSON *status_local_JSON = v1alpha1_storage_version_status_convertToJSON(v1alpha1_storage_version->status);
     if(status_local_JSON == NULL) {
     goto fail; //model

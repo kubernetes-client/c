@@ -43,18 +43,17 @@ cJSON *v1_host_path_volume_source_convertToJSON(v1_host_path_volume_source_t *v1
     if (!v1_host_path_volume_source->path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "path", v1_host_path_volume_source->path) == NULL) {
     goto fail; //String
     }
 
 
     // v1_host_path_volume_source->type
-    if(v1_host_path_volume_source->type) { 
+    if(v1_host_path_volume_source->type) {
     if(cJSON_AddStringToObject(item, "type", v1_host_path_volume_source->type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

@@ -48,35 +48,35 @@ cJSON *v1beta1_endpoint_port_convertToJSON(v1beta1_endpoint_port_t *v1beta1_endp
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_endpoint_port->app_protocol
-    if(v1beta1_endpoint_port->app_protocol) { 
+    if(v1beta1_endpoint_port->app_protocol) {
     if(cJSON_AddStringToObject(item, "appProtocol", v1beta1_endpoint_port->app_protocol) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_endpoint_port->name
-    if(v1beta1_endpoint_port->name) { 
+    if(v1beta1_endpoint_port->name) {
     if(cJSON_AddStringToObject(item, "name", v1beta1_endpoint_port->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_endpoint_port->port
-    if(v1beta1_endpoint_port->port) { 
+    if(v1beta1_endpoint_port->port) {
     if(cJSON_AddNumberToObject(item, "port", v1beta1_endpoint_port->port) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1beta1_endpoint_port->protocol
-    if(v1beta1_endpoint_port->protocol) { 
+    if(v1beta1_endpoint_port->protocol) {
     if(cJSON_AddStringToObject(item, "protocol", v1beta1_endpoint_port->protocol) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

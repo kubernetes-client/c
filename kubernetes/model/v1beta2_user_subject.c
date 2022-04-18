@@ -37,7 +37,6 @@ cJSON *v1beta2_user_subject_convertToJSON(v1beta2_user_subject_t *v1beta2_user_s
     if (!v1beta2_user_subject->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1beta2_user_subject->name) == NULL) {
     goto fail; //String
     }

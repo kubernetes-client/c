@@ -40,19 +40,19 @@ cJSON *v1_volume_error_convertToJSON(v1_volume_error_t *v1_volume_error) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_volume_error->message
-    if(v1_volume_error->message) { 
+    if(v1_volume_error->message) {
     if(cJSON_AddStringToObject(item, "message", v1_volume_error->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_volume_error->time
-    if(v1_volume_error->time) { 
+    if(v1_volume_error->time) {
     if(cJSON_AddStringToObject(item, "time", v1_volume_error->time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
     return item;
 fail:

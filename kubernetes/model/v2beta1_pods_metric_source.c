@@ -49,14 +49,13 @@ cJSON *v2beta1_pods_metric_source_convertToJSON(v2beta1_pods_metric_source_t *v2
     if (!v2beta1_pods_metric_source->metric_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "metricName", v2beta1_pods_metric_source->metric_name) == NULL) {
     goto fail; //String
     }
 
 
     // v2beta1_pods_metric_source->selector
-    if(v2beta1_pods_metric_source->selector) { 
+    if(v2beta1_pods_metric_source->selector) {
     cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v2beta1_pods_metric_source->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
@@ -65,14 +64,13 @@ cJSON *v2beta1_pods_metric_source_convertToJSON(v2beta1_pods_metric_source_t *v2
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2beta1_pods_metric_source->target_average_value
     if (!v2beta1_pods_metric_source->target_average_value) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "targetAverageValue", v2beta1_pods_metric_source->target_average_value) == NULL) {
     goto fail; //String
     }

@@ -74,15 +74,15 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
     cJSON *item = cJSON_CreateObject();
 
     // v1_http_get_action->host
-    if(v1_http_get_action->host) { 
+    if(v1_http_get_action->host) {
     if(cJSON_AddStringToObject(item, "host", v1_http_get_action->host) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_http_get_action->http_headers
-    if(v1_http_get_action->http_headers) { 
+    if(v1_http_get_action->http_headers) {
     cJSON *http_headers = cJSON_AddArrayToObject(item, "httpHeaders");
     if(http_headers == NULL) {
     goto fail; //nonprimitive container
@@ -98,22 +98,21 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
     cJSON_AddItemToArray(http_headers, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_http_get_action->path
-    if(v1_http_get_action->path) { 
+    if(v1_http_get_action->path) {
     if(cJSON_AddStringToObject(item, "path", v1_http_get_action->path) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_http_get_action->port
     if (!v1_http_get_action->port) {
         goto fail;
     }
-    
     cJSON *port_local_JSON = int_or_string_convertToJSON(v1_http_get_action->port);
     if(port_local_JSON == NULL) {
         goto fail; // custom
@@ -125,12 +124,12 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
 
 
     // v1_http_get_action->scheme
-    
+    if(v1_http_get_action->scheme != kubernetes_v1_http_get_action_SCHEME_NULL) {
     if(cJSON_AddStringToObject(item, "scheme", schemev1_http_get_action_ToString(v1_http_get_action->scheme)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
     return item;
 fail:

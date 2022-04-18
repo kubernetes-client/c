@@ -39,18 +39,17 @@ cJSON *v1_grpc_action_convertToJSON(v1_grpc_action_t *v1_grpc_action) {
     if (!v1_grpc_action->port) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "port", v1_grpc_action->port) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_grpc_action->service
-    if(v1_grpc_action->service) { 
+    if(v1_grpc_action->service) {
     if(cJSON_AddStringToObject(item, "service", v1_grpc_action->service) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

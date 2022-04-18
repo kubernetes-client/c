@@ -40,7 +40,6 @@ cJSON *v1_http_ingress_rule_value_convertToJSON(v1_http_ingress_rule_value_t *v1
     if (!v1_http_ingress_rule_value->paths) {
         goto fail;
     }
-    
     cJSON *paths = cJSON_AddArrayToObject(item, "paths");
     if(paths == NULL) {
     goto fail; //nonprimitive container

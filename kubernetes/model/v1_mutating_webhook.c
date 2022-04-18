@@ -99,7 +99,6 @@ cJSON *v1_mutating_webhook_convertToJSON(v1_mutating_webhook_t *v1_mutating_webh
     if (!v1_mutating_webhook->admission_review_versions) {
         goto fail;
     }
-    
     cJSON *admission_review_versions = cJSON_AddArrayToObject(item, "admissionReviewVersions");
     if(admission_review_versions == NULL) {
         goto fail; //primitive container
@@ -118,7 +117,6 @@ cJSON *v1_mutating_webhook_convertToJSON(v1_mutating_webhook_t *v1_mutating_webh
     if (!v1_mutating_webhook->client_config) {
         goto fail;
     }
-    
     cJSON *client_config_local_JSON = admissionregistration_v1_webhook_client_config_convertToJSON(v1_mutating_webhook->client_config);
     if(client_config_local_JSON == NULL) {
     goto fail; //model
@@ -130,33 +128,32 @@ cJSON *v1_mutating_webhook_convertToJSON(v1_mutating_webhook_t *v1_mutating_webh
 
 
     // v1_mutating_webhook->failure_policy
-    if(v1_mutating_webhook->failure_policy) { 
+    if(v1_mutating_webhook->failure_policy) {
     if(cJSON_AddStringToObject(item, "failurePolicy", v1_mutating_webhook->failure_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_mutating_webhook->match_policy
-    if(v1_mutating_webhook->match_policy) { 
+    if(v1_mutating_webhook->match_policy) {
     if(cJSON_AddStringToObject(item, "matchPolicy", v1_mutating_webhook->match_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_mutating_webhook->name
     if (!v1_mutating_webhook->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_mutating_webhook->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_mutating_webhook->namespace_selector
-    if(v1_mutating_webhook->namespace_selector) { 
+    if(v1_mutating_webhook->namespace_selector) {
     cJSON *namespace_selector_local_JSON = v1_label_selector_convertToJSON(v1_mutating_webhook->namespace_selector);
     if(namespace_selector_local_JSON == NULL) {
     goto fail; //model
@@ -165,11 +162,11 @@ cJSON *v1_mutating_webhook_convertToJSON(v1_mutating_webhook_t *v1_mutating_webh
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_mutating_webhook->object_selector
-    if(v1_mutating_webhook->object_selector) { 
+    if(v1_mutating_webhook->object_selector) {
     cJSON *object_selector_local_JSON = v1_label_selector_convertToJSON(v1_mutating_webhook->object_selector);
     if(object_selector_local_JSON == NULL) {
     goto fail; //model
@@ -178,19 +175,19 @@ cJSON *v1_mutating_webhook_convertToJSON(v1_mutating_webhook_t *v1_mutating_webh
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_mutating_webhook->reinvocation_policy
-    if(v1_mutating_webhook->reinvocation_policy) { 
+    if(v1_mutating_webhook->reinvocation_policy) {
     if(cJSON_AddStringToObject(item, "reinvocationPolicy", v1_mutating_webhook->reinvocation_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_mutating_webhook->rules
-    if(v1_mutating_webhook->rules) { 
+    if(v1_mutating_webhook->rules) {
     cJSON *rules = cJSON_AddArrayToObject(item, "rules");
     if(rules == NULL) {
     goto fail; //nonprimitive container
@@ -206,25 +203,24 @@ cJSON *v1_mutating_webhook_convertToJSON(v1_mutating_webhook_t *v1_mutating_webh
     cJSON_AddItemToArray(rules, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_mutating_webhook->side_effects
     if (!v1_mutating_webhook->side_effects) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "sideEffects", v1_mutating_webhook->side_effects) == NULL) {
     goto fail; //String
     }
 
 
     // v1_mutating_webhook->timeout_seconds
-    if(v1_mutating_webhook->timeout_seconds) { 
+    if(v1_mutating_webhook->timeout_seconds) {
     if(cJSON_AddNumberToObject(item, "timeoutSeconds", v1_mutating_webhook->timeout_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

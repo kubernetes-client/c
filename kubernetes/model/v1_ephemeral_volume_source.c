@@ -34,7 +34,7 @@ cJSON *v1_ephemeral_volume_source_convertToJSON(v1_ephemeral_volume_source_t *v1
     cJSON *item = cJSON_CreateObject();
 
     // v1_ephemeral_volume_source->volume_claim_template
-    if(v1_ephemeral_volume_source->volume_claim_template) { 
+    if(v1_ephemeral_volume_source->volume_claim_template) {
     cJSON *volume_claim_template_local_JSON = v1_persistent_volume_claim_template_convertToJSON(v1_ephemeral_volume_source->volume_claim_template);
     if(volume_claim_template_local_JSON == NULL) {
     goto fail; //model
@@ -43,7 +43,7 @@ cJSON *v1_ephemeral_volume_source_convertToJSON(v1_ephemeral_volume_source_t *v1
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -46,15 +46,15 @@ cJSON *apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_web
     cJSON *item = cJSON_CreateObject();
 
     // apiextensions_v1_webhook_client_config->ca_bundle
-    if(apiextensions_v1_webhook_client_config->ca_bundle) { 
+    if(apiextensions_v1_webhook_client_config->ca_bundle) {
     if(cJSON_AddStringToObject(item, "caBundle", apiextensions_v1_webhook_client_config->ca_bundle) == NULL) {
     goto fail; //ByteArray
     }
-     } 
+    }
 
 
     // apiextensions_v1_webhook_client_config->service
-    if(apiextensions_v1_webhook_client_config->service) { 
+    if(apiextensions_v1_webhook_client_config->service) {
     cJSON *service_local_JSON = apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_webhook_client_config->service);
     if(service_local_JSON == NULL) {
     goto fail; //model
@@ -63,15 +63,15 @@ cJSON *apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_web
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // apiextensions_v1_webhook_client_config->url
-    if(apiextensions_v1_webhook_client_config->url) { 
+    if(apiextensions_v1_webhook_client_config->url) {
     if(cJSON_AddStringToObject(item, "url", apiextensions_v1_webhook_client_config->url) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

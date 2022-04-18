@@ -55,15 +55,15 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     cJSON *item = cJSON_CreateObject();
 
     // v1_daemon_set_status->collision_count
-    if(v1_daemon_set_status->collision_count) { 
+    if(v1_daemon_set_status->collision_count) {
     if(cJSON_AddNumberToObject(item, "collisionCount", v1_daemon_set_status->collision_count) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_daemon_set_status->conditions
-    if(v1_daemon_set_status->conditions) { 
+    if(v1_daemon_set_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -79,14 +79,13 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_daemon_set_status->current_number_scheduled
     if (!v1_daemon_set_status->current_number_scheduled) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "currentNumberScheduled", v1_daemon_set_status->current_number_scheduled) == NULL) {
     goto fail; //Numeric
     }
@@ -96,25 +95,23 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     if (!v1_daemon_set_status->desired_number_scheduled) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "desiredNumberScheduled", v1_daemon_set_status->desired_number_scheduled) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_daemon_set_status->number_available
-    if(v1_daemon_set_status->number_available) { 
+    if(v1_daemon_set_status->number_available) {
     if(cJSON_AddNumberToObject(item, "numberAvailable", v1_daemon_set_status->number_available) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_daemon_set_status->number_misscheduled
     if (!v1_daemon_set_status->number_misscheduled) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "numberMisscheduled", v1_daemon_set_status->number_misscheduled) == NULL) {
     goto fail; //Numeric
     }
@@ -124,34 +121,33 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     if (!v1_daemon_set_status->number_ready) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "numberReady", v1_daemon_set_status->number_ready) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_daemon_set_status->number_unavailable
-    if(v1_daemon_set_status->number_unavailable) { 
+    if(v1_daemon_set_status->number_unavailable) {
     if(cJSON_AddNumberToObject(item, "numberUnavailable", v1_daemon_set_status->number_unavailable) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_daemon_set_status->observed_generation
-    if(v1_daemon_set_status->observed_generation) { 
+    if(v1_daemon_set_status->observed_generation) {
     if(cJSON_AddNumberToObject(item, "observedGeneration", v1_daemon_set_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_daemon_set_status->updated_number_scheduled
-    if(v1_daemon_set_status->updated_number_scheduled) { 
+    if(v1_daemon_set_status->updated_number_scheduled) {
     if(cJSON_AddNumberToObject(item, "updatedNumberScheduled", v1_daemon_set_status->updated_number_scheduled) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

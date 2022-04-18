@@ -70,33 +70,32 @@ cJSON *v1_api_group_convertToJSON(v1_api_group_t *v1_api_group) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_api_group->api_version
-    if(v1_api_group->api_version) { 
+    if(v1_api_group->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_api_group->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_group->kind
-    if(v1_api_group->kind) { 
+    if(v1_api_group->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_api_group->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_group->name
     if (!v1_api_group->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_api_group->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_api_group->preferred_version
-    if(v1_api_group->preferred_version) { 
+    if(v1_api_group->preferred_version) {
     cJSON *preferred_version_local_JSON = v1_group_version_for_discovery_convertToJSON(v1_api_group->preferred_version);
     if(preferred_version_local_JSON == NULL) {
     goto fail; //model
@@ -105,11 +104,11 @@ cJSON *v1_api_group_convertToJSON(v1_api_group_t *v1_api_group) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_api_group->server_address_by_client_cidrs
-    if(v1_api_group->server_address_by_client_cidrs) { 
+    if(v1_api_group->server_address_by_client_cidrs) {
     cJSON *server_address_by_client_cidrs = cJSON_AddArrayToObject(item, "serverAddressByClientCIDRs");
     if(server_address_by_client_cidrs == NULL) {
     goto fail; //nonprimitive container
@@ -125,14 +124,13 @@ cJSON *v1_api_group_convertToJSON(v1_api_group_t *v1_api_group) {
     cJSON_AddItemToArray(server_address_by_client_cidrs, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_api_group->versions
     if (!v1_api_group->versions) {
         goto fail;
     }
-    
     cJSON *versions = cJSON_AddArrayToObject(item, "versions");
     if(versions == NULL) {
     goto fail; //nonprimitive container

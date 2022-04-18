@@ -43,7 +43,6 @@ cJSON *v1_group_version_for_discovery_convertToJSON(v1_group_version_for_discove
     if (!v1_group_version_for_discovery->group_version) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "groupVersion", v1_group_version_for_discovery->group_version) == NULL) {
     goto fail; //String
     }
@@ -53,7 +52,6 @@ cJSON *v1_group_version_for_discovery_convertToJSON(v1_group_version_for_discove
     if (!v1_group_version_for_discovery->version) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "version", v1_group_version_for_discovery->version) == NULL) {
     goto fail; //String
     }

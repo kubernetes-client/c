@@ -49,7 +49,6 @@ cJSON *v1_http_ingress_path_convertToJSON(v1_http_ingress_path_t *v1_http_ingres
     if (!v1_http_ingress_path->backend) {
         goto fail;
     }
-    
     cJSON *backend_local_JSON = v1_ingress_backend_convertToJSON(v1_http_ingress_path->backend);
     if(backend_local_JSON == NULL) {
     goto fail; //model
@@ -61,18 +60,17 @@ cJSON *v1_http_ingress_path_convertToJSON(v1_http_ingress_path_t *v1_http_ingres
 
 
     // v1_http_ingress_path->path
-    if(v1_http_ingress_path->path) { 
+    if(v1_http_ingress_path->path) {
     if(cJSON_AddStringToObject(item, "path", v1_http_ingress_path->path) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_http_ingress_path->path_type
     if (!v1_http_ingress_path->path_type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "pathType", v1_http_ingress_path->path_type) == NULL) {
     goto fail; //String
     }

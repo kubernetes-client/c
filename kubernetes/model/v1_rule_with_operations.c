@@ -70,7 +70,7 @@ cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_
     cJSON *item = cJSON_CreateObject();
 
     // v1_rule_with_operations->api_groups
-    if(v1_rule_with_operations->api_groups) { 
+    if(v1_rule_with_operations->api_groups) {
     cJSON *api_groups = cJSON_AddArrayToObject(item, "apiGroups");
     if(api_groups == NULL) {
         goto fail; //primitive container
@@ -83,11 +83,11 @@ cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_rule_with_operations->api_versions
-    if(v1_rule_with_operations->api_versions) { 
+    if(v1_rule_with_operations->api_versions) {
     cJSON *api_versions = cJSON_AddArrayToObject(item, "apiVersions");
     if(api_versions == NULL) {
         goto fail; //primitive container
@@ -100,11 +100,11 @@ cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_rule_with_operations->operations
-    if(v1_rule_with_operations->operations) { 
+    if(v1_rule_with_operations->operations) {
     cJSON *operations = cJSON_AddArrayToObject(item, "operations");
     if(operations == NULL) {
         goto fail; //primitive container
@@ -117,11 +117,11 @@ cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_rule_with_operations->resources
-    if(v1_rule_with_operations->resources) { 
+    if(v1_rule_with_operations->resources) {
     cJSON *resources = cJSON_AddArrayToObject(item, "resources");
     if(resources == NULL) {
         goto fail; //primitive container
@@ -134,15 +134,15 @@ cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_rule_with_operations->scope
-    if(v1_rule_with_operations->scope) { 
+    if(v1_rule_with_operations->scope) {
     if(cJSON_AddStringToObject(item, "scope", v1_rule_with_operations->scope) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

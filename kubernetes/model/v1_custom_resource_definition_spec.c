@@ -63,7 +63,7 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
     cJSON *item = cJSON_CreateObject();
 
     // v1_custom_resource_definition_spec->conversion
-    if(v1_custom_resource_definition_spec->conversion) { 
+    if(v1_custom_resource_definition_spec->conversion) {
     cJSON *conversion_local_JSON = v1_custom_resource_conversion_convertToJSON(v1_custom_resource_definition_spec->conversion);
     if(conversion_local_JSON == NULL) {
     goto fail; //model
@@ -72,14 +72,13 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition_spec->group
     if (!v1_custom_resource_definition_spec->group) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "group", v1_custom_resource_definition_spec->group) == NULL) {
     goto fail; //String
     }
@@ -89,7 +88,6 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
     if (!v1_custom_resource_definition_spec->names) {
         goto fail;
     }
-    
     cJSON *names_local_JSON = v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_definition_spec->names);
     if(names_local_JSON == NULL) {
     goto fail; //model
@@ -101,18 +99,17 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
 
 
     // v1_custom_resource_definition_spec->preserve_unknown_fields
-    if(v1_custom_resource_definition_spec->preserve_unknown_fields) { 
+    if(v1_custom_resource_definition_spec->preserve_unknown_fields) {
     if(cJSON_AddBoolToObject(item, "preserveUnknownFields", v1_custom_resource_definition_spec->preserve_unknown_fields) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition_spec->scope
     if (!v1_custom_resource_definition_spec->scope) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "scope", v1_custom_resource_definition_spec->scope) == NULL) {
     goto fail; //String
     }
@@ -122,7 +119,6 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
     if (!v1_custom_resource_definition_spec->versions) {
         goto fail;
     }
-    
     cJSON *versions = cJSON_AddArrayToObject(item, "versions");
     if(versions == NULL) {
     goto fail; //nonprimitive container

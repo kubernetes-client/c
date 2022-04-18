@@ -59,33 +59,31 @@ cJSON *v1_owner_reference_convertToJSON(v1_owner_reference_t *v1_owner_reference
     if (!v1_owner_reference->api_version) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "apiVersion", v1_owner_reference->api_version) == NULL) {
     goto fail; //String
     }
 
 
     // v1_owner_reference->block_owner_deletion
-    if(v1_owner_reference->block_owner_deletion) { 
+    if(v1_owner_reference->block_owner_deletion) {
     if(cJSON_AddBoolToObject(item, "blockOwnerDeletion", v1_owner_reference->block_owner_deletion) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_owner_reference->controller
-    if(v1_owner_reference->controller) { 
+    if(v1_owner_reference->controller) {
     if(cJSON_AddBoolToObject(item, "controller", v1_owner_reference->controller) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_owner_reference->kind
     if (!v1_owner_reference->kind) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kind", v1_owner_reference->kind) == NULL) {
     goto fail; //String
     }
@@ -95,7 +93,6 @@ cJSON *v1_owner_reference_convertToJSON(v1_owner_reference_t *v1_owner_reference
     if (!v1_owner_reference->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_owner_reference->name) == NULL) {
     goto fail; //String
     }
@@ -105,7 +102,6 @@ cJSON *v1_owner_reference_convertToJSON(v1_owner_reference_t *v1_owner_reference
     if (!v1_owner_reference->uid) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "uid", v1_owner_reference->uid) == NULL) {
     goto fail; //String
     }

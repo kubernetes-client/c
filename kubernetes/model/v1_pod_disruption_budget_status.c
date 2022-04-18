@@ -59,7 +59,7 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_disruption_budget_status->conditions
-    if(v1_pod_disruption_budget_status->conditions) { 
+    if(v1_pod_disruption_budget_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -75,14 +75,13 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_disruption_budget_status->current_healthy
     if (!v1_pod_disruption_budget_status->current_healthy) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "currentHealthy", v1_pod_disruption_budget_status->current_healthy) == NULL) {
     goto fail; //Numeric
     }
@@ -92,14 +91,13 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
     if (!v1_pod_disruption_budget_status->desired_healthy) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "desiredHealthy", v1_pod_disruption_budget_status->desired_healthy) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_pod_disruption_budget_status->disrupted_pods
-    if(v1_pod_disruption_budget_status->disrupted_pods) { 
+    if(v1_pod_disruption_budget_status->disrupted_pods) {
     cJSON *disrupted_pods = cJSON_AddObjectToObject(item, "disruptedPods");
     if(disrupted_pods == NULL) {
         goto fail; //primitive map container
@@ -111,14 +109,13 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
         keyValuePair_t *localKeyValue = (keyValuePair_t*)disrupted_podsListEntry->data;
     }
     }
-     } 
+    }
 
 
     // v1_pod_disruption_budget_status->disruptions_allowed
     if (!v1_pod_disruption_budget_status->disruptions_allowed) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "disruptionsAllowed", v1_pod_disruption_budget_status->disruptions_allowed) == NULL) {
     goto fail; //Numeric
     }
@@ -128,18 +125,17 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
     if (!v1_pod_disruption_budget_status->expected_pods) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "expectedPods", v1_pod_disruption_budget_status->expected_pods) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_pod_disruption_budget_status->observed_generation
-    if(v1_pod_disruption_budget_status->observed_generation) { 
+    if(v1_pod_disruption_budget_status->observed_generation) {
     if(cJSON_AddNumberToObject(item, "observedGeneration", v1_pod_disruption_budget_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

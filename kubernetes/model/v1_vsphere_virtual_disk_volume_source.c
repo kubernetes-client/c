@@ -52,34 +52,33 @@ cJSON *v1_vsphere_virtual_disk_volume_source_convertToJSON(v1_vsphere_virtual_di
     cJSON *item = cJSON_CreateObject();
 
     // v1_vsphere_virtual_disk_volume_source->fs_type
-    if(v1_vsphere_virtual_disk_volume_source->fs_type) { 
+    if(v1_vsphere_virtual_disk_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_vsphere_virtual_disk_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_vsphere_virtual_disk_volume_source->storage_policy_id
-    if(v1_vsphere_virtual_disk_volume_source->storage_policy_id) { 
+    if(v1_vsphere_virtual_disk_volume_source->storage_policy_id) {
     if(cJSON_AddStringToObject(item, "storagePolicyID", v1_vsphere_virtual_disk_volume_source->storage_policy_id) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_vsphere_virtual_disk_volume_source->storage_policy_name
-    if(v1_vsphere_virtual_disk_volume_source->storage_policy_name) { 
+    if(v1_vsphere_virtual_disk_volume_source->storage_policy_name) {
     if(cJSON_AddStringToObject(item, "storagePolicyName", v1_vsphere_virtual_disk_volume_source->storage_policy_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_vsphere_virtual_disk_volume_source->volume_path
     if (!v1_vsphere_virtual_disk_volume_source->volume_path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "volumePath", v1_vsphere_virtual_disk_volume_source->volume_path) == NULL) {
     goto fail; //String
     }

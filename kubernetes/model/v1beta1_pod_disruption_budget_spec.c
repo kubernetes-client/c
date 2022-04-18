@@ -46,7 +46,7 @@ cJSON *v1beta1_pod_disruption_budget_spec_convertToJSON(v1beta1_pod_disruption_b
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_pod_disruption_budget_spec->max_unavailable
-    if(v1beta1_pod_disruption_budget_spec->max_unavailable) { 
+    if(v1beta1_pod_disruption_budget_spec->max_unavailable) {
     cJSON *max_unavailable_local_JSON = int_or_string_convertToJSON(v1beta1_pod_disruption_budget_spec->max_unavailable);
     if(max_unavailable_local_JSON == NULL) {
         goto fail; // custom
@@ -55,11 +55,11 @@ cJSON *v1beta1_pod_disruption_budget_spec_convertToJSON(v1beta1_pod_disruption_b
     if(item->child == NULL) {
         goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_pod_disruption_budget_spec->min_available
-    if(v1beta1_pod_disruption_budget_spec->min_available) { 
+    if(v1beta1_pod_disruption_budget_spec->min_available) {
     cJSON *min_available_local_JSON = int_or_string_convertToJSON(v1beta1_pod_disruption_budget_spec->min_available);
     if(min_available_local_JSON == NULL) {
         goto fail; // custom
@@ -68,11 +68,11 @@ cJSON *v1beta1_pod_disruption_budget_spec_convertToJSON(v1beta1_pod_disruption_b
     if(item->child == NULL) {
         goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_pod_disruption_budget_spec->selector
-    if(v1beta1_pod_disruption_budget_spec->selector) { 
+    if(v1beta1_pod_disruption_budget_spec->selector) {
     cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1beta1_pod_disruption_budget_spec->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
@@ -81,7 +81,7 @@ cJSON *v1beta1_pod_disruption_budget_spec_convertToJSON(v1beta1_pod_disruption_b
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

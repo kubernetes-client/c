@@ -77,49 +77,50 @@ cJSON *v1_node_condition_convertToJSON(v1_node_condition_t *v1_node_condition) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_node_condition->last_heartbeat_time
-    if(v1_node_condition->last_heartbeat_time) { 
+    if(v1_node_condition->last_heartbeat_time) {
     if(cJSON_AddStringToObject(item, "lastHeartbeatTime", v1_node_condition->last_heartbeat_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_node_condition->last_transition_time
-    if(v1_node_condition->last_transition_time) { 
+    if(v1_node_condition->last_transition_time) {
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v1_node_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_node_condition->message
-    if(v1_node_condition->message) { 
+    if(v1_node_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1_node_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_node_condition->reason
-    if(v1_node_condition->reason) { 
+    if(v1_node_condition->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_node_condition->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_node_condition->status
     if (!v1_node_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v1_node_condition->status) == NULL) {
     goto fail; //String
     }
 
 
     // v1_node_condition->type
-    
+    if (kubernetes_v1_node_condition_TYPE_NULL == v1_node_condition->type) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "type", typev1_node_condition_ToString(v1_node_condition->type)) == NULL)
     {
     goto fail; //Enum

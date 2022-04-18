@@ -52,15 +52,15 @@ cJSON *v1_eviction_convertToJSON(v1_eviction_t *v1_eviction) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_eviction->api_version
-    if(v1_eviction->api_version) { 
+    if(v1_eviction->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_eviction->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_eviction->delete_options
-    if(v1_eviction->delete_options) { 
+    if(v1_eviction->delete_options) {
     cJSON *delete_options_local_JSON = v1_delete_options_convertToJSON(v1_eviction->delete_options);
     if(delete_options_local_JSON == NULL) {
     goto fail; //model
@@ -69,19 +69,19 @@ cJSON *v1_eviction_convertToJSON(v1_eviction_t *v1_eviction) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_eviction->kind
-    if(v1_eviction->kind) { 
+    if(v1_eviction->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_eviction->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_eviction->metadata
-    if(v1_eviction->metadata) { 
+    if(v1_eviction->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_eviction->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -90,7 +90,7 @@ cJSON *v1_eviction_convertToJSON(v1_eviction_t *v1_eviction) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

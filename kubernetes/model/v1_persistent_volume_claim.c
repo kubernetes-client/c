@@ -58,23 +58,23 @@ cJSON *v1_persistent_volume_claim_convertToJSON(v1_persistent_volume_claim_t *v1
     cJSON *item = cJSON_CreateObject();
 
     // v1_persistent_volume_claim->api_version
-    if(v1_persistent_volume_claim->api_version) { 
+    if(v1_persistent_volume_claim->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_persistent_volume_claim->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim->kind
-    if(v1_persistent_volume_claim->kind) { 
+    if(v1_persistent_volume_claim->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_persistent_volume_claim->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim->metadata
-    if(v1_persistent_volume_claim->metadata) { 
+    if(v1_persistent_volume_claim->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_persistent_volume_claim->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v1_persistent_volume_claim_convertToJSON(v1_persistent_volume_claim_t *v1
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim->spec
-    if(v1_persistent_volume_claim->spec) { 
+    if(v1_persistent_volume_claim->spec) {
     cJSON *spec_local_JSON = v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v1_persistent_volume_claim_convertToJSON(v1_persistent_volume_claim_t *v1
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim->status
-    if(v1_persistent_volume_claim->status) { 
+    if(v1_persistent_volume_claim->status) {
     cJSON *status_local_JSON = v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_claim->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v1_persistent_volume_claim_convertToJSON(v1_persistent_volume_claim_t *v1
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

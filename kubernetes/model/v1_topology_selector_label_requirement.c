@@ -46,7 +46,6 @@ cJSON *v1_topology_selector_label_requirement_convertToJSON(v1_topology_selector
     if (!v1_topology_selector_label_requirement->key) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "key", v1_topology_selector_label_requirement->key) == NULL) {
     goto fail; //String
     }
@@ -56,7 +55,6 @@ cJSON *v1_topology_selector_label_requirement_convertToJSON(v1_topology_selector
     if (!v1_topology_selector_label_requirement->values) {
         goto fail;
     }
-    
     cJSON *values = cJSON_AddArrayToObject(item, "values");
     if(values == NULL) {
         goto fail; //primitive container

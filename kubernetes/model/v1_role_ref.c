@@ -49,7 +49,6 @@ cJSON *v1_role_ref_convertToJSON(v1_role_ref_t *v1_role_ref) {
     if (!v1_role_ref->api_group) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "apiGroup", v1_role_ref->api_group) == NULL) {
     goto fail; //String
     }
@@ -59,7 +58,6 @@ cJSON *v1_role_ref_convertToJSON(v1_role_ref_t *v1_role_ref) {
     if (!v1_role_ref->kind) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kind", v1_role_ref->kind) == NULL) {
     goto fail; //String
     }
@@ -69,7 +67,6 @@ cJSON *v1_role_ref_convertToJSON(v1_role_ref_t *v1_role_ref) {
     if (!v1_role_ref->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_role_ref->name) == NULL) {
     goto fail; //String
     }

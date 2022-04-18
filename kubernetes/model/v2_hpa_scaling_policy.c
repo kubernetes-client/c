@@ -41,7 +41,6 @@ cJSON *v2_hpa_scaling_policy_convertToJSON(v2_hpa_scaling_policy_t *v2_hpa_scali
     if (!v2_hpa_scaling_policy->period_seconds) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "periodSeconds", v2_hpa_scaling_policy->period_seconds) == NULL) {
     goto fail; //Numeric
     }
@@ -51,7 +50,6 @@ cJSON *v2_hpa_scaling_policy_convertToJSON(v2_hpa_scaling_policy_t *v2_hpa_scali
     if (!v2_hpa_scaling_policy->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v2_hpa_scaling_policy->type) == NULL) {
     goto fail; //String
     }
@@ -61,7 +59,6 @@ cJSON *v2_hpa_scaling_policy_convertToJSON(v2_hpa_scaling_policy_t *v2_hpa_scali
     if (!v2_hpa_scaling_policy->value) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "value", v2_hpa_scaling_policy->value) == NULL) {
     goto fail; //Numeric
     }

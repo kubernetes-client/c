@@ -46,7 +46,7 @@ cJSON *v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_t
     cJSON *item = cJSON_CreateObject();
 
     // v1_uncounted_terminated_pods->failed
-    if(v1_uncounted_terminated_pods->failed) { 
+    if(v1_uncounted_terminated_pods->failed) {
     cJSON *failed = cJSON_AddArrayToObject(item, "failed");
     if(failed == NULL) {
         goto fail; //primitive container
@@ -59,11 +59,11 @@ cJSON *v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_t
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_uncounted_terminated_pods->succeeded
-    if(v1_uncounted_terminated_pods->succeeded) { 
+    if(v1_uncounted_terminated_pods->succeeded) {
     cJSON *succeeded = cJSON_AddArrayToObject(item, "succeeded");
     if(succeeded == NULL) {
         goto fail; //primitive container
@@ -76,7 +76,7 @@ cJSON *v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_t
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

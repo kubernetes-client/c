@@ -40,19 +40,19 @@ cJSON *v1_empty_dir_volume_source_convertToJSON(v1_empty_dir_volume_source_t *v1
     cJSON *item = cJSON_CreateObject();
 
     // v1_empty_dir_volume_source->medium
-    if(v1_empty_dir_volume_source->medium) { 
+    if(v1_empty_dir_volume_source->medium) {
     if(cJSON_AddStringToObject(item, "medium", v1_empty_dir_volume_source->medium) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_empty_dir_volume_source->size_limit
-    if(v1_empty_dir_volume_source->size_limit) { 
+    if(v1_empty_dir_volume_source->size_limit) {
     if(cJSON_AddStringToObject(item, "sizeLimit", v1_empty_dir_volume_source->size_limit) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

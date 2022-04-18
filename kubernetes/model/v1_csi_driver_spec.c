@@ -60,47 +60,47 @@ cJSON *v1_csi_driver_spec_convertToJSON(v1_csi_driver_spec_t *v1_csi_driver_spec
     cJSON *item = cJSON_CreateObject();
 
     // v1_csi_driver_spec->attach_required
-    if(v1_csi_driver_spec->attach_required) { 
+    if(v1_csi_driver_spec->attach_required) {
     if(cJSON_AddBoolToObject(item, "attachRequired", v1_csi_driver_spec->attach_required) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_csi_driver_spec->fs_group_policy
-    if(v1_csi_driver_spec->fs_group_policy) { 
+    if(v1_csi_driver_spec->fs_group_policy) {
     if(cJSON_AddStringToObject(item, "fsGroupPolicy", v1_csi_driver_spec->fs_group_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_csi_driver_spec->pod_info_on_mount
-    if(v1_csi_driver_spec->pod_info_on_mount) { 
+    if(v1_csi_driver_spec->pod_info_on_mount) {
     if(cJSON_AddBoolToObject(item, "podInfoOnMount", v1_csi_driver_spec->pod_info_on_mount) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_csi_driver_spec->requires_republish
-    if(v1_csi_driver_spec->requires_republish) { 
+    if(v1_csi_driver_spec->requires_republish) {
     if(cJSON_AddBoolToObject(item, "requiresRepublish", v1_csi_driver_spec->requires_republish) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_csi_driver_spec->storage_capacity
-    if(v1_csi_driver_spec->storage_capacity) { 
+    if(v1_csi_driver_spec->storage_capacity) {
     if(cJSON_AddBoolToObject(item, "storageCapacity", v1_csi_driver_spec->storage_capacity) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_csi_driver_spec->token_requests
-    if(v1_csi_driver_spec->token_requests) { 
+    if(v1_csi_driver_spec->token_requests) {
     cJSON *token_requests = cJSON_AddArrayToObject(item, "tokenRequests");
     if(token_requests == NULL) {
     goto fail; //nonprimitive container
@@ -116,11 +116,11 @@ cJSON *v1_csi_driver_spec_convertToJSON(v1_csi_driver_spec_t *v1_csi_driver_spec
     cJSON_AddItemToArray(token_requests, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_csi_driver_spec->volume_lifecycle_modes
-    if(v1_csi_driver_spec->volume_lifecycle_modes) { 
+    if(v1_csi_driver_spec->volume_lifecycle_modes) {
     cJSON *volume_lifecycle_modes = cJSON_AddArrayToObject(item, "volumeLifecycleModes");
     if(volume_lifecycle_modes == NULL) {
         goto fail; //primitive container
@@ -133,7 +133,7 @@ cJSON *v1_csi_driver_spec_convertToJSON(v1_csi_driver_spec_t *v1_csi_driver_spec
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

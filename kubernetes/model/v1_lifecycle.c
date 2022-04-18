@@ -40,7 +40,7 @@ cJSON *v1_lifecycle_convertToJSON(v1_lifecycle_t *v1_lifecycle) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_lifecycle->post_start
-    if(v1_lifecycle->post_start) { 
+    if(v1_lifecycle->post_start) {
     cJSON *post_start_local_JSON = v1_lifecycle_handler_convertToJSON(v1_lifecycle->post_start);
     if(post_start_local_JSON == NULL) {
     goto fail; //model
@@ -49,11 +49,11 @@ cJSON *v1_lifecycle_convertToJSON(v1_lifecycle_t *v1_lifecycle) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_lifecycle->pre_stop
-    if(v1_lifecycle->pre_stop) { 
+    if(v1_lifecycle->pre_stop) {
     cJSON *pre_stop_local_JSON = v1_lifecycle_handler_convertToJSON(v1_lifecycle->pre_stop);
     if(pre_stop_local_JSON == NULL) {
     goto fail; //model
@@ -62,7 +62,7 @@ cJSON *v1_lifecycle_convertToJSON(v1_lifecycle_t *v1_lifecycle) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

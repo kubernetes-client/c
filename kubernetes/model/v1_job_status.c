@@ -69,31 +69,31 @@ cJSON *v1_job_status_convertToJSON(v1_job_status_t *v1_job_status) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_job_status->active
-    if(v1_job_status->active) { 
+    if(v1_job_status->active) {
     if(cJSON_AddNumberToObject(item, "active", v1_job_status->active) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_job_status->completed_indexes
-    if(v1_job_status->completed_indexes) { 
+    if(v1_job_status->completed_indexes) {
     if(cJSON_AddStringToObject(item, "completedIndexes", v1_job_status->completed_indexes) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_job_status->completion_time
-    if(v1_job_status->completion_time) { 
+    if(v1_job_status->completion_time) {
     if(cJSON_AddStringToObject(item, "completionTime", v1_job_status->completion_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_job_status->conditions
-    if(v1_job_status->conditions) { 
+    if(v1_job_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -109,43 +109,43 @@ cJSON *v1_job_status_convertToJSON(v1_job_status_t *v1_job_status) {
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_job_status->failed
-    if(v1_job_status->failed) { 
+    if(v1_job_status->failed) {
     if(cJSON_AddNumberToObject(item, "failed", v1_job_status->failed) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_job_status->ready
-    if(v1_job_status->ready) { 
+    if(v1_job_status->ready) {
     if(cJSON_AddNumberToObject(item, "ready", v1_job_status->ready) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_job_status->start_time
-    if(v1_job_status->start_time) { 
+    if(v1_job_status->start_time) {
     if(cJSON_AddStringToObject(item, "startTime", v1_job_status->start_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_job_status->succeeded
-    if(v1_job_status->succeeded) { 
+    if(v1_job_status->succeeded) {
     if(cJSON_AddNumberToObject(item, "succeeded", v1_job_status->succeeded) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_job_status->uncounted_terminated_pods
-    if(v1_job_status->uncounted_terminated_pods) { 
+    if(v1_job_status->uncounted_terminated_pods) {
     cJSON *uncounted_terminated_pods_local_JSON = v1_uncounted_terminated_pods_convertToJSON(v1_job_status->uncounted_terminated_pods);
     if(uncounted_terminated_pods_local_JSON == NULL) {
     goto fail; //model
@@ -154,7 +154,7 @@ cJSON *v1_job_status_convertToJSON(v1_job_status_t *v1_job_status) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

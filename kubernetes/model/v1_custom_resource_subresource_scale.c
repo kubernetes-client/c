@@ -46,18 +46,17 @@ cJSON *v1_custom_resource_subresource_scale_convertToJSON(v1_custom_resource_sub
     cJSON *item = cJSON_CreateObject();
 
     // v1_custom_resource_subresource_scale->label_selector_path
-    if(v1_custom_resource_subresource_scale->label_selector_path) { 
+    if(v1_custom_resource_subresource_scale->label_selector_path) {
     if(cJSON_AddStringToObject(item, "labelSelectorPath", v1_custom_resource_subresource_scale->label_selector_path) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_custom_resource_subresource_scale->spec_replicas_path
     if (!v1_custom_resource_subresource_scale->spec_replicas_path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "specReplicasPath", v1_custom_resource_subresource_scale->spec_replicas_path) == NULL) {
     goto fail; //String
     }
@@ -67,7 +66,6 @@ cJSON *v1_custom_resource_subresource_scale_convertToJSON(v1_custom_resource_sub
     if (!v1_custom_resource_subresource_scale->status_replicas_path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "statusReplicasPath", v1_custom_resource_subresource_scale->status_replicas_path) == NULL) {
     goto fail; //String
     }

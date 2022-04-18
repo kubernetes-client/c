@@ -49,7 +49,6 @@ cJSON *v1beta2_non_resource_policy_rule_convertToJSON(v1beta2_non_resource_polic
     if (!v1beta2_non_resource_policy_rule->non_resource_urls) {
         goto fail;
     }
-    
     cJSON *non_resource_urls = cJSON_AddArrayToObject(item, "nonResourceURLs");
     if(non_resource_urls == NULL) {
         goto fail; //primitive container
@@ -68,7 +67,6 @@ cJSON *v1beta2_non_resource_policy_rule_convertToJSON(v1beta2_non_resource_polic
     if (!v1beta2_non_resource_policy_rule->verbs) {
         goto fail;
     }
-    
     cJSON *verbs = cJSON_AddArrayToObject(item, "verbs");
     if(verbs == NULL) {
         goto fail; //primitive container

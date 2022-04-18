@@ -40,7 +40,7 @@ cJSON *v2_horizontal_pod_autoscaler_behavior_convertToJSON(v2_horizontal_pod_aut
     cJSON *item = cJSON_CreateObject();
 
     // v2_horizontal_pod_autoscaler_behavior->scale_down
-    if(v2_horizontal_pod_autoscaler_behavior->scale_down) { 
+    if(v2_horizontal_pod_autoscaler_behavior->scale_down) {
     cJSON *scale_down_local_JSON = v2_hpa_scaling_rules_convertToJSON(v2_horizontal_pod_autoscaler_behavior->scale_down);
     if(scale_down_local_JSON == NULL) {
     goto fail; //model
@@ -49,11 +49,11 @@ cJSON *v2_horizontal_pod_autoscaler_behavior_convertToJSON(v2_horizontal_pod_aut
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2_horizontal_pod_autoscaler_behavior->scale_up
-    if(v2_horizontal_pod_autoscaler_behavior->scale_up) { 
+    if(v2_horizontal_pod_autoscaler_behavior->scale_up) {
     cJSON *scale_up_local_JSON = v2_hpa_scaling_rules_convertToJSON(v2_horizontal_pod_autoscaler_behavior->scale_up);
     if(scale_up_local_JSON == NULL) {
     goto fail; //model
@@ -62,7 +62,7 @@ cJSON *v2_horizontal_pod_autoscaler_behavior_convertToJSON(v2_horizontal_pod_aut
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -56,14 +56,15 @@ cJSON *v1_node_address_convertToJSON(v1_node_address_t *v1_node_address) {
     if (!v1_node_address->address) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "address", v1_node_address->address) == NULL) {
     goto fail; //String
     }
 
 
     // v1_node_address->type
-    
+    if (kubernetes_v1_node_address_TYPE_NULL == v1_node_address->type) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "type", typev1_node_address_ToString(v1_node_address->type)) == NULL)
     {
     goto fail; //Enum

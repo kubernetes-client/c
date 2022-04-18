@@ -96,15 +96,15 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_storage_class->allow_volume_expansion
-    if(v1_storage_class->allow_volume_expansion) { 
+    if(v1_storage_class->allow_volume_expansion) {
     if(cJSON_AddBoolToObject(item, "allowVolumeExpansion", v1_storage_class->allow_volume_expansion) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_storage_class->allowed_topologies
-    if(v1_storage_class->allowed_topologies) { 
+    if(v1_storage_class->allowed_topologies) {
     cJSON *allowed_topologies = cJSON_AddArrayToObject(item, "allowedTopologies");
     if(allowed_topologies == NULL) {
     goto fail; //nonprimitive container
@@ -120,27 +120,27 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
     cJSON_AddItemToArray(allowed_topologies, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_storage_class->api_version
-    if(v1_storage_class->api_version) { 
+    if(v1_storage_class->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_storage_class->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_storage_class->kind
-    if(v1_storage_class->kind) { 
+    if(v1_storage_class->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_storage_class->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_storage_class->metadata
-    if(v1_storage_class->metadata) { 
+    if(v1_storage_class->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_storage_class->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -149,11 +149,11 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_storage_class->mount_options
-    if(v1_storage_class->mount_options) { 
+    if(v1_storage_class->mount_options) {
     cJSON *mount_options = cJSON_AddArrayToObject(item, "mountOptions");
     if(mount_options == NULL) {
         goto fail; //primitive container
@@ -166,11 +166,11 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_storage_class->parameters
-    if(v1_storage_class->parameters) { 
+    if(v1_storage_class->parameters) {
     cJSON *parameters = cJSON_AddObjectToObject(item, "parameters");
     if(parameters == NULL) {
         goto fail; //primitive map container
@@ -186,33 +186,32 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_storage_class->provisioner
     if (!v1_storage_class->provisioner) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "provisioner", v1_storage_class->provisioner) == NULL) {
     goto fail; //String
     }
 
 
     // v1_storage_class->reclaim_policy
-    if(v1_storage_class->reclaim_policy) { 
+    if(v1_storage_class->reclaim_policy) {
     if(cJSON_AddStringToObject(item, "reclaimPolicy", v1_storage_class->reclaim_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_storage_class->volume_binding_mode
-    if(v1_storage_class->volume_binding_mode) { 
+    if(v1_storage_class->volume_binding_mode) {
     if(cJSON_AddStringToObject(item, "volumeBindingMode", v1_storage_class->volume_binding_mode) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

@@ -126,47 +126,47 @@ cJSON *v1beta1_event_convertToJSON(v1beta1_event_t *v1beta1_event) {
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_event->action
-    if(v1beta1_event->action) { 
+    if(v1beta1_event->action) {
     if(cJSON_AddStringToObject(item, "action", v1beta1_event->action) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_event->api_version
-    if(v1beta1_event->api_version) { 
+    if(v1beta1_event->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1beta1_event->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_event->deprecated_count
-    if(v1beta1_event->deprecated_count) { 
+    if(v1beta1_event->deprecated_count) {
     if(cJSON_AddNumberToObject(item, "deprecatedCount", v1beta1_event->deprecated_count) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1beta1_event->deprecated_first_timestamp
-    if(v1beta1_event->deprecated_first_timestamp) { 
+    if(v1beta1_event->deprecated_first_timestamp) {
     if(cJSON_AddStringToObject(item, "deprecatedFirstTimestamp", v1beta1_event->deprecated_first_timestamp) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1beta1_event->deprecated_last_timestamp
-    if(v1beta1_event->deprecated_last_timestamp) { 
+    if(v1beta1_event->deprecated_last_timestamp) {
     if(cJSON_AddStringToObject(item, "deprecatedLastTimestamp", v1beta1_event->deprecated_last_timestamp) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1beta1_event->deprecated_source
-    if(v1beta1_event->deprecated_source) { 
+    if(v1beta1_event->deprecated_source) {
     cJSON *deprecated_source_local_JSON = v1_event_source_convertToJSON(v1beta1_event->deprecated_source);
     if(deprecated_source_local_JSON == NULL) {
     goto fail; //model
@@ -175,29 +175,28 @@ cJSON *v1beta1_event_convertToJSON(v1beta1_event_t *v1beta1_event) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_event->event_time
     if (!v1beta1_event->event_time) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "eventTime", v1beta1_event->event_time) == NULL) {
     goto fail; //Date-Time
     }
 
 
     // v1beta1_event->kind
-    if(v1beta1_event->kind) { 
+    if(v1beta1_event->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1beta1_event->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_event->metadata
-    if(v1beta1_event->metadata) { 
+    if(v1beta1_event->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1beta1_event->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -206,27 +205,27 @@ cJSON *v1beta1_event_convertToJSON(v1beta1_event_t *v1beta1_event) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_event->note
-    if(v1beta1_event->note) { 
+    if(v1beta1_event->note) {
     if(cJSON_AddStringToObject(item, "note", v1beta1_event->note) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_event->reason
-    if(v1beta1_event->reason) { 
+    if(v1beta1_event->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1beta1_event->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_event->regarding
-    if(v1beta1_event->regarding) { 
+    if(v1beta1_event->regarding) {
     cJSON *regarding_local_JSON = v1_object_reference_convertToJSON(v1beta1_event->regarding);
     if(regarding_local_JSON == NULL) {
     goto fail; //model
@@ -235,11 +234,11 @@ cJSON *v1beta1_event_convertToJSON(v1beta1_event_t *v1beta1_event) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_event->related
-    if(v1beta1_event->related) { 
+    if(v1beta1_event->related) {
     cJSON *related_local_JSON = v1_object_reference_convertToJSON(v1beta1_event->related);
     if(related_local_JSON == NULL) {
     goto fail; //model
@@ -248,27 +247,27 @@ cJSON *v1beta1_event_convertToJSON(v1beta1_event_t *v1beta1_event) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_event->reporting_controller
-    if(v1beta1_event->reporting_controller) { 
+    if(v1beta1_event->reporting_controller) {
     if(cJSON_AddStringToObject(item, "reportingController", v1beta1_event->reporting_controller) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_event->reporting_instance
-    if(v1beta1_event->reporting_instance) { 
+    if(v1beta1_event->reporting_instance) {
     if(cJSON_AddStringToObject(item, "reportingInstance", v1beta1_event->reporting_instance) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_event->series
-    if(v1beta1_event->series) { 
+    if(v1beta1_event->series) {
     cJSON *series_local_JSON = v1beta1_event_series_convertToJSON(v1beta1_event->series);
     if(series_local_JSON == NULL) {
     goto fail; //model
@@ -277,15 +276,15 @@ cJSON *v1beta1_event_convertToJSON(v1beta1_event_t *v1beta1_event) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_event->type
-    if(v1beta1_event->type) { 
+    if(v1beta1_event->type) {
     if(cJSON_AddStringToObject(item, "type", v1beta1_event->type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

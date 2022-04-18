@@ -54,7 +54,7 @@ cJSON *v1_volume_attachment_status_convertToJSON(v1_volume_attachment_status_t *
     cJSON *item = cJSON_CreateObject();
 
     // v1_volume_attachment_status->attach_error
-    if(v1_volume_attachment_status->attach_error) { 
+    if(v1_volume_attachment_status->attach_error) {
     cJSON *attach_error_local_JSON = v1_volume_error_convertToJSON(v1_volume_attachment_status->attach_error);
     if(attach_error_local_JSON == NULL) {
     goto fail; //model
@@ -63,21 +63,20 @@ cJSON *v1_volume_attachment_status_convertToJSON(v1_volume_attachment_status_t *
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume_attachment_status->attached
     if (!v1_volume_attachment_status->attached) {
         goto fail;
     }
-    
     if(cJSON_AddBoolToObject(item, "attached", v1_volume_attachment_status->attached) == NULL) {
     goto fail; //Bool
     }
 
 
     // v1_volume_attachment_status->attachment_metadata
-    if(v1_volume_attachment_status->attachment_metadata) { 
+    if(v1_volume_attachment_status->attachment_metadata) {
     cJSON *attachment_metadata = cJSON_AddObjectToObject(item, "attachmentMetadata");
     if(attachment_metadata == NULL) {
         goto fail; //primitive map container
@@ -93,11 +92,11 @@ cJSON *v1_volume_attachment_status_convertToJSON(v1_volume_attachment_status_t *
         }
     }
     }
-     } 
+    }
 
 
     // v1_volume_attachment_status->detach_error
-    if(v1_volume_attachment_status->detach_error) { 
+    if(v1_volume_attachment_status->detach_error) {
     cJSON *detach_error_local_JSON = v1_volume_error_convertToJSON(v1_volume_attachment_status->detach_error);
     if(detach_error_local_JSON == NULL) {
     goto fail; //model
@@ -106,7 +105,7 @@ cJSON *v1_volume_attachment_status_convertToJSON(v1_volume_attachment_status_t *
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

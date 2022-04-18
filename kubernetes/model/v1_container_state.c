@@ -46,7 +46,7 @@ cJSON *v1_container_state_convertToJSON(v1_container_state_t *v1_container_state
     cJSON *item = cJSON_CreateObject();
 
     // v1_container_state->running
-    if(v1_container_state->running) { 
+    if(v1_container_state->running) {
     cJSON *running_local_JSON = v1_container_state_running_convertToJSON(v1_container_state->running);
     if(running_local_JSON == NULL) {
     goto fail; //model
@@ -55,11 +55,11 @@ cJSON *v1_container_state_convertToJSON(v1_container_state_t *v1_container_state
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_container_state->terminated
-    if(v1_container_state->terminated) { 
+    if(v1_container_state->terminated) {
     cJSON *terminated_local_JSON = v1_container_state_terminated_convertToJSON(v1_container_state->terminated);
     if(terminated_local_JSON == NULL) {
     goto fail; //model
@@ -68,11 +68,11 @@ cJSON *v1_container_state_convertToJSON(v1_container_state_t *v1_container_state
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_container_state->waiting
-    if(v1_container_state->waiting) { 
+    if(v1_container_state->waiting) {
     cJSON *waiting_local_JSON = v1_container_state_waiting_convertToJSON(v1_container_state->waiting);
     if(waiting_local_JSON == NULL) {
     goto fail; //model
@@ -81,7 +81,7 @@ cJSON *v1_container_state_convertToJSON(v1_container_state_t *v1_container_state
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

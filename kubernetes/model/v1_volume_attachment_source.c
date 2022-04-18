@@ -40,7 +40,7 @@ cJSON *v1_volume_attachment_source_convertToJSON(v1_volume_attachment_source_t *
     cJSON *item = cJSON_CreateObject();
 
     // v1_volume_attachment_source->inline_volume_spec
-    if(v1_volume_attachment_source->inline_volume_spec) { 
+    if(v1_volume_attachment_source->inline_volume_spec) {
     cJSON *inline_volume_spec_local_JSON = v1_persistent_volume_spec_convertToJSON(v1_volume_attachment_source->inline_volume_spec);
     if(inline_volume_spec_local_JSON == NULL) {
     goto fail; //model
@@ -49,15 +49,15 @@ cJSON *v1_volume_attachment_source_convertToJSON(v1_volume_attachment_source_t *
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume_attachment_source->persistent_volume_name
-    if(v1_volume_attachment_source->persistent_volume_name) { 
+    if(v1_volume_attachment_source->persistent_volume_name) {
     if(cJSON_AddStringToObject(item, "persistentVolumeName", v1_volume_attachment_source->persistent_volume_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

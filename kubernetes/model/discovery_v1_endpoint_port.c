@@ -48,35 +48,35 @@ cJSON *discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_t *di
     cJSON *item = cJSON_CreateObject();
 
     // discovery_v1_endpoint_port->app_protocol
-    if(discovery_v1_endpoint_port->app_protocol) { 
+    if(discovery_v1_endpoint_port->app_protocol) {
     if(cJSON_AddStringToObject(item, "appProtocol", discovery_v1_endpoint_port->app_protocol) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // discovery_v1_endpoint_port->name
-    if(discovery_v1_endpoint_port->name) { 
+    if(discovery_v1_endpoint_port->name) {
     if(cJSON_AddStringToObject(item, "name", discovery_v1_endpoint_port->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // discovery_v1_endpoint_port->port
-    if(discovery_v1_endpoint_port->port) { 
+    if(discovery_v1_endpoint_port->port) {
     if(cJSON_AddNumberToObject(item, "port", discovery_v1_endpoint_port->port) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // discovery_v1_endpoint_port->protocol
-    if(discovery_v1_endpoint_port->protocol) { 
+    if(discovery_v1_endpoint_port->protocol) {
     if(cJSON_AddStringToObject(item, "protocol", discovery_v1_endpoint_port->protocol) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

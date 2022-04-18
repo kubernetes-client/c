@@ -30,11 +30,11 @@ cJSON *v1_rolling_update_stateful_set_strategy_convertToJSON(v1_rolling_update_s
     cJSON *item = cJSON_CreateObject();
 
     // v1_rolling_update_stateful_set_strategy->partition
-    if(v1_rolling_update_stateful_set_strategy->partition) { 
+    if(v1_rolling_update_stateful_set_strategy->partition) {
     if(cJSON_AddNumberToObject(item, "partition", v1_rolling_update_stateful_set_strategy->partition) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

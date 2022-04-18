@@ -190,23 +190,23 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_service_spec->allocate_load_balancer_node_ports
-    if(v1_service_spec->allocate_load_balancer_node_ports) { 
+    if(v1_service_spec->allocate_load_balancer_node_ports) {
     if(cJSON_AddBoolToObject(item, "allocateLoadBalancerNodePorts", v1_service_spec->allocate_load_balancer_node_ports) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_service_spec->cluster_ip
-    if(v1_service_spec->cluster_ip) { 
+    if(v1_service_spec->cluster_ip) {
     if(cJSON_AddStringToObject(item, "clusterIP", v1_service_spec->cluster_ip) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_spec->cluster_ips
-    if(v1_service_spec->cluster_ips) { 
+    if(v1_service_spec->cluster_ips) {
     cJSON *cluster_ips = cJSON_AddArrayToObject(item, "clusterIPs");
     if(cluster_ips == NULL) {
         goto fail; //primitive container
@@ -219,11 +219,11 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_service_spec->external_ips
-    if(v1_service_spec->external_ips) { 
+    if(v1_service_spec->external_ips) {
     cJSON *external_ips = cJSON_AddArrayToObject(item, "externalIPs");
     if(external_ips == NULL) {
         goto fail; //primitive container
@@ -236,44 +236,44 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_service_spec->external_name
-    if(v1_service_spec->external_name) { 
+    if(v1_service_spec->external_name) {
     if(cJSON_AddStringToObject(item, "externalName", v1_service_spec->external_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_spec->external_traffic_policy
-    
+    if(v1_service_spec->external_traffic_policy != kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_NULL) {
     if(cJSON_AddStringToObject(item, "externalTrafficPolicy", external_traffic_policyv1_service_spec_ToString(v1_service_spec->external_traffic_policy)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_service_spec->health_check_node_port
-    if(v1_service_spec->health_check_node_port) { 
+    if(v1_service_spec->health_check_node_port) {
     if(cJSON_AddNumberToObject(item, "healthCheckNodePort", v1_service_spec->health_check_node_port) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_service_spec->internal_traffic_policy
-    if(v1_service_spec->internal_traffic_policy) { 
+    if(v1_service_spec->internal_traffic_policy) {
     if(cJSON_AddStringToObject(item, "internalTrafficPolicy", v1_service_spec->internal_traffic_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_spec->ip_families
-    if(v1_service_spec->ip_families) { 
+    if(v1_service_spec->ip_families) {
     cJSON *ip_families = cJSON_AddArrayToObject(item, "ipFamilies");
     if(ip_families == NULL) {
         goto fail; //primitive container
@@ -286,35 +286,35 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_service_spec->ip_family_policy
-    if(v1_service_spec->ip_family_policy) { 
+    if(v1_service_spec->ip_family_policy) {
     if(cJSON_AddStringToObject(item, "ipFamilyPolicy", v1_service_spec->ip_family_policy) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_spec->load_balancer_class
-    if(v1_service_spec->load_balancer_class) { 
+    if(v1_service_spec->load_balancer_class) {
     if(cJSON_AddStringToObject(item, "loadBalancerClass", v1_service_spec->load_balancer_class) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_spec->load_balancer_ip
-    if(v1_service_spec->load_balancer_ip) { 
+    if(v1_service_spec->load_balancer_ip) {
     if(cJSON_AddStringToObject(item, "loadBalancerIP", v1_service_spec->load_balancer_ip) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_spec->load_balancer_source_ranges
-    if(v1_service_spec->load_balancer_source_ranges) { 
+    if(v1_service_spec->load_balancer_source_ranges) {
     cJSON *load_balancer_source_ranges = cJSON_AddArrayToObject(item, "loadBalancerSourceRanges");
     if(load_balancer_source_ranges == NULL) {
         goto fail; //primitive container
@@ -327,11 +327,11 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_service_spec->ports
-    if(v1_service_spec->ports) { 
+    if(v1_service_spec->ports) {
     cJSON *ports = cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
@@ -347,19 +347,19 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
     cJSON_AddItemToArray(ports, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_service_spec->publish_not_ready_addresses
-    if(v1_service_spec->publish_not_ready_addresses) { 
+    if(v1_service_spec->publish_not_ready_addresses) {
     if(cJSON_AddBoolToObject(item, "publishNotReadyAddresses", v1_service_spec->publish_not_ready_addresses) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_service_spec->selector
-    if(v1_service_spec->selector) { 
+    if(v1_service_spec->selector) {
     cJSON *selector = cJSON_AddObjectToObject(item, "selector");
     if(selector == NULL) {
         goto fail; //primitive map container
@@ -375,20 +375,20 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_service_spec->session_affinity
-    
+    if(v1_service_spec->session_affinity != kubernetes_v1_service_spec_SESSIONAFFINITY_NULL) {
     if(cJSON_AddStringToObject(item, "sessionAffinity", session_affinityv1_service_spec_ToString(v1_service_spec->session_affinity)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_service_spec->session_affinity_config
-    if(v1_service_spec->session_affinity_config) { 
+    if(v1_service_spec->session_affinity_config) {
     cJSON *session_affinity_config_local_JSON = v1_session_affinity_config_convertToJSON(v1_service_spec->session_affinity_config);
     if(session_affinity_config_local_JSON == NULL) {
     goto fail; //model
@@ -397,16 +397,16 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_service_spec->type
-    
+    if(v1_service_spec->type != kubernetes_v1_service_spec_TYPE_NULL) {
     if(cJSON_AddStringToObject(item, "type", typev1_service_spec_ToString(v1_service_spec->type)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
     return item;
 fail:

@@ -43,7 +43,6 @@ cJSON *v1_http_header_convertToJSON(v1_http_header_t *v1_http_header) {
     if (!v1_http_header->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_http_header->name) == NULL) {
     goto fail; //String
     }
@@ -53,7 +52,6 @@ cJSON *v1_http_header_convertToJSON(v1_http_header_t *v1_http_header) {
     if (!v1_http_header->value) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "value", v1_http_header->value) == NULL) {
     goto fail; //String
     }

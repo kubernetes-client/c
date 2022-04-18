@@ -51,7 +51,7 @@ cJSON *v1beta2_flow_schema_spec_convertToJSON(v1beta2_flow_schema_spec_t *v1beta
     cJSON *item = cJSON_CreateObject();
 
     // v1beta2_flow_schema_spec->distinguisher_method
-    if(v1beta2_flow_schema_spec->distinguisher_method) { 
+    if(v1beta2_flow_schema_spec->distinguisher_method) {
     cJSON *distinguisher_method_local_JSON = v1beta2_flow_distinguisher_method_convertToJSON(v1beta2_flow_schema_spec->distinguisher_method);
     if(distinguisher_method_local_JSON == NULL) {
     goto fail; //model
@@ -60,22 +60,21 @@ cJSON *v1beta2_flow_schema_spec_convertToJSON(v1beta2_flow_schema_spec_t *v1beta
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta2_flow_schema_spec->matching_precedence
-    if(v1beta2_flow_schema_spec->matching_precedence) { 
+    if(v1beta2_flow_schema_spec->matching_precedence) {
     if(cJSON_AddNumberToObject(item, "matchingPrecedence", v1beta2_flow_schema_spec->matching_precedence) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1beta2_flow_schema_spec->priority_level_configuration
     if (!v1beta2_flow_schema_spec->priority_level_configuration) {
         goto fail;
     }
-    
     cJSON *priority_level_configuration_local_JSON = v1beta2_priority_level_configuration_reference_convertToJSON(v1beta2_flow_schema_spec->priority_level_configuration);
     if(priority_level_configuration_local_JSON == NULL) {
     goto fail; //model
@@ -87,7 +86,7 @@ cJSON *v1beta2_flow_schema_spec_convertToJSON(v1beta2_flow_schema_spec_t *v1beta
 
 
     // v1beta2_flow_schema_spec->rules
-    if(v1beta2_flow_schema_spec->rules) { 
+    if(v1beta2_flow_schema_spec->rules) {
     cJSON *rules = cJSON_AddArrayToObject(item, "rules");
     if(rules == NULL) {
     goto fail; //nonprimitive container
@@ -103,7 +102,7 @@ cJSON *v1beta2_flow_schema_spec_convertToJSON(v1beta2_flow_schema_spec_t *v1beta
     cJSON_AddItemToArray(rules, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

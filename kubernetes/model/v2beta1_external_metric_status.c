@@ -52,18 +52,17 @@ cJSON *v2beta1_external_metric_status_convertToJSON(v2beta1_external_metric_stat
     cJSON *item = cJSON_CreateObject();
 
     // v2beta1_external_metric_status->current_average_value
-    if(v2beta1_external_metric_status->current_average_value) { 
+    if(v2beta1_external_metric_status->current_average_value) {
     if(cJSON_AddStringToObject(item, "currentAverageValue", v2beta1_external_metric_status->current_average_value) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v2beta1_external_metric_status->current_value
     if (!v2beta1_external_metric_status->current_value) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "currentValue", v2beta1_external_metric_status->current_value) == NULL) {
     goto fail; //String
     }
@@ -73,14 +72,13 @@ cJSON *v2beta1_external_metric_status_convertToJSON(v2beta1_external_metric_stat
     if (!v2beta1_external_metric_status->metric_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "metricName", v2beta1_external_metric_status->metric_name) == NULL) {
     goto fail; //String
     }
 
 
     // v2beta1_external_metric_status->metric_selector
-    if(v2beta1_external_metric_status->metric_selector) { 
+    if(v2beta1_external_metric_status->metric_selector) {
     cJSON *metric_selector_local_JSON = v1_label_selector_convertToJSON(v2beta1_external_metric_status->metric_selector);
     if(metric_selector_local_JSON == NULL) {
     goto fail; //model
@@ -89,7 +87,7 @@ cJSON *v2beta1_external_metric_status_convertToJSON(v2beta1_external_metric_stat
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

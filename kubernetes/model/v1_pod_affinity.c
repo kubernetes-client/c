@@ -46,7 +46,7 @@ cJSON *v1_pod_affinity_convertToJSON(v1_pod_affinity_t *v1_pod_affinity) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_affinity->preferred_during_scheduling_ignored_during_execution
-    if(v1_pod_affinity->preferred_during_scheduling_ignored_during_execution) { 
+    if(v1_pod_affinity->preferred_during_scheduling_ignored_during_execution) {
     cJSON *preferred_during_scheduling_ignored_during_execution = cJSON_AddArrayToObject(item, "preferredDuringSchedulingIgnoredDuringExecution");
     if(preferred_during_scheduling_ignored_during_execution == NULL) {
     goto fail; //nonprimitive container
@@ -62,11 +62,11 @@ cJSON *v1_pod_affinity_convertToJSON(v1_pod_affinity_t *v1_pod_affinity) {
     cJSON_AddItemToArray(preferred_during_scheduling_ignored_during_execution, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_affinity->required_during_scheduling_ignored_during_execution
-    if(v1_pod_affinity->required_during_scheduling_ignored_during_execution) { 
+    if(v1_pod_affinity->required_during_scheduling_ignored_during_execution) {
     cJSON *required_during_scheduling_ignored_during_execution = cJSON_AddArrayToObject(item, "requiredDuringSchedulingIgnoredDuringExecution");
     if(required_during_scheduling_ignored_during_execution == NULL) {
     goto fail; //nonprimitive container
@@ -82,7 +82,7 @@ cJSON *v1_pod_affinity_convertToJSON(v1_pod_affinity_t *v1_pod_affinity) {
     cJSON_AddItemToArray(required_during_scheduling_ignored_during_execution, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

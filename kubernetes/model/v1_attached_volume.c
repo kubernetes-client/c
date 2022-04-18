@@ -43,7 +43,6 @@ cJSON *v1_attached_volume_convertToJSON(v1_attached_volume_t *v1_attached_volume
     if (!v1_attached_volume->device_path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "devicePath", v1_attached_volume->device_path) == NULL) {
     goto fail; //String
     }
@@ -53,7 +52,6 @@ cJSON *v1_attached_volume_convertToJSON(v1_attached_volume_t *v1_attached_volume
     if (!v1_attached_volume->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_attached_volume->name) == NULL) {
     goto fail; //String
     }

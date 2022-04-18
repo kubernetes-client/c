@@ -39,15 +39,15 @@ cJSON *v1_downward_api_volume_source_convertToJSON(v1_downward_api_volume_source
     cJSON *item = cJSON_CreateObject();
 
     // v1_downward_api_volume_source->default_mode
-    if(v1_downward_api_volume_source->default_mode) { 
+    if(v1_downward_api_volume_source->default_mode) {
     if(cJSON_AddNumberToObject(item, "defaultMode", v1_downward_api_volume_source->default_mode) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_downward_api_volume_source->items
-    if(v1_downward_api_volume_source->items) { 
+    if(v1_downward_api_volume_source->items) {
     cJSON *items = cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
@@ -63,7 +63,7 @@ cJSON *v1_downward_api_volume_source_convertToJSON(v1_downward_api_volume_source
     cJSON_AddItemToArray(items, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

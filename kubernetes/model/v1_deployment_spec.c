@@ -56,50 +56,49 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
     cJSON *item = cJSON_CreateObject();
 
     // v1_deployment_spec->min_ready_seconds
-    if(v1_deployment_spec->min_ready_seconds) { 
+    if(v1_deployment_spec->min_ready_seconds) {
     if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_deployment_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_deployment_spec->paused
-    if(v1_deployment_spec->paused) { 
+    if(v1_deployment_spec->paused) {
     if(cJSON_AddBoolToObject(item, "paused", v1_deployment_spec->paused) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_deployment_spec->progress_deadline_seconds
-    if(v1_deployment_spec->progress_deadline_seconds) { 
+    if(v1_deployment_spec->progress_deadline_seconds) {
     if(cJSON_AddNumberToObject(item, "progressDeadlineSeconds", v1_deployment_spec->progress_deadline_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_deployment_spec->replicas
-    if(v1_deployment_spec->replicas) { 
+    if(v1_deployment_spec->replicas) {
     if(cJSON_AddNumberToObject(item, "replicas", v1_deployment_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_deployment_spec->revision_history_limit
-    if(v1_deployment_spec->revision_history_limit) { 
+    if(v1_deployment_spec->revision_history_limit) {
     if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_deployment_spec->revision_history_limit) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_deployment_spec->selector
     if (!v1_deployment_spec->selector) {
         goto fail;
     }
-    
     cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_deployment_spec->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
@@ -111,7 +110,7 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
 
 
     // v1_deployment_spec->strategy
-    if(v1_deployment_spec->strategy) { 
+    if(v1_deployment_spec->strategy) {
     cJSON *strategy_local_JSON = v1_deployment_strategy_convertToJSON(v1_deployment_spec->strategy);
     if(strategy_local_JSON == NULL) {
     goto fail; //model
@@ -120,14 +119,13 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_deployment_spec->_template
     if (!v1_deployment_spec->_template) {
         goto fail;
     }
-    
     cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_deployment_spec->_template);
     if(_template_local_JSON == NULL) {
     goto fail; //model

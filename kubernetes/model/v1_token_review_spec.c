@@ -43,7 +43,7 @@ cJSON *v1_token_review_spec_convertToJSON(v1_token_review_spec_t *v1_token_revie
     cJSON *item = cJSON_CreateObject();
 
     // v1_token_review_spec->audiences
-    if(v1_token_review_spec->audiences) { 
+    if(v1_token_review_spec->audiences) {
     cJSON *audiences = cJSON_AddArrayToObject(item, "audiences");
     if(audiences == NULL) {
         goto fail; //primitive container
@@ -56,15 +56,15 @@ cJSON *v1_token_review_spec_convertToJSON(v1_token_review_spec_t *v1_token_revie
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_token_review_spec->token
-    if(v1_token_review_spec->token) { 
+    if(v1_token_review_spec->token) {
     if(cJSON_AddStringToObject(item, "token", v1_token_review_spec->token) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

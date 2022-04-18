@@ -37,7 +37,6 @@ cJSON *v1beta1_allowed_flex_volume_convertToJSON(v1beta1_allowed_flex_volume_t *
     if (!v1beta1_allowed_flex_volume->driver) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "driver", v1beta1_allowed_flex_volume->driver) == NULL) {
     goto fail; //String
     }

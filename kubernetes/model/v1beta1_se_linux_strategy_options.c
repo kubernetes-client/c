@@ -43,14 +43,13 @@ cJSON *v1beta1_se_linux_strategy_options_convertToJSON(v1beta1_se_linux_strategy
     if (!v1beta1_se_linux_strategy_options->rule) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "rule", v1beta1_se_linux_strategy_options->rule) == NULL) {
     goto fail; //String
     }
 
 
     // v1beta1_se_linux_strategy_options->se_linux_options
-    if(v1beta1_se_linux_strategy_options->se_linux_options) { 
+    if(v1beta1_se_linux_strategy_options->se_linux_options) {
     cJSON *se_linux_options_local_JSON = v1_se_linux_options_convertToJSON(v1beta1_se_linux_strategy_options->se_linux_options);
     if(se_linux_options_local_JSON == NULL) {
     goto fail; //model
@@ -59,7 +58,7 @@ cJSON *v1beta1_se_linux_strategy_options_convertToJSON(v1beta1_se_linux_strategy
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

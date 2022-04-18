@@ -46,7 +46,7 @@ cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_h
     cJSON *item = cJSON_CreateObject();
 
     // v1_lifecycle_handler->exec
-    if(v1_lifecycle_handler->exec) { 
+    if(v1_lifecycle_handler->exec) {
     cJSON *exec_local_JSON = v1_exec_action_convertToJSON(v1_lifecycle_handler->exec);
     if(exec_local_JSON == NULL) {
     goto fail; //model
@@ -55,11 +55,11 @@ cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_h
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_lifecycle_handler->http_get
-    if(v1_lifecycle_handler->http_get) { 
+    if(v1_lifecycle_handler->http_get) {
     cJSON *http_get_local_JSON = v1_http_get_action_convertToJSON(v1_lifecycle_handler->http_get);
     if(http_get_local_JSON == NULL) {
     goto fail; //model
@@ -68,11 +68,11 @@ cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_h
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_lifecycle_handler->tcp_socket
-    if(v1_lifecycle_handler->tcp_socket) { 
+    if(v1_lifecycle_handler->tcp_socket) {
     cJSON *tcp_socket_local_JSON = v1_tcp_socket_action_convertToJSON(v1_lifecycle_handler->tcp_socket);
     if(tcp_socket_local_JSON == NULL) {
     goto fail; //model
@@ -81,7 +81,7 @@ cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_h
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

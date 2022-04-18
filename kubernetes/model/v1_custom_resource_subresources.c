@@ -40,7 +40,7 @@ cJSON *v1_custom_resource_subresources_convertToJSON(v1_custom_resource_subresou
     cJSON *item = cJSON_CreateObject();
 
     // v1_custom_resource_subresources->scale
-    if(v1_custom_resource_subresources->scale) { 
+    if(v1_custom_resource_subresources->scale) {
     cJSON *scale_local_JSON = v1_custom_resource_subresource_scale_convertToJSON(v1_custom_resource_subresources->scale);
     if(scale_local_JSON == NULL) {
     goto fail; //model
@@ -49,11 +49,11 @@ cJSON *v1_custom_resource_subresources_convertToJSON(v1_custom_resource_subresou
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_custom_resource_subresources->status
-    if(v1_custom_resource_subresources->status) { 
+    if(v1_custom_resource_subresources->status) {
     cJSON *status_object = object_convertToJSON(v1_custom_resource_subresources->status);
     if(status_object == NULL) {
     goto fail; //model
@@ -62,7 +62,7 @@ cJSON *v1_custom_resource_subresources_convertToJSON(v1_custom_resource_subresou
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

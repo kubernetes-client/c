@@ -52,7 +52,6 @@ cJSON *v1_label_selector_requirement_convertToJSON(v1_label_selector_requirement
     if (!v1_label_selector_requirement->key) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "key", v1_label_selector_requirement->key) == NULL) {
     goto fail; //String
     }
@@ -62,14 +61,13 @@ cJSON *v1_label_selector_requirement_convertToJSON(v1_label_selector_requirement
     if (!v1_label_selector_requirement->_operator) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "operator", v1_label_selector_requirement->_operator) == NULL) {
     goto fail; //String
     }
 
 
     // v1_label_selector_requirement->values
-    if(v1_label_selector_requirement->values) { 
+    if(v1_label_selector_requirement->values) {
     cJSON *values = cJSON_AddArrayToObject(item, "values");
     if(values == NULL) {
         goto fail; //primitive container
@@ -82,7 +80,7 @@ cJSON *v1_label_selector_requirement_convertToJSON(v1_label_selector_requirement
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

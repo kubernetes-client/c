@@ -66,22 +66,21 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
     if (!v1_stateful_set_status->available_replicas) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "availableReplicas", v1_stateful_set_status->available_replicas) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_stateful_set_status->collision_count
-    if(v1_stateful_set_status->collision_count) { 
+    if(v1_stateful_set_status->collision_count) {
     if(cJSON_AddNumberToObject(item, "collisionCount", v1_stateful_set_status->collision_count) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_stateful_set_status->conditions
-    if(v1_stateful_set_status->conditions) { 
+    if(v1_stateful_set_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -97,65 +96,64 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_stateful_set_status->current_replicas
-    if(v1_stateful_set_status->current_replicas) { 
+    if(v1_stateful_set_status->current_replicas) {
     if(cJSON_AddNumberToObject(item, "currentReplicas", v1_stateful_set_status->current_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_stateful_set_status->current_revision
-    if(v1_stateful_set_status->current_revision) { 
+    if(v1_stateful_set_status->current_revision) {
     if(cJSON_AddStringToObject(item, "currentRevision", v1_stateful_set_status->current_revision) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_stateful_set_status->observed_generation
-    if(v1_stateful_set_status->observed_generation) { 
+    if(v1_stateful_set_status->observed_generation) {
     if(cJSON_AddNumberToObject(item, "observedGeneration", v1_stateful_set_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_stateful_set_status->ready_replicas
-    if(v1_stateful_set_status->ready_replicas) { 
+    if(v1_stateful_set_status->ready_replicas) {
     if(cJSON_AddNumberToObject(item, "readyReplicas", v1_stateful_set_status->ready_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_stateful_set_status->replicas
     if (!v1_stateful_set_status->replicas) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "replicas", v1_stateful_set_status->replicas) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_stateful_set_status->update_revision
-    if(v1_stateful_set_status->update_revision) { 
+    if(v1_stateful_set_status->update_revision) {
     if(cJSON_AddStringToObject(item, "updateRevision", v1_stateful_set_status->update_revision) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_stateful_set_status->updated_replicas
-    if(v1_stateful_set_status->updated_replicas) { 
+    if(v1_stateful_set_status->updated_replicas) {
     if(cJSON_AddNumberToObject(item, "updatedReplicas", v1_stateful_set_status->updated_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

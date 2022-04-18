@@ -33,7 +33,6 @@ cJSON *v1_daemon_endpoint_convertToJSON(v1_daemon_endpoint_t *v1_daemon_endpoint
     if (!v1_daemon_endpoint->port) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "Port", v1_daemon_endpoint->port) == NULL) {
     goto fail; //Numeric
     }

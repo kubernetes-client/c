@@ -43,7 +43,6 @@ cJSON *v1_watch_event_convertToJSON(v1_watch_event_t *v1_watch_event) {
     if (!v1_watch_event->object) {
         goto fail;
     }
-    
     cJSON *object_object = object_convertToJSON(v1_watch_event->object);
     if(object_object == NULL) {
     goto fail; //model
@@ -58,7 +57,6 @@ cJSON *v1_watch_event_convertToJSON(v1_watch_event_t *v1_watch_event) {
     if (!v1_watch_event->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v1_watch_event->type) == NULL) {
     goto fail; //String
     }

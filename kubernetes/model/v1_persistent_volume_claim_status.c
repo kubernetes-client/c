@@ -95,7 +95,7 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
     cJSON *item = cJSON_CreateObject();
 
     // v1_persistent_volume_claim_status->access_modes
-    if(v1_persistent_volume_claim_status->access_modes) { 
+    if(v1_persistent_volume_claim_status->access_modes) {
     cJSON *access_modes = cJSON_AddArrayToObject(item, "accessModes");
     if(access_modes == NULL) {
         goto fail; //primitive container
@@ -108,11 +108,11 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_status->allocated_resources
-    if(v1_persistent_volume_claim_status->allocated_resources) { 
+    if(v1_persistent_volume_claim_status->allocated_resources) {
     cJSON *allocated_resources = cJSON_AddObjectToObject(item, "allocatedResources");
     if(allocated_resources == NULL) {
         goto fail; //primitive map container
@@ -128,11 +128,11 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
         }
     }
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_status->capacity
-    if(v1_persistent_volume_claim_status->capacity) { 
+    if(v1_persistent_volume_claim_status->capacity) {
     cJSON *capacity = cJSON_AddObjectToObject(item, "capacity");
     if(capacity == NULL) {
         goto fail; //primitive map container
@@ -148,11 +148,11 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
         }
     }
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_status->conditions
-    if(v1_persistent_volume_claim_status->conditions) { 
+    if(v1_persistent_volume_claim_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -168,24 +168,24 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_status->phase
-    
+    if(v1_persistent_volume_claim_status->phase != kubernetes_v1_persistent_volume_claim_status_PHASE_NULL) {
     if(cJSON_AddStringToObject(item, "phase", phasev1_persistent_volume_claim_status_ToString(v1_persistent_volume_claim_status->phase)) == NULL)
     {
     goto fail; //Enum
     }
-    
+    }
 
 
     // v1_persistent_volume_claim_status->resize_status
-    if(v1_persistent_volume_claim_status->resize_status) { 
+    if(v1_persistent_volume_claim_status->resize_status) {
     if(cJSON_AddStringToObject(item, "resizeStatus", v1_persistent_volume_claim_status->resize_status) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

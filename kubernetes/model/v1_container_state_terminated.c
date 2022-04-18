@@ -62,61 +62,60 @@ cJSON *v1_container_state_terminated_convertToJSON(v1_container_state_terminated
     cJSON *item = cJSON_CreateObject();
 
     // v1_container_state_terminated->container_id
-    if(v1_container_state_terminated->container_id) { 
+    if(v1_container_state_terminated->container_id) {
     if(cJSON_AddStringToObject(item, "containerID", v1_container_state_terminated->container_id) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_container_state_terminated->exit_code
     if (!v1_container_state_terminated->exit_code) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "exitCode", v1_container_state_terminated->exit_code) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_container_state_terminated->finished_at
-    if(v1_container_state_terminated->finished_at) { 
+    if(v1_container_state_terminated->finished_at) {
     if(cJSON_AddStringToObject(item, "finishedAt", v1_container_state_terminated->finished_at) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_container_state_terminated->message
-    if(v1_container_state_terminated->message) { 
+    if(v1_container_state_terminated->message) {
     if(cJSON_AddStringToObject(item, "message", v1_container_state_terminated->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_container_state_terminated->reason
-    if(v1_container_state_terminated->reason) { 
+    if(v1_container_state_terminated->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_container_state_terminated->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_container_state_terminated->signal
-    if(v1_container_state_terminated->signal) { 
+    if(v1_container_state_terminated->signal) {
     if(cJSON_AddNumberToObject(item, "signal", v1_container_state_terminated->signal) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_container_state_terminated->started_at
-    if(v1_container_state_terminated->started_at) { 
+    if(v1_container_state_terminated->started_at) {
     if(cJSON_AddStringToObject(item, "startedAt", v1_container_state_terminated->started_at) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
     return item;
 fail:

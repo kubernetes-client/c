@@ -40,7 +40,7 @@ cJSON *v1_persistent_volume_claim_template_convertToJSON(v1_persistent_volume_cl
     cJSON *item = cJSON_CreateObject();
 
     // v1_persistent_volume_claim_template->metadata
-    if(v1_persistent_volume_claim_template->metadata) { 
+    if(v1_persistent_volume_claim_template->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_persistent_volume_claim_template->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -49,14 +49,13 @@ cJSON *v1_persistent_volume_claim_template_convertToJSON(v1_persistent_volume_cl
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_template->spec
     if (!v1_persistent_volume_claim_template->spec) {
         goto fail;
     }
-    
     cJSON *spec_local_JSON = v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_template->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model

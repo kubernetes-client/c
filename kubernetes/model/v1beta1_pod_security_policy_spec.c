@@ -177,15 +177,15 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_pod_security_policy_spec->allow_privilege_escalation
-    if(v1beta1_pod_security_policy_spec->allow_privilege_escalation) { 
+    if(v1beta1_pod_security_policy_spec->allow_privilege_escalation) {
     if(cJSON_AddBoolToObject(item, "allowPrivilegeEscalation", v1beta1_pod_security_policy_spec->allow_privilege_escalation) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->allowed_csi_drivers
-    if(v1beta1_pod_security_policy_spec->allowed_csi_drivers) { 
+    if(v1beta1_pod_security_policy_spec->allowed_csi_drivers) {
     cJSON *allowed_csi_drivers = cJSON_AddArrayToObject(item, "allowedCSIDrivers");
     if(allowed_csi_drivers == NULL) {
     goto fail; //nonprimitive container
@@ -201,11 +201,11 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
     cJSON_AddItemToArray(allowed_csi_drivers, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->allowed_capabilities
-    if(v1beta1_pod_security_policy_spec->allowed_capabilities) { 
+    if(v1beta1_pod_security_policy_spec->allowed_capabilities) {
     cJSON *allowed_capabilities = cJSON_AddArrayToObject(item, "allowedCapabilities");
     if(allowed_capabilities == NULL) {
         goto fail; //primitive container
@@ -218,11 +218,11 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->allowed_flex_volumes
-    if(v1beta1_pod_security_policy_spec->allowed_flex_volumes) { 
+    if(v1beta1_pod_security_policy_spec->allowed_flex_volumes) {
     cJSON *allowed_flex_volumes = cJSON_AddArrayToObject(item, "allowedFlexVolumes");
     if(allowed_flex_volumes == NULL) {
     goto fail; //nonprimitive container
@@ -238,11 +238,11 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
     cJSON_AddItemToArray(allowed_flex_volumes, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->allowed_host_paths
-    if(v1beta1_pod_security_policy_spec->allowed_host_paths) { 
+    if(v1beta1_pod_security_policy_spec->allowed_host_paths) {
     cJSON *allowed_host_paths = cJSON_AddArrayToObject(item, "allowedHostPaths");
     if(allowed_host_paths == NULL) {
     goto fail; //nonprimitive container
@@ -258,11 +258,11 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
     cJSON_AddItemToArray(allowed_host_paths, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->allowed_proc_mount_types
-    if(v1beta1_pod_security_policy_spec->allowed_proc_mount_types) { 
+    if(v1beta1_pod_security_policy_spec->allowed_proc_mount_types) {
     cJSON *allowed_proc_mount_types = cJSON_AddArrayToObject(item, "allowedProcMountTypes");
     if(allowed_proc_mount_types == NULL) {
         goto fail; //primitive container
@@ -275,11 +275,11 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls
-    if(v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls) { 
+    if(v1beta1_pod_security_policy_spec->allowed_unsafe_sysctls) {
     cJSON *allowed_unsafe_sysctls = cJSON_AddArrayToObject(item, "allowedUnsafeSysctls");
     if(allowed_unsafe_sysctls == NULL) {
         goto fail; //primitive container
@@ -292,11 +292,11 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->default_add_capabilities
-    if(v1beta1_pod_security_policy_spec->default_add_capabilities) { 
+    if(v1beta1_pod_security_policy_spec->default_add_capabilities) {
     cJSON *default_add_capabilities = cJSON_AddArrayToObject(item, "defaultAddCapabilities");
     if(default_add_capabilities == NULL) {
         goto fail; //primitive container
@@ -309,19 +309,19 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->default_allow_privilege_escalation
-    if(v1beta1_pod_security_policy_spec->default_allow_privilege_escalation) { 
+    if(v1beta1_pod_security_policy_spec->default_allow_privilege_escalation) {
     if(cJSON_AddBoolToObject(item, "defaultAllowPrivilegeEscalation", v1beta1_pod_security_policy_spec->default_allow_privilege_escalation) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->forbidden_sysctls
-    if(v1beta1_pod_security_policy_spec->forbidden_sysctls) { 
+    if(v1beta1_pod_security_policy_spec->forbidden_sysctls) {
     cJSON *forbidden_sysctls = cJSON_AddArrayToObject(item, "forbiddenSysctls");
     if(forbidden_sysctls == NULL) {
         goto fail; //primitive container
@@ -334,14 +334,13 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->fs_group
     if (!v1beta1_pod_security_policy_spec->fs_group) {
         goto fail;
     }
-    
     cJSON *fs_group_local_JSON = v1beta1_fs_group_strategy_options_convertToJSON(v1beta1_pod_security_policy_spec->fs_group);
     if(fs_group_local_JSON == NULL) {
     goto fail; //model
@@ -353,31 +352,31 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
 
 
     // v1beta1_pod_security_policy_spec->host_ipc
-    if(v1beta1_pod_security_policy_spec->host_ipc) { 
+    if(v1beta1_pod_security_policy_spec->host_ipc) {
     if(cJSON_AddBoolToObject(item, "hostIPC", v1beta1_pod_security_policy_spec->host_ipc) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->host_network
-    if(v1beta1_pod_security_policy_spec->host_network) { 
+    if(v1beta1_pod_security_policy_spec->host_network) {
     if(cJSON_AddBoolToObject(item, "hostNetwork", v1beta1_pod_security_policy_spec->host_network) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->host_pid
-    if(v1beta1_pod_security_policy_spec->host_pid) { 
+    if(v1beta1_pod_security_policy_spec->host_pid) {
     if(cJSON_AddBoolToObject(item, "hostPID", v1beta1_pod_security_policy_spec->host_pid) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->host_ports
-    if(v1beta1_pod_security_policy_spec->host_ports) { 
+    if(v1beta1_pod_security_policy_spec->host_ports) {
     cJSON *host_ports = cJSON_AddArrayToObject(item, "hostPorts");
     if(host_ports == NULL) {
     goto fail; //nonprimitive container
@@ -393,27 +392,27 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
     cJSON_AddItemToArray(host_ports, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->privileged
-    if(v1beta1_pod_security_policy_spec->privileged) { 
+    if(v1beta1_pod_security_policy_spec->privileged) {
     if(cJSON_AddBoolToObject(item, "privileged", v1beta1_pod_security_policy_spec->privileged) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->read_only_root_filesystem
-    if(v1beta1_pod_security_policy_spec->read_only_root_filesystem) { 
+    if(v1beta1_pod_security_policy_spec->read_only_root_filesystem) {
     if(cJSON_AddBoolToObject(item, "readOnlyRootFilesystem", v1beta1_pod_security_policy_spec->read_only_root_filesystem) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->required_drop_capabilities
-    if(v1beta1_pod_security_policy_spec->required_drop_capabilities) { 
+    if(v1beta1_pod_security_policy_spec->required_drop_capabilities) {
     cJSON *required_drop_capabilities = cJSON_AddArrayToObject(item, "requiredDropCapabilities");
     if(required_drop_capabilities == NULL) {
         goto fail; //primitive container
@@ -426,11 +425,11 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->run_as_group
-    if(v1beta1_pod_security_policy_spec->run_as_group) { 
+    if(v1beta1_pod_security_policy_spec->run_as_group) {
     cJSON *run_as_group_local_JSON = v1beta1_run_as_group_strategy_options_convertToJSON(v1beta1_pod_security_policy_spec->run_as_group);
     if(run_as_group_local_JSON == NULL) {
     goto fail; //model
@@ -439,14 +438,13 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->run_as_user
     if (!v1beta1_pod_security_policy_spec->run_as_user) {
         goto fail;
     }
-    
     cJSON *run_as_user_local_JSON = v1beta1_run_as_user_strategy_options_convertToJSON(v1beta1_pod_security_policy_spec->run_as_user);
     if(run_as_user_local_JSON == NULL) {
     goto fail; //model
@@ -458,7 +456,7 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
 
 
     // v1beta1_pod_security_policy_spec->runtime_class
-    if(v1beta1_pod_security_policy_spec->runtime_class) { 
+    if(v1beta1_pod_security_policy_spec->runtime_class) {
     cJSON *runtime_class_local_JSON = v1beta1_runtime_class_strategy_options_convertToJSON(v1beta1_pod_security_policy_spec->runtime_class);
     if(runtime_class_local_JSON == NULL) {
     goto fail; //model
@@ -467,14 +465,13 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_pod_security_policy_spec->se_linux
     if (!v1beta1_pod_security_policy_spec->se_linux) {
         goto fail;
     }
-    
     cJSON *se_linux_local_JSON = v1beta1_se_linux_strategy_options_convertToJSON(v1beta1_pod_security_policy_spec->se_linux);
     if(se_linux_local_JSON == NULL) {
     goto fail; //model
@@ -489,7 +486,6 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
     if (!v1beta1_pod_security_policy_spec->supplemental_groups) {
         goto fail;
     }
-    
     cJSON *supplemental_groups_local_JSON = v1beta1_supplemental_groups_strategy_options_convertToJSON(v1beta1_pod_security_policy_spec->supplemental_groups);
     if(supplemental_groups_local_JSON == NULL) {
     goto fail; //model
@@ -501,7 +497,7 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
 
 
     // v1beta1_pod_security_policy_spec->volumes
-    if(v1beta1_pod_security_policy_spec->volumes) { 
+    if(v1beta1_pod_security_policy_spec->volumes) {
     cJSON *volumes = cJSON_AddArrayToObject(item, "volumes");
     if(volumes == NULL) {
         goto fail; //primitive container
@@ -514,7 +510,7 @@ cJSON *v1beta1_pod_security_policy_spec_convertToJSON(v1beta1_pod_security_polic
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

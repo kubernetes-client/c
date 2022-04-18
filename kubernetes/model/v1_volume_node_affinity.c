@@ -34,7 +34,7 @@ cJSON *v1_volume_node_affinity_convertToJSON(v1_volume_node_affinity_t *v1_volum
     cJSON *item = cJSON_CreateObject();
 
     // v1_volume_node_affinity->required
-    if(v1_volume_node_affinity->required) { 
+    if(v1_volume_node_affinity->required) {
     cJSON *required_local_JSON = v1_node_selector_convertToJSON(v1_volume_node_affinity->required);
     if(required_local_JSON == NULL) {
     goto fail; //model
@@ -43,7 +43,7 @@ cJSON *v1_volume_node_affinity_convertToJSON(v1_volume_node_affinity_t *v1_volum
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

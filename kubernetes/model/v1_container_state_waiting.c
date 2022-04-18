@@ -40,19 +40,19 @@ cJSON *v1_container_state_waiting_convertToJSON(v1_container_state_waiting_t *v1
     cJSON *item = cJSON_CreateObject();
 
     // v1_container_state_waiting->message
-    if(v1_container_state_waiting->message) { 
+    if(v1_container_state_waiting->message) {
     if(cJSON_AddStringToObject(item, "message", v1_container_state_waiting->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_container_state_waiting->reason
-    if(v1_container_state_waiting->reason) { 
+    if(v1_container_state_waiting->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_container_state_waiting->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

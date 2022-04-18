@@ -52,23 +52,23 @@ cJSON *v1alpha1_runtime_class_convertToJSON(v1alpha1_runtime_class_t *v1alpha1_r
     cJSON *item = cJSON_CreateObject();
 
     // v1alpha1_runtime_class->api_version
-    if(v1alpha1_runtime_class->api_version) { 
+    if(v1alpha1_runtime_class->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1alpha1_runtime_class->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1alpha1_runtime_class->kind
-    if(v1alpha1_runtime_class->kind) { 
+    if(v1alpha1_runtime_class->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1alpha1_runtime_class->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1alpha1_runtime_class->metadata
-    if(v1alpha1_runtime_class->metadata) { 
+    if(v1alpha1_runtime_class->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha1_runtime_class->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -77,14 +77,13 @@ cJSON *v1alpha1_runtime_class_convertToJSON(v1alpha1_runtime_class_t *v1alpha1_r
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1alpha1_runtime_class->spec
     if (!v1alpha1_runtime_class->spec) {
         goto fail;
     }
-    
     cJSON *spec_local_JSON = v1alpha1_runtime_class_spec_convertToJSON(v1alpha1_runtime_class->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model

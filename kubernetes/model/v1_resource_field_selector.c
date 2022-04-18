@@ -46,26 +46,25 @@ cJSON *v1_resource_field_selector_convertToJSON(v1_resource_field_selector_t *v1
     cJSON *item = cJSON_CreateObject();
 
     // v1_resource_field_selector->container_name
-    if(v1_resource_field_selector->container_name) { 
+    if(v1_resource_field_selector->container_name) {
     if(cJSON_AddStringToObject(item, "containerName", v1_resource_field_selector->container_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_resource_field_selector->divisor
-    if(v1_resource_field_selector->divisor) { 
+    if(v1_resource_field_selector->divisor) {
     if(cJSON_AddStringToObject(item, "divisor", v1_resource_field_selector->divisor) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_resource_field_selector->resource
     if (!v1_resource_field_selector->resource) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "resource", v1_resource_field_selector->resource) == NULL) {
     goto fail; //String
     }

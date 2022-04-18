@@ -50,43 +50,43 @@ cJSON *v1_lease_spec_convertToJSON(v1_lease_spec_t *v1_lease_spec) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_lease_spec->acquire_time
-    if(v1_lease_spec->acquire_time) { 
+    if(v1_lease_spec->acquire_time) {
     if(cJSON_AddStringToObject(item, "acquireTime", v1_lease_spec->acquire_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_lease_spec->holder_identity
-    if(v1_lease_spec->holder_identity) { 
+    if(v1_lease_spec->holder_identity) {
     if(cJSON_AddStringToObject(item, "holderIdentity", v1_lease_spec->holder_identity) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_lease_spec->lease_duration_seconds
-    if(v1_lease_spec->lease_duration_seconds) { 
+    if(v1_lease_spec->lease_duration_seconds) {
     if(cJSON_AddNumberToObject(item, "leaseDurationSeconds", v1_lease_spec->lease_duration_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_lease_spec->lease_transitions
-    if(v1_lease_spec->lease_transitions) { 
+    if(v1_lease_spec->lease_transitions) {
     if(cJSON_AddNumberToObject(item, "leaseTransitions", v1_lease_spec->lease_transitions) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_lease_spec->renew_time
-    if(v1_lease_spec->renew_time) { 
+    if(v1_lease_spec->renew_time) {
     if(cJSON_AddStringToObject(item, "renewTime", v1_lease_spec->renew_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
     return item;
 fail:
