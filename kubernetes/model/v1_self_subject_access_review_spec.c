@@ -40,7 +40,7 @@ cJSON *v1_self_subject_access_review_spec_convertToJSON(v1_self_subject_access_r
     cJSON *item = cJSON_CreateObject();
 
     // v1_self_subject_access_review_spec->non_resource_attributes
-    if(v1_self_subject_access_review_spec->non_resource_attributes) { 
+    if(v1_self_subject_access_review_spec->non_resource_attributes) {
     cJSON *non_resource_attributes_local_JSON = v1_non_resource_attributes_convertToJSON(v1_self_subject_access_review_spec->non_resource_attributes);
     if(non_resource_attributes_local_JSON == NULL) {
     goto fail; //model
@@ -49,11 +49,11 @@ cJSON *v1_self_subject_access_review_spec_convertToJSON(v1_self_subject_access_r
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_self_subject_access_review_spec->resource_attributes
-    if(v1_self_subject_access_review_spec->resource_attributes) { 
+    if(v1_self_subject_access_review_spec->resource_attributes) {
     cJSON *resource_attributes_local_JSON = v1_resource_attributes_convertToJSON(v1_self_subject_access_review_spec->resource_attributes);
     if(resource_attributes_local_JSON == NULL) {
     goto fail; //model
@@ -62,7 +62,7 @@ cJSON *v1_self_subject_access_review_spec_convertToJSON(v1_self_subject_access_r
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -40,19 +40,19 @@ cJSON *v1_pod_dns_config_option_convertToJSON(v1_pod_dns_config_option_t *v1_pod
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_dns_config_option->name
-    if(v1_pod_dns_config_option->name) { 
+    if(v1_pod_dns_config_option->name) {
     if(cJSON_AddStringToObject(item, "name", v1_pod_dns_config_option->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_dns_config_option->value
-    if(v1_pod_dns_config_option->value) { 
+    if(v1_pod_dns_config_option->value) {
     if(cJSON_AddStringToObject(item, "value", v1_pod_dns_config_option->value) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

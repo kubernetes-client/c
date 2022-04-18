@@ -70,39 +70,39 @@ cJSON *v1beta1_csi_storage_capacity_convertToJSON(v1beta1_csi_storage_capacity_t
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_csi_storage_capacity->api_version
-    if(v1beta1_csi_storage_capacity->api_version) { 
+    if(v1beta1_csi_storage_capacity->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1beta1_csi_storage_capacity->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_csi_storage_capacity->capacity
-    if(v1beta1_csi_storage_capacity->capacity) { 
+    if(v1beta1_csi_storage_capacity->capacity) {
     if(cJSON_AddStringToObject(item, "capacity", v1beta1_csi_storage_capacity->capacity) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_csi_storage_capacity->kind
-    if(v1beta1_csi_storage_capacity->kind) { 
+    if(v1beta1_csi_storage_capacity->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1beta1_csi_storage_capacity->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_csi_storage_capacity->maximum_volume_size
-    if(v1beta1_csi_storage_capacity->maximum_volume_size) { 
+    if(v1beta1_csi_storage_capacity->maximum_volume_size) {
     if(cJSON_AddStringToObject(item, "maximumVolumeSize", v1beta1_csi_storage_capacity->maximum_volume_size) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_csi_storage_capacity->metadata
-    if(v1beta1_csi_storage_capacity->metadata) { 
+    if(v1beta1_csi_storage_capacity->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1beta1_csi_storage_capacity->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -111,11 +111,11 @@ cJSON *v1beta1_csi_storage_capacity_convertToJSON(v1beta1_csi_storage_capacity_t
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_csi_storage_capacity->node_topology
-    if(v1beta1_csi_storage_capacity->node_topology) { 
+    if(v1beta1_csi_storage_capacity->node_topology) {
     cJSON *node_topology_local_JSON = v1_label_selector_convertToJSON(v1beta1_csi_storage_capacity->node_topology);
     if(node_topology_local_JSON == NULL) {
     goto fail; //model
@@ -124,14 +124,13 @@ cJSON *v1beta1_csi_storage_capacity_convertToJSON(v1beta1_csi_storage_capacity_t
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_csi_storage_capacity->storage_class_name
     if (!v1beta1_csi_storage_capacity->storage_class_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "storageClassName", v1beta1_csi_storage_capacity->storage_class_name) == NULL) {
     goto fail; //String
     }

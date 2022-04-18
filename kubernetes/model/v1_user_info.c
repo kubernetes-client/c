@@ -61,7 +61,7 @@ cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_user_info->extra
-    if(v1_user_info->extra) { 
+    if(v1_user_info->extra) {
     cJSON *extra = cJSON_AddObjectToObject(item, "extra");
     if(extra == NULL) {
         goto fail; //primitive map container
@@ -73,11 +73,11 @@ cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)extraListEntry->data;
     }
     }
-     } 
+    }
 
 
     // v1_user_info->groups
-    if(v1_user_info->groups) { 
+    if(v1_user_info->groups) {
     cJSON *groups = cJSON_AddArrayToObject(item, "groups");
     if(groups == NULL) {
         goto fail; //primitive container
@@ -90,23 +90,23 @@ cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_user_info->uid
-    if(v1_user_info->uid) { 
+    if(v1_user_info->uid) {
     if(cJSON_AddStringToObject(item, "uid", v1_user_info->uid) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_user_info->username
-    if(v1_user_info->username) { 
+    if(v1_user_info->username) {
     if(cJSON_AddStringToObject(item, "username", v1_user_info->username) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

@@ -8,6 +8,7 @@
 v1_probe_t *v1_probe_create(
     v1_exec_action_t *exec,
     int failure_threshold,
+    v1_grpc_action_t *grpc,
     v1_http_get_action_t *http_get,
     int initial_delay_seconds,
     int period_seconds,
@@ -22,6 +23,7 @@ v1_probe_t *v1_probe_create(
     }
     v1_probe_local_var->exec = exec;
     v1_probe_local_var->failure_threshold = failure_threshold;
+    v1_probe_local_var->grpc = grpc;
     v1_probe_local_var->http_get = http_get;
     v1_probe_local_var->initial_delay_seconds = initial_delay_seconds;
     v1_probe_local_var->period_seconds = period_seconds;
@@ -43,6 +45,10 @@ void v1_probe_free(v1_probe_t *v1_probe) {
         v1_exec_action_free(v1_probe->exec);
         v1_probe->exec = NULL;
     }
+    if (v1_probe->grpc) {
+        v1_grpc_action_free(v1_probe->grpc);
+        v1_probe->grpc = NULL;
+    }
     if (v1_probe->http_get) {
         v1_http_get_action_free(v1_probe->http_get);
         v1_probe->http_get = NULL;
@@ -58,7 +64,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_probe->exec
-    if(v1_probe->exec) { 
+    if(v1_probe->exec) {
     cJSON *exec_local_JSON = v1_exec_action_convertToJSON(v1_probe->exec);
     if(exec_local_JSON == NULL) {
     goto fail; //model
@@ -67,19 +73,32 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_probe->failure_threshold
-    if(v1_probe->failure_threshold) { 
+    if(v1_probe->failure_threshold) {
     if(cJSON_AddNumberToObject(item, "failureThreshold", v1_probe->failure_threshold) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
+
+
+    // v1_probe->grpc
+    if(v1_probe->grpc) {
+    cJSON *grpc_local_JSON = v1_grpc_action_convertToJSON(v1_probe->grpc);
+    if(grpc_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "grpc", grpc_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
 
 
     // v1_probe->http_get
-    if(v1_probe->http_get) { 
+    if(v1_probe->http_get) {
     cJSON *http_get_local_JSON = v1_http_get_action_convertToJSON(v1_probe->http_get);
     if(http_get_local_JSON == NULL) {
     goto fail; //model
@@ -88,35 +107,35 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_probe->initial_delay_seconds
-    if(v1_probe->initial_delay_seconds) { 
+    if(v1_probe->initial_delay_seconds) {
     if(cJSON_AddNumberToObject(item, "initialDelaySeconds", v1_probe->initial_delay_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_probe->period_seconds
-    if(v1_probe->period_seconds) { 
+    if(v1_probe->period_seconds) {
     if(cJSON_AddNumberToObject(item, "periodSeconds", v1_probe->period_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_probe->success_threshold
-    if(v1_probe->success_threshold) { 
+    if(v1_probe->success_threshold) {
     if(cJSON_AddNumberToObject(item, "successThreshold", v1_probe->success_threshold) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_probe->tcp_socket
-    if(v1_probe->tcp_socket) { 
+    if(v1_probe->tcp_socket) {
     cJSON *tcp_socket_local_JSON = v1_tcp_socket_action_convertToJSON(v1_probe->tcp_socket);
     if(tcp_socket_local_JSON == NULL) {
     goto fail; //model
@@ -125,23 +144,23 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_probe->termination_grace_period_seconds
-    if(v1_probe->termination_grace_period_seconds) { 
+    if(v1_probe->termination_grace_period_seconds) {
     if(cJSON_AddNumberToObject(item, "terminationGracePeriodSeconds", v1_probe->termination_grace_period_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_probe->timeout_seconds
-    if(v1_probe->timeout_seconds) { 
+    if(v1_probe->timeout_seconds) {
     if(cJSON_AddNumberToObject(item, "timeoutSeconds", v1_probe->timeout_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:
@@ -157,6 +176,9 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
 
     // define the local variable for v1_probe->exec
     v1_exec_action_t *exec_local_nonprim = NULL;
+
+    // define the local variable for v1_probe->grpc
+    v1_grpc_action_t *grpc_local_nonprim = NULL;
 
     // define the local variable for v1_probe->http_get
     v1_http_get_action_t *http_get_local_nonprim = NULL;
@@ -177,6 +199,12 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     {
     goto end; //Numeric
     }
+    }
+
+    // v1_probe->grpc
+    cJSON *grpc = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "grpc");
+    if (grpc) { 
+    grpc_local_nonprim = v1_grpc_action_parseFromJSON(grpc); //nonprimitive
     }
 
     // v1_probe->http_get
@@ -240,6 +268,7 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     v1_probe_local_var = v1_probe_create (
         exec ? exec_local_nonprim : NULL,
         failure_threshold ? failure_threshold->valuedouble : 0,
+        grpc ? grpc_local_nonprim : NULL,
         http_get ? http_get_local_nonprim : NULL,
         initial_delay_seconds ? initial_delay_seconds->valuedouble : 0,
         period_seconds ? period_seconds->valuedouble : 0,
@@ -254,6 +283,10 @@ end:
     if (exec_local_nonprim) {
         v1_exec_action_free(exec_local_nonprim);
         exec_local_nonprim = NULL;
+    }
+    if (grpc_local_nonprim) {
+        v1_grpc_action_free(grpc_local_nonprim);
+        grpc_local_nonprim = NULL;
     }
     if (http_get_local_nonprim) {
         v1_http_get_action_free(http_get_local_nonprim);

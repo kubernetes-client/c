@@ -49,22 +49,21 @@ cJSON *v1_env_var_convertToJSON(v1_env_var_t *v1_env_var) {
     if (!v1_env_var->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_env_var->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_env_var->value
-    if(v1_env_var->value) { 
+    if(v1_env_var->value) {
     if(cJSON_AddStringToObject(item, "value", v1_env_var->value) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_env_var->value_from
-    if(v1_env_var->value_from) { 
+    if(v1_env_var->value_from) {
     cJSON *value_from_local_JSON = v1_env_var_source_convertToJSON(v1_env_var->value_from);
     if(value_from_local_JSON == NULL) {
     goto fail; //model
@@ -73,7 +72,7 @@ cJSON *v1_env_var_convertToJSON(v1_env_var_t *v1_env_var) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -58,41 +58,40 @@ cJSON *v1_api_service_spec_convertToJSON(v1_api_service_spec_t *v1_api_service_s
     cJSON *item = cJSON_CreateObject();
 
     // v1_api_service_spec->ca_bundle
-    if(v1_api_service_spec->ca_bundle) { 
+    if(v1_api_service_spec->ca_bundle) {
     if(cJSON_AddStringToObject(item, "caBundle", v1_api_service_spec->ca_bundle) == NULL) {
     goto fail; //ByteArray
     }
-     } 
+    }
 
 
     // v1_api_service_spec->group
-    if(v1_api_service_spec->group) { 
+    if(v1_api_service_spec->group) {
     if(cJSON_AddStringToObject(item, "group", v1_api_service_spec->group) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_service_spec->group_priority_minimum
     if (!v1_api_service_spec->group_priority_minimum) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "groupPriorityMinimum", v1_api_service_spec->group_priority_minimum) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_api_service_spec->insecure_skip_tls_verify
-    if(v1_api_service_spec->insecure_skip_tls_verify) { 
+    if(v1_api_service_spec->insecure_skip_tls_verify) {
     if(cJSON_AddBoolToObject(item, "insecureSkipTLSVerify", v1_api_service_spec->insecure_skip_tls_verify) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_api_service_spec->service
-    if(v1_api_service_spec->service) { 
+    if(v1_api_service_spec->service) {
     cJSON *service_local_JSON = apiregistration_v1_service_reference_convertToJSON(v1_api_service_spec->service);
     if(service_local_JSON == NULL) {
     goto fail; //model
@@ -101,22 +100,21 @@ cJSON *v1_api_service_spec_convertToJSON(v1_api_service_spec_t *v1_api_service_s
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_api_service_spec->version
-    if(v1_api_service_spec->version) { 
+    if(v1_api_service_spec->version) {
     if(cJSON_AddStringToObject(item, "version", v1_api_service_spec->version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_service_spec->version_priority
     if (!v1_api_service_spec->version_priority) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "versionPriority", v1_api_service_spec->version_priority) == NULL) {
     goto fail; //Numeric
     }

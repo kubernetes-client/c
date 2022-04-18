@@ -54,23 +54,23 @@ cJSON *v1_storage_os_volume_source_convertToJSON(v1_storage_os_volume_source_t *
     cJSON *item = cJSON_CreateObject();
 
     // v1_storage_os_volume_source->fs_type
-    if(v1_storage_os_volume_source->fs_type) { 
+    if(v1_storage_os_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_storage_os_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_storage_os_volume_source->read_only
-    if(v1_storage_os_volume_source->read_only) { 
+    if(v1_storage_os_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_storage_os_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_storage_os_volume_source->secret_ref
-    if(v1_storage_os_volume_source->secret_ref) { 
+    if(v1_storage_os_volume_source->secret_ref) {
     cJSON *secret_ref_local_JSON = v1_local_object_reference_convertToJSON(v1_storage_os_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -79,23 +79,23 @@ cJSON *v1_storage_os_volume_source_convertToJSON(v1_storage_os_volume_source_t *
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_storage_os_volume_source->volume_name
-    if(v1_storage_os_volume_source->volume_name) { 
+    if(v1_storage_os_volume_source->volume_name) {
     if(cJSON_AddStringToObject(item, "volumeName", v1_storage_os_volume_source->volume_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_storage_os_volume_source->volume_namespace
-    if(v1_storage_os_volume_source->volume_namespace) { 
+    if(v1_storage_os_volume_source->volume_namespace) {
     if(cJSON_AddStringToObject(item, "volumeNamespace", v1_storage_os_volume_source->volume_namespace) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

@@ -49,9 +49,10 @@ LogsAPI_logFileHandler(apiClient_t *apiClient, char * logpath )
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //No return type
 end:
     if (apiClient->dataReceived) {
@@ -96,9 +97,10 @@ LogsAPI_logFileListHandler(apiClient_t *apiClient)
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //No return type
 end:
     if (apiClient->dataReceived) {

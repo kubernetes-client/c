@@ -78,15 +78,15 @@ cJSON *v1_secret_convertToJSON(v1_secret_t *v1_secret) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_secret->api_version
-    if(v1_secret->api_version) { 
+    if(v1_secret->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_secret->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_secret->data
-    if(v1_secret->data) { 
+    if(v1_secret->data) {
     cJSON *data = cJSON_AddObjectToObject(item, "data");
     if(data == NULL) {
         goto fail; //primitive map container
@@ -102,27 +102,27 @@ cJSON *v1_secret_convertToJSON(v1_secret_t *v1_secret) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_secret->immutable
-    if(v1_secret->immutable) { 
+    if(v1_secret->immutable) {
     if(cJSON_AddBoolToObject(item, "immutable", v1_secret->immutable) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_secret->kind
-    if(v1_secret->kind) { 
+    if(v1_secret->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_secret->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_secret->metadata
-    if(v1_secret->metadata) { 
+    if(v1_secret->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_secret->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -131,11 +131,11 @@ cJSON *v1_secret_convertToJSON(v1_secret_t *v1_secret) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_secret->string_data
-    if(v1_secret->string_data) { 
+    if(v1_secret->string_data) {
     cJSON *string_data = cJSON_AddObjectToObject(item, "stringData");
     if(string_data == NULL) {
         goto fail; //primitive map container
@@ -151,15 +151,15 @@ cJSON *v1_secret_convertToJSON(v1_secret_t *v1_secret) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_secret->type
-    if(v1_secret->type) { 
+    if(v1_secret->type) {
     if(cJSON_AddStringToObject(item, "type", v1_secret->type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

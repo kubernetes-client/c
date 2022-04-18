@@ -34,7 +34,7 @@ cJSON *v1_ingress_status_convertToJSON(v1_ingress_status_t *v1_ingress_status) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_ingress_status->load_balancer
-    if(v1_ingress_status->load_balancer) { 
+    if(v1_ingress_status->load_balancer) {
     cJSON *load_balancer_local_JSON = v1_load_balancer_status_convertToJSON(v1_ingress_status->load_balancer);
     if(load_balancer_local_JSON == NULL) {
     goto fail; //model
@@ -43,7 +43,7 @@ cJSON *v1_ingress_status_convertToJSON(v1_ingress_status_t *v1_ingress_status) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

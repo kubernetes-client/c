@@ -52,35 +52,35 @@ cJSON *v1_bound_object_reference_convertToJSON(v1_bound_object_reference_t *v1_b
     cJSON *item = cJSON_CreateObject();
 
     // v1_bound_object_reference->api_version
-    if(v1_bound_object_reference->api_version) { 
+    if(v1_bound_object_reference->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_bound_object_reference->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_bound_object_reference->kind
-    if(v1_bound_object_reference->kind) { 
+    if(v1_bound_object_reference->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_bound_object_reference->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_bound_object_reference->name
-    if(v1_bound_object_reference->name) { 
+    if(v1_bound_object_reference->name) {
     if(cJSON_AddStringToObject(item, "name", v1_bound_object_reference->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_bound_object_reference->uid
-    if(v1_bound_object_reference->uid) { 
+    if(v1_bound_object_reference->uid) {
     if(cJSON_AddStringToObject(item, "uid", v1_bound_object_reference->uid) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

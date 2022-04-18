@@ -48,36 +48,34 @@ cJSON *v1_azure_file_persistent_volume_source_convertToJSON(v1_azure_file_persis
     cJSON *item = cJSON_CreateObject();
 
     // v1_azure_file_persistent_volume_source->read_only
-    if(v1_azure_file_persistent_volume_source->read_only) { 
+    if(v1_azure_file_persistent_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_azure_file_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_azure_file_persistent_volume_source->secret_name
     if (!v1_azure_file_persistent_volume_source->secret_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "secretName", v1_azure_file_persistent_volume_source->secret_name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_azure_file_persistent_volume_source->secret_namespace
-    if(v1_azure_file_persistent_volume_source->secret_namespace) { 
+    if(v1_azure_file_persistent_volume_source->secret_namespace) {
     if(cJSON_AddStringToObject(item, "secretNamespace", v1_azure_file_persistent_volume_source->secret_namespace) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_azure_file_persistent_volume_source->share_name
     if (!v1_azure_file_persistent_volume_source->share_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "shareName", v1_azure_file_persistent_volume_source->share_name) == NULL) {
     goto fail; //String
     }

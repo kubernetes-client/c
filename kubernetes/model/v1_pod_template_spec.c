@@ -40,7 +40,7 @@ cJSON *v1_pod_template_spec_convertToJSON(v1_pod_template_spec_t *v1_pod_templat
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_template_spec->metadata
-    if(v1_pod_template_spec->metadata) { 
+    if(v1_pod_template_spec->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_pod_template_spec->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -49,11 +49,11 @@ cJSON *v1_pod_template_spec_convertToJSON(v1_pod_template_spec_t *v1_pod_templat
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_template_spec->spec
-    if(v1_pod_template_spec->spec) { 
+    if(v1_pod_template_spec->spec) {
     cJSON *spec_local_JSON = v1_pod_spec_convertToJSON(v1_pod_template_spec->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -62,7 +62,7 @@ cJSON *v1_pod_template_spec_convertToJSON(v1_pod_template_spec_t *v1_pod_templat
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

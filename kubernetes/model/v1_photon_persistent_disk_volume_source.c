@@ -40,18 +40,17 @@ cJSON *v1_photon_persistent_disk_volume_source_convertToJSON(v1_photon_persisten
     cJSON *item = cJSON_CreateObject();
 
     // v1_photon_persistent_disk_volume_source->fs_type
-    if(v1_photon_persistent_disk_volume_source->fs_type) { 
+    if(v1_photon_persistent_disk_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_photon_persistent_disk_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_photon_persistent_disk_volume_source->pd_id
     if (!v1_photon_persistent_disk_volume_source->pd_id) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "pdID", v1_photon_persistent_disk_volume_source->pd_id) == NULL) {
     goto fail; //String
     }

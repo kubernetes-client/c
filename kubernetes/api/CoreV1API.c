@@ -74,12 +74,14 @@ CoreV1API_connectDeleteNamespacedPodProxy(apiClient_t *apiClient, char * name , 
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -187,12 +189,14 @@ CoreV1API_connectDeleteNamespacedPodProxyWithPath(apiClient_t *apiClient, char *
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -291,12 +295,14 @@ CoreV1API_connectDeleteNamespacedServiceProxy(apiClient_t *apiClient, char * nam
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -404,12 +410,14 @@ CoreV1API_connectDeleteNamespacedServiceProxyWithPath(apiClient_t *apiClient, ch
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -498,12 +506,14 @@ CoreV1API_connectDeleteNodeProxy(apiClient_t *apiClient, char * name , char * pa
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -600,12 +610,14 @@ CoreV1API_connectDeleteNodeProxyWithPath(apiClient_t *apiClient, char * name , c
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -755,12 +767,14 @@ CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char * name , ch
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -970,12 +984,14 @@ CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char * name , char
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -1134,12 +1150,14 @@ CoreV1API_connectGetNamespacedPodPortforward(apiClient_t *apiClient, char * name
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -1237,12 +1255,14 @@ CoreV1API_connectGetNamespacedPodProxy(apiClient_t *apiClient, char * name , cha
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -1350,12 +1370,14 @@ CoreV1API_connectGetNamespacedPodProxyWithPath(apiClient_t *apiClient, char * na
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -1454,12 +1476,14 @@ CoreV1API_connectGetNamespacedServiceProxy(apiClient_t *apiClient, char * name ,
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -1567,12 +1591,14 @@ CoreV1API_connectGetNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -1661,12 +1687,14 @@ CoreV1API_connectGetNodeProxy(apiClient_t *apiClient, char * name , char * path 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -1763,12 +1791,14 @@ CoreV1API_connectGetNodeProxyWithPath(apiClient_t *apiClient, char * name , char
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -1866,12 +1896,14 @@ CoreV1API_connectHeadNamespacedPodProxy(apiClient_t *apiClient, char * name , ch
                     localVarBodyParameters,
                     "HEAD");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -1979,12 +2011,14 @@ CoreV1API_connectHeadNamespacedPodProxyWithPath(apiClient_t *apiClient, char * n
                     localVarBodyParameters,
                     "HEAD");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -2083,12 +2117,14 @@ CoreV1API_connectHeadNamespacedServiceProxy(apiClient_t *apiClient, char * name 
                     localVarBodyParameters,
                     "HEAD");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -2196,12 +2232,14 @@ CoreV1API_connectHeadNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
                     localVarBodyParameters,
                     "HEAD");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -2290,12 +2328,14 @@ CoreV1API_connectHeadNodeProxy(apiClient_t *apiClient, char * name , char * path
                     localVarBodyParameters,
                     "HEAD");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -2392,12 +2432,14 @@ CoreV1API_connectHeadNodeProxyWithPath(apiClient_t *apiClient, char * name , cha
                     localVarBodyParameters,
                     "HEAD");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -2495,12 +2537,14 @@ CoreV1API_connectOptionsNamespacedPodProxy(apiClient_t *apiClient, char * name ,
                     localVarBodyParameters,
                     "OPTIONS");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -2608,12 +2652,14 @@ CoreV1API_connectOptionsNamespacedPodProxyWithPath(apiClient_t *apiClient, char 
                     localVarBodyParameters,
                     "OPTIONS");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -2712,12 +2758,14 @@ CoreV1API_connectOptionsNamespacedServiceProxy(apiClient_t *apiClient, char * na
                     localVarBodyParameters,
                     "OPTIONS");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -2825,12 +2873,14 @@ CoreV1API_connectOptionsNamespacedServiceProxyWithPath(apiClient_t *apiClient, c
                     localVarBodyParameters,
                     "OPTIONS");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -2919,12 +2969,14 @@ CoreV1API_connectOptionsNodeProxy(apiClient_t *apiClient, char * name , char * p
                     localVarBodyParameters,
                     "OPTIONS");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -3021,12 +3073,14 @@ CoreV1API_connectOptionsNodeProxyWithPath(apiClient_t *apiClient, char * name , 
                     localVarBodyParameters,
                     "OPTIONS");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -3124,12 +3178,14 @@ CoreV1API_connectPatchNamespacedPodProxy(apiClient_t *apiClient, char * name , c
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -3237,12 +3293,14 @@ CoreV1API_connectPatchNamespacedPodProxyWithPath(apiClient_t *apiClient, char * 
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -3341,12 +3399,14 @@ CoreV1API_connectPatchNamespacedServiceProxy(apiClient_t *apiClient, char * name
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -3454,12 +3514,14 @@ CoreV1API_connectPatchNamespacedServiceProxyWithPath(apiClient_t *apiClient, cha
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -3548,12 +3610,14 @@ CoreV1API_connectPatchNodeProxy(apiClient_t *apiClient, char * name , char * pat
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -3650,12 +3714,14 @@ CoreV1API_connectPatchNodeProxyWithPath(apiClient_t *apiClient, char * name , ch
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -3805,12 +3871,14 @@ CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char * name , c
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -4020,12 +4088,14 @@ CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char * name , cha
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -4184,12 +4254,14 @@ CoreV1API_connectPostNamespacedPodPortforward(apiClient_t *apiClient, char * nam
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -4287,12 +4359,14 @@ CoreV1API_connectPostNamespacedPodProxy(apiClient_t *apiClient, char * name , ch
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -4400,12 +4474,14 @@ CoreV1API_connectPostNamespacedPodProxyWithPath(apiClient_t *apiClient, char * n
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -4504,12 +4580,14 @@ CoreV1API_connectPostNamespacedServiceProxy(apiClient_t *apiClient, char * name 
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -4617,12 +4695,14 @@ CoreV1API_connectPostNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -4711,12 +4791,14 @@ CoreV1API_connectPostNodeProxy(apiClient_t *apiClient, char * name , char * path
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -4813,12 +4895,14 @@ CoreV1API_connectPostNodeProxyWithPath(apiClient_t *apiClient, char * name , cha
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -4916,12 +5000,14 @@ CoreV1API_connectPutNamespacedPodProxy(apiClient_t *apiClient, char * name , cha
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -5029,12 +5115,14 @@ CoreV1API_connectPutNamespacedPodProxyWithPath(apiClient_t *apiClient, char * na
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -5133,12 +5221,14 @@ CoreV1API_connectPutNamespacedServiceProxy(apiClient_t *apiClient, char * name ,
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -5246,12 +5336,14 @@ CoreV1API_connectPutNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -5340,12 +5432,14 @@ CoreV1API_connectPutNodeProxy(apiClient_t *apiClient, char * name , char * path 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -5442,12 +5536,14 @@ CoreV1API_connectPutNodeProxyWithPath(apiClient_t *apiClient, char * name , char
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -5486,7 +5582,7 @@ end:
 // create a Namespace
 //
 v1_namespace_t*
-CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5539,6 +5635,18 @@ CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t * body , char *
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -5560,18 +5668,22 @@ CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t * body , char *
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -5633,6 +5745,18 @@ CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t * body , char *
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -5643,7 +5767,7 @@ end:
 // create a Binding
 //
 v1_binding_t*
-CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char * _namespace , v1_binding_t * body , char * dryRun , char * fieldManager , char * pretty )
+CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char * _namespace , v1_binding_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5695,6 +5819,18 @@ CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char * _namespace , v1
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_pretty = NULL;
     char * valueQuery_pretty = NULL;
     keyValuePair_t *keyPairQuery_pretty = 0;
@@ -5727,18 +5863,22 @@ CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char * _namespace , v1
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_binding_t *elementToReturn = v1_binding_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -5789,6 +5929,18 @@ CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char * _namespace , v1
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -5811,7 +5963,7 @@ end:
 // create a ConfigMap
 //
 v1_config_map_t*
-CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , v1_config_map_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , v1_config_map_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5874,6 +6026,18 @@ CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -5895,18 +6059,22 @@ CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , 
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_config_map_t *elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -5969,6 +6137,18 @@ CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -5979,7 +6159,7 @@ end:
 // create Endpoints
 //
 v1_endpoints_t*
-CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , v1_endpoints_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , v1_endpoints_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6042,6 +6222,18 @@ CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -6063,18 +6255,22 @@ CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , 
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_endpoints_t *elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -6137,6 +6333,18 @@ CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -6147,7 +6355,7 @@ end:
 // create an Event
 //
 core_v1_event_t*
-CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6210,6 +6418,18 @@ CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , core
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -6231,18 +6451,22 @@ CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , core
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -6305,6 +6529,18 @@ CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , core
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -6315,7 +6551,7 @@ end:
 // create a LimitRange
 //
 v1_limit_range_t*
-CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , v1_limit_range_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , v1_limit_range_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6378,6 +6614,18 @@ CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, char * _namespace ,
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -6399,18 +6647,22 @@ CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, char * _namespace ,
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_limit_range_t *elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -6473,6 +6725,18 @@ CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, char * _namespace ,
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -6483,7 +6747,7 @@ end:
 // create a PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_createNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6546,6 +6810,18 @@ CoreV1API_createNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -6567,18 +6843,22 @@ CoreV1API_createNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -6641,6 +6921,18 @@ CoreV1API_createNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -6651,7 +6943,7 @@ end:
 // create a Pod
 //
 v1_pod_t*
-CoreV1API_createNamespacedPod(apiClient_t *apiClient, char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedPod(apiClient_t *apiClient, char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6714,6 +7006,18 @@ CoreV1API_createNamespacedPod(apiClient_t *apiClient, char * _namespace , v1_pod
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -6735,18 +7039,22 @@ CoreV1API_createNamespacedPod(apiClient_t *apiClient, char * _namespace , v1_pod
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -6809,6 +7117,18 @@ CoreV1API_createNamespacedPod(apiClient_t *apiClient, char * _namespace , v1_pod
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -6819,7 +7139,7 @@ end:
 // create binding of a Pod
 //
 v1_binding_t*
-CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char * name , char * _namespace , v1_binding_t * body , char * dryRun , char * fieldManager , char * pretty )
+CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char * name , char * _namespace , v1_binding_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6881,6 +7201,18 @@ CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char * name , char 
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_pretty = NULL;
     char * valueQuery_pretty = NULL;
     keyValuePair_t *keyPairQuery_pretty = 0;
@@ -6913,18 +7245,22 @@ CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char * name , char 
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_binding_t *elementToReturn = v1_binding_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -6976,6 +7312,18 @@ CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char * name , char 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -6998,7 +7346,7 @@ end:
 // create eviction of a Pod
 //
 v1_eviction_t*
-CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char * _namespace , v1_eviction_t * body , char * dryRun , char * fieldManager , char * pretty )
+CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char * _namespace , v1_eviction_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7060,6 +7408,18 @@ CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_pretty = NULL;
     char * valueQuery_pretty = NULL;
     keyValuePair_t *keyPairQuery_pretty = 0;
@@ -7092,18 +7452,22 @@ CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_eviction_t *elementToReturn = v1_eviction_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -7155,6 +7519,18 @@ CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -7177,7 +7553,7 @@ end:
 // create a PodTemplate
 //
 v1_pod_template_t*
-CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , v1_pod_template_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , v1_pod_template_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7240,6 +7616,18 @@ CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -7261,18 +7649,22 @@ CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace 
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_template_t *elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -7335,6 +7727,18 @@ CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -7345,7 +7749,7 @@ end:
 // create a ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_createNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7408,6 +7812,18 @@ CoreV1API_createNamespacedReplicationController(apiClient_t *apiClient, char * _
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -7429,18 +7845,22 @@ CoreV1API_createNamespacedReplicationController(apiClient_t *apiClient, char * _
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -7503,6 +7923,18 @@ CoreV1API_createNamespacedReplicationController(apiClient_t *apiClient, char * _
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -7513,7 +7945,7 @@ end:
 // create a ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_createNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7576,6 +8008,18 @@ CoreV1API_createNamespacedResourceQuota(apiClient_t *apiClient, char * _namespac
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -7597,18 +8041,22 @@ CoreV1API_createNamespacedResourceQuota(apiClient_t *apiClient, char * _namespac
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -7671,6 +8119,18 @@ CoreV1API_createNamespacedResourceQuota(apiClient_t *apiClient, char * _namespac
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -7681,7 +8141,7 @@ end:
 // create a Secret
 //
 v1_secret_t*
-CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char * _namespace , v1_secret_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char * _namespace , v1_secret_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7744,6 +8204,18 @@ CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char * _namespace , v1_
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -7765,18 +8237,22 @@ CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char * _namespace , v1_
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_secret_t *elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -7839,6 +8315,18 @@ CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char * _namespace , v1_
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -7849,7 +8337,7 @@ end:
 // create a Service
 //
 v1_service_t*
-CoreV1API_createNamespacedService(apiClient_t *apiClient, char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedService(apiClient_t *apiClient, char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7912,6 +8400,18 @@ CoreV1API_createNamespacedService(apiClient_t *apiClient, char * _namespace , v1
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -7933,18 +8433,22 @@ CoreV1API_createNamespacedService(apiClient_t *apiClient, char * _namespace , v1
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -8007,6 +8511,18 @@ CoreV1API_createNamespacedService(apiClient_t *apiClient, char * _namespace , v1
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -8017,7 +8533,7 @@ end:
 // create a ServiceAccount
 //
 v1_service_account_t*
-CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , v1_service_account_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , v1_service_account_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -8080,6 +8596,18 @@ CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char * _namespa
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -8101,18 +8629,22 @@ CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char * _namespa
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_account_t *elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -8175,6 +8707,18 @@ CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char * _namespa
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -8185,7 +8729,7 @@ end:
 // create token of a ServiceAccount
 //
 authentication_v1_token_request_t*
-CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * name , char * _namespace , authentication_v1_token_request_t * body , char * dryRun , char * fieldManager , char * pretty )
+CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * name , char * _namespace , authentication_v1_token_request_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -8247,6 +8791,18 @@ CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * nam
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_pretty = NULL;
     char * valueQuery_pretty = NULL;
     keyValuePair_t *keyPairQuery_pretty = 0;
@@ -8279,18 +8835,22 @@ CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * nam
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     authentication_v1_token_request_t *elementToReturn = authentication_v1_token_request_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -8342,6 +8902,18 @@ CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * nam
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -8364,7 +8936,7 @@ end:
 // create a Node
 //
 v1_node_t*
-CoreV1API_createNode(apiClient_t *apiClient, v1_node_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createNode(apiClient_t *apiClient, v1_node_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -8417,6 +8989,18 @@ CoreV1API_createNode(apiClient_t *apiClient, v1_node_t * body , char * pretty , 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -8438,18 +9022,22 @@ CoreV1API_createNode(apiClient_t *apiClient, v1_node_t * body , char * pretty , 
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -8511,6 +9099,18 @@ CoreV1API_createNode(apiClient_t *apiClient, v1_node_t * body , char * pretty , 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -8521,7 +9121,7 @@ end:
 // create a PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -8574,6 +9174,18 @@ CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -8595,18 +9207,22 @@ CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t 
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -8667,6 +9283,18 @@ CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t 
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:
@@ -8874,12 +9502,14 @@ CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char * _na
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -9256,12 +9886,14 @@ CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char * _na
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -9638,12 +10270,14 @@ CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char * _namesp
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -10020,12 +10654,14 @@ CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char * _n
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -10402,12 +11038,14 @@ CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -10784,12 +11422,14 @@ CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char * _namespac
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -11166,12 +11806,14 @@ CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char * _
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -11548,12 +12190,14 @@ CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -11930,12 +12574,14 @@ CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -12312,12 +12958,398 @@ CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char * _names
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
+    //nonprimitive not container
+    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+    cJSON_Delete(CoreV1APIlocalVarJSON);
+    if(elementToReturn == NULL) {
+        // return 0;
     }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
     }
+    list_freeList(localVarQueryParameters);
+    
+    
+    list_freeList(localVarHeaderType);
+    
+    free(localVarPath);
+    free(localVarToReplace__namespace);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
+    free(localVarBodyParameters);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
+    }
+    if(keyQuery__continue){
+        free(keyQuery__continue);
+        keyQuery__continue = NULL;
+    }
+    if(valueQuery__continue){
+        free(valueQuery__continue);
+        valueQuery__continue = NULL;
+    }
+    if(keyPairQuery__continue){
+        keyValuePair_free(keyPairQuery__continue);
+        keyPairQuery__continue = NULL;
+    }
+    if(keyQuery_dryRun){
+        free(keyQuery_dryRun);
+        keyQuery_dryRun = NULL;
+    }
+    if(valueQuery_dryRun){
+        free(valueQuery_dryRun);
+        valueQuery_dryRun = NULL;
+    }
+    if(keyPairQuery_dryRun){
+        keyValuePair_free(keyPairQuery_dryRun);
+        keyPairQuery_dryRun = NULL;
+    }
+    if(keyQuery_fieldSelector){
+        free(keyQuery_fieldSelector);
+        keyQuery_fieldSelector = NULL;
+    }
+    if(valueQuery_fieldSelector){
+        free(valueQuery_fieldSelector);
+        valueQuery_fieldSelector = NULL;
+    }
+    if(keyPairQuery_fieldSelector){
+        keyValuePair_free(keyPairQuery_fieldSelector);
+        keyPairQuery_fieldSelector = NULL;
+    }
+    if(keyQuery_gracePeriodSeconds){
+        free(keyQuery_gracePeriodSeconds);
+        keyQuery_gracePeriodSeconds = NULL;
+    }
+    if(valueQuery_gracePeriodSeconds){
+        free(valueQuery_gracePeriodSeconds);
+        valueQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyPairQuery_gracePeriodSeconds){
+        keyValuePair_free(keyPairQuery_gracePeriodSeconds);
+        keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_labelSelector){
+        free(keyQuery_labelSelector);
+        keyQuery_labelSelector = NULL;
+    }
+    if(valueQuery_labelSelector){
+        free(valueQuery_labelSelector);
+        valueQuery_labelSelector = NULL;
+    }
+    if(keyPairQuery_labelSelector){
+        keyValuePair_free(keyPairQuery_labelSelector);
+        keyPairQuery_labelSelector = NULL;
+    }
+    if(keyQuery_limit){
+        free(keyQuery_limit);
+        keyQuery_limit = NULL;
+    }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
+    if(keyPairQuery_limit){
+        keyValuePair_free(keyPairQuery_limit);
+        keyPairQuery_limit = NULL;
+    }
+    if(keyQuery_orphanDependents){
+        free(keyQuery_orphanDependents);
+        keyQuery_orphanDependents = NULL;
+    }
+    if(valueQuery_orphanDependents){
+        free(valueQuery_orphanDependents);
+        valueQuery_orphanDependents = NULL;
+    }
+    if(keyPairQuery_orphanDependents){
+        keyValuePair_free(keyPairQuery_orphanDependents);
+        keyPairQuery_orphanDependents = NULL;
+    }
+    if(keyQuery_propagationPolicy){
+        free(keyQuery_propagationPolicy);
+        keyQuery_propagationPolicy = NULL;
+    }
+    if(valueQuery_propagationPolicy){
+        free(valueQuery_propagationPolicy);
+        valueQuery_propagationPolicy = NULL;
+    }
+    if(keyPairQuery_propagationPolicy){
+        keyValuePair_free(keyPairQuery_propagationPolicy);
+        keyPairQuery_propagationPolicy = NULL;
+    }
+    if(keyQuery_resourceVersion){
+        free(keyQuery_resourceVersion);
+        keyQuery_resourceVersion = NULL;
+    }
+    if(valueQuery_resourceVersion){
+        free(valueQuery_resourceVersion);
+        valueQuery_resourceVersion = NULL;
+    }
+    if(keyPairQuery_resourceVersion){
+        keyValuePair_free(keyPairQuery_resourceVersion);
+        keyPairQuery_resourceVersion = NULL;
+    }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
+    if(keyQuery_timeoutSeconds){
+        free(keyQuery_timeoutSeconds);
+        keyQuery_timeoutSeconds = NULL;
+    }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
+    if(keyPairQuery_timeoutSeconds){
+        keyValuePair_free(keyPairQuery_timeoutSeconds);
+        keyPairQuery_timeoutSeconds = NULL;
+    }
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
+// delete collection of Service
+//
+v1_status_t*
+CoreV1API_deleteCollectionNamespacedService(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+{
+    list_t    *localVarQueryParameters = list_createList();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_createList();
+    list_t *localVarContentType = NULL;
+    char      *localVarBodyParameters = NULL;
+
+    // create the path
+    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services")+1;
+    char *localVarPath = malloc(sizeOfPath);
+    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services");
+
+
+    // Path Params
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    if(_namespace == NULL) {
+        goto end;
+    }
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery__continue = NULL;
+    char * valueQuery__continue = NULL;
+    keyValuePair_t *keyPairQuery__continue = 0;
+    if (_continue)
+    {
+        keyQuery__continue = strdup("continue");
+        valueQuery__continue = strdup((_continue));
+        keyPairQuery__continue = keyValuePair_create(keyQuery__continue, valueQuery__continue);
+        list_addElement(localVarQueryParameters,keyPairQuery__continue);
+    }
+
+    // query parameters
+    char *keyQuery_dryRun = NULL;
+    char * valueQuery_dryRun = NULL;
+    keyValuePair_t *keyPairQuery_dryRun = 0;
+    if (dryRun)
+    {
+        keyQuery_dryRun = strdup("dryRun");
+        valueQuery_dryRun = strdup((dryRun));
+        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
+        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
+    }
+
+    // query parameters
+    char *keyQuery_fieldSelector = NULL;
+    char * valueQuery_fieldSelector = NULL;
+    keyValuePair_t *keyPairQuery_fieldSelector = 0;
+    if (fieldSelector)
+    {
+        keyQuery_fieldSelector = strdup("fieldSelector");
+        valueQuery_fieldSelector = strdup((fieldSelector));
+        keyPairQuery_fieldSelector = keyValuePair_create(keyQuery_fieldSelector, valueQuery_fieldSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldSelector);
+    }
+
+    // query parameters
+    char *keyQuery_gracePeriodSeconds = NULL;
+    char * valueQuery_gracePeriodSeconds = NULL;
+    keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
+    if (gracePeriodSeconds)
+    {
+        keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
+        valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
+        list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_labelSelector = NULL;
+    char * valueQuery_labelSelector = NULL;
+    keyValuePair_t *keyPairQuery_labelSelector = 0;
+    if (labelSelector)
+    {
+        keyQuery_labelSelector = strdup("labelSelector");
+        valueQuery_labelSelector = strdup((labelSelector));
+        keyPairQuery_labelSelector = keyValuePair_create(keyQuery_labelSelector, valueQuery_labelSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_labelSelector);
+    }
+
+    // query parameters
+    char *keyQuery_limit = NULL;
+    char * valueQuery_limit = NULL;
+    keyValuePair_t *keyPairQuery_limit = 0;
+    if (limit)
+    {
+        keyQuery_limit = strdup("limit");
+        valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
+        list_addElement(localVarQueryParameters,keyPairQuery_limit);
+    }
+
+    // query parameters
+    char *keyQuery_orphanDependents = NULL;
+    char * valueQuery_orphanDependents = NULL;
+    keyValuePair_t *keyPairQuery_orphanDependents = 0;
+    if (orphanDependents)
+    {
+        keyQuery_orphanDependents = strdup("orphanDependents");
+        valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
+        list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
+    }
+
+    // query parameters
+    char *keyQuery_propagationPolicy = NULL;
+    char * valueQuery_propagationPolicy = NULL;
+    keyValuePair_t *keyPairQuery_propagationPolicy = 0;
+    if (propagationPolicy)
+    {
+        keyQuery_propagationPolicy = strdup("propagationPolicy");
+        valueQuery_propagationPolicy = strdup((propagationPolicy));
+        keyPairQuery_propagationPolicy = keyValuePair_create(keyQuery_propagationPolicy, valueQuery_propagationPolicy);
+        list_addElement(localVarQueryParameters,keyPairQuery_propagationPolicy);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersion = NULL;
+    char * valueQuery_resourceVersion = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersion = 0;
+    if (resourceVersion)
+    {
+        keyQuery_resourceVersion = strdup("resourceVersion");
+        valueQuery_resourceVersion = strdup((resourceVersion));
+        keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_timeoutSeconds = NULL;
+    char * valueQuery_timeoutSeconds = NULL;
+    keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
+    if (timeoutSeconds)
+    {
+        keyQuery_timeoutSeconds = strdup("timeoutSeconds");
+        valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
+        list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
+    }
+
+    // Body Param
+    cJSON *localVarSingleItemJSON_body = NULL;
+    if (body != NULL)
+    {
+        //string
+        localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
+        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/yaml"); //produces
+    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    "DELETE");
+
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -12694,12 +13726,14 @@ CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char 
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -13066,12 +14100,14 @@ CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char * pretty , char * _c
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -13437,12 +14473,14 @@ CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char * pretty
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -13732,15 +14770,18 @@ CoreV1API_deleteNamespace(apiClient_t *apiClient, char * name , char * pretty , 
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -13957,15 +14998,18 @@ CoreV1API_deleteNamespacedConfigMap(apiClient_t *apiClient, char * name , char *
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -14183,15 +15227,18 @@ CoreV1API_deleteNamespacedEndpoints(apiClient_t *apiClient, char * name , char *
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -14409,15 +15456,18 @@ CoreV1API_deleteNamespacedEvent(apiClient_t *apiClient, char * name , char * _na
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -14635,15 +15685,18 @@ CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char * name , char 
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -14861,15 +15914,18 @@ CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * n
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -15087,15 +16143,18 @@ CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char * name , char * _name
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -15313,15 +16372,18 @@ CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char * name , char
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_template_t *elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -15539,15 +16601,18 @@ CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiClient, char * n
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -15765,15 +16830,18 @@ CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char * name , ch
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -15991,15 +17059,18 @@ CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char * name , char * _n
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -16096,7 +17167,7 @@ end:
 
 // delete a Service
 //
-v1_status_t*
+v1_service_t*
 CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
@@ -16217,18 +17288,21 @@ CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char * name , char * _
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+    v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
     cJSON_Delete(CoreV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -16443,15 +17517,18 @@ CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char * name , c
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_account_t *elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -16659,15 +17736,18 @@ CoreV1API_deleteNode(apiClient_t *apiClient, char * name , char * pretty , char 
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -16874,15 +17954,18 @@ CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char * name , char * pr
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -17008,12 +18091,14 @@ CoreV1API_getAPIResources(apiClient_t *apiClient)
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -17199,12 +18284,14 @@ CoreV1API_listComponentStatus(apiClient_t *apiClient, int allowWatchBookmarks , 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_component_status_list_t *elementToReturn = v1_component_status_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -17510,12 +18597,14 @@ CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_config_map_list_t *elementToReturn = v1_config_map_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -17821,12 +18910,14 @@ CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_endpoints_list_t *elementToReturn = v1_endpoints_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -18132,12 +19223,14 @@ CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int allowWatchBookma
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     core_v1_event_list_t *elementToReturn = core_v1_event_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -18443,12 +19536,14 @@ CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int allowWatchB
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_limit_range_list_t *elementToReturn = v1_limit_range_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -18754,12 +19849,14 @@ CoreV1API_listNamespace(apiClient_t *apiClient, char * pretty , int allowWatchBo
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_namespace_list_t *elementToReturn = v1_namespace_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -19075,12 +20172,14 @@ CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , ch
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_config_map_list_t *elementToReturn = v1_config_map_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -19397,12 +20496,14 @@ CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , ch
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_endpoints_list_t *elementToReturn = v1_endpoints_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -19719,12 +20820,14 @@ CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char * _namespace , char *
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     core_v1_event_list_t *elementToReturn = core_v1_event_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -20041,12 +21144,14 @@ CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , c
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_limit_range_list_t *elementToReturn = v1_limit_range_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -20363,12 +21468,14 @@ CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _na
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_claim_list_t *elementToReturn = v1_persistent_volume_claim_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -20685,12 +21792,14 @@ CoreV1API_listNamespacedPod(apiClient_t *apiClient, char * _namespace , char * p
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_list_t *elementToReturn = v1_pod_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -21007,12 +22116,14 @@ CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_template_list_t *elementToReturn = v1_pod_template_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -21329,12 +22440,14 @@ CoreV1API_listNamespacedReplicationController(apiClient_t *apiClient, char * _na
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_replication_controller_list_t *elementToReturn = v1_replication_controller_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -21651,12 +22764,14 @@ CoreV1API_listNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_resource_quota_list_t *elementToReturn = v1_resource_quota_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -21973,12 +23088,14 @@ CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char * _namespace , char 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_secret_list_t *elementToReturn = v1_secret_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -22295,12 +23412,14 @@ CoreV1API_listNamespacedService(apiClient_t *apiClient, char * _namespace , char
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_list_t *elementToReturn = v1_service_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -22617,12 +23736,14 @@ CoreV1API_listNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_account_list_t *elementToReturn = v1_service_account_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -22929,12 +24050,14 @@ CoreV1API_listNode(apiClient_t *apiClient, char * pretty , int allowWatchBookmar
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_node_list_t *elementToReturn = v1_node_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -23240,12 +24363,14 @@ CoreV1API_listPersistentVolume(apiClient_t *apiClient, char * pretty , int allow
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_list_t *elementToReturn = v1_persistent_volume_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -23551,12 +24676,14 @@ CoreV1API_listPersistentVolumeClaimForAllNamespaces(apiClient_t *apiClient, int 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_claim_list_t *elementToReturn = v1_persistent_volume_claim_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -23862,12 +24989,14 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_list_t *elementToReturn = v1_pod_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -24173,12 +25302,14 @@ CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *apiClient, int allowWatch
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_template_list_t *elementToReturn = v1_pod_template_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -24484,12 +25615,14 @@ CoreV1API_listReplicationControllerForAllNamespaces(apiClient_t *apiClient, int 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_replication_controller_list_t *elementToReturn = v1_replication_controller_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -24795,12 +25928,14 @@ CoreV1API_listResourceQuotaForAllNamespaces(apiClient_t *apiClient, int allowWat
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_resource_quota_list_t *elementToReturn = v1_resource_quota_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -25106,12 +26241,14 @@ CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, int allowWatchBookm
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_secret_list_t *elementToReturn = v1_secret_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -25417,12 +26554,14 @@ CoreV1API_listServiceAccountForAllNamespaces(apiClient_t *apiClient, int allowWa
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_account_list_t *elementToReturn = v1_service_account_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -25728,12 +26867,14 @@ CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int allowWatchBook
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_list_t *elementToReturn = v1_service_list_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -25884,7 +27025,7 @@ end:
 // partially update the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_patchNamespace(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespace(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -25948,6 +27089,18 @@ CoreV1API_patchNamespace(apiClient_t *apiClient, char * name , object_t * body ,
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -25985,15 +27138,18 @@ CoreV1API_patchNamespace(apiClient_t *apiClient, char * name , object_t * body ,
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -26056,6 +27212,18 @@ CoreV1API_patchNamespace(apiClient_t *apiClient, char * name , object_t * body ,
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -26078,7 +27246,7 @@ end:
 // partially update status of the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -26142,6 +27310,18 @@ CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char * name , object_t * 
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -26179,15 +27359,18 @@ CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char * name , object_t * 
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -26250,6 +27433,18 @@ CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char * name , object_t * 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -26272,7 +27467,7 @@ end:
 // partially update the specified ConfigMap
 //
 v1_config_map_t*
-CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -26346,6 +27541,18 @@ CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char * name , char * 
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -26383,15 +27590,18 @@ CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char * name , char * 
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_config_map_t *elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -26455,6 +27665,18 @@ CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char * name , char * 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -26477,7 +27699,7 @@ end:
 // partially update the specified Endpoints
 //
 v1_endpoints_t*
-CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -26551,6 +27773,18 @@ CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char * name , char * 
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -26588,15 +27822,18 @@ CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char * name , char * 
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_endpoints_t *elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -26660,6 +27897,18 @@ CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char * name , char * 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -26682,7 +27931,7 @@ end:
 // partially update the specified Event
 //
 core_v1_event_t*
-CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -26756,6 +28005,18 @@ CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _nam
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -26793,15 +28054,18 @@ CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _nam
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -26865,6 +28129,18 @@ CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _nam
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -26887,7 +28163,7 @@ end:
 // partially update the specified LimitRange
 //
 v1_limit_range_t*
-CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -26961,6 +28237,18 @@ CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char * name , char *
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -26998,15 +28286,18 @@ CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char * name , char *
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_limit_range_t *elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -27070,6 +28361,18 @@ CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char * name , char *
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -27092,7 +28395,7 @@ end:
 // partially update the specified PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -27166,6 +28469,18 @@ CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * na
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -27203,15 +28518,18 @@ CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * na
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -27275,6 +28593,18 @@ CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * na
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -27297,7 +28627,7 @@ end:
 // partially update status of the specified PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -27371,6 +28701,18 @@ CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, cha
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -27408,15 +28750,18 @@ CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, cha
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -27480,6 +28825,18 @@ CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, cha
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -27502,7 +28859,7 @@ end:
 // partially update the specified Pod
 //
 v1_pod_t*
-CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -27576,6 +28933,18 @@ CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char * name , char * _names
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -27613,15 +28982,18 @@ CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char * name , char * _names
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -27685,6 +29057,18 @@ CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char * name , char * _names
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -27707,7 +29091,7 @@ end:
 // partially update ephemeralcontainers of the specified Pod
 //
 v1_pod_t*
-CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -27781,6 +29165,18 @@ CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * n
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -27818,15 +29214,18 @@ CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * n
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -27890,6 +29289,18 @@ CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * n
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -27912,7 +29323,7 @@ end:
 // partially update status of the specified Pod
 //
 v1_pod_t*
-CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -27986,6 +29397,18 @@ CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char * name , char * 
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -28023,15 +29446,18 @@ CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char * name , char * 
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -28095,6 +29521,18 @@ CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char * name , char * 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -28117,7 +29555,7 @@ end:
 // partially update the specified PodTemplate
 //
 v1_pod_template_t*
-CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -28191,6 +29629,18 @@ CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char * name , char 
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -28228,15 +29678,18 @@ CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char * name , char 
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_template_t *elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -28300,6 +29753,18 @@ CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char * name , char 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -28322,7 +29787,7 @@ end:
 // partially update the specified ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -28396,6 +29861,18 @@ CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char * na
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -28433,15 +29910,18 @@ CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char * na
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -28505,6 +29985,18 @@ CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char * na
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -28527,7 +30019,7 @@ end:
 // partially update scale of the specified ReplicationController
 //
 v1_scale_t*
-CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -28601,6 +30093,18 @@ CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -28638,15 +30142,18 @@ CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_scale_t *elementToReturn = v1_scale_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -28710,6 +30217,18 @@ CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -28732,7 +30251,7 @@ end:
 // partially update status of the specified ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -28806,6 +30325,18 @@ CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, cha
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -28843,15 +30374,18 @@ CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, cha
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -28915,6 +30449,18 @@ CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, cha
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -28937,7 +30483,7 @@ end:
 // partially update the specified ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -29011,6 +30557,18 @@ CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char * name , cha
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -29048,15 +30606,18 @@ CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char * name , cha
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -29120,6 +30681,18 @@ CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char * name , cha
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -29142,7 +30715,7 @@ end:
 // partially update status of the specified ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -29216,6 +30789,18 @@ CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -29253,15 +30838,18 @@ CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -29325,6 +30913,18 @@ CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -29347,7 +30947,7 @@ end:
 // partially update the specified Secret
 //
 v1_secret_t*
-CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -29421,6 +31021,18 @@ CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char * name , char * _na
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -29458,15 +31070,18 @@ CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char * name , char * _na
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_secret_t *elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -29530,6 +31145,18 @@ CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char * name , char * _na
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -29552,7 +31179,7 @@ end:
 // partially update the specified Service
 //
 v1_service_t*
-CoreV1API_patchNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -29626,6 +31253,18 @@ CoreV1API_patchNamespacedService(apiClient_t *apiClient, char * name , char * _n
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -29663,15 +31302,18 @@ CoreV1API_patchNamespacedService(apiClient_t *apiClient, char * name , char * _n
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -29735,6 +31377,18 @@ CoreV1API_patchNamespacedService(apiClient_t *apiClient, char * name , char * _n
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -29757,7 +31411,7 @@ end:
 // partially update the specified ServiceAccount
 //
 v1_service_account_t*
-CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -29831,6 +31485,18 @@ CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char * name , ch
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -29868,15 +31534,18 @@ CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char * name , ch
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_account_t *elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -29940,6 +31609,18 @@ CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char * name , ch
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -29962,7 +31643,7 @@ end:
 // partially update status of the specified Service
 //
 v1_service_t*
-CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -30036,6 +31717,18 @@ CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char * name , cha
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -30073,15 +31766,18 @@ CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char * name , cha
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -30145,6 +31841,18 @@ CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char * name , cha
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -30167,7 +31875,7 @@ end:
 // partially update the specified Node
 //
 v1_node_t*
-CoreV1API_patchNode(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNode(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -30231,6 +31939,18 @@ CoreV1API_patchNode(apiClient_t *apiClient, char * name , object_t * body , char
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -30268,15 +31988,18 @@ CoreV1API_patchNode(apiClient_t *apiClient, char * name , object_t * body , char
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -30339,6 +32062,18 @@ CoreV1API_patchNode(apiClient_t *apiClient, char * name , object_t * body , char
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -30361,7 +32096,7 @@ end:
 // partially update status of the specified Node
 //
 v1_node_t*
-CoreV1API_patchNodeStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchNodeStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -30425,6 +32160,18 @@ CoreV1API_patchNodeStatus(apiClient_t *apiClient, char * name , object_t * body 
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -30462,15 +32209,18 @@ CoreV1API_patchNodeStatus(apiClient_t *apiClient, char * name , object_t * body 
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -30533,6 +32283,18 @@ CoreV1API_patchNodeStatus(apiClient_t *apiClient, char * name , object_t * body 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -30555,7 +32317,7 @@ end:
 // partially update the specified PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -30619,6 +32381,18 @@ CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char * name , object_t *
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -30656,15 +32430,18 @@ CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char * name , object_t *
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -30727,6 +32504,18 @@ CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char * name , object_t *
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -30749,7 +32538,7 @@ end:
 // partially update status of the specified PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -30813,6 +32602,18 @@ CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char * name , obje
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -30850,15 +32651,18 @@ CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char * name , obje
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -30920,6 +32724,18 @@ CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char * name , obje
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     if(keyQuery_force){
         free(keyQuery_force);
@@ -30994,12 +32810,14 @@ CoreV1API_readComponentStatus(apiClient_t *apiClient, char * name , char * prett
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_component_status_t *elementToReturn = v1_component_status_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -31094,12 +32912,14 @@ CoreV1API_readNamespace(apiClient_t *apiClient, char * name , char * pretty )
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -31194,12 +33014,14 @@ CoreV1API_readNamespaceStatus(apiClient_t *apiClient, char * name , char * prett
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -31304,12 +33126,14 @@ CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_config_map_t *elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -31415,12 +33239,14 @@ CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_endpoints_t *elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -31526,12 +33352,14 @@ CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char * name , char * _name
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -31637,12 +33465,14 @@ CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char * name , char * 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_limit_range_t *elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -31748,12 +33578,14 @@ CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * nam
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -31859,12 +33691,14 @@ CoreV1API_readNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -31970,12 +33804,14 @@ CoreV1API_readNamespacedPod(apiClient_t *apiClient, char * name , char * _namesp
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -32081,12 +33917,14 @@ CoreV1API_readNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * na
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -32296,12 +34134,14 @@ CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char * name , char * _nam
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //primitive return type simple
     char* elementToReturn =  strdup((char*)apiClient->dataReceived);
 
@@ -32497,12 +34337,14 @@ CoreV1API_readNamespacedPodStatus(apiClient_t *apiClient, char * name , char * _
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -32608,12 +34450,14 @@ CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char * name , char *
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_template_t *elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -32719,12 +34563,14 @@ CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char * nam
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -32830,12 +34676,14 @@ CoreV1API_readNamespacedReplicationControllerScale(apiClient_t *apiClient, char 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_scale_t *elementToReturn = v1_scale_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -32941,12 +34789,14 @@ CoreV1API_readNamespacedReplicationControllerStatus(apiClient_t *apiClient, char
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -33052,12 +34902,14 @@ CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char * name , char
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -33163,12 +35015,14 @@ CoreV1API_readNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -33274,12 +35128,14 @@ CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char * name , char * _nam
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_secret_t *elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -33385,12 +35241,14 @@ CoreV1API_readNamespacedService(apiClient_t *apiClient, char * name , char * _na
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -33496,12 +35354,14 @@ CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char * name , cha
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_account_t *elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -33607,12 +35467,14 @@ CoreV1API_readNamespacedServiceStatus(apiClient_t *apiClient, char * name , char
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -33708,12 +35570,14 @@ CoreV1API_readNode(apiClient_t *apiClient, char * name , char * pretty )
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -33808,12 +35672,14 @@ CoreV1API_readNodeStatus(apiClient_t *apiClient, char * name , char * pretty )
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -33908,12 +35774,14 @@ CoreV1API_readPersistentVolume(apiClient_t *apiClient, char * name , char * pret
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -34008,12 +35876,14 @@ CoreV1API_readPersistentVolumeStatus(apiClient_t *apiClient, char * name , char 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -34057,7 +35927,7 @@ end:
 // replace the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_replaceNamespace(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespace(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -34120,6 +35990,18 @@ CoreV1API_replaceNamespace(apiClient_t *apiClient, char * name , v1_namespace_t 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -34141,15 +36023,18 @@ CoreV1API_replaceNamespace(apiClient_t *apiClient, char * name , v1_namespace_t 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -34212,6 +36097,18 @@ CoreV1API_replaceNamespace(apiClient_t *apiClient, char * name , v1_namespace_t 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -34222,7 +36119,7 @@ end:
 // replace finalize of the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * dryRun , char * fieldManager , char * pretty )
+CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -34274,6 +36171,18 @@ CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char * name , v1_name
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_pretty = NULL;
     char * valueQuery_pretty = NULL;
     keyValuePair_t *keyPairQuery_pretty = 0;
@@ -34306,15 +36215,18 @@ CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char * name , v1_name
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -34365,6 +36277,18 @@ CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char * name , v1_name
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -34387,7 +36311,7 @@ end:
 // replace status of the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -34450,6 +36374,18 @@ CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char * name , v1_namesp
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -34471,15 +36407,18 @@ CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char * name , v1_namesp
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -34542,6 +36481,18 @@ CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char * name , v1_namesp
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -34552,7 +36503,7 @@ end:
 // replace the specified ConfigMap
 //
 v1_config_map_t*
-CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , v1_config_map_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , v1_config_map_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -34625,6 +36576,18 @@ CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char * name , char 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -34646,15 +36609,18 @@ CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char * name , char 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_config_map_t *elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -34718,6 +36684,18 @@ CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char * name , char 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -34728,7 +36706,7 @@ end:
 // replace the specified Endpoints
 //
 v1_endpoints_t*
-CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , v1_endpoints_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , v1_endpoints_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -34801,6 +36779,18 @@ CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char * name , char 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -34822,15 +36812,18 @@ CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char * name , char 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_endpoints_t *elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -34894,6 +36887,18 @@ CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char * name , char 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -34904,7 +36909,7 @@ end:
 // replace the specified Event
 //
 core_v1_event_t*
-CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -34977,6 +36982,18 @@ CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _n
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -34998,15 +37015,18 @@ CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _n
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -35070,6 +37090,18 @@ CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _n
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -35080,7 +37112,7 @@ end:
 // replace the specified LimitRange
 //
 v1_limit_range_t*
-CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , v1_limit_range_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , v1_limit_range_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -35153,6 +37185,18 @@ CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char * name , char
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -35174,15 +37218,18 @@ CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char * name , char
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_limit_range_t *elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -35246,6 +37293,18 @@ CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char * name , char
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -35256,7 +37315,7 @@ end:
 // replace the specified PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -35329,6 +37388,18 @@ CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -35350,15 +37421,18 @@ CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -35422,6 +37496,18 @@ CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -35432,7 +37518,7 @@ end:
 // replace status of the specified PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -35505,6 +37591,18 @@ CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, c
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -35526,15 +37624,18 @@ CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, c
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -35598,6 +37699,18 @@ CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, c
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -35608,7 +37721,7 @@ end:
 // replace the specified Pod
 //
 v1_pod_t*
-CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -35681,6 +37794,18 @@ CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char * name , char * _nam
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -35702,15 +37827,18 @@ CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char * name , char * _nam
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -35774,6 +37902,18 @@ CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char * name , char * _nam
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -35784,7 +37924,7 @@ end:
 // replace ephemeralcontainers of the specified Pod
 //
 v1_pod_t*
-CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -35857,6 +37997,18 @@ CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -35878,15 +38030,18 @@ CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -35950,6 +38105,18 @@ CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -35960,7 +38127,7 @@ end:
 // replace status of the specified Pod
 //
 v1_pod_t*
-CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -36033,6 +38200,18 @@ CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char * name , char 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -36054,15 +38233,18 @@ CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char * name , char 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -36126,6 +38308,18 @@ CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char * name , char 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -36136,7 +38330,7 @@ end:
 // replace the specified PodTemplate
 //
 v1_pod_template_t*
-CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_template_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_template_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -36209,6 +38403,18 @@ CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char * name , cha
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -36230,15 +38436,18 @@ CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char * name , cha
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_pod_template_t *elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -36302,6 +38511,18 @@ CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char * name , cha
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -36312,7 +38533,7 @@ end:
 // replace the specified ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -36385,6 +38606,18 @@ CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char * 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -36406,15 +38639,18 @@ CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char * 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -36478,6 +38714,18 @@ CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char * 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -36488,7 +38736,7 @@ end:
 // replace scale of the specified ReplicationController
 //
 v1_scale_t*
-CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -36561,6 +38809,18 @@ CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, ch
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -36582,15 +38842,18 @@ CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, ch
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_scale_t *elementToReturn = v1_scale_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -36654,6 +38917,18 @@ CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, ch
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -36664,7 +38939,7 @@ end:
 // replace status of the specified ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -36737,6 +39012,18 @@ CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, c
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -36758,15 +39045,18 @@ CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, c
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -36830,6 +39120,18 @@ CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, c
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -36840,7 +39142,7 @@ end:
 // replace the specified ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -36913,6 +39215,18 @@ CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char * name , c
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -36934,15 +39248,18 @@ CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char * name , c
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -37006,6 +39323,18 @@ CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char * name , c
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -37016,7 +39345,7 @@ end:
 // replace status of the specified ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -37089,6 +39418,18 @@ CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * na
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -37110,15 +39451,18 @@ CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * na
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -37182,6 +39526,18 @@ CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * na
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -37192,7 +39548,7 @@ end:
 // replace the specified Secret
 //
 v1_secret_t*
-CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , v1_secret_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , v1_secret_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -37265,6 +39621,18 @@ CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char * name , char * _
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -37286,15 +39654,18 @@ CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char * name , char * _
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_secret_t *elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -37358,6 +39729,18 @@ CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char * name , char * _
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -37368,7 +39751,7 @@ end:
 // replace the specified Service
 //
 v1_service_t*
-CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -37441,6 +39824,18 @@ CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char * name , char * 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -37462,15 +39857,18 @@ CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char * name , char * 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -37534,6 +39932,18 @@ CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char * name , char * 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -37544,7 +39954,7 @@ end:
 // replace the specified ServiceAccount
 //
 v1_service_account_t*
-CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , v1_service_account_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , v1_service_account_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -37617,6 +40027,18 @@ CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char * name , 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -37638,15 +40060,18 @@ CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char * name , 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_account_t *elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -37710,6 +40135,18 @@ CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char * name , 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -37720,7 +40157,7 @@ end:
 // replace status of the specified Service
 //
 v1_service_t*
-CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -37793,6 +40230,18 @@ CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char * name , c
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -37814,15 +40263,18 @@ CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char * name , c
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -37886,6 +40338,18 @@ CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char * name , c
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -37896,7 +40360,7 @@ end:
 // replace the specified Node
 //
 v1_node_t*
-CoreV1API_replaceNode(apiClient_t *apiClient, char * name , v1_node_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNode(apiClient_t *apiClient, char * name , v1_node_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -37959,6 +40423,18 @@ CoreV1API_replaceNode(apiClient_t *apiClient, char * name , v1_node_t * body , c
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -37980,15 +40456,18 @@ CoreV1API_replaceNode(apiClient_t *apiClient, char * name , v1_node_t * body , c
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -38051,6 +40530,18 @@ CoreV1API_replaceNode(apiClient_t *apiClient, char * name , v1_node_t * body , c
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -38061,7 +40552,7 @@ end:
 // replace status of the specified Node
 //
 v1_node_t*
-CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char * name , v1_node_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char * name , v1_node_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -38124,6 +40615,18 @@ CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char * name , v1_node_t * bo
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -38145,15 +40648,18 @@ CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char * name , v1_node_t * bo
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -38216,6 +40722,18 @@ CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char * name , v1_node_t * bo
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -38226,7 +40744,7 @@ end:
 // replace the specified PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_replacePersistentVolume(apiClient_t *apiClient, char * name , v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replacePersistentVolume(apiClient_t *apiClient, char * name , v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -38289,6 +40807,18 @@ CoreV1API_replacePersistentVolume(apiClient_t *apiClient, char * name , v1_persi
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -38310,15 +40840,18 @@ CoreV1API_replacePersistentVolume(apiClient_t *apiClient, char * name , v1_persi
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -38381,6 +40914,18 @@ CoreV1API_replacePersistentVolume(apiClient_t *apiClient, char * name , v1_persi
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -38391,7 +40936,7 @@ end:
 // replace status of the specified PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_replacePersistentVolumeStatus(apiClient_t *apiClient, char * name , v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager )
+CoreV1API_replacePersistentVolumeStatus(apiClient_t *apiClient, char * name , v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -38454,6 +40999,18 @@ CoreV1API_replacePersistentVolumeStatus(apiClient_t *apiClient, char * name , v1
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -38475,15 +41032,18 @@ CoreV1API_replacePersistentVolumeStatus(apiClient_t *apiClient, char * name , v1
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
@@ -38545,6 +41105,18 @@ CoreV1API_replacePersistentVolumeStatus(apiClient_t *apiClient, char * name , v1
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:

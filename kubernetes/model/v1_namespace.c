@@ -58,23 +58,23 @@ cJSON *v1_namespace_convertToJSON(v1_namespace_t *v1_namespace) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_namespace->api_version
-    if(v1_namespace->api_version) { 
+    if(v1_namespace->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_namespace->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_namespace->kind
-    if(v1_namespace->kind) { 
+    if(v1_namespace->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_namespace->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_namespace->metadata
-    if(v1_namespace->metadata) { 
+    if(v1_namespace->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_namespace->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v1_namespace_convertToJSON(v1_namespace_t *v1_namespace) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_namespace->spec
-    if(v1_namespace->spec) { 
+    if(v1_namespace->spec) {
     cJSON *spec_local_JSON = v1_namespace_spec_convertToJSON(v1_namespace->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v1_namespace_convertToJSON(v1_namespace_t *v1_namespace) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_namespace->status
-    if(v1_namespace->status) { 
+    if(v1_namespace->status) {
     cJSON *status_local_JSON = v1_namespace_status_convertToJSON(v1_namespace->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v1_namespace_convertToJSON(v1_namespace_t *v1_namespace) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

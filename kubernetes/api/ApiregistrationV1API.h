@@ -16,7 +16,7 @@
 // create an APIService
 //
 v1_api_service_t*
-ApiregistrationV1API_createAPIService(apiClient_t *apiClient, v1_api_service_t * body , char * pretty , char * dryRun , char * fieldManager );
+ApiregistrationV1API_createAPIService(apiClient_t *apiClient, v1_api_service_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete an APIService
@@ -46,13 +46,13 @@ ApiregistrationV1API_listAPIService(apiClient_t *apiClient, char * pretty , int 
 // partially update the specified APIService
 //
 v1_api_service_t*
-ApiregistrationV1API_patchAPIService(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+ApiregistrationV1API_patchAPIService(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified APIService
 //
 v1_api_service_t*
-ApiregistrationV1API_patchAPIServiceStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+ApiregistrationV1API_patchAPIServiceStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified APIService
@@ -70,12 +70,12 @@ ApiregistrationV1API_readAPIServiceStatus(apiClient_t *apiClient, char * name , 
 // replace the specified APIService
 //
 v1_api_service_t*
-ApiregistrationV1API_replaceAPIService(apiClient_t *apiClient, char * name , v1_api_service_t * body , char * pretty , char * dryRun , char * fieldManager );
+ApiregistrationV1API_replaceAPIService(apiClient_t *apiClient, char * name , v1_api_service_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified APIService
 //
 v1_api_service_t*
-ApiregistrationV1API_replaceAPIServiceStatus(apiClient_t *apiClient, char * name , v1_api_service_t * body , char * pretty , char * dryRun , char * fieldManager );
+ApiregistrationV1API_replaceAPIServiceStatus(apiClient_t *apiClient, char * name , v1_api_service_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

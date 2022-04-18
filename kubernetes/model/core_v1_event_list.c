@@ -55,18 +55,17 @@ cJSON *core_v1_event_list_convertToJSON(core_v1_event_list_t *core_v1_event_list
     cJSON *item = cJSON_CreateObject();
 
     // core_v1_event_list->api_version
-    if(core_v1_event_list->api_version) { 
+    if(core_v1_event_list->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", core_v1_event_list->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // core_v1_event_list->items
     if (!core_v1_event_list->items) {
         goto fail;
     }
-    
     cJSON *items = cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
@@ -85,15 +84,15 @@ cJSON *core_v1_event_list_convertToJSON(core_v1_event_list_t *core_v1_event_list
 
 
     // core_v1_event_list->kind
-    if(core_v1_event_list->kind) { 
+    if(core_v1_event_list->kind) {
     if(cJSON_AddStringToObject(item, "kind", core_v1_event_list->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // core_v1_event_list->metadata
-    if(core_v1_event_list->metadata) { 
+    if(core_v1_event_list->metadata) {
     cJSON *metadata_local_JSON = v1_list_meta_convertToJSON(core_v1_event_list->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -102,7 +101,7 @@ cJSON *core_v1_event_list_convertToJSON(core_v1_event_list_t *core_v1_event_list
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

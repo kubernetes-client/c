@@ -34,11 +34,11 @@ cJSON *v1_local_object_reference_convertToJSON(v1_local_object_reference_t *v1_l
     cJSON *item = cJSON_CreateObject();
 
     // v1_local_object_reference->name
-    if(v1_local_object_reference->name) { 
+    if(v1_local_object_reference->name) {
     if(cJSON_AddStringToObject(item, "name", v1_local_object_reference->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

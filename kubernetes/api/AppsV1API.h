@@ -25,31 +25,31 @@
 // create a ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_createNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , v1_controller_revision_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_createNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , v1_controller_revision_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a Deployment
 //
 v1_deployment_t*
-AppsV1API_createNamespacedDeployment(apiClient_t *apiClient, char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_createNamespacedDeployment(apiClient_t *apiClient, char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_createNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_createNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of ControllerRevision
@@ -181,73 +181,73 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
 // partially update the specified ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update scale of the specified Deployment
 //
 v1_scale_t*
-AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update scale of the specified ReplicaSet
 //
 v1_scale_t*
-AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update scale of the specified StatefulSet
 //
 v1_scale_t*
-AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified ControllerRevision
@@ -325,72 +325,72 @@ AppsV1API_readNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , 
 // replace the specified ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_replaceNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , v1_controller_revision_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , v1_controller_revision_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace scale of the specified Deployment
 //
 v1_scale_t*
-AppsV1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace scale of the specified ReplicaSet
 //
 v1_scale_t*
-AppsV1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_replaceNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace scale of the specified StatefulSet
 //
 v1_scale_t*
-AppsV1API_replaceNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_replaceNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager );
+AppsV1API_replaceNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

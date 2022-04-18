@@ -43,7 +43,7 @@ cJSON *v1_service_status_convertToJSON(v1_service_status_t *v1_service_status) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_service_status->conditions
-    if(v1_service_status->conditions) { 
+    if(v1_service_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -59,11 +59,11 @@ cJSON *v1_service_status_convertToJSON(v1_service_status_t *v1_service_status) {
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_service_status->load_balancer
-    if(v1_service_status->load_balancer) { 
+    if(v1_service_status->load_balancer) {
     cJSON *load_balancer_local_JSON = v1_load_balancer_status_convertToJSON(v1_service_status->load_balancer);
     if(load_balancer_local_JSON == NULL) {
     goto fail; //model
@@ -72,7 +72,7 @@ cJSON *v1_service_status_convertToJSON(v1_service_status_t *v1_service_status) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

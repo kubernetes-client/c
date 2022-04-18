@@ -34,7 +34,7 @@ cJSON *v1_node_config_source_convertToJSON(v1_node_config_source_t *v1_node_conf
     cJSON *item = cJSON_CreateObject();
 
     // v1_node_config_source->config_map
-    if(v1_node_config_source->config_map) { 
+    if(v1_node_config_source->config_map) {
     cJSON *config_map_local_JSON = v1_config_map_node_config_source_convertToJSON(v1_node_config_source->config_map);
     if(config_map_local_JSON == NULL) {
     goto fail; //model
@@ -43,7 +43,7 @@ cJSON *v1_node_config_source_convertToJSON(v1_node_config_source_t *v1_node_conf
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

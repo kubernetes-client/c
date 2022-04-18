@@ -58,23 +58,23 @@ cJSON *v1_ingress_convertToJSON(v1_ingress_t *v1_ingress) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_ingress->api_version
-    if(v1_ingress->api_version) { 
+    if(v1_ingress->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_ingress->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ingress->kind
-    if(v1_ingress->kind) { 
+    if(v1_ingress->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_ingress->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ingress->metadata
-    if(v1_ingress->metadata) { 
+    if(v1_ingress->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_ingress->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v1_ingress_convertToJSON(v1_ingress_t *v1_ingress) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ingress->spec
-    if(v1_ingress->spec) { 
+    if(v1_ingress->spec) {
     cJSON *spec_local_JSON = v1_ingress_spec_convertToJSON(v1_ingress->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v1_ingress_convertToJSON(v1_ingress_t *v1_ingress) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ingress->status
-    if(v1_ingress->status) { 
+    if(v1_ingress->status) {
     cJSON *status_local_JSON = v1_ingress_status_convertToJSON(v1_ingress->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v1_ingress_convertToJSON(v1_ingress_t *v1_ingress) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -60,18 +60,17 @@ cJSON *v1_azure_disk_volume_source_convertToJSON(v1_azure_disk_volume_source_t *
     cJSON *item = cJSON_CreateObject();
 
     // v1_azure_disk_volume_source->caching_mode
-    if(v1_azure_disk_volume_source->caching_mode) { 
+    if(v1_azure_disk_volume_source->caching_mode) {
     if(cJSON_AddStringToObject(item, "cachingMode", v1_azure_disk_volume_source->caching_mode) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_azure_disk_volume_source->disk_name
     if (!v1_azure_disk_volume_source->disk_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "diskName", v1_azure_disk_volume_source->disk_name) == NULL) {
     goto fail; //String
     }
@@ -81,34 +80,33 @@ cJSON *v1_azure_disk_volume_source_convertToJSON(v1_azure_disk_volume_source_t *
     if (!v1_azure_disk_volume_source->disk_uri) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "diskURI", v1_azure_disk_volume_source->disk_uri) == NULL) {
     goto fail; //String
     }
 
 
     // v1_azure_disk_volume_source->fs_type
-    if(v1_azure_disk_volume_source->fs_type) { 
+    if(v1_azure_disk_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_azure_disk_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_azure_disk_volume_source->kind
-    if(v1_azure_disk_volume_source->kind) { 
+    if(v1_azure_disk_volume_source->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_azure_disk_volume_source->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_azure_disk_volume_source->read_only
-    if(v1_azure_disk_volume_source->read_only) { 
+    if(v1_azure_disk_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_azure_disk_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

@@ -61,23 +61,23 @@ cJSON *v1_role_binding_convertToJSON(v1_role_binding_t *v1_role_binding) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_role_binding->api_version
-    if(v1_role_binding->api_version) { 
+    if(v1_role_binding->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_role_binding->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_role_binding->kind
-    if(v1_role_binding->kind) { 
+    if(v1_role_binding->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_role_binding->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_role_binding->metadata
-    if(v1_role_binding->metadata) { 
+    if(v1_role_binding->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_role_binding->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -86,14 +86,13 @@ cJSON *v1_role_binding_convertToJSON(v1_role_binding_t *v1_role_binding) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_role_binding->role_ref
     if (!v1_role_binding->role_ref) {
         goto fail;
     }
-    
     cJSON *role_ref_local_JSON = v1_role_ref_convertToJSON(v1_role_binding->role_ref);
     if(role_ref_local_JSON == NULL) {
     goto fail; //model
@@ -105,7 +104,7 @@ cJSON *v1_role_binding_convertToJSON(v1_role_binding_t *v1_role_binding) {
 
 
     // v1_role_binding->subjects
-    if(v1_role_binding->subjects) { 
+    if(v1_role_binding->subjects) {
     cJSON *subjects = cJSON_AddArrayToObject(item, "subjects");
     if(subjects == NULL) {
     goto fail; //nonprimitive container
@@ -121,7 +120,7 @@ cJSON *v1_role_binding_convertToJSON(v1_role_binding_t *v1_role_binding) {
     cJSON_AddItemToArray(subjects, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

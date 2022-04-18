@@ -58,23 +58,23 @@ cJSON *v1_job_convertToJSON(v1_job_t *v1_job) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_job->api_version
-    if(v1_job->api_version) { 
+    if(v1_job->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_job->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_job->kind
-    if(v1_job->kind) { 
+    if(v1_job->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_job->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_job->metadata
-    if(v1_job->metadata) { 
+    if(v1_job->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_job->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v1_job_convertToJSON(v1_job_t *v1_job) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_job->spec
-    if(v1_job->spec) { 
+    if(v1_job->spec) {
     cJSON *spec_local_JSON = v1_job_spec_convertToJSON(v1_job->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v1_job_convertToJSON(v1_job_t *v1_job) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_job->status
-    if(v1_job->status) { 
+    if(v1_job->status) {
     cJSON *status_local_JSON = v1_job_status_convertToJSON(v1_job->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v1_job_convertToJSON(v1_job_t *v1_job) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

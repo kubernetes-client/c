@@ -40,7 +40,7 @@ cJSON *v1beta1_priority_level_configuration_spec_convertToJSON(v1beta1_priority_
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_priority_level_configuration_spec->limited
-    if(v1beta1_priority_level_configuration_spec->limited) { 
+    if(v1beta1_priority_level_configuration_spec->limited) {
     cJSON *limited_local_JSON = v1beta1_limited_priority_level_configuration_convertToJSON(v1beta1_priority_level_configuration_spec->limited);
     if(limited_local_JSON == NULL) {
     goto fail; //model
@@ -49,14 +49,13 @@ cJSON *v1beta1_priority_level_configuration_spec_convertToJSON(v1beta1_priority_
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_priority_level_configuration_spec->type
     if (!v1beta1_priority_level_configuration_spec->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v1beta1_priority_level_configuration_spec->type) == NULL) {
     goto fail; //String
     }

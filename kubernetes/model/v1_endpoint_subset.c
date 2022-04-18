@@ -55,7 +55,7 @@ cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset
     cJSON *item = cJSON_CreateObject();
 
     // v1_endpoint_subset->addresses
-    if(v1_endpoint_subset->addresses) { 
+    if(v1_endpoint_subset->addresses) {
     cJSON *addresses = cJSON_AddArrayToObject(item, "addresses");
     if(addresses == NULL) {
     goto fail; //nonprimitive container
@@ -71,11 +71,11 @@ cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset
     cJSON_AddItemToArray(addresses, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_endpoint_subset->not_ready_addresses
-    if(v1_endpoint_subset->not_ready_addresses) { 
+    if(v1_endpoint_subset->not_ready_addresses) {
     cJSON *not_ready_addresses = cJSON_AddArrayToObject(item, "notReadyAddresses");
     if(not_ready_addresses == NULL) {
     goto fail; //nonprimitive container
@@ -91,11 +91,11 @@ cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset
     cJSON_AddItemToArray(not_ready_addresses, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_endpoint_subset->ports
-    if(v1_endpoint_subset->ports) { 
+    if(v1_endpoint_subset->ports) {
     cJSON *ports = cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
@@ -111,7 +111,7 @@ cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset
     cJSON_AddItemToArray(ports, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

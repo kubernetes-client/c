@@ -91,7 +91,6 @@ cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_i
     if (!v1_node_system_info->architecture) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "architecture", v1_node_system_info->architecture) == NULL) {
     goto fail; //String
     }
@@ -101,7 +100,6 @@ cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_i
     if (!v1_node_system_info->boot_id) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "bootID", v1_node_system_info->boot_id) == NULL) {
     goto fail; //String
     }
@@ -111,7 +109,6 @@ cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_i
     if (!v1_node_system_info->container_runtime_version) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "containerRuntimeVersion", v1_node_system_info->container_runtime_version) == NULL) {
     goto fail; //String
     }
@@ -121,7 +118,6 @@ cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_i
     if (!v1_node_system_info->kernel_version) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kernelVersion", v1_node_system_info->kernel_version) == NULL) {
     goto fail; //String
     }
@@ -131,7 +127,6 @@ cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_i
     if (!v1_node_system_info->kube_proxy_version) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kubeProxyVersion", v1_node_system_info->kube_proxy_version) == NULL) {
     goto fail; //String
     }
@@ -141,7 +136,6 @@ cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_i
     if (!v1_node_system_info->kubelet_version) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kubeletVersion", v1_node_system_info->kubelet_version) == NULL) {
     goto fail; //String
     }
@@ -151,7 +145,6 @@ cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_i
     if (!v1_node_system_info->machine_id) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "machineID", v1_node_system_info->machine_id) == NULL) {
     goto fail; //String
     }
@@ -161,7 +154,6 @@ cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_i
     if (!v1_node_system_info->operating_system) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "operatingSystem", v1_node_system_info->operating_system) == NULL) {
     goto fail; //String
     }
@@ -171,7 +163,6 @@ cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_i
     if (!v1_node_system_info->os_image) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "osImage", v1_node_system_info->os_image) == NULL) {
     goto fail; //String
     }
@@ -181,7 +172,6 @@ cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_i
     if (!v1_node_system_info->system_uuid) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "systemUUID", v1_node_system_info->system_uuid) == NULL) {
     goto fail; //String
     }

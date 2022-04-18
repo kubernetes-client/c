@@ -72,15 +72,15 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_config_map->api_version
-    if(v1_config_map->api_version) { 
+    if(v1_config_map->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_config_map->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_config_map->binary_data
-    if(v1_config_map->binary_data) { 
+    if(v1_config_map->binary_data) {
     cJSON *binary_data = cJSON_AddObjectToObject(item, "binaryData");
     if(binary_data == NULL) {
         goto fail; //primitive map container
@@ -96,11 +96,11 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_config_map->data
-    if(v1_config_map->data) { 
+    if(v1_config_map->data) {
     cJSON *data = cJSON_AddObjectToObject(item, "data");
     if(data == NULL) {
         goto fail; //primitive map container
@@ -116,27 +116,27 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_config_map->immutable
-    if(v1_config_map->immutable) { 
+    if(v1_config_map->immutable) {
     if(cJSON_AddBoolToObject(item, "immutable", v1_config_map->immutable) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_config_map->kind
-    if(v1_config_map->kind) { 
+    if(v1_config_map->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_config_map->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_config_map->metadata
-    if(v1_config_map->metadata) { 
+    if(v1_config_map->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_config_map->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -145,7 +145,7 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

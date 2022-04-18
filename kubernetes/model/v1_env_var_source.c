@@ -52,7 +52,7 @@ cJSON *v1_env_var_source_convertToJSON(v1_env_var_source_t *v1_env_var_source) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_env_var_source->config_map_key_ref
-    if(v1_env_var_source->config_map_key_ref) { 
+    if(v1_env_var_source->config_map_key_ref) {
     cJSON *config_map_key_ref_local_JSON = v1_config_map_key_selector_convertToJSON(v1_env_var_source->config_map_key_ref);
     if(config_map_key_ref_local_JSON == NULL) {
     goto fail; //model
@@ -61,11 +61,11 @@ cJSON *v1_env_var_source_convertToJSON(v1_env_var_source_t *v1_env_var_source) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_env_var_source->field_ref
-    if(v1_env_var_source->field_ref) { 
+    if(v1_env_var_source->field_ref) {
     cJSON *field_ref_local_JSON = v1_object_field_selector_convertToJSON(v1_env_var_source->field_ref);
     if(field_ref_local_JSON == NULL) {
     goto fail; //model
@@ -74,11 +74,11 @@ cJSON *v1_env_var_source_convertToJSON(v1_env_var_source_t *v1_env_var_source) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_env_var_source->resource_field_ref
-    if(v1_env_var_source->resource_field_ref) { 
+    if(v1_env_var_source->resource_field_ref) {
     cJSON *resource_field_ref_local_JSON = v1_resource_field_selector_convertToJSON(v1_env_var_source->resource_field_ref);
     if(resource_field_ref_local_JSON == NULL) {
     goto fail; //model
@@ -87,11 +87,11 @@ cJSON *v1_env_var_source_convertToJSON(v1_env_var_source_t *v1_env_var_source) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_env_var_source->secret_key_ref
-    if(v1_env_var_source->secret_key_ref) { 
+    if(v1_env_var_source->secret_key_ref) {
     cJSON *secret_key_ref_local_JSON = v1_secret_key_selector_convertToJSON(v1_env_var_source->secret_key_ref);
     if(secret_key_ref_local_JSON == NULL) {
     goto fail; //model
@@ -100,7 +100,7 @@ cJSON *v1_env_var_source_convertToJSON(v1_env_var_source_t *v1_env_var_source) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

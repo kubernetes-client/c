@@ -67,7 +67,7 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     cJSON *item = cJSON_CreateObject();
 
     // v1_custom_resource_definition_version->additional_printer_columns
-    if(v1_custom_resource_definition_version->additional_printer_columns) { 
+    if(v1_custom_resource_definition_version->additional_printer_columns) {
     cJSON *additional_printer_columns = cJSON_AddArrayToObject(item, "additionalPrinterColumns");
     if(additional_printer_columns == NULL) {
     goto fail; //nonprimitive container
@@ -83,37 +83,36 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     cJSON_AddItemToArray(additional_printer_columns, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition_version->deprecated
-    if(v1_custom_resource_definition_version->deprecated) { 
+    if(v1_custom_resource_definition_version->deprecated) {
     if(cJSON_AddBoolToObject(item, "deprecated", v1_custom_resource_definition_version->deprecated) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition_version->deprecation_warning
-    if(v1_custom_resource_definition_version->deprecation_warning) { 
+    if(v1_custom_resource_definition_version->deprecation_warning) {
     if(cJSON_AddStringToObject(item, "deprecationWarning", v1_custom_resource_definition_version->deprecation_warning) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition_version->name
     if (!v1_custom_resource_definition_version->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_custom_resource_definition_version->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_custom_resource_definition_version->schema
-    if(v1_custom_resource_definition_version->schema) { 
+    if(v1_custom_resource_definition_version->schema) {
     cJSON *schema_local_JSON = v1_custom_resource_validation_convertToJSON(v1_custom_resource_definition_version->schema);
     if(schema_local_JSON == NULL) {
     goto fail; //model
@@ -122,14 +121,13 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition_version->served
     if (!v1_custom_resource_definition_version->served) {
         goto fail;
     }
-    
     if(cJSON_AddBoolToObject(item, "served", v1_custom_resource_definition_version->served) == NULL) {
     goto fail; //Bool
     }
@@ -139,14 +137,13 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     if (!v1_custom_resource_definition_version->storage) {
         goto fail;
     }
-    
     if(cJSON_AddBoolToObject(item, "storage", v1_custom_resource_definition_version->storage) == NULL) {
     goto fail; //Bool
     }
 
 
     // v1_custom_resource_definition_version->subresources
-    if(v1_custom_resource_definition_version->subresources) { 
+    if(v1_custom_resource_definition_version->subresources) {
     cJSON *subresources_local_JSON = v1_custom_resource_subresources_convertToJSON(v1_custom_resource_definition_version->subresources);
     if(subresources_local_JSON == NULL) {
     goto fail; //model
@@ -155,7 +152,7 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -37,7 +37,6 @@ cJSON *v1beta1_flow_distinguisher_method_convertToJSON(v1beta1_flow_distinguishe
     if (!v1beta1_flow_distinguisher_method->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v1beta1_flow_distinguisher_method->type) == NULL) {
     goto fail; //String
     }

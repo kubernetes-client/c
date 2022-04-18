@@ -55,7 +55,7 @@ cJSON *v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_t *v1_pod_affinit
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_affinity_term->label_selector
-    if(v1_pod_affinity_term->label_selector) { 
+    if(v1_pod_affinity_term->label_selector) {
     cJSON *label_selector_local_JSON = v1_label_selector_convertToJSON(v1_pod_affinity_term->label_selector);
     if(label_selector_local_JSON == NULL) {
     goto fail; //model
@@ -64,11 +64,11 @@ cJSON *v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_t *v1_pod_affinit
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_affinity_term->namespace_selector
-    if(v1_pod_affinity_term->namespace_selector) { 
+    if(v1_pod_affinity_term->namespace_selector) {
     cJSON *namespace_selector_local_JSON = v1_label_selector_convertToJSON(v1_pod_affinity_term->namespace_selector);
     if(namespace_selector_local_JSON == NULL) {
     goto fail; //model
@@ -77,11 +77,11 @@ cJSON *v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_t *v1_pod_affinit
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_affinity_term->namespaces
-    if(v1_pod_affinity_term->namespaces) { 
+    if(v1_pod_affinity_term->namespaces) {
     cJSON *namespaces = cJSON_AddArrayToObject(item, "namespaces");
     if(namespaces == NULL) {
         goto fail; //primitive container
@@ -94,14 +94,13 @@ cJSON *v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_t *v1_pod_affinit
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_pod_affinity_term->topology_key
     if (!v1_pod_affinity_term->topology_key) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "topologyKey", v1_pod_affinity_term->topology_key) == NULL) {
     goto fail; //String
     }

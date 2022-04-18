@@ -72,23 +72,23 @@ cJSON *v1_status_convertToJSON(v1_status_t *v1_status) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_status->api_version
-    if(v1_status->api_version) { 
+    if(v1_status->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_status->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_status->code
-    if(v1_status->code) { 
+    if(v1_status->code) {
     if(cJSON_AddNumberToObject(item, "code", v1_status->code) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_status->details
-    if(v1_status->details) { 
+    if(v1_status->details) {
     cJSON *details_local_JSON = v1_status_details_convertToJSON(v1_status->details);
     if(details_local_JSON == NULL) {
     goto fail; //model
@@ -97,27 +97,27 @@ cJSON *v1_status_convertToJSON(v1_status_t *v1_status) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_status->kind
-    if(v1_status->kind) { 
+    if(v1_status->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_status->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_status->message
-    if(v1_status->message) { 
+    if(v1_status->message) {
     if(cJSON_AddStringToObject(item, "message", v1_status->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_status->metadata
-    if(v1_status->metadata) { 
+    if(v1_status->metadata) {
     cJSON *metadata_local_JSON = v1_list_meta_convertToJSON(v1_status->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -126,23 +126,23 @@ cJSON *v1_status_convertToJSON(v1_status_t *v1_status) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_status->reason
-    if(v1_status->reason) { 
+    if(v1_status->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_status->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_status->status
-    if(v1_status->status) { 
+    if(v1_status->status) {
     if(cJSON_AddStringToObject(item, "status", v1_status->status) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

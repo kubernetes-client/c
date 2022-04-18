@@ -58,23 +58,23 @@ cJSON *v1_persistent_volume_convertToJSON(v1_persistent_volume_t *v1_persistent_
     cJSON *item = cJSON_CreateObject();
 
     // v1_persistent_volume->api_version
-    if(v1_persistent_volume->api_version) { 
+    if(v1_persistent_volume->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_persistent_volume->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume->kind
-    if(v1_persistent_volume->kind) { 
+    if(v1_persistent_volume->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_persistent_volume->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume->metadata
-    if(v1_persistent_volume->metadata) { 
+    if(v1_persistent_volume->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_persistent_volume->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v1_persistent_volume_convertToJSON(v1_persistent_volume_t *v1_persistent_
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume->spec
-    if(v1_persistent_volume->spec) { 
+    if(v1_persistent_volume->spec) {
     cJSON *spec_local_JSON = v1_persistent_volume_spec_convertToJSON(v1_persistent_volume->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v1_persistent_volume_convertToJSON(v1_persistent_volume_t *v1_persistent_
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume->status
-    if(v1_persistent_volume->status) { 
+    if(v1_persistent_volume->status) {
     cJSON *status_local_JSON = v1_persistent_volume_status_convertToJSON(v1_persistent_volume->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v1_persistent_volume_convertToJSON(v1_persistent_volume_t *v1_persistent_
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

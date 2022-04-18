@@ -40,7 +40,6 @@ cJSON *v1_node_selector_convertToJSON(v1_node_selector_t *v1_node_selector) {
     if (!v1_node_selector->node_selector_terms) {
         goto fail;
     }
-    
     cJSON *node_selector_terms = cJSON_AddArrayToObject(item, "nodeSelectorTerms");
     if(node_selector_terms == NULL) {
     goto fail; //nonprimitive container

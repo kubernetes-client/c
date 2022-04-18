@@ -72,7 +72,7 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_node_spec->config_source
-    if(v1_node_spec->config_source) { 
+    if(v1_node_spec->config_source) {
     cJSON *config_source_local_JSON = v1_node_config_source_convertToJSON(v1_node_spec->config_source);
     if(config_source_local_JSON == NULL) {
     goto fail; //model
@@ -81,27 +81,27 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_node_spec->external_id
-    if(v1_node_spec->external_id) { 
+    if(v1_node_spec->external_id) {
     if(cJSON_AddStringToObject(item, "externalID", v1_node_spec->external_id) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_node_spec->pod_cidr
-    if(v1_node_spec->pod_cidr) { 
+    if(v1_node_spec->pod_cidr) {
     if(cJSON_AddStringToObject(item, "podCIDR", v1_node_spec->pod_cidr) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_node_spec->pod_cidrs
-    if(v1_node_spec->pod_cidrs) { 
+    if(v1_node_spec->pod_cidrs) {
     cJSON *pod_cidrs = cJSON_AddArrayToObject(item, "podCIDRs");
     if(pod_cidrs == NULL) {
         goto fail; //primitive container
@@ -114,19 +114,19 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_node_spec->provider_id
-    if(v1_node_spec->provider_id) { 
+    if(v1_node_spec->provider_id) {
     if(cJSON_AddStringToObject(item, "providerID", v1_node_spec->provider_id) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_node_spec->taints
-    if(v1_node_spec->taints) { 
+    if(v1_node_spec->taints) {
     cJSON *taints = cJSON_AddArrayToObject(item, "taints");
     if(taints == NULL) {
     goto fail; //nonprimitive container
@@ -142,15 +142,15 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
     cJSON_AddItemToArray(taints, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_node_spec->unschedulable
-    if(v1_node_spec->unschedulable) { 
+    if(v1_node_spec->unschedulable) {
     if(cJSON_AddBoolToObject(item, "unschedulable", v1_node_spec->unschedulable) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

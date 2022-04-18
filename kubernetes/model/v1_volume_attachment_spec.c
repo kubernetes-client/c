@@ -49,7 +49,6 @@ cJSON *v1_volume_attachment_spec_convertToJSON(v1_volume_attachment_spec_t *v1_v
     if (!v1_volume_attachment_spec->attacher) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "attacher", v1_volume_attachment_spec->attacher) == NULL) {
     goto fail; //String
     }
@@ -59,7 +58,6 @@ cJSON *v1_volume_attachment_spec_convertToJSON(v1_volume_attachment_spec_t *v1_v
     if (!v1_volume_attachment_spec->node_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "nodeName", v1_volume_attachment_spec->node_name) == NULL) {
     goto fail; //String
     }
@@ -69,7 +67,6 @@ cJSON *v1_volume_attachment_spec_convertToJSON(v1_volume_attachment_spec_t *v1_v
     if (!v1_volume_attachment_spec->source) {
         goto fail;
     }
-    
     cJSON *source_local_JSON = v1_volume_attachment_source_convertToJSON(v1_volume_attachment_spec->source);
     if(source_local_JSON == NULL) {
     goto fail; //model

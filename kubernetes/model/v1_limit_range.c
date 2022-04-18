@@ -52,23 +52,23 @@ cJSON *v1_limit_range_convertToJSON(v1_limit_range_t *v1_limit_range) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_limit_range->api_version
-    if(v1_limit_range->api_version) { 
+    if(v1_limit_range->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_limit_range->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_limit_range->kind
-    if(v1_limit_range->kind) { 
+    if(v1_limit_range->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_limit_range->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_limit_range->metadata
-    if(v1_limit_range->metadata) { 
+    if(v1_limit_range->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_limit_range->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -77,11 +77,11 @@ cJSON *v1_limit_range_convertToJSON(v1_limit_range_t *v1_limit_range) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_limit_range->spec
-    if(v1_limit_range->spec) { 
+    if(v1_limit_range->spec) {
     cJSON *spec_local_JSON = v1_limit_range_spec_convertToJSON(v1_limit_range->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -90,7 +90,7 @@ cJSON *v1_limit_range_convertToJSON(v1_limit_range_t *v1_limit_range) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

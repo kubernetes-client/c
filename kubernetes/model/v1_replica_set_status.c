@@ -47,15 +47,15 @@ cJSON *v1_replica_set_status_convertToJSON(v1_replica_set_status_t *v1_replica_s
     cJSON *item = cJSON_CreateObject();
 
     // v1_replica_set_status->available_replicas
-    if(v1_replica_set_status->available_replicas) { 
+    if(v1_replica_set_status->available_replicas) {
     if(cJSON_AddNumberToObject(item, "availableReplicas", v1_replica_set_status->available_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_replica_set_status->conditions
-    if(v1_replica_set_status->conditions) { 
+    if(v1_replica_set_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -71,38 +71,37 @@ cJSON *v1_replica_set_status_convertToJSON(v1_replica_set_status_t *v1_replica_s
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_replica_set_status->fully_labeled_replicas
-    if(v1_replica_set_status->fully_labeled_replicas) { 
+    if(v1_replica_set_status->fully_labeled_replicas) {
     if(cJSON_AddNumberToObject(item, "fullyLabeledReplicas", v1_replica_set_status->fully_labeled_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_replica_set_status->observed_generation
-    if(v1_replica_set_status->observed_generation) { 
+    if(v1_replica_set_status->observed_generation) {
     if(cJSON_AddNumberToObject(item, "observedGeneration", v1_replica_set_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_replica_set_status->ready_replicas
-    if(v1_replica_set_status->ready_replicas) { 
+    if(v1_replica_set_status->ready_replicas) {
     if(cJSON_AddNumberToObject(item, "readyReplicas", v1_replica_set_status->ready_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_replica_set_status->replicas
     if (!v1_replica_set_status->replicas) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "replicas", v1_replica_set_status->replicas) == NULL) {
     goto fail; //Numeric
     }

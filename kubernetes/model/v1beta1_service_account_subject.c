@@ -43,7 +43,6 @@ cJSON *v1beta1_service_account_subject_convertToJSON(v1beta1_service_account_sub
     if (!v1beta1_service_account_subject->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1beta1_service_account_subject->name) == NULL) {
     goto fail; //String
     }
@@ -53,7 +52,6 @@ cJSON *v1beta1_service_account_subject_convertToJSON(v1beta1_service_account_sub
     if (!v1beta1_service_account_subject->_namespace) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "namespace", v1beta1_service_account_subject->_namespace) == NULL) {
     goto fail; //String
     }

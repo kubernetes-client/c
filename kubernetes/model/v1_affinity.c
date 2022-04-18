@@ -46,7 +46,7 @@ cJSON *v1_affinity_convertToJSON(v1_affinity_t *v1_affinity) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_affinity->node_affinity
-    if(v1_affinity->node_affinity) { 
+    if(v1_affinity->node_affinity) {
     cJSON *node_affinity_local_JSON = v1_node_affinity_convertToJSON(v1_affinity->node_affinity);
     if(node_affinity_local_JSON == NULL) {
     goto fail; //model
@@ -55,11 +55,11 @@ cJSON *v1_affinity_convertToJSON(v1_affinity_t *v1_affinity) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_affinity->pod_affinity
-    if(v1_affinity->pod_affinity) { 
+    if(v1_affinity->pod_affinity) {
     cJSON *pod_affinity_local_JSON = v1_pod_affinity_convertToJSON(v1_affinity->pod_affinity);
     if(pod_affinity_local_JSON == NULL) {
     goto fail; //model
@@ -68,11 +68,11 @@ cJSON *v1_affinity_convertToJSON(v1_affinity_t *v1_affinity) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_affinity->pod_anti_affinity
-    if(v1_affinity->pod_anti_affinity) { 
+    if(v1_affinity->pod_anti_affinity) {
     cJSON *pod_anti_affinity_local_JSON = v1_pod_anti_affinity_convertToJSON(v1_affinity->pod_anti_affinity);
     if(pod_anti_affinity_local_JSON == NULL) {
     goto fail; //model
@@ -81,7 +81,7 @@ cJSON *v1_affinity_convertToJSON(v1_affinity_t *v1_affinity) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

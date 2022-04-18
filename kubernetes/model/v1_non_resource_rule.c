@@ -46,7 +46,7 @@ cJSON *v1_non_resource_rule_convertToJSON(v1_non_resource_rule_t *v1_non_resourc
     cJSON *item = cJSON_CreateObject();
 
     // v1_non_resource_rule->non_resource_urls
-    if(v1_non_resource_rule->non_resource_urls) { 
+    if(v1_non_resource_rule->non_resource_urls) {
     cJSON *non_resource_urls = cJSON_AddArrayToObject(item, "nonResourceURLs");
     if(non_resource_urls == NULL) {
         goto fail; //primitive container
@@ -59,14 +59,13 @@ cJSON *v1_non_resource_rule_convertToJSON(v1_non_resource_rule_t *v1_non_resourc
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_non_resource_rule->verbs
     if (!v1_non_resource_rule->verbs) {
         goto fail;
     }
-    
     cJSON *verbs = cJSON_AddArrayToObject(item, "verbs");
     if(verbs == NULL) {
         goto fail; //primitive container

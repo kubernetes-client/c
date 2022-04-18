@@ -52,23 +52,23 @@ cJSON *v1_pod_template_convertToJSON(v1_pod_template_t *v1_pod_template) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_template->api_version
-    if(v1_pod_template->api_version) { 
+    if(v1_pod_template->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_pod_template->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_template->kind
-    if(v1_pod_template->kind) { 
+    if(v1_pod_template->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_pod_template->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_template->metadata
-    if(v1_pod_template->metadata) { 
+    if(v1_pod_template->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_pod_template->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -77,11 +77,11 @@ cJSON *v1_pod_template_convertToJSON(v1_pod_template_t *v1_pod_template) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_pod_template->_template
-    if(v1_pod_template->_template) { 
+    if(v1_pod_template->_template) {
     cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_pod_template->_template);
     if(_template_local_JSON == NULL) {
     goto fail; //model
@@ -90,7 +90,7 @@ cJSON *v1_pod_template_convertToJSON(v1_pod_template_t *v1_pod_template) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

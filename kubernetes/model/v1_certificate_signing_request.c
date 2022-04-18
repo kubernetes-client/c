@@ -58,23 +58,23 @@ cJSON *v1_certificate_signing_request_convertToJSON(v1_certificate_signing_reque
     cJSON *item = cJSON_CreateObject();
 
     // v1_certificate_signing_request->api_version
-    if(v1_certificate_signing_request->api_version) { 
+    if(v1_certificate_signing_request->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_certificate_signing_request->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_certificate_signing_request->kind
-    if(v1_certificate_signing_request->kind) { 
+    if(v1_certificate_signing_request->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_certificate_signing_request->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_certificate_signing_request->metadata
-    if(v1_certificate_signing_request->metadata) { 
+    if(v1_certificate_signing_request->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_certificate_signing_request->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,14 +83,13 @@ cJSON *v1_certificate_signing_request_convertToJSON(v1_certificate_signing_reque
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_certificate_signing_request->spec
     if (!v1_certificate_signing_request->spec) {
         goto fail;
     }
-    
     cJSON *spec_local_JSON = v1_certificate_signing_request_spec_convertToJSON(v1_certificate_signing_request->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -102,7 +101,7 @@ cJSON *v1_certificate_signing_request_convertToJSON(v1_certificate_signing_reque
 
 
     // v1_certificate_signing_request->status
-    if(v1_certificate_signing_request->status) { 
+    if(v1_certificate_signing_request->status) {
     cJSON *status_local_JSON = v1_certificate_signing_request_status_convertToJSON(v1_certificate_signing_request->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -111,7 +110,7 @@ cJSON *v1_certificate_signing_request_convertToJSON(v1_certificate_signing_reque
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

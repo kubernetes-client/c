@@ -15,7 +15,7 @@
 // create a CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_createCertificateSigningRequest(apiClient_t *apiClient, v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager )
+CertificatesV1API_createCertificateSigningRequest(apiClient_t *apiClient, v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -68,6 +68,18 @@ CertificatesV1API_createCertificateSigningRequest(apiClient_t *apiClient, v1_cer
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -89,18 +101,22 @@ CertificatesV1API_createCertificateSigningRequest(apiClient_t *apiClient, v1_cer
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -161,6 +177,18 @@ CertificatesV1API_createCertificateSigningRequest(apiClient_t *apiClient, v1_cer
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:
@@ -282,15 +310,18 @@ CertificatesV1API_deleteCertificateSigningRequest(apiClient_t *apiClient, char *
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -573,12 +604,14 @@ CertificatesV1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClie
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -787,12 +820,14 @@ CertificatesV1API_getAPIResources(apiClient_t *apiClient)
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -978,12 +1013,14 @@ CertificatesV1API_listCertificateSigningRequest(apiClient_t *apiClient, char * p
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_list_t *elementToReturn = v1_certificate_signing_request_list_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -1134,7 +1171,7 @@ end:
 // partially update the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_patchCertificateSigningRequest(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CertificatesV1API_patchCertificateSigningRequest(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1198,6 +1235,18 @@ CertificatesV1API_patchCertificateSigningRequest(apiClient_t *apiClient, char * 
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -1235,15 +1284,18 @@ CertificatesV1API_patchCertificateSigningRequest(apiClient_t *apiClient, char * 
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -1306,6 +1358,18 @@ CertificatesV1API_patchCertificateSigningRequest(apiClient_t *apiClient, char * 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -1328,7 +1392,7 @@ end:
 // partially update approval of the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_patchCertificateSigningRequestApproval(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CertificatesV1API_patchCertificateSigningRequestApproval(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1392,6 +1456,18 @@ CertificatesV1API_patchCertificateSigningRequestApproval(apiClient_t *apiClient,
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -1429,15 +1505,18 @@ CertificatesV1API_patchCertificateSigningRequestApproval(apiClient_t *apiClient,
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -1500,6 +1579,18 @@ CertificatesV1API_patchCertificateSigningRequestApproval(apiClient_t *apiClient,
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -1522,7 +1613,7 @@ end:
 // partially update status of the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+CertificatesV1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1586,6 +1677,18 @@ CertificatesV1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, c
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -1623,15 +1726,18 @@ CertificatesV1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, c
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -1693,6 +1799,18 @@ CertificatesV1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, c
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     if(keyQuery_force){
         free(keyQuery_force);
@@ -1767,12 +1885,14 @@ CertificatesV1API_readCertificateSigningRequest(apiClient_t *apiClient, char * n
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -1867,12 +1987,14 @@ CertificatesV1API_readCertificateSigningRequestApproval(apiClient_t *apiClient, 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -1967,12 +2089,14 @@ CertificatesV1API_readCertificateSigningRequestStatus(apiClient_t *apiClient, ch
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -2016,7 +2140,7 @@ end:
 // replace the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager )
+CertificatesV1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2079,6 +2203,18 @@ CertificatesV1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -2100,15 +2236,18 @@ CertificatesV1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -2171,6 +2310,18 @@ CertificatesV1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -2181,7 +2332,7 @@ end:
 // replace approval of the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager )
+CertificatesV1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2244,6 +2395,18 @@ CertificatesV1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClien
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -2265,15 +2428,18 @@ CertificatesV1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClien
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -2336,6 +2502,18 @@ CertificatesV1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClien
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -2346,7 +2524,7 @@ end:
 // replace status of the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager )
+CertificatesV1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2409,6 +2587,18 @@ CertificatesV1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient,
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -2430,15 +2620,18 @@ CertificatesV1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient,
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
@@ -2500,6 +2693,18 @@ CertificatesV1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient,
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:

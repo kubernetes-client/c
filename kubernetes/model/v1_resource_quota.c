@@ -58,23 +58,23 @@ cJSON *v1_resource_quota_convertToJSON(v1_resource_quota_t *v1_resource_quota) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_resource_quota->api_version
-    if(v1_resource_quota->api_version) { 
+    if(v1_resource_quota->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_resource_quota->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_resource_quota->kind
-    if(v1_resource_quota->kind) { 
+    if(v1_resource_quota->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_resource_quota->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_resource_quota->metadata
-    if(v1_resource_quota->metadata) { 
+    if(v1_resource_quota->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_resource_quota->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v1_resource_quota_convertToJSON(v1_resource_quota_t *v1_resource_quota) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_resource_quota->spec
-    if(v1_resource_quota->spec) { 
+    if(v1_resource_quota->spec) {
     cJSON *spec_local_JSON = v1_resource_quota_spec_convertToJSON(v1_resource_quota->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v1_resource_quota_convertToJSON(v1_resource_quota_t *v1_resource_quota) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_resource_quota->status
-    if(v1_resource_quota->status) { 
+    if(v1_resource_quota->status) {
     cJSON *status_local_JSON = v1_resource_quota_status_convertToJSON(v1_resource_quota->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v1_resource_quota_convertToJSON(v1_resource_quota_t *v1_resource_quota) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

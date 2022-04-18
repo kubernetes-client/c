@@ -46,14 +46,13 @@ cJSON *v1_ip_block_convertToJSON(v1_ip_block_t *v1_ip_block) {
     if (!v1_ip_block->cidr) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "cidr", v1_ip_block->cidr) == NULL) {
     goto fail; //String
     }
 
 
     // v1_ip_block->except
-    if(v1_ip_block->except) { 
+    if(v1_ip_block->except) {
     cJSON *except = cJSON_AddArrayToObject(item, "except");
     if(except == NULL) {
         goto fail; //primitive container
@@ -66,7 +65,7 @@ cJSON *v1_ip_block_convertToJSON(v1_ip_block_t *v1_ip_block) {
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

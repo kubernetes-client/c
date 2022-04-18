@@ -43,14 +43,13 @@ cJSON *v2beta2_metric_identifier_convertToJSON(v2beta2_metric_identifier_t *v2be
     if (!v2beta2_metric_identifier->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v2beta2_metric_identifier->name) == NULL) {
     goto fail; //String
     }
 
 
     // v2beta2_metric_identifier->selector
-    if(v2beta2_metric_identifier->selector) { 
+    if(v2beta2_metric_identifier->selector) {
     cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v2beta2_metric_identifier->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
@@ -59,7 +58,7 @@ cJSON *v2beta2_metric_identifier_convertToJSON(v2beta2_metric_identifier_t *v2be
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

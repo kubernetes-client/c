@@ -117,12 +117,14 @@ CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char * group 
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -309,12 +311,14 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char * gro
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -516,12 +520,14 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char * group 
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -737,12 +743,14 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -979,12 +987,14 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -1220,12 +1230,14 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * gro
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -1381,12 +1393,14 @@ CustomObjectsAPI_getClusterCustomObject(apiClient_t *apiClient, char * group , c
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","A single Resource");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","A single Resource");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -1490,12 +1504,14 @@ CustomObjectsAPI_getClusterCustomObjectScale(apiClient_t *apiClient, char * grou
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -1599,12 +1615,14 @@ CustomObjectsAPI_getClusterCustomObjectStatus(apiClient_t *apiClient, char * gro
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -1716,12 +1734,14 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char * group 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","A single Resource");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","A single Resource");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -1836,12 +1856,14 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char * g
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -1956,12 +1978,14 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char * 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -2179,12 +2203,14 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -2530,12 +2556,14 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -2805,12 +2833,14 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char * group ,
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -3003,12 +3033,14 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char * gr
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -3201,12 +3233,14 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char * g
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -3407,12 +3441,14 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * grou
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -3617,12 +3653,14 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -3827,12 +3865,14 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -4009,12 +4049,14 @@ CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char * group
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -4180,15 +4222,18 @@ CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char * 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -4354,15 +4399,18 @@ CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -4536,12 +4584,14 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char * gr
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -4718,15 +4768,18 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
@@ -4903,15 +4956,18 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);

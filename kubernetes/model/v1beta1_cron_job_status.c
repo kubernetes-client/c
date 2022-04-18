@@ -49,7 +49,7 @@ cJSON *v1beta1_cron_job_status_convertToJSON(v1beta1_cron_job_status_t *v1beta1_
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_cron_job_status->active
-    if(v1beta1_cron_job_status->active) { 
+    if(v1beta1_cron_job_status->active) {
     cJSON *active = cJSON_AddArrayToObject(item, "active");
     if(active == NULL) {
     goto fail; //nonprimitive container
@@ -65,23 +65,23 @@ cJSON *v1beta1_cron_job_status_convertToJSON(v1beta1_cron_job_status_t *v1beta1_
     cJSON_AddItemToArray(active, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1beta1_cron_job_status->last_schedule_time
-    if(v1beta1_cron_job_status->last_schedule_time) { 
+    if(v1beta1_cron_job_status->last_schedule_time) {
     if(cJSON_AddStringToObject(item, "lastScheduleTime", v1beta1_cron_job_status->last_schedule_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1beta1_cron_job_status->last_successful_time
-    if(v1beta1_cron_job_status->last_successful_time) { 
+    if(v1beta1_cron_job_status->last_successful_time) {
     if(cJSON_AddStringToObject(item, "lastSuccessfulTime", v1beta1_cron_job_status->last_successful_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
     return item;
 fail:

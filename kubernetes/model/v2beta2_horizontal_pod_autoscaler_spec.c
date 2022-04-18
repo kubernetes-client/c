@@ -53,7 +53,7 @@ cJSON *v2beta2_horizontal_pod_autoscaler_spec_convertToJSON(v2beta2_horizontal_p
     cJSON *item = cJSON_CreateObject();
 
     // v2beta2_horizontal_pod_autoscaler_spec->behavior
-    if(v2beta2_horizontal_pod_autoscaler_spec->behavior) { 
+    if(v2beta2_horizontal_pod_autoscaler_spec->behavior) {
     cJSON *behavior_local_JSON = v2beta2_horizontal_pod_autoscaler_behavior_convertToJSON(v2beta2_horizontal_pod_autoscaler_spec->behavior);
     if(behavior_local_JSON == NULL) {
     goto fail; //model
@@ -62,21 +62,20 @@ cJSON *v2beta2_horizontal_pod_autoscaler_spec_convertToJSON(v2beta2_horizontal_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2beta2_horizontal_pod_autoscaler_spec->max_replicas
     if (!v2beta2_horizontal_pod_autoscaler_spec->max_replicas) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "maxReplicas", v2beta2_horizontal_pod_autoscaler_spec->max_replicas) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v2beta2_horizontal_pod_autoscaler_spec->metrics
-    if(v2beta2_horizontal_pod_autoscaler_spec->metrics) { 
+    if(v2beta2_horizontal_pod_autoscaler_spec->metrics) {
     cJSON *metrics = cJSON_AddArrayToObject(item, "metrics");
     if(metrics == NULL) {
     goto fail; //nonprimitive container
@@ -92,22 +91,21 @@ cJSON *v2beta2_horizontal_pod_autoscaler_spec_convertToJSON(v2beta2_horizontal_p
     cJSON_AddItemToArray(metrics, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v2beta2_horizontal_pod_autoscaler_spec->min_replicas
-    if(v2beta2_horizontal_pod_autoscaler_spec->min_replicas) { 
+    if(v2beta2_horizontal_pod_autoscaler_spec->min_replicas) {
     if(cJSON_AddNumberToObject(item, "minReplicas", v2beta2_horizontal_pod_autoscaler_spec->min_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v2beta2_horizontal_pod_autoscaler_spec->scale_target_ref
     if (!v2beta2_horizontal_pod_autoscaler_spec->scale_target_ref) {
         goto fail;
     }
-    
     cJSON *scale_target_ref_local_JSON = v2beta2_cross_version_object_reference_convertToJSON(v2beta2_horizontal_pod_autoscaler_spec->scale_target_ref);
     if(scale_target_ref_local_JSON == NULL) {
     goto fail; //model

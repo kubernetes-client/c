@@ -40,18 +40,17 @@ cJSON *v1_local_volume_source_convertToJSON(v1_local_volume_source_t *v1_local_v
     cJSON *item = cJSON_CreateObject();
 
     // v1_local_volume_source->fs_type
-    if(v1_local_volume_source->fs_type) { 
+    if(v1_local_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_local_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_local_volume_source->path
     if (!v1_local_volume_source->path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "path", v1_local_volume_source->path) == NULL) {
     goto fail; //String
     }

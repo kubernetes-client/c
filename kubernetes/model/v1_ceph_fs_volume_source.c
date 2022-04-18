@@ -66,7 +66,6 @@ cJSON *v1_ceph_fs_volume_source_convertToJSON(v1_ceph_fs_volume_source_t *v1_cep
     if (!v1_ceph_fs_volume_source->monitors) {
         goto fail;
     }
-    
     cJSON *monitors = cJSON_AddArrayToObject(item, "monitors");
     if(monitors == NULL) {
         goto fail; //primitive container
@@ -82,31 +81,31 @@ cJSON *v1_ceph_fs_volume_source_convertToJSON(v1_ceph_fs_volume_source_t *v1_cep
 
 
     // v1_ceph_fs_volume_source->path
-    if(v1_ceph_fs_volume_source->path) { 
+    if(v1_ceph_fs_volume_source->path) {
     if(cJSON_AddStringToObject(item, "path", v1_ceph_fs_volume_source->path) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ceph_fs_volume_source->read_only
-    if(v1_ceph_fs_volume_source->read_only) { 
+    if(v1_ceph_fs_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_ceph_fs_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_ceph_fs_volume_source->secret_file
-    if(v1_ceph_fs_volume_source->secret_file) { 
+    if(v1_ceph_fs_volume_source->secret_file) {
     if(cJSON_AddStringToObject(item, "secretFile", v1_ceph_fs_volume_source->secret_file) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ceph_fs_volume_source->secret_ref
-    if(v1_ceph_fs_volume_source->secret_ref) { 
+    if(v1_ceph_fs_volume_source->secret_ref) {
     cJSON *secret_ref_local_JSON = v1_local_object_reference_convertToJSON(v1_ceph_fs_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -115,15 +114,15 @@ cJSON *v1_ceph_fs_volume_source_convertToJSON(v1_ceph_fs_volume_source_t *v1_cep
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ceph_fs_volume_source->user
-    if(v1_ceph_fs_volume_source->user) { 
+    if(v1_ceph_fs_volume_source->user) {
     if(cJSON_AddStringToObject(item, "user", v1_ceph_fs_volume_source->user) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

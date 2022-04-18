@@ -63,22 +63,21 @@ cJSON *v1_flex_volume_source_convertToJSON(v1_flex_volume_source_t *v1_flex_volu
     if (!v1_flex_volume_source->driver) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "driver", v1_flex_volume_source->driver) == NULL) {
     goto fail; //String
     }
 
 
     // v1_flex_volume_source->fs_type
-    if(v1_flex_volume_source->fs_type) { 
+    if(v1_flex_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_flex_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_flex_volume_source->options
-    if(v1_flex_volume_source->options) { 
+    if(v1_flex_volume_source->options) {
     cJSON *options = cJSON_AddObjectToObject(item, "options");
     if(options == NULL) {
         goto fail; //primitive map container
@@ -94,19 +93,19 @@ cJSON *v1_flex_volume_source_convertToJSON(v1_flex_volume_source_t *v1_flex_volu
         }
     }
     }
-     } 
+    }
 
 
     // v1_flex_volume_source->read_only
-    if(v1_flex_volume_source->read_only) { 
+    if(v1_flex_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_flex_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_flex_volume_source->secret_ref
-    if(v1_flex_volume_source->secret_ref) { 
+    if(v1_flex_volume_source->secret_ref) {
     cJSON *secret_ref_local_JSON = v1_local_object_reference_convertToJSON(v1_flex_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -115,7 +114,7 @@ cJSON *v1_flex_volume_source_convertToJSON(v1_flex_volume_source_t *v1_flex_volu
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

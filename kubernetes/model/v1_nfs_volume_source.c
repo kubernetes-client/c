@@ -45,25 +45,23 @@ cJSON *v1_nfs_volume_source_convertToJSON(v1_nfs_volume_source_t *v1_nfs_volume_
     if (!v1_nfs_volume_source->path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "path", v1_nfs_volume_source->path) == NULL) {
     goto fail; //String
     }
 
 
     // v1_nfs_volume_source->read_only
-    if(v1_nfs_volume_source->read_only) { 
+    if(v1_nfs_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_nfs_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_nfs_volume_source->server
     if (!v1_nfs_volume_source->server) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "server", v1_nfs_volume_source->server) == NULL) {
     goto fail; //String
     }

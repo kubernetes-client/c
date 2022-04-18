@@ -35,7 +35,6 @@ cJSON *v1beta1_id_range_convertToJSON(v1beta1_id_range_t *v1beta1_id_range) {
     if (!v1beta1_id_range->max) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "max", v1beta1_id_range->max) == NULL) {
     goto fail; //Numeric
     }
@@ -45,7 +44,6 @@ cJSON *v1beta1_id_range_convertToJSON(v1beta1_id_range_t *v1beta1_id_range) {
     if (!v1beta1_id_range->min) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "min", v1beta1_id_range->min) == NULL) {
     goto fail; //Numeric
     }

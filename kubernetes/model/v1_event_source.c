@@ -40,19 +40,19 @@ cJSON *v1_event_source_convertToJSON(v1_event_source_t *v1_event_source) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_event_source->component
-    if(v1_event_source->component) { 
+    if(v1_event_source->component) {
     if(cJSON_AddStringToObject(item, "component", v1_event_source->component) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_event_source->host
-    if(v1_event_source->host) { 
+    if(v1_event_source->host) {
     if(cJSON_AddStringToObject(item, "host", v1_event_source->host) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

@@ -42,18 +42,17 @@ cJSON *v1_horizontal_pod_autoscaler_status_convertToJSON(v1_horizontal_pod_autos
     cJSON *item = cJSON_CreateObject();
 
     // v1_horizontal_pod_autoscaler_status->current_cpu_utilization_percentage
-    if(v1_horizontal_pod_autoscaler_status->current_cpu_utilization_percentage) { 
+    if(v1_horizontal_pod_autoscaler_status->current_cpu_utilization_percentage) {
     if(cJSON_AddNumberToObject(item, "currentCPUUtilizationPercentage", v1_horizontal_pod_autoscaler_status->current_cpu_utilization_percentage) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_horizontal_pod_autoscaler_status->current_replicas
     if (!v1_horizontal_pod_autoscaler_status->current_replicas) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "currentReplicas", v1_horizontal_pod_autoscaler_status->current_replicas) == NULL) {
     goto fail; //Numeric
     }
@@ -63,26 +62,25 @@ cJSON *v1_horizontal_pod_autoscaler_status_convertToJSON(v1_horizontal_pod_autos
     if (!v1_horizontal_pod_autoscaler_status->desired_replicas) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "desiredReplicas", v1_horizontal_pod_autoscaler_status->desired_replicas) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_horizontal_pod_autoscaler_status->last_scale_time
-    if(v1_horizontal_pod_autoscaler_status->last_scale_time) { 
+    if(v1_horizontal_pod_autoscaler_status->last_scale_time) {
     if(cJSON_AddStringToObject(item, "lastScaleTime", v1_horizontal_pod_autoscaler_status->last_scale_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_horizontal_pod_autoscaler_status->observed_generation
-    if(v1_horizontal_pod_autoscaler_status->observed_generation) { 
+    if(v1_horizontal_pod_autoscaler_status->observed_generation) {
     if(cJSON_AddNumberToObject(item, "observedGeneration", v1_horizontal_pod_autoscaler_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

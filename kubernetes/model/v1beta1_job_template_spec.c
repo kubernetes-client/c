@@ -40,7 +40,7 @@ cJSON *v1beta1_job_template_spec_convertToJSON(v1beta1_job_template_spec_t *v1be
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_job_template_spec->metadata
-    if(v1beta1_job_template_spec->metadata) { 
+    if(v1beta1_job_template_spec->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1beta1_job_template_spec->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -49,11 +49,11 @@ cJSON *v1beta1_job_template_spec_convertToJSON(v1beta1_job_template_spec_t *v1be
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_job_template_spec->spec
-    if(v1beta1_job_template_spec->spec) { 
+    if(v1beta1_job_template_spec->spec) {
     cJSON *spec_local_JSON = v1_job_spec_convertToJSON(v1beta1_job_template_spec->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -62,7 +62,7 @@ cJSON *v1beta1_job_template_spec_convertToJSON(v1beta1_job_template_spec_t *v1be
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

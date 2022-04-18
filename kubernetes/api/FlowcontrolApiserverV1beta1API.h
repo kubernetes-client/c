@@ -18,13 +18,13 @@
 // create a FlowSchema
 //
 v1beta1_flow_schema_t*
-FlowcontrolApiserverV1beta1API_createFlowSchema(apiClient_t *apiClient, v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager );
+FlowcontrolApiserverV1beta1API_createFlowSchema(apiClient_t *apiClient, v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a PriorityLevelConfiguration
 //
 v1beta1_priority_level_configuration_t*
-FlowcontrolApiserverV1beta1API_createPriorityLevelConfiguration(apiClient_t *apiClient, v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager );
+FlowcontrolApiserverV1beta1API_createPriorityLevelConfiguration(apiClient_t *apiClient, v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of FlowSchema
@@ -72,25 +72,25 @@ FlowcontrolApiserverV1beta1API_listPriorityLevelConfiguration(apiClient_t *apiCl
 // partially update the specified FlowSchema
 //
 v1beta1_flow_schema_t*
-FlowcontrolApiserverV1beta1API_patchFlowSchema(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+FlowcontrolApiserverV1beta1API_patchFlowSchema(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified FlowSchema
 //
 v1beta1_flow_schema_t*
-FlowcontrolApiserverV1beta1API_patchFlowSchemaStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+FlowcontrolApiserverV1beta1API_patchFlowSchemaStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified PriorityLevelConfiguration
 //
 v1beta1_priority_level_configuration_t*
-FlowcontrolApiserverV1beta1API_patchPriorityLevelConfiguration(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+FlowcontrolApiserverV1beta1API_patchPriorityLevelConfiguration(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified PriorityLevelConfiguration
 //
 v1beta1_priority_level_configuration_t*
-FlowcontrolApiserverV1beta1API_patchPriorityLevelConfigurationStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+FlowcontrolApiserverV1beta1API_patchPriorityLevelConfigurationStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified FlowSchema
@@ -120,24 +120,24 @@ FlowcontrolApiserverV1beta1API_readPriorityLevelConfigurationStatus(apiClient_t 
 // replace the specified FlowSchema
 //
 v1beta1_flow_schema_t*
-FlowcontrolApiserverV1beta1API_replaceFlowSchema(apiClient_t *apiClient, char * name , v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager );
+FlowcontrolApiserverV1beta1API_replaceFlowSchema(apiClient_t *apiClient, char * name , v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified FlowSchema
 //
 v1beta1_flow_schema_t*
-FlowcontrolApiserverV1beta1API_replaceFlowSchemaStatus(apiClient_t *apiClient, char * name , v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager );
+FlowcontrolApiserverV1beta1API_replaceFlowSchemaStatus(apiClient_t *apiClient, char * name , v1beta1_flow_schema_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified PriorityLevelConfiguration
 //
 v1beta1_priority_level_configuration_t*
-FlowcontrolApiserverV1beta1API_replacePriorityLevelConfiguration(apiClient_t *apiClient, char * name , v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager );
+FlowcontrolApiserverV1beta1API_replacePriorityLevelConfiguration(apiClient_t *apiClient, char * name , v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified PriorityLevelConfiguration
 //
 v1beta1_priority_level_configuration_t*
-FlowcontrolApiserverV1beta1API_replacePriorityLevelConfigurationStatus(apiClient_t *apiClient, char * name , v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager );
+FlowcontrolApiserverV1beta1API_replacePriorityLevelConfigurationStatus(apiClient_t *apiClient, char * name , v1beta1_priority_level_configuration_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

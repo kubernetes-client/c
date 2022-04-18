@@ -15,7 +15,7 @@
 // create a CronJob
 //
 v1_cron_job_t*
-BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager )
+BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -78,6 +78,18 @@ BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace , v
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -99,18 +111,22 @@ BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace , v
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -173,6 +189,18 @@ BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace , v
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -183,7 +211,7 @@ end:
 // create a Job
 //
 v1_job_t*
-BatchV1API_createNamespacedJob(apiClient_t *apiClient, char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager )
+BatchV1API_createNamespacedJob(apiClient_t *apiClient, char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -246,6 +274,18 @@ BatchV1API_createNamespacedJob(apiClient_t *apiClient, char * _namespace , v1_jo
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -267,18 +307,22 @@ BatchV1API_createNamespacedJob(apiClient_t *apiClient, char * _namespace , v1_jo
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -340,6 +384,18 @@ BatchV1API_createNamespacedJob(apiClient_t *apiClient, char * _namespace , v1_jo
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:
@@ -547,12 +603,14 @@ BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * _nam
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -929,12 +987,14 @@ BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char * _namespa
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -1235,15 +1295,18 @@ BatchV1API_deleteNamespacedCronJob(apiClient_t *apiClient, char * name , char * 
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -1461,15 +1524,18 @@ BatchV1API_deleteNamespacedJob(apiClient_t *apiClient, char * name , char * _nam
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -1596,12 +1662,14 @@ BatchV1API_getAPIResources(apiClient_t *apiClient)
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -1787,12 +1855,14 @@ BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBoo
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_list_t *elementToReturn = v1_cron_job_list_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -2098,12 +2168,14 @@ BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmar
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_job_list_t *elementToReturn = v1_job_list_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -2419,12 +2491,14 @@ BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace , cha
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_list_t *elementToReturn = v1_cron_job_list_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -2741,12 +2815,14 @@ BatchV1API_listNamespacedJob(apiClient_t *apiClient, char * _namespace , char * 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_job_list_t *elementToReturn = v1_job_list_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -2898,7 +2974,7 @@ end:
 // partially update the specified CronJob
 //
 v1_cron_job_t*
-BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2972,6 +3048,18 @@ BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * _
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -3009,15 +3097,18 @@ BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * _
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -3081,6 +3172,18 @@ BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * _
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -3103,7 +3206,7 @@ end:
 // partially update status of the specified CronJob
 //
 v1_cron_job_t*
-BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3177,6 +3280,18 @@ BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , ch
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -3214,15 +3329,18 @@ BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , ch
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -3286,6 +3404,18 @@ BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , ch
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -3308,7 +3438,7 @@ end:
 // partially update the specified Job
 //
 v1_job_t*
-BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3382,6 +3512,18 @@ BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char * name , char * _name
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -3419,15 +3561,18 @@ BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char * name , char * _name
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -3491,6 +3636,18 @@ BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char * name , char * _name
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -3513,7 +3670,7 @@ end:
 // partially update status of the specified Job
 //
 v1_job_t*
-BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3587,6 +3744,18 @@ BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char * name , char *
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -3624,15 +3793,18 @@ BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char * name , char *
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -3695,6 +3867,18 @@ BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char * name , char *
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     if(keyQuery_force){
         free(keyQuery_force);
@@ -3779,12 +3963,14 @@ BatchV1API_readNamespacedCronJob(apiClient_t *apiClient, char * name , char * _n
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -3890,12 +4076,14 @@ BatchV1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char * name , cha
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -4001,12 +4189,14 @@ BatchV1API_readNamespacedJob(apiClient_t *apiClient, char * name , char * _names
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -4112,12 +4302,14 @@ BatchV1API_readNamespacedJobStatus(apiClient_t *apiClient, char * name , char * 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -4162,7 +4354,7 @@ end:
 // replace the specified CronJob
 //
 v1_cron_job_t*
-BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager )
+BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4235,6 +4427,18 @@ BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char *
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -4256,15 +4460,18 @@ BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char *
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -4328,6 +4535,18 @@ BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char *
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -4338,7 +4557,7 @@ end:
 // replace status of the specified CronJob
 //
 v1_cron_job_t*
-BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager )
+BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4411,6 +4630,18 @@ BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -4432,15 +4663,18 @@ BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , 
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -4504,6 +4738,18 @@ BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -4514,7 +4760,7 @@ end:
 // replace the specified Job
 //
 v1_job_t*
-BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char * name , char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager )
+BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char * name , char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4587,6 +4833,18 @@ BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char * name , char * _na
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -4608,15 +4866,18 @@ BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char * name , char * _na
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -4680,6 +4941,18 @@ BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char * name , char * _na
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -4690,7 +4963,7 @@ end:
 // replace status of the specified Job
 //
 v1_job_t*
-BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager )
+BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4763,6 +5036,18 @@ BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char * name , char
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -4784,15 +5069,18 @@ BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char * name , char
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
@@ -4855,6 +5143,18 @@ BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char * name , char
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:

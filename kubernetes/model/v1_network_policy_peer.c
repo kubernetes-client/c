@@ -46,7 +46,7 @@ cJSON *v1_network_policy_peer_convertToJSON(v1_network_policy_peer_t *v1_network
     cJSON *item = cJSON_CreateObject();
 
     // v1_network_policy_peer->ip_block
-    if(v1_network_policy_peer->ip_block) { 
+    if(v1_network_policy_peer->ip_block) {
     cJSON *ip_block_local_JSON = v1_ip_block_convertToJSON(v1_network_policy_peer->ip_block);
     if(ip_block_local_JSON == NULL) {
     goto fail; //model
@@ -55,11 +55,11 @@ cJSON *v1_network_policy_peer_convertToJSON(v1_network_policy_peer_t *v1_network
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_network_policy_peer->namespace_selector
-    if(v1_network_policy_peer->namespace_selector) { 
+    if(v1_network_policy_peer->namespace_selector) {
     cJSON *namespace_selector_local_JSON = v1_label_selector_convertToJSON(v1_network_policy_peer->namespace_selector);
     if(namespace_selector_local_JSON == NULL) {
     goto fail; //model
@@ -68,11 +68,11 @@ cJSON *v1_network_policy_peer_convertToJSON(v1_network_policy_peer_t *v1_network
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_network_policy_peer->pod_selector
-    if(v1_network_policy_peer->pod_selector) { 
+    if(v1_network_policy_peer->pod_selector) {
     cJSON *pod_selector_local_JSON = v1_label_selector_convertToJSON(v1_network_policy_peer->pod_selector);
     if(pod_selector_local_JSON == NULL) {
     goto fail; //model
@@ -81,7 +81,7 @@ cJSON *v1_network_policy_peer_convertToJSON(v1_network_policy_peer_t *v1_network
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

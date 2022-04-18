@@ -46,7 +46,7 @@ cJSON *v1_env_from_source_convertToJSON(v1_env_from_source_t *v1_env_from_source
     cJSON *item = cJSON_CreateObject();
 
     // v1_env_from_source->config_map_ref
-    if(v1_env_from_source->config_map_ref) { 
+    if(v1_env_from_source->config_map_ref) {
     cJSON *config_map_ref_local_JSON = v1_config_map_env_source_convertToJSON(v1_env_from_source->config_map_ref);
     if(config_map_ref_local_JSON == NULL) {
     goto fail; //model
@@ -55,19 +55,19 @@ cJSON *v1_env_from_source_convertToJSON(v1_env_from_source_t *v1_env_from_source
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_env_from_source->prefix
-    if(v1_env_from_source->prefix) { 
+    if(v1_env_from_source->prefix) {
     if(cJSON_AddStringToObject(item, "prefix", v1_env_from_source->prefix) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_env_from_source->secret_ref
-    if(v1_env_from_source->secret_ref) { 
+    if(v1_env_from_source->secret_ref) {
     cJSON *secret_ref_local_JSON = v1_secret_env_source_convertToJSON(v1_env_from_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -76,7 +76,7 @@ cJSON *v1_env_from_source_convertToJSON(v1_env_from_source_t *v1_env_from_source
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

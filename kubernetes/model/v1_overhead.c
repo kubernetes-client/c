@@ -40,7 +40,7 @@ cJSON *v1_overhead_convertToJSON(v1_overhead_t *v1_overhead) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_overhead->pod_fixed
-    if(v1_overhead->pod_fixed) { 
+    if(v1_overhead->pod_fixed) {
     cJSON *pod_fixed = cJSON_AddObjectToObject(item, "podFixed");
     if(pod_fixed == NULL) {
         goto fail; //primitive map container
@@ -56,7 +56,7 @@ cJSON *v1_overhead_convertToJSON(v1_overhead_t *v1_overhead) {
         }
     }
     }
-     } 
+    }
 
     return item;
 fail:

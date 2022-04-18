@@ -15,7 +15,7 @@
 // create a LocalSubjectAccessReview
 //
 v1_local_subject_access_review_t*
-AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClient, char * _namespace , v1_local_subject_access_review_t * body , char * dryRun , char * fieldManager , char * pretty )
+AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClient, char * _namespace , v1_local_subject_access_review_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -67,6 +67,18 @@ AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClie
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_pretty = NULL;
     char * valueQuery_pretty = NULL;
     keyValuePair_t *keyPairQuery_pretty = 0;
@@ -99,18 +111,22 @@ AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClie
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_local_subject_access_review_t *elementToReturn = v1_local_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
@@ -161,6 +177,18 @@ AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClie
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -183,7 +211,7 @@ end:
 // create a SelfSubjectAccessReview
 //
 v1_self_subject_access_review_t*
-AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self_subject_access_review_t * body , char * dryRun , char * fieldManager , char * pretty )
+AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self_subject_access_review_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -225,6 +253,18 @@ AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_pretty = NULL;
     char * valueQuery_pretty = NULL;
     keyValuePair_t *keyPairQuery_pretty = 0;
@@ -257,18 +297,22 @@ AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_self_subject_access_review_t *elementToReturn = v1_self_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
@@ -318,6 +362,18 @@ AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -340,7 +396,7 @@ end:
 // create a SelfSubjectRulesReview
 //
 v1_self_subject_rules_review_t*
-AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_subject_rules_review_t * body , char * dryRun , char * fieldManager , char * pretty )
+AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_subject_rules_review_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -382,6 +438,18 @@ AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_pretty = NULL;
     char * valueQuery_pretty = NULL;
     keyValuePair_t *keyPairQuery_pretty = 0;
@@ -414,18 +482,22 @@ AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_self_subject_rules_review_t *elementToReturn = v1_self_subject_rules_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
@@ -475,6 +547,18 @@ AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -497,7 +581,7 @@ end:
 // create a SubjectAccessReview
 //
 v1_subject_access_review_t*
-AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_access_review_t * body , char * dryRun , char * fieldManager , char * pretty )
+AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_access_review_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -539,6 +623,18 @@ AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_pretty = NULL;
     char * valueQuery_pretty = NULL;
     keyValuePair_t *keyPairQuery_pretty = 0;
@@ -571,18 +667,22 @@ AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_subject_access_review_t *elementToReturn = v1_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
@@ -631,6 +731,18 @@ AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     if(keyQuery_pretty){
         free(keyQuery_pretty);
@@ -683,12 +795,14 @@ AuthorizationV1API_getAPIResources(apiClient_t *apiClient)
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(AuthorizationV1APIlocalVarJSON);

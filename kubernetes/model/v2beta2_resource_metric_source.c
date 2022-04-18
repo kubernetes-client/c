@@ -43,7 +43,6 @@ cJSON *v2beta2_resource_metric_source_convertToJSON(v2beta2_resource_metric_sour
     if (!v2beta2_resource_metric_source->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v2beta2_resource_metric_source->name) == NULL) {
     goto fail; //String
     }
@@ -53,7 +52,6 @@ cJSON *v2beta2_resource_metric_source_convertToJSON(v2beta2_resource_metric_sour
     if (!v2beta2_resource_metric_source->target) {
         goto fail;
     }
-    
     cJSON *target_local_JSON = v2beta2_metric_target_convertToJSON(v2beta2_resource_metric_source->target);
     if(target_local_JSON == NULL) {
     goto fail; //model

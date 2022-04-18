@@ -34,11 +34,11 @@ cJSON *v1_self_subject_rules_review_spec_convertToJSON(v1_self_subject_rules_rev
     cJSON *item = cJSON_CreateObject();
 
     // v1_self_subject_rules_review_spec->_namespace
-    if(v1_self_subject_rules_review_spec->_namespace) { 
+    if(v1_self_subject_rules_review_spec->_namespace) {
     if(cJSON_AddStringToObject(item, "namespace", v1_self_subject_rules_review_spec->_namespace) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

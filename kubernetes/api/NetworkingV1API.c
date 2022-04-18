@@ -15,7 +15,7 @@
 // create an IngressClass
 //
 v1_ingress_class_t*
-NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t * body , char * pretty , char * dryRun , char * fieldManager )
+NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -68,6 +68,18 @@ NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t * 
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -89,18 +101,22 @@ NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t * 
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -162,6 +178,18 @@ NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t * 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -172,7 +200,7 @@ end:
 // create an Ingress
 //
 v1_ingress_t*
-NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager )
+NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -235,6 +263,18 @@ NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char * _namespac
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -256,18 +296,22 @@ NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char * _namespac
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -330,6 +374,18 @@ NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char * _namespac
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -340,7 +396,7 @@ end:
 // create a NetworkPolicy
 //
 v1_network_policy_t*
-NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char * _namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager )
+NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char * _namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -403,6 +459,18 @@ NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char * _na
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -424,18 +492,22 @@ NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char * _na
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -497,6 +569,18 @@ NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char * _na
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:
@@ -694,12 +778,14 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char * pret
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -1075,12 +1161,14 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -1457,12 +1545,14 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -1753,15 +1843,18 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char * name , char * 
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -1978,15 +2071,18 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char * name , ch
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -2204,15 +2300,18 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char * nam
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -2339,12 +2438,14 @@ NetworkingV1API_getAPIResources(apiClient_t *apiClient)
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -2530,12 +2631,14 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char * pretty , int all
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_class_list_t *elementToReturn = v1_ingress_class_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -2841,12 +2944,14 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWat
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_list_t *elementToReturn = v1_ingress_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -3162,12 +3267,14 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char * _namespace 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_list_t *elementToReturn = v1_ingress_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -3484,12 +3591,14 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * _name
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_list_t *elementToReturn = v1_network_policy_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -3796,12 +3905,14 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int al
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_list_t *elementToReturn = v1_network_policy_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -3952,7 +4063,7 @@ end:
 // partially update the specified IngressClass
 //
 v1_ingress_class_t*
-NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4016,6 +4127,18 @@ NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char * name , object_t
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -4053,15 +4176,18 @@ NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char * name , object_t
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -4124,6 +4250,18 @@ NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char * name , object_t
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -4146,7 +4284,7 @@ end:
 // partially update the specified Ingress
 //
 v1_ingress_t*
-NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4220,6 +4358,18 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char * name , cha
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -4257,15 +4407,18 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char * name , cha
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -4329,6 +4482,18 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char * name , cha
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -4351,7 +4516,7 @@ end:
 // partially update status of the specified Ingress
 //
 v1_ingress_t*
-NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4425,6 +4590,18 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char * name
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -4462,15 +4639,18 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char * name
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -4534,6 +4714,18 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char * name
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -4556,7 +4748,7 @@ end:
 // partially update the specified NetworkPolicy
 //
 v1_network_policy_t*
-NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4630,6 +4822,18 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -4667,15 +4871,18 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -4738,6 +4945,18 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     if(keyQuery_force){
         free(keyQuery_force);
@@ -4812,12 +5031,14 @@ NetworkingV1API_readIngressClass(apiClient_t *apiClient, char * name , char * pr
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -4922,12 +5143,14 @@ NetworkingV1API_readNamespacedIngress(apiClient_t *apiClient, char * name , char
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -5033,12 +5256,14 @@ NetworkingV1API_readNamespacedIngressStatus(apiClient_t *apiClient, char * name 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -5144,12 +5369,14 @@ NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char * name 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -5194,7 +5421,7 @@ end:
 // replace the specified IngressClass
 //
 v1_ingress_class_t*
-NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char * name , v1_ingress_class_t * body , char * pretty , char * dryRun , char * fieldManager )
+NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char * name , v1_ingress_class_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5257,6 +5484,18 @@ NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char * name , v1_ing
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -5278,15 +5517,18 @@ NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char * name , v1_ing
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -5349,6 +5591,18 @@ NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char * name , v1_ing
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -5359,7 +5613,7 @@ end:
 // replace the specified Ingress
 //
 v1_ingress_t*
-NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char * name , char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager )
+NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char * name , char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5432,6 +5686,18 @@ NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char * name , c
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -5453,15 +5719,18 @@ NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char * name , c
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -5525,6 +5794,18 @@ NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char * name , c
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -5535,7 +5816,7 @@ end:
 // replace status of the specified Ingress
 //
 v1_ingress_t*
-NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager )
+NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5608,6 +5889,18 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char * na
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -5629,15 +5922,18 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char * na
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -5701,6 +5997,18 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char * na
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -5711,7 +6019,7 @@ end:
 // replace the specified NetworkPolicy
 //
 v1_network_policy_t*
-NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * _namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager )
+NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * _namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5784,6 +6092,18 @@ NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char * na
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -5805,15 +6125,18 @@ NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char * na
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
@@ -5876,6 +6199,18 @@ NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char * na
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:

@@ -20,19 +20,19 @@
 // create an IngressClass
 //
 v1_ingress_class_t*
-NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t * body , char * pretty , char * dryRun , char * fieldManager );
+NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create an Ingress
 //
 v1_ingress_t*
-NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager );
+NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a NetworkPolicy
 //
 v1_network_policy_t*
-NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char * _namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager );
+NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char * _namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of IngressClass
@@ -110,25 +110,25 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int al
 // partially update the specified IngressClass
 //
 v1_ingress_class_t*
-NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified Ingress
 //
 v1_ingress_t*
-NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified Ingress
 //
 v1_ingress_t*
-NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified NetworkPolicy
 //
 v1_network_policy_t*
-NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified IngressClass
@@ -158,24 +158,24 @@ NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char * name 
 // replace the specified IngressClass
 //
 v1_ingress_class_t*
-NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char * name , v1_ingress_class_t * body , char * pretty , char * dryRun , char * fieldManager );
+NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char * name , v1_ingress_class_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified Ingress
 //
 v1_ingress_t*
-NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char * name , char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager );
+NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char * name , char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified Ingress
 //
 v1_ingress_t*
-NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager );
+NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_ingress_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified NetworkPolicy
 //
 v1_network_policy_t*
-NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * _namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager );
+NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * _namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

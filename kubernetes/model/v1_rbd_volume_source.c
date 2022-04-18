@@ -75,36 +75,34 @@ cJSON *v1_rbd_volume_source_convertToJSON(v1_rbd_volume_source_t *v1_rbd_volume_
     cJSON *item = cJSON_CreateObject();
 
     // v1_rbd_volume_source->fs_type
-    if(v1_rbd_volume_source->fs_type) { 
+    if(v1_rbd_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_rbd_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_rbd_volume_source->image
     if (!v1_rbd_volume_source->image) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "image", v1_rbd_volume_source->image) == NULL) {
     goto fail; //String
     }
 
 
     // v1_rbd_volume_source->keyring
-    if(v1_rbd_volume_source->keyring) { 
+    if(v1_rbd_volume_source->keyring) {
     if(cJSON_AddStringToObject(item, "keyring", v1_rbd_volume_source->keyring) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_rbd_volume_source->monitors
     if (!v1_rbd_volume_source->monitors) {
         goto fail;
     }
-    
     cJSON *monitors = cJSON_AddArrayToObject(item, "monitors");
     if(monitors == NULL) {
         goto fail; //primitive container
@@ -120,23 +118,23 @@ cJSON *v1_rbd_volume_source_convertToJSON(v1_rbd_volume_source_t *v1_rbd_volume_
 
 
     // v1_rbd_volume_source->pool
-    if(v1_rbd_volume_source->pool) { 
+    if(v1_rbd_volume_source->pool) {
     if(cJSON_AddStringToObject(item, "pool", v1_rbd_volume_source->pool) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_rbd_volume_source->read_only
-    if(v1_rbd_volume_source->read_only) { 
+    if(v1_rbd_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_rbd_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_rbd_volume_source->secret_ref
-    if(v1_rbd_volume_source->secret_ref) { 
+    if(v1_rbd_volume_source->secret_ref) {
     cJSON *secret_ref_local_JSON = v1_local_object_reference_convertToJSON(v1_rbd_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -145,15 +143,15 @@ cJSON *v1_rbd_volume_source_convertToJSON(v1_rbd_volume_source_t *v1_rbd_volume_
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_rbd_volume_source->user
-    if(v1_rbd_volume_source->user) { 
+    if(v1_rbd_volume_source->user) {
     if(cJSON_AddStringToObject(item, "user", v1_rbd_volume_source->user) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

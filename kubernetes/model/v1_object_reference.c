@@ -70,59 +70,59 @@ cJSON *v1_object_reference_convertToJSON(v1_object_reference_t *v1_object_refere
     cJSON *item = cJSON_CreateObject();
 
     // v1_object_reference->api_version
-    if(v1_object_reference->api_version) { 
+    if(v1_object_reference->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_object_reference->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_reference->field_path
-    if(v1_object_reference->field_path) { 
+    if(v1_object_reference->field_path) {
     if(cJSON_AddStringToObject(item, "fieldPath", v1_object_reference->field_path) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_reference->kind
-    if(v1_object_reference->kind) { 
+    if(v1_object_reference->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_object_reference->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_reference->name
-    if(v1_object_reference->name) { 
+    if(v1_object_reference->name) {
     if(cJSON_AddStringToObject(item, "name", v1_object_reference->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_reference->_namespace
-    if(v1_object_reference->_namespace) { 
+    if(v1_object_reference->_namespace) {
     if(cJSON_AddStringToObject(item, "namespace", v1_object_reference->_namespace) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_reference->resource_version
-    if(v1_object_reference->resource_version) { 
+    if(v1_object_reference->resource_version) {
     if(cJSON_AddStringToObject(item, "resourceVersion", v1_object_reference->resource_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_reference->uid
-    if(v1_object_reference->uid) { 
+    if(v1_object_reference->uid) {
     if(cJSON_AddStringToObject(item, "uid", v1_object_reference->uid) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

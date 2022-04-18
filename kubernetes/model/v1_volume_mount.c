@@ -63,52 +63,50 @@ cJSON *v1_volume_mount_convertToJSON(v1_volume_mount_t *v1_volume_mount) {
     if (!v1_volume_mount->mount_path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "mountPath", v1_volume_mount->mount_path) == NULL) {
     goto fail; //String
     }
 
 
     // v1_volume_mount->mount_propagation
-    if(v1_volume_mount->mount_propagation) { 
+    if(v1_volume_mount->mount_propagation) {
     if(cJSON_AddStringToObject(item, "mountPropagation", v1_volume_mount->mount_propagation) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_volume_mount->name
     if (!v1_volume_mount->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_volume_mount->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_volume_mount->read_only
-    if(v1_volume_mount->read_only) { 
+    if(v1_volume_mount->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_volume_mount->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_volume_mount->sub_path
-    if(v1_volume_mount->sub_path) { 
+    if(v1_volume_mount->sub_path) {
     if(cJSON_AddStringToObject(item, "subPath", v1_volume_mount->sub_path) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_volume_mount->sub_path_expr
-    if(v1_volume_mount->sub_path_expr) { 
+    if(v1_volume_mount->sub_path_expr) {
     if(cJSON_AddStringToObject(item, "subPathExpr", v1_volume_mount->sub_path_expr) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

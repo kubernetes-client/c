@@ -48,35 +48,35 @@ cJSON *v1_windows_security_context_options_convertToJSON(v1_windows_security_con
     cJSON *item = cJSON_CreateObject();
 
     // v1_windows_security_context_options->gmsa_credential_spec
-    if(v1_windows_security_context_options->gmsa_credential_spec) { 
+    if(v1_windows_security_context_options->gmsa_credential_spec) {
     if(cJSON_AddStringToObject(item, "gmsaCredentialSpec", v1_windows_security_context_options->gmsa_credential_spec) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_windows_security_context_options->gmsa_credential_spec_name
-    if(v1_windows_security_context_options->gmsa_credential_spec_name) { 
+    if(v1_windows_security_context_options->gmsa_credential_spec_name) {
     if(cJSON_AddStringToObject(item, "gmsaCredentialSpecName", v1_windows_security_context_options->gmsa_credential_spec_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_windows_security_context_options->host_process
-    if(v1_windows_security_context_options->host_process) { 
+    if(v1_windows_security_context_options->host_process) {
     if(cJSON_AddBoolToObject(item, "hostProcess", v1_windows_security_context_options->host_process) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_windows_security_context_options->run_as_user_name
-    if(v1_windows_security_context_options->run_as_user_name) { 
+    if(v1_windows_security_context_options->run_as_user_name) {
     if(cJSON_AddStringToObject(item, "runAsUserName", v1_windows_security_context_options->run_as_user_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

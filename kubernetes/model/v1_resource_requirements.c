@@ -52,7 +52,7 @@ cJSON *v1_resource_requirements_convertToJSON(v1_resource_requirements_t *v1_res
     cJSON *item = cJSON_CreateObject();
 
     // v1_resource_requirements->limits
-    if(v1_resource_requirements->limits) { 
+    if(v1_resource_requirements->limits) {
     cJSON *limits = cJSON_AddObjectToObject(item, "limits");
     if(limits == NULL) {
         goto fail; //primitive map container
@@ -68,11 +68,11 @@ cJSON *v1_resource_requirements_convertToJSON(v1_resource_requirements_t *v1_res
         }
     }
     }
-     } 
+    }
 
 
     // v1_resource_requirements->requests
-    if(v1_resource_requirements->requests) { 
+    if(v1_resource_requirements->requests) {
     cJSON *requests = cJSON_AddObjectToObject(item, "requests");
     if(requests == NULL) {
         goto fail; //primitive map container
@@ -88,7 +88,7 @@ cJSON *v1_resource_requirements_convertToJSON(v1_resource_requirements_t *v1_res
         }
     }
     }
-     } 
+    }
 
     return item;
 fail:

@@ -40,7 +40,6 @@ cJSON *v1_limit_range_spec_convertToJSON(v1_limit_range_spec_t *v1_limit_range_s
     if (!v1_limit_range_spec->limits) {
         goto fail;
     }
-    
     cJSON *limits = cJSON_AddArrayToObject(item, "limits");
     if(limits == NULL) {
     goto fail; //nonprimitive container

@@ -55,36 +55,34 @@ cJSON *v1_api_resource_list_convertToJSON(v1_api_resource_list_t *v1_api_resourc
     cJSON *item = cJSON_CreateObject();
 
     // v1_api_resource_list->api_version
-    if(v1_api_resource_list->api_version) { 
+    if(v1_api_resource_list->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_api_resource_list->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_resource_list->group_version
     if (!v1_api_resource_list->group_version) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "groupVersion", v1_api_resource_list->group_version) == NULL) {
     goto fail; //String
     }
 
 
     // v1_api_resource_list->kind
-    if(v1_api_resource_list->kind) { 
+    if(v1_api_resource_list->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_api_resource_list->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_resource_list->resources
     if (!v1_api_resource_list->resources) {
         goto fail;
     }
-    
     cJSON *resources = cJSON_AddArrayToObject(item, "resources");
     if(resources == NULL) {
     goto fail; //nonprimitive container

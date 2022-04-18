@@ -49,23 +49,23 @@ cJSON *v1_load_balancer_ingress_convertToJSON(v1_load_balancer_ingress_t *v1_loa
     cJSON *item = cJSON_CreateObject();
 
     // v1_load_balancer_ingress->hostname
-    if(v1_load_balancer_ingress->hostname) { 
+    if(v1_load_balancer_ingress->hostname) {
     if(cJSON_AddStringToObject(item, "hostname", v1_load_balancer_ingress->hostname) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_load_balancer_ingress->ip
-    if(v1_load_balancer_ingress->ip) { 
+    if(v1_load_balancer_ingress->ip) {
     if(cJSON_AddStringToObject(item, "ip", v1_load_balancer_ingress->ip) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_load_balancer_ingress->ports
-    if(v1_load_balancer_ingress->ports) { 
+    if(v1_load_balancer_ingress->ports) {
     cJSON *ports = cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
@@ -81,7 +81,7 @@ cJSON *v1_load_balancer_ingress_convertToJSON(v1_load_balancer_ingress_t *v1_loa
     cJSON_AddItemToArray(ports, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

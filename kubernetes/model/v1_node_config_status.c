@@ -52,7 +52,7 @@ cJSON *v1_node_config_status_convertToJSON(v1_node_config_status_t *v1_node_conf
     cJSON *item = cJSON_CreateObject();
 
     // v1_node_config_status->active
-    if(v1_node_config_status->active) { 
+    if(v1_node_config_status->active) {
     cJSON *active_local_JSON = v1_node_config_source_convertToJSON(v1_node_config_status->active);
     if(active_local_JSON == NULL) {
     goto fail; //model
@@ -61,11 +61,11 @@ cJSON *v1_node_config_status_convertToJSON(v1_node_config_status_t *v1_node_conf
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_node_config_status->assigned
-    if(v1_node_config_status->assigned) { 
+    if(v1_node_config_status->assigned) {
     cJSON *assigned_local_JSON = v1_node_config_source_convertToJSON(v1_node_config_status->assigned);
     if(assigned_local_JSON == NULL) {
     goto fail; //model
@@ -74,19 +74,19 @@ cJSON *v1_node_config_status_convertToJSON(v1_node_config_status_t *v1_node_conf
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_node_config_status->error
-    if(v1_node_config_status->error) { 
+    if(v1_node_config_status->error) {
     if(cJSON_AddStringToObject(item, "error", v1_node_config_status->error) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_node_config_status->last_known_good
-    if(v1_node_config_status->last_known_good) { 
+    if(v1_node_config_status->last_known_good) {
     cJSON *last_known_good_local_JSON = v1_node_config_source_convertToJSON(v1_node_config_status->last_known_good);
     if(last_known_good_local_JSON == NULL) {
     goto fail; //model
@@ -95,7 +95,7 @@ cJSON *v1_node_config_status_convertToJSON(v1_node_config_status_t *v1_node_conf
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

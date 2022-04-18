@@ -4,6 +4,23 @@
 #include "v1_persistent_volume_spec.h"
 
 
+char* persistent_volume_reclaim_policyv1_persistent_volume_spec_ToString(kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e persistent_volume_reclaim_policy) {
+    char* persistent_volume_reclaim_policyArray[] =  { "NULL", "Delete", "Recycle", "Retain" };
+	return persistent_volume_reclaim_policyArray[persistent_volume_reclaim_policy];
+}
+
+kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e persistent_volume_reclaim_policyv1_persistent_volume_spec_FromString(char* persistent_volume_reclaim_policy){
+    int stringToReturn = 0;
+    char *persistent_volume_reclaim_policyArray[] =  { "NULL", "Delete", "Recycle", "Retain" };
+    size_t sizeofArray = sizeof(persistent_volume_reclaim_policyArray) / sizeof(persistent_volume_reclaim_policyArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(persistent_volume_reclaim_policy, persistent_volume_reclaim_policyArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
     list_t *access_modes,
@@ -26,7 +43,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
     list_t *mount_options,
     v1_nfs_volume_source_t *nfs,
     v1_volume_node_affinity_t *node_affinity,
-    char *persistent_volume_reclaim_policy,
+    kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e persistent_volume_reclaim_policy,
     v1_photon_persistent_disk_volume_source_t *photon_persistent_disk,
     v1_portworx_volume_source_t *portworx_volume,
     v1_quobyte_volume_source_t *quobyte,
@@ -173,10 +190,6 @@ void v1_persistent_volume_spec_free(v1_persistent_volume_spec_t *v1_persistent_v
         v1_volume_node_affinity_free(v1_persistent_volume_spec->node_affinity);
         v1_persistent_volume_spec->node_affinity = NULL;
     }
-    if (v1_persistent_volume_spec->persistent_volume_reclaim_policy) {
-        free(v1_persistent_volume_spec->persistent_volume_reclaim_policy);
-        v1_persistent_volume_spec->persistent_volume_reclaim_policy = NULL;
-    }
     if (v1_persistent_volume_spec->photon_persistent_disk) {
         v1_photon_persistent_disk_volume_source_free(v1_persistent_volume_spec->photon_persistent_disk);
         v1_persistent_volume_spec->photon_persistent_disk = NULL;
@@ -220,7 +233,7 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     cJSON *item = cJSON_CreateObject();
 
     // v1_persistent_volume_spec->access_modes
-    if(v1_persistent_volume_spec->access_modes) { 
+    if(v1_persistent_volume_spec->access_modes) {
     cJSON *access_modes = cJSON_AddArrayToObject(item, "accessModes");
     if(access_modes == NULL) {
         goto fail; //primitive container
@@ -233,11 +246,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->aws_elastic_block_store
-    if(v1_persistent_volume_spec->aws_elastic_block_store) { 
+    if(v1_persistent_volume_spec->aws_elastic_block_store) {
     cJSON *aws_elastic_block_store_local_JSON = v1_aws_elastic_block_store_volume_source_convertToJSON(v1_persistent_volume_spec->aws_elastic_block_store);
     if(aws_elastic_block_store_local_JSON == NULL) {
     goto fail; //model
@@ -246,11 +259,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->azure_disk
-    if(v1_persistent_volume_spec->azure_disk) { 
+    if(v1_persistent_volume_spec->azure_disk) {
     cJSON *azure_disk_local_JSON = v1_azure_disk_volume_source_convertToJSON(v1_persistent_volume_spec->azure_disk);
     if(azure_disk_local_JSON == NULL) {
     goto fail; //model
@@ -259,11 +272,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->azure_file
-    if(v1_persistent_volume_spec->azure_file) { 
+    if(v1_persistent_volume_spec->azure_file) {
     cJSON *azure_file_local_JSON = v1_azure_file_persistent_volume_source_convertToJSON(v1_persistent_volume_spec->azure_file);
     if(azure_file_local_JSON == NULL) {
     goto fail; //model
@@ -272,11 +285,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->capacity
-    if(v1_persistent_volume_spec->capacity) { 
+    if(v1_persistent_volume_spec->capacity) {
     cJSON *capacity = cJSON_AddObjectToObject(item, "capacity");
     if(capacity == NULL) {
         goto fail; //primitive map container
@@ -292,11 +305,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
         }
     }
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->cephfs
-    if(v1_persistent_volume_spec->cephfs) { 
+    if(v1_persistent_volume_spec->cephfs) {
     cJSON *cephfs_local_JSON = v1_ceph_fs_persistent_volume_source_convertToJSON(v1_persistent_volume_spec->cephfs);
     if(cephfs_local_JSON == NULL) {
     goto fail; //model
@@ -305,11 +318,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->cinder
-    if(v1_persistent_volume_spec->cinder) { 
+    if(v1_persistent_volume_spec->cinder) {
     cJSON *cinder_local_JSON = v1_cinder_persistent_volume_source_convertToJSON(v1_persistent_volume_spec->cinder);
     if(cinder_local_JSON == NULL) {
     goto fail; //model
@@ -318,11 +331,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->claim_ref
-    if(v1_persistent_volume_spec->claim_ref) { 
+    if(v1_persistent_volume_spec->claim_ref) {
     cJSON *claim_ref_local_JSON = v1_object_reference_convertToJSON(v1_persistent_volume_spec->claim_ref);
     if(claim_ref_local_JSON == NULL) {
     goto fail; //model
@@ -331,11 +344,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->csi
-    if(v1_persistent_volume_spec->csi) { 
+    if(v1_persistent_volume_spec->csi) {
     cJSON *csi_local_JSON = v1_csi_persistent_volume_source_convertToJSON(v1_persistent_volume_spec->csi);
     if(csi_local_JSON == NULL) {
     goto fail; //model
@@ -344,11 +357,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->fc
-    if(v1_persistent_volume_spec->fc) { 
+    if(v1_persistent_volume_spec->fc) {
     cJSON *fc_local_JSON = v1_fc_volume_source_convertToJSON(v1_persistent_volume_spec->fc);
     if(fc_local_JSON == NULL) {
     goto fail; //model
@@ -357,11 +370,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->flex_volume
-    if(v1_persistent_volume_spec->flex_volume) { 
+    if(v1_persistent_volume_spec->flex_volume) {
     cJSON *flex_volume_local_JSON = v1_flex_persistent_volume_source_convertToJSON(v1_persistent_volume_spec->flex_volume);
     if(flex_volume_local_JSON == NULL) {
     goto fail; //model
@@ -370,11 +383,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->flocker
-    if(v1_persistent_volume_spec->flocker) { 
+    if(v1_persistent_volume_spec->flocker) {
     cJSON *flocker_local_JSON = v1_flocker_volume_source_convertToJSON(v1_persistent_volume_spec->flocker);
     if(flocker_local_JSON == NULL) {
     goto fail; //model
@@ -383,11 +396,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->gce_persistent_disk
-    if(v1_persistent_volume_spec->gce_persistent_disk) { 
+    if(v1_persistent_volume_spec->gce_persistent_disk) {
     cJSON *gce_persistent_disk_local_JSON = v1_gce_persistent_disk_volume_source_convertToJSON(v1_persistent_volume_spec->gce_persistent_disk);
     if(gce_persistent_disk_local_JSON == NULL) {
     goto fail; //model
@@ -396,11 +409,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->glusterfs
-    if(v1_persistent_volume_spec->glusterfs) { 
+    if(v1_persistent_volume_spec->glusterfs) {
     cJSON *glusterfs_local_JSON = v1_glusterfs_persistent_volume_source_convertToJSON(v1_persistent_volume_spec->glusterfs);
     if(glusterfs_local_JSON == NULL) {
     goto fail; //model
@@ -409,11 +422,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->host_path
-    if(v1_persistent_volume_spec->host_path) { 
+    if(v1_persistent_volume_spec->host_path) {
     cJSON *host_path_local_JSON = v1_host_path_volume_source_convertToJSON(v1_persistent_volume_spec->host_path);
     if(host_path_local_JSON == NULL) {
     goto fail; //model
@@ -422,11 +435,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->iscsi
-    if(v1_persistent_volume_spec->iscsi) { 
+    if(v1_persistent_volume_spec->iscsi) {
     cJSON *iscsi_local_JSON = v1_iscsi_persistent_volume_source_convertToJSON(v1_persistent_volume_spec->iscsi);
     if(iscsi_local_JSON == NULL) {
     goto fail; //model
@@ -435,11 +448,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->local
-    if(v1_persistent_volume_spec->local) { 
+    if(v1_persistent_volume_spec->local) {
     cJSON *local_local_JSON = v1_local_volume_source_convertToJSON(v1_persistent_volume_spec->local);
     if(local_local_JSON == NULL) {
     goto fail; //model
@@ -448,11 +461,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->mount_options
-    if(v1_persistent_volume_spec->mount_options) { 
+    if(v1_persistent_volume_spec->mount_options) {
     cJSON *mount_options = cJSON_AddArrayToObject(item, "mountOptions");
     if(mount_options == NULL) {
         goto fail; //primitive container
@@ -465,11 +478,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->nfs
-    if(v1_persistent_volume_spec->nfs) { 
+    if(v1_persistent_volume_spec->nfs) {
     cJSON *nfs_local_JSON = v1_nfs_volume_source_convertToJSON(v1_persistent_volume_spec->nfs);
     if(nfs_local_JSON == NULL) {
     goto fail; //model
@@ -478,11 +491,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->node_affinity
-    if(v1_persistent_volume_spec->node_affinity) { 
+    if(v1_persistent_volume_spec->node_affinity) {
     cJSON *node_affinity_local_JSON = v1_volume_node_affinity_convertToJSON(v1_persistent_volume_spec->node_affinity);
     if(node_affinity_local_JSON == NULL) {
     goto fail; //model
@@ -491,19 +504,20 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->persistent_volume_reclaim_policy
-    if(v1_persistent_volume_spec->persistent_volume_reclaim_policy) { 
-    if(cJSON_AddStringToObject(item, "persistentVolumeReclaimPolicy", v1_persistent_volume_spec->persistent_volume_reclaim_policy) == NULL) {
-    goto fail; //String
+    if(v1_persistent_volume_spec->persistent_volume_reclaim_policy != kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_NULL) {
+    if(cJSON_AddStringToObject(item, "persistentVolumeReclaimPolicy", persistent_volume_reclaim_policyv1_persistent_volume_spec_ToString(v1_persistent_volume_spec->persistent_volume_reclaim_policy)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->photon_persistent_disk
-    if(v1_persistent_volume_spec->photon_persistent_disk) { 
+    if(v1_persistent_volume_spec->photon_persistent_disk) {
     cJSON *photon_persistent_disk_local_JSON = v1_photon_persistent_disk_volume_source_convertToJSON(v1_persistent_volume_spec->photon_persistent_disk);
     if(photon_persistent_disk_local_JSON == NULL) {
     goto fail; //model
@@ -512,11 +526,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->portworx_volume
-    if(v1_persistent_volume_spec->portworx_volume) { 
+    if(v1_persistent_volume_spec->portworx_volume) {
     cJSON *portworx_volume_local_JSON = v1_portworx_volume_source_convertToJSON(v1_persistent_volume_spec->portworx_volume);
     if(portworx_volume_local_JSON == NULL) {
     goto fail; //model
@@ -525,11 +539,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->quobyte
-    if(v1_persistent_volume_spec->quobyte) { 
+    if(v1_persistent_volume_spec->quobyte) {
     cJSON *quobyte_local_JSON = v1_quobyte_volume_source_convertToJSON(v1_persistent_volume_spec->quobyte);
     if(quobyte_local_JSON == NULL) {
     goto fail; //model
@@ -538,11 +552,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->rbd
-    if(v1_persistent_volume_spec->rbd) { 
+    if(v1_persistent_volume_spec->rbd) {
     cJSON *rbd_local_JSON = v1_rbd_persistent_volume_source_convertToJSON(v1_persistent_volume_spec->rbd);
     if(rbd_local_JSON == NULL) {
     goto fail; //model
@@ -551,11 +565,11 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->scale_io
-    if(v1_persistent_volume_spec->scale_io) { 
+    if(v1_persistent_volume_spec->scale_io) {
     cJSON *scale_io_local_JSON = v1_scale_io_persistent_volume_source_convertToJSON(v1_persistent_volume_spec->scale_io);
     if(scale_io_local_JSON == NULL) {
     goto fail; //model
@@ -564,19 +578,19 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->storage_class_name
-    if(v1_persistent_volume_spec->storage_class_name) { 
+    if(v1_persistent_volume_spec->storage_class_name) {
     if(cJSON_AddStringToObject(item, "storageClassName", v1_persistent_volume_spec->storage_class_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->storageos
-    if(v1_persistent_volume_spec->storageos) { 
+    if(v1_persistent_volume_spec->storageos) {
     cJSON *storageos_local_JSON = v1_storage_os_persistent_volume_source_convertToJSON(v1_persistent_volume_spec->storageos);
     if(storageos_local_JSON == NULL) {
     goto fail; //model
@@ -585,19 +599,19 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->volume_mode
-    if(v1_persistent_volume_spec->volume_mode) { 
+    if(v1_persistent_volume_spec->volume_mode) {
     if(cJSON_AddStringToObject(item, "volumeMode", v1_persistent_volume_spec->volume_mode) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume_spec->vsphere_volume
-    if(v1_persistent_volume_spec->vsphere_volume) { 
+    if(v1_persistent_volume_spec->vsphere_volume) {
     cJSON *vsphere_volume_local_JSON = v1_vsphere_virtual_disk_volume_source_convertToJSON(v1_persistent_volume_spec->vsphere_volume);
     if(vsphere_volume_local_JSON == NULL) {
     goto fail; //model
@@ -606,7 +620,7 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:
@@ -864,11 +878,13 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->persistent_volume_reclaim_policy
     cJSON *persistent_volume_reclaim_policy = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "persistentVolumeReclaimPolicy");
+    kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e persistent_volume_reclaim_policyVariable;
     if (persistent_volume_reclaim_policy) { 
     if(!cJSON_IsString(persistent_volume_reclaim_policy))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    persistent_volume_reclaim_policyVariable = persistent_volume_reclaim_policyv1_persistent_volume_spec_FromString(persistent_volume_reclaim_policy->valuestring);
     }
 
     // v1_persistent_volume_spec->photon_persistent_disk
@@ -953,7 +969,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
         mount_options ? mount_optionsList : NULL,
         nfs ? nfs_local_nonprim : NULL,
         node_affinity ? node_affinity_local_nonprim : NULL,
-        persistent_volume_reclaim_policy ? strdup(persistent_volume_reclaim_policy->valuestring) : NULL,
+        persistent_volume_reclaim_policy ? persistent_volume_reclaim_policyVariable : -1,
         photon_persistent_disk ? photon_persistent_disk_local_nonprim : NULL,
         portworx_volume ? portworx_volume_local_nonprim : NULL,
         quobyte ? quobyte_local_nonprim : NULL,

@@ -48,23 +48,23 @@ cJSON *v1_cinder_volume_source_convertToJSON(v1_cinder_volume_source_t *v1_cinde
     cJSON *item = cJSON_CreateObject();
 
     // v1_cinder_volume_source->fs_type
-    if(v1_cinder_volume_source->fs_type) { 
+    if(v1_cinder_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_cinder_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_cinder_volume_source->read_only
-    if(v1_cinder_volume_source->read_only) { 
+    if(v1_cinder_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_cinder_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_cinder_volume_source->secret_ref
-    if(v1_cinder_volume_source->secret_ref) { 
+    if(v1_cinder_volume_source->secret_ref) {
     cJSON *secret_ref_local_JSON = v1_local_object_reference_convertToJSON(v1_cinder_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -73,14 +73,13 @@ cJSON *v1_cinder_volume_source_convertToJSON(v1_cinder_volume_source_t *v1_cinde
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_cinder_volume_source->volume_id
     if (!v1_cinder_volume_source->volume_id) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "volumeID", v1_cinder_volume_source->volume_id) == NULL) {
     goto fail; //String
     }

@@ -58,23 +58,23 @@ cJSON *v1beta1_flow_schema_convertToJSON(v1beta1_flow_schema_t *v1beta1_flow_sch
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_flow_schema->api_version
-    if(v1beta1_flow_schema->api_version) { 
+    if(v1beta1_flow_schema->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1beta1_flow_schema->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_flow_schema->kind
-    if(v1beta1_flow_schema->kind) { 
+    if(v1beta1_flow_schema->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1beta1_flow_schema->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_flow_schema->metadata
-    if(v1beta1_flow_schema->metadata) { 
+    if(v1beta1_flow_schema->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1beta1_flow_schema->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,11 +83,11 @@ cJSON *v1beta1_flow_schema_convertToJSON(v1beta1_flow_schema_t *v1beta1_flow_sch
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_flow_schema->spec
-    if(v1beta1_flow_schema->spec) { 
+    if(v1beta1_flow_schema->spec) {
     cJSON *spec_local_JSON = v1beta1_flow_schema_spec_convertToJSON(v1beta1_flow_schema->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -96,11 +96,11 @@ cJSON *v1beta1_flow_schema_convertToJSON(v1beta1_flow_schema_t *v1beta1_flow_sch
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_flow_schema->status
-    if(v1beta1_flow_schema->status) { 
+    if(v1beta1_flow_schema->status) {
     cJSON *status_local_JSON = v1beta1_flow_schema_status_convertToJSON(v1beta1_flow_schema->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -109,7 +109,7 @@ cJSON *v1beta1_flow_schema_convertToJSON(v1beta1_flow_schema_t *v1beta1_flow_sch
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

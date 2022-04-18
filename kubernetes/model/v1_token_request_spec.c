@@ -48,7 +48,6 @@ cJSON *v1_token_request_spec_convertToJSON(v1_token_request_spec_t *v1_token_req
     if (!v1_token_request_spec->audiences) {
         goto fail;
     }
-    
     cJSON *audiences = cJSON_AddArrayToObject(item, "audiences");
     if(audiences == NULL) {
         goto fail; //primitive container
@@ -64,7 +63,7 @@ cJSON *v1_token_request_spec_convertToJSON(v1_token_request_spec_t *v1_token_req
 
 
     // v1_token_request_spec->bound_object_ref
-    if(v1_token_request_spec->bound_object_ref) { 
+    if(v1_token_request_spec->bound_object_ref) {
     cJSON *bound_object_ref_local_JSON = v1_bound_object_reference_convertToJSON(v1_token_request_spec->bound_object_ref);
     if(bound_object_ref_local_JSON == NULL) {
     goto fail; //model
@@ -73,15 +72,15 @@ cJSON *v1_token_request_spec_convertToJSON(v1_token_request_spec_t *v1_token_req
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_token_request_spec->expiration_seconds
-    if(v1_token_request_spec->expiration_seconds) { 
+    if(v1_token_request_spec->expiration_seconds) {
     if(cJSON_AddNumberToObject(item, "expirationSeconds", v1_token_request_spec->expiration_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

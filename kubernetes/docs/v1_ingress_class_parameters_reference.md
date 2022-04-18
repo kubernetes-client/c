@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **kind** | **char \*** | Kind is the type of resource being referenced. | 
 **name** | **char \*** | Name is the name of resource being referenced. | 
 **_namespace** | **char \*** | Namespace is the namespace of the resource being referenced. This field is required when scope is set to \&quot;Namespace\&quot; and must be unset when scope is set to \&quot;Cluster\&quot;. | [optional] 
-**scope** | **char \*** | Scope represents if this refers to a cluster or namespace scoped resource. This may be set to \&quot;Cluster\&quot; (default) or \&quot;Namespace\&quot;. Field can be enabled with IngressClassNamespacedParams feature gate. | [optional] 
+**scope** | **char \*** | Scope represents if this refers to a cluster or namespace scoped resource. This may be set to \&quot;Cluster\&quot; (default) or \&quot;Namespace\&quot;. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

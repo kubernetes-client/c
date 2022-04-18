@@ -39,18 +39,17 @@ cJSON *v1_scale_status_convertToJSON(v1_scale_status_t *v1_scale_status) {
     if (!v1_scale_status->replicas) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "replicas", v1_scale_status->replicas) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_scale_status->selector
-    if(v1_scale_status->selector) { 
+    if(v1_scale_status->selector) {
     if(cJSON_AddStringToObject(item, "selector", v1_scale_status->selector) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

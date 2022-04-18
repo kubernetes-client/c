@@ -43,14 +43,13 @@ cJSON *v1_custom_resource_conversion_convertToJSON(v1_custom_resource_conversion
     if (!v1_custom_resource_conversion->strategy) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "strategy", v1_custom_resource_conversion->strategy) == NULL) {
     goto fail; //String
     }
 
 
     // v1_custom_resource_conversion->webhook
-    if(v1_custom_resource_conversion->webhook) { 
+    if(v1_custom_resource_conversion->webhook) {
     cJSON *webhook_local_JSON = v1_webhook_conversion_convertToJSON(v1_custom_resource_conversion->webhook);
     if(webhook_local_JSON == NULL) {
     goto fail; //model
@@ -59,7 +58,7 @@ cJSON *v1_custom_resource_conversion_convertToJSON(v1_custom_resource_conversion
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

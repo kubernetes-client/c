@@ -46,27 +46,27 @@ cJSON *v1_status_cause_convertToJSON(v1_status_cause_t *v1_status_cause) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_status_cause->field
-    if(v1_status_cause->field) { 
+    if(v1_status_cause->field) {
     if(cJSON_AddStringToObject(item, "field", v1_status_cause->field) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_status_cause->message
-    if(v1_status_cause->message) { 
+    if(v1_status_cause->message) {
     if(cJSON_AddStringToObject(item, "message", v1_status_cause->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_status_cause->reason
-    if(v1_status_cause->reason) { 
+    if(v1_status_cause->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_status_cause->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

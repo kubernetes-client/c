@@ -58,18 +58,17 @@ cJSON *v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_para
     cJSON *item = cJSON_CreateObject();
 
     // v1_ingress_class_parameters_reference->api_group
-    if(v1_ingress_class_parameters_reference->api_group) { 
+    if(v1_ingress_class_parameters_reference->api_group) {
     if(cJSON_AddStringToObject(item, "apiGroup", v1_ingress_class_parameters_reference->api_group) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ingress_class_parameters_reference->kind
     if (!v1_ingress_class_parameters_reference->kind) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kind", v1_ingress_class_parameters_reference->kind) == NULL) {
     goto fail; //String
     }
@@ -79,26 +78,25 @@ cJSON *v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_para
     if (!v1_ingress_class_parameters_reference->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_ingress_class_parameters_reference->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_ingress_class_parameters_reference->_namespace
-    if(v1_ingress_class_parameters_reference->_namespace) { 
+    if(v1_ingress_class_parameters_reference->_namespace) {
     if(cJSON_AddStringToObject(item, "namespace", v1_ingress_class_parameters_reference->_namespace) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ingress_class_parameters_reference->scope
-    if(v1_ingress_class_parameters_reference->scope) { 
+    if(v1_ingress_class_parameters_reference->scope) {
     if(cJSON_AddStringToObject(item, "scope", v1_ingress_class_parameters_reference->scope) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

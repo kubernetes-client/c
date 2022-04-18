@@ -40,19 +40,19 @@ cJSON *v1_secret_reference_convertToJSON(v1_secret_reference_t *v1_secret_refere
     cJSON *item = cJSON_CreateObject();
 
     // v1_secret_reference->name
-    if(v1_secret_reference->name) { 
+    if(v1_secret_reference->name) {
     if(cJSON_AddStringToObject(item, "name", v1_secret_reference->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_secret_reference->_namespace
-    if(v1_secret_reference->_namespace) { 
+    if(v1_secret_reference->_namespace) {
     if(cJSON_AddStringToObject(item, "namespace", v1_secret_reference->_namespace) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

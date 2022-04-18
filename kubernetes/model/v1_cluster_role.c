@@ -61,7 +61,7 @@ cJSON *v1_cluster_role_convertToJSON(v1_cluster_role_t *v1_cluster_role) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_cluster_role->aggregation_rule
-    if(v1_cluster_role->aggregation_rule) { 
+    if(v1_cluster_role->aggregation_rule) {
     cJSON *aggregation_rule_local_JSON = v1_aggregation_rule_convertToJSON(v1_cluster_role->aggregation_rule);
     if(aggregation_rule_local_JSON == NULL) {
     goto fail; //model
@@ -70,27 +70,27 @@ cJSON *v1_cluster_role_convertToJSON(v1_cluster_role_t *v1_cluster_role) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_cluster_role->api_version
-    if(v1_cluster_role->api_version) { 
+    if(v1_cluster_role->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_cluster_role->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_cluster_role->kind
-    if(v1_cluster_role->kind) { 
+    if(v1_cluster_role->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_cluster_role->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_cluster_role->metadata
-    if(v1_cluster_role->metadata) { 
+    if(v1_cluster_role->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_cluster_role->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -99,11 +99,11 @@ cJSON *v1_cluster_role_convertToJSON(v1_cluster_role_t *v1_cluster_role) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_cluster_role->rules
-    if(v1_cluster_role->rules) { 
+    if(v1_cluster_role->rules) {
     cJSON *rules = cJSON_AddArrayToObject(item, "rules");
     if(rules == NULL) {
     goto fail; //nonprimitive container
@@ -119,7 +119,7 @@ cJSON *v1_cluster_role_convertToJSON(v1_cluster_role_t *v1_cluster_role) {
     cJSON_AddItemToArray(rules, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

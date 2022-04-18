@@ -44,26 +44,25 @@ cJSON *v1_replica_set_spec_convertToJSON(v1_replica_set_spec_t *v1_replica_set_s
     cJSON *item = cJSON_CreateObject();
 
     // v1_replica_set_spec->min_ready_seconds
-    if(v1_replica_set_spec->min_ready_seconds) { 
+    if(v1_replica_set_spec->min_ready_seconds) {
     if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_replica_set_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_replica_set_spec->replicas
-    if(v1_replica_set_spec->replicas) { 
+    if(v1_replica_set_spec->replicas) {
     if(cJSON_AddNumberToObject(item, "replicas", v1_replica_set_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_replica_set_spec->selector
     if (!v1_replica_set_spec->selector) {
         goto fail;
     }
-    
     cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_replica_set_spec->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
@@ -75,7 +74,7 @@ cJSON *v1_replica_set_spec_convertToJSON(v1_replica_set_spec_t *v1_replica_set_s
 
 
     // v1_replica_set_spec->_template
-    if(v1_replica_set_spec->_template) { 
+    if(v1_replica_set_spec->_template) {
     cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_replica_set_spec->_template);
     if(_template_local_JSON == NULL) {
     goto fail; //model
@@ -84,7 +83,7 @@ cJSON *v1_replica_set_spec_convertToJSON(v1_replica_set_spec_t *v1_replica_set_s
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

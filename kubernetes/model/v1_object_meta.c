@@ -137,7 +137,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_object_meta->annotations
-    if(v1_object_meta->annotations) { 
+    if(v1_object_meta->annotations) {
     cJSON *annotations = cJSON_AddObjectToObject(item, "annotations");
     if(annotations == NULL) {
         goto fail; //primitive map container
@@ -153,43 +153,43 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_object_meta->cluster_name
-    if(v1_object_meta->cluster_name) { 
+    if(v1_object_meta->cluster_name) {
     if(cJSON_AddStringToObject(item, "clusterName", v1_object_meta->cluster_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_meta->creation_timestamp
-    if(v1_object_meta->creation_timestamp) { 
+    if(v1_object_meta->creation_timestamp) {
     if(cJSON_AddStringToObject(item, "creationTimestamp", v1_object_meta->creation_timestamp) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_object_meta->deletion_grace_period_seconds
-    if(v1_object_meta->deletion_grace_period_seconds) { 
+    if(v1_object_meta->deletion_grace_period_seconds) {
     if(cJSON_AddNumberToObject(item, "deletionGracePeriodSeconds", v1_object_meta->deletion_grace_period_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_object_meta->deletion_timestamp
-    if(v1_object_meta->deletion_timestamp) { 
+    if(v1_object_meta->deletion_timestamp) {
     if(cJSON_AddStringToObject(item, "deletionTimestamp", v1_object_meta->deletion_timestamp) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_object_meta->finalizers
-    if(v1_object_meta->finalizers) { 
+    if(v1_object_meta->finalizers) {
     cJSON *finalizers = cJSON_AddArrayToObject(item, "finalizers");
     if(finalizers == NULL) {
         goto fail; //primitive container
@@ -202,27 +202,27 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_object_meta->generate_name
-    if(v1_object_meta->generate_name) { 
+    if(v1_object_meta->generate_name) {
     if(cJSON_AddStringToObject(item, "generateName", v1_object_meta->generate_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_meta->generation
-    if(v1_object_meta->generation) { 
+    if(v1_object_meta->generation) {
     if(cJSON_AddNumberToObject(item, "generation", v1_object_meta->generation) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_object_meta->labels
-    if(v1_object_meta->labels) { 
+    if(v1_object_meta->labels) {
     cJSON *labels = cJSON_AddObjectToObject(item, "labels");
     if(labels == NULL) {
         goto fail; //primitive map container
@@ -238,11 +238,11 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
         }
     }
     }
-     } 
+    }
 
 
     // v1_object_meta->managed_fields
-    if(v1_object_meta->managed_fields) { 
+    if(v1_object_meta->managed_fields) {
     cJSON *managed_fields = cJSON_AddArrayToObject(item, "managedFields");
     if(managed_fields == NULL) {
     goto fail; //nonprimitive container
@@ -258,27 +258,27 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
     cJSON_AddItemToArray(managed_fields, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_object_meta->name
-    if(v1_object_meta->name) { 
+    if(v1_object_meta->name) {
     if(cJSON_AddStringToObject(item, "name", v1_object_meta->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_meta->_namespace
-    if(v1_object_meta->_namespace) { 
+    if(v1_object_meta->_namespace) {
     if(cJSON_AddStringToObject(item, "namespace", v1_object_meta->_namespace) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_meta->owner_references
-    if(v1_object_meta->owner_references) { 
+    if(v1_object_meta->owner_references) {
     cJSON *owner_references = cJSON_AddArrayToObject(item, "ownerReferences");
     if(owner_references == NULL) {
     goto fail; //nonprimitive container
@@ -294,31 +294,31 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
     cJSON_AddItemToArray(owner_references, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_object_meta->resource_version
-    if(v1_object_meta->resource_version) { 
+    if(v1_object_meta->resource_version) {
     if(cJSON_AddStringToObject(item, "resourceVersion", v1_object_meta->resource_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_meta->self_link
-    if(v1_object_meta->self_link) { 
+    if(v1_object_meta->self_link) {
     if(cJSON_AddStringToObject(item, "selfLink", v1_object_meta->self_link) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_meta->uid
-    if(v1_object_meta->uid) { 
+    if(v1_object_meta->uid) {
     if(cJSON_AddStringToObject(item, "uid", v1_object_meta->uid) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

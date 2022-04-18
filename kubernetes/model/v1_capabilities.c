@@ -46,7 +46,7 @@ cJSON *v1_capabilities_convertToJSON(v1_capabilities_t *v1_capabilities) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_capabilities->add
-    if(v1_capabilities->add) { 
+    if(v1_capabilities->add) {
     cJSON *add = cJSON_AddArrayToObject(item, "add");
     if(add == NULL) {
         goto fail; //primitive container
@@ -59,11 +59,11 @@ cJSON *v1_capabilities_convertToJSON(v1_capabilities_t *v1_capabilities) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_capabilities->drop
-    if(v1_capabilities->drop) { 
+    if(v1_capabilities->drop) {
     cJSON *drop = cJSON_AddArrayToObject(item, "drop");
     if(drop == NULL) {
         goto fail; //primitive container
@@ -76,7 +76,7 @@ cJSON *v1_capabilities_convertToJSON(v1_capabilities_t *v1_capabilities) {
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

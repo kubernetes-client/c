@@ -58,25 +58,24 @@ cJSON *v2beta1_object_metric_source_convertToJSON(v2beta1_object_metric_source_t
     cJSON *item = cJSON_CreateObject();
 
     // v2beta1_object_metric_source->average_value
-    if(v2beta1_object_metric_source->average_value) { 
+    if(v2beta1_object_metric_source->average_value) {
     if(cJSON_AddStringToObject(item, "averageValue", v2beta1_object_metric_source->average_value) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v2beta1_object_metric_source->metric_name
     if (!v2beta1_object_metric_source->metric_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "metricName", v2beta1_object_metric_source->metric_name) == NULL) {
     goto fail; //String
     }
 
 
     // v2beta1_object_metric_source->selector
-    if(v2beta1_object_metric_source->selector) { 
+    if(v2beta1_object_metric_source->selector) {
     cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v2beta1_object_metric_source->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
@@ -85,14 +84,13 @@ cJSON *v2beta1_object_metric_source_convertToJSON(v2beta1_object_metric_source_t
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2beta1_object_metric_source->target
     if (!v2beta1_object_metric_source->target) {
         goto fail;
     }
-    
     cJSON *target_local_JSON = v2beta1_cross_version_object_reference_convertToJSON(v2beta1_object_metric_source->target);
     if(target_local_JSON == NULL) {
     goto fail; //model
@@ -107,7 +105,6 @@ cJSON *v2beta1_object_metric_source_convertToJSON(v2beta1_object_metric_source_t
     if (!v2beta1_object_metric_source->target_value) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "targetValue", v2beta1_object_metric_source->target_value) == NULL) {
     goto fail; //String
     }

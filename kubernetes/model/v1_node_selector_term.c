@@ -46,7 +46,7 @@ cJSON *v1_node_selector_term_convertToJSON(v1_node_selector_term_t *v1_node_sele
     cJSON *item = cJSON_CreateObject();
 
     // v1_node_selector_term->match_expressions
-    if(v1_node_selector_term->match_expressions) { 
+    if(v1_node_selector_term->match_expressions) {
     cJSON *match_expressions = cJSON_AddArrayToObject(item, "matchExpressions");
     if(match_expressions == NULL) {
     goto fail; //nonprimitive container
@@ -62,11 +62,11 @@ cJSON *v1_node_selector_term_convertToJSON(v1_node_selector_term_t *v1_node_sele
     cJSON_AddItemToArray(match_expressions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_node_selector_term->match_fields
-    if(v1_node_selector_term->match_fields) { 
+    if(v1_node_selector_term->match_fields) {
     cJSON *match_fields = cJSON_AddArrayToObject(item, "matchFields");
     if(match_fields == NULL) {
     goto fail; //nonprimitive container
@@ -82,7 +82,7 @@ cJSON *v1_node_selector_term_convertToJSON(v1_node_selector_term_t *v1_node_sele
     cJSON_AddItemToArray(match_fields, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

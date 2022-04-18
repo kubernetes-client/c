@@ -46,7 +46,7 @@ cJSON *v1_network_policy_egress_rule_convertToJSON(v1_network_policy_egress_rule
     cJSON *item = cJSON_CreateObject();
 
     // v1_network_policy_egress_rule->ports
-    if(v1_network_policy_egress_rule->ports) { 
+    if(v1_network_policy_egress_rule->ports) {
     cJSON *ports = cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
@@ -62,11 +62,11 @@ cJSON *v1_network_policy_egress_rule_convertToJSON(v1_network_policy_egress_rule
     cJSON_AddItemToArray(ports, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_network_policy_egress_rule->to
-    if(v1_network_policy_egress_rule->to) { 
+    if(v1_network_policy_egress_rule->to) {
     cJSON *to = cJSON_AddArrayToObject(item, "to");
     if(to == NULL) {
     goto fail; //nonprimitive container
@@ -82,7 +82,7 @@ cJSON *v1_network_policy_egress_rule_convertToJSON(v1_network_policy_egress_rule
     cJSON_AddItemToArray(to, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

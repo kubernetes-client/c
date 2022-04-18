@@ -43,7 +43,6 @@ cJSON *v1_sysctl_convertToJSON(v1_sysctl_t *v1_sysctl) {
     if (!v1_sysctl->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_sysctl->name) == NULL) {
     goto fail; //String
     }
@@ -53,7 +52,6 @@ cJSON *v1_sysctl_convertToJSON(v1_sysctl_t *v1_sysctl) {
     if (!v1_sysctl->value) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "value", v1_sysctl->value) == NULL) {
     goto fail; //String
     }

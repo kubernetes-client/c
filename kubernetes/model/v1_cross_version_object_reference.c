@@ -46,18 +46,17 @@ cJSON *v1_cross_version_object_reference_convertToJSON(v1_cross_version_object_r
     cJSON *item = cJSON_CreateObject();
 
     // v1_cross_version_object_reference->api_version
-    if(v1_cross_version_object_reference->api_version) { 
+    if(v1_cross_version_object_reference->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_cross_version_object_reference->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_cross_version_object_reference->kind
     if (!v1_cross_version_object_reference->kind) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kind", v1_cross_version_object_reference->kind) == NULL) {
     goto fail; //String
     }
@@ -67,7 +66,6 @@ cJSON *v1_cross_version_object_reference_convertToJSON(v1_cross_version_object_r
     if (!v1_cross_version_object_reference->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_cross_version_object_reference->name) == NULL) {
     goto fail; //String
     }

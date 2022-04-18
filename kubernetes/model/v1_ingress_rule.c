@@ -40,15 +40,15 @@ cJSON *v1_ingress_rule_convertToJSON(v1_ingress_rule_t *v1_ingress_rule) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_ingress_rule->host
-    if(v1_ingress_rule->host) { 
+    if(v1_ingress_rule->host) {
     if(cJSON_AddStringToObject(item, "host", v1_ingress_rule->host) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ingress_rule->http
-    if(v1_ingress_rule->http) { 
+    if(v1_ingress_rule->http) {
     cJSON *http_local_JSON = v1_http_ingress_rule_value_convertToJSON(v1_ingress_rule->http);
     if(http_local_JSON == NULL) {
     goto fail; //model
@@ -57,7 +57,7 @@ cJSON *v1_ingress_rule_convertToJSON(v1_ingress_rule_t *v1_ingress_rule) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

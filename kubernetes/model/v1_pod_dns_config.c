@@ -55,7 +55,7 @@ cJSON *v1_pod_dns_config_convertToJSON(v1_pod_dns_config_t *v1_pod_dns_config) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_dns_config->nameservers
-    if(v1_pod_dns_config->nameservers) { 
+    if(v1_pod_dns_config->nameservers) {
     cJSON *nameservers = cJSON_AddArrayToObject(item, "nameservers");
     if(nameservers == NULL) {
         goto fail; //primitive container
@@ -68,11 +68,11 @@ cJSON *v1_pod_dns_config_convertToJSON(v1_pod_dns_config_t *v1_pod_dns_config) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_pod_dns_config->options
-    if(v1_pod_dns_config->options) { 
+    if(v1_pod_dns_config->options) {
     cJSON *options = cJSON_AddArrayToObject(item, "options");
     if(options == NULL) {
     goto fail; //nonprimitive container
@@ -88,11 +88,11 @@ cJSON *v1_pod_dns_config_convertToJSON(v1_pod_dns_config_t *v1_pod_dns_config) {
     cJSON_AddItemToArray(options, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_dns_config->searches
-    if(v1_pod_dns_config->searches) { 
+    if(v1_pod_dns_config->searches) {
     cJSON *searches = cJSON_AddArrayToObject(item, "searches");
     if(searches == NULL) {
         goto fail; //primitive container
@@ -105,7 +105,7 @@ cJSON *v1_pod_dns_config_convertToJSON(v1_pod_dns_config_t *v1_pod_dns_config) {
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

@@ -39,7 +39,7 @@ cJSON *v1_container_image_convertToJSON(v1_container_image_t *v1_container_image
     cJSON *item = cJSON_CreateObject();
 
     // v1_container_image->names
-    if(v1_container_image->names) { 
+    if(v1_container_image->names) {
     cJSON *names = cJSON_AddArrayToObject(item, "names");
     if(names == NULL) {
         goto fail; //primitive container
@@ -52,15 +52,15 @@ cJSON *v1_container_image_convertToJSON(v1_container_image_t *v1_container_image
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_container_image->size_bytes
-    if(v1_container_image->size_bytes) { 
+    if(v1_container_image->size_bytes) {
     if(cJSON_AddNumberToObject(item, "sizeBytes", v1_container_image->size_bytes) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

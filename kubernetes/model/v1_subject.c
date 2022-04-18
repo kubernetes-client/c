@@ -52,18 +52,17 @@ cJSON *v1_subject_convertToJSON(v1_subject_t *v1_subject) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_subject->api_group
-    if(v1_subject->api_group) { 
+    if(v1_subject->api_group) {
     if(cJSON_AddStringToObject(item, "apiGroup", v1_subject->api_group) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_subject->kind
     if (!v1_subject->kind) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kind", v1_subject->kind) == NULL) {
     goto fail; //String
     }
@@ -73,18 +72,17 @@ cJSON *v1_subject_convertToJSON(v1_subject_t *v1_subject) {
     if (!v1_subject->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_subject->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_subject->_namespace
-    if(v1_subject->_namespace) { 
+    if(v1_subject->_namespace) {
     if(cJSON_AddStringToObject(item, "namespace", v1_subject->_namespace) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

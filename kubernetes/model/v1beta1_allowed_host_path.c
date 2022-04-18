@@ -36,19 +36,19 @@ cJSON *v1beta1_allowed_host_path_convertToJSON(v1beta1_allowed_host_path_t *v1be
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_allowed_host_path->path_prefix
-    if(v1beta1_allowed_host_path->path_prefix) { 
+    if(v1beta1_allowed_host_path->path_prefix) {
     if(cJSON_AddStringToObject(item, "pathPrefix", v1beta1_allowed_host_path->path_prefix) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_allowed_host_path->read_only
-    if(v1beta1_allowed_host_path->read_only) { 
+    if(v1beta1_allowed_host_path->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1beta1_allowed_host_path->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

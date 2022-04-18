@@ -37,7 +37,7 @@ cJSON *v1_exec_action_convertToJSON(v1_exec_action_t *v1_exec_action) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_exec_action->command
-    if(v1_exec_action->command) { 
+    if(v1_exec_action->command) {
     cJSON *command = cJSON_AddArrayToObject(item, "command");
     if(command == NULL) {
         goto fail; //primitive container
@@ -50,7 +50,7 @@ cJSON *v1_exec_action_convertToJSON(v1_exec_action_t *v1_exec_action) {
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

@@ -60,55 +60,55 @@ cJSON *v1_job_spec_convertToJSON(v1_job_spec_t *v1_job_spec) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_job_spec->active_deadline_seconds
-    if(v1_job_spec->active_deadline_seconds) { 
+    if(v1_job_spec->active_deadline_seconds) {
     if(cJSON_AddNumberToObject(item, "activeDeadlineSeconds", v1_job_spec->active_deadline_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_job_spec->backoff_limit
-    if(v1_job_spec->backoff_limit) { 
+    if(v1_job_spec->backoff_limit) {
     if(cJSON_AddNumberToObject(item, "backoffLimit", v1_job_spec->backoff_limit) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_job_spec->completion_mode
-    if(v1_job_spec->completion_mode) { 
+    if(v1_job_spec->completion_mode) {
     if(cJSON_AddStringToObject(item, "completionMode", v1_job_spec->completion_mode) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_job_spec->completions
-    if(v1_job_spec->completions) { 
+    if(v1_job_spec->completions) {
     if(cJSON_AddNumberToObject(item, "completions", v1_job_spec->completions) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_job_spec->manual_selector
-    if(v1_job_spec->manual_selector) { 
+    if(v1_job_spec->manual_selector) {
     if(cJSON_AddBoolToObject(item, "manualSelector", v1_job_spec->manual_selector) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_job_spec->parallelism
-    if(v1_job_spec->parallelism) { 
+    if(v1_job_spec->parallelism) {
     if(cJSON_AddNumberToObject(item, "parallelism", v1_job_spec->parallelism) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_job_spec->selector
-    if(v1_job_spec->selector) { 
+    if(v1_job_spec->selector) {
     cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_job_spec->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
@@ -117,22 +117,21 @@ cJSON *v1_job_spec_convertToJSON(v1_job_spec_t *v1_job_spec) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_job_spec->suspend
-    if(v1_job_spec->suspend) { 
+    if(v1_job_spec->suspend) {
     if(cJSON_AddBoolToObject(item, "suspend", v1_job_spec->suspend) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_job_spec->_template
     if (!v1_job_spec->_template) {
         goto fail;
     }
-    
     cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_job_spec->_template);
     if(_template_local_JSON == NULL) {
     goto fail; //model
@@ -144,11 +143,11 @@ cJSON *v1_job_spec_convertToJSON(v1_job_spec_t *v1_job_spec) {
 
 
     // v1_job_spec->ttl_seconds_after_finished
-    if(v1_job_spec->ttl_seconds_after_finished) { 
+    if(v1_job_spec->ttl_seconds_after_finished) {
     if(cJSON_AddNumberToObject(item, "ttlSecondsAfterFinished", v1_job_spec->ttl_seconds_after_finished) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

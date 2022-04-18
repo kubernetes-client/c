@@ -73,7 +73,7 @@ cJSON *v1_policy_rule_convertToJSON(v1_policy_rule_t *v1_policy_rule) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_policy_rule->api_groups
-    if(v1_policy_rule->api_groups) { 
+    if(v1_policy_rule->api_groups) {
     cJSON *api_groups = cJSON_AddArrayToObject(item, "apiGroups");
     if(api_groups == NULL) {
         goto fail; //primitive container
@@ -86,11 +86,11 @@ cJSON *v1_policy_rule_convertToJSON(v1_policy_rule_t *v1_policy_rule) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_policy_rule->non_resource_urls
-    if(v1_policy_rule->non_resource_urls) { 
+    if(v1_policy_rule->non_resource_urls) {
     cJSON *non_resource_urls = cJSON_AddArrayToObject(item, "nonResourceURLs");
     if(non_resource_urls == NULL) {
         goto fail; //primitive container
@@ -103,11 +103,11 @@ cJSON *v1_policy_rule_convertToJSON(v1_policy_rule_t *v1_policy_rule) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_policy_rule->resource_names
-    if(v1_policy_rule->resource_names) { 
+    if(v1_policy_rule->resource_names) {
     cJSON *resource_names = cJSON_AddArrayToObject(item, "resourceNames");
     if(resource_names == NULL) {
         goto fail; //primitive container
@@ -120,11 +120,11 @@ cJSON *v1_policy_rule_convertToJSON(v1_policy_rule_t *v1_policy_rule) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_policy_rule->resources
-    if(v1_policy_rule->resources) { 
+    if(v1_policy_rule->resources) {
     cJSON *resources = cJSON_AddArrayToObject(item, "resources");
     if(resources == NULL) {
         goto fail; //primitive container
@@ -137,14 +137,13 @@ cJSON *v1_policy_rule_convertToJSON(v1_policy_rule_t *v1_policy_rule) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_policy_rule->verbs
     if (!v1_policy_rule->verbs) {
         goto fail;
     }
-    
     cJSON *verbs = cJSON_AddArrayToObject(item, "verbs");
     if(verbs == NULL) {
         goto fail; //primitive container

@@ -16,7 +16,7 @@
 // create a StorageVersion
 //
 v1alpha1_storage_version_t*
-InternalApiserverV1alpha1API_createStorageVersion(apiClient_t *apiClient, v1alpha1_storage_version_t * body , char * pretty , char * dryRun , char * fieldManager );
+InternalApiserverV1alpha1API_createStorageVersion(apiClient_t *apiClient, v1alpha1_storage_version_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of StorageVersion
@@ -46,13 +46,13 @@ InternalApiserverV1alpha1API_listStorageVersion(apiClient_t *apiClient, char * p
 // partially update the specified StorageVersion
 //
 v1alpha1_storage_version_t*
-InternalApiserverV1alpha1API_patchStorageVersion(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+InternalApiserverV1alpha1API_patchStorageVersion(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified StorageVersion
 //
 v1alpha1_storage_version_t*
-InternalApiserverV1alpha1API_patchStorageVersionStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+InternalApiserverV1alpha1API_patchStorageVersionStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified StorageVersion
@@ -70,12 +70,12 @@ InternalApiserverV1alpha1API_readStorageVersionStatus(apiClient_t *apiClient, ch
 // replace the specified StorageVersion
 //
 v1alpha1_storage_version_t*
-InternalApiserverV1alpha1API_replaceStorageVersion(apiClient_t *apiClient, char * name , v1alpha1_storage_version_t * body , char * pretty , char * dryRun , char * fieldManager );
+InternalApiserverV1alpha1API_replaceStorageVersion(apiClient_t *apiClient, char * name , v1alpha1_storage_version_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified StorageVersion
 //
 v1alpha1_storage_version_t*
-InternalApiserverV1alpha1API_replaceStorageVersionStatus(apiClient_t *apiClient, char * name , v1alpha1_storage_version_t * body , char * pretty , char * dryRun , char * fieldManager );
+InternalApiserverV1alpha1API_replaceStorageVersionStatus(apiClient_t *apiClient, char * name , v1alpha1_storage_version_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

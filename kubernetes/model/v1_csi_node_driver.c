@@ -55,7 +55,7 @@ cJSON *v1_csi_node_driver_convertToJSON(v1_csi_node_driver_t *v1_csi_node_driver
     cJSON *item = cJSON_CreateObject();
 
     // v1_csi_node_driver->allocatable
-    if(v1_csi_node_driver->allocatable) { 
+    if(v1_csi_node_driver->allocatable) {
     cJSON *allocatable_local_JSON = v1_volume_node_resources_convertToJSON(v1_csi_node_driver->allocatable);
     if(allocatable_local_JSON == NULL) {
     goto fail; //model
@@ -64,14 +64,13 @@ cJSON *v1_csi_node_driver_convertToJSON(v1_csi_node_driver_t *v1_csi_node_driver
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_csi_node_driver->name
     if (!v1_csi_node_driver->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_csi_node_driver->name) == NULL) {
     goto fail; //String
     }
@@ -81,14 +80,13 @@ cJSON *v1_csi_node_driver_convertToJSON(v1_csi_node_driver_t *v1_csi_node_driver
     if (!v1_csi_node_driver->node_id) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "nodeID", v1_csi_node_driver->node_id) == NULL) {
     goto fail; //String
     }
 
 
     // v1_csi_node_driver->topology_keys
-    if(v1_csi_node_driver->topology_keys) { 
+    if(v1_csi_node_driver->topology_keys) {
     cJSON *topology_keys = cJSON_AddArrayToObject(item, "topologyKeys");
     if(topology_keys == NULL) {
         goto fail; //primitive container
@@ -101,7 +99,7 @@ cJSON *v1_csi_node_driver_convertToJSON(v1_csi_node_driver_t *v1_csi_node_driver
         goto fail;
     }
     }
-     } 
+    }
 
     return item;
 fail:

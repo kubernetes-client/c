@@ -51,7 +51,6 @@ cJSON *v2beta1_container_resource_metric_source_convertToJSON(v2beta1_container_
     if (!v2beta1_container_resource_metric_source->container) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "container", v2beta1_container_resource_metric_source->container) == NULL) {
     goto fail; //String
     }
@@ -61,26 +60,25 @@ cJSON *v2beta1_container_resource_metric_source_convertToJSON(v2beta1_container_
     if (!v2beta1_container_resource_metric_source->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v2beta1_container_resource_metric_source->name) == NULL) {
     goto fail; //String
     }
 
 
     // v2beta1_container_resource_metric_source->target_average_utilization
-    if(v2beta1_container_resource_metric_source->target_average_utilization) { 
+    if(v2beta1_container_resource_metric_source->target_average_utilization) {
     if(cJSON_AddNumberToObject(item, "targetAverageUtilization", v2beta1_container_resource_metric_source->target_average_utilization) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v2beta1_container_resource_metric_source->target_average_value
-    if(v2beta1_container_resource_metric_source->target_average_value) { 
+    if(v2beta1_container_resource_metric_source->target_average_value) {
     if(cJSON_AddStringToObject(item, "targetAverageValue", v2beta1_container_resource_metric_source->target_average_value) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

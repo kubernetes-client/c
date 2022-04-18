@@ -43,7 +43,7 @@ cJSON *v1_host_alias_convertToJSON(v1_host_alias_t *v1_host_alias) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_host_alias->hostnames
-    if(v1_host_alias->hostnames) { 
+    if(v1_host_alias->hostnames) {
     cJSON *hostnames = cJSON_AddArrayToObject(item, "hostnames");
     if(hostnames == NULL) {
         goto fail; //primitive container
@@ -56,15 +56,15 @@ cJSON *v1_host_alias_convertToJSON(v1_host_alias_t *v1_host_alias) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_host_alias->ip
-    if(v1_host_alias->ip) { 
+    if(v1_host_alias->ip) {
     if(cJSON_AddStringToObject(item, "ip", v1_host_alias->ip) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

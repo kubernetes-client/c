@@ -63,7 +63,7 @@ cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_status_details->causes
-    if(v1_status_details->causes) { 
+    if(v1_status_details->causes) {
     cJSON *causes = cJSON_AddArrayToObject(item, "causes");
     if(causes == NULL) {
     goto fail; //nonprimitive container
@@ -79,47 +79,47 @@ cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
     cJSON_AddItemToArray(causes, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_status_details->group
-    if(v1_status_details->group) { 
+    if(v1_status_details->group) {
     if(cJSON_AddStringToObject(item, "group", v1_status_details->group) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_status_details->kind
-    if(v1_status_details->kind) { 
+    if(v1_status_details->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_status_details->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_status_details->name
-    if(v1_status_details->name) { 
+    if(v1_status_details->name) {
     if(cJSON_AddStringToObject(item, "name", v1_status_details->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_status_details->retry_after_seconds
-    if(v1_status_details->retry_after_seconds) { 
+    if(v1_status_details->retry_after_seconds) {
     if(cJSON_AddNumberToObject(item, "retryAfterSeconds", v1_status_details->retry_after_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_status_details->uid
-    if(v1_status_details->uid) { 
+    if(v1_status_details->uid) {
     if(cJSON_AddStringToObject(item, "uid", v1_status_details->uid) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

@@ -28,7 +28,7 @@ v1_service_spec_t* instantiate_v1_service_spec(int include_optional) {
       list_createList(),
       list_createList(),
       "0",
-      "0",
+      kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_Cluster,
       56,
       "0",
       list_createList(),
@@ -39,10 +39,10 @@ v1_service_spec_t* instantiate_v1_service_spec(int include_optional) {
       list_createList(),
       1,
       list_createList(),
-      "0",
+      kubernetes_v1_service_spec_SESSIONAFFINITY_ClientIP,
        // false, not to have infinite recursion
       instantiate_v1_session_affinity_config(0),
-      "0"
+      kubernetes_v1_service_spec_TYPE_ClusterIP
     );
   } else {
     v1_service_spec = v1_service_spec_create(
@@ -51,7 +51,7 @@ v1_service_spec_t* instantiate_v1_service_spec(int include_optional) {
       list_createList(),
       list_createList(),
       "0",
-      "0",
+      kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_Cluster,
       56,
       "0",
       list_createList(),
@@ -62,9 +62,9 @@ v1_service_spec_t* instantiate_v1_service_spec(int include_optional) {
       list_createList(),
       1,
       list_createList(),
-      "0",
+      kubernetes_v1_service_spec_SESSIONAFFINITY_ClientIP,
       NULL,
-      "0"
+      kubernetes_v1_service_spec_TYPE_ClusterIP
     );
   }
 

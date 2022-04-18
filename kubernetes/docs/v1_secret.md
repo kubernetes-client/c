@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **kind** | **char \*** | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds | [optional] 
 **metadata** | [**v1_object_meta_t**](v1_object_meta.md) \* |  | [optional] 
 **string_data** | **list_t*** | stringData allows specifying non-binary secret data in string form. It is provided as a write-only input field for convenience. All keys and values are merged into the data field on write, overwriting any existing values. The stringData field is never output when reading from the API. | [optional] 
-**type** | **char \*** | Used to facilitate programmatic handling of secret data. | [optional] 
+**type** | **char \*** | Used to facilitate programmatic handling of secret data. More info: https://kubernetes.io/docs/concepts/configuration/secret/#secret-types | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

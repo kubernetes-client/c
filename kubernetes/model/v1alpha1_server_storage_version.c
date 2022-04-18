@@ -49,15 +49,15 @@ cJSON *v1alpha1_server_storage_version_convertToJSON(v1alpha1_server_storage_ver
     cJSON *item = cJSON_CreateObject();
 
     // v1alpha1_server_storage_version->api_server_id
-    if(v1alpha1_server_storage_version->api_server_id) { 
+    if(v1alpha1_server_storage_version->api_server_id) {
     if(cJSON_AddStringToObject(item, "apiServerID", v1alpha1_server_storage_version->api_server_id) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1alpha1_server_storage_version->decodable_versions
-    if(v1alpha1_server_storage_version->decodable_versions) { 
+    if(v1alpha1_server_storage_version->decodable_versions) {
     cJSON *decodable_versions = cJSON_AddArrayToObject(item, "decodableVersions");
     if(decodable_versions == NULL) {
         goto fail; //primitive container
@@ -70,15 +70,15 @@ cJSON *v1alpha1_server_storage_version_convertToJSON(v1alpha1_server_storage_ver
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1alpha1_server_storage_version->encoding_version
-    if(v1alpha1_server_storage_version->encoding_version) { 
+    if(v1alpha1_server_storage_version->encoding_version) {
     if(cJSON_AddStringToObject(item, "encodingVersion", v1alpha1_server_storage_version->encoding_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

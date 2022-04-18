@@ -208,7 +208,7 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_volume->aws_elastic_block_store
-    if(v1_volume->aws_elastic_block_store) { 
+    if(v1_volume->aws_elastic_block_store) {
     cJSON *aws_elastic_block_store_local_JSON = v1_aws_elastic_block_store_volume_source_convertToJSON(v1_volume->aws_elastic_block_store);
     if(aws_elastic_block_store_local_JSON == NULL) {
     goto fail; //model
@@ -217,11 +217,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->azure_disk
-    if(v1_volume->azure_disk) { 
+    if(v1_volume->azure_disk) {
     cJSON *azure_disk_local_JSON = v1_azure_disk_volume_source_convertToJSON(v1_volume->azure_disk);
     if(azure_disk_local_JSON == NULL) {
     goto fail; //model
@@ -230,11 +230,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->azure_file
-    if(v1_volume->azure_file) { 
+    if(v1_volume->azure_file) {
     cJSON *azure_file_local_JSON = v1_azure_file_volume_source_convertToJSON(v1_volume->azure_file);
     if(azure_file_local_JSON == NULL) {
     goto fail; //model
@@ -243,11 +243,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->cephfs
-    if(v1_volume->cephfs) { 
+    if(v1_volume->cephfs) {
     cJSON *cephfs_local_JSON = v1_ceph_fs_volume_source_convertToJSON(v1_volume->cephfs);
     if(cephfs_local_JSON == NULL) {
     goto fail; //model
@@ -256,11 +256,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->cinder
-    if(v1_volume->cinder) { 
+    if(v1_volume->cinder) {
     cJSON *cinder_local_JSON = v1_cinder_volume_source_convertToJSON(v1_volume->cinder);
     if(cinder_local_JSON == NULL) {
     goto fail; //model
@@ -269,11 +269,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->config_map
-    if(v1_volume->config_map) { 
+    if(v1_volume->config_map) {
     cJSON *config_map_local_JSON = v1_config_map_volume_source_convertToJSON(v1_volume->config_map);
     if(config_map_local_JSON == NULL) {
     goto fail; //model
@@ -282,11 +282,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->csi
-    if(v1_volume->csi) { 
+    if(v1_volume->csi) {
     cJSON *csi_local_JSON = v1_csi_volume_source_convertToJSON(v1_volume->csi);
     if(csi_local_JSON == NULL) {
     goto fail; //model
@@ -295,11 +295,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->downward_api
-    if(v1_volume->downward_api) { 
+    if(v1_volume->downward_api) {
     cJSON *downward_api_local_JSON = v1_downward_api_volume_source_convertToJSON(v1_volume->downward_api);
     if(downward_api_local_JSON == NULL) {
     goto fail; //model
@@ -308,11 +308,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->empty_dir
-    if(v1_volume->empty_dir) { 
+    if(v1_volume->empty_dir) {
     cJSON *empty_dir_local_JSON = v1_empty_dir_volume_source_convertToJSON(v1_volume->empty_dir);
     if(empty_dir_local_JSON == NULL) {
     goto fail; //model
@@ -321,11 +321,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->ephemeral
-    if(v1_volume->ephemeral) { 
+    if(v1_volume->ephemeral) {
     cJSON *ephemeral_local_JSON = v1_ephemeral_volume_source_convertToJSON(v1_volume->ephemeral);
     if(ephemeral_local_JSON == NULL) {
     goto fail; //model
@@ -334,11 +334,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->fc
-    if(v1_volume->fc) { 
+    if(v1_volume->fc) {
     cJSON *fc_local_JSON = v1_fc_volume_source_convertToJSON(v1_volume->fc);
     if(fc_local_JSON == NULL) {
     goto fail; //model
@@ -347,11 +347,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->flex_volume
-    if(v1_volume->flex_volume) { 
+    if(v1_volume->flex_volume) {
     cJSON *flex_volume_local_JSON = v1_flex_volume_source_convertToJSON(v1_volume->flex_volume);
     if(flex_volume_local_JSON == NULL) {
     goto fail; //model
@@ -360,11 +360,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->flocker
-    if(v1_volume->flocker) { 
+    if(v1_volume->flocker) {
     cJSON *flocker_local_JSON = v1_flocker_volume_source_convertToJSON(v1_volume->flocker);
     if(flocker_local_JSON == NULL) {
     goto fail; //model
@@ -373,11 +373,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->gce_persistent_disk
-    if(v1_volume->gce_persistent_disk) { 
+    if(v1_volume->gce_persistent_disk) {
     cJSON *gce_persistent_disk_local_JSON = v1_gce_persistent_disk_volume_source_convertToJSON(v1_volume->gce_persistent_disk);
     if(gce_persistent_disk_local_JSON == NULL) {
     goto fail; //model
@@ -386,11 +386,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->git_repo
-    if(v1_volume->git_repo) { 
+    if(v1_volume->git_repo) {
     cJSON *git_repo_local_JSON = v1_git_repo_volume_source_convertToJSON(v1_volume->git_repo);
     if(git_repo_local_JSON == NULL) {
     goto fail; //model
@@ -399,11 +399,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->glusterfs
-    if(v1_volume->glusterfs) { 
+    if(v1_volume->glusterfs) {
     cJSON *glusterfs_local_JSON = v1_glusterfs_volume_source_convertToJSON(v1_volume->glusterfs);
     if(glusterfs_local_JSON == NULL) {
     goto fail; //model
@@ -412,11 +412,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->host_path
-    if(v1_volume->host_path) { 
+    if(v1_volume->host_path) {
     cJSON *host_path_local_JSON = v1_host_path_volume_source_convertToJSON(v1_volume->host_path);
     if(host_path_local_JSON == NULL) {
     goto fail; //model
@@ -425,11 +425,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->iscsi
-    if(v1_volume->iscsi) { 
+    if(v1_volume->iscsi) {
     cJSON *iscsi_local_JSON = v1_iscsi_volume_source_convertToJSON(v1_volume->iscsi);
     if(iscsi_local_JSON == NULL) {
     goto fail; //model
@@ -438,21 +438,20 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->name
     if (!v1_volume->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_volume->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_volume->nfs
-    if(v1_volume->nfs) { 
+    if(v1_volume->nfs) {
     cJSON *nfs_local_JSON = v1_nfs_volume_source_convertToJSON(v1_volume->nfs);
     if(nfs_local_JSON == NULL) {
     goto fail; //model
@@ -461,11 +460,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->persistent_volume_claim
-    if(v1_volume->persistent_volume_claim) { 
+    if(v1_volume->persistent_volume_claim) {
     cJSON *persistent_volume_claim_local_JSON = v1_persistent_volume_claim_volume_source_convertToJSON(v1_volume->persistent_volume_claim);
     if(persistent_volume_claim_local_JSON == NULL) {
     goto fail; //model
@@ -474,11 +473,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->photon_persistent_disk
-    if(v1_volume->photon_persistent_disk) { 
+    if(v1_volume->photon_persistent_disk) {
     cJSON *photon_persistent_disk_local_JSON = v1_photon_persistent_disk_volume_source_convertToJSON(v1_volume->photon_persistent_disk);
     if(photon_persistent_disk_local_JSON == NULL) {
     goto fail; //model
@@ -487,11 +486,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->portworx_volume
-    if(v1_volume->portworx_volume) { 
+    if(v1_volume->portworx_volume) {
     cJSON *portworx_volume_local_JSON = v1_portworx_volume_source_convertToJSON(v1_volume->portworx_volume);
     if(portworx_volume_local_JSON == NULL) {
     goto fail; //model
@@ -500,11 +499,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->projected
-    if(v1_volume->projected) { 
+    if(v1_volume->projected) {
     cJSON *projected_local_JSON = v1_projected_volume_source_convertToJSON(v1_volume->projected);
     if(projected_local_JSON == NULL) {
     goto fail; //model
@@ -513,11 +512,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->quobyte
-    if(v1_volume->quobyte) { 
+    if(v1_volume->quobyte) {
     cJSON *quobyte_local_JSON = v1_quobyte_volume_source_convertToJSON(v1_volume->quobyte);
     if(quobyte_local_JSON == NULL) {
     goto fail; //model
@@ -526,11 +525,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->rbd
-    if(v1_volume->rbd) { 
+    if(v1_volume->rbd) {
     cJSON *rbd_local_JSON = v1_rbd_volume_source_convertToJSON(v1_volume->rbd);
     if(rbd_local_JSON == NULL) {
     goto fail; //model
@@ -539,11 +538,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->scale_io
-    if(v1_volume->scale_io) { 
+    if(v1_volume->scale_io) {
     cJSON *scale_io_local_JSON = v1_scale_io_volume_source_convertToJSON(v1_volume->scale_io);
     if(scale_io_local_JSON == NULL) {
     goto fail; //model
@@ -552,11 +551,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->secret
-    if(v1_volume->secret) { 
+    if(v1_volume->secret) {
     cJSON *secret_local_JSON = v1_secret_volume_source_convertToJSON(v1_volume->secret);
     if(secret_local_JSON == NULL) {
     goto fail; //model
@@ -565,11 +564,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->storageos
-    if(v1_volume->storageos) { 
+    if(v1_volume->storageos) {
     cJSON *storageos_local_JSON = v1_storage_os_volume_source_convertToJSON(v1_volume->storageos);
     if(storageos_local_JSON == NULL) {
     goto fail; //model
@@ -578,11 +577,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_volume->vsphere_volume
-    if(v1_volume->vsphere_volume) { 
+    if(v1_volume->vsphere_volume) {
     cJSON *vsphere_volume_local_JSON = v1_vsphere_virtual_disk_volume_source_convertToJSON(v1_volume->vsphere_volume);
     if(vsphere_volume_local_JSON == NULL) {
     goto fail; //model
@@ -591,7 +590,7 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -45,7 +45,6 @@ cJSON *v1_glusterfs_volume_source_convertToJSON(v1_glusterfs_volume_source_t *v1
     if (!v1_glusterfs_volume_source->endpoints) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "endpoints", v1_glusterfs_volume_source->endpoints) == NULL) {
     goto fail; //String
     }
@@ -55,18 +54,17 @@ cJSON *v1_glusterfs_volume_source_convertToJSON(v1_glusterfs_volume_source_t *v1
     if (!v1_glusterfs_volume_source->path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "path", v1_glusterfs_volume_source->path) == NULL) {
     goto fail; //String
     }
 
 
     // v1_glusterfs_volume_source->read_only
-    if(v1_glusterfs_volume_source->read_only) { 
+    if(v1_glusterfs_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_glusterfs_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

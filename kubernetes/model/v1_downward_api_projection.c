@@ -37,7 +37,7 @@ cJSON *v1_downward_api_projection_convertToJSON(v1_downward_api_projection_t *v1
     cJSON *item = cJSON_CreateObject();
 
     // v1_downward_api_projection->items
-    if(v1_downward_api_projection->items) { 
+    if(v1_downward_api_projection->items) {
     cJSON *items = cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
@@ -53,7 +53,7 @@ cJSON *v1_downward_api_projection_convertToJSON(v1_downward_api_projection_t *v1
     cJSON_AddItemToArray(items, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

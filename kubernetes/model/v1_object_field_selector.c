@@ -40,18 +40,17 @@ cJSON *v1_object_field_selector_convertToJSON(v1_object_field_selector_t *v1_obj
     cJSON *item = cJSON_CreateObject();
 
     // v1_object_field_selector->api_version
-    if(v1_object_field_selector->api_version) { 
+    if(v1_object_field_selector->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_object_field_selector->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_object_field_selector->field_path
     if (!v1_object_field_selector->field_path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "fieldPath", v1_object_field_selector->field_path) == NULL) {
     goto fail; //String
     }

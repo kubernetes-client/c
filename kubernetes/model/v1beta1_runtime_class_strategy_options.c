@@ -46,7 +46,6 @@ cJSON *v1beta1_runtime_class_strategy_options_convertToJSON(v1beta1_runtime_clas
     if (!v1beta1_runtime_class_strategy_options->allowed_runtime_class_names) {
         goto fail;
     }
-    
     cJSON *allowed_runtime_class_names = cJSON_AddArrayToObject(item, "allowedRuntimeClassNames");
     if(allowed_runtime_class_names == NULL) {
         goto fail; //primitive container
@@ -62,11 +61,11 @@ cJSON *v1beta1_runtime_class_strategy_options_convertToJSON(v1beta1_runtime_clas
 
 
     // v1beta1_runtime_class_strategy_options->default_runtime_class_name
-    if(v1beta1_runtime_class_strategy_options->default_runtime_class_name) { 
+    if(v1beta1_runtime_class_strategy_options->default_runtime_class_name) {
     if(cJSON_AddStringToObject(item, "defaultRuntimeClassName", v1beta1_runtime_class_strategy_options->default_runtime_class_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

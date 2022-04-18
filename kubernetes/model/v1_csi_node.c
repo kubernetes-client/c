@@ -52,23 +52,23 @@ cJSON *v1_csi_node_convertToJSON(v1_csi_node_t *v1_csi_node) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_csi_node->api_version
-    if(v1_csi_node->api_version) { 
+    if(v1_csi_node->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_csi_node->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_csi_node->kind
-    if(v1_csi_node->kind) { 
+    if(v1_csi_node->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_csi_node->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_csi_node->metadata
-    if(v1_csi_node->metadata) { 
+    if(v1_csi_node->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_csi_node->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -77,14 +77,13 @@ cJSON *v1_csi_node_convertToJSON(v1_csi_node_t *v1_csi_node) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_csi_node->spec
     if (!v1_csi_node->spec) {
         goto fail;
     }
-    
     cJSON *spec_local_JSON = v1_csi_node_spec_convertToJSON(v1_csi_node->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model

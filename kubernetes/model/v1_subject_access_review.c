@@ -58,23 +58,23 @@ cJSON *v1_subject_access_review_convertToJSON(v1_subject_access_review_t *v1_sub
     cJSON *item = cJSON_CreateObject();
 
     // v1_subject_access_review->api_version
-    if(v1_subject_access_review->api_version) { 
+    if(v1_subject_access_review->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_subject_access_review->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_subject_access_review->kind
-    if(v1_subject_access_review->kind) { 
+    if(v1_subject_access_review->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_subject_access_review->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_subject_access_review->metadata
-    if(v1_subject_access_review->metadata) { 
+    if(v1_subject_access_review->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_subject_access_review->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -83,14 +83,13 @@ cJSON *v1_subject_access_review_convertToJSON(v1_subject_access_review_t *v1_sub
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_subject_access_review->spec
     if (!v1_subject_access_review->spec) {
         goto fail;
     }
-    
     cJSON *spec_local_JSON = v1_subject_access_review_spec_convertToJSON(v1_subject_access_review->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -102,7 +101,7 @@ cJSON *v1_subject_access_review_convertToJSON(v1_subject_access_review_t *v1_sub
 
 
     // v1_subject_access_review->status
-    if(v1_subject_access_review->status) { 
+    if(v1_subject_access_review->status) {
     cJSON *status_local_JSON = v1_subject_access_review_status_convertToJSON(v1_subject_access_review->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -111,7 +110,7 @@ cJSON *v1_subject_access_review_convertToJSON(v1_subject_access_review_t *v1_sub
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -52,15 +52,15 @@ cJSON *v1alpha1_storage_version_status_convertToJSON(v1alpha1_storage_version_st
     cJSON *item = cJSON_CreateObject();
 
     // v1alpha1_storage_version_status->common_encoding_version
-    if(v1alpha1_storage_version_status->common_encoding_version) { 
+    if(v1alpha1_storage_version_status->common_encoding_version) {
     if(cJSON_AddStringToObject(item, "commonEncodingVersion", v1alpha1_storage_version_status->common_encoding_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1alpha1_storage_version_status->conditions
-    if(v1alpha1_storage_version_status->conditions) { 
+    if(v1alpha1_storage_version_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -76,11 +76,11 @@ cJSON *v1alpha1_storage_version_status_convertToJSON(v1alpha1_storage_version_st
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1alpha1_storage_version_status->storage_versions
-    if(v1alpha1_storage_version_status->storage_versions) { 
+    if(v1alpha1_storage_version_status->storage_versions) {
     cJSON *storage_versions = cJSON_AddArrayToObject(item, "storageVersions");
     if(storage_versions == NULL) {
     goto fail; //nonprimitive container
@@ -96,7 +96,7 @@ cJSON *v1alpha1_storage_version_status_convertToJSON(v1alpha1_storage_version_st
     cJSON_AddItemToArray(storage_versions, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

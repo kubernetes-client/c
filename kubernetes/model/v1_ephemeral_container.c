@@ -4,6 +4,40 @@
 #include "v1_ephemeral_container.h"
 
 
+char* image_pull_policyv1_ephemeral_container_ToString(kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_e image_pull_policy) {
+    char* image_pull_policyArray[] =  { "NULL", "Always", "IfNotPresent", "Never" };
+	return image_pull_policyArray[image_pull_policy];
+}
+
+kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_e image_pull_policyv1_ephemeral_container_FromString(char* image_pull_policy){
+    int stringToReturn = 0;
+    char *image_pull_policyArray[] =  { "NULL", "Always", "IfNotPresent", "Never" };
+    size_t sizeofArray = sizeof(image_pull_policyArray) / sizeof(image_pull_policyArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(image_pull_policy, image_pull_policyArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
+char* termination_message_policyv1_ephemeral_container_ToString(kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_e termination_message_policy) {
+    char* termination_message_policyArray[] =  { "NULL", "FallbackToLogsOnError", "File" };
+	return termination_message_policyArray[termination_message_policy];
+}
+
+kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_e termination_message_policyv1_ephemeral_container_FromString(char* termination_message_policy){
+    int stringToReturn = 0;
+    char *termination_message_policyArray[] =  { "NULL", "FallbackToLogsOnError", "File" };
+    size_t sizeofArray = sizeof(termination_message_policyArray) / sizeof(termination_message_policyArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(termination_message_policy, termination_message_policyArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_ephemeral_container_t *v1_ephemeral_container_create(
     list_t *args,
@@ -11,7 +45,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_create(
     list_t *env,
     list_t *env_from,
     char *image,
-    char *image_pull_policy,
+    kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_e image_pull_policy,
     v1_lifecycle_t *lifecycle,
     v1_probe_t *liveness_probe,
     char *name,
@@ -24,7 +58,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_create(
     int stdin_once,
     char *target_container_name,
     char *termination_message_path,
-    char *termination_message_policy,
+    kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_e termination_message_policy,
     int tty,
     list_t *volume_devices,
     list_t *volume_mounts,
@@ -99,10 +133,6 @@ void v1_ephemeral_container_free(v1_ephemeral_container_t *v1_ephemeral_containe
         free(v1_ephemeral_container->image);
         v1_ephemeral_container->image = NULL;
     }
-    if (v1_ephemeral_container->image_pull_policy) {
-        free(v1_ephemeral_container->image_pull_policy);
-        v1_ephemeral_container->image_pull_policy = NULL;
-    }
     if (v1_ephemeral_container->lifecycle) {
         v1_lifecycle_free(v1_ephemeral_container->lifecycle);
         v1_ephemeral_container->lifecycle = NULL;
@@ -146,10 +176,6 @@ void v1_ephemeral_container_free(v1_ephemeral_container_t *v1_ephemeral_containe
         free(v1_ephemeral_container->termination_message_path);
         v1_ephemeral_container->termination_message_path = NULL;
     }
-    if (v1_ephemeral_container->termination_message_policy) {
-        free(v1_ephemeral_container->termination_message_policy);
-        v1_ephemeral_container->termination_message_policy = NULL;
-    }
     if (v1_ephemeral_container->volume_devices) {
         list_ForEach(listEntry, v1_ephemeral_container->volume_devices) {
             v1_volume_device_free(listEntry->data);
@@ -175,7 +201,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     cJSON *item = cJSON_CreateObject();
 
     // v1_ephemeral_container->args
-    if(v1_ephemeral_container->args) { 
+    if(v1_ephemeral_container->args) {
     cJSON *args = cJSON_AddArrayToObject(item, "args");
     if(args == NULL) {
         goto fail; //primitive container
@@ -188,11 +214,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->command
-    if(v1_ephemeral_container->command) { 
+    if(v1_ephemeral_container->command) {
     cJSON *command = cJSON_AddArrayToObject(item, "command");
     if(command == NULL) {
         goto fail; //primitive container
@@ -205,11 +231,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->env
-    if(v1_ephemeral_container->env) { 
+    if(v1_ephemeral_container->env) {
     cJSON *env = cJSON_AddArrayToObject(item, "env");
     if(env == NULL) {
     goto fail; //nonprimitive container
@@ -225,11 +251,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     cJSON_AddItemToArray(env, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->env_from
-    if(v1_ephemeral_container->env_from) { 
+    if(v1_ephemeral_container->env_from) {
     cJSON *env_from = cJSON_AddArrayToObject(item, "envFrom");
     if(env_from == NULL) {
     goto fail; //nonprimitive container
@@ -245,27 +271,28 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     cJSON_AddItemToArray(env_from, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->image
-    if(v1_ephemeral_container->image) { 
+    if(v1_ephemeral_container->image) {
     if(cJSON_AddStringToObject(item, "image", v1_ephemeral_container->image) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->image_pull_policy
-    if(v1_ephemeral_container->image_pull_policy) { 
-    if(cJSON_AddStringToObject(item, "imagePullPolicy", v1_ephemeral_container->image_pull_policy) == NULL) {
-    goto fail; //String
+    if(v1_ephemeral_container->image_pull_policy != kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_NULL) {
+    if(cJSON_AddStringToObject(item, "imagePullPolicy", image_pull_policyv1_ephemeral_container_ToString(v1_ephemeral_container->image_pull_policy)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->lifecycle
-    if(v1_ephemeral_container->lifecycle) { 
+    if(v1_ephemeral_container->lifecycle) {
     cJSON *lifecycle_local_JSON = v1_lifecycle_convertToJSON(v1_ephemeral_container->lifecycle);
     if(lifecycle_local_JSON == NULL) {
     goto fail; //model
@@ -274,11 +301,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->liveness_probe
-    if(v1_ephemeral_container->liveness_probe) { 
+    if(v1_ephemeral_container->liveness_probe) {
     cJSON *liveness_probe_local_JSON = v1_probe_convertToJSON(v1_ephemeral_container->liveness_probe);
     if(liveness_probe_local_JSON == NULL) {
     goto fail; //model
@@ -287,21 +314,20 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->name
     if (!v1_ephemeral_container->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_ephemeral_container->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_ephemeral_container->ports
-    if(v1_ephemeral_container->ports) { 
+    if(v1_ephemeral_container->ports) {
     cJSON *ports = cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
@@ -317,11 +343,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     cJSON_AddItemToArray(ports, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->readiness_probe
-    if(v1_ephemeral_container->readiness_probe) { 
+    if(v1_ephemeral_container->readiness_probe) {
     cJSON *readiness_probe_local_JSON = v1_probe_convertToJSON(v1_ephemeral_container->readiness_probe);
     if(readiness_probe_local_JSON == NULL) {
     goto fail; //model
@@ -330,11 +356,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->resources
-    if(v1_ephemeral_container->resources) { 
+    if(v1_ephemeral_container->resources) {
     cJSON *resources_local_JSON = v1_resource_requirements_convertToJSON(v1_ephemeral_container->resources);
     if(resources_local_JSON == NULL) {
     goto fail; //model
@@ -343,11 +369,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->security_context
-    if(v1_ephemeral_container->security_context) { 
+    if(v1_ephemeral_container->security_context) {
     cJSON *security_context_local_JSON = v1_security_context_convertToJSON(v1_ephemeral_container->security_context);
     if(security_context_local_JSON == NULL) {
     goto fail; //model
@@ -356,11 +382,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->startup_probe
-    if(v1_ephemeral_container->startup_probe) { 
+    if(v1_ephemeral_container->startup_probe) {
     cJSON *startup_probe_local_JSON = v1_probe_convertToJSON(v1_ephemeral_container->startup_probe);
     if(startup_probe_local_JSON == NULL) {
     goto fail; //model
@@ -369,59 +395,60 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->_stdin
-    if(v1_ephemeral_container->_stdin) { 
+    if(v1_ephemeral_container->_stdin) {
     if(cJSON_AddBoolToObject(item, "stdin", v1_ephemeral_container->_stdin) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->stdin_once
-    if(v1_ephemeral_container->stdin_once) { 
+    if(v1_ephemeral_container->stdin_once) {
     if(cJSON_AddBoolToObject(item, "stdinOnce", v1_ephemeral_container->stdin_once) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->target_container_name
-    if(v1_ephemeral_container->target_container_name) { 
+    if(v1_ephemeral_container->target_container_name) {
     if(cJSON_AddStringToObject(item, "targetContainerName", v1_ephemeral_container->target_container_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->termination_message_path
-    if(v1_ephemeral_container->termination_message_path) { 
+    if(v1_ephemeral_container->termination_message_path) {
     if(cJSON_AddStringToObject(item, "terminationMessagePath", v1_ephemeral_container->termination_message_path) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->termination_message_policy
-    if(v1_ephemeral_container->termination_message_policy) { 
-    if(cJSON_AddStringToObject(item, "terminationMessagePolicy", v1_ephemeral_container->termination_message_policy) == NULL) {
-    goto fail; //String
+    if(v1_ephemeral_container->termination_message_policy != kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_NULL) {
+    if(cJSON_AddStringToObject(item, "terminationMessagePolicy", termination_message_policyv1_ephemeral_container_ToString(v1_ephemeral_container->termination_message_policy)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->tty
-    if(v1_ephemeral_container->tty) { 
+    if(v1_ephemeral_container->tty) {
     if(cJSON_AddBoolToObject(item, "tty", v1_ephemeral_container->tty) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->volume_devices
-    if(v1_ephemeral_container->volume_devices) { 
+    if(v1_ephemeral_container->volume_devices) {
     cJSON *volume_devices = cJSON_AddArrayToObject(item, "volumeDevices");
     if(volume_devices == NULL) {
     goto fail; //nonprimitive container
@@ -437,11 +464,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     cJSON_AddItemToArray(volume_devices, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->volume_mounts
-    if(v1_ephemeral_container->volume_mounts) { 
+    if(v1_ephemeral_container->volume_mounts) {
     cJSON *volume_mounts = cJSON_AddArrayToObject(item, "volumeMounts");
     if(volume_mounts == NULL) {
     goto fail; //nonprimitive container
@@ -457,15 +484,15 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     cJSON_AddItemToArray(volume_mounts, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_ephemeral_container->working_dir
-    if(v1_ephemeral_container->working_dir) { 
+    if(v1_ephemeral_container->working_dir) {
     if(cJSON_AddStringToObject(item, "workingDir", v1_ephemeral_container->working_dir) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:
@@ -609,11 +636,13 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     // v1_ephemeral_container->image_pull_policy
     cJSON *image_pull_policy = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "imagePullPolicy");
+    kubernetes_v1_ephemeral_container_IMAGEPULLPOLICY_e image_pull_policyVariable;
     if (image_pull_policy) { 
     if(!cJSON_IsString(image_pull_policy))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    image_pull_policyVariable = image_pull_policyv1_ephemeral_container_FromString(image_pull_policy->valuestring);
     }
 
     // v1_ephemeral_container->lifecycle
@@ -723,11 +752,13 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
 
     // v1_ephemeral_container->termination_message_policy
     cJSON *termination_message_policy = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "terminationMessagePolicy");
+    kubernetes_v1_ephemeral_container_TERMINATIONMESSAGEPOLICY_e termination_message_policyVariable;
     if (termination_message_policy) { 
     if(!cJSON_IsString(termination_message_policy))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    termination_message_policyVariable = termination_message_policyv1_ephemeral_container_FromString(termination_message_policy->valuestring);
     }
 
     // v1_ephemeral_container->tty
@@ -797,7 +828,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
         env ? envList : NULL,
         env_from ? env_fromList : NULL,
         image ? strdup(image->valuestring) : NULL,
-        image_pull_policy ? strdup(image_pull_policy->valuestring) : NULL,
+        image_pull_policy ? image_pull_policyVariable : -1,
         lifecycle ? lifecycle_local_nonprim : NULL,
         liveness_probe ? liveness_probe_local_nonprim : NULL,
         strdup(name->valuestring),
@@ -810,7 +841,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
         stdin_once ? stdin_once->valueint : 0,
         target_container_name ? strdup(target_container_name->valuestring) : NULL,
         termination_message_path ? strdup(termination_message_path->valuestring) : NULL,
-        termination_message_policy ? strdup(termination_message_policy->valuestring) : NULL,
+        termination_message_policy ? termination_message_policyVariable : -1,
         tty ? tty->valueint : 0,
         volume_devices ? volume_devicesList : NULL,
         volume_mounts ? volume_mountsList : NULL,

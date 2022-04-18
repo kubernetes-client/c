@@ -15,7 +15,7 @@
 // create a CSIStorageCapacity
 //
 v1beta1_csi_storage_capacity_t*
-StorageV1beta1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _namespace , v1beta1_csi_storage_capacity_t * body , char * pretty , char * dryRun , char * fieldManager )
+StorageV1beta1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _namespace , v1beta1_csi_storage_capacity_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -78,6 +78,18 @@ StorageV1beta1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, cha
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -99,18 +111,22 @@ StorageV1beta1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, cha
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *StorageV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_csi_storage_capacity_t *elementToReturn = v1beta1_csi_storage_capacity_parseFromJSON(StorageV1beta1APIlocalVarJSON);
@@ -172,6 +188,18 @@ StorageV1beta1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, cha
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:
@@ -379,12 +407,14 @@ StorageV1beta1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiC
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *StorageV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(StorageV1beta1APIlocalVarJSON);
@@ -685,15 +715,18 @@ StorageV1beta1API_deleteNamespacedCSIStorageCapacity(apiClient_t *apiClient, cha
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *StorageV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(StorageV1beta1APIlocalVarJSON);
@@ -820,12 +853,14 @@ StorageV1beta1API_getAPIResources(apiClient_t *apiClient)
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *StorageV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(StorageV1beta1APIlocalVarJSON);
@@ -1011,12 +1046,14 @@ StorageV1beta1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient,
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *StorageV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_csi_storage_capacity_list_t *elementToReturn = v1beta1_csi_storage_capacity_list_parseFromJSON(StorageV1beta1APIlocalVarJSON);
@@ -1332,12 +1369,14 @@ StorageV1beta1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *StorageV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_csi_storage_capacity_list_t *elementToReturn = v1beta1_csi_storage_capacity_list_parseFromJSON(StorageV1beta1APIlocalVarJSON);
@@ -1489,7 +1528,7 @@ end:
 // partially update the specified CSIStorageCapacity
 //
 v1beta1_csi_storage_capacity_t*
-StorageV1beta1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+StorageV1beta1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1563,6 +1602,18 @@ StorageV1beta1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -1600,15 +1651,18 @@ StorageV1beta1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *StorageV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_csi_storage_capacity_t *elementToReturn = v1beta1_csi_storage_capacity_parseFromJSON(StorageV1beta1APIlocalVarJSON);
@@ -1671,6 +1725,18 @@ StorageV1beta1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     if(keyQuery_force){
         free(keyQuery_force);
@@ -1755,12 +1821,14 @@ StorageV1beta1API_readNamespacedCSIStorageCapacity(apiClient_t *apiClient, char 
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *StorageV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_csi_storage_capacity_t *elementToReturn = v1beta1_csi_storage_capacity_parseFromJSON(StorageV1beta1APIlocalVarJSON);
@@ -1805,7 +1873,7 @@ end:
 // replace the specified CSIStorageCapacity
 //
 v1beta1_csi_storage_capacity_t*
-StorageV1beta1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_csi_storage_capacity_t * body , char * pretty , char * dryRun , char * fieldManager )
+StorageV1beta1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_csi_storage_capacity_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1878,6 +1946,18 @@ StorageV1beta1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, ch
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -1899,15 +1979,18 @@ StorageV1beta1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, ch
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *StorageV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1beta1_csi_storage_capacity_t *elementToReturn = v1beta1_csi_storage_capacity_parseFromJSON(StorageV1beta1APIlocalVarJSON);
@@ -1970,6 +2053,18 @@ StorageV1beta1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, ch
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:

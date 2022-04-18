@@ -42,27 +42,27 @@ cJSON *apiregistration_v1_service_reference_convertToJSON(apiregistration_v1_ser
     cJSON *item = cJSON_CreateObject();
 
     // apiregistration_v1_service_reference->name
-    if(apiregistration_v1_service_reference->name) { 
+    if(apiregistration_v1_service_reference->name) {
     if(cJSON_AddStringToObject(item, "name", apiregistration_v1_service_reference->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // apiregistration_v1_service_reference->_namespace
-    if(apiregistration_v1_service_reference->_namespace) { 
+    if(apiregistration_v1_service_reference->_namespace) {
     if(cJSON_AddStringToObject(item, "namespace", apiregistration_v1_service_reference->_namespace) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // apiregistration_v1_service_reference->port
-    if(apiregistration_v1_service_reference->port) { 
+    if(apiregistration_v1_service_reference->port) {
     if(cJSON_AddNumberToObject(item, "port", apiregistration_v1_service_reference->port) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

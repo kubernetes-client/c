@@ -16,7 +16,7 @@
 // create an EndpointSlice
 //
 v1beta1_endpoint_slice_t*
-DiscoveryV1beta1API_createNamespacedEndpointSlice(apiClient_t *apiClient, char * _namespace , v1beta1_endpoint_slice_t * body , char * pretty , char * dryRun , char * fieldManager );
+DiscoveryV1beta1API_createNamespacedEndpointSlice(apiClient_t *apiClient, char * _namespace , v1beta1_endpoint_slice_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of EndpointSlice
@@ -52,7 +52,7 @@ DiscoveryV1beta1API_listNamespacedEndpointSlice(apiClient_t *apiClient, char * _
 // partially update the specified EndpointSlice
 //
 v1beta1_endpoint_slice_t*
-DiscoveryV1beta1API_patchNamespacedEndpointSlice(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+DiscoveryV1beta1API_patchNamespacedEndpointSlice(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified EndpointSlice
@@ -64,6 +64,6 @@ DiscoveryV1beta1API_readNamespacedEndpointSlice(apiClient_t *apiClient, char * n
 // replace the specified EndpointSlice
 //
 v1beta1_endpoint_slice_t*
-DiscoveryV1beta1API_replaceNamespacedEndpointSlice(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_endpoint_slice_t * body , char * pretty , char * dryRun , char * fieldManager );
+DiscoveryV1beta1API_replaceNamespacedEndpointSlice(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_endpoint_slice_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

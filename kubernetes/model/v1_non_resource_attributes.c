@@ -40,19 +40,19 @@ cJSON *v1_non_resource_attributes_convertToJSON(v1_non_resource_attributes_t *v1
     cJSON *item = cJSON_CreateObject();
 
     // v1_non_resource_attributes->path
-    if(v1_non_resource_attributes->path) { 
+    if(v1_non_resource_attributes->path) {
     if(cJSON_AddStringToObject(item, "path", v1_non_resource_attributes->path) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_non_resource_attributes->verb
-    if(v1_non_resource_attributes->verb) { 
+    if(v1_non_resource_attributes->verb) {
     if(cJSON_AddStringToObject(item, "verb", v1_non_resource_attributes->verb) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

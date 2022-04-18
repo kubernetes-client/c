@@ -60,26 +60,25 @@ cJSON *v1_custom_resource_column_definition_convertToJSON(v1_custom_resource_col
     cJSON *item = cJSON_CreateObject();
 
     // v1_custom_resource_column_definition->description
-    if(v1_custom_resource_column_definition->description) { 
+    if(v1_custom_resource_column_definition->description) {
     if(cJSON_AddStringToObject(item, "description", v1_custom_resource_column_definition->description) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_custom_resource_column_definition->format
-    if(v1_custom_resource_column_definition->format) { 
+    if(v1_custom_resource_column_definition->format) {
     if(cJSON_AddStringToObject(item, "format", v1_custom_resource_column_definition->format) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_custom_resource_column_definition->json_path
     if (!v1_custom_resource_column_definition->json_path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "jsonPath", v1_custom_resource_column_definition->json_path) == NULL) {
     goto fail; //String
     }
@@ -89,25 +88,23 @@ cJSON *v1_custom_resource_column_definition_convertToJSON(v1_custom_resource_col
     if (!v1_custom_resource_column_definition->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1_custom_resource_column_definition->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_custom_resource_column_definition->priority
-    if(v1_custom_resource_column_definition->priority) { 
+    if(v1_custom_resource_column_definition->priority) {
     if(cJSON_AddNumberToObject(item, "priority", v1_custom_resource_column_definition->priority) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_custom_resource_column_definition->type
     if (!v1_custom_resource_column_definition->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v1_custom_resource_column_definition->type) == NULL) {
     goto fail; //String
     }

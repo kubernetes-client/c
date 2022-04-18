@@ -18,13 +18,13 @@
 // create a PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager );
+PolicyV1beta1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a PodSecurityPolicy
 //
 v1beta1_pod_security_policy_t*
-PolicyV1beta1API_createPodSecurityPolicy(apiClient_t *apiClient, v1beta1_pod_security_policy_t * body , char * pretty , char * dryRun , char * fieldManager );
+PolicyV1beta1API_createPodSecurityPolicy(apiClient_t *apiClient, v1beta1_pod_security_policy_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of PodDisruptionBudget
@@ -78,19 +78,19 @@ PolicyV1beta1API_listPodSecurityPolicy(apiClient_t *apiClient, char * pretty , i
 // partially update the specified PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+PolicyV1beta1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+PolicyV1beta1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified PodSecurityPolicy
 //
 v1beta1_pod_security_policy_t*
-PolicyV1beta1API_patchPodSecurityPolicy(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+PolicyV1beta1API_patchPodSecurityPolicy(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified PodDisruptionBudget
@@ -114,18 +114,18 @@ PolicyV1beta1API_readPodSecurityPolicy(apiClient_t *apiClient, char * name , cha
 // replace the specified PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager );
+PolicyV1beta1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified PodDisruptionBudget
 //
 v1beta1_pod_disruption_budget_t*
-PolicyV1beta1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager );
+PolicyV1beta1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified PodSecurityPolicy
 //
 v1beta1_pod_security_policy_t*
-PolicyV1beta1API_replacePodSecurityPolicy(apiClient_t *apiClient, char * name , v1beta1_pod_security_policy_t * body , char * pretty , char * dryRun , char * fieldManager );
+PolicyV1beta1API_replacePodSecurityPolicy(apiClient_t *apiClient, char * name , v1beta1_pod_security_policy_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

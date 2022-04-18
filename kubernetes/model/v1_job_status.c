@@ -11,6 +11,7 @@ v1_job_status_t *v1_job_status_create(
     char *completion_time,
     list_t *conditions,
     int failed,
+    int ready,
     char *start_time,
     int succeeded,
     v1_uncounted_terminated_pods_t *uncounted_terminated_pods
@@ -24,6 +25,7 @@ v1_job_status_t *v1_job_status_create(
     v1_job_status_local_var->completion_time = completion_time;
     v1_job_status_local_var->conditions = conditions;
     v1_job_status_local_var->failed = failed;
+    v1_job_status_local_var->ready = ready;
     v1_job_status_local_var->start_time = start_time;
     v1_job_status_local_var->succeeded = succeeded;
     v1_job_status_local_var->uncounted_terminated_pods = uncounted_terminated_pods;
@@ -67,31 +69,31 @@ cJSON *v1_job_status_convertToJSON(v1_job_status_t *v1_job_status) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_job_status->active
-    if(v1_job_status->active) { 
+    if(v1_job_status->active) {
     if(cJSON_AddNumberToObject(item, "active", v1_job_status->active) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_job_status->completed_indexes
-    if(v1_job_status->completed_indexes) { 
+    if(v1_job_status->completed_indexes) {
     if(cJSON_AddStringToObject(item, "completedIndexes", v1_job_status->completed_indexes) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_job_status->completion_time
-    if(v1_job_status->completion_time) { 
+    if(v1_job_status->completion_time) {
     if(cJSON_AddStringToObject(item, "completionTime", v1_job_status->completion_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_job_status->conditions
-    if(v1_job_status->conditions) { 
+    if(v1_job_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -107,35 +109,43 @@ cJSON *v1_job_status_convertToJSON(v1_job_status_t *v1_job_status) {
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_job_status->failed
-    if(v1_job_status->failed) { 
+    if(v1_job_status->failed) {
     if(cJSON_AddNumberToObject(item, "failed", v1_job_status->failed) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
+
+
+    // v1_job_status->ready
+    if(v1_job_status->ready) {
+    if(cJSON_AddNumberToObject(item, "ready", v1_job_status->ready) == NULL) {
+    goto fail; //Numeric
+    }
+    }
 
 
     // v1_job_status->start_time
-    if(v1_job_status->start_time) { 
+    if(v1_job_status->start_time) {
     if(cJSON_AddStringToObject(item, "startTime", v1_job_status->start_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_job_status->succeeded
-    if(v1_job_status->succeeded) { 
+    if(v1_job_status->succeeded) {
     if(cJSON_AddNumberToObject(item, "succeeded", v1_job_status->succeeded) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_job_status->uncounted_terminated_pods
-    if(v1_job_status->uncounted_terminated_pods) { 
+    if(v1_job_status->uncounted_terminated_pods) {
     cJSON *uncounted_terminated_pods_local_JSON = v1_uncounted_terminated_pods_convertToJSON(v1_job_status->uncounted_terminated_pods);
     if(uncounted_terminated_pods_local_JSON == NULL) {
     goto fail; //model
@@ -144,7 +154,7 @@ cJSON *v1_job_status_convertToJSON(v1_job_status_t *v1_job_status) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:
@@ -221,6 +231,15 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
     }
     }
 
+    // v1_job_status->ready
+    cJSON *ready = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "ready");
+    if (ready) { 
+    if(!cJSON_IsNumber(ready))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1_job_status->start_time
     cJSON *start_time = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "startTime");
     if (start_time) { 
@@ -252,6 +271,7 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
         completion_time ? strdup(completion_time->valuestring) : NULL,
         conditions ? conditionsList : NULL,
         failed ? failed->valuedouble : 0,
+        ready ? ready->valuedouble : 0,
         start_time ? strdup(start_time->valuestring) : NULL,
         succeeded ? succeeded->valuedouble : 0,
         uncounted_terminated_pods ? uncounted_terminated_pods_local_nonprim : NULL

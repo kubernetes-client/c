@@ -47,15 +47,15 @@ cJSON *v1_config_map_volume_source_convertToJSON(v1_config_map_volume_source_t *
     cJSON *item = cJSON_CreateObject();
 
     // v1_config_map_volume_source->default_mode
-    if(v1_config_map_volume_source->default_mode) { 
+    if(v1_config_map_volume_source->default_mode) {
     if(cJSON_AddNumberToObject(item, "defaultMode", v1_config_map_volume_source->default_mode) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_config_map_volume_source->items
-    if(v1_config_map_volume_source->items) { 
+    if(v1_config_map_volume_source->items) {
     cJSON *items = cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
@@ -71,23 +71,23 @@ cJSON *v1_config_map_volume_source_convertToJSON(v1_config_map_volume_source_t *
     cJSON_AddItemToArray(items, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_config_map_volume_source->name
-    if(v1_config_map_volume_source->name) { 
+    if(v1_config_map_volume_source->name) {
     if(cJSON_AddStringToObject(item, "name", v1_config_map_volume_source->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_config_map_volume_source->optional
-    if(v1_config_map_volume_source->optional) { 
+    if(v1_config_map_volume_source->optional) {
     if(cJSON_AddBoolToObject(item, "optional", v1_config_map_volume_source->optional) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

@@ -196,7 +196,7 @@ set(SRCS
     model/v1_glusterfs_persistent_volume_source.c
     model/v1_glusterfs_volume_source.c
     model/v1_group_version_for_discovery.c
-    model/v1_handler.c
+    model/v1_grpc_action.c
     model/v1_horizontal_pod_autoscaler.c
     model/v1_horizontal_pod_autoscaler_list.c
     model/v1_horizontal_pod_autoscaler_spec.c
@@ -236,6 +236,7 @@ set(SRCS
     model/v1_lease_list.c
     model/v1_lease_spec.c
     model/v1_lifecycle.c
+    model/v1_lifecycle_handler.c
     model/v1_limit_range.c
     model/v1_limit_range_item.c
     model/v1_limit_range_list.c
@@ -309,6 +310,7 @@ set(SRCS
     model/v1_pod_dns_config_option.c
     model/v1_pod_ip.c
     model/v1_pod_list.c
+    model/v1_pod_os.c
     model/v1_pod_readiness_gate.c
     model/v1_pod_security_context.c
     model/v1_pod_spec.c
@@ -393,6 +395,7 @@ set(SRCS
     model/v1_stateful_set.c
     model/v1_stateful_set_condition.c
     model/v1_stateful_set_list.c
+    model/v1_stateful_set_persistent_volume_claim_retention_policy.c
     model/v1_stateful_set_spec.c
     model/v1_stateful_set_status.c
     model/v1_stateful_set_update_strategy.c
@@ -426,6 +429,7 @@ set(SRCS
     model/v1_validating_webhook.c
     model/v1_validating_webhook_configuration.c
     model/v1_validating_webhook_configuration_list.c
+    model/v1_validation_rule.c
     model/v1_volume.c
     model/v1_volume_attachment.c
     model/v1_volume_attachment_list.c
@@ -443,22 +447,9 @@ set(SRCS
     model/v1_webhook_conversion.c
     model/v1_weighted_pod_affinity_term.c
     model/v1_windows_security_context_options.c
-    model/v1alpha1_aggregation_rule.c
-    model/v1alpha1_cluster_role.c
-    model/v1alpha1_cluster_role_binding.c
-    model/v1alpha1_cluster_role_binding_list.c
-    model/v1alpha1_cluster_role_list.c
     model/v1alpha1_csi_storage_capacity.c
     model/v1alpha1_csi_storage_capacity_list.c
     model/v1alpha1_overhead.c
-    model/v1alpha1_policy_rule.c
-    model/v1alpha1_priority_class.c
-    model/v1alpha1_priority_class_list.c
-    model/v1alpha1_role.c
-    model/v1alpha1_role_binding.c
-    model/v1alpha1_role_binding_list.c
-    model/v1alpha1_role_list.c
-    model/v1alpha1_role_ref.c
     model/v1alpha1_runtime_class.c
     model/v1alpha1_runtime_class_list.c
     model/v1alpha1_runtime_class_spec.c
@@ -468,13 +459,6 @@ set(SRCS
     model/v1alpha1_storage_version_condition.c
     model/v1alpha1_storage_version_list.c
     model/v1alpha1_storage_version_status.c
-    model/v1alpha1_subject.c
-    model/v1alpha1_volume_attachment.c
-    model/v1alpha1_volume_attachment_list.c
-    model/v1alpha1_volume_attachment_source.c
-    model/v1alpha1_volume_attachment_spec.c
-    model/v1alpha1_volume_attachment_status.c
-    model/v1alpha1_volume_error.c
     model/v1beta1_allowed_csi_driver.c
     model/v1beta1_allowed_flex_volume.c
     model/v1beta1_allowed_host_path.c
@@ -536,6 +520,52 @@ set(SRCS
     model/v1beta1_subject.c
     model/v1beta1_supplemental_groups_strategy_options.c
     model/v1beta1_user_subject.c
+    model/v1beta2_flow_distinguisher_method.c
+    model/v1beta2_flow_schema.c
+    model/v1beta2_flow_schema_condition.c
+    model/v1beta2_flow_schema_list.c
+    model/v1beta2_flow_schema_spec.c
+    model/v1beta2_flow_schema_status.c
+    model/v1beta2_group_subject.c
+    model/v1beta2_limit_response.c
+    model/v1beta2_limited_priority_level_configuration.c
+    model/v1beta2_non_resource_policy_rule.c
+    model/v1beta2_policy_rules_with_subjects.c
+    model/v1beta2_priority_level_configuration.c
+    model/v1beta2_priority_level_configuration_condition.c
+    model/v1beta2_priority_level_configuration_list.c
+    model/v1beta2_priority_level_configuration_reference.c
+    model/v1beta2_priority_level_configuration_spec.c
+    model/v1beta2_priority_level_configuration_status.c
+    model/v1beta2_queuing_configuration.c
+    model/v1beta2_resource_policy_rule.c
+    model/v1beta2_service_account_subject.c
+    model/v1beta2_subject.c
+    model/v1beta2_user_subject.c
+    model/v2_container_resource_metric_source.c
+    model/v2_container_resource_metric_status.c
+    model/v2_cross_version_object_reference.c
+    model/v2_external_metric_source.c
+    model/v2_external_metric_status.c
+    model/v2_horizontal_pod_autoscaler.c
+    model/v2_horizontal_pod_autoscaler_behavior.c
+    model/v2_horizontal_pod_autoscaler_condition.c
+    model/v2_horizontal_pod_autoscaler_list.c
+    model/v2_horizontal_pod_autoscaler_spec.c
+    model/v2_horizontal_pod_autoscaler_status.c
+    model/v2_hpa_scaling_policy.c
+    model/v2_hpa_scaling_rules.c
+    model/v2_metric_identifier.c
+    model/v2_metric_spec.c
+    model/v2_metric_status.c
+    model/v2_metric_target.c
+    model/v2_metric_value_status.c
+    model/v2_object_metric_source.c
+    model/v2_object_metric_status.c
+    model/v2_pods_metric_source.c
+    model/v2_pods_metric_status.c
+    model/v2_resource_metric_source.c
+    model/v2_resource_metric_status.c
     model/v2beta1_container_resource_metric_source.c
     model/v2beta1_container_resource_metric_status.c
     model/v2beta1_cross_version_object_reference.c
@@ -594,6 +624,7 @@ set(SRCS
     api/AuthorizationV1API.c
     api/AutoscalingAPI.c
     api/AutoscalingV1API.c
+    api/AutoscalingV2API.c
     api/AutoscalingV2beta1API.c
     api/AutoscalingV2beta2API.c
     api/BatchAPI.c
@@ -614,6 +645,7 @@ set(SRCS
     api/EventsV1beta1API.c
     api/FlowcontrolApiserverAPI.c
     api/FlowcontrolApiserverV1beta1API.c
+    api/FlowcontrolApiserverV1beta2API.c
     api/InternalApiserverAPI.c
     api/InternalApiserverV1alpha1API.c
     api/LogsAPI.c
@@ -629,10 +661,8 @@ set(SRCS
     api/PolicyV1beta1API.c
     api/RbacAuthorizationAPI.c
     api/RbacAuthorizationV1API.c
-    api/RbacAuthorizationV1alpha1API.c
     api/SchedulingAPI.c
     api/SchedulingV1API.c
-    api/SchedulingV1alpha1API.c
     api/StorageAPI.c
     api/StorageV1API.c
     api/StorageV1alpha1API.c
@@ -791,7 +821,7 @@ set(HDRS
     model/v1_glusterfs_persistent_volume_source.h
     model/v1_glusterfs_volume_source.h
     model/v1_group_version_for_discovery.h
-    model/v1_handler.h
+    model/v1_grpc_action.h
     model/v1_horizontal_pod_autoscaler.h
     model/v1_horizontal_pod_autoscaler_list.h
     model/v1_horizontal_pod_autoscaler_spec.h
@@ -831,6 +861,7 @@ set(HDRS
     model/v1_lease_list.h
     model/v1_lease_spec.h
     model/v1_lifecycle.h
+    model/v1_lifecycle_handler.h
     model/v1_limit_range.h
     model/v1_limit_range_item.h
     model/v1_limit_range_list.h
@@ -904,6 +935,7 @@ set(HDRS
     model/v1_pod_dns_config_option.h
     model/v1_pod_ip.h
     model/v1_pod_list.h
+    model/v1_pod_os.h
     model/v1_pod_readiness_gate.h
     model/v1_pod_security_context.h
     model/v1_pod_spec.h
@@ -988,6 +1020,7 @@ set(HDRS
     model/v1_stateful_set.h
     model/v1_stateful_set_condition.h
     model/v1_stateful_set_list.h
+    model/v1_stateful_set_persistent_volume_claim_retention_policy.h
     model/v1_stateful_set_spec.h
     model/v1_stateful_set_status.h
     model/v1_stateful_set_update_strategy.h
@@ -1021,6 +1054,7 @@ set(HDRS
     model/v1_validating_webhook.h
     model/v1_validating_webhook_configuration.h
     model/v1_validating_webhook_configuration_list.h
+    model/v1_validation_rule.h
     model/v1_volume.h
     model/v1_volume_attachment.h
     model/v1_volume_attachment_list.h
@@ -1038,22 +1072,9 @@ set(HDRS
     model/v1_webhook_conversion.h
     model/v1_weighted_pod_affinity_term.h
     model/v1_windows_security_context_options.h
-    model/v1alpha1_aggregation_rule.h
-    model/v1alpha1_cluster_role.h
-    model/v1alpha1_cluster_role_binding.h
-    model/v1alpha1_cluster_role_binding_list.h
-    model/v1alpha1_cluster_role_list.h
     model/v1alpha1_csi_storage_capacity.h
     model/v1alpha1_csi_storage_capacity_list.h
     model/v1alpha1_overhead.h
-    model/v1alpha1_policy_rule.h
-    model/v1alpha1_priority_class.h
-    model/v1alpha1_priority_class_list.h
-    model/v1alpha1_role.h
-    model/v1alpha1_role_binding.h
-    model/v1alpha1_role_binding_list.h
-    model/v1alpha1_role_list.h
-    model/v1alpha1_role_ref.h
     model/v1alpha1_runtime_class.h
     model/v1alpha1_runtime_class_list.h
     model/v1alpha1_runtime_class_spec.h
@@ -1063,13 +1084,6 @@ set(HDRS
     model/v1alpha1_storage_version_condition.h
     model/v1alpha1_storage_version_list.h
     model/v1alpha1_storage_version_status.h
-    model/v1alpha1_subject.h
-    model/v1alpha1_volume_attachment.h
-    model/v1alpha1_volume_attachment_list.h
-    model/v1alpha1_volume_attachment_source.h
-    model/v1alpha1_volume_attachment_spec.h
-    model/v1alpha1_volume_attachment_status.h
-    model/v1alpha1_volume_error.h
     model/v1beta1_allowed_csi_driver.h
     model/v1beta1_allowed_flex_volume.h
     model/v1beta1_allowed_host_path.h
@@ -1131,6 +1145,52 @@ set(HDRS
     model/v1beta1_subject.h
     model/v1beta1_supplemental_groups_strategy_options.h
     model/v1beta1_user_subject.h
+    model/v1beta2_flow_distinguisher_method.h
+    model/v1beta2_flow_schema.h
+    model/v1beta2_flow_schema_condition.h
+    model/v1beta2_flow_schema_list.h
+    model/v1beta2_flow_schema_spec.h
+    model/v1beta2_flow_schema_status.h
+    model/v1beta2_group_subject.h
+    model/v1beta2_limit_response.h
+    model/v1beta2_limited_priority_level_configuration.h
+    model/v1beta2_non_resource_policy_rule.h
+    model/v1beta2_policy_rules_with_subjects.h
+    model/v1beta2_priority_level_configuration.h
+    model/v1beta2_priority_level_configuration_condition.h
+    model/v1beta2_priority_level_configuration_list.h
+    model/v1beta2_priority_level_configuration_reference.h
+    model/v1beta2_priority_level_configuration_spec.h
+    model/v1beta2_priority_level_configuration_status.h
+    model/v1beta2_queuing_configuration.h
+    model/v1beta2_resource_policy_rule.h
+    model/v1beta2_service_account_subject.h
+    model/v1beta2_subject.h
+    model/v1beta2_user_subject.h
+    model/v2_container_resource_metric_source.h
+    model/v2_container_resource_metric_status.h
+    model/v2_cross_version_object_reference.h
+    model/v2_external_metric_source.h
+    model/v2_external_metric_status.h
+    model/v2_horizontal_pod_autoscaler.h
+    model/v2_horizontal_pod_autoscaler_behavior.h
+    model/v2_horizontal_pod_autoscaler_condition.h
+    model/v2_horizontal_pod_autoscaler_list.h
+    model/v2_horizontal_pod_autoscaler_spec.h
+    model/v2_horizontal_pod_autoscaler_status.h
+    model/v2_hpa_scaling_policy.h
+    model/v2_hpa_scaling_rules.h
+    model/v2_metric_identifier.h
+    model/v2_metric_spec.h
+    model/v2_metric_status.h
+    model/v2_metric_target.h
+    model/v2_metric_value_status.h
+    model/v2_object_metric_source.h
+    model/v2_object_metric_status.h
+    model/v2_pods_metric_source.h
+    model/v2_pods_metric_status.h
+    model/v2_resource_metric_source.h
+    model/v2_resource_metric_status.h
     model/v2beta1_container_resource_metric_source.h
     model/v2beta1_container_resource_metric_status.h
     model/v2beta1_cross_version_object_reference.h
@@ -1189,6 +1249,7 @@ set(HDRS
     api/AuthorizationV1API.h
     api/AutoscalingAPI.h
     api/AutoscalingV1API.h
+    api/AutoscalingV2API.h
     api/AutoscalingV2beta1API.h
     api/AutoscalingV2beta2API.h
     api/BatchAPI.h
@@ -1209,6 +1270,7 @@ set(HDRS
     api/EventsV1beta1API.h
     api/FlowcontrolApiserverAPI.h
     api/FlowcontrolApiserverV1beta1API.h
+    api/FlowcontrolApiserverV1beta2API.h
     api/InternalApiserverAPI.h
     api/InternalApiserverV1alpha1API.h
     api/LogsAPI.h
@@ -1224,10 +1286,8 @@ set(HDRS
     api/PolicyV1beta1API.h
     api/RbacAuthorizationAPI.h
     api/RbacAuthorizationV1API.h
-    api/RbacAuthorizationV1alpha1API.h
     api/SchedulingAPI.h
     api/SchedulingV1API.h
-    api/SchedulingV1alpha1API.h
     api/StorageAPI.h
     api/StorageV1API.h
     api/StorageV1alpha1API.h
@@ -1330,6 +1390,7 @@ set(HDRS "")
 #    unit-tests/manual-AuthorizationV1API.c
 #    unit-tests/manual-AutoscalingAPI.c
 #    unit-tests/manual-AutoscalingV1API.c
+#    unit-tests/manual-AutoscalingV2API.c
 #    unit-tests/manual-AutoscalingV2beta1API.c
 #    unit-tests/manual-AutoscalingV2beta2API.c
 #    unit-tests/manual-BatchAPI.c
@@ -1350,6 +1411,7 @@ set(HDRS "")
 #    unit-tests/manual-EventsV1beta1API.c
 #    unit-tests/manual-FlowcontrolApiserverAPI.c
 #    unit-tests/manual-FlowcontrolApiserverV1beta1API.c
+#    unit-tests/manual-FlowcontrolApiserverV1beta2API.c
 #    unit-tests/manual-InternalApiserverAPI.c
 #    unit-tests/manual-InternalApiserverV1alpha1API.c
 #    unit-tests/manual-LogsAPI.c
@@ -1365,10 +1427,8 @@ set(HDRS "")
 #    unit-tests/manual-PolicyV1beta1API.c
 #    unit-tests/manual-RbacAuthorizationAPI.c
 #    unit-tests/manual-RbacAuthorizationV1API.c
-#    unit-tests/manual-RbacAuthorizationV1alpha1API.c
 #    unit-tests/manual-SchedulingAPI.c
 #    unit-tests/manual-SchedulingV1API.c
-#    unit-tests/manual-SchedulingV1alpha1API.c
 #    unit-tests/manual-StorageAPI.c
 #    unit-tests/manual-StorageV1API.c
 #    unit-tests/manual-StorageV1alpha1API.c

@@ -36,19 +36,19 @@ cJSON *core_v1_event_series_convertToJSON(core_v1_event_series_t *core_v1_event_
     cJSON *item = cJSON_CreateObject();
 
     // core_v1_event_series->count
-    if(core_v1_event_series->count) { 
+    if(core_v1_event_series->count) {
     if(cJSON_AddNumberToObject(item, "count", core_v1_event_series->count) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // core_v1_event_series->last_observed_time
-    if(core_v1_event_series->last_observed_time) { 
+    if(core_v1_event_series->last_observed_time) {
     if(cJSON_AddStringToObject(item, "lastObservedTime", core_v1_event_series->last_observed_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
     return item;
 fail:

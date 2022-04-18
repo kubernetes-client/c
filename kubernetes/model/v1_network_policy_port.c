@@ -42,15 +42,15 @@ cJSON *v1_network_policy_port_convertToJSON(v1_network_policy_port_t *v1_network
     cJSON *item = cJSON_CreateObject();
 
     // v1_network_policy_port->end_port
-    if(v1_network_policy_port->end_port) { 
+    if(v1_network_policy_port->end_port) {
     if(cJSON_AddNumberToObject(item, "endPort", v1_network_policy_port->end_port) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_network_policy_port->port
-    if(v1_network_policy_port->port) { 
+    if(v1_network_policy_port->port) {
     cJSON *port_local_JSON = int_or_string_convertToJSON(v1_network_policy_port->port);
     if(port_local_JSON == NULL) {
         goto fail; // custom
@@ -59,15 +59,15 @@ cJSON *v1_network_policy_port_convertToJSON(v1_network_policy_port_t *v1_network
     if(item->child == NULL) {
         goto fail;
     }
-     } 
+    }
 
 
     // v1_network_policy_port->protocol
-    if(v1_network_policy_port->protocol) { 
+    if(v1_network_policy_port->protocol) {
     if(cJSON_AddStringToObject(item, "protocol", v1_network_policy_port->protocol) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

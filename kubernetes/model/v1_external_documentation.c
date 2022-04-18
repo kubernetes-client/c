@@ -40,19 +40,19 @@ cJSON *v1_external_documentation_convertToJSON(v1_external_documentation_t *v1_e
     cJSON *item = cJSON_CreateObject();
 
     // v1_external_documentation->description
-    if(v1_external_documentation->description) { 
+    if(v1_external_documentation->description) {
     if(cJSON_AddStringToObject(item, "description", v1_external_documentation->description) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_external_documentation->url
-    if(v1_external_documentation->url) { 
+    if(v1_external_documentation->url) {
     if(cJSON_AddStringToObject(item, "url", v1_external_documentation->url) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

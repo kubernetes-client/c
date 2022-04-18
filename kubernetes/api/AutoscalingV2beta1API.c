@@ -15,7 +15,7 @@
 // create a HorizontalPodAutoscaler
 //
 v2beta1_horizontal_pod_autoscaler_t*
-AutoscalingV2beta1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , v2beta1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager )
+AutoscalingV2beta1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * _namespace , v2beta1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -78,6 +78,18 @@ AutoscalingV2beta1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiCl
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -99,18 +111,22 @@ AutoscalingV2beta1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiCl
                     localVarBodyParameters,
                     "POST");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v2beta1_horizontal_pod_autoscaler_t *elementToReturn = v2beta1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -172,6 +188,18 @@ AutoscalingV2beta1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiCl
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:
@@ -379,12 +407,14 @@ AutoscalingV2beta1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClien
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -685,15 +715,18 @@ AutoscalingV2beta1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiCl
                     localVarBodyParameters,
                     "DELETE");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 202) {
-        printf("%s\n","Accepted");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 202) {
+    //    printf("%s\n","Accepted");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -820,12 +853,14 @@ AutoscalingV2beta1API_getAPIResources(apiClient_t *apiClient)
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -1011,12 +1046,14 @@ AutoscalingV2beta1API_listHorizontalPodAutoscalerForAllNamespaces(apiClient_t *a
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v2beta1_horizontal_pod_autoscaler_list_t *elementToReturn = v2beta1_horizontal_pod_autoscaler_list_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -1332,12 +1369,14 @@ AutoscalingV2beta1API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClie
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v2beta1_horizontal_pod_autoscaler_list_t *elementToReturn = v2beta1_horizontal_pod_autoscaler_list_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -1489,7 +1528,7 @@ end:
 // partially update the specified HorizontalPodAutoscaler
 //
 v2beta1_horizontal_pod_autoscaler_t*
-AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1563,6 +1602,18 @@ AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiCli
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -1600,15 +1651,18 @@ AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiCli
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v2beta1_horizontal_pod_autoscaler_t *elementToReturn = v2beta1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -1672,6 +1726,18 @@ AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiCli
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -1694,7 +1760,7 @@ end:
 // partially update status of the specified HorizontalPodAutoscaler
 //
 v2beta1_horizontal_pod_autoscaler_t*
-AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force )
+AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1768,6 +1834,18 @@ AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -1805,15 +1883,18 @@ AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *
                     localVarBodyParameters,
                     "PATCH");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v2beta1_horizontal_pod_autoscaler_t *elementToReturn = v2beta1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -1876,6 +1957,18 @@ AutoscalingV2beta1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     if(keyQuery_force){
         free(keyQuery_force);
@@ -1960,12 +2053,14 @@ AutoscalingV2beta1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClie
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v2beta1_horizontal_pod_autoscaler_t *elementToReturn = v2beta1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -2071,12 +2166,14 @@ AutoscalingV2beta1API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *a
                     localVarBodyParameters,
                     "GET");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v2beta1_horizontal_pod_autoscaler_t *elementToReturn = v2beta1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -2121,7 +2218,7 @@ end:
 // replace the specified HorizontalPodAutoscaler
 //
 v2beta1_horizontal_pod_autoscaler_t*
-AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , v2beta1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager )
+AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char * name , char * _namespace , v2beta1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2194,6 +2291,18 @@ AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiC
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -2215,15 +2324,18 @@ AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiC
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v2beta1_horizontal_pod_autoscaler_t *elementToReturn = v2beta1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -2287,6 +2399,18 @@ AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiC
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -2297,7 +2421,7 @@ end:
 // replace status of the specified HorizontalPodAutoscaler
 //
 v2beta1_horizontal_pod_autoscaler_t*
-AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , v2beta1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager )
+AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char * name , char * _namespace , v2beta1_horizontal_pod_autoscaler_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2370,6 +2494,18 @@ AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -2391,15 +2527,18 @@ AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t
                     localVarBodyParameters,
                     "PUT");
 
-    if (apiClient->response_code == 200) {
-        printf("%s\n","OK");
-    }
-    if (apiClient->response_code == 201) {
-        printf("%s\n","Created");
-    }
-    if (apiClient->response_code == 401) {
-        printf("%s\n","Unauthorized");
-    }
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
     //nonprimitive not container
     cJSON *AutoscalingV2beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
     v2beta1_horizontal_pod_autoscaler_t *elementToReturn = v2beta1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV2beta1APIlocalVarJSON);
@@ -2462,6 +2601,18 @@ AutoscalingV2beta1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:

@@ -63,7 +63,6 @@ cJSON *v1_condition_convertToJSON(v1_condition_t *v1_condition) {
     if (!v1_condition->last_transition_time) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v1_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
@@ -73,25 +72,23 @@ cJSON *v1_condition_convertToJSON(v1_condition_t *v1_condition) {
     if (!v1_condition->message) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "message", v1_condition->message) == NULL) {
     goto fail; //String
     }
 
 
     // v1_condition->observed_generation
-    if(v1_condition->observed_generation) { 
+    if(v1_condition->observed_generation) {
     if(cJSON_AddNumberToObject(item, "observedGeneration", v1_condition->observed_generation) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_condition->reason
     if (!v1_condition->reason) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "reason", v1_condition->reason) == NULL) {
     goto fail; //String
     }
@@ -101,7 +98,6 @@ cJSON *v1_condition_convertToJSON(v1_condition_t *v1_condition) {
     if (!v1_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v1_condition->status) == NULL) {
     goto fail; //String
     }
@@ -111,7 +107,6 @@ cJSON *v1_condition_convertToJSON(v1_condition_t *v1_condition) {
     if (!v1_condition->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v1_condition->type) == NULL) {
     goto fail; //String
     }

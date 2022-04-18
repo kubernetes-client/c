@@ -45,7 +45,7 @@ cJSON *v1_config_map_projection_convertToJSON(v1_config_map_projection_t *v1_con
     cJSON *item = cJSON_CreateObject();
 
     // v1_config_map_projection->items
-    if(v1_config_map_projection->items) { 
+    if(v1_config_map_projection->items) {
     cJSON *items = cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
@@ -61,23 +61,23 @@ cJSON *v1_config_map_projection_convertToJSON(v1_config_map_projection_t *v1_con
     cJSON_AddItemToArray(items, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_config_map_projection->name
-    if(v1_config_map_projection->name) { 
+    if(v1_config_map_projection->name) {
     if(cJSON_AddStringToObject(item, "name", v1_config_map_projection->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_config_map_projection->optional
-    if(v1_config_map_projection->optional) { 
+    if(v1_config_map_projection->optional) {
     if(cJSON_AddBoolToObject(item, "optional", v1_config_map_projection->optional) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
     return item;
 fail:

@@ -47,34 +47,33 @@ cJSON *v1_subject_access_review_status_convertToJSON(v1_subject_access_review_st
     if (!v1_subject_access_review_status->allowed) {
         goto fail;
     }
-    
     if(cJSON_AddBoolToObject(item, "allowed", v1_subject_access_review_status->allowed) == NULL) {
     goto fail; //Bool
     }
 
 
     // v1_subject_access_review_status->denied
-    if(v1_subject_access_review_status->denied) { 
+    if(v1_subject_access_review_status->denied) {
     if(cJSON_AddBoolToObject(item, "denied", v1_subject_access_review_status->denied) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_subject_access_review_status->evaluation_error
-    if(v1_subject_access_review_status->evaluation_error) { 
+    if(v1_subject_access_review_status->evaluation_error) {
     if(cJSON_AddStringToObject(item, "evaluationError", v1_subject_access_review_status->evaluation_error) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_subject_access_review_status->reason
-    if(v1_subject_access_review_status->reason) { 
+    if(v1_subject_access_review_status->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_subject_access_review_status->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

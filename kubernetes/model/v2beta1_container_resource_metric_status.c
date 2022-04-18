@@ -51,25 +51,23 @@ cJSON *v2beta1_container_resource_metric_status_convertToJSON(v2beta1_container_
     if (!v2beta1_container_resource_metric_status->container) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "container", v2beta1_container_resource_metric_status->container) == NULL) {
     goto fail; //String
     }
 
 
     // v2beta1_container_resource_metric_status->current_average_utilization
-    if(v2beta1_container_resource_metric_status->current_average_utilization) { 
+    if(v2beta1_container_resource_metric_status->current_average_utilization) {
     if(cJSON_AddNumberToObject(item, "currentAverageUtilization", v2beta1_container_resource_metric_status->current_average_utilization) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v2beta1_container_resource_metric_status->current_average_value
     if (!v2beta1_container_resource_metric_status->current_average_value) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "currentAverageValue", v2beta1_container_resource_metric_status->current_average_value) == NULL) {
     goto fail; //String
     }
@@ -79,7 +77,6 @@ cJSON *v2beta1_container_resource_metric_status_convertToJSON(v2beta1_container_
     if (!v2beta1_container_resource_metric_status->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v2beta1_container_resource_metric_status->name) == NULL) {
     goto fail; //String
     }

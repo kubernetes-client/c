@@ -34,7 +34,7 @@ cJSON *v1_node_daemon_endpoints_convertToJSON(v1_node_daemon_endpoints_t *v1_nod
     cJSON *item = cJSON_CreateObject();
 
     // v1_node_daemon_endpoints->kubelet_endpoint
-    if(v1_node_daemon_endpoints->kubelet_endpoint) { 
+    if(v1_node_daemon_endpoints->kubelet_endpoint) {
     cJSON *kubelet_endpoint_local_JSON = v1_daemon_endpoint_convertToJSON(v1_node_daemon_endpoints->kubelet_endpoint);
     if(kubelet_endpoint_local_JSON == NULL) {
     goto fail; //model
@@ -43,7 +43,7 @@ cJSON *v1_node_daemon_endpoints_convertToJSON(v1_node_daemon_endpoints_t *v1_nod
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

@@ -43,7 +43,7 @@ cJSON *v1_ingress_tls_convertToJSON(v1_ingress_tls_t *v1_ingress_tls) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_ingress_tls->hosts
-    if(v1_ingress_tls->hosts) { 
+    if(v1_ingress_tls->hosts) {
     cJSON *hosts = cJSON_AddArrayToObject(item, "hosts");
     if(hosts == NULL) {
         goto fail; //primitive container
@@ -56,15 +56,15 @@ cJSON *v1_ingress_tls_convertToJSON(v1_ingress_tls_t *v1_ingress_tls) {
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_ingress_tls->secret_name
-    if(v1_ingress_tls->secret_name) { 
+    if(v1_ingress_tls->secret_name) {
     if(cJSON_AddStringToObject(item, "secretName", v1_ingress_tls->secret_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

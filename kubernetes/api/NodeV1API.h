@@ -16,7 +16,7 @@
 // create a RuntimeClass
 //
 v1_runtime_class_t*
-NodeV1API_createRuntimeClass(apiClient_t *apiClient, v1_runtime_class_t * body , char * pretty , char * dryRun , char * fieldManager );
+NodeV1API_createRuntimeClass(apiClient_t *apiClient, v1_runtime_class_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of RuntimeClass
@@ -46,7 +46,7 @@ NodeV1API_listRuntimeClass(apiClient_t *apiClient, char * pretty , int allowWatc
 // partially update the specified RuntimeClass
 //
 v1_runtime_class_t*
-NodeV1API_patchRuntimeClass(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+NodeV1API_patchRuntimeClass(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified RuntimeClass
@@ -58,6 +58,6 @@ NodeV1API_readRuntimeClass(apiClient_t *apiClient, char * name , char * pretty )
 // replace the specified RuntimeClass
 //
 v1_runtime_class_t*
-NodeV1API_replaceRuntimeClass(apiClient_t *apiClient, char * name , v1_runtime_class_t * body , char * pretty , char * dryRun , char * fieldManager );
+NodeV1API_replaceRuntimeClass(apiClient_t *apiClient, char * name , v1_runtime_class_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

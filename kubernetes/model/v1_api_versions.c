@@ -58,26 +58,25 @@ cJSON *v1_api_versions_convertToJSON(v1_api_versions_t *v1_api_versions) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_api_versions->api_version
-    if(v1_api_versions->api_version) { 
+    if(v1_api_versions->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_api_versions->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_versions->kind
-    if(v1_api_versions->kind) { 
+    if(v1_api_versions->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_api_versions->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_api_versions->server_address_by_client_cidrs
     if (!v1_api_versions->server_address_by_client_cidrs) {
         goto fail;
     }
-    
     cJSON *server_address_by_client_cidrs = cJSON_AddArrayToObject(item, "serverAddressByClientCIDRs");
     if(server_address_by_client_cidrs == NULL) {
     goto fail; //nonprimitive container
@@ -99,7 +98,6 @@ cJSON *v1_api_versions_convertToJSON(v1_api_versions_t *v1_api_versions) {
     if (!v1_api_versions->versions) {
         goto fail;
     }
-    
     cJSON *versions = cJSON_AddArrayToObject(item, "versions");
     if(versions == NULL) {
         goto fail; //primitive container

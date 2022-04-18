@@ -34,7 +34,7 @@ cJSON *v1_custom_resource_validation_convertToJSON(v1_custom_resource_validation
     cJSON *item = cJSON_CreateObject();
 
     // v1_custom_resource_validation->open_apiv3_schema
-    if(v1_custom_resource_validation->open_apiv3_schema) { 
+    if(v1_custom_resource_validation->open_apiv3_schema) {
     cJSON *open_apiv3_schema_local_JSON = v1_json_schema_props_convertToJSON(v1_custom_resource_validation->open_apiv3_schema);
     if(open_apiv3_schema_local_JSON == NULL) {
     goto fail; //model
@@ -43,7 +43,7 @@ cJSON *v1_custom_resource_validation_convertToJSON(v1_custom_resource_validation
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

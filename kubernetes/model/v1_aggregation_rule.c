@@ -37,7 +37,7 @@ cJSON *v1_aggregation_rule_convertToJSON(v1_aggregation_rule_t *v1_aggregation_r
     cJSON *item = cJSON_CreateObject();
 
     // v1_aggregation_rule->cluster_role_selectors
-    if(v1_aggregation_rule->cluster_role_selectors) { 
+    if(v1_aggregation_rule->cluster_role_selectors) {
     cJSON *cluster_role_selectors = cJSON_AddArrayToObject(item, "clusterRoleSelectors");
     if(cluster_role_selectors == NULL) {
     goto fail; //nonprimitive container
@@ -53,7 +53,7 @@ cJSON *v1_aggregation_rule_convertToJSON(v1_aggregation_rule_t *v1_aggregation_r
     cJSON_AddItemToArray(cluster_role_selectors, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

@@ -4,6 +4,40 @@
 #include "v1_pod_status.h"
 
 
+char* phasev1_pod_status_ToString(kubernetes_v1_pod_status_PHASE_e phase) {
+    char* phaseArray[] =  { "NULL", "Failed", "Pending", "Running", "Succeeded", "Unknown" };
+	return phaseArray[phase];
+}
+
+kubernetes_v1_pod_status_PHASE_e phasev1_pod_status_FromString(char* phase){
+    int stringToReturn = 0;
+    char *phaseArray[] =  { "NULL", "Failed", "Pending", "Running", "Succeeded", "Unknown" };
+    size_t sizeofArray = sizeof(phaseArray) / sizeof(phaseArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(phase, phaseArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
+char* qos_classv1_pod_status_ToString(kubernetes_v1_pod_status_QOSCLASS_e qos_class) {
+    char* qos_classArray[] =  { "NULL", "BestEffort", "Burstable", "Guaranteed" };
+	return qos_classArray[qos_class];
+}
+
+kubernetes_v1_pod_status_QOSCLASS_e qos_classv1_pod_status_FromString(char* qos_class){
+    int stringToReturn = 0;
+    char *qos_classArray[] =  { "NULL", "BestEffort", "Burstable", "Guaranteed" };
+    size_t sizeofArray = sizeof(qos_classArray) / sizeof(qos_classArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(qos_class, qos_classArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_pod_status_t *v1_pod_status_create(
     list_t *conditions,
@@ -13,10 +47,10 @@ v1_pod_status_t *v1_pod_status_create(
     list_t *init_container_statuses,
     char *message,
     char *nominated_node_name,
-    char *phase,
+    kubernetes_v1_pod_status_PHASE_e phase,
     char *pod_ip,
     list_t *pod_ips,
-    char *qos_class,
+    kubernetes_v1_pod_status_QOSCLASS_e qos_class,
     char *reason,
     char *start_time
     ) {
@@ -87,10 +121,6 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
         free(v1_pod_status->nominated_node_name);
         v1_pod_status->nominated_node_name = NULL;
     }
-    if (v1_pod_status->phase) {
-        free(v1_pod_status->phase);
-        v1_pod_status->phase = NULL;
-    }
     if (v1_pod_status->pod_ip) {
         free(v1_pod_status->pod_ip);
         v1_pod_status->pod_ip = NULL;
@@ -101,10 +131,6 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
         }
         list_freeList(v1_pod_status->pod_ips);
         v1_pod_status->pod_ips = NULL;
-    }
-    if (v1_pod_status->qos_class) {
-        free(v1_pod_status->qos_class);
-        v1_pod_status->qos_class = NULL;
     }
     if (v1_pod_status->reason) {
         free(v1_pod_status->reason);
@@ -121,7 +147,7 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_status->conditions
-    if(v1_pod_status->conditions) { 
+    if(v1_pod_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -137,11 +163,11 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_status->container_statuses
-    if(v1_pod_status->container_statuses) { 
+    if(v1_pod_status->container_statuses) {
     cJSON *container_statuses = cJSON_AddArrayToObject(item, "containerStatuses");
     if(container_statuses == NULL) {
     goto fail; //nonprimitive container
@@ -157,11 +183,11 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON_AddItemToArray(container_statuses, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_status->ephemeral_container_statuses
-    if(v1_pod_status->ephemeral_container_statuses) { 
+    if(v1_pod_status->ephemeral_container_statuses) {
     cJSON *ephemeral_container_statuses = cJSON_AddArrayToObject(item, "ephemeralContainerStatuses");
     if(ephemeral_container_statuses == NULL) {
     goto fail; //nonprimitive container
@@ -177,19 +203,19 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON_AddItemToArray(ephemeral_container_statuses, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_status->host_ip
-    if(v1_pod_status->host_ip) { 
+    if(v1_pod_status->host_ip) {
     if(cJSON_AddStringToObject(item, "hostIP", v1_pod_status->host_ip) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_status->init_container_statuses
-    if(v1_pod_status->init_container_statuses) { 
+    if(v1_pod_status->init_container_statuses) {
     cJSON *init_container_statuses = cJSON_AddArrayToObject(item, "initContainerStatuses");
     if(init_container_statuses == NULL) {
     goto fail; //nonprimitive container
@@ -205,43 +231,44 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON_AddItemToArray(init_container_statuses, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_status->message
-    if(v1_pod_status->message) { 
+    if(v1_pod_status->message) {
     if(cJSON_AddStringToObject(item, "message", v1_pod_status->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_status->nominated_node_name
-    if(v1_pod_status->nominated_node_name) { 
+    if(v1_pod_status->nominated_node_name) {
     if(cJSON_AddStringToObject(item, "nominatedNodeName", v1_pod_status->nominated_node_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_status->phase
-    if(v1_pod_status->phase) { 
-    if(cJSON_AddStringToObject(item, "phase", v1_pod_status->phase) == NULL) {
-    goto fail; //String
+    if(v1_pod_status->phase != kubernetes_v1_pod_status_PHASE_NULL) {
+    if(cJSON_AddStringToObject(item, "phase", phasev1_pod_status_ToString(v1_pod_status->phase)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    }
 
 
     // v1_pod_status->pod_ip
-    if(v1_pod_status->pod_ip) { 
+    if(v1_pod_status->pod_ip) {
     if(cJSON_AddStringToObject(item, "podIP", v1_pod_status->pod_ip) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_status->pod_ips
-    if(v1_pod_status->pod_ips) { 
+    if(v1_pod_status->pod_ips) {
     cJSON *pod_ips = cJSON_AddArrayToObject(item, "podIPs");
     if(pod_ips == NULL) {
     goto fail; //nonprimitive container
@@ -257,31 +284,32 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON_AddItemToArray(pod_ips, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_pod_status->qos_class
-    if(v1_pod_status->qos_class) { 
-    if(cJSON_AddStringToObject(item, "qosClass", v1_pod_status->qos_class) == NULL) {
-    goto fail; //String
+    if(v1_pod_status->qos_class != kubernetes_v1_pod_status_QOSCLASS_NULL) {
+    if(cJSON_AddStringToObject(item, "qosClass", qos_classv1_pod_status_ToString(v1_pod_status->qos_class)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    }
 
 
     // v1_pod_status->reason
-    if(v1_pod_status->reason) { 
+    if(v1_pod_status->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_pod_status->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_pod_status->start_time
-    if(v1_pod_status->start_time) { 
+    if(v1_pod_status->start_time) {
     if(cJSON_AddStringToObject(item, "startTime", v1_pod_status->start_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
     return item;
 fail:
@@ -423,11 +451,13 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "phase");
+    kubernetes_v1_pod_status_PHASE_e phaseVariable;
     if (phase) { 
     if(!cJSON_IsString(phase))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    phaseVariable = phasev1_pod_status_FromString(phase->valuestring);
     }
 
     // v1_pod_status->pod_ip
@@ -462,11 +492,13 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->qos_class
     cJSON *qos_class = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "qosClass");
+    kubernetes_v1_pod_status_QOSCLASS_e qos_classVariable;
     if (qos_class) { 
     if(!cJSON_IsString(qos_class))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    qos_classVariable = qos_classv1_pod_status_FromString(qos_class->valuestring);
     }
 
     // v1_pod_status->reason
@@ -496,10 +528,10 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         init_container_statuses ? init_container_statusesList : NULL,
         message ? strdup(message->valuestring) : NULL,
         nominated_node_name ? strdup(nominated_node_name->valuestring) : NULL,
-        phase ? strdup(phase->valuestring) : NULL,
+        phase ? phaseVariable : -1,
         pod_ip ? strdup(pod_ip->valuestring) : NULL,
         pod_ips ? pod_ipsList : NULL,
-        qos_class ? strdup(qos_class->valuestring) : NULL,
+        qos_class ? qos_classVariable : -1,
         reason ? strdup(reason->valuestring) : NULL,
         start_time ? strdup(start_time->valuestring) : NULL
         );

@@ -79,7 +79,7 @@ cJSON *v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_
     cJSON *item = cJSON_CreateObject();
 
     // v1_persistent_volume_claim_spec->access_modes
-    if(v1_persistent_volume_claim_spec->access_modes) { 
+    if(v1_persistent_volume_claim_spec->access_modes) {
     cJSON *access_modes = cJSON_AddArrayToObject(item, "accessModes");
     if(access_modes == NULL) {
         goto fail; //primitive container
@@ -92,11 +92,11 @@ cJSON *v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_spec->data_source
-    if(v1_persistent_volume_claim_spec->data_source) { 
+    if(v1_persistent_volume_claim_spec->data_source) {
     cJSON *data_source_local_JSON = v1_typed_local_object_reference_convertToJSON(v1_persistent_volume_claim_spec->data_source);
     if(data_source_local_JSON == NULL) {
     goto fail; //model
@@ -105,11 +105,11 @@ cJSON *v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_spec->data_source_ref
-    if(v1_persistent_volume_claim_spec->data_source_ref) { 
+    if(v1_persistent_volume_claim_spec->data_source_ref) {
     cJSON *data_source_ref_local_JSON = v1_typed_local_object_reference_convertToJSON(v1_persistent_volume_claim_spec->data_source_ref);
     if(data_source_ref_local_JSON == NULL) {
     goto fail; //model
@@ -118,11 +118,11 @@ cJSON *v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_spec->resources
-    if(v1_persistent_volume_claim_spec->resources) { 
+    if(v1_persistent_volume_claim_spec->resources) {
     cJSON *resources_local_JSON = v1_resource_requirements_convertToJSON(v1_persistent_volume_claim_spec->resources);
     if(resources_local_JSON == NULL) {
     goto fail; //model
@@ -131,11 +131,11 @@ cJSON *v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_spec->selector
-    if(v1_persistent_volume_claim_spec->selector) { 
+    if(v1_persistent_volume_claim_spec->selector) {
     cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_persistent_volume_claim_spec->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
@@ -144,31 +144,31 @@ cJSON *v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_spec->storage_class_name
-    if(v1_persistent_volume_claim_spec->storage_class_name) { 
+    if(v1_persistent_volume_claim_spec->storage_class_name) {
     if(cJSON_AddStringToObject(item, "storageClassName", v1_persistent_volume_claim_spec->storage_class_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_spec->volume_mode
-    if(v1_persistent_volume_claim_spec->volume_mode) { 
+    if(v1_persistent_volume_claim_spec->volume_mode) {
     if(cJSON_AddStringToObject(item, "volumeMode", v1_persistent_volume_claim_spec->volume_mode) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_spec->volume_name
-    if(v1_persistent_volume_claim_spec->volume_name) { 
+    if(v1_persistent_volume_claim_spec->volume_name) {
     if(cJSON_AddStringToObject(item, "volumeName", v1_persistent_volume_claim_spec->volume_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

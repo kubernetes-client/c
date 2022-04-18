@@ -338,115 +338,115 @@ CoreV1API_connectPutNodeProxyWithPath(apiClient_t *apiClient, char * name , char
 // create a Namespace
 //
 v1_namespace_t*
-CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a Binding
 //
 v1_binding_t*
-CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char * _namespace , v1_binding_t * body , char * dryRun , char * fieldManager , char * pretty );
+CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char * _namespace , v1_binding_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty );
 
 
 // create a ConfigMap
 //
 v1_config_map_t*
-CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , v1_config_map_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, char * _namespace , v1_config_map_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create Endpoints
 //
 v1_endpoints_t*
-CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , v1_endpoints_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char * _namespace , v1_endpoints_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create an Event
 //
 core_v1_event_t*
-CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a LimitRange
 //
 v1_limit_range_t*
-CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , v1_limit_range_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, char * _namespace , v1_limit_range_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_createNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a Pod
 //
 v1_pod_t*
-CoreV1API_createNamespacedPod(apiClient_t *apiClient, char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedPod(apiClient_t *apiClient, char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create binding of a Pod
 //
 v1_binding_t*
-CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char * name , char * _namespace , v1_binding_t * body , char * dryRun , char * fieldManager , char * pretty );
+CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char * name , char * _namespace , v1_binding_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty );
 
 
 // create eviction of a Pod
 //
 v1_eviction_t*
-CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char * _namespace , v1_eviction_t * body , char * dryRun , char * fieldManager , char * pretty );
+CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char * name , char * _namespace , v1_eviction_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty );
 
 
 // create a PodTemplate
 //
 v1_pod_template_t*
-CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , v1_pod_template_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient, char * _namespace , v1_pod_template_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_createNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedReplicationController(apiClient_t *apiClient, char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_createNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedResourceQuota(apiClient_t *apiClient, char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a Secret
 //
 v1_secret_t*
-CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char * _namespace , v1_secret_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char * _namespace , v1_secret_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a Service
 //
 v1_service_t*
-CoreV1API_createNamespacedService(apiClient_t *apiClient, char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedService(apiClient_t *apiClient, char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a ServiceAccount
 //
 v1_service_account_t*
-CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , v1_service_account_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char * _namespace , v1_service_account_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create token of a ServiceAccount
 //
 authentication_v1_token_request_t*
-CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * name , char * _namespace , authentication_v1_token_request_t * body , char * dryRun , char * fieldManager , char * pretty );
+CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char * name , char * _namespace , authentication_v1_token_request_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty );
 
 
 // create a Node
 //
 v1_node_t*
-CoreV1API_createNode(apiClient_t *apiClient, v1_node_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createNode(apiClient_t *apiClient, v1_node_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of ConfigMap
@@ -507,6 +507,12 @@ CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *
 //
 v1_status_t*
 CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
+
+
+// delete collection of Service
+//
+v1_status_t*
+CoreV1API_deleteCollectionNamespacedService(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of ServiceAccount
@@ -595,7 +601,7 @@ CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char * name , char * _n
 
 // delete a Service
 //
-v1_status_t*
+v1_service_t*
 CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
@@ -794,151 +800,151 @@ CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int allowWatchBook
 // partially update the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_patchNamespace(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespace(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified ConfigMap
 //
 v1_config_map_t*
-CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified Endpoints
 //
 v1_endpoints_t*
-CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified Event
 //
 core_v1_event_t*
-CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified LimitRange
 //
 v1_limit_range_t*
-CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified Pod
 //
 v1_pod_t*
-CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update ephemeralcontainers of the specified Pod
 //
 v1_pod_t*
-CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified Pod
 //
 v1_pod_t*
-CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified PodTemplate
 //
 v1_pod_template_t*
-CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update scale of the specified ReplicationController
 //
 v1_scale_t*
-CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified Secret
 //
 v1_secret_t*
-CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified Service
 //
 v1_service_t*
-CoreV1API_patchNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified ServiceAccount
 //
 v1_service_account_t*
-CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified Service
 //
 v1_service_t*
-CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified Node
 //
 v1_node_t*
-CoreV1API_patchNode(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNode(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified Node
 //
 v1_node_t*
-CoreV1API_patchNodeStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchNodeStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified ComponentStatus
@@ -1106,156 +1112,156 @@ CoreV1API_readPersistentVolumeStatus(apiClient_t *apiClient, char * name , char 
 // replace the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_replaceNamespace(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespace(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace finalize of the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * dryRun , char * fieldManager , char * pretty );
+CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty );
 
 
 // replace status of the specified Namespace
 //
 v1_namespace_t*
-CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char * name , v1_namespace_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified ConfigMap
 //
 v1_config_map_t*
-CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , v1_config_map_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char * name , char * _namespace , v1_config_map_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified Endpoints
 //
 v1_endpoints_t*
-CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , v1_endpoints_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char * name , char * _namespace , v1_endpoints_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified Event
 //
 core_v1_event_t*
-CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char * name , char * _namespace , core_v1_event_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified LimitRange
 //
 v1_limit_range_t*
-CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , v1_limit_range_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char * name , char * _namespace , v1_limit_range_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char * name , char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_persistent_volume_claim_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified Pod
 //
 v1_pod_t*
-CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace ephemeralcontainers of the specified Pod
 //
 v1_pod_t*
-CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified Pod
 //
 v1_pod_t*
-CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified PodTemplate
 //
 v1_pod_template_t*
-CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_template_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_template_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char * name , char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace scale of the specified ReplicationController
 //
 v1_scale_t*
-CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified ReplicationController
 //
 v1_replication_controller_t*
-CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_replication_controller_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char * name , char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_resource_quota_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified Secret
 //
 v1_secret_t*
-CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , v1_secret_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char * name , char * _namespace , v1_secret_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified Service
 //
 v1_service_t*
-CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char * name , char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified ServiceAccount
 //
 v1_service_account_t*
-CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , v1_service_account_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char * name , char * _namespace , v1_service_account_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified Service
 //
 v1_service_t*
-CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_service_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified Node
 //
 v1_node_t*
-CoreV1API_replaceNode(apiClient_t *apiClient, char * name , v1_node_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNode(apiClient_t *apiClient, char * name , v1_node_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified Node
 //
 v1_node_t*
-CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char * name , v1_node_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char * name , v1_node_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_replacePersistentVolume(apiClient_t *apiClient, char * name , v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replacePersistentVolume(apiClient_t *apiClient, char * name , v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_replacePersistentVolumeStatus(apiClient_t *apiClient, char * name , v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoreV1API_replacePersistentVolumeStatus(apiClient_t *apiClient, char * name , v1_persistent_volume_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

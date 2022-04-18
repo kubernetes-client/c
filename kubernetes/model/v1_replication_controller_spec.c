@@ -50,23 +50,23 @@ cJSON *v1_replication_controller_spec_convertToJSON(v1_replication_controller_sp
     cJSON *item = cJSON_CreateObject();
 
     // v1_replication_controller_spec->min_ready_seconds
-    if(v1_replication_controller_spec->min_ready_seconds) { 
+    if(v1_replication_controller_spec->min_ready_seconds) {
     if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_replication_controller_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_replication_controller_spec->replicas
-    if(v1_replication_controller_spec->replicas) { 
+    if(v1_replication_controller_spec->replicas) {
     if(cJSON_AddNumberToObject(item, "replicas", v1_replication_controller_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_replication_controller_spec->selector
-    if(v1_replication_controller_spec->selector) { 
+    if(v1_replication_controller_spec->selector) {
     cJSON *selector = cJSON_AddObjectToObject(item, "selector");
     if(selector == NULL) {
         goto fail; //primitive map container
@@ -82,11 +82,11 @@ cJSON *v1_replication_controller_spec_convertToJSON(v1_replication_controller_sp
         }
     }
     }
-     } 
+    }
 
 
     // v1_replication_controller_spec->_template
-    if(v1_replication_controller_spec->_template) { 
+    if(v1_replication_controller_spec->_template) {
     cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_replication_controller_spec->_template);
     if(_template_local_JSON == NULL) {
     goto fail; //model
@@ -95,7 +95,7 @@ cJSON *v1_replication_controller_spec_convertToJSON(v1_replication_controller_sp
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

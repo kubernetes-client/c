@@ -4,13 +4,30 @@
 #include "v1_namespace_condition.h"
 
 
+char* typev1_namespace_condition_ToString(kubernetes_v1_namespace_condition_TYPE_e type) {
+    char* typeArray[] =  { "NULL", "NamespaceContentRemaining", "NamespaceDeletionContentFailure", "NamespaceDeletionDiscoveryFailure", "NamespaceDeletionGroupVersionParsingFailure", "NamespaceFinalizersRemaining" };
+	return typeArray[type];
+}
+
+kubernetes_v1_namespace_condition_TYPE_e typev1_namespace_condition_FromString(char* type){
+    int stringToReturn = 0;
+    char *typeArray[] =  { "NULL", "NamespaceContentRemaining", "NamespaceDeletionContentFailure", "NamespaceDeletionDiscoveryFailure", "NamespaceDeletionGroupVersionParsingFailure", "NamespaceFinalizersRemaining" };
+    size_t sizeofArray = sizeof(typeArray) / sizeof(typeArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(type, typeArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_namespace_condition_t *v1_namespace_condition_create(
     char *last_transition_time,
     char *message,
     char *reason,
     char *status,
-    char *type
+    kubernetes_v1_namespace_condition_TYPE_e type
     ) {
     v1_namespace_condition_t *v1_namespace_condition_local_var = malloc(sizeof(v1_namespace_condition_t));
     if (!v1_namespace_condition_local_var) {
@@ -47,10 +64,6 @@ void v1_namespace_condition_free(v1_namespace_condition_t *v1_namespace_conditio
         free(v1_namespace_condition->status);
         v1_namespace_condition->status = NULL;
     }
-    if (v1_namespace_condition->type) {
-        free(v1_namespace_condition->type);
-        v1_namespace_condition->type = NULL;
-    }
     free(v1_namespace_condition);
 }
 
@@ -58,46 +71,45 @@ cJSON *v1_namespace_condition_convertToJSON(v1_namespace_condition_t *v1_namespa
     cJSON *item = cJSON_CreateObject();
 
     // v1_namespace_condition->last_transition_time
-    if(v1_namespace_condition->last_transition_time) { 
+    if(v1_namespace_condition->last_transition_time) {
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v1_namespace_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_namespace_condition->message
-    if(v1_namespace_condition->message) { 
+    if(v1_namespace_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1_namespace_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_namespace_condition->reason
-    if(v1_namespace_condition->reason) { 
+    if(v1_namespace_condition->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_namespace_condition->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_namespace_condition->status
     if (!v1_namespace_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v1_namespace_condition->status) == NULL) {
     goto fail; //String
     }
 
 
     // v1_namespace_condition->type
-    if (!v1_namespace_condition->type) {
+    if (kubernetes_v1_namespace_condition_TYPE_NULL == v1_namespace_condition->type) {
         goto fail;
     }
-    
-    if(cJSON_AddStringToObject(item, "type", v1_namespace_condition->type) == NULL) {
-    goto fail; //String
+    if(cJSON_AddStringToObject(item, "type", typev1_namespace_condition_ToString(v1_namespace_condition->type)) == NULL)
+    {
+    goto fail; //Enum
     }
 
     return item;
@@ -157,11 +169,13 @@ v1_namespace_condition_t *v1_namespace_condition_parseFromJSON(cJSON *v1_namespa
         goto end;
     }
 
+    kubernetes_v1_namespace_condition_TYPE_e typeVariable;
     
     if(!cJSON_IsString(type))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    typeVariable = typev1_namespace_condition_FromString(type->valuestring);
 
 
     v1_namespace_condition_local_var = v1_namespace_condition_create (
@@ -169,7 +183,7 @@ v1_namespace_condition_t *v1_namespace_condition_parseFromJSON(cJSON *v1_namespa
         message ? strdup(message->valuestring) : NULL,
         reason ? strdup(reason->valuestring) : NULL,
         strdup(status->valuestring),
-        strdup(type->valuestring)
+        typeVariable
         );
 
     return v1_namespace_condition_local_var;

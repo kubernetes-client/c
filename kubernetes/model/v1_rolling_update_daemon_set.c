@@ -40,7 +40,7 @@ cJSON *v1_rolling_update_daemon_set_convertToJSON(v1_rolling_update_daemon_set_t
     cJSON *item = cJSON_CreateObject();
 
     // v1_rolling_update_daemon_set->max_surge
-    if(v1_rolling_update_daemon_set->max_surge) { 
+    if(v1_rolling_update_daemon_set->max_surge) {
     cJSON *max_surge_local_JSON = int_or_string_convertToJSON(v1_rolling_update_daemon_set->max_surge);
     if(max_surge_local_JSON == NULL) {
         goto fail; // custom
@@ -49,11 +49,11 @@ cJSON *v1_rolling_update_daemon_set_convertToJSON(v1_rolling_update_daemon_set_t
     if(item->child == NULL) {
         goto fail;
     }
-     } 
+    }
 
 
     // v1_rolling_update_daemon_set->max_unavailable
-    if(v1_rolling_update_daemon_set->max_unavailable) { 
+    if(v1_rolling_update_daemon_set->max_unavailable) {
     cJSON *max_unavailable_local_JSON = int_or_string_convertToJSON(v1_rolling_update_daemon_set->max_unavailable);
     if(max_unavailable_local_JSON == NULL) {
         goto fail; // custom
@@ -62,7 +62,7 @@ cJSON *v1_rolling_update_daemon_set_convertToJSON(v1_rolling_update_daemon_set_t
     if(item->child == NULL) {
         goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

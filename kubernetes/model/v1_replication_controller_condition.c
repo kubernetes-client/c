@@ -58,34 +58,33 @@ cJSON *v1_replication_controller_condition_convertToJSON(v1_replication_controll
     cJSON *item = cJSON_CreateObject();
 
     // v1_replication_controller_condition->last_transition_time
-    if(v1_replication_controller_condition->last_transition_time) { 
+    if(v1_replication_controller_condition->last_transition_time) {
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v1_replication_controller_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_replication_controller_condition->message
-    if(v1_replication_controller_condition->message) { 
+    if(v1_replication_controller_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1_replication_controller_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_replication_controller_condition->reason
-    if(v1_replication_controller_condition->reason) { 
+    if(v1_replication_controller_condition->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_replication_controller_condition->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_replication_controller_condition->status
     if (!v1_replication_controller_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v1_replication_controller_condition->status) == NULL) {
     goto fail; //String
     }
@@ -95,7 +94,6 @@ cJSON *v1_replication_controller_condition_convertToJSON(v1_replication_controll
     if (!v1_replication_controller_condition->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v1_replication_controller_condition->type) == NULL) {
     goto fail; //String
     }

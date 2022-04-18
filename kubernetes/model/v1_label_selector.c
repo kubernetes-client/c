@@ -49,7 +49,7 @@ cJSON *v1_label_selector_convertToJSON(v1_label_selector_t *v1_label_selector) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_label_selector->match_expressions
-    if(v1_label_selector->match_expressions) { 
+    if(v1_label_selector->match_expressions) {
     cJSON *match_expressions = cJSON_AddArrayToObject(item, "matchExpressions");
     if(match_expressions == NULL) {
     goto fail; //nonprimitive container
@@ -65,11 +65,11 @@ cJSON *v1_label_selector_convertToJSON(v1_label_selector_t *v1_label_selector) {
     cJSON_AddItemToArray(match_expressions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_label_selector->match_labels
-    if(v1_label_selector->match_labels) { 
+    if(v1_label_selector->match_labels) {
     cJSON *match_labels = cJSON_AddObjectToObject(item, "matchLabels");
     if(match_labels == NULL) {
         goto fail; //primitive map container
@@ -85,7 +85,7 @@ cJSON *v1_label_selector_convertToJSON(v1_label_selector_t *v1_label_selector) {
         }
     }
     }
-     } 
+    }
 
     return item;
 fail:

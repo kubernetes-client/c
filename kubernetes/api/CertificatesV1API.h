@@ -16,7 +16,7 @@
 // create a CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_createCertificateSigningRequest(apiClient_t *apiClient, v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager );
+CertificatesV1API_createCertificateSigningRequest(apiClient_t *apiClient, v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete a CertificateSigningRequest
@@ -46,19 +46,19 @@ CertificatesV1API_listCertificateSigningRequest(apiClient_t *apiClient, char * p
 // partially update the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_patchCertificateSigningRequest(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CertificatesV1API_patchCertificateSigningRequest(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update approval of the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_patchCertificateSigningRequestApproval(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CertificatesV1API_patchCertificateSigningRequestApproval(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CertificatesV1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified CertificateSigningRequest
@@ -82,18 +82,18 @@ CertificatesV1API_readCertificateSigningRequestStatus(apiClient_t *apiClient, ch
 // replace the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager );
+CertificatesV1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace approval of the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager );
+CertificatesV1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified CertificateSigningRequest
 //
 v1_certificate_signing_request_t*
-CertificatesV1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager );
+CertificatesV1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient, char * name , v1_certificate_signing_request_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

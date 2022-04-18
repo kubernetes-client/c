@@ -60,52 +60,50 @@ cJSON *v1_quobyte_volume_source_convertToJSON(v1_quobyte_volume_source_t *v1_quo
     cJSON *item = cJSON_CreateObject();
 
     // v1_quobyte_volume_source->group
-    if(v1_quobyte_volume_source->group) { 
+    if(v1_quobyte_volume_source->group) {
     if(cJSON_AddStringToObject(item, "group", v1_quobyte_volume_source->group) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_quobyte_volume_source->read_only
-    if(v1_quobyte_volume_source->read_only) { 
+    if(v1_quobyte_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_quobyte_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_quobyte_volume_source->registry
     if (!v1_quobyte_volume_source->registry) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "registry", v1_quobyte_volume_source->registry) == NULL) {
     goto fail; //String
     }
 
 
     // v1_quobyte_volume_source->tenant
-    if(v1_quobyte_volume_source->tenant) { 
+    if(v1_quobyte_volume_source->tenant) {
     if(cJSON_AddStringToObject(item, "tenant", v1_quobyte_volume_source->tenant) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_quobyte_volume_source->user
-    if(v1_quobyte_volume_source->user) { 
+    if(v1_quobyte_volume_source->user) {
     if(cJSON_AddStringToObject(item, "user", v1_quobyte_volume_source->user) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_quobyte_volume_source->volume
     if (!v1_quobyte_volume_source->volume) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "volume", v1_quobyte_volume_source->volume) == NULL) {
     goto fail; //String
     }

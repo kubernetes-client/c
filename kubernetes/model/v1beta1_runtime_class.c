@@ -64,33 +64,32 @@ cJSON *v1beta1_runtime_class_convertToJSON(v1beta1_runtime_class_t *v1beta1_runt
     cJSON *item = cJSON_CreateObject();
 
     // v1beta1_runtime_class->api_version
-    if(v1beta1_runtime_class->api_version) { 
+    if(v1beta1_runtime_class->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1beta1_runtime_class->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_runtime_class->handler
     if (!v1beta1_runtime_class->handler) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "handler", v1beta1_runtime_class->handler) == NULL) {
     goto fail; //String
     }
 
 
     // v1beta1_runtime_class->kind
-    if(v1beta1_runtime_class->kind) { 
+    if(v1beta1_runtime_class->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1beta1_runtime_class->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1beta1_runtime_class->metadata
-    if(v1beta1_runtime_class->metadata) { 
+    if(v1beta1_runtime_class->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1beta1_runtime_class->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -99,11 +98,11 @@ cJSON *v1beta1_runtime_class_convertToJSON(v1beta1_runtime_class_t *v1beta1_runt
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_runtime_class->overhead
-    if(v1beta1_runtime_class->overhead) { 
+    if(v1beta1_runtime_class->overhead) {
     cJSON *overhead_local_JSON = v1beta1_overhead_convertToJSON(v1beta1_runtime_class->overhead);
     if(overhead_local_JSON == NULL) {
     goto fail; //model
@@ -112,11 +111,11 @@ cJSON *v1beta1_runtime_class_convertToJSON(v1beta1_runtime_class_t *v1beta1_runt
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1beta1_runtime_class->scheduling
-    if(v1beta1_runtime_class->scheduling) { 
+    if(v1beta1_runtime_class->scheduling) {
     cJSON *scheduling_local_JSON = v1beta1_scheduling_convertToJSON(v1beta1_runtime_class->scheduling);
     if(scheduling_local_JSON == NULL) {
     goto fail; //model
@@ -125,7 +124,7 @@ cJSON *v1beta1_runtime_class_convertToJSON(v1beta1_runtime_class_t *v1beta1_runt
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

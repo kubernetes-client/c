@@ -58,34 +58,33 @@ cJSON *v2beta2_horizontal_pod_autoscaler_condition_convertToJSON(v2beta2_horizon
     cJSON *item = cJSON_CreateObject();
 
     // v2beta2_horizontal_pod_autoscaler_condition->last_transition_time
-    if(v2beta2_horizontal_pod_autoscaler_condition->last_transition_time) { 
+    if(v2beta2_horizontal_pod_autoscaler_condition->last_transition_time) {
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v2beta2_horizontal_pod_autoscaler_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v2beta2_horizontal_pod_autoscaler_condition->message
-    if(v2beta2_horizontal_pod_autoscaler_condition->message) { 
+    if(v2beta2_horizontal_pod_autoscaler_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v2beta2_horizontal_pod_autoscaler_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v2beta2_horizontal_pod_autoscaler_condition->reason
-    if(v2beta2_horizontal_pod_autoscaler_condition->reason) { 
+    if(v2beta2_horizontal_pod_autoscaler_condition->reason) {
     if(cJSON_AddStringToObject(item, "reason", v2beta2_horizontal_pod_autoscaler_condition->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v2beta2_horizontal_pod_autoscaler_condition->status
     if (!v2beta2_horizontal_pod_autoscaler_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v2beta2_horizontal_pod_autoscaler_condition->status) == NULL) {
     goto fail; //String
     }
@@ -95,7 +94,6 @@ cJSON *v2beta2_horizontal_pod_autoscaler_condition_convertToJSON(v2beta2_horizon
     if (!v2beta2_horizontal_pod_autoscaler_condition->type) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "type", v2beta2_horizontal_pod_autoscaler_condition->type) == NULL) {
     goto fail; //String
     }

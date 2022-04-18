@@ -43,15 +43,15 @@ cJSON *v1_certificate_signing_request_status_convertToJSON(v1_certificate_signin
     cJSON *item = cJSON_CreateObject();
 
     // v1_certificate_signing_request_status->certificate
-    if(v1_certificate_signing_request_status->certificate) { 
+    if(v1_certificate_signing_request_status->certificate) {
     if(cJSON_AddStringToObject(item, "certificate", v1_certificate_signing_request_status->certificate) == NULL) {
     goto fail; //ByteArray
     }
-     } 
+    }
 
 
     // v1_certificate_signing_request_status->conditions
-    if(v1_certificate_signing_request_status->conditions) { 
+    if(v1_certificate_signing_request_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -67,7 +67,7 @@ cJSON *v1_certificate_signing_request_status_convertToJSON(v1_certificate_signin
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
     return item;
 fail:

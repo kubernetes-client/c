@@ -43,7 +43,6 @@ cJSON *v2beta2_external_metric_status_convertToJSON(v2beta2_external_metric_stat
     if (!v2beta2_external_metric_status->current) {
         goto fail;
     }
-    
     cJSON *current_local_JSON = v2beta2_metric_value_status_convertToJSON(v2beta2_external_metric_status->current);
     if(current_local_JSON == NULL) {
     goto fail; //model
@@ -58,7 +57,6 @@ cJSON *v2beta2_external_metric_status_convertToJSON(v2beta2_external_metric_stat
     if (!v2beta2_external_metric_status->metric) {
         goto fail;
     }
-    
     cJSON *metric_local_JSON = v2beta2_metric_identifier_convertToJSON(v2beta2_external_metric_status->metric);
     if(metric_local_JSON == NULL) {
     goto fail; //model

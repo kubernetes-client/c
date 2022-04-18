@@ -40,15 +40,15 @@ cJSON *v1_ingress_class_spec_convertToJSON(v1_ingress_class_spec_t *v1_ingress_c
     cJSON *item = cJSON_CreateObject();
 
     // v1_ingress_class_spec->controller
-    if(v1_ingress_class_spec->controller) { 
+    if(v1_ingress_class_spec->controller) {
     if(cJSON_AddStringToObject(item, "controller", v1_ingress_class_spec->controller) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ingress_class_spec->parameters
-    if(v1_ingress_class_spec->parameters) { 
+    if(v1_ingress_class_spec->parameters) {
     cJSON *parameters_local_JSON = v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_spec->parameters);
     if(parameters_local_JSON == NULL) {
     goto fail; //model
@@ -57,7 +57,7 @@ cJSON *v1_ingress_class_spec_convertToJSON(v1_ingress_class_spec_t *v1_ingress_c
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

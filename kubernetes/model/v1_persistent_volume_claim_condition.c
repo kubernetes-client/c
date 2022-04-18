@@ -4,6 +4,23 @@
 #include "v1_persistent_volume_claim_condition.h"
 
 
+char* typev1_persistent_volume_claim_condition_ToString(kubernetes_v1_persistent_volume_claim_condition_TYPE_e type) {
+    char* typeArray[] =  { "NULL", "FileSystemResizePending", "Resizing" };
+	return typeArray[type];
+}
+
+kubernetes_v1_persistent_volume_claim_condition_TYPE_e typev1_persistent_volume_claim_condition_FromString(char* type){
+    int stringToReturn = 0;
+    char *typeArray[] =  { "NULL", "FileSystemResizePending", "Resizing" };
+    size_t sizeofArray = sizeof(typeArray) / sizeof(typeArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(type, typeArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_persistent_volume_claim_condition_t *v1_persistent_volume_claim_condition_create(
     char *last_probe_time,
@@ -11,7 +28,7 @@ v1_persistent_volume_claim_condition_t *v1_persistent_volume_claim_condition_cre
     char *message,
     char *reason,
     char *status,
-    char *type
+    kubernetes_v1_persistent_volume_claim_condition_TYPE_e type
     ) {
     v1_persistent_volume_claim_condition_t *v1_persistent_volume_claim_condition_local_var = malloc(sizeof(v1_persistent_volume_claim_condition_t));
     if (!v1_persistent_volume_claim_condition_local_var) {
@@ -53,10 +70,6 @@ void v1_persistent_volume_claim_condition_free(v1_persistent_volume_claim_condit
         free(v1_persistent_volume_claim_condition->status);
         v1_persistent_volume_claim_condition->status = NULL;
     }
-    if (v1_persistent_volume_claim_condition->type) {
-        free(v1_persistent_volume_claim_condition->type);
-        v1_persistent_volume_claim_condition->type = NULL;
-    }
     free(v1_persistent_volume_claim_condition);
 }
 
@@ -64,54 +77,53 @@ cJSON *v1_persistent_volume_claim_condition_convertToJSON(v1_persistent_volume_c
     cJSON *item = cJSON_CreateObject();
 
     // v1_persistent_volume_claim_condition->last_probe_time
-    if(v1_persistent_volume_claim_condition->last_probe_time) { 
+    if(v1_persistent_volume_claim_condition->last_probe_time) {
     if(cJSON_AddStringToObject(item, "lastProbeTime", v1_persistent_volume_claim_condition->last_probe_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_condition->last_transition_time
-    if(v1_persistent_volume_claim_condition->last_transition_time) { 
+    if(v1_persistent_volume_claim_condition->last_transition_time) {
     if(cJSON_AddStringToObject(item, "lastTransitionTime", v1_persistent_volume_claim_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_condition->message
-    if(v1_persistent_volume_claim_condition->message) { 
+    if(v1_persistent_volume_claim_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1_persistent_volume_claim_condition->message) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_condition->reason
-    if(v1_persistent_volume_claim_condition->reason) { 
+    if(v1_persistent_volume_claim_condition->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_persistent_volume_claim_condition->reason) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_persistent_volume_claim_condition->status
     if (!v1_persistent_volume_claim_condition->status) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "status", v1_persistent_volume_claim_condition->status) == NULL) {
     goto fail; //String
     }
 
 
     // v1_persistent_volume_claim_condition->type
-    if (!v1_persistent_volume_claim_condition->type) {
+    if (kubernetes_v1_persistent_volume_claim_condition_TYPE_NULL == v1_persistent_volume_claim_condition->type) {
         goto fail;
     }
-    
-    if(cJSON_AddStringToObject(item, "type", v1_persistent_volume_claim_condition->type) == NULL) {
-    goto fail; //String
+    if(cJSON_AddStringToObject(item, "type", typev1_persistent_volume_claim_condition_ToString(v1_persistent_volume_claim_condition->type)) == NULL)
+    {
+    goto fail; //Enum
     }
 
     return item;
@@ -180,11 +192,13 @@ v1_persistent_volume_claim_condition_t *v1_persistent_volume_claim_condition_par
         goto end;
     }
 
+    kubernetes_v1_persistent_volume_claim_condition_TYPE_e typeVariable;
     
     if(!cJSON_IsString(type))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    typeVariable = typev1_persistent_volume_claim_condition_FromString(type->valuestring);
 
 
     v1_persistent_volume_claim_condition_local_var = v1_persistent_volume_claim_condition_create (
@@ -193,7 +207,7 @@ v1_persistent_volume_claim_condition_t *v1_persistent_volume_claim_condition_par
         message ? strdup(message->valuestring) : NULL,
         reason ? strdup(reason->valuestring) : NULL,
         strdup(status->valuestring),
-        strdup(type->valuestring)
+        typeVariable
         );
 
     return v1_persistent_volume_claim_condition_local_var;

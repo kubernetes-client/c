@@ -37,7 +37,6 @@ cJSON *v1beta1_group_subject_convertToJSON(v1beta1_group_subject_t *v1beta1_grou
     if (!v1beta1_group_subject->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1beta1_group_subject->name) == NULL) {
     goto fail; //String
     }

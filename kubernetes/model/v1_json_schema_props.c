@@ -48,7 +48,8 @@ v1_json_schema_props_t *v1_json_schema_props_create(
     list_t *x_kubernetes_list_map_keys,
     char *x_kubernetes_list_type,
     char *x_kubernetes_map_type,
-    int x_kubernetes_preserve_unknown_fields
+    int x_kubernetes_preserve_unknown_fields,
+    list_t *x_kubernetes_validations
     ) {
     v1_json_schema_props_t *v1_json_schema_props_local_var = malloc(sizeof(v1_json_schema_props_t));
     if (!v1_json_schema_props_local_var) {
@@ -97,6 +98,7 @@ v1_json_schema_props_t *v1_json_schema_props_create(
     v1_json_schema_props_local_var->x_kubernetes_list_type = x_kubernetes_list_type;
     v1_json_schema_props_local_var->x_kubernetes_map_type = x_kubernetes_map_type;
     v1_json_schema_props_local_var->x_kubernetes_preserve_unknown_fields = x_kubernetes_preserve_unknown_fields;
+    v1_json_schema_props_local_var->x_kubernetes_validations = x_kubernetes_validations;
 
     return v1_json_schema_props_local_var;
 }
@@ -257,6 +259,13 @@ void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props) {
         free(v1_json_schema_props->x_kubernetes_map_type);
         v1_json_schema_props->x_kubernetes_map_type = NULL;
     }
+    if (v1_json_schema_props->x_kubernetes_validations) {
+        list_ForEach(listEntry, v1_json_schema_props->x_kubernetes_validations) {
+            v1_validation_rule_free(listEntry->data);
+        }
+        list_freeList(v1_json_schema_props->x_kubernetes_validations);
+        v1_json_schema_props->x_kubernetes_validations = NULL;
+    }
     free(v1_json_schema_props);
 }
 
@@ -264,23 +273,23 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     cJSON *item = cJSON_CreateObject();
 
     // v1_json_schema_props->ref
-    if(v1_json_schema_props->ref) { 
+    if(v1_json_schema_props->ref) {
     if(cJSON_AddStringToObject(item, "$ref", v1_json_schema_props->ref) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_json_schema_props->schema
-    if(v1_json_schema_props->schema) { 
+    if(v1_json_schema_props->schema) {
     if(cJSON_AddStringToObject(item, "$schema", v1_json_schema_props->schema) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_json_schema_props->additional_items
-    if(v1_json_schema_props->additional_items) { 
+    if(v1_json_schema_props->additional_items) {
     cJSON *additional_items_object = object_convertToJSON(v1_json_schema_props->additional_items);
     if(additional_items_object == NULL) {
     goto fail; //model
@@ -289,11 +298,11 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_json_schema_props->additional_properties
-    if(v1_json_schema_props->additional_properties) { 
+    if(v1_json_schema_props->additional_properties) {
     cJSON *additional_properties_object = object_convertToJSON(v1_json_schema_props->additional_properties);
     if(additional_properties_object == NULL) {
     goto fail; //model
@@ -302,11 +311,11 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_json_schema_props->all_of
-    if(v1_json_schema_props->all_of) { 
+    if(v1_json_schema_props->all_of) {
     cJSON *all_of = cJSON_AddArrayToObject(item, "allOf");
     if(all_of == NULL) {
     goto fail; //nonprimitive container
@@ -322,11 +331,11 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     cJSON_AddItemToArray(all_of, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_json_schema_props->any_of
-    if(v1_json_schema_props->any_of) { 
+    if(v1_json_schema_props->any_of) {
     cJSON *any_of = cJSON_AddArrayToObject(item, "anyOf");
     if(any_of == NULL) {
     goto fail; //nonprimitive container
@@ -342,11 +351,11 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     cJSON_AddItemToArray(any_of, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_json_schema_props->_default
-    if(v1_json_schema_props->_default) { 
+    if(v1_json_schema_props->_default) {
     cJSON *_default_object = object_convertToJSON(v1_json_schema_props->_default);
     if(_default_object == NULL) {
     goto fail; //model
@@ -355,11 +364,11 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_json_schema_props->definitions
-    if(v1_json_schema_props->definitions) { 
+    if(v1_json_schema_props->definitions) {
     cJSON *definitions = cJSON_AddObjectToObject(item, "definitions");
     if(definitions == NULL) {
         goto fail; //primitive map container
@@ -371,11 +380,11 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
         keyValuePair_t *localKeyValue = (keyValuePair_t*)definitionsListEntry->data;
     }
     }
-     } 
+    }
 
 
     // v1_json_schema_props->dependencies
-    if(v1_json_schema_props->dependencies) { 
+    if(v1_json_schema_props->dependencies) {
     cJSON *dependencies = cJSON_AddObjectToObject(item, "dependencies");
     if(dependencies == NULL) {
         goto fail; //primitive map container
@@ -387,19 +396,19 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
         keyValuePair_t *localKeyValue = (keyValuePair_t*)dependenciesListEntry->data;
     }
     }
-     } 
+    }
 
 
     // v1_json_schema_props->description
-    if(v1_json_schema_props->description) { 
+    if(v1_json_schema_props->description) {
     if(cJSON_AddStringToObject(item, "description", v1_json_schema_props->description) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_json_schema_props->_enum
-    if(v1_json_schema_props->_enum) { 
+    if(v1_json_schema_props->_enum) {
     cJSON *_enum = cJSON_AddArrayToObject(item, "enum");
     if(_enum == NULL) {
     goto fail; //nonprimitive container
@@ -415,11 +424,11 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     cJSON_AddItemToArray(_enum, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_json_schema_props->example
-    if(v1_json_schema_props->example) { 
+    if(v1_json_schema_props->example) {
     cJSON *example_object = object_convertToJSON(v1_json_schema_props->example);
     if(example_object == NULL) {
     goto fail; //model
@@ -428,27 +437,27 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_json_schema_props->exclusive_maximum
-    if(v1_json_schema_props->exclusive_maximum) { 
+    if(v1_json_schema_props->exclusive_maximum) {
     if(cJSON_AddBoolToObject(item, "exclusiveMaximum", v1_json_schema_props->exclusive_maximum) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_json_schema_props->exclusive_minimum
-    if(v1_json_schema_props->exclusive_minimum) { 
+    if(v1_json_schema_props->exclusive_minimum) {
     if(cJSON_AddBoolToObject(item, "exclusiveMinimum", v1_json_schema_props->exclusive_minimum) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_json_schema_props->external_docs
-    if(v1_json_schema_props->external_docs) { 
+    if(v1_json_schema_props->external_docs) {
     cJSON *external_docs_local_JSON = v1_external_documentation_convertToJSON(v1_json_schema_props->external_docs);
     if(external_docs_local_JSON == NULL) {
     goto fail; //model
@@ -457,27 +466,27 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_json_schema_props->format
-    if(v1_json_schema_props->format) { 
+    if(v1_json_schema_props->format) {
     if(cJSON_AddStringToObject(item, "format", v1_json_schema_props->format) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_json_schema_props->id
-    if(v1_json_schema_props->id) { 
+    if(v1_json_schema_props->id) {
     if(cJSON_AddStringToObject(item, "id", v1_json_schema_props->id) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_json_schema_props->items
-    if(v1_json_schema_props->items) { 
+    if(v1_json_schema_props->items) {
     cJSON *items_object = object_convertToJSON(v1_json_schema_props->items);
     if(items_object == NULL) {
     goto fail; //model
@@ -486,83 +495,83 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_json_schema_props->max_items
-    if(v1_json_schema_props->max_items) { 
+    if(v1_json_schema_props->max_items) {
     if(cJSON_AddNumberToObject(item, "maxItems", v1_json_schema_props->max_items) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_json_schema_props->max_length
-    if(v1_json_schema_props->max_length) { 
+    if(v1_json_schema_props->max_length) {
     if(cJSON_AddNumberToObject(item, "maxLength", v1_json_schema_props->max_length) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_json_schema_props->max_properties
-    if(v1_json_schema_props->max_properties) { 
+    if(v1_json_schema_props->max_properties) {
     if(cJSON_AddNumberToObject(item, "maxProperties", v1_json_schema_props->max_properties) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_json_schema_props->maximum
-    if(v1_json_schema_props->maximum) { 
+    if(v1_json_schema_props->maximum) {
     if(cJSON_AddNumberToObject(item, "maximum", v1_json_schema_props->maximum) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_json_schema_props->min_items
-    if(v1_json_schema_props->min_items) { 
+    if(v1_json_schema_props->min_items) {
     if(cJSON_AddNumberToObject(item, "minItems", v1_json_schema_props->min_items) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_json_schema_props->min_length
-    if(v1_json_schema_props->min_length) { 
+    if(v1_json_schema_props->min_length) {
     if(cJSON_AddNumberToObject(item, "minLength", v1_json_schema_props->min_length) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_json_schema_props->min_properties
-    if(v1_json_schema_props->min_properties) { 
+    if(v1_json_schema_props->min_properties) {
     if(cJSON_AddNumberToObject(item, "minProperties", v1_json_schema_props->min_properties) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_json_schema_props->minimum
-    if(v1_json_schema_props->minimum) { 
+    if(v1_json_schema_props->minimum) {
     if(cJSON_AddNumberToObject(item, "minimum", v1_json_schema_props->minimum) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_json_schema_props->multiple_of
-    if(v1_json_schema_props->multiple_of) { 
+    if(v1_json_schema_props->multiple_of) {
     if(cJSON_AddNumberToObject(item, "multipleOf", v1_json_schema_props->multiple_of) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_json_schema_props->_not
-    if(v1_json_schema_props->_not) { 
+    if(v1_json_schema_props->_not) {
     cJSON *_not_local_JSON = v1_json_schema_props_convertToJSON(v1_json_schema_props->_not);
     if(_not_local_JSON == NULL) {
     goto fail; //model
@@ -571,19 +580,19 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_json_schema_props->nullable
-    if(v1_json_schema_props->nullable) { 
+    if(v1_json_schema_props->nullable) {
     if(cJSON_AddBoolToObject(item, "nullable", v1_json_schema_props->nullable) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_json_schema_props->one_of
-    if(v1_json_schema_props->one_of) { 
+    if(v1_json_schema_props->one_of) {
     cJSON *one_of = cJSON_AddArrayToObject(item, "oneOf");
     if(one_of == NULL) {
     goto fail; //nonprimitive container
@@ -599,19 +608,19 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
     cJSON_AddItemToArray(one_of, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_json_schema_props->pattern
-    if(v1_json_schema_props->pattern) { 
+    if(v1_json_schema_props->pattern) {
     if(cJSON_AddStringToObject(item, "pattern", v1_json_schema_props->pattern) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_json_schema_props->pattern_properties
-    if(v1_json_schema_props->pattern_properties) { 
+    if(v1_json_schema_props->pattern_properties) {
     cJSON *pattern_properties = cJSON_AddObjectToObject(item, "patternProperties");
     if(pattern_properties == NULL) {
         goto fail; //primitive map container
@@ -623,11 +632,11 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
         keyValuePair_t *localKeyValue = (keyValuePair_t*)pattern_propertiesListEntry->data;
     }
     }
-     } 
+    }
 
 
     // v1_json_schema_props->properties
-    if(v1_json_schema_props->properties) { 
+    if(v1_json_schema_props->properties) {
     cJSON *properties = cJSON_AddObjectToObject(item, "properties");
     if(properties == NULL) {
         goto fail; //primitive map container
@@ -639,11 +648,11 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
         keyValuePair_t *localKeyValue = (keyValuePair_t*)propertiesListEntry->data;
     }
     }
-     } 
+    }
 
 
     // v1_json_schema_props->required
-    if(v1_json_schema_props->required) { 
+    if(v1_json_schema_props->required) {
     cJSON *required = cJSON_AddArrayToObject(item, "required");
     if(required == NULL) {
         goto fail; //primitive container
@@ -656,51 +665,51 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_json_schema_props->title
-    if(v1_json_schema_props->title) { 
+    if(v1_json_schema_props->title) {
     if(cJSON_AddStringToObject(item, "title", v1_json_schema_props->title) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_json_schema_props->type
-    if(v1_json_schema_props->type) { 
+    if(v1_json_schema_props->type) {
     if(cJSON_AddStringToObject(item, "type", v1_json_schema_props->type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_json_schema_props->unique_items
-    if(v1_json_schema_props->unique_items) { 
+    if(v1_json_schema_props->unique_items) {
     if(cJSON_AddBoolToObject(item, "uniqueItems", v1_json_schema_props->unique_items) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_json_schema_props->x_kubernetes_embedded_resource
-    if(v1_json_schema_props->x_kubernetes_embedded_resource) { 
+    if(v1_json_schema_props->x_kubernetes_embedded_resource) {
     if(cJSON_AddBoolToObject(item, "x-kubernetes-embedded-resource", v1_json_schema_props->x_kubernetes_embedded_resource) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_json_schema_props->x_kubernetes_int_or_string
-    if(v1_json_schema_props->x_kubernetes_int_or_string) { 
+    if(v1_json_schema_props->x_kubernetes_int_or_string) {
     if(cJSON_AddBoolToObject(item, "x-kubernetes-int-or-string", v1_json_schema_props->x_kubernetes_int_or_string) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_json_schema_props->x_kubernetes_list_map_keys
-    if(v1_json_schema_props->x_kubernetes_list_map_keys) { 
+    if(v1_json_schema_props->x_kubernetes_list_map_keys) {
     cJSON *x_kubernetes_list_map_keys = cJSON_AddArrayToObject(item, "x-kubernetes-list-map-keys");
     if(x_kubernetes_list_map_keys == NULL) {
         goto fail; //primitive container
@@ -713,31 +722,51 @@ cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_json_schema_props->x_kubernetes_list_type
-    if(v1_json_schema_props->x_kubernetes_list_type) { 
+    if(v1_json_schema_props->x_kubernetes_list_type) {
     if(cJSON_AddStringToObject(item, "x-kubernetes-list-type", v1_json_schema_props->x_kubernetes_list_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_json_schema_props->x_kubernetes_map_type
-    if(v1_json_schema_props->x_kubernetes_map_type) { 
+    if(v1_json_schema_props->x_kubernetes_map_type) {
     if(cJSON_AddStringToObject(item, "x-kubernetes-map-type", v1_json_schema_props->x_kubernetes_map_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_json_schema_props->x_kubernetes_preserve_unknown_fields
-    if(v1_json_schema_props->x_kubernetes_preserve_unknown_fields) { 
+    if(v1_json_schema_props->x_kubernetes_preserve_unknown_fields) {
     if(cJSON_AddBoolToObject(item, "x-kubernetes-preserve-unknown-fields", v1_json_schema_props->x_kubernetes_preserve_unknown_fields) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
+
+
+    // v1_json_schema_props->x_kubernetes_validations
+    if(v1_json_schema_props->x_kubernetes_validations) {
+    cJSON *x_kubernetes_validations = cJSON_AddArrayToObject(item, "x-kubernetes-validations");
+    if(x_kubernetes_validations == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *x_kubernetes_validationsListEntry;
+    if (v1_json_schema_props->x_kubernetes_validations) {
+    list_ForEach(x_kubernetes_validationsListEntry, v1_json_schema_props->x_kubernetes_validations) {
+    cJSON *itemLocal = v1_validation_rule_convertToJSON(x_kubernetes_validationsListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(x_kubernetes_validations, itemLocal);
+    }
+    }
+    }
 
     return item;
 fail:
@@ -786,6 +815,9 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
 
     // define the local list for v1_json_schema_props->x_kubernetes_list_map_keys
     list_t *x_kubernetes_list_map_keysList = NULL;
+
+    // define the local list for v1_json_schema_props->x_kubernetes_validations
+    list_t *x_kubernetes_validationsList = NULL;
 
     // v1_json_schema_props->ref
     cJSON *ref = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "$ref");
@@ -1230,6 +1262,27 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     }
     }
 
+    // v1_json_schema_props->x_kubernetes_validations
+    cJSON *x_kubernetes_validations = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "x-kubernetes-validations");
+    if (x_kubernetes_validations) { 
+    cJSON *x_kubernetes_validations_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(x_kubernetes_validations)){
+        goto end; //nonprimitive container
+    }
+
+    x_kubernetes_validationsList = list_createList();
+
+    cJSON_ArrayForEach(x_kubernetes_validations_local_nonprimitive,x_kubernetes_validations )
+    {
+        if(!cJSON_IsObject(x_kubernetes_validations_local_nonprimitive)){
+            goto end;
+        }
+        v1_validation_rule_t *x_kubernetes_validationsItem = v1_validation_rule_parseFromJSON(x_kubernetes_validations_local_nonprimitive);
+
+        list_addElement(x_kubernetes_validationsList, x_kubernetes_validationsItem);
+    }
+    }
+
 
     v1_json_schema_props_local_var = v1_json_schema_props_create (
         ref ? strdup(ref->valuestring) : NULL,
@@ -1274,7 +1327,8 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
         x_kubernetes_list_map_keys ? x_kubernetes_list_map_keysList : NULL,
         x_kubernetes_list_type ? strdup(x_kubernetes_list_type->valuestring) : NULL,
         x_kubernetes_map_type ? strdup(x_kubernetes_map_type->valuestring) : NULL,
-        x_kubernetes_preserve_unknown_fields ? x_kubernetes_preserve_unknown_fields->valueint : 0
+        x_kubernetes_preserve_unknown_fields ? x_kubernetes_preserve_unknown_fields->valueint : 0,
+        x_kubernetes_validations ? x_kubernetes_validationsList : NULL
         );
 
     return v1_json_schema_props_local_var;
@@ -1361,6 +1415,15 @@ end:
         }
         list_freeList(x_kubernetes_list_map_keysList);
         x_kubernetes_list_map_keysList = NULL;
+    }
+    if (x_kubernetes_validationsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, x_kubernetes_validationsList) {
+            v1_validation_rule_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(x_kubernetes_validationsList);
+        x_kubernetes_validationsList = NULL;
     }
     return NULL;
 

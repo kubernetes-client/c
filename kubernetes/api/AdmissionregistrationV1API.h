@@ -18,13 +18,13 @@
 // create a MutatingWebhookConfiguration
 //
 v1_mutating_webhook_configuration_t*
-AdmissionregistrationV1API_createMutatingWebhookConfiguration(apiClient_t *apiClient, v1_mutating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager );
+AdmissionregistrationV1API_createMutatingWebhookConfiguration(apiClient_t *apiClient, v1_mutating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a ValidatingWebhookConfiguration
 //
 v1_validating_webhook_configuration_t*
-AdmissionregistrationV1API_createValidatingWebhookConfiguration(apiClient_t *apiClient, v1_validating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager );
+AdmissionregistrationV1API_createValidatingWebhookConfiguration(apiClient_t *apiClient, v1_validating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of MutatingWebhookConfiguration
@@ -72,13 +72,13 @@ AdmissionregistrationV1API_listValidatingWebhookConfiguration(apiClient_t *apiCl
 // partially update the specified MutatingWebhookConfiguration
 //
 v1_mutating_webhook_configuration_t*
-AdmissionregistrationV1API_patchMutatingWebhookConfiguration(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AdmissionregistrationV1API_patchMutatingWebhookConfiguration(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified ValidatingWebhookConfiguration
 //
 v1_validating_webhook_configuration_t*
-AdmissionregistrationV1API_patchValidatingWebhookConfiguration(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+AdmissionregistrationV1API_patchValidatingWebhookConfiguration(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified MutatingWebhookConfiguration
@@ -96,12 +96,12 @@ AdmissionregistrationV1API_readValidatingWebhookConfiguration(apiClient_t *apiCl
 // replace the specified MutatingWebhookConfiguration
 //
 v1_mutating_webhook_configuration_t*
-AdmissionregistrationV1API_replaceMutatingWebhookConfiguration(apiClient_t *apiClient, char * name , v1_mutating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager );
+AdmissionregistrationV1API_replaceMutatingWebhookConfiguration(apiClient_t *apiClient, char * name , v1_mutating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified ValidatingWebhookConfiguration
 //
 v1_validating_webhook_configuration_t*
-AdmissionregistrationV1API_replaceValidatingWebhookConfiguration(apiClient_t *apiClient, char * name , v1_validating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager );
+AdmissionregistrationV1API_replaceValidatingWebhookConfiguration(apiClient_t *apiClient, char * name , v1_validating_webhook_configuration_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

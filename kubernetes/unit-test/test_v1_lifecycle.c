@@ -16,8 +16,8 @@
 #include "../model/v1_lifecycle.h"
 v1_lifecycle_t* instantiate_v1_lifecycle(int include_optional);
 
-#include "test_v1_handler.c"
-#include "test_v1_handler.c"
+#include "test_v1_lifecycle_handler.c"
+#include "test_v1_lifecycle_handler.c"
 
 
 v1_lifecycle_t* instantiate_v1_lifecycle(int include_optional) {
@@ -25,9 +25,9 @@ v1_lifecycle_t* instantiate_v1_lifecycle(int include_optional) {
   if (include_optional) {
     v1_lifecycle = v1_lifecycle_create(
        // false, not to have infinite recursion
-      instantiate_v1_handler(0),
+      instantiate_v1_lifecycle_handler(0),
        // false, not to have infinite recursion
-      instantiate_v1_handler(0)
+      instantiate_v1_lifecycle_handler(0)
     );
   } else {
     v1_lifecycle = v1_lifecycle_create(

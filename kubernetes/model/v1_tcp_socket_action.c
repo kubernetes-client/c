@@ -40,18 +40,17 @@ cJSON *v1_tcp_socket_action_convertToJSON(v1_tcp_socket_action_t *v1_tcp_socket_
     cJSON *item = cJSON_CreateObject();
 
     // v1_tcp_socket_action->host
-    if(v1_tcp_socket_action->host) { 
+    if(v1_tcp_socket_action->host) {
     if(cJSON_AddStringToObject(item, "host", v1_tcp_socket_action->host) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_tcp_socket_action->port
     if (!v1_tcp_socket_action->port) {
         goto fail;
     }
-    
     cJSON *port_local_JSON = int_or_string_convertToJSON(v1_tcp_socket_action->port);
     if(port_local_JSON == NULL) {
         goto fail; // custom

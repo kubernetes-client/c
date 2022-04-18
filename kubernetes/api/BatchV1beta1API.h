@@ -16,7 +16,7 @@
 // create a CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV1beta1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of CronJob
@@ -52,13 +52,13 @@ BatchV1beta1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace 
 // partially update the specified CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+BatchV1beta1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update status of the specified CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+BatchV1beta1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified CronJob
@@ -76,12 +76,12 @@ BatchV1beta1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char * name 
 // replace the specified CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV1beta1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace status of the specified CronJob
 //
 v1beta1_cron_job_t*
-BatchV1beta1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager );
+BatchV1beta1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name , char * _namespace , v1beta1_cron_job_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

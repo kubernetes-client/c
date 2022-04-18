@@ -42,26 +42,25 @@ cJSON *v1_portworx_volume_source_convertToJSON(v1_portworx_volume_source_t *v1_p
     cJSON *item = cJSON_CreateObject();
 
     // v1_portworx_volume_source->fs_type
-    if(v1_portworx_volume_source->fs_type) { 
+    if(v1_portworx_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_portworx_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_portworx_volume_source->read_only
-    if(v1_portworx_volume_source->read_only) { 
+    if(v1_portworx_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_portworx_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_portworx_volume_source->volume_id
     if (!v1_portworx_volume_source->volume_id) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "volumeID", v1_portworx_volume_source->volume_id) == NULL) {
     goto fail; //String
     }

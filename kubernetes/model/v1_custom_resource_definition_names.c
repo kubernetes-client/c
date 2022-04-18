@@ -70,7 +70,7 @@ cJSON *v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_defi
     cJSON *item = cJSON_CreateObject();
 
     // v1_custom_resource_definition_names->categories
-    if(v1_custom_resource_definition_names->categories) { 
+    if(v1_custom_resource_definition_names->categories) {
     cJSON *categories = cJSON_AddArrayToObject(item, "categories");
     if(categories == NULL) {
         goto fail; //primitive container
@@ -83,39 +83,37 @@ cJSON *v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_defi
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition_names->kind
     if (!v1_custom_resource_definition_names->kind) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "kind", v1_custom_resource_definition_names->kind) == NULL) {
     goto fail; //String
     }
 
 
     // v1_custom_resource_definition_names->list_kind
-    if(v1_custom_resource_definition_names->list_kind) { 
+    if(v1_custom_resource_definition_names->list_kind) {
     if(cJSON_AddStringToObject(item, "listKind", v1_custom_resource_definition_names->list_kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition_names->plural
     if (!v1_custom_resource_definition_names->plural) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "plural", v1_custom_resource_definition_names->plural) == NULL) {
     goto fail; //String
     }
 
 
     // v1_custom_resource_definition_names->short_names
-    if(v1_custom_resource_definition_names->short_names) { 
+    if(v1_custom_resource_definition_names->short_names) {
     cJSON *short_names = cJSON_AddArrayToObject(item, "shortNames");
     if(short_names == NULL) {
         goto fail; //primitive container
@@ -128,15 +126,15 @@ cJSON *v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_defi
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_custom_resource_definition_names->singular
-    if(v1_custom_resource_definition_names->singular) { 
+    if(v1_custom_resource_definition_names->singular) {
     if(cJSON_AddStringToObject(item, "singular", v1_custom_resource_definition_names->singular) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:

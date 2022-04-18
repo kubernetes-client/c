@@ -17,6 +17,7 @@
 v1_probe_t* instantiate_v1_probe(int include_optional);
 
 #include "test_v1_exec_action.c"
+#include "test_v1_grpc_action.c"
 #include "test_v1_http_get_action.c"
 #include "test_v1_tcp_socket_action.c"
 
@@ -28,6 +29,8 @@ v1_probe_t* instantiate_v1_probe(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_exec_action(0),
       56,
+       // false, not to have infinite recursion
+      instantiate_v1_grpc_action(0),
        // false, not to have infinite recursion
       instantiate_v1_http_get_action(0),
       56,
@@ -42,6 +45,7 @@ v1_probe_t* instantiate_v1_probe(int include_optional) {
     v1_probe = v1_probe_create(
       NULL,
       56,
+      NULL,
       NULL,
       56,
       56,

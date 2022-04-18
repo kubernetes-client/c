@@ -42,26 +42,25 @@ cJSON *v1_service_account_token_projection_convertToJSON(v1_service_account_toke
     cJSON *item = cJSON_CreateObject();
 
     // v1_service_account_token_projection->audience
-    if(v1_service_account_token_projection->audience) { 
+    if(v1_service_account_token_projection->audience) {
     if(cJSON_AddStringToObject(item, "audience", v1_service_account_token_projection->audience) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_account_token_projection->expiration_seconds
-    if(v1_service_account_token_projection->expiration_seconds) { 
+    if(v1_service_account_token_projection->expiration_seconds) {
     if(cJSON_AddNumberToObject(item, "expirationSeconds", v1_service_account_token_projection->expiration_seconds) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_service_account_token_projection->path
     if (!v1_service_account_token_projection->path) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "path", v1_service_account_token_projection->path) == NULL) {
     goto fail; //String
     }

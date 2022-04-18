@@ -30,11 +30,11 @@ cJSON *v1_volume_node_resources_convertToJSON(v1_volume_node_resources_t *v1_vol
     cJSON *item = cJSON_CreateObject();
 
     // v1_volume_node_resources->count
-    if(v1_volume_node_resources->count) { 
+    if(v1_volume_node_resources->count) {
     if(cJSON_AddNumberToObject(item, "count", v1_volume_node_resources->count) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

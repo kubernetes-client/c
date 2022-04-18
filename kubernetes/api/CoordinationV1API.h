@@ -16,7 +16,7 @@
 // create a Lease
 //
 v1_lease_t*
-CoordinationV1API_createNamespacedLease(apiClient_t *apiClient, char * _namespace , v1_lease_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoordinationV1API_createNamespacedLease(apiClient_t *apiClient, char * _namespace , v1_lease_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // delete collection of Lease
@@ -52,7 +52,7 @@ CoordinationV1API_listNamespacedLease(apiClient_t *apiClient, char * _namespace 
 // partially update the specified Lease
 //
 v1_lease_t*
-CoordinationV1API_patchNamespacedLease(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , int force );
+CoordinationV1API_patchNamespacedLease(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // read the specified Lease
@@ -64,6 +64,6 @@ CoordinationV1API_readNamespacedLease(apiClient_t *apiClient, char * name , char
 // replace the specified Lease
 //
 v1_lease_t*
-CoordinationV1API_replaceNamespacedLease(apiClient_t *apiClient, char * name , char * _namespace , v1_lease_t * body , char * pretty , char * dryRun , char * fieldManager );
+CoordinationV1API_replaceNamespacedLease(apiClient_t *apiClient, char * name , char * _namespace , v1_lease_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

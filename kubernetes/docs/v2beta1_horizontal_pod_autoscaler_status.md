@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**conditions** | [**list_t**](v2beta1_horizontal_pod_autoscaler_condition.md) \* | conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met. | 
+**conditions** | [**list_t**](v2beta1_horizontal_pod_autoscaler_condition.md) \* | conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met. | [optional] 
 **current_metrics** | [**list_t**](v2beta1_metric_status.md) \* | currentMetrics is the last read state of the metrics used by this autoscaler. | [optional] 
 **current_replicas** | **int** | currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler. | 
 **desired_replicas** | **int** | desiredReplicas is the desired number of replicas of pods managed by this autoscaler, as last calculated by the autoscaler. | 

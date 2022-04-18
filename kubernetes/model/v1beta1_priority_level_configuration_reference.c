@@ -37,7 +37,6 @@ cJSON *v1beta1_priority_level_configuration_reference_convertToJSON(v1beta1_prio
     if (!v1beta1_priority_level_configuration_reference->name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "name", v1beta1_priority_level_configuration_reference->name) == NULL) {
     goto fail; //String
     }

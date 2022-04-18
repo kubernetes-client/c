@@ -52,23 +52,23 @@ cJSON *v1_ingress_class_convertToJSON(v1_ingress_class_t *v1_ingress_class) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_ingress_class->api_version
-    if(v1_ingress_class->api_version) { 
+    if(v1_ingress_class->api_version) {
     if(cJSON_AddStringToObject(item, "apiVersion", v1_ingress_class->api_version) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ingress_class->kind
-    if(v1_ingress_class->kind) { 
+    if(v1_ingress_class->kind) {
     if(cJSON_AddStringToObject(item, "kind", v1_ingress_class->kind) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_ingress_class->metadata
-    if(v1_ingress_class->metadata) { 
+    if(v1_ingress_class->metadata) {
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_ingress_class->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -77,11 +77,11 @@ cJSON *v1_ingress_class_convertToJSON(v1_ingress_class_t *v1_ingress_class) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_ingress_class->spec
-    if(v1_ingress_class->spec) { 
+    if(v1_ingress_class->spec) {
     cJSON *spec_local_JSON = v1_ingress_class_spec_convertToJSON(v1_ingress_class->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -90,7 +90,7 @@ cJSON *v1_ingress_class_convertToJSON(v1_ingress_class_t *v1_ingress_class) {
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
     return item;
 fail:

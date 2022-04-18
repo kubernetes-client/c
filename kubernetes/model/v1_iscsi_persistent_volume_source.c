@@ -81,67 +81,65 @@ cJSON *v1_iscsi_persistent_volume_source_convertToJSON(v1_iscsi_persistent_volum
     cJSON *item = cJSON_CreateObject();
 
     // v1_iscsi_persistent_volume_source->chap_auth_discovery
-    if(v1_iscsi_persistent_volume_source->chap_auth_discovery) { 
+    if(v1_iscsi_persistent_volume_source->chap_auth_discovery) {
     if(cJSON_AddBoolToObject(item, "chapAuthDiscovery", v1_iscsi_persistent_volume_source->chap_auth_discovery) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_iscsi_persistent_volume_source->chap_auth_session
-    if(v1_iscsi_persistent_volume_source->chap_auth_session) { 
+    if(v1_iscsi_persistent_volume_source->chap_auth_session) {
     if(cJSON_AddBoolToObject(item, "chapAuthSession", v1_iscsi_persistent_volume_source->chap_auth_session) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_iscsi_persistent_volume_source->fs_type
-    if(v1_iscsi_persistent_volume_source->fs_type) { 
+    if(v1_iscsi_persistent_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_iscsi_persistent_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_iscsi_persistent_volume_source->initiator_name
-    if(v1_iscsi_persistent_volume_source->initiator_name) { 
+    if(v1_iscsi_persistent_volume_source->initiator_name) {
     if(cJSON_AddStringToObject(item, "initiatorName", v1_iscsi_persistent_volume_source->initiator_name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_iscsi_persistent_volume_source->iqn
     if (!v1_iscsi_persistent_volume_source->iqn) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "iqn", v1_iscsi_persistent_volume_source->iqn) == NULL) {
     goto fail; //String
     }
 
 
     // v1_iscsi_persistent_volume_source->iscsi_interface
-    if(v1_iscsi_persistent_volume_source->iscsi_interface) { 
+    if(v1_iscsi_persistent_volume_source->iscsi_interface) {
     if(cJSON_AddStringToObject(item, "iscsiInterface", v1_iscsi_persistent_volume_source->iscsi_interface) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_iscsi_persistent_volume_source->lun
     if (!v1_iscsi_persistent_volume_source->lun) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "lun", v1_iscsi_persistent_volume_source->lun) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_iscsi_persistent_volume_source->portals
-    if(v1_iscsi_persistent_volume_source->portals) { 
+    if(v1_iscsi_persistent_volume_source->portals) {
     cJSON *portals = cJSON_AddArrayToObject(item, "portals");
     if(portals == NULL) {
         goto fail; //primitive container
@@ -154,19 +152,19 @@ cJSON *v1_iscsi_persistent_volume_source_convertToJSON(v1_iscsi_persistent_volum
         goto fail;
     }
     }
-     } 
+    }
 
 
     // v1_iscsi_persistent_volume_source->read_only
-    if(v1_iscsi_persistent_volume_source->read_only) { 
+    if(v1_iscsi_persistent_volume_source->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_iscsi_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
-     } 
+    }
 
 
     // v1_iscsi_persistent_volume_source->secret_ref
-    if(v1_iscsi_persistent_volume_source->secret_ref) { 
+    if(v1_iscsi_persistent_volume_source->secret_ref) {
     cJSON *secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_iscsi_persistent_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
@@ -175,14 +173,13 @@ cJSON *v1_iscsi_persistent_volume_source_convertToJSON(v1_iscsi_persistent_volum
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v1_iscsi_persistent_volume_source->target_portal
     if (!v1_iscsi_persistent_volume_source->target_portal) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "targetPortal", v1_iscsi_persistent_volume_source->target_portal) == NULL) {
     goto fail; //String
     }

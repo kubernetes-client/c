@@ -72,7 +72,7 @@ Method | HTTP request | Description
 ```c
 // create a ControllerRevision
 //
-v1_controller_revision_t* AppsV1API_createNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace, v1_controller_revision_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_controller_revision_t* AppsV1API_createNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace, v1_controller_revision_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -84,6 +84,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -105,7 +106,7 @@ Name | Type | Description  | Notes
 ```c
 // create a DaemonSet
 //
-v1_daemon_set_t* AppsV1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace, v1_daemon_set_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_daemon_set_t* AppsV1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace, v1_daemon_set_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -117,6 +118,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -138,7 +140,7 @@ Name | Type | Description  | Notes
 ```c
 // create a Deployment
 //
-v1_deployment_t* AppsV1API_createNamespacedDeployment(apiClient_t *apiClient, char * _namespace, v1_deployment_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_deployment_t* AppsV1API_createNamespacedDeployment(apiClient_t *apiClient, char * _namespace, v1_deployment_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -150,6 +152,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -171,7 +174,7 @@ Name | Type | Description  | Notes
 ```c
 // create a ReplicaSet
 //
-v1_replica_set_t* AppsV1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace, v1_replica_set_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_replica_set_t* AppsV1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace, v1_replica_set_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -183,6 +186,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -204,7 +208,7 @@ Name | Type | Description  | Notes
 ```c
 // create a StatefulSet
 //
-v1_stateful_set_t* AppsV1API_createNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace, v1_stateful_set_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_stateful_set_t* AppsV1API_createNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace, v1_stateful_set_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -216,6 +220,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -1040,7 +1045,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified ControllerRevision
 //
-v1_controller_revision_t* AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_controller_revision_t* AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1053,6 +1058,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1075,7 +1081,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified DaemonSet
 //
-v1_daemon_set_t* AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_daemon_set_t* AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1088,6 +1094,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1110,7 +1117,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update status of the specified DaemonSet
 //
-v1_daemon_set_t* AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_daemon_set_t* AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1123,6 +1130,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1145,7 +1153,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified Deployment
 //
-v1_deployment_t* AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_deployment_t* AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1158,6 +1166,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1180,7 +1189,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update scale of the specified Deployment
 //
-v1_scale_t* AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_scale_t* AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1193,6 +1202,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1215,7 +1225,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update status of the specified Deployment
 //
-v1_deployment_t* AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_deployment_t* AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1228,6 +1238,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1250,7 +1261,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified ReplicaSet
 //
-v1_replica_set_t* AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_replica_set_t* AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1263,6 +1274,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1285,7 +1297,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update scale of the specified ReplicaSet
 //
-v1_scale_t* AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_scale_t* AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1298,6 +1310,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1320,7 +1333,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update status of the specified ReplicaSet
 //
-v1_replica_set_t* AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_replica_set_t* AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1333,6 +1346,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1355,7 +1369,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified StatefulSet
 //
-v1_stateful_set_t* AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_stateful_set_t* AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1368,6 +1382,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1390,7 +1405,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update scale of the specified StatefulSet
 //
-v1_scale_t* AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_scale_t* AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1403,6 +1418,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1425,7 +1441,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update status of the specified StatefulSet
 //
-v1_stateful_set_t* AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, int force);
+v1_stateful_set_t* AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
 ```
 
 ### Parameters
@@ -1438,6 +1454,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 **force** | **int** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
@@ -1832,7 +1849,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified ControllerRevision
 //
-v1_controller_revision_t* AppsV1API_replaceNamespacedControllerRevision(apiClient_t *apiClient, char * name, char * _namespace, v1_controller_revision_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_controller_revision_t* AppsV1API_replaceNamespacedControllerRevision(apiClient_t *apiClient, char * name, char * _namespace, v1_controller_revision_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -1845,6 +1862,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -1866,7 +1884,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified DaemonSet
 //
-v1_daemon_set_t* AppsV1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * name, char * _namespace, v1_daemon_set_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_daemon_set_t* AppsV1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * name, char * _namespace, v1_daemon_set_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -1879,6 +1897,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -1900,7 +1919,7 @@ Name | Type | Description  | Notes
 ```c
 // replace status of the specified DaemonSet
 //
-v1_daemon_set_t* AppsV1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name, char * _namespace, v1_daemon_set_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_daemon_set_t* AppsV1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name, char * _namespace, v1_daemon_set_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -1913,6 +1932,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -1934,7 +1954,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified Deployment
 //
-v1_deployment_t* AppsV1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * name, char * _namespace, v1_deployment_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_deployment_t* AppsV1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * name, char * _namespace, v1_deployment_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -1947,6 +1967,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -1968,7 +1989,7 @@ Name | Type | Description  | Notes
 ```c
 // replace scale of the specified Deployment
 //
-v1_scale_t* AppsV1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, char * name, char * _namespace, v1_scale_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_scale_t* AppsV1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, char * name, char * _namespace, v1_scale_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -1981,6 +2002,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -2002,7 +2024,7 @@ Name | Type | Description  | Notes
 ```c
 // replace status of the specified Deployment
 //
-v1_deployment_t* AppsV1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, char * name, char * _namespace, v1_deployment_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_deployment_t* AppsV1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, char * name, char * _namespace, v1_deployment_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -2015,6 +2037,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -2036,7 +2059,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified ReplicaSet
 //
-v1_replica_set_t* AppsV1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * name, char * _namespace, v1_replica_set_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_replica_set_t* AppsV1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * name, char * _namespace, v1_replica_set_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -2049,6 +2072,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -2070,7 +2094,7 @@ Name | Type | Description  | Notes
 ```c
 // replace scale of the specified ReplicaSet
 //
-v1_scale_t* AppsV1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, char * name, char * _namespace, v1_scale_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_scale_t* AppsV1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, char * name, char * _namespace, v1_scale_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -2083,6 +2107,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -2104,7 +2129,7 @@ Name | Type | Description  | Notes
 ```c
 // replace status of the specified ReplicaSet
 //
-v1_replica_set_t* AppsV1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name, char * _namespace, v1_replica_set_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_replica_set_t* AppsV1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name, char * _namespace, v1_replica_set_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -2117,6 +2142,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -2138,7 +2164,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified StatefulSet
 //
-v1_stateful_set_t* AppsV1API_replaceNamespacedStatefulSet(apiClient_t *apiClient, char * name, char * _namespace, v1_stateful_set_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_stateful_set_t* AppsV1API_replaceNamespacedStatefulSet(apiClient_t *apiClient, char * name, char * _namespace, v1_stateful_set_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -2151,6 +2177,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -2172,7 +2199,7 @@ Name | Type | Description  | Notes
 ```c
 // replace scale of the specified StatefulSet
 //
-v1_scale_t* AppsV1API_replaceNamespacedStatefulSetScale(apiClient_t *apiClient, char * name, char * _namespace, v1_scale_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_scale_t* AppsV1API_replaceNamespacedStatefulSetScale(apiClient_t *apiClient, char * name, char * _namespace, v1_scale_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -2185,6 +2212,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 
@@ -2206,7 +2234,7 @@ Name | Type | Description  | Notes
 ```c
 // replace status of the specified StatefulSet
 //
-v1_stateful_set_t* AppsV1API_replaceNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name, char * _namespace, v1_stateful_set_t * body, char * pretty, char * dryRun, char * fieldManager);
+v1_stateful_set_t* AppsV1API_replaceNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name, char * _namespace, v1_stateful_set_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
 ```
 
 ### Parameters
@@ -2219,6 +2247,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation determines how the server should respond to unknown/duplicate fields in the object in the request. Introduced as alpha in 1.23, older servers or servers with the &#x60;ServerSideFieldValidation&#x60; feature disabled will discard valid values specified in  this param and not perform any server side field validation. Valid values are: - Ignore: ignores unknown/duplicate fields. - Warn: responds with a warning for each unknown/duplicate field, but successfully serves the request. - Strict: fails the request on unknown/duplicate fields. | [optional] 
 
 ### Return type
 

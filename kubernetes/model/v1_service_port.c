@@ -4,13 +4,30 @@
 #include "v1_service_port.h"
 
 
+char* protocolv1_service_port_ToString(kubernetes_v1_service_port_PROTOCOL_e protocol) {
+    char* protocolArray[] =  { "NULL", "SCTP", "TCP", "UDP" };
+	return protocolArray[protocol];
+}
+
+kubernetes_v1_service_port_PROTOCOL_e protocolv1_service_port_FromString(char* protocol){
+    int stringToReturn = 0;
+    char *protocolArray[] =  { "NULL", "SCTP", "TCP", "UDP" };
+    size_t sizeofArray = sizeof(protocolArray) / sizeof(protocolArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(protocol, protocolArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 v1_service_port_t *v1_service_port_create(
     char *app_protocol,
     char *name,
     int node_port,
     int port,
-    char *protocol,
+    kubernetes_v1_service_port_PROTOCOL_e protocol,
     int_or_string_t *target_port
     ) {
     v1_service_port_t *v1_service_port_local_var = malloc(sizeof(v1_service_port_t));
@@ -41,10 +58,6 @@ void v1_service_port_free(v1_service_port_t *v1_service_port) {
         free(v1_service_port->name);
         v1_service_port->name = NULL;
     }
-    if (v1_service_port->protocol) {
-        free(v1_service_port->protocol);
-        v1_service_port->protocol = NULL;
-    }
     if (v1_service_port->target_port) {
         int_or_string_free(v1_service_port->target_port);
         v1_service_port->target_port = NULL;
@@ -56,49 +69,49 @@ cJSON *v1_service_port_convertToJSON(v1_service_port_t *v1_service_port) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_service_port->app_protocol
-    if(v1_service_port->app_protocol) { 
+    if(v1_service_port->app_protocol) {
     if(cJSON_AddStringToObject(item, "appProtocol", v1_service_port->app_protocol) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_port->name
-    if(v1_service_port->name) { 
+    if(v1_service_port->name) {
     if(cJSON_AddStringToObject(item, "name", v1_service_port->name) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v1_service_port->node_port
-    if(v1_service_port->node_port) { 
+    if(v1_service_port->node_port) {
     if(cJSON_AddNumberToObject(item, "nodePort", v1_service_port->node_port) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_service_port->port
     if (!v1_service_port->port) {
         goto fail;
     }
-    
     if(cJSON_AddNumberToObject(item, "port", v1_service_port->port) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_service_port->protocol
-    if(v1_service_port->protocol) { 
-    if(cJSON_AddStringToObject(item, "protocol", v1_service_port->protocol) == NULL) {
-    goto fail; //String
+    if(v1_service_port->protocol != kubernetes_v1_service_port_PROTOCOL_NULL) {
+    if(cJSON_AddStringToObject(item, "protocol", protocolv1_service_port_ToString(v1_service_port->protocol)) == NULL)
+    {
+    goto fail; //Enum
     }
-     } 
+    }
 
 
     // v1_service_port->target_port
-    if(v1_service_port->target_port) { 
+    if(v1_service_port->target_port) {
     cJSON *target_port_local_JSON = int_or_string_convertToJSON(v1_service_port->target_port);
     if(target_port_local_JSON == NULL) {
         goto fail; // custom
@@ -107,7 +120,7 @@ cJSON *v1_service_port_convertToJSON(v1_service_port_t *v1_service_port) {
     if(item->child == NULL) {
         goto fail;
     }
-     } 
+    }
 
     return item;
 fail:
@@ -165,11 +178,13 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
     // v1_service_port->protocol
     cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "protocol");
+    kubernetes_v1_service_port_PROTOCOL_e protocolVariable;
     if (protocol) { 
     if(!cJSON_IsString(protocol))
     {
-    goto end; //String
+    goto end; //Enum
     }
+    protocolVariable = protocolv1_service_port_FromString(protocol->valuestring);
     }
 
     // v1_service_port->target_port
@@ -184,7 +199,7 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
         name ? strdup(name->valuestring) : NULL,
         node_port ? node_port->valuedouble : 0,
         port->valuedouble,
-        protocol ? strdup(protocol->valuestring) : NULL,
+        protocol ? protocolVariable : -1,
         target_port ? target_port_local_nonprim : NULL
         );
 

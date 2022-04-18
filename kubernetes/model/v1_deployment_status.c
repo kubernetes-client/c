@@ -51,23 +51,23 @@ cJSON *v1_deployment_status_convertToJSON(v1_deployment_status_t *v1_deployment_
     cJSON *item = cJSON_CreateObject();
 
     // v1_deployment_status->available_replicas
-    if(v1_deployment_status->available_replicas) { 
+    if(v1_deployment_status->available_replicas) {
     if(cJSON_AddNumberToObject(item, "availableReplicas", v1_deployment_status->available_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_deployment_status->collision_count
-    if(v1_deployment_status->collision_count) { 
+    if(v1_deployment_status->collision_count) {
     if(cJSON_AddNumberToObject(item, "collisionCount", v1_deployment_status->collision_count) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_deployment_status->conditions
-    if(v1_deployment_status->conditions) { 
+    if(v1_deployment_status->conditions) {
     cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
@@ -83,47 +83,47 @@ cJSON *v1_deployment_status_convertToJSON(v1_deployment_status_t *v1_deployment_
     cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
-     } 
+    }
 
 
     // v1_deployment_status->observed_generation
-    if(v1_deployment_status->observed_generation) { 
+    if(v1_deployment_status->observed_generation) {
     if(cJSON_AddNumberToObject(item, "observedGeneration", v1_deployment_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_deployment_status->ready_replicas
-    if(v1_deployment_status->ready_replicas) { 
+    if(v1_deployment_status->ready_replicas) {
     if(cJSON_AddNumberToObject(item, "readyReplicas", v1_deployment_status->ready_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_deployment_status->replicas
-    if(v1_deployment_status->replicas) { 
+    if(v1_deployment_status->replicas) {
     if(cJSON_AddNumberToObject(item, "replicas", v1_deployment_status->replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_deployment_status->unavailable_replicas
-    if(v1_deployment_status->unavailable_replicas) { 
+    if(v1_deployment_status->unavailable_replicas) {
     if(cJSON_AddNumberToObject(item, "unavailableReplicas", v1_deployment_status->unavailable_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
 
     // v1_deployment_status->updated_replicas
-    if(v1_deployment_status->updated_replicas) { 
+    if(v1_deployment_status->updated_replicas) {
     if(cJSON_AddNumberToObject(item, "updatedReplicas", v1_deployment_status->updated_replicas) == NULL) {
     goto fail; //Numeric
     }
-     } 
+    }
 
     return item;
 fail:

@@ -55,14 +55,13 @@ cJSON *v2beta1_external_metric_source_convertToJSON(v2beta1_external_metric_sour
     if (!v2beta1_external_metric_source->metric_name) {
         goto fail;
     }
-    
     if(cJSON_AddStringToObject(item, "metricName", v2beta1_external_metric_source->metric_name) == NULL) {
     goto fail; //String
     }
 
 
     // v2beta1_external_metric_source->metric_selector
-    if(v2beta1_external_metric_source->metric_selector) { 
+    if(v2beta1_external_metric_source->metric_selector) {
     cJSON *metric_selector_local_JSON = v1_label_selector_convertToJSON(v2beta1_external_metric_source->metric_selector);
     if(metric_selector_local_JSON == NULL) {
     goto fail; //model
@@ -71,23 +70,23 @@ cJSON *v2beta1_external_metric_source_convertToJSON(v2beta1_external_metric_sour
     if(item->child == NULL) {
     goto fail;
     }
-     } 
+    }
 
 
     // v2beta1_external_metric_source->target_average_value
-    if(v2beta1_external_metric_source->target_average_value) { 
+    if(v2beta1_external_metric_source->target_average_value) {
     if(cJSON_AddStringToObject(item, "targetAverageValue", v2beta1_external_metric_source->target_average_value) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
 
     // v2beta1_external_metric_source->target_value
-    if(v2beta1_external_metric_source->target_value) { 
+    if(v2beta1_external_metric_source->target_value) {
     if(cJSON_AddStringToObject(item, "targetValue", v2beta1_external_metric_source->target_value) == NULL) {
     goto fail; //String
     }
-     } 
+    }
 
     return item;
 fail:
