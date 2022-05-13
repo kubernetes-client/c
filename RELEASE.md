@@ -24,9 +24,9 @@ Now we are ready to perform the release.
 
 ## Release
 
-There are 2 options to release: via Github Action or by manul
+There are 2 options to release: via GitHub Action or by manul
 
-### Release via Github Action
+### Release via GitHub Action
 
 Maintainers meeting the following requirements will be able to perform automated
 release:
@@ -36,21 +36,21 @@ release:
 
 #### Fill in the release workflow inputs manually
 
-The Github Action workflow [Release](https://github.com/kubernetes-client/c/actions/workflows/release.yml) will require three manual inputs:
+The GitHub Action workflow [Release](https://github.com/kubernetes-client/c/actions/workflows/release.yml) will require three manual inputs:
 
 * The branch on which the workflow runs, must be a release branch, e.g. `release-X.Y`
 
 * The releasing version, must be a valid semver `X.Y.Z` (without "v" prefix).
 
-* Dry-Run: Indicating whether the release job will push the generated tag to the release branch and actually do a Github release.
+* Dry-Run: Indicating whether the release job will push the generated tag to the release branch and actually do a GitHub release.
   
 Fill in the inputs, then click "Run" to start the job. 
 
 #### Release note, announcements
 
-After the release job successfully finishes, we're supposed to see a git tag `vX.Y.Z` pushed to the release branch, a GITHUB release will also be packed on the tag.
+After the release job successfully finishes, we're supposed to see a git tag `vX.Y.Z` pushed to the release branch, a GitHub draft release will also be packed on the tag.
 
-In the end, don't forget to clarify the release notes on the GITHUB release.
+In the end, manually update the release notes and publish the release on the GitHub release page.
 
 ### Release by manual
 
