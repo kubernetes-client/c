@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        type: string
+        required: true
+        description: The release version of this release. Must be a semantic version of the form X.Y.Z
+      dry-run:
+        type: boolean
+        required: true
+        description: Dry run, will not push tags to branch and release.
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Input
+        run: |
+          echo "${{ github.ref_type }}" | perl -ne 'die unless m/^branch$/'
+          echo "${{ github.ref_name }}" | perl -ne 'die unless m/^release-\d+\.\d+$/'
+          echo "${{ github.event.inputs.releaseVersion }}" | perl -ne 'die unless m/^\d+\.\d+\.\d+$/'
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Check Actor
+        run: |
+          # Release actor should be in the OWNER list
+          cat OWNERS | grep ${{ github.actor }}
+      - name: Prepare
+        run: |
+          git config user.email "k8s.ci.robot@gmail.com"
+          git config user.name "Kubernetes Prow Robot"
+      - name: Release Prepare
+        run: |
+          git tag -a v${{ github.event.inputs.releaseVersion }} -m "version ${{ github.event.inputs.releaseVersion }}"
+      - name: Release Perform
+        if: ${{ github.event.inputs.dry-run != 'true' }}
+        run: |
+          git push https://${{ github.token }}@github.com/${{ github.repository }}.git v${{ github.event.inputs.releaseVersion }}
+      - name: Publish Release
+        if: ${{ github.event.inputs.dry-run != 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create -d --generate-notes v${{ github.event.inputs.releaseVersion }}
