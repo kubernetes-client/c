@@ -1,9 +1,9 @@
 # Kubernetes branch/tag to get the OpenAPI spec from.
-export KUBERNETES_BRANCH="v1.22.1"
+export KUBERNETES_BRANCH="v1.23.5"
 
 # client version for packaging and releasing. It can
 # be different than SPEC_VERSION.
-export CLIENT_VERSION="0.1.0"
+export CLIENT_VERSION="0.3.0"
 
 # Name of the release package
 export PACKAGE_NAME="client"
