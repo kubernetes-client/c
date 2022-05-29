@@ -4,23 +4,6 @@
 #include "v1_job_condition.h"
 
 
-char* typev1_job_condition_ToString(kubernetes_v1_job_condition_TYPE_e type) {
-    char* typeArray[] =  { "NULL", "Complete", "Failed", "Suspended" };
-	return typeArray[type];
-}
-
-kubernetes_v1_job_condition_TYPE_e typev1_job_condition_FromString(char* type){
-    int stringToReturn = 0;
-    char *typeArray[] =  { "NULL", "Complete", "Failed", "Suspended" };
-    size_t sizeofArray = sizeof(typeArray) / sizeof(typeArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(type, typeArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_job_condition_t *v1_job_condition_create(
     char *last_probe_time,
@@ -28,7 +11,7 @@ v1_job_condition_t *v1_job_condition_create(
     char *message,
     char *reason,
     char *status,
-    kubernetes_v1_job_condition_TYPE_e type
+    char *type
     ) {
     v1_job_condition_t *v1_job_condition_local_var = malloc(sizeof(v1_job_condition_t));
     if (!v1_job_condition_local_var) {
@@ -69,6 +52,10 @@ void v1_job_condition_free(v1_job_condition_t *v1_job_condition) {
     if (v1_job_condition->status) {
         free(v1_job_condition->status);
         v1_job_condition->status = NULL;
+    }
+    if (v1_job_condition->type) {
+        free(v1_job_condition->type);
+        v1_job_condition->type = NULL;
     }
     free(v1_job_condition);
 }
@@ -118,12 +105,11 @@ cJSON *v1_job_condition_convertToJSON(v1_job_condition_t *v1_job_condition) {
 
 
     // v1_job_condition->type
-    if (kubernetes_v1_job_condition_TYPE_NULL == v1_job_condition->type) {
+    if (!v1_job_condition->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", typev1_job_condition_ToString(v1_job_condition->type)) == NULL)
-    {
-    goto fail; //Enum
+    if(cJSON_AddStringToObject(item, "type", v1_job_condition->type) == NULL) {
+    goto fail; //String
     }
 
     return item;
@@ -192,13 +178,11 @@ v1_job_condition_t *v1_job_condition_parseFromJSON(cJSON *v1_job_conditionJSON){
         goto end;
     }
 
-    kubernetes_v1_job_condition_TYPE_e typeVariable;
     
     if(!cJSON_IsString(type))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    typeVariable = typev1_job_condition_FromString(type->valuestring);
 
 
     v1_job_condition_local_var = v1_job_condition_create (
@@ -207,7 +191,7 @@ v1_job_condition_t *v1_job_condition_parseFromJSON(cJSON *v1_job_conditionJSON){
         message ? strdup(message->valuestring) : NULL,
         reason ? strdup(reason->valuestring) : NULL,
         strdup(status->valuestring),
-        typeVariable
+        strdup(type->valuestring)
         );
 
     return v1_job_condition_local_var;

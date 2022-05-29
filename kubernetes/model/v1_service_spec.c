@@ -4,57 +4,6 @@
 #include "v1_service_spec.h"
 
 
-char* external_traffic_policyv1_service_spec_ToString(kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_e external_traffic_policy) {
-    char* external_traffic_policyArray[] =  { "NULL", "Cluster", "Local" };
-	return external_traffic_policyArray[external_traffic_policy];
-}
-
-kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_e external_traffic_policyv1_service_spec_FromString(char* external_traffic_policy){
-    int stringToReturn = 0;
-    char *external_traffic_policyArray[] =  { "NULL", "Cluster", "Local" };
-    size_t sizeofArray = sizeof(external_traffic_policyArray) / sizeof(external_traffic_policyArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(external_traffic_policy, external_traffic_policyArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
-char* session_affinityv1_service_spec_ToString(kubernetes_v1_service_spec_SESSIONAFFINITY_e session_affinity) {
-    char* session_affinityArray[] =  { "NULL", "ClientIP", "None" };
-	return session_affinityArray[session_affinity];
-}
-
-kubernetes_v1_service_spec_SESSIONAFFINITY_e session_affinityv1_service_spec_FromString(char* session_affinity){
-    int stringToReturn = 0;
-    char *session_affinityArray[] =  { "NULL", "ClientIP", "None" };
-    size_t sizeofArray = sizeof(session_affinityArray) / sizeof(session_affinityArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(session_affinity, session_affinityArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
-char* typev1_service_spec_ToString(kubernetes_v1_service_spec_TYPE_e type) {
-    char* typeArray[] =  { "NULL", "ClusterIP", "ExternalName", "LoadBalancer", "NodePort" };
-	return typeArray[type];
-}
-
-kubernetes_v1_service_spec_TYPE_e typev1_service_spec_FromString(char* type){
-    int stringToReturn = 0;
-    char *typeArray[] =  { "NULL", "ClusterIP", "ExternalName", "LoadBalancer", "NodePort" };
-    size_t sizeofArray = sizeof(typeArray) / sizeof(typeArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(type, typeArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_service_spec_t *v1_service_spec_create(
     int allocate_load_balancer_node_ports,
@@ -62,7 +11,7 @@ v1_service_spec_t *v1_service_spec_create(
     list_t *cluster_ips,
     list_t *external_ips,
     char *external_name,
-    kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_e external_traffic_policy,
+    char *external_traffic_policy,
     int health_check_node_port,
     char *internal_traffic_policy,
     list_t *ip_families,
@@ -73,9 +22,9 @@ v1_service_spec_t *v1_service_spec_create(
     list_t *ports,
     int publish_not_ready_addresses,
     list_t* selector,
-    kubernetes_v1_service_spec_SESSIONAFFINITY_e session_affinity,
+    char *session_affinity,
     v1_session_affinity_config_t *session_affinity_config,
-    kubernetes_v1_service_spec_TYPE_e type
+    char *type
     ) {
     v1_service_spec_t *v1_service_spec_local_var = malloc(sizeof(v1_service_spec_t));
     if (!v1_service_spec_local_var) {
@@ -132,6 +81,10 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
         free(v1_service_spec->external_name);
         v1_service_spec->external_name = NULL;
     }
+    if (v1_service_spec->external_traffic_policy) {
+        free(v1_service_spec->external_traffic_policy);
+        v1_service_spec->external_traffic_policy = NULL;
+    }
     if (v1_service_spec->internal_traffic_policy) {
         free(v1_service_spec->internal_traffic_policy);
         v1_service_spec->internal_traffic_policy = NULL;
@@ -179,9 +132,17 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
         list_freeList(v1_service_spec->selector);
         v1_service_spec->selector = NULL;
     }
+    if (v1_service_spec->session_affinity) {
+        free(v1_service_spec->session_affinity);
+        v1_service_spec->session_affinity = NULL;
+    }
     if (v1_service_spec->session_affinity_config) {
         v1_session_affinity_config_free(v1_service_spec->session_affinity_config);
         v1_service_spec->session_affinity_config = NULL;
+    }
+    if (v1_service_spec->type) {
+        free(v1_service_spec->type);
+        v1_service_spec->type = NULL;
     }
     free(v1_service_spec);
 }
@@ -248,10 +209,9 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
 
     // v1_service_spec->external_traffic_policy
-    if(v1_service_spec->external_traffic_policy != kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_NULL) {
-    if(cJSON_AddStringToObject(item, "externalTrafficPolicy", external_traffic_policyv1_service_spec_ToString(v1_service_spec->external_traffic_policy)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_service_spec->external_traffic_policy) {
+    if(cJSON_AddStringToObject(item, "externalTrafficPolicy", v1_service_spec->external_traffic_policy) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -379,10 +339,9 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
 
     // v1_service_spec->session_affinity
-    if(v1_service_spec->session_affinity != kubernetes_v1_service_spec_SESSIONAFFINITY_NULL) {
-    if(cJSON_AddStringToObject(item, "sessionAffinity", session_affinityv1_service_spec_ToString(v1_service_spec->session_affinity)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_service_spec->session_affinity) {
+    if(cJSON_AddStringToObject(item, "sessionAffinity", v1_service_spec->session_affinity) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -401,10 +360,9 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
 
     // v1_service_spec->type
-    if(v1_service_spec->type != kubernetes_v1_service_spec_TYPE_NULL) {
-    if(cJSON_AddStringToObject(item, "type", typev1_service_spec_ToString(v1_service_spec->type)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_service_spec->type) {
+    if(cJSON_AddStringToObject(item, "type", v1_service_spec->type) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -508,13 +466,11 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->external_traffic_policy
     cJSON *external_traffic_policy = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalTrafficPolicy");
-    kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_e external_traffic_policyVariable;
     if (external_traffic_policy) { 
     if(!cJSON_IsString(external_traffic_policy))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    external_traffic_policyVariable = external_traffic_policyv1_service_spec_FromString(external_traffic_policy->valuestring);
     }
 
     // v1_service_spec->health_check_node_port
@@ -653,13 +609,11 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->session_affinity
     cJSON *session_affinity = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "sessionAffinity");
-    kubernetes_v1_service_spec_SESSIONAFFINITY_e session_affinityVariable;
     if (session_affinity) { 
     if(!cJSON_IsString(session_affinity))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    session_affinityVariable = session_affinityv1_service_spec_FromString(session_affinity->valuestring);
     }
 
     // v1_service_spec->session_affinity_config
@@ -670,13 +624,11 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "type");
-    kubernetes_v1_service_spec_TYPE_e typeVariable;
     if (type) { 
     if(!cJSON_IsString(type))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    typeVariable = typev1_service_spec_FromString(type->valuestring);
     }
 
 
@@ -686,7 +638,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
         cluster_ips ? cluster_ipsList : NULL,
         external_ips ? external_ipsList : NULL,
         external_name ? strdup(external_name->valuestring) : NULL,
-        external_traffic_policy ? external_traffic_policyVariable : -1,
+        external_traffic_policy ? strdup(external_traffic_policy->valuestring) : NULL,
         health_check_node_port ? health_check_node_port->valuedouble : 0,
         internal_traffic_policy ? strdup(internal_traffic_policy->valuestring) : NULL,
         ip_families ? ip_familiesList : NULL,
@@ -697,9 +649,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
         ports ? portsList : NULL,
         publish_not_ready_addresses ? publish_not_ready_addresses->valueint : 0,
         selector ? selectorList : NULL,
-        session_affinity ? session_affinityVariable : -1,
+        session_affinity ? strdup(session_affinity->valuestring) : NULL,
         session_affinity_config ? session_affinity_config_local_nonprim : NULL,
-        type ? typeVariable : -1
+        type ? strdup(type->valuestring) : NULL
         );
 
     return v1_service_spec_local_var;

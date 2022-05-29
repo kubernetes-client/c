@@ -63,11 +63,10 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
     cJSON *item = cJSON_CreateObject();
 
     // v1_stateful_set_status->available_replicas
-    if (!v1_stateful_set_status->available_replicas) {
-        goto fail;
-    }
+    if(v1_stateful_set_status->available_replicas) {
     if(cJSON_AddNumberToObject(item, "availableReplicas", v1_stateful_set_status->available_replicas) == NULL) {
     goto fail; //Numeric
+    }
     }
 
 
@@ -172,14 +171,11 @@ v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_statefu
 
     // v1_stateful_set_status->available_replicas
     cJSON *available_replicas = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "availableReplicas");
-    if (!available_replicas) {
-        goto end;
-    }
-
-    
+    if (available_replicas) { 
     if(!cJSON_IsNumber(available_replicas))
     {
     goto end; //Numeric
+    }
     }
 
     // v1_stateful_set_status->collision_count
@@ -280,7 +276,7 @@ v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_statefu
 
 
     v1_stateful_set_status_local_var = v1_stateful_set_status_create (
-        available_replicas->valuedouble,
+        available_replicas ? available_replicas->valuedouble : 0,
         collision_count ? collision_count->valuedouble : 0,
         conditions ? conditionsList : NULL,
         current_replicas ? current_replicas->valuedouble : 0,

@@ -4,26 +4,9 @@
 #include "v1_taint.h"
 
 
-char* effectv1_taint_ToString(kubernetes_v1_taint_EFFECT_e effect) {
-    char* effectArray[] =  { "NULL", "NoExecute", "NoSchedule", "PreferNoSchedule" };
-	return effectArray[effect];
-}
-
-kubernetes_v1_taint_EFFECT_e effectv1_taint_FromString(char* effect){
-    int stringToReturn = 0;
-    char *effectArray[] =  { "NULL", "NoExecute", "NoSchedule", "PreferNoSchedule" };
-    size_t sizeofArray = sizeof(effectArray) / sizeof(effectArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(effect, effectArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_taint_t *v1_taint_create(
-    kubernetes_v1_taint_EFFECT_e effect,
+    char *effect,
     char *key,
     char *time_added,
     char *value
@@ -46,6 +29,10 @@ void v1_taint_free(v1_taint_t *v1_taint) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_taint->effect) {
+        free(v1_taint->effect);
+        v1_taint->effect = NULL;
+    }
     if (v1_taint->key) {
         free(v1_taint->key);
         v1_taint->key = NULL;
@@ -65,12 +52,11 @@ cJSON *v1_taint_convertToJSON(v1_taint_t *v1_taint) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_taint->effect
-    if (kubernetes_v1_taint_EFFECT_NULL == v1_taint->effect) {
+    if (!v1_taint->effect) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "effect", effectv1_taint_ToString(v1_taint->effect)) == NULL)
-    {
-    goto fail; //Enum
+    if(cJSON_AddStringToObject(item, "effect", v1_taint->effect) == NULL) {
+    goto fail; //String
     }
 
 
@@ -116,13 +102,11 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
         goto end;
     }
 
-    kubernetes_v1_taint_EFFECT_e effectVariable;
     
     if(!cJSON_IsString(effect))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    effectVariable = effectv1_taint_FromString(effect->valuestring);
 
     // v1_taint->key
     cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "key");
@@ -156,7 +140,7 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
 
 
     v1_taint_local_var = v1_taint_create (
-        effectVariable,
+        strdup(effect->valuestring),
         strdup(key->valuestring),
         time_added ? strdup(time_added->valuestring) : NULL,
         value ? strdup(value->valuestring) : NULL

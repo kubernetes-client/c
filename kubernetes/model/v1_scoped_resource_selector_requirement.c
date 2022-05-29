@@ -4,44 +4,10 @@
 #include "v1_scoped_resource_selector_requirement.h"
 
 
-char* _operatorv1_scoped_resource_selector_requirement_ToString(kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_e _operator) {
-    char* _operatorArray[] =  { "NULL", "DoesNotExist", "Exists", "In", "NotIn" };
-	return _operatorArray[_operator];
-}
-
-kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_e _operatorv1_scoped_resource_selector_requirement_FromString(char* _operator){
-    int stringToReturn = 0;
-    char *_operatorArray[] =  { "NULL", "DoesNotExist", "Exists", "In", "NotIn" };
-    size_t sizeofArray = sizeof(_operatorArray) / sizeof(_operatorArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(_operator, _operatorArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
-char* scope_namev1_scoped_resource_selector_requirement_ToString(kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_e scope_name) {
-    char* scope_nameArray[] =  { "NULL", "BestEffort", "CrossNamespacePodAffinity", "NotBestEffort", "NotTerminating", "PriorityClass", "Terminating" };
-	return scope_nameArray[scope_name];
-}
-
-kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_e scope_namev1_scoped_resource_selector_requirement_FromString(char* scope_name){
-    int stringToReturn = 0;
-    char *scope_nameArray[] =  { "NULL", "BestEffort", "CrossNamespacePodAffinity", "NotBestEffort", "NotTerminating", "PriorityClass", "Terminating" };
-    size_t sizeofArray = sizeof(scope_nameArray) / sizeof(scope_nameArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(scope_name, scope_nameArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement_create(
-    kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_e _operator,
-    kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_e scope_name,
+    char *_operator,
+    char *scope_name,
     list_t *values
     ) {
     v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement_local_var = malloc(sizeof(v1_scoped_resource_selector_requirement_t));
@@ -61,6 +27,14 @@ void v1_scoped_resource_selector_requirement_free(v1_scoped_resource_selector_re
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_scoped_resource_selector_requirement->_operator) {
+        free(v1_scoped_resource_selector_requirement->_operator);
+        v1_scoped_resource_selector_requirement->_operator = NULL;
+    }
+    if (v1_scoped_resource_selector_requirement->scope_name) {
+        free(v1_scoped_resource_selector_requirement->scope_name);
+        v1_scoped_resource_selector_requirement->scope_name = NULL;
+    }
     if (v1_scoped_resource_selector_requirement->values) {
         list_ForEach(listEntry, v1_scoped_resource_selector_requirement->values) {
             free(listEntry->data);
@@ -75,22 +49,20 @@ cJSON *v1_scoped_resource_selector_requirement_convertToJSON(v1_scoped_resource_
     cJSON *item = cJSON_CreateObject();
 
     // v1_scoped_resource_selector_requirement->_operator
-    if (kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_NULL == v1_scoped_resource_selector_requirement->_operator) {
+    if (!v1_scoped_resource_selector_requirement->_operator) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "operator", _operatorv1_scoped_resource_selector_requirement_ToString(v1_scoped_resource_selector_requirement->_operator)) == NULL)
-    {
-    goto fail; //Enum
+    if(cJSON_AddStringToObject(item, "operator", v1_scoped_resource_selector_requirement->_operator) == NULL) {
+    goto fail; //String
     }
 
 
     // v1_scoped_resource_selector_requirement->scope_name
-    if (kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_NULL == v1_scoped_resource_selector_requirement->scope_name) {
+    if (!v1_scoped_resource_selector_requirement->scope_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "scopeName", scope_namev1_scoped_resource_selector_requirement_ToString(v1_scoped_resource_selector_requirement->scope_name)) == NULL)
-    {
-    goto fail; //Enum
+    if(cJSON_AddStringToObject(item, "scopeName", v1_scoped_resource_selector_requirement->scope_name) == NULL) {
+    goto fail; //String
     }
 
 
@@ -131,13 +103,11 @@ v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requireme
         goto end;
     }
 
-    kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_e _operatorVariable;
     
     if(!cJSON_IsString(_operator))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    _operatorVariable = _operatorv1_scoped_resource_selector_requirement_FromString(_operator->valuestring);
 
     // v1_scoped_resource_selector_requirement->scope_name
     cJSON *scope_name = cJSON_GetObjectItemCaseSensitive(v1_scoped_resource_selector_requirementJSON, "scopeName");
@@ -145,13 +115,11 @@ v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requireme
         goto end;
     }
 
-    kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_e scope_nameVariable;
     
     if(!cJSON_IsString(scope_name))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    scope_nameVariable = scope_namev1_scoped_resource_selector_requirement_FromString(scope_name->valuestring);
 
     // v1_scoped_resource_selector_requirement->values
     cJSON *values = cJSON_GetObjectItemCaseSensitive(v1_scoped_resource_selector_requirementJSON, "values");
@@ -174,8 +142,8 @@ v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requireme
 
 
     v1_scoped_resource_selector_requirement_local_var = v1_scoped_resource_selector_requirement_create (
-        _operatorVariable,
-        scope_nameVariable,
+        strdup(_operator->valuestring),
+        strdup(scope_name->valuestring),
         values ? valuesList : NULL
         );
 

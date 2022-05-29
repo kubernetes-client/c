@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **kind** | **char \*** | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds | [optional] 
 **metadata** | [**v1_object_meta_t**](v1_object_meta.md) \* |  | [optional] 
 **spec** | [**v1_network_policy_spec_t**](v1_network_policy_spec.md) \* |  | [optional] 
+**status** | [**v1_network_policy_status_t**](v1_network_policy_status.md) \* |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

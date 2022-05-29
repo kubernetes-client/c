@@ -28,22 +28,6 @@ typedef struct v1_pod_spec_t v1_pod_spec_t;
 #include "v1_topology_spread_constraint.h"
 #include "v1_volume.h"
 
-// Enum DNSPOLICY for v1_pod_spec
-
-typedef enum  { kubernetes_v1_pod_spec_DNSPOLICY_NULL = 0, kubernetes_v1_pod_spec_DNSPOLICY_ClusterFirst, kubernetes_v1_pod_spec_DNSPOLICY_ClusterFirstWithHostNet, kubernetes_v1_pod_spec_DNSPOLICY__Default, kubernetes_v1_pod_spec_DNSPOLICY_None } kubernetes_v1_pod_spec_DNSPOLICY_e;
-
-char* v1_pod_spec_dns_policy_ToString(kubernetes_v1_pod_spec_DNSPOLICY_e dns_policy);
-
-kubernetes_v1_pod_spec_DNSPOLICY_e v1_pod_spec_dns_policy_FromString(char* dns_policy);
-
-// Enum RESTARTPOLICY for v1_pod_spec
-
-typedef enum  { kubernetes_v1_pod_spec_RESTARTPOLICY_NULL = 0, kubernetes_v1_pod_spec_RESTARTPOLICY_Always, kubernetes_v1_pod_spec_RESTARTPOLICY_Never, kubernetes_v1_pod_spec_RESTARTPOLICY_OnFailure } kubernetes_v1_pod_spec_RESTARTPOLICY_e;
-
-char* v1_pod_spec_restart_policy_ToString(kubernetes_v1_pod_spec_RESTARTPOLICY_e restart_policy);
-
-kubernetes_v1_pod_spec_RESTARTPOLICY_e v1_pod_spec_restart_policy_FromString(char* restart_policy);
-
 
 
 typedef struct v1_pod_spec_t {
@@ -52,7 +36,7 @@ typedef struct v1_pod_spec_t {
     int automount_service_account_token; //boolean
     list_t *containers; //nonprimitive container
     struct v1_pod_dns_config_t *dns_config; //model
-    kubernetes_v1_pod_spec_DNSPOLICY_e dns_policy; //enum
+    char *dns_policy; // string
     int enable_service_links; //boolean
     list_t *ephemeral_containers; //nonprimitive container
     list_t *host_aliases; //nonprimitive container
@@ -70,7 +54,7 @@ typedef struct v1_pod_spec_t {
     int priority; //numeric
     char *priority_class_name; // string
     list_t *readiness_gates; //nonprimitive container
-    kubernetes_v1_pod_spec_RESTARTPOLICY_e restart_policy; //enum
+    char *restart_policy; // string
     char *runtime_class_name; // string
     char *scheduler_name; // string
     struct v1_pod_security_context_t *security_context; //model
@@ -92,7 +76,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     int automount_service_account_token,
     list_t *containers,
     v1_pod_dns_config_t *dns_config,
-    kubernetes_v1_pod_spec_DNSPOLICY_e dns_policy,
+    char *dns_policy,
     int enable_service_links,
     list_t *ephemeral_containers,
     list_t *host_aliases,
@@ -110,7 +94,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     int priority,
     char *priority_class_name,
     list_t *readiness_gates,
-    kubernetes_v1_pod_spec_RESTARTPOLICY_e restart_policy,
+    char *restart_policy,
     char *runtime_class_name,
     char *scheduler_name,
     v1_pod_security_context_t *security_context,

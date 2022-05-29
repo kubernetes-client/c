@@ -4,30 +4,13 @@
 #include "v1_http_get_action.h"
 
 
-char* schemev1_http_get_action_ToString(kubernetes_v1_http_get_action_SCHEME_e scheme) {
-    char* schemeArray[] =  { "NULL", "HTTP", "HTTPS" };
-	return schemeArray[scheme];
-}
-
-kubernetes_v1_http_get_action_SCHEME_e schemev1_http_get_action_FromString(char* scheme){
-    int stringToReturn = 0;
-    char *schemeArray[] =  { "NULL", "HTTP", "HTTPS" };
-    size_t sizeofArray = sizeof(schemeArray) / sizeof(schemeArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(scheme, schemeArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_http_get_action_t *v1_http_get_action_create(
     char *host,
     list_t *http_headers,
     char *path,
     int_or_string_t *port,
-    kubernetes_v1_http_get_action_SCHEME_e scheme
+    char *scheme
     ) {
     v1_http_get_action_t *v1_http_get_action_local_var = malloc(sizeof(v1_http_get_action_t));
     if (!v1_http_get_action_local_var) {
@@ -66,6 +49,10 @@ void v1_http_get_action_free(v1_http_get_action_t *v1_http_get_action) {
     if (v1_http_get_action->port) {
         int_or_string_free(v1_http_get_action->port);
         v1_http_get_action->port = NULL;
+    }
+    if (v1_http_get_action->scheme) {
+        free(v1_http_get_action->scheme);
+        v1_http_get_action->scheme = NULL;
     }
     free(v1_http_get_action);
 }
@@ -124,10 +111,9 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
 
 
     // v1_http_get_action->scheme
-    if(v1_http_get_action->scheme != kubernetes_v1_http_get_action_SCHEME_NULL) {
-    if(cJSON_AddStringToObject(item, "scheme", schemev1_http_get_action_ToString(v1_http_get_action->scheme)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_http_get_action->scheme) {
+    if(cJSON_AddStringToObject(item, "scheme", v1_http_get_action->scheme) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -199,13 +185,11 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
     // v1_http_get_action->scheme
     cJSON *scheme = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "scheme");
-    kubernetes_v1_http_get_action_SCHEME_e schemeVariable;
     if (scheme) { 
     if(!cJSON_IsString(scheme))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    schemeVariable = schemev1_http_get_action_FromString(scheme->valuestring);
     }
 
 
@@ -214,7 +198,7 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
         http_headers ? http_headersList : NULL,
         path ? strdup(path->valuestring) : NULL,
         port_local_nonprim,
-        scheme ? schemeVariable : -1
+        scheme ? strdup(scheme->valuestring) : NULL
         );
 
     return v1_http_get_action_local_var;

@@ -4,23 +4,6 @@
 #include "v1_persistent_volume_spec.h"
 
 
-char* persistent_volume_reclaim_policyv1_persistent_volume_spec_ToString(kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e persistent_volume_reclaim_policy) {
-    char* persistent_volume_reclaim_policyArray[] =  { "NULL", "Delete", "Recycle", "Retain" };
-	return persistent_volume_reclaim_policyArray[persistent_volume_reclaim_policy];
-}
-
-kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e persistent_volume_reclaim_policyv1_persistent_volume_spec_FromString(char* persistent_volume_reclaim_policy){
-    int stringToReturn = 0;
-    char *persistent_volume_reclaim_policyArray[] =  { "NULL", "Delete", "Recycle", "Retain" };
-    size_t sizeofArray = sizeof(persistent_volume_reclaim_policyArray) / sizeof(persistent_volume_reclaim_policyArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(persistent_volume_reclaim_policy, persistent_volume_reclaim_policyArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
     list_t *access_modes,
@@ -43,7 +26,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
     list_t *mount_options,
     v1_nfs_volume_source_t *nfs,
     v1_volume_node_affinity_t *node_affinity,
-    kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e persistent_volume_reclaim_policy,
+    char *persistent_volume_reclaim_policy,
     v1_photon_persistent_disk_volume_source_t *photon_persistent_disk,
     v1_portworx_volume_source_t *portworx_volume,
     v1_quobyte_volume_source_t *quobyte,
@@ -189,6 +172,10 @@ void v1_persistent_volume_spec_free(v1_persistent_volume_spec_t *v1_persistent_v
     if (v1_persistent_volume_spec->node_affinity) {
         v1_volume_node_affinity_free(v1_persistent_volume_spec->node_affinity);
         v1_persistent_volume_spec->node_affinity = NULL;
+    }
+    if (v1_persistent_volume_spec->persistent_volume_reclaim_policy) {
+        free(v1_persistent_volume_spec->persistent_volume_reclaim_policy);
+        v1_persistent_volume_spec->persistent_volume_reclaim_policy = NULL;
     }
     if (v1_persistent_volume_spec->photon_persistent_disk) {
         v1_photon_persistent_disk_volume_source_free(v1_persistent_volume_spec->photon_persistent_disk);
@@ -508,10 +495,9 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
 
 
     // v1_persistent_volume_spec->persistent_volume_reclaim_policy
-    if(v1_persistent_volume_spec->persistent_volume_reclaim_policy != kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_NULL) {
-    if(cJSON_AddStringToObject(item, "persistentVolumeReclaimPolicy", persistent_volume_reclaim_policyv1_persistent_volume_spec_ToString(v1_persistent_volume_spec->persistent_volume_reclaim_policy)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_persistent_volume_spec->persistent_volume_reclaim_policy) {
+    if(cJSON_AddStringToObject(item, "persistentVolumeReclaimPolicy", v1_persistent_volume_spec->persistent_volume_reclaim_policy) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -878,13 +864,11 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->persistent_volume_reclaim_policy
     cJSON *persistent_volume_reclaim_policy = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "persistentVolumeReclaimPolicy");
-    kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e persistent_volume_reclaim_policyVariable;
     if (persistent_volume_reclaim_policy) { 
     if(!cJSON_IsString(persistent_volume_reclaim_policy))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    persistent_volume_reclaim_policyVariable = persistent_volume_reclaim_policyv1_persistent_volume_spec_FromString(persistent_volume_reclaim_policy->valuestring);
     }
 
     // v1_persistent_volume_spec->photon_persistent_disk
@@ -969,7 +953,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
         mount_options ? mount_optionsList : NULL,
         nfs ? nfs_local_nonprim : NULL,
         node_affinity ? node_affinity_local_nonprim : NULL,
-        persistent_volume_reclaim_policy ? persistent_volume_reclaim_policyVariable : -1,
+        persistent_volume_reclaim_policy ? strdup(persistent_volume_reclaim_policy->valuestring) : NULL,
         photon_persistent_disk ? photon_persistent_disk_local_nonprim : NULL,
         portworx_volume ? portworx_volume_local_nonprim : NULL,
         quobyte ? quobyte_local_nonprim : NULL,

@@ -16,6 +16,7 @@
 typedef struct v1_network_policy_t v1_network_policy_t;
 
 #include "v1_network_policy_spec.h"
+#include "v1_network_policy_status.h"
 #include "v1_object_meta.h"
 
 
@@ -25,6 +26,7 @@ typedef struct v1_network_policy_t {
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
     struct v1_network_policy_spec_t *spec; //model
+    struct v1_network_policy_status_t *status; //model
 
 } v1_network_policy_t;
 
@@ -32,7 +34,8 @@ v1_network_policy_t *v1_network_policy_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
-    v1_network_policy_spec_t *spec
+    v1_network_policy_spec_t *spec,
+    v1_network_policy_status_t *status
 );
 
 void v1_network_policy_free(v1_network_policy_t *v1_network_policy);

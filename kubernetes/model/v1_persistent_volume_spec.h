@@ -40,14 +40,6 @@ typedef struct v1_persistent_volume_spec_t v1_persistent_volume_spec_t;
 #include "v1_volume_node_affinity.h"
 #include "v1_vsphere_virtual_disk_volume_source.h"
 
-// Enum PERSISTENTVOLUMERECLAIMPOLICY for v1_persistent_volume_spec
-
-typedef enum  { kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_NULL = 0, kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY__Delete, kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_Recycle, kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_Retain } kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e;
-
-char* v1_persistent_volume_spec_persistent_volume_reclaim_policy_ToString(kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e persistent_volume_reclaim_policy);
-
-kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e v1_persistent_volume_spec_persistent_volume_reclaim_policy_FromString(char* persistent_volume_reclaim_policy);
-
 
 
 typedef struct v1_persistent_volume_spec_t {
@@ -71,7 +63,7 @@ typedef struct v1_persistent_volume_spec_t {
     list_t *mount_options; //primitive container
     struct v1_nfs_volume_source_t *nfs; //model
     struct v1_volume_node_affinity_t *node_affinity; //model
-    kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e persistent_volume_reclaim_policy; //enum
+    char *persistent_volume_reclaim_policy; // string
     struct v1_photon_persistent_disk_volume_source_t *photon_persistent_disk; //model
     struct v1_portworx_volume_source_t *portworx_volume; //model
     struct v1_quobyte_volume_source_t *quobyte; //model
@@ -105,7 +97,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
     list_t *mount_options,
     v1_nfs_volume_source_t *nfs,
     v1_volume_node_affinity_t *node_affinity,
-    kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_e persistent_volume_reclaim_policy,
+    char *persistent_volume_reclaim_policy,
     v1_photon_persistent_disk_volume_source_t *photon_persistent_disk,
     v1_portworx_volume_source_t *portworx_volume,
     v1_quobyte_volume_source_t *quobyte,

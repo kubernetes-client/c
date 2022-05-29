@@ -4,40 +4,6 @@
 #include "v1_container.h"
 
 
-char* image_pull_policyv1_container_ToString(kubernetes_v1_container_IMAGEPULLPOLICY_e image_pull_policy) {
-    char* image_pull_policyArray[] =  { "NULL", "Always", "IfNotPresent", "Never" };
-	return image_pull_policyArray[image_pull_policy];
-}
-
-kubernetes_v1_container_IMAGEPULLPOLICY_e image_pull_policyv1_container_FromString(char* image_pull_policy){
-    int stringToReturn = 0;
-    char *image_pull_policyArray[] =  { "NULL", "Always", "IfNotPresent", "Never" };
-    size_t sizeofArray = sizeof(image_pull_policyArray) / sizeof(image_pull_policyArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(image_pull_policy, image_pull_policyArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
-char* termination_message_policyv1_container_ToString(kubernetes_v1_container_TERMINATIONMESSAGEPOLICY_e termination_message_policy) {
-    char* termination_message_policyArray[] =  { "NULL", "FallbackToLogsOnError", "File" };
-	return termination_message_policyArray[termination_message_policy];
-}
-
-kubernetes_v1_container_TERMINATIONMESSAGEPOLICY_e termination_message_policyv1_container_FromString(char* termination_message_policy){
-    int stringToReturn = 0;
-    char *termination_message_policyArray[] =  { "NULL", "FallbackToLogsOnError", "File" };
-    size_t sizeofArray = sizeof(termination_message_policyArray) / sizeof(termination_message_policyArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(termination_message_policy, termination_message_policyArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_container_t *v1_container_create(
     list_t *args,
@@ -45,7 +11,7 @@ v1_container_t *v1_container_create(
     list_t *env,
     list_t *env_from,
     char *image,
-    kubernetes_v1_container_IMAGEPULLPOLICY_e image_pull_policy,
+    char *image_pull_policy,
     v1_lifecycle_t *lifecycle,
     v1_probe_t *liveness_probe,
     char *name,
@@ -57,7 +23,7 @@ v1_container_t *v1_container_create(
     int _stdin,
     int stdin_once,
     char *termination_message_path,
-    kubernetes_v1_container_TERMINATIONMESSAGEPOLICY_e termination_message_policy,
+    char *termination_message_policy,
     int tty,
     list_t *volume_devices,
     list_t *volume_mounts,
@@ -131,6 +97,10 @@ void v1_container_free(v1_container_t *v1_container) {
         free(v1_container->image);
         v1_container->image = NULL;
     }
+    if (v1_container->image_pull_policy) {
+        free(v1_container->image_pull_policy);
+        v1_container->image_pull_policy = NULL;
+    }
     if (v1_container->lifecycle) {
         v1_lifecycle_free(v1_container->lifecycle);
         v1_container->lifecycle = NULL;
@@ -169,6 +139,10 @@ void v1_container_free(v1_container_t *v1_container) {
     if (v1_container->termination_message_path) {
         free(v1_container->termination_message_path);
         v1_container->termination_message_path = NULL;
+    }
+    if (v1_container->termination_message_policy) {
+        free(v1_container->termination_message_policy);
+        v1_container->termination_message_policy = NULL;
     }
     if (v1_container->volume_devices) {
         list_ForEach(listEntry, v1_container->volume_devices) {
@@ -277,10 +251,9 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
 
 
     // v1_container->image_pull_policy
-    if(v1_container->image_pull_policy != kubernetes_v1_container_IMAGEPULLPOLICY_NULL) {
-    if(cJSON_AddStringToObject(item, "imagePullPolicy", image_pull_policyv1_container_ToString(v1_container->image_pull_policy)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_container->image_pull_policy) {
+    if(cJSON_AddStringToObject(item, "imagePullPolicy", v1_container->image_pull_policy) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -417,10 +390,9 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
 
 
     // v1_container->termination_message_policy
-    if(v1_container->termination_message_policy != kubernetes_v1_container_TERMINATIONMESSAGEPOLICY_NULL) {
-    if(cJSON_AddStringToObject(item, "terminationMessagePolicy", termination_message_policyv1_container_ToString(v1_container->termination_message_policy)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_container->termination_message_policy) {
+    if(cJSON_AddStringToObject(item, "terminationMessagePolicy", v1_container->termination_message_policy) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -622,13 +594,11 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->image_pull_policy
     cJSON *image_pull_policy = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "imagePullPolicy");
-    kubernetes_v1_container_IMAGEPULLPOLICY_e image_pull_policyVariable;
     if (image_pull_policy) { 
     if(!cJSON_IsString(image_pull_policy))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    image_pull_policyVariable = image_pull_policyv1_container_FromString(image_pull_policy->valuestring);
     }
 
     // v1_container->lifecycle
@@ -729,13 +699,11 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->termination_message_policy
     cJSON *termination_message_policy = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "terminationMessagePolicy");
-    kubernetes_v1_container_TERMINATIONMESSAGEPOLICY_e termination_message_policyVariable;
     if (termination_message_policy) { 
     if(!cJSON_IsString(termination_message_policy))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    termination_message_policyVariable = termination_message_policyv1_container_FromString(termination_message_policy->valuestring);
     }
 
     // v1_container->tty
@@ -805,7 +773,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
         env ? envList : NULL,
         env_from ? env_fromList : NULL,
         image ? strdup(image->valuestring) : NULL,
-        image_pull_policy ? image_pull_policyVariable : -1,
+        image_pull_policy ? strdup(image_pull_policy->valuestring) : NULL,
         lifecycle ? lifecycle_local_nonprim : NULL,
         liveness_probe ? liveness_probe_local_nonprim : NULL,
         strdup(name->valuestring),
@@ -817,7 +785,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
         _stdin ? _stdin->valueint : 0,
         stdin_once ? stdin_once->valueint : 0,
         termination_message_path ? strdup(termination_message_path->valuestring) : NULL,
-        termination_message_policy ? termination_message_policyVariable : -1,
+        termination_message_policy ? strdup(termination_message_policy->valuestring) : NULL,
         tty ? tty->valueint : 0,
         volume_devices ? volume_devicesList : NULL,
         volume_mounts ? volume_mountsList : NULL,

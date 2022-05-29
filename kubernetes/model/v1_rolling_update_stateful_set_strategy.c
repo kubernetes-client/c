@@ -6,12 +6,14 @@
 
 
 v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_create(
+    int_or_string_t *max_unavailable,
     int partition
     ) {
     v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_local_var = malloc(sizeof(v1_rolling_update_stateful_set_strategy_t));
     if (!v1_rolling_update_stateful_set_strategy_local_var) {
         return NULL;
     }
+    v1_rolling_update_stateful_set_strategy_local_var->max_unavailable = max_unavailable;
     v1_rolling_update_stateful_set_strategy_local_var->partition = partition;
 
     return v1_rolling_update_stateful_set_strategy_local_var;
@@ -23,11 +25,28 @@ void v1_rolling_update_stateful_set_strategy_free(v1_rolling_update_stateful_set
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_rolling_update_stateful_set_strategy->max_unavailable) {
+        int_or_string_free(v1_rolling_update_stateful_set_strategy->max_unavailable);
+        v1_rolling_update_stateful_set_strategy->max_unavailable = NULL;
+    }
     free(v1_rolling_update_stateful_set_strategy);
 }
 
 cJSON *v1_rolling_update_stateful_set_strategy_convertToJSON(v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1_rolling_update_stateful_set_strategy->max_unavailable
+    if(v1_rolling_update_stateful_set_strategy->max_unavailable) {
+    cJSON *max_unavailable_local_JSON = int_or_string_convertToJSON(v1_rolling_update_stateful_set_strategy->max_unavailable);
+    if(max_unavailable_local_JSON == NULL) {
+        goto fail; // custom
+    }
+    cJSON_AddItemToObject(item, "maxUnavailable", max_unavailable_local_JSON);
+    if(item->child == NULL) {
+        goto fail;
+    }
+    }
+
 
     // v1_rolling_update_stateful_set_strategy->partition
     if(v1_rolling_update_stateful_set_strategy->partition) {
@@ -48,6 +67,15 @@ v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strate
 
     v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_local_var = NULL;
 
+    // define the local variable for v1_rolling_update_stateful_set_strategy->max_unavailable
+    int_or_string_t *max_unavailable_local_nonprim = NULL;
+
+    // v1_rolling_update_stateful_set_strategy->max_unavailable
+    cJSON *max_unavailable = cJSON_GetObjectItemCaseSensitive(v1_rolling_update_stateful_set_strategyJSON, "maxUnavailable");
+    if (max_unavailable) { 
+    max_unavailable_local_nonprim = int_or_string_parseFromJSON(max_unavailable); //custom
+    }
+
     // v1_rolling_update_stateful_set_strategy->partition
     cJSON *partition = cJSON_GetObjectItemCaseSensitive(v1_rolling_update_stateful_set_strategyJSON, "partition");
     if (partition) { 
@@ -59,11 +87,16 @@ v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strate
 
 
     v1_rolling_update_stateful_set_strategy_local_var = v1_rolling_update_stateful_set_strategy_create (
+        max_unavailable ? max_unavailable_local_nonprim : NULL,
         partition ? partition->valuedouble : 0
         );
 
     return v1_rolling_update_stateful_set_strategy_local_var;
 end:
+    if (max_unavailable_local_nonprim) {
+        int_or_string_free(max_unavailable_local_nonprim);
+        max_unavailable_local_nonprim = NULL;
+    }
     return NULL;
 
 }

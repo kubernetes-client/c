@@ -18,30 +18,6 @@ typedef struct v1_service_spec_t v1_service_spec_t;
 #include "v1_service_port.h"
 #include "v1_session_affinity_config.h"
 
-// Enum EXTERNALTRAFFICPOLICY for v1_service_spec
-
-typedef enum  { kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_NULL = 0, kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_Cluster, kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_Local } kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_e;
-
-char* v1_service_spec_external_traffic_policy_ToString(kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_e external_traffic_policy);
-
-kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_e v1_service_spec_external_traffic_policy_FromString(char* external_traffic_policy);
-
-// Enum SESSIONAFFINITY for v1_service_spec
-
-typedef enum  { kubernetes_v1_service_spec_SESSIONAFFINITY_NULL = 0, kubernetes_v1_service_spec_SESSIONAFFINITY_ClientIP, kubernetes_v1_service_spec_SESSIONAFFINITY_None } kubernetes_v1_service_spec_SESSIONAFFINITY_e;
-
-char* v1_service_spec_session_affinity_ToString(kubernetes_v1_service_spec_SESSIONAFFINITY_e session_affinity);
-
-kubernetes_v1_service_spec_SESSIONAFFINITY_e v1_service_spec_session_affinity_FromString(char* session_affinity);
-
-// Enum TYPE for v1_service_spec
-
-typedef enum  { kubernetes_v1_service_spec_TYPE_NULL = 0, kubernetes_v1_service_spec_TYPE_ClusterIP, kubernetes_v1_service_spec_TYPE_ExternalName, kubernetes_v1_service_spec_TYPE_LoadBalancer, kubernetes_v1_service_spec_TYPE_NodePort } kubernetes_v1_service_spec_TYPE_e;
-
-char* v1_service_spec_type_ToString(kubernetes_v1_service_spec_TYPE_e type);
-
-kubernetes_v1_service_spec_TYPE_e v1_service_spec_type_FromString(char* type);
-
 
 
 typedef struct v1_service_spec_t {
@@ -50,7 +26,7 @@ typedef struct v1_service_spec_t {
     list_t *cluster_ips; //primitive container
     list_t *external_ips; //primitive container
     char *external_name; // string
-    kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_e external_traffic_policy; //enum
+    char *external_traffic_policy; // string
     int health_check_node_port; //numeric
     char *internal_traffic_policy; // string
     list_t *ip_families; //primitive container
@@ -61,9 +37,9 @@ typedef struct v1_service_spec_t {
     list_t *ports; //nonprimitive container
     int publish_not_ready_addresses; //boolean
     list_t* selector; //map
-    kubernetes_v1_service_spec_SESSIONAFFINITY_e session_affinity; //enum
+    char *session_affinity; // string
     struct v1_session_affinity_config_t *session_affinity_config; //model
-    kubernetes_v1_service_spec_TYPE_e type; //enum
+    char *type; // string
 
 } v1_service_spec_t;
 
@@ -73,7 +49,7 @@ v1_service_spec_t *v1_service_spec_create(
     list_t *cluster_ips,
     list_t *external_ips,
     char *external_name,
-    kubernetes_v1_service_spec_EXTERNALTRAFFICPOLICY_e external_traffic_policy,
+    char *external_traffic_policy,
     int health_check_node_port,
     char *internal_traffic_policy,
     list_t *ip_families,
@@ -84,9 +60,9 @@ v1_service_spec_t *v1_service_spec_create(
     list_t *ports,
     int publish_not_ready_addresses,
     list_t* selector,
-    kubernetes_v1_service_spec_SESSIONAFFINITY_e session_affinity,
+    char *session_affinity,
     v1_session_affinity_config_t *session_affinity_config,
-    kubernetes_v1_service_spec_TYPE_e type
+    char *type
 );
 
 void v1_service_spec_free(v1_service_spec_t *v1_service_spec);

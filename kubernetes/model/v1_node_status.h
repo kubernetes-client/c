@@ -23,14 +23,6 @@ typedef struct v1_node_status_t v1_node_status_t;
 #include "v1_node_daemon_endpoints.h"
 #include "v1_node_system_info.h"
 
-// Enum PHASE for v1_node_status
-
-typedef enum  { kubernetes_v1_node_status_PHASE_NULL = 0, kubernetes_v1_node_status_PHASE_Pending, kubernetes_v1_node_status_PHASE_Running, kubernetes_v1_node_status_PHASE_Terminated } kubernetes_v1_node_status_PHASE_e;
-
-char* v1_node_status_phase_ToString(kubernetes_v1_node_status_PHASE_e phase);
-
-kubernetes_v1_node_status_PHASE_e v1_node_status_phase_FromString(char* phase);
-
 
 
 typedef struct v1_node_status_t {
@@ -42,7 +34,7 @@ typedef struct v1_node_status_t {
     struct v1_node_daemon_endpoints_t *daemon_endpoints; //model
     list_t *images; //nonprimitive container
     struct v1_node_system_info_t *node_info; //model
-    kubernetes_v1_node_status_PHASE_e phase; //enum
+    char *phase; // string
     list_t *volumes_attached; //nonprimitive container
     list_t *volumes_in_use; //primitive container
 
@@ -57,7 +49,7 @@ v1_node_status_t *v1_node_status_create(
     v1_node_daemon_endpoints_t *daemon_endpoints,
     list_t *images,
     v1_node_system_info_t *node_info,
-    kubernetes_v1_node_status_PHASE_e phase,
+    char *phase,
     list_t *volumes_attached,
     list_t *volumes_in_use
 );

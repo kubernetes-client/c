@@ -16,37 +16,21 @@
 typedef struct v1_toleration_t v1_toleration_t;
 
 
-// Enum EFFECT for v1_toleration
-
-typedef enum  { kubernetes_v1_toleration_EFFECT_NULL = 0, kubernetes_v1_toleration_EFFECT_NoExecute, kubernetes_v1_toleration_EFFECT_NoSchedule, kubernetes_v1_toleration_EFFECT_PreferNoSchedule } kubernetes_v1_toleration_EFFECT_e;
-
-char* v1_toleration_effect_ToString(kubernetes_v1_toleration_EFFECT_e effect);
-
-kubernetes_v1_toleration_EFFECT_e v1_toleration_effect_FromString(char* effect);
-
-// Enum OPERATOR for v1_toleration
-
-typedef enum  { kubernetes_v1_toleration_OPERATOR_NULL = 0, kubernetes_v1_toleration_OPERATOR_Equal, kubernetes_v1_toleration_OPERATOR_Exists } kubernetes_v1_toleration_OPERATOR_e;
-
-char* v1_toleration__operator_ToString(kubernetes_v1_toleration_OPERATOR_e _operator);
-
-kubernetes_v1_toleration_OPERATOR_e v1_toleration__operator_FromString(char* _operator);
-
 
 
 typedef struct v1_toleration_t {
-    kubernetes_v1_toleration_EFFECT_e effect; //enum
+    char *effect; // string
     char *key; // string
-    kubernetes_v1_toleration_OPERATOR_e _operator; //enum
+    char *_operator; // string
     long toleration_seconds; //numeric
     char *value; // string
 
 } v1_toleration_t;
 
 v1_toleration_t *v1_toleration_create(
-    kubernetes_v1_toleration_EFFECT_e effect,
+    char *effect,
     char *key,
-    kubernetes_v1_toleration_OPERATOR_e _operator,
+    char *_operator,
     long toleration_seconds,
     char *value
 );

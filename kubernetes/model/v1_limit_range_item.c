@@ -4,23 +4,6 @@
 #include "v1_limit_range_item.h"
 
 
-char* typev1_limit_range_item_ToString(kubernetes_v1_limit_range_item_TYPE_e type) {
-    char* typeArray[] =  { "NULL", "Container", "PersistentVolumeClaim", "Pod" };
-	return typeArray[type];
-}
-
-kubernetes_v1_limit_range_item_TYPE_e typev1_limit_range_item_FromString(char* type){
-    int stringToReturn = 0;
-    char *typeArray[] =  { "NULL", "Container", "PersistentVolumeClaim", "Pod" };
-    size_t sizeofArray = sizeof(typeArray) / sizeof(typeArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(type, typeArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_limit_range_item_t *v1_limit_range_item_create(
     list_t* _default,
@@ -28,7 +11,7 @@ v1_limit_range_item_t *v1_limit_range_item_create(
     list_t* max,
     list_t* max_limit_request_ratio,
     list_t* min,
-    kubernetes_v1_limit_range_item_TYPE_e type
+    char *type
     ) {
     v1_limit_range_item_t *v1_limit_range_item_local_var = malloc(sizeof(v1_limit_range_item_t));
     if (!v1_limit_range_item_local_var) {
@@ -99,6 +82,10 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
         }
         list_freeList(v1_limit_range_item->min);
         v1_limit_range_item->min = NULL;
+    }
+    if (v1_limit_range_item->type) {
+        free(v1_limit_range_item->type);
+        v1_limit_range_item->type = NULL;
     }
     free(v1_limit_range_item);
 }
@@ -207,12 +194,11 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
 
 
     // v1_limit_range_item->type
-    if (kubernetes_v1_limit_range_item_TYPE_NULL == v1_limit_range_item->type) {
+    if (!v1_limit_range_item->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", typev1_limit_range_item_ToString(v1_limit_range_item->type)) == NULL)
-    {
-    goto fail; //Enum
+    if(cJSON_AddStringToObject(item, "type", v1_limit_range_item->type) == NULL) {
+    goto fail; //String
     }
 
     return item;
@@ -353,13 +339,11 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
         goto end;
     }
 
-    kubernetes_v1_limit_range_item_TYPE_e typeVariable;
     
     if(!cJSON_IsString(type))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    typeVariable = typev1_limit_range_item_FromString(type->valuestring);
 
 
     v1_limit_range_item_local_var = v1_limit_range_item_create (
@@ -368,7 +352,7 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
         max ? maxList : NULL,
         max_limit_request_ratio ? max_limit_request_ratioList : NULL,
         min ? minList : NULL,
-        typeVariable
+        strdup(type->valuestring)
         );
 
     return v1_limit_range_item_local_var;
