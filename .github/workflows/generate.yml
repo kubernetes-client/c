@@ -1,0 +1,84 @@
+name: Generate
+
+on:
+  workflow_dispatch:
+    inputs:
+      kubernetesBranch:
+        type: string
+        required: true
+        description: 'The remote kubernetes release branch to fetch openapi spec. .e.g. "release-1.23"'
+      genCommit:
+        type: string
+        required: true
+        default: 'master'
+        description: 'The commit to use for the kubernetes-client/gen repo'
+      clientVersion:
+        type: string
+        required: true
+        default: '0.3.0'
+        description: 'Semvar to use for the version number' 
+
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout C
+        uses: actions/checkout@v3
+      - name: Checkout Gen
+        run: |
+          git clone https://github.com/kubernetes-client/gen
+          pushd gen
+          git checkout "${{ github.event.inputs.genCommit }}"
+      - name: Generate Branch Name
+        run: |
+          SUFFIX=$(openssl rand -hex 4)
+          echo "BRANCH=automated-generate-$SUFFIX" >> $GITHUB_ENV
+      - name: Remove old files
+        run: |
+          find kubernetes/model -type f -not -name "int_or_string*" -exec rm -r {} \;
+          find kubernetes/api -type f -not -name "int_or_string*" -exec rm -r {} \;
+          find kubernetes/unit-test -type f -not -name "manual*" -exec rm -r {} \;
+      - name: Generate Openapi
+        run: |
+          pushd gen/openapi
+          cat <<"EOF"> settings
+          # Kubernetes branch/tag to get the OpenAPI spec from.
+          export KUBERNETES_BRANCH="${{ github.event.inputs.kubernetesBranch }}"
+
+          # client version is not currently used by the code generator.
+          export CLIENT_VERSION="${{github.event.inputs.clientVersion}}"
+
+          # Name of the release package
+          export PACKAGE_NAME="client"
+
+          # OpenAPI-Generator branch/tag to generate the client library
+          export OPENAPI_GENERATOR_COMMIT="master"
+
+          export USERNAME=kubernetes
+          EOF
+          bash c.sh ../../kubernetes settings
+          cp settings ../../settings
+          popd
+          rm -rf gen
+      - name: Update version
+        run: |
+          perl -pi -e "s/PROJECT_VERSION_MAJOR \\d/PROJECT_VERSION_MAJOR $(echo ${{ github.event.inputs.clientVersion }} | awk -F. '{print $1}')/" kubernetes/PreTarget.cmake 
+          perl -pi -e "s/PROJECT_VERSION_MINOR \\d/PROJECT_VERSION_MINOR $(echo ${{ github.event.inputs.clientVersion }} | awk -F. '{print $2}')/" kubernetes/PreTarget.cmake 
+          perl -pi -e "s/PROJECT_VERSION_PATCH \\d/PROJECT_VERSION_PATCH $(echo ${{ github.event.inputs.clientVersion }} | awk -F. '{print $3}')/" kubernetes/PreTarget.cmake 
+      - name: Commit and push
+        run: |
+          # Commit and push
+          git config user.email "k8s.ci.robot@gmail.com"
+          git config user.name "Kubernetes Prow Robot"
+          git checkout -b "$BRANCH"
+          git add .
+          git commit -s -m 'Automated openapi generation from ${{ github.event.inputs.kubernetesBranch }}'
+          git push origin "$BRANCH"
+      - name: Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: ${{ env.BRANCH }}
+          destination_branch: ${{ github.ref_name }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_title: "Automated Generate from openapi ${{ github.event.inputs.kubernetesBranch }}"
