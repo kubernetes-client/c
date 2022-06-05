@@ -16,34 +16,18 @@
 typedef struct v1_scoped_resource_selector_requirement_t v1_scoped_resource_selector_requirement_t;
 
 
-// Enum OPERATOR for v1_scoped_resource_selector_requirement
-
-typedef enum  { kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_NULL = 0, kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_DoesNotExist, kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_Exists, kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_In, kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_NotIn } kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_e;
-
-char* v1_scoped_resource_selector_requirement__operator_ToString(kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_e _operator);
-
-kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_e v1_scoped_resource_selector_requirement__operator_FromString(char* _operator);
-
-// Enum SCOPENAME for v1_scoped_resource_selector_requirement
-
-typedef enum  { kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_NULL = 0, kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_BestEffort, kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_CrossNamespacePodAffinity, kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_NotBestEffort, kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_NotTerminating, kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_PriorityClass, kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_Terminating } kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_e;
-
-char* v1_scoped_resource_selector_requirement_scope_name_ToString(kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_e scope_name);
-
-kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_e v1_scoped_resource_selector_requirement_scope_name_FromString(char* scope_name);
-
 
 
 typedef struct v1_scoped_resource_selector_requirement_t {
-    kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_e _operator; //enum
-    kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_e scope_name; //enum
+    char *_operator; // string
+    char *scope_name; // string
     list_t *values; //primitive container
 
 } v1_scoped_resource_selector_requirement_t;
 
 v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement_create(
-    kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_e _operator,
-    kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_e scope_name,
+    char *_operator,
+    char *scope_name,
     list_t *values
 );
 

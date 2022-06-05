@@ -22,11 +22,11 @@ v1_pod_readiness_gate_t* instantiate_v1_pod_readiness_gate(int include_optional)
   v1_pod_readiness_gate_t* v1_pod_readiness_gate = NULL;
   if (include_optional) {
     v1_pod_readiness_gate = v1_pod_readiness_gate_create(
-      kubernetes_v1_pod_readiness_gate_CONDITIONTYPE_ContainersReady
+      "0"
     );
   } else {
     v1_pod_readiness_gate = v1_pod_readiness_gate_create(
-      kubernetes_v1_pod_readiness_gate_CONDITIONTYPE_ContainersReady
+      "0"
     );
   }
 

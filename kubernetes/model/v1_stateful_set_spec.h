@@ -21,20 +21,12 @@ typedef struct v1_stateful_set_spec_t v1_stateful_set_spec_t;
 #include "v1_stateful_set_persistent_volume_claim_retention_policy.h"
 #include "v1_stateful_set_update_strategy.h"
 
-// Enum PODMANAGEMENTPOLICY for v1_stateful_set_spec
-
-typedef enum  { kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_NULL = 0, kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_OrderedReady, kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_Parallel } kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_e;
-
-char* v1_stateful_set_spec_pod_management_policy_ToString(kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_e pod_management_policy);
-
-kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_e v1_stateful_set_spec_pod_management_policy_FromString(char* pod_management_policy);
-
 
 
 typedef struct v1_stateful_set_spec_t {
     int min_ready_seconds; //numeric
     struct v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy; //model
-    kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_e pod_management_policy; //enum
+    char *pod_management_policy; // string
     int replicas; //numeric
     int revision_history_limit; //numeric
     struct v1_label_selector_t *selector; //model
@@ -48,7 +40,7 @@ typedef struct v1_stateful_set_spec_t {
 v1_stateful_set_spec_t *v1_stateful_set_spec_create(
     int min_ready_seconds,
     v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy,
-    kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_e pod_management_policy,
+    char *pod_management_policy,
     int replicas,
     int revision_history_limit,
     v1_label_selector_t *selector,

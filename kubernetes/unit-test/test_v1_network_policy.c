@@ -18,6 +18,7 @@ v1_network_policy_t* instantiate_v1_network_policy(int include_optional);
 
 #include "test_v1_object_meta.c"
 #include "test_v1_network_policy_spec.c"
+#include "test_v1_network_policy_status.c"
 
 
 v1_network_policy_t* instantiate_v1_network_policy(int include_optional) {
@@ -29,12 +30,15 @@ v1_network_policy_t* instantiate_v1_network_policy(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_object_meta(0),
        // false, not to have infinite recursion
-      instantiate_v1_network_policy_spec(0)
+      instantiate_v1_network_policy_spec(0),
+       // false, not to have infinite recursion
+      instantiate_v1_network_policy_status(0)
     );
   } else {
     v1_network_policy = v1_network_policy_create(
       "0",
       "0",
+      NULL,
       NULL,
       NULL
     );

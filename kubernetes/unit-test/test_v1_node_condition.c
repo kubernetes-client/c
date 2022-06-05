@@ -27,7 +27,7 @@ v1_node_condition_t* instantiate_v1_node_condition(int include_optional) {
       "0",
       "0",
       "0",
-      kubernetes_v1_node_condition_TYPE_DiskPressure
+      "0"
     );
   } else {
     v1_node_condition = v1_node_condition_create(
@@ -36,7 +36,7 @@ v1_node_condition_t* instantiate_v1_node_condition(int include_optional) {
       "0",
       "0",
       "0",
-      kubernetes_v1_node_condition_TYPE_DiskPressure
+      "0"
     );
   }
 

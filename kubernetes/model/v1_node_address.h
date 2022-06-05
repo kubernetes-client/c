@@ -16,25 +16,17 @@
 typedef struct v1_node_address_t v1_node_address_t;
 
 
-// Enum TYPE for v1_node_address
-
-typedef enum  { kubernetes_v1_node_address_TYPE_NULL = 0, kubernetes_v1_node_address_TYPE_ExternalDNS, kubernetes_v1_node_address_TYPE_ExternalIP, kubernetes_v1_node_address_TYPE_Hostname, kubernetes_v1_node_address_TYPE_InternalDNS, kubernetes_v1_node_address_TYPE_InternalIP } kubernetes_v1_node_address_TYPE_e;
-
-char* v1_node_address_type_ToString(kubernetes_v1_node_address_TYPE_e type);
-
-kubernetes_v1_node_address_TYPE_e v1_node_address_type_FromString(char* type);
-
 
 
 typedef struct v1_node_address_t {
     char *address; // string
-    kubernetes_v1_node_address_TYPE_e type; //enum
+    char *type; // string
 
 } v1_node_address_t;
 
 v1_node_address_t *v1_node_address_create(
     char *address,
-    kubernetes_v1_node_address_TYPE_e type
+    char *type
 );
 
 void v1_node_address_free(v1_node_address_t *v1_node_address);

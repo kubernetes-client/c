@@ -18,14 +18,6 @@ typedef struct v1_http_get_action_t v1_http_get_action_t;
 #include "int_or_string.h"
 #include "v1_http_header.h"
 
-// Enum SCHEME for v1_http_get_action
-
-typedef enum  { kubernetes_v1_http_get_action_SCHEME_NULL = 0, kubernetes_v1_http_get_action_SCHEME_HTTP, kubernetes_v1_http_get_action_SCHEME_HTTPS } kubernetes_v1_http_get_action_SCHEME_e;
-
-char* v1_http_get_action_scheme_ToString(kubernetes_v1_http_get_action_SCHEME_e scheme);
-
-kubernetes_v1_http_get_action_SCHEME_e v1_http_get_action_scheme_FromString(char* scheme);
-
 
 
 typedef struct v1_http_get_action_t {
@@ -33,7 +25,7 @@ typedef struct v1_http_get_action_t {
     list_t *http_headers; //nonprimitive container
     char *path; // string
     int_or_string_t *port; // custom
-    kubernetes_v1_http_get_action_SCHEME_e scheme; //enum
+    char *scheme; // string
 
 } v1_http_get_action_t;
 
@@ -42,7 +34,7 @@ v1_http_get_action_t *v1_http_get_action_create(
     list_t *http_headers,
     char *path,
     int_or_string_t *port,
-    kubernetes_v1_http_get_action_SCHEME_e scheme
+    char *scheme
 );
 
 void v1_http_get_action_free(v1_http_get_action_t *v1_http_get_action);

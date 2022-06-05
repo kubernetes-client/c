@@ -22,14 +22,14 @@ v1_scoped_resource_selector_requirement_t* instantiate_v1_scoped_resource_select
   v1_scoped_resource_selector_requirement_t* v1_scoped_resource_selector_requirement = NULL;
   if (include_optional) {
     v1_scoped_resource_selector_requirement = v1_scoped_resource_selector_requirement_create(
-      kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_DoesNotExist,
-      kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_BestEffort,
+      "0",
+      "0",
       list_createList()
     );
   } else {
     v1_scoped_resource_selector_requirement = v1_scoped_resource_selector_requirement_create(
-      kubernetes_v1_scoped_resource_selector_requirement_OPERATOR_DoesNotExist,
-      kubernetes_v1_scoped_resource_selector_requirement_SCOPENAME_BestEffort,
+      "0",
+      "0",
       list_createList()
     );
   }

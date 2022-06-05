@@ -26,7 +26,7 @@ v1_http_get_action_t* instantiate_v1_http_get_action(int include_optional) {
       list_createList(),
       "0",
       "0",
-      kubernetes_v1_http_get_action_SCHEME_HTTP
+      "0"
     );
   } else {
     v1_http_get_action = v1_http_get_action_create(
@@ -34,7 +34,7 @@ v1_http_get_action_t* instantiate_v1_http_get_action(int include_optional) {
       list_createList(),
       "0",
       "0",
-      kubernetes_v1_http_get_action_SCHEME_HTTP
+      "0"
     );
   }
 

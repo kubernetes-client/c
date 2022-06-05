@@ -16,26 +16,18 @@
 typedef struct v1_node_selector_requirement_t v1_node_selector_requirement_t;
 
 
-// Enum OPERATOR for v1_node_selector_requirement
-
-typedef enum  { kubernetes_v1_node_selector_requirement_OPERATOR_NULL = 0, kubernetes_v1_node_selector_requirement_OPERATOR_DoesNotExist, kubernetes_v1_node_selector_requirement_OPERATOR_Exists, kubernetes_v1_node_selector_requirement_OPERATOR_Gt, kubernetes_v1_node_selector_requirement_OPERATOR_In, kubernetes_v1_node_selector_requirement_OPERATOR_Lt, kubernetes_v1_node_selector_requirement_OPERATOR_NotIn } kubernetes_v1_node_selector_requirement_OPERATOR_e;
-
-char* v1_node_selector_requirement__operator_ToString(kubernetes_v1_node_selector_requirement_OPERATOR_e _operator);
-
-kubernetes_v1_node_selector_requirement_OPERATOR_e v1_node_selector_requirement__operator_FromString(char* _operator);
-
 
 
 typedef struct v1_node_selector_requirement_t {
     char *key; // string
-    kubernetes_v1_node_selector_requirement_OPERATOR_e _operator; //enum
+    char *_operator; // string
     list_t *values; //primitive container
 
 } v1_node_selector_requirement_t;
 
 v1_node_selector_requirement_t *v1_node_selector_requirement_create(
     char *key,
-    kubernetes_v1_node_selector_requirement_OPERATOR_e _operator,
+    char *_operator,
     list_t *values
 );
 

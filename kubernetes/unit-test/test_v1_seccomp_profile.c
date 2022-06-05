@@ -23,12 +23,12 @@ v1_seccomp_profile_t* instantiate_v1_seccomp_profile(int include_optional) {
   if (include_optional) {
     v1_seccomp_profile = v1_seccomp_profile_create(
       "0",
-      kubernetes_v1_seccomp_profile_TYPE_Localhost
+      "0"
     );
   } else {
     v1_seccomp_profile = v1_seccomp_profile_create(
       "0",
-      kubernetes_v1_seccomp_profile_TYPE_Localhost
+      "0"
     );
   }
 

@@ -27,7 +27,7 @@ v1_pod_condition_t* instantiate_v1_pod_condition(int include_optional) {
       "0",
       "0",
       "0",
-      kubernetes_v1_pod_condition_TYPE_ContainersReady
+      "0"
     );
   } else {
     v1_pod_condition = v1_pod_condition_create(
@@ -36,7 +36,7 @@ v1_pod_condition_t* instantiate_v1_pod_condition(int include_optional) {
       "0",
       "0",
       "0",
-      kubernetes_v1_pod_condition_TYPE_ContainersReady
+      "0"
     );
   }
 

@@ -30,7 +30,8 @@ v1beta1_cron_job_spec_t* instantiate_v1beta1_cron_job_spec(int include_optional)
       "0",
       56,
       56,
-      1
+      1,
+      "0"
     );
   } else {
     v1beta1_cron_job_spec = v1beta1_cron_job_spec_create(
@@ -40,7 +41,8 @@ v1beta1_cron_job_spec_t* instantiate_v1beta1_cron_job_spec(int include_optional)
       "0",
       56,
       56,
-      1
+      1,
+      "0"
     );
   }
 

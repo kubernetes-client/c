@@ -23,12 +23,12 @@ v1_node_address_t* instantiate_v1_node_address(int include_optional) {
   if (include_optional) {
     v1_node_address = v1_node_address_create(
       "0",
-      kubernetes_v1_node_address_TYPE_ExternalDNS
+      "0"
     );
   } else {
     v1_node_address = v1_node_address_create(
       "0",
-      kubernetes_v1_node_address_TYPE_ExternalDNS
+      "0"
     );
   }
 

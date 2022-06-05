@@ -22,14 +22,14 @@ v1_taint_t* instantiate_v1_taint(int include_optional) {
   v1_taint_t* v1_taint = NULL;
   if (include_optional) {
     v1_taint = v1_taint_create(
-      kubernetes_v1_taint_EFFECT_NoExecute,
+      "0",
       "0",
       "2013-10-20T19:20:30+01:00",
       "0"
     );
   } else {
     v1_taint = v1_taint_create(
-      kubernetes_v1_taint_EFFECT_NoExecute,
+      "0",
       "0",
       "2013-10-20T19:20:30+01:00",
       "0"

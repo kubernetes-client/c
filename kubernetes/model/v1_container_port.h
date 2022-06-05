@@ -16,14 +16,6 @@
 typedef struct v1_container_port_t v1_container_port_t;
 
 
-// Enum PROTOCOL for v1_container_port
-
-typedef enum  { kubernetes_v1_container_port_PROTOCOL_NULL = 0, kubernetes_v1_container_port_PROTOCOL_SCTP, kubernetes_v1_container_port_PROTOCOL_TCP, kubernetes_v1_container_port_PROTOCOL_UDP } kubernetes_v1_container_port_PROTOCOL_e;
-
-char* v1_container_port_protocol_ToString(kubernetes_v1_container_port_PROTOCOL_e protocol);
-
-kubernetes_v1_container_port_PROTOCOL_e v1_container_port_protocol_FromString(char* protocol);
-
 
 
 typedef struct v1_container_port_t {
@@ -31,7 +23,7 @@ typedef struct v1_container_port_t {
     char *host_ip; // string
     int host_port; //numeric
     char *name; // string
-    kubernetes_v1_container_port_PROTOCOL_e protocol; //enum
+    char *protocol; // string
 
 } v1_container_port_t;
 
@@ -40,7 +32,7 @@ v1_container_port_t *v1_container_port_create(
     char *host_ip,
     int host_port,
     char *name,
-    kubernetes_v1_container_port_PROTOCOL_e protocol
+    char *protocol
 );
 
 void v1_container_port_free(v1_container_port_t *v1_container_port);

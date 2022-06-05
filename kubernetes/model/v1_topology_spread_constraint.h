@@ -17,29 +17,23 @@ typedef struct v1_topology_spread_constraint_t v1_topology_spread_constraint_t;
 
 #include "v1_label_selector.h"
 
-// Enum WHENUNSATISFIABLE for v1_topology_spread_constraint
-
-typedef enum  { kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_NULL = 0, kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_DoNotSchedule, kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_ScheduleAnyway } kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_e;
-
-char* v1_topology_spread_constraint_when_unsatisfiable_ToString(kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_e when_unsatisfiable);
-
-kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_e v1_topology_spread_constraint_when_unsatisfiable_FromString(char* when_unsatisfiable);
-
 
 
 typedef struct v1_topology_spread_constraint_t {
     struct v1_label_selector_t *label_selector; //model
     int max_skew; //numeric
+    int min_domains; //numeric
     char *topology_key; // string
-    kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_e when_unsatisfiable; //enum
+    char *when_unsatisfiable; // string
 
 } v1_topology_spread_constraint_t;
 
 v1_topology_spread_constraint_t *v1_topology_spread_constraint_create(
     v1_label_selector_t *label_selector,
     int max_skew,
+    int min_domains,
     char *topology_key,
-    kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_e when_unsatisfiable
+    char *when_unsatisfiable
 );
 
 void v1_topology_spread_constraint_free(v1_topology_spread_constraint_t *v1_topology_spread_constraint);

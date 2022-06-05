@@ -4,28 +4,11 @@
 #include "v1_port_status.h"
 
 
-char* protocolv1_port_status_ToString(kubernetes_v1_port_status_PROTOCOL_e protocol) {
-    char* protocolArray[] =  { "NULL", "SCTP", "TCP", "UDP" };
-	return protocolArray[protocol];
-}
-
-kubernetes_v1_port_status_PROTOCOL_e protocolv1_port_status_FromString(char* protocol){
-    int stringToReturn = 0;
-    char *protocolArray[] =  { "NULL", "SCTP", "TCP", "UDP" };
-    size_t sizeofArray = sizeof(protocolArray) / sizeof(protocolArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(protocol, protocolArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_port_status_t *v1_port_status_create(
     char *error,
     int port,
-    kubernetes_v1_port_status_PROTOCOL_e protocol
+    char *protocol
     ) {
     v1_port_status_t *v1_port_status_local_var = malloc(sizeof(v1_port_status_t));
     if (!v1_port_status_local_var) {
@@ -47,6 +30,10 @@ void v1_port_status_free(v1_port_status_t *v1_port_status) {
     if (v1_port_status->error) {
         free(v1_port_status->error);
         v1_port_status->error = NULL;
+    }
+    if (v1_port_status->protocol) {
+        free(v1_port_status->protocol);
+        v1_port_status->protocol = NULL;
     }
     free(v1_port_status);
 }
@@ -72,12 +59,11 @@ cJSON *v1_port_status_convertToJSON(v1_port_status_t *v1_port_status) {
 
 
     // v1_port_status->protocol
-    if (kubernetes_v1_port_status_PROTOCOL_NULL == v1_port_status->protocol) {
+    if (!v1_port_status->protocol) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "protocol", protocolv1_port_status_ToString(v1_port_status->protocol)) == NULL)
-    {
-    goto fail; //Enum
+    if(cJSON_AddStringToObject(item, "protocol", v1_port_status->protocol) == NULL) {
+    goto fail; //String
     }
 
     return item;
@@ -119,19 +105,17 @@ v1_port_status_t *v1_port_status_parseFromJSON(cJSON *v1_port_statusJSON){
         goto end;
     }
 
-    kubernetes_v1_port_status_PROTOCOL_e protocolVariable;
     
     if(!cJSON_IsString(protocol))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    protocolVariable = protocolv1_port_status_FromString(protocol->valuestring);
 
 
     v1_port_status_local_var = v1_port_status_create (
         error ? strdup(error->valuestring) : NULL,
         port->valuedouble,
-        protocolVariable
+        strdup(protocol->valuestring)
         );
 
     return v1_port_status_local_var;

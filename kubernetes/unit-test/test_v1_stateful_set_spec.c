@@ -29,7 +29,7 @@ v1_stateful_set_spec_t* instantiate_v1_stateful_set_spec(int include_optional) {
       56,
        // false, not to have infinite recursion
       instantiate_v1_stateful_set_persistent_volume_claim_retention_policy(0),
-      kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_OrderedReady,
+      "0",
       56,
       56,
        // false, not to have infinite recursion
@@ -45,7 +45,7 @@ v1_stateful_set_spec_t* instantiate_v1_stateful_set_spec(int include_optional) {
     v1_stateful_set_spec = v1_stateful_set_spec_create(
       56,
       NULL,
-      kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_OrderedReady,
+      "0",
       56,
       56,
       NULL,

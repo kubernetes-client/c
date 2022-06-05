@@ -27,7 +27,7 @@ v1_limit_range_item_t* instantiate_v1_limit_range_item(int include_optional) {
       list_createList(),
       list_createList(),
       list_createList(),
-      kubernetes_v1_limit_range_item_TYPE_Container
+      "0"
     );
   } else {
     v1_limit_range_item = v1_limit_range_item_create(
@@ -36,7 +36,7 @@ v1_limit_range_item_t* instantiate_v1_limit_range_item(int include_optional) {
       list_createList(),
       list_createList(),
       list_createList(),
-      kubernetes_v1_limit_range_item_TYPE_Container
+      "0"
     );
   }
 

@@ -27,7 +27,7 @@ v1_job_condition_t* instantiate_v1_job_condition(int include_optional) {
       "0",
       "0",
       "0",
-      kubernetes_v1_job_condition_TYPE_Complete
+      "0"
     );
   } else {
     v1_job_condition = v1_job_condition_create(
@@ -36,7 +36,7 @@ v1_job_condition_t* instantiate_v1_job_condition(int include_optional) {
       "0",
       "0",
       "0",
-      kubernetes_v1_job_condition_TYPE_Complete
+      "0"
     );
   }
 

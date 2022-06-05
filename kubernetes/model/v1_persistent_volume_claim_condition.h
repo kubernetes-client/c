@@ -16,14 +16,6 @@
 typedef struct v1_persistent_volume_claim_condition_t v1_persistent_volume_claim_condition_t;
 
 
-// Enum TYPE for v1_persistent_volume_claim_condition
-
-typedef enum  { kubernetes_v1_persistent_volume_claim_condition_TYPE_NULL = 0, kubernetes_v1_persistent_volume_claim_condition_TYPE_FileSystemResizePending, kubernetes_v1_persistent_volume_claim_condition_TYPE_Resizing } kubernetes_v1_persistent_volume_claim_condition_TYPE_e;
-
-char* v1_persistent_volume_claim_condition_type_ToString(kubernetes_v1_persistent_volume_claim_condition_TYPE_e type);
-
-kubernetes_v1_persistent_volume_claim_condition_TYPE_e v1_persistent_volume_claim_condition_type_FromString(char* type);
-
 
 
 typedef struct v1_persistent_volume_claim_condition_t {
@@ -32,7 +24,7 @@ typedef struct v1_persistent_volume_claim_condition_t {
     char *message; // string
     char *reason; // string
     char *status; // string
-    kubernetes_v1_persistent_volume_claim_condition_TYPE_e type; //enum
+    char *type; // string
 
 } v1_persistent_volume_claim_condition_t;
 
@@ -42,7 +34,7 @@ v1_persistent_volume_claim_condition_t *v1_persistent_volume_claim_condition_cre
     char *message,
     char *reason,
     char *status,
-    kubernetes_v1_persistent_volume_claim_condition_TYPE_e type
+    char *type
 );
 
 void v1_persistent_volume_claim_condition_free(v1_persistent_volume_claim_condition_t *v1_persistent_volume_claim_condition);

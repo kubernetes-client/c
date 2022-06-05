@@ -23,13 +23,13 @@ v1_node_selector_requirement_t* instantiate_v1_node_selector_requirement(int inc
   if (include_optional) {
     v1_node_selector_requirement = v1_node_selector_requirement_create(
       "0",
-      kubernetes_v1_node_selector_requirement_OPERATOR_DoesNotExist,
+      "0",
       list_createList()
     );
   } else {
     v1_node_selector_requirement = v1_node_selector_requirement_create(
       "0",
-      kubernetes_v1_node_selector_requirement_OPERATOR_DoesNotExist,
+      "0",
       list_createList()
     );
   }

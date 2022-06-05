@@ -36,7 +36,7 @@ v1_node_status_t* instantiate_v1_node_status(int include_optional) {
       list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_node_system_info(0),
-      kubernetes_v1_node_status_PHASE_Pending,
+      "0",
       list_createList(),
       list_createList()
     );
@@ -50,7 +50,7 @@ v1_node_status_t* instantiate_v1_node_status(int include_optional) {
       NULL,
       list_createList(),
       NULL,
-      kubernetes_v1_node_status_PHASE_Pending,
+      "0",
       list_createList(),
       list_createList()
     );

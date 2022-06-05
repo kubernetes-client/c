@@ -23,13 +23,13 @@ v1_persistent_volume_status_t* instantiate_v1_persistent_volume_status(int inclu
   if (include_optional) {
     v1_persistent_volume_status = v1_persistent_volume_status_create(
       "0",
-      kubernetes_v1_persistent_volume_status_PHASE_Available,
+      "0",
       "0"
     );
   } else {
     v1_persistent_volume_status = v1_persistent_volume_status_create(
       "0",
-      kubernetes_v1_persistent_volume_status_PHASE_Available,
+      "0",
       "0"
     );
   }

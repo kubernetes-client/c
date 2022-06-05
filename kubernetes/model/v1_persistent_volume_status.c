@@ -4,27 +4,10 @@
 #include "v1_persistent_volume_status.h"
 
 
-char* phasev1_persistent_volume_status_ToString(kubernetes_v1_persistent_volume_status_PHASE_e phase) {
-    char* phaseArray[] =  { "NULL", "Available", "Bound", "Failed", "Pending", "Released" };
-	return phaseArray[phase];
-}
-
-kubernetes_v1_persistent_volume_status_PHASE_e phasev1_persistent_volume_status_FromString(char* phase){
-    int stringToReturn = 0;
-    char *phaseArray[] =  { "NULL", "Available", "Bound", "Failed", "Pending", "Released" };
-    size_t sizeofArray = sizeof(phaseArray) / sizeof(phaseArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(phase, phaseArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_persistent_volume_status_t *v1_persistent_volume_status_create(
     char *message,
-    kubernetes_v1_persistent_volume_status_PHASE_e phase,
+    char *phase,
     char *reason
     ) {
     v1_persistent_volume_status_t *v1_persistent_volume_status_local_var = malloc(sizeof(v1_persistent_volume_status_t));
@@ -48,6 +31,10 @@ void v1_persistent_volume_status_free(v1_persistent_volume_status_t *v1_persiste
         free(v1_persistent_volume_status->message);
         v1_persistent_volume_status->message = NULL;
     }
+    if (v1_persistent_volume_status->phase) {
+        free(v1_persistent_volume_status->phase);
+        v1_persistent_volume_status->phase = NULL;
+    }
     if (v1_persistent_volume_status->reason) {
         free(v1_persistent_volume_status->reason);
         v1_persistent_volume_status->reason = NULL;
@@ -67,10 +54,9 @@ cJSON *v1_persistent_volume_status_convertToJSON(v1_persistent_volume_status_t *
 
 
     // v1_persistent_volume_status->phase
-    if(v1_persistent_volume_status->phase != kubernetes_v1_persistent_volume_status_PHASE_NULL) {
-    if(cJSON_AddStringToObject(item, "phase", phasev1_persistent_volume_status_ToString(v1_persistent_volume_status->phase)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_persistent_volume_status->phase) {
+    if(cJSON_AddStringToObject(item, "phase", v1_persistent_volume_status->phase) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -105,13 +91,11 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
 
     // v1_persistent_volume_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_statusJSON, "phase");
-    kubernetes_v1_persistent_volume_status_PHASE_e phaseVariable;
     if (phase) { 
     if(!cJSON_IsString(phase))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    phaseVariable = phasev1_persistent_volume_status_FromString(phase->valuestring);
     }
 
     // v1_persistent_volume_status->reason
@@ -126,7 +110,7 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
 
     v1_persistent_volume_status_local_var = v1_persistent_volume_status_create (
         message ? strdup(message->valuestring) : NULL,
-        phase ? phaseVariable : -1,
+        phase ? strdup(phase->valuestring) : NULL,
         reason ? strdup(reason->valuestring) : NULL
         );
 

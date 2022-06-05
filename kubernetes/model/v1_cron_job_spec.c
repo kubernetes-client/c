@@ -4,32 +4,16 @@
 #include "v1_cron_job_spec.h"
 
 
-char* concurrency_policyv1_cron_job_spec_ToString(kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e concurrency_policy) {
-    char* concurrency_policyArray[] =  { "NULL", "Allow", "Forbid", "Replace" };
-	return concurrency_policyArray[concurrency_policy];
-}
-
-kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e concurrency_policyv1_cron_job_spec_FromString(char* concurrency_policy){
-    int stringToReturn = 0;
-    char *concurrency_policyArray[] =  { "NULL", "Allow", "Forbid", "Replace" };
-    size_t sizeofArray = sizeof(concurrency_policyArray) / sizeof(concurrency_policyArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(concurrency_policy, concurrency_policyArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_cron_job_spec_t *v1_cron_job_spec_create(
-    kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e concurrency_policy,
+    char *concurrency_policy,
     int failed_jobs_history_limit,
     v1_job_template_spec_t *job_template,
     char *schedule,
     long starting_deadline_seconds,
     int successful_jobs_history_limit,
-    int suspend
+    int suspend,
+    char *time_zone
     ) {
     v1_cron_job_spec_t *v1_cron_job_spec_local_var = malloc(sizeof(v1_cron_job_spec_t));
     if (!v1_cron_job_spec_local_var) {
@@ -42,6 +26,7 @@ v1_cron_job_spec_t *v1_cron_job_spec_create(
     v1_cron_job_spec_local_var->starting_deadline_seconds = starting_deadline_seconds;
     v1_cron_job_spec_local_var->successful_jobs_history_limit = successful_jobs_history_limit;
     v1_cron_job_spec_local_var->suspend = suspend;
+    v1_cron_job_spec_local_var->time_zone = time_zone;
 
     return v1_cron_job_spec_local_var;
 }
@@ -52,6 +37,10 @@ void v1_cron_job_spec_free(v1_cron_job_spec_t *v1_cron_job_spec) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_cron_job_spec->concurrency_policy) {
+        free(v1_cron_job_spec->concurrency_policy);
+        v1_cron_job_spec->concurrency_policy = NULL;
+    }
     if (v1_cron_job_spec->job_template) {
         v1_job_template_spec_free(v1_cron_job_spec->job_template);
         v1_cron_job_spec->job_template = NULL;
@@ -60,6 +49,10 @@ void v1_cron_job_spec_free(v1_cron_job_spec_t *v1_cron_job_spec) {
         free(v1_cron_job_spec->schedule);
         v1_cron_job_spec->schedule = NULL;
     }
+    if (v1_cron_job_spec->time_zone) {
+        free(v1_cron_job_spec->time_zone);
+        v1_cron_job_spec->time_zone = NULL;
+    }
     free(v1_cron_job_spec);
 }
 
@@ -67,10 +60,9 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_cron_job_spec->concurrency_policy
-    if(v1_cron_job_spec->concurrency_policy != kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_NULL) {
-    if(cJSON_AddStringToObject(item, "concurrencyPolicy", concurrency_policyv1_cron_job_spec_ToString(v1_cron_job_spec->concurrency_policy)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_cron_job_spec->concurrency_policy) {
+    if(cJSON_AddStringToObject(item, "concurrencyPolicy", v1_cron_job_spec->concurrency_policy) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -129,6 +121,14 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
     }
     }
 
+
+    // v1_cron_job_spec->time_zone
+    if(v1_cron_job_spec->time_zone) {
+    if(cJSON_AddStringToObject(item, "timeZone", v1_cron_job_spec->time_zone) == NULL) {
+    goto fail; //String
+    }
+    }
+
     return item;
 fail:
     if (item) {
@@ -146,13 +146,11 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
     // v1_cron_job_spec->concurrency_policy
     cJSON *concurrency_policy = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "concurrencyPolicy");
-    kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e concurrency_policyVariable;
     if (concurrency_policy) { 
     if(!cJSON_IsString(concurrency_policy))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    concurrency_policyVariable = concurrency_policyv1_cron_job_spec_FromString(concurrency_policy->valuestring);
     }
 
     // v1_cron_job_spec->failed_jobs_history_limit
@@ -212,15 +210,25 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
     }
     }
 
+    // v1_cron_job_spec->time_zone
+    cJSON *time_zone = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "timeZone");
+    if (time_zone) { 
+    if(!cJSON_IsString(time_zone))
+    {
+    goto end; //String
+    }
+    }
+
 
     v1_cron_job_spec_local_var = v1_cron_job_spec_create (
-        concurrency_policy ? concurrency_policyVariable : -1,
+        concurrency_policy ? strdup(concurrency_policy->valuestring) : NULL,
         failed_jobs_history_limit ? failed_jobs_history_limit->valuedouble : 0,
         job_template_local_nonprim,
         strdup(schedule->valuestring),
         starting_deadline_seconds ? starting_deadline_seconds->valuedouble : 0,
         successful_jobs_history_limit ? successful_jobs_history_limit->valuedouble : 0,
-        suspend ? suspend->valueint : 0
+        suspend ? suspend->valueint : 0,
+        time_zone ? strdup(time_zone->valuestring) : NULL
         );
 
     return v1_cron_job_spec_local_var;

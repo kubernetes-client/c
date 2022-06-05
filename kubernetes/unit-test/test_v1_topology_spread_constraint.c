@@ -26,15 +26,17 @@ v1_topology_spread_constraint_t* instantiate_v1_topology_spread_constraint(int i
        // false, not to have infinite recursion
       instantiate_v1_label_selector(0),
       56,
+      56,
       "0",
-      kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_DoNotSchedule
+      "0"
     );
   } else {
     v1_topology_spread_constraint = v1_topology_spread_constraint_create(
       NULL,
       56,
+      56,
       "0",
-      kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_DoNotSchedule
+      "0"
     );
   }
 

@@ -17,14 +17,6 @@ typedef struct v1_persistent_volume_claim_status_t v1_persistent_volume_claim_st
 
 #include "v1_persistent_volume_claim_condition.h"
 
-// Enum PHASE for v1_persistent_volume_claim_status
-
-typedef enum  { kubernetes_v1_persistent_volume_claim_status_PHASE_NULL = 0, kubernetes_v1_persistent_volume_claim_status_PHASE_Bound, kubernetes_v1_persistent_volume_claim_status_PHASE_Lost, kubernetes_v1_persistent_volume_claim_status_PHASE_Pending } kubernetes_v1_persistent_volume_claim_status_PHASE_e;
-
-char* v1_persistent_volume_claim_status_phase_ToString(kubernetes_v1_persistent_volume_claim_status_PHASE_e phase);
-
-kubernetes_v1_persistent_volume_claim_status_PHASE_e v1_persistent_volume_claim_status_phase_FromString(char* phase);
-
 
 
 typedef struct v1_persistent_volume_claim_status_t {
@@ -32,7 +24,7 @@ typedef struct v1_persistent_volume_claim_status_t {
     list_t* allocated_resources; //map
     list_t* capacity; //map
     list_t *conditions; //nonprimitive container
-    kubernetes_v1_persistent_volume_claim_status_PHASE_e phase; //enum
+    char *phase; // string
     char *resize_status; // string
 
 } v1_persistent_volume_claim_status_t;
@@ -42,7 +34,7 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_create(
     list_t* allocated_resources,
     list_t* capacity,
     list_t *conditions,
-    kubernetes_v1_persistent_volume_claim_status_PHASE_e phase,
+    char *phase,
     char *resize_status
 );
 
