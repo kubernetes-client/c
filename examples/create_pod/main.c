@@ -23,7 +23,7 @@ void create_a_pod(apiClient_t * apiClient)
     v1_container_t *con = calloc(1, sizeof(v1_container_t));
     con->name = strdup("my-container");
     con->image = strdup("ubuntu:latest");
-    con->image_pull_policy = kubernetes_v1_container_IMAGEPULLPOLICY_IfNotPresent;
+    con->image_pull_policy = strdup("IfNotPresent");
 
     /* set command for container */
     list_t *commandlist = list_createList();
