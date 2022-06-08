@@ -25,12 +25,12 @@ v1_deployment_strategy_t* instantiate_v1_deployment_strategy(int include_optiona
     v1_deployment_strategy = v1_deployment_strategy_create(
        // false, not to have infinite recursion
       instantiate_v1_rolling_update_deployment(0),
-      kubernetes_v1_deployment_strategy_TYPE_Recreate
+      "0"
     );
   } else {
     v1_deployment_strategy = v1_deployment_strategy_create(
       NULL,
-      kubernetes_v1_deployment_strategy_TYPE_Recreate
+      "0"
     );
   }
 

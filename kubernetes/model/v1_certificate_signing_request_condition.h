@@ -16,14 +16,6 @@
 typedef struct v1_certificate_signing_request_condition_t v1_certificate_signing_request_condition_t;
 
 
-// Enum TYPE for v1_certificate_signing_request_condition
-
-typedef enum  { kubernetes_v1_certificate_signing_request_condition_TYPE_NULL = 0, kubernetes_v1_certificate_signing_request_condition_TYPE_Approved, kubernetes_v1_certificate_signing_request_condition_TYPE_Denied, kubernetes_v1_certificate_signing_request_condition_TYPE_Failed } kubernetes_v1_certificate_signing_request_condition_TYPE_e;
-
-char* v1_certificate_signing_request_condition_type_ToString(kubernetes_v1_certificate_signing_request_condition_TYPE_e type);
-
-kubernetes_v1_certificate_signing_request_condition_TYPE_e v1_certificate_signing_request_condition_type_FromString(char* type);
-
 
 
 typedef struct v1_certificate_signing_request_condition_t {
@@ -32,7 +24,7 @@ typedef struct v1_certificate_signing_request_condition_t {
     char *message; // string
     char *reason; // string
     char *status; // string
-    kubernetes_v1_certificate_signing_request_condition_TYPE_e type; //enum
+    char *type; // string
 
 } v1_certificate_signing_request_condition_t;
 
@@ -42,7 +34,7 @@ v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condi
     char *message,
     char *reason,
     char *status,
-    kubernetes_v1_certificate_signing_request_condition_TYPE_e type
+    char *type
 );
 
 void v1_certificate_signing_request_condition_free(v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condition);

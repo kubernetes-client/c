@@ -27,6 +27,7 @@ typedef struct v1beta1_cron_job_spec_t {
     long starting_deadline_seconds; //numeric
     int successful_jobs_history_limit; //numeric
     int suspend; //boolean
+    char *time_zone; // string
 
 } v1beta1_cron_job_spec_t;
 
@@ -37,7 +38,8 @@ v1beta1_cron_job_spec_t *v1beta1_cron_job_spec_create(
     char *schedule,
     long starting_deadline_seconds,
     int successful_jobs_history_limit,
-    int suspend
+    int suspend,
+    char *time_zone
 );
 
 void v1beta1_cron_job_spec_free(v1beta1_cron_job_spec_t *v1beta1_cron_job_spec);

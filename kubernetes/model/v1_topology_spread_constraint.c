@@ -4,29 +4,13 @@
 #include "v1_topology_spread_constraint.h"
 
 
-char* when_unsatisfiablev1_topology_spread_constraint_ToString(kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_e when_unsatisfiable) {
-    char* when_unsatisfiableArray[] =  { "NULL", "DoNotSchedule", "ScheduleAnyway" };
-	return when_unsatisfiableArray[when_unsatisfiable];
-}
-
-kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_e when_unsatisfiablev1_topology_spread_constraint_FromString(char* when_unsatisfiable){
-    int stringToReturn = 0;
-    char *when_unsatisfiableArray[] =  { "NULL", "DoNotSchedule", "ScheduleAnyway" };
-    size_t sizeofArray = sizeof(when_unsatisfiableArray) / sizeof(when_unsatisfiableArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(when_unsatisfiable, when_unsatisfiableArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_topology_spread_constraint_t *v1_topology_spread_constraint_create(
     v1_label_selector_t *label_selector,
     int max_skew,
+    int min_domains,
     char *topology_key,
-    kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_e when_unsatisfiable
+    char *when_unsatisfiable
     ) {
     v1_topology_spread_constraint_t *v1_topology_spread_constraint_local_var = malloc(sizeof(v1_topology_spread_constraint_t));
     if (!v1_topology_spread_constraint_local_var) {
@@ -34,6 +18,7 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_create(
     }
     v1_topology_spread_constraint_local_var->label_selector = label_selector;
     v1_topology_spread_constraint_local_var->max_skew = max_skew;
+    v1_topology_spread_constraint_local_var->min_domains = min_domains;
     v1_topology_spread_constraint_local_var->topology_key = topology_key;
     v1_topology_spread_constraint_local_var->when_unsatisfiable = when_unsatisfiable;
 
@@ -53,6 +38,10 @@ void v1_topology_spread_constraint_free(v1_topology_spread_constraint_t *v1_topo
     if (v1_topology_spread_constraint->topology_key) {
         free(v1_topology_spread_constraint->topology_key);
         v1_topology_spread_constraint->topology_key = NULL;
+    }
+    if (v1_topology_spread_constraint->when_unsatisfiable) {
+        free(v1_topology_spread_constraint->when_unsatisfiable);
+        v1_topology_spread_constraint->when_unsatisfiable = NULL;
     }
     free(v1_topology_spread_constraint);
 }
@@ -82,6 +71,14 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
     }
 
 
+    // v1_topology_spread_constraint->min_domains
+    if(v1_topology_spread_constraint->min_domains) {
+    if(cJSON_AddNumberToObject(item, "minDomains", v1_topology_spread_constraint->min_domains) == NULL) {
+    goto fail; //Numeric
+    }
+    }
+
+
     // v1_topology_spread_constraint->topology_key
     if (!v1_topology_spread_constraint->topology_key) {
         goto fail;
@@ -92,12 +89,11 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
 
 
     // v1_topology_spread_constraint->when_unsatisfiable
-    if (kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_NULL == v1_topology_spread_constraint->when_unsatisfiable) {
+    if (!v1_topology_spread_constraint->when_unsatisfiable) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "whenUnsatisfiable", when_unsatisfiablev1_topology_spread_constraint_ToString(v1_topology_spread_constraint->when_unsatisfiable)) == NULL)
-    {
-    goto fail; //Enum
+    if(cJSON_AddStringToObject(item, "whenUnsatisfiable", v1_topology_spread_constraint->when_unsatisfiable) == NULL) {
+    goto fail; //String
     }
 
     return item;
@@ -133,6 +129,15 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
     goto end; //Numeric
     }
 
+    // v1_topology_spread_constraint->min_domains
+    cJSON *min_domains = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "minDomains");
+    if (min_domains) { 
+    if(!cJSON_IsNumber(min_domains))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1_topology_spread_constraint->topology_key
     cJSON *topology_key = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "topologyKey");
     if (!topology_key) {
@@ -151,20 +156,19 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
         goto end;
     }
 
-    kubernetes_v1_topology_spread_constraint_WHENUNSATISFIABLE_e when_unsatisfiableVariable;
     
     if(!cJSON_IsString(when_unsatisfiable))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    when_unsatisfiableVariable = when_unsatisfiablev1_topology_spread_constraint_FromString(when_unsatisfiable->valuestring);
 
 
     v1_topology_spread_constraint_local_var = v1_topology_spread_constraint_create (
         label_selector ? label_selector_local_nonprim : NULL,
         max_skew->valuedouble,
+        min_domains ? min_domains->valuedouble : 0,
         strdup(topology_key->valuestring),
-        when_unsatisfiableVariable
+        strdup(when_unsatisfiable->valuestring)
         );
 
     return v1_topology_spread_constraint_local_var;

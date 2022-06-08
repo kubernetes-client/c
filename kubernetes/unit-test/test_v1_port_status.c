@@ -24,13 +24,13 @@ v1_port_status_t* instantiate_v1_port_status(int include_optional) {
     v1_port_status = v1_port_status_create(
       "0",
       56,
-      kubernetes_v1_port_status_PROTOCOL_SCTP
+      "0"
     );
   } else {
     v1_port_status = v1_port_status_create(
       "0",
       56,
-      kubernetes_v1_port_status_PROTOCOL_SCTP
+      "0"
     );
   }
 

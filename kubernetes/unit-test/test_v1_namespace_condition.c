@@ -26,7 +26,7 @@ v1_namespace_condition_t* instantiate_v1_namespace_condition(int include_optiona
       "0",
       "0",
       "0",
-      kubernetes_v1_namespace_condition_TYPE_NamespaceContentRemaining
+      "0"
     );
   } else {
     v1_namespace_condition = v1_namespace_condition_create(
@@ -34,7 +34,7 @@ v1_namespace_condition_t* instantiate_v1_namespace_condition(int include_optiona
       "0",
       "0",
       "0",
-      kubernetes_v1_namespace_condition_TYPE_NamespaceContentRemaining
+      "0"
     );
   }
 

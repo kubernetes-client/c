@@ -25,14 +25,14 @@ core_v1_endpoint_port_t* instantiate_core_v1_endpoint_port(int include_optional)
       "0",
       "0",
       56,
-      kubernetes_core_v1_endpoint_port_PROTOCOL_SCTP
+      "0"
     );
   } else {
     core_v1_endpoint_port = core_v1_endpoint_port_create(
       "0",
       "0",
       56,
-      kubernetes_core_v1_endpoint_port_PROTOCOL_SCTP
+      "0"
     );
   }
 

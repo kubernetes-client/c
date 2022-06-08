@@ -17,35 +17,29 @@ typedef struct v1_cron_job_spec_t v1_cron_job_spec_t;
 
 #include "v1_job_template_spec.h"
 
-// Enum CONCURRENCYPOLICY for v1_cron_job_spec
-
-typedef enum  { kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_NULL = 0, kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_Allow, kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_Forbid, kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_Replace } kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e;
-
-char* v1_cron_job_spec_concurrency_policy_ToString(kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e concurrency_policy);
-
-kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e v1_cron_job_spec_concurrency_policy_FromString(char* concurrency_policy);
-
 
 
 typedef struct v1_cron_job_spec_t {
-    kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e concurrency_policy; //enum
+    char *concurrency_policy; // string
     int failed_jobs_history_limit; //numeric
     struct v1_job_template_spec_t *job_template; //model
     char *schedule; // string
     long starting_deadline_seconds; //numeric
     int successful_jobs_history_limit; //numeric
     int suspend; //boolean
+    char *time_zone; // string
 
 } v1_cron_job_spec_t;
 
 v1_cron_job_spec_t *v1_cron_job_spec_create(
-    kubernetes_v1_cron_job_spec_CONCURRENCYPOLICY_e concurrency_policy,
+    char *concurrency_policy,
     int failed_jobs_history_limit,
     v1_job_template_spec_t *job_template,
     char *schedule,
     long starting_deadline_seconds,
     int successful_jobs_history_limit,
-    int suspend
+    int suspend,
+    char *time_zone
 );
 
 void v1_cron_job_spec_free(v1_cron_job_spec_t *v1_cron_job_spec);

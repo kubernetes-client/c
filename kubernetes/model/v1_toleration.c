@@ -4,45 +4,11 @@
 #include "v1_toleration.h"
 
 
-char* effectv1_toleration_ToString(kubernetes_v1_toleration_EFFECT_e effect) {
-    char* effectArray[] =  { "NULL", "NoExecute", "NoSchedule", "PreferNoSchedule" };
-	return effectArray[effect];
-}
-
-kubernetes_v1_toleration_EFFECT_e effectv1_toleration_FromString(char* effect){
-    int stringToReturn = 0;
-    char *effectArray[] =  { "NULL", "NoExecute", "NoSchedule", "PreferNoSchedule" };
-    size_t sizeofArray = sizeof(effectArray) / sizeof(effectArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(effect, effectArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
-char* _operatorv1_toleration_ToString(kubernetes_v1_toleration_OPERATOR_e _operator) {
-    char* _operatorArray[] =  { "NULL", "Equal", "Exists" };
-	return _operatorArray[_operator];
-}
-
-kubernetes_v1_toleration_OPERATOR_e _operatorv1_toleration_FromString(char* _operator){
-    int stringToReturn = 0;
-    char *_operatorArray[] =  { "NULL", "Equal", "Exists" };
-    size_t sizeofArray = sizeof(_operatorArray) / sizeof(_operatorArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(_operator, _operatorArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_toleration_t *v1_toleration_create(
-    kubernetes_v1_toleration_EFFECT_e effect,
+    char *effect,
     char *key,
-    kubernetes_v1_toleration_OPERATOR_e _operator,
+    char *_operator,
     long toleration_seconds,
     char *value
     ) {
@@ -65,9 +31,17 @@ void v1_toleration_free(v1_toleration_t *v1_toleration) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_toleration->effect) {
+        free(v1_toleration->effect);
+        v1_toleration->effect = NULL;
+    }
     if (v1_toleration->key) {
         free(v1_toleration->key);
         v1_toleration->key = NULL;
+    }
+    if (v1_toleration->_operator) {
+        free(v1_toleration->_operator);
+        v1_toleration->_operator = NULL;
     }
     if (v1_toleration->value) {
         free(v1_toleration->value);
@@ -80,10 +54,9 @@ cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_toleration->effect
-    if(v1_toleration->effect != kubernetes_v1_toleration_EFFECT_NULL) {
-    if(cJSON_AddStringToObject(item, "effect", effectv1_toleration_ToString(v1_toleration->effect)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_toleration->effect) {
+    if(cJSON_AddStringToObject(item, "effect", v1_toleration->effect) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -97,10 +70,9 @@ cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration) {
 
 
     // v1_toleration->_operator
-    if(v1_toleration->_operator != kubernetes_v1_toleration_OPERATOR_NULL) {
-    if(cJSON_AddStringToObject(item, "operator", _operatorv1_toleration_ToString(v1_toleration->_operator)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_toleration->_operator) {
+    if(cJSON_AddStringToObject(item, "operator", v1_toleration->_operator) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -134,13 +106,11 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
 
     // v1_toleration->effect
     cJSON *effect = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "effect");
-    kubernetes_v1_toleration_EFFECT_e effectVariable;
     if (effect) { 
     if(!cJSON_IsString(effect))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    effectVariable = effectv1_toleration_FromString(effect->valuestring);
     }
 
     // v1_toleration->key
@@ -154,13 +124,11 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
 
     // v1_toleration->_operator
     cJSON *_operator = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "operator");
-    kubernetes_v1_toleration_OPERATOR_e _operatorVariable;
     if (_operator) { 
     if(!cJSON_IsString(_operator))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    _operatorVariable = _operatorv1_toleration_FromString(_operator->valuestring);
     }
 
     // v1_toleration->toleration_seconds
@@ -183,9 +151,9 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
 
 
     v1_toleration_local_var = v1_toleration_create (
-        effect ? effectVariable : -1,
+        effect ? strdup(effect->valuestring) : NULL,
         key ? strdup(key->valuestring) : NULL,
-        _operator ? _operatorVariable : -1,
+        _operator ? strdup(_operator->valuestring) : NULL,
         toleration_seconds ? toleration_seconds->valuedouble : 0,
         value ? strdup(value->valuestring) : NULL
         );

@@ -26,7 +26,7 @@ v1_container_port_t* instantiate_v1_container_port(int include_optional) {
       "0",
       56,
       "0",
-      kubernetes_v1_container_port_PROTOCOL_SCTP
+      "0"
     );
   } else {
     v1_container_port = v1_container_port_create(
@@ -34,7 +34,7 @@ v1_container_port_t* instantiate_v1_container_port(int include_optional) {
       "0",
       56,
       "0",
-      kubernetes_v1_container_port_PROTOCOL_SCTP
+      "0"
     );
   }
 

@@ -11,6 +11,8 @@
 #include "../model/v1_csi_driver_list.h"
 #include "../model/v1_csi_node.h"
 #include "../model/v1_csi_node_list.h"
+#include "../model/v1_csi_storage_capacity.h"
+#include "../model/v1_csi_storage_capacity_list.h"
 #include "../model/v1_delete_options.h"
 #include "../model/v1_status.h"
 #include "../model/v1_storage_class.h"
@@ -29,6 +31,12 @@ StorageV1API_createCSIDriver(apiClient_t *apiClient, v1_csi_driver_t * body , ch
 //
 v1_csi_node_t*
 StorageV1API_createCSINode(apiClient_t *apiClient, v1_csi_node_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
+
+
+// create a CSIStorageCapacity
+//
+v1_csi_storage_capacity_t*
+StorageV1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _namespace , v1_csi_storage_capacity_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // create a StorageClass
@@ -67,6 +75,12 @@ v1_status_t*
 StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
 
 
+// delete collection of CSIStorageCapacity
+//
+v1_status_t*
+StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
+
+
 // delete collection of StorageClass
 //
 v1_status_t*
@@ -77,6 +91,12 @@ StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char * pretty 
 //
 v1_status_t*
 StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
+
+
+// delete a CSIStorageCapacity
+//
+v1_status_t*
+StorageV1API_deleteNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
 
 
 // delete a StorageClass
@@ -109,6 +129,18 @@ v1_csi_node_list_t*
 StorageV1API_listCSINode(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
 
 
+// list or watch objects of kind CSIStorageCapacity
+//
+v1_csi_storage_capacity_list_t*
+StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
+
+
+// list or watch objects of kind CSIStorageCapacity
+//
+v1_csi_storage_capacity_list_t*
+StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
+
+
 // list or watch objects of kind StorageClass
 //
 v1_storage_class_list_t*
@@ -131,6 +163,12 @@ StorageV1API_patchCSIDriver(apiClient_t *apiClient, char * name , object_t * bod
 //
 v1_csi_node_t*
 StorageV1API_patchCSINode(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
+
+
+// partially update the specified CSIStorageCapacity
+//
+v1_csi_storage_capacity_t*
+StorageV1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
 // partially update the specified StorageClass
@@ -163,6 +201,12 @@ v1_csi_node_t*
 StorageV1API_readCSINode(apiClient_t *apiClient, char * name , char * pretty );
 
 
+// read the specified CSIStorageCapacity
+//
+v1_csi_storage_capacity_t*
+StorageV1API_readNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
+
+
 // read the specified StorageClass
 //
 v1_storage_class_t*
@@ -191,6 +235,12 @@ StorageV1API_replaceCSIDriver(apiClient_t *apiClient, char * name , v1_csi_drive
 //
 v1_csi_node_t*
 StorageV1API_replaceCSINode(apiClient_t *apiClient, char * name , v1_csi_node_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
+
+
+// replace the specified CSIStorageCapacity
+//
+v1_csi_storage_capacity_t*
+StorageV1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * name , char * _namespace , v1_csi_storage_capacity_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 
 // replace the specified StorageClass

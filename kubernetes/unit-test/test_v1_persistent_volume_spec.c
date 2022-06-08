@@ -83,7 +83,7 @@ v1_persistent_volume_spec_t* instantiate_v1_persistent_volume_spec(int include_o
       instantiate_v1_nfs_volume_source(0),
        // false, not to have infinite recursion
       instantiate_v1_volume_node_affinity(0),
-      kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_Delete,
+      "0",
        // false, not to have infinite recursion
       instantiate_v1_photon_persistent_disk_volume_source(0),
        // false, not to have infinite recursion
@@ -123,7 +123,7 @@ v1_persistent_volume_spec_t* instantiate_v1_persistent_volume_spec(int include_o
       list_createList(),
       NULL,
       NULL,
-      kubernetes_v1_persistent_volume_spec_PERSISTENTVOLUMERECLAIMPOLICY_Delete,
+      "0",
       NULL,
       NULL,
       NULL,

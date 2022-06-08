@@ -22,10 +22,12 @@ v1_rolling_update_stateful_set_strategy_t* instantiate_v1_rolling_update_statefu
   v1_rolling_update_stateful_set_strategy_t* v1_rolling_update_stateful_set_strategy = NULL;
   if (include_optional) {
     v1_rolling_update_stateful_set_strategy = v1_rolling_update_stateful_set_strategy_create(
+      "0",
       56
     );
   } else {
     v1_rolling_update_stateful_set_strategy = v1_rolling_update_stateful_set_strategy_create(
+      "0",
       56
     );
   }

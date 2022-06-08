@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**container_id** | **char \*** | Container&#39;s ID in the format &#39;docker://&lt;container_id&gt;&#39; | [optional] 
+**container_id** | **char \*** | Container&#39;s ID in the format &#39;&lt;type&gt;://&lt;container_id&gt;&#39; | [optional] 
 **exit_code** | **int** | Exit status from the last termination of the container | 
 **finished_at** | **char \*** | Time at which the container last terminated | [optional] 
 **message** | **char \*** | Message regarding the last termination of the container | [optional] 

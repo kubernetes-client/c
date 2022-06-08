@@ -15,15 +15,18 @@
 
 typedef struct v1_rolling_update_stateful_set_strategy_t v1_rolling_update_stateful_set_strategy_t;
 
+#include "int_or_string.h"
 
 
 
 typedef struct v1_rolling_update_stateful_set_strategy_t {
+    int_or_string_t *max_unavailable; // custom
     int partition; //numeric
 
 } v1_rolling_update_stateful_set_strategy_t;
 
 v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_create(
+    int_or_string_t *max_unavailable,
     int partition
 );
 

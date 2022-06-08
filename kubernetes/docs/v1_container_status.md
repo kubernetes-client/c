@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**container_id** | **char \*** | Container&#39;s ID in the format &#39;docker://&lt;container_id&gt;&#39;. | [optional] 
+**container_id** | **char \*** | Container&#39;s ID in the format &#39;&lt;type&gt;://&lt;container_id&gt;&#39;. | [optional] 
 **image** | **char \*** | The image the container is running. More info: https://kubernetes.io/docs/concepts/containers/images. | 
 **image_id** | **char \*** | ImageID of the container&#39;s image. | 
 **last_state** | [**v1_container_state_t**](v1_container_state.md) \* |  | [optional] 

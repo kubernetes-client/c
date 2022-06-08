@@ -12,7 +12,8 @@ v1beta1_cron_job_spec_t *v1beta1_cron_job_spec_create(
     char *schedule,
     long starting_deadline_seconds,
     int successful_jobs_history_limit,
-    int suspend
+    int suspend,
+    char *time_zone
     ) {
     v1beta1_cron_job_spec_t *v1beta1_cron_job_spec_local_var = malloc(sizeof(v1beta1_cron_job_spec_t));
     if (!v1beta1_cron_job_spec_local_var) {
@@ -25,6 +26,7 @@ v1beta1_cron_job_spec_t *v1beta1_cron_job_spec_create(
     v1beta1_cron_job_spec_local_var->starting_deadline_seconds = starting_deadline_seconds;
     v1beta1_cron_job_spec_local_var->successful_jobs_history_limit = successful_jobs_history_limit;
     v1beta1_cron_job_spec_local_var->suspend = suspend;
+    v1beta1_cron_job_spec_local_var->time_zone = time_zone;
 
     return v1beta1_cron_job_spec_local_var;
 }
@@ -46,6 +48,10 @@ void v1beta1_cron_job_spec_free(v1beta1_cron_job_spec_t *v1beta1_cron_job_spec) 
     if (v1beta1_cron_job_spec->schedule) {
         free(v1beta1_cron_job_spec->schedule);
         v1beta1_cron_job_spec->schedule = NULL;
+    }
+    if (v1beta1_cron_job_spec->time_zone) {
+        free(v1beta1_cron_job_spec->time_zone);
+        v1beta1_cron_job_spec->time_zone = NULL;
     }
     free(v1beta1_cron_job_spec);
 }
@@ -112,6 +118,14 @@ cJSON *v1beta1_cron_job_spec_convertToJSON(v1beta1_cron_job_spec_t *v1beta1_cron
     if(v1beta1_cron_job_spec->suspend) {
     if(cJSON_AddBoolToObject(item, "suspend", v1beta1_cron_job_spec->suspend) == NULL) {
     goto fail; //Bool
+    }
+    }
+
+
+    // v1beta1_cron_job_spec->time_zone
+    if(v1beta1_cron_job_spec->time_zone) {
+    if(cJSON_AddStringToObject(item, "timeZone", v1beta1_cron_job_spec->time_zone) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -196,6 +210,15 @@ v1beta1_cron_job_spec_t *v1beta1_cron_job_spec_parseFromJSON(cJSON *v1beta1_cron
     }
     }
 
+    // v1beta1_cron_job_spec->time_zone
+    cJSON *time_zone = cJSON_GetObjectItemCaseSensitive(v1beta1_cron_job_specJSON, "timeZone");
+    if (time_zone) { 
+    if(!cJSON_IsString(time_zone))
+    {
+    goto end; //String
+    }
+    }
+
 
     v1beta1_cron_job_spec_local_var = v1beta1_cron_job_spec_create (
         concurrency_policy ? strdup(concurrency_policy->valuestring) : NULL,
@@ -204,7 +227,8 @@ v1beta1_cron_job_spec_t *v1beta1_cron_job_spec_parseFromJSON(cJSON *v1beta1_cron
         strdup(schedule->valuestring),
         starting_deadline_seconds ? starting_deadline_seconds->valuedouble : 0,
         successful_jobs_history_limit ? successful_jobs_history_limit->valuedouble : 0,
-        suspend ? suspend->valueint : 0
+        suspend ? suspend->valueint : 0,
+        time_zone ? strdup(time_zone->valuestring) : NULL
         );
 
     return v1beta1_cron_job_spec_local_var;

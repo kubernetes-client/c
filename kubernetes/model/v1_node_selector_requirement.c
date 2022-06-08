@@ -4,27 +4,10 @@
 #include "v1_node_selector_requirement.h"
 
 
-char* _operatorv1_node_selector_requirement_ToString(kubernetes_v1_node_selector_requirement_OPERATOR_e _operator) {
-    char* _operatorArray[] =  { "NULL", "DoesNotExist", "Exists", "Gt", "In", "Lt", "NotIn" };
-	return _operatorArray[_operator];
-}
-
-kubernetes_v1_node_selector_requirement_OPERATOR_e _operatorv1_node_selector_requirement_FromString(char* _operator){
-    int stringToReturn = 0;
-    char *_operatorArray[] =  { "NULL", "DoesNotExist", "Exists", "Gt", "In", "Lt", "NotIn" };
-    size_t sizeofArray = sizeof(_operatorArray) / sizeof(_operatorArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(_operator, _operatorArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_node_selector_requirement_t *v1_node_selector_requirement_create(
     char *key,
-    kubernetes_v1_node_selector_requirement_OPERATOR_e _operator,
+    char *_operator,
     list_t *values
     ) {
     v1_node_selector_requirement_t *v1_node_selector_requirement_local_var = malloc(sizeof(v1_node_selector_requirement_t));
@@ -47,6 +30,10 @@ void v1_node_selector_requirement_free(v1_node_selector_requirement_t *v1_node_s
     if (v1_node_selector_requirement->key) {
         free(v1_node_selector_requirement->key);
         v1_node_selector_requirement->key = NULL;
+    }
+    if (v1_node_selector_requirement->_operator) {
+        free(v1_node_selector_requirement->_operator);
+        v1_node_selector_requirement->_operator = NULL;
     }
     if (v1_node_selector_requirement->values) {
         list_ForEach(listEntry, v1_node_selector_requirement->values) {
@@ -71,12 +58,11 @@ cJSON *v1_node_selector_requirement_convertToJSON(v1_node_selector_requirement_t
 
 
     // v1_node_selector_requirement->_operator
-    if (kubernetes_v1_node_selector_requirement_OPERATOR_NULL == v1_node_selector_requirement->_operator) {
+    if (!v1_node_selector_requirement->_operator) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "operator", _operatorv1_node_selector_requirement_ToString(v1_node_selector_requirement->_operator)) == NULL)
-    {
-    goto fail; //Enum
+    if(cJSON_AddStringToObject(item, "operator", v1_node_selector_requirement->_operator) == NULL) {
+    goto fail; //String
     }
 
 
@@ -129,13 +115,11 @@ v1_node_selector_requirement_t *v1_node_selector_requirement_parseFromJSON(cJSON
         goto end;
     }
 
-    kubernetes_v1_node_selector_requirement_OPERATOR_e _operatorVariable;
     
     if(!cJSON_IsString(_operator))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    _operatorVariable = _operatorv1_node_selector_requirement_FromString(_operator->valuestring);
 
     // v1_node_selector_requirement->values
     cJSON *values = cJSON_GetObjectItemCaseSensitive(v1_node_selector_requirementJSON, "values");
@@ -159,7 +143,7 @@ v1_node_selector_requirement_t *v1_node_selector_requirement_parseFromJSON(cJSON
 
     v1_node_selector_requirement_local_var = v1_node_selector_requirement_create (
         strdup(key->valuestring),
-        _operatorVariable,
+        strdup(_operator->valuestring),
         values ? valuesList : NULL
         );
 

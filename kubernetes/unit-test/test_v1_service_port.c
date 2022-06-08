@@ -26,7 +26,7 @@ v1_service_port_t* instantiate_v1_service_port(int include_optional) {
       "0",
       56,
       56,
-      kubernetes_v1_service_port_PROTOCOL_SCTP,
+      "0",
       "0"
     );
   } else {
@@ -35,7 +35,7 @@ v1_service_port_t* instantiate_v1_service_port(int include_optional) {
       "0",
       56,
       56,
-      kubernetes_v1_service_port_PROTOCOL_SCTP,
+      "0",
       "0"
     );
   }

@@ -137,6 +137,8 @@ set(SRCS
     model/v1_csi_node_list.c
     model/v1_csi_node_spec.c
     model/v1_csi_persistent_volume_source.c
+    model/v1_csi_storage_capacity.c
+    model/v1_csi_storage_capacity_list.c
     model/v1_csi_volume_source.c
     model/v1_custom_resource_column_definition.c
     model/v1_custom_resource_conversion.c
@@ -263,6 +265,7 @@ set(SRCS
     model/v1_network_policy_peer.c
     model/v1_network_policy_port.c
     model/v1_network_policy_spec.c
+    model/v1_network_policy_status.c
     model/v1_nfs_volume_source.c
     model/v1_node.c
     model/v1_node_address.c
@@ -447,13 +450,6 @@ set(SRCS
     model/v1_webhook_conversion.c
     model/v1_weighted_pod_affinity_term.c
     model/v1_windows_security_context_options.c
-    model/v1alpha1_csi_storage_capacity.c
-    model/v1alpha1_csi_storage_capacity_list.c
-    model/v1alpha1_overhead.c
-    model/v1alpha1_runtime_class.c
-    model/v1alpha1_runtime_class_list.c
-    model/v1alpha1_runtime_class_spec.c
-    model/v1alpha1_scheduling.c
     model/v1alpha1_server_storage_version.c
     model/v1alpha1_storage_version.c
     model/v1alpha1_storage_version_condition.c
@@ -653,7 +649,6 @@ set(SRCS
     api/NetworkingV1API.c
     api/NodeAPI.c
     api/NodeV1API.c
-    api/NodeV1alpha1API.c
     api/NodeV1beta1API.c
     api/OpenidAPI.c
     api/PolicyAPI.c
@@ -665,7 +660,6 @@ set(SRCS
     api/SchedulingV1API.c
     api/StorageAPI.c
     api/StorageV1API.c
-    api/StorageV1alpha1API.c
     api/StorageV1beta1API.c
     api/VersionAPI.c
     api/WellKnownAPI.c
@@ -762,6 +756,8 @@ set(HDRS
     model/v1_csi_node_list.h
     model/v1_csi_node_spec.h
     model/v1_csi_persistent_volume_source.h
+    model/v1_csi_storage_capacity.h
+    model/v1_csi_storage_capacity_list.h
     model/v1_csi_volume_source.h
     model/v1_custom_resource_column_definition.h
     model/v1_custom_resource_conversion.h
@@ -888,6 +884,7 @@ set(HDRS
     model/v1_network_policy_peer.h
     model/v1_network_policy_port.h
     model/v1_network_policy_spec.h
+    model/v1_network_policy_status.h
     model/v1_nfs_volume_source.h
     model/v1_node.h
     model/v1_node_address.h
@@ -1072,13 +1069,6 @@ set(HDRS
     model/v1_webhook_conversion.h
     model/v1_weighted_pod_affinity_term.h
     model/v1_windows_security_context_options.h
-    model/v1alpha1_csi_storage_capacity.h
-    model/v1alpha1_csi_storage_capacity_list.h
-    model/v1alpha1_overhead.h
-    model/v1alpha1_runtime_class.h
-    model/v1alpha1_runtime_class_list.h
-    model/v1alpha1_runtime_class_spec.h
-    model/v1alpha1_scheduling.h
     model/v1alpha1_server_storage_version.h
     model/v1alpha1_storage_version.h
     model/v1alpha1_storage_version_condition.h
@@ -1278,7 +1268,6 @@ set(HDRS
     api/NetworkingV1API.h
     api/NodeAPI.h
     api/NodeV1API.h
-    api/NodeV1alpha1API.h
     api/NodeV1beta1API.h
     api/OpenidAPI.h
     api/PolicyAPI.h
@@ -1290,7 +1279,6 @@ set(HDRS
     api/SchedulingV1API.h
     api/StorageAPI.h
     api/StorageV1API.h
-    api/StorageV1alpha1API.h
     api/StorageV1beta1API.h
     api/VersionAPI.h
     api/WellKnownAPI.h
@@ -1419,7 +1407,6 @@ set(HDRS "")
 #    unit-tests/manual-NetworkingV1API.c
 #    unit-tests/manual-NodeAPI.c
 #    unit-tests/manual-NodeV1API.c
-#    unit-tests/manual-NodeV1alpha1API.c
 #    unit-tests/manual-NodeV1beta1API.c
 #    unit-tests/manual-OpenidAPI.c
 #    unit-tests/manual-PolicyAPI.c
@@ -1431,7 +1418,6 @@ set(HDRS "")
 #    unit-tests/manual-SchedulingV1API.c
 #    unit-tests/manual-StorageAPI.c
 #    unit-tests/manual-StorageV1API.c
-#    unit-tests/manual-StorageV1alpha1API.c
 #    unit-tests/manual-StorageV1beta1API.c
 #    unit-tests/manual-VersionAPI.c
 #    unit-tests/manual-WellKnownAPI.c

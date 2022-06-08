@@ -22,17 +22,17 @@ v1_toleration_t* instantiate_v1_toleration(int include_optional) {
   v1_toleration_t* v1_toleration = NULL;
   if (include_optional) {
     v1_toleration = v1_toleration_create(
-      kubernetes_v1_toleration_EFFECT_NoExecute,
       "0",
-      kubernetes_v1_toleration_OPERATOR_Equal,
+      "0",
+      "0",
       56,
       "0"
     );
   } else {
     v1_toleration = v1_toleration_create(
-      kubernetes_v1_toleration_EFFECT_NoExecute,
       "0",
-      kubernetes_v1_toleration_OPERATOR_Equal,
+      "0",
+      "0",
       56,
       "0"
     );

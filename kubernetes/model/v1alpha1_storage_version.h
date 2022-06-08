@@ -1,7 +1,7 @@
 /*
  * v1alpha1_storage_version.h
  *
- *   Storage version of a specific resource.
+ * Storage version of a specific resource.
  */
 
 #ifndef _v1alpha1_storage_version_H_

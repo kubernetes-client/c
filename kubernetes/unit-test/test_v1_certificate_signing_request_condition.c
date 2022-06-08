@@ -27,7 +27,7 @@ v1_certificate_signing_request_condition_t* instantiate_v1_certificate_signing_r
       "0",
       "0",
       "0",
-      kubernetes_v1_certificate_signing_request_condition_TYPE_Approved
+      "0"
     );
   } else {
     v1_certificate_signing_request_condition = v1_certificate_signing_request_condition_create(
@@ -36,7 +36,7 @@ v1_certificate_signing_request_condition_t* instantiate_v1_certificate_signing_r
       "0",
       "0",
       "0",
-      kubernetes_v1_certificate_signing_request_condition_TYPE_Approved
+      "0"
     );
   }
 

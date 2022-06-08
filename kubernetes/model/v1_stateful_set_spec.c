@@ -4,28 +4,11 @@
 #include "v1_stateful_set_spec.h"
 
 
-char* pod_management_policyv1_stateful_set_spec_ToString(kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_e pod_management_policy) {
-    char* pod_management_policyArray[] =  { "NULL", "OrderedReady", "Parallel" };
-	return pod_management_policyArray[pod_management_policy];
-}
-
-kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_e pod_management_policyv1_stateful_set_spec_FromString(char* pod_management_policy){
-    int stringToReturn = 0;
-    char *pod_management_policyArray[] =  { "NULL", "OrderedReady", "Parallel" };
-    size_t sizeofArray = sizeof(pod_management_policyArray) / sizeof(pod_management_policyArray[0]);
-    while(stringToReturn < sizeofArray) {
-        if(strcmp(pod_management_policy, pod_management_policyArray[stringToReturn]) == 0) {
-            return stringToReturn;
-        }
-        stringToReturn++;
-    }
-    return 0;
-}
 
 v1_stateful_set_spec_t *v1_stateful_set_spec_create(
     int min_ready_seconds,
     v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy,
-    kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_e pod_management_policy,
+    char *pod_management_policy,
     int replicas,
     int revision_history_limit,
     v1_label_selector_t *selector,
@@ -61,6 +44,10 @@ void v1_stateful_set_spec_free(v1_stateful_set_spec_t *v1_stateful_set_spec) {
     if (v1_stateful_set_spec->persistent_volume_claim_retention_policy) {
         v1_stateful_set_persistent_volume_claim_retention_policy_free(v1_stateful_set_spec->persistent_volume_claim_retention_policy);
         v1_stateful_set_spec->persistent_volume_claim_retention_policy = NULL;
+    }
+    if (v1_stateful_set_spec->pod_management_policy) {
+        free(v1_stateful_set_spec->pod_management_policy);
+        v1_stateful_set_spec->pod_management_policy = NULL;
     }
     if (v1_stateful_set_spec->selector) {
         v1_label_selector_free(v1_stateful_set_spec->selector);
@@ -113,10 +100,9 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
 
     // v1_stateful_set_spec->pod_management_policy
-    if(v1_stateful_set_spec->pod_management_policy != kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_NULL) {
-    if(cJSON_AddStringToObject(item, "podManagementPolicy", pod_management_policyv1_stateful_set_spec_ToString(v1_stateful_set_spec->pod_management_policy)) == NULL)
-    {
-    goto fail; //Enum
+    if(v1_stateful_set_spec->pod_management_policy) {
+    if(cJSON_AddStringToObject(item, "podManagementPolicy", v1_stateful_set_spec->pod_management_policy) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -250,13 +236,11 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     // v1_stateful_set_spec->pod_management_policy
     cJSON *pod_management_policy = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "podManagementPolicy");
-    kubernetes_v1_stateful_set_spec_PODMANAGEMENTPOLICY_e pod_management_policyVariable;
     if (pod_management_policy) { 
     if(!cJSON_IsString(pod_management_policy))
     {
-    goto end; //Enum
+    goto end; //String
     }
-    pod_management_policyVariable = pod_management_policyv1_stateful_set_spec_FromString(pod_management_policy->valuestring);
     }
 
     // v1_stateful_set_spec->replicas
@@ -338,7 +322,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     v1_stateful_set_spec_local_var = v1_stateful_set_spec_create (
         min_ready_seconds ? min_ready_seconds->valuedouble : 0,
         persistent_volume_claim_retention_policy ? persistent_volume_claim_retention_policy_local_nonprim : NULL,
-        pod_management_policy ? pod_management_policyVariable : -1,
+        pod_management_policy ? strdup(pod_management_policy->valuestring) : NULL,
         replicas ? replicas->valuedouble : 0,
         revision_history_limit ? revision_history_limit->valuedouble : 0,
         selector_local_nonprim,

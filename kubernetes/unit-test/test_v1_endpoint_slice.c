@@ -23,7 +23,7 @@ v1_endpoint_slice_t* instantiate_v1_endpoint_slice(int include_optional) {
   v1_endpoint_slice_t* v1_endpoint_slice = NULL;
   if (include_optional) {
     v1_endpoint_slice = v1_endpoint_slice_create(
-      kubernetes_v1_endpoint_slice_ADDRESSTYPE_FQDN,
+      "0",
       "0",
       list_createList(),
       "0",
@@ -33,7 +33,7 @@ v1_endpoint_slice_t* instantiate_v1_endpoint_slice(int include_optional) {
     );
   } else {
     v1_endpoint_slice = v1_endpoint_slice_create(
-      kubernetes_v1_endpoint_slice_ADDRESSTYPE_FQDN,
+      "0",
       "0",
       list_createList(),
       "0",

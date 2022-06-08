@@ -19,18 +19,10 @@ typedef struct v1_endpoint_slice_t v1_endpoint_slice_t;
 #include "v1_endpoint.h"
 #include "v1_object_meta.h"
 
-// Enum ADDRESSTYPE for v1_endpoint_slice
-
-typedef enum  { kubernetes_v1_endpoint_slice_ADDRESSTYPE_NULL = 0, kubernetes_v1_endpoint_slice_ADDRESSTYPE_FQDN, kubernetes_v1_endpoint_slice_ADDRESSTYPE_IPv4, kubernetes_v1_endpoint_slice_ADDRESSTYPE_IPv6 } kubernetes_v1_endpoint_slice_ADDRESSTYPE_e;
-
-char* v1_endpoint_slice_address_type_ToString(kubernetes_v1_endpoint_slice_ADDRESSTYPE_e address_type);
-
-kubernetes_v1_endpoint_slice_ADDRESSTYPE_e v1_endpoint_slice_address_type_FromString(char* address_type);
-
 
 
 typedef struct v1_endpoint_slice_t {
-    kubernetes_v1_endpoint_slice_ADDRESSTYPE_e address_type; //enum
+    char *address_type; // string
     char *api_version; // string
     list_t *endpoints; //nonprimitive container
     char *kind; // string
@@ -40,7 +32,7 @@ typedef struct v1_endpoint_slice_t {
 } v1_endpoint_slice_t;
 
 v1_endpoint_slice_t *v1_endpoint_slice_create(
-    kubernetes_v1_endpoint_slice_ADDRESSTYPE_e address_type,
+    char *address_type,
     char *api_version,
     list_t *endpoints,
     char *kind,

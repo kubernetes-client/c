@@ -23,12 +23,12 @@ v1_namespace_status_t* instantiate_v1_namespace_status(int include_optional) {
   if (include_optional) {
     v1_namespace_status = v1_namespace_status_create(
       list_createList(),
-      kubernetes_v1_namespace_status_PHASE_Active
+      "0"
     );
   } else {
     v1_namespace_status = v1_namespace_status_create(
       list_createList(),
-      kubernetes_v1_namespace_status_PHASE_Active
+      "0"
     );
   }
 

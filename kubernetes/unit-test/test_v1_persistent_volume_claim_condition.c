@@ -27,7 +27,7 @@ v1_persistent_volume_claim_condition_t* instantiate_v1_persistent_volume_claim_c
       "0",
       "0",
       "0",
-      kubernetes_v1_persistent_volume_claim_condition_TYPE_FileSystemResizePending
+      "0"
     );
   } else {
     v1_persistent_volume_claim_condition = v1_persistent_volume_claim_condition_create(
@@ -36,7 +36,7 @@ v1_persistent_volume_claim_condition_t* instantiate_v1_persistent_volume_claim_c
       "0",
       "0",
       "0",
-      kubernetes_v1_persistent_volume_claim_condition_TYPE_FileSystemResizePending
+      "0"
     );
   }
 
