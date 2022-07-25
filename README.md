@@ -6,7 +6,6 @@
 [![Build](https://github.com/kubernetes-client/c/workflows/Build/badge.svg)](https://github.com/kubernetes-client/c/actions?query=workflow%3ABuild)
 
 This is the official Kubernetes client library for the C programming language.
-It is a work in progress.
 
 ## Building the library
 ```bash
@@ -153,6 +152,10 @@ list all pods in cluster:
     apiClient_unsetupGlobalEnv();
 ```
 
+## Aggregated APIs and CRD-based APIs
+
+If you want to implement a client for aggregated APIs (such as the metrics server API `apis/metrics.k8s.io` ) or CRD-based APIs, use the [generic client](./kubernetes/src/generic.c). See [example](./examples/generic/main.c).
+
 ## Multi-threaded Usage
 
 If the C client library is used in multi-threaded program, the following 2 actions are required:
@@ -174,7 +177,7 @@ Learn how to engage with the Kubernetes community on the [community page](http:/
 You can reach the maintainers of this project at:
 
 - [Slack](http://slack.k8s.io/)
-- [Mailing List](https://groups.google.com/forum/#!forum/kubernetes-dev)
+- [Mailing List](https://groups.google.com/a/kubernetes.io/g/dev)
 
 ### Code of conduct
 
