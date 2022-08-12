@@ -36,3 +36,14 @@ test:
 	cd multi_thread; make test; sleep 10
 	kubectl describe po test-pod-8
 	cd exec_pod; make test
+
+memcheck:
+	cd create_pod; make memcheck; sleep 10
+	cd list_pod; make memcheck
+	cd delete_pod; make memcheck
+	cd list_secret; make memcheck
+	cd configmap; make memcheck
+	cd generic; make memcheck
+	cd multi_thread; make memcheck; sleep 10
+	kubectl describe po test-pod-8
+	cd exec_pod; make memcheck

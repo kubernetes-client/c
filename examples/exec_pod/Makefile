@@ -3,9 +3,15 @@ LIBS:=-L../../kubernetes/build -lkubernetes -lyaml -lwebsockets -L/usr/local/lib
 CFLAGS:=-g
 BIN:=exec_pod_bin
 
+.PHONY : all clean test memcheck
 all:
 	gcc main.c $(CFLAGS) $(INCLUDE) $(LIBS) -o $(BIN)
-clean:
-	rm ./$(BIN)
+
 test:
 	./$(BIN) only-run-case-1
+
+memcheck:
+	valgrind --tool=memcheck --leak-check=full ./$(BIN) only-run-case-1
+
+clean:
+	rm ./$(BIN)
