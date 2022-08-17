@@ -27,23 +27,27 @@ clean:
 	cd configmap; make clean
 
 test:
-	cd create_pod; make test; sleep 10
+	cd create_pod; make test;
+	kubectl wait --for=condition=ready --all pod -n default --timeout=60s
 	cd list_pod; make test
 	cd delete_pod; make test
 	cd list_secret; make test
 	cd configmap; make test
 	cd generic; make test
-	cd multi_thread; make test; sleep 10
+	cd multi_thread; make test;
+	kubectl wait --for=condition=ready pod/test-pod-8 -n default --timeout=60s
 	kubectl describe po test-pod-8
 	cd exec_pod; make test
 
 memcheck:
-	cd create_pod; make memcheck; sleep 10
+	cd create_pod; make memcheck;
+	kubectl wait --for=condition=ready --all pod -n default --timeout=60s
 	cd list_pod; make memcheck
 	cd delete_pod; make memcheck
 	cd list_secret; make memcheck
 	cd configmap; make memcheck
 	cd generic; make memcheck
-	cd multi_thread; make memcheck; sleep 10
+	cd multi_thread; make memcheck;
+	kubectl wait --for=condition=ready pod/test-pod-8 -n default --timeout=60s
 	kubectl describe po test-pod-8
 	cd exec_pod; make memcheck
