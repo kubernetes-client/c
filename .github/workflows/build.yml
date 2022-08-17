@@ -15,7 +15,7 @@ jobs:
     - name: Prepare
       run: |
         sudo apt-get update
-        sudo apt-get install -y libssl-dev libcurl4-openssl-dev uncrustify
+        sudo apt-get install -y libssl-dev libcurl4-openssl-dev uncrustify valgrind
     - name: Prepare libwebsockets
       run: |
         git clone https://libwebsockets.org/repo/libwebsockets --depth 1 --branch v4.2-stable
@@ -65,3 +65,9 @@ jobs:
         kubectl describe node
         cd examples/
         LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kubernetes/build/:/usr/local/lib make test
+    - name: Valgrind memory check for examples
+      run: |
+        kubectl cluster-info --context kind-chart-testing
+        kubectl describe node
+        cd examples/
+        LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kubernetes/build/:/usr/local/lib make memcheck

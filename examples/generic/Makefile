@@ -3,9 +3,15 @@ LIBS:=-L../../kubernetes/build -lkubernetes -lyaml -lwebsockets -L/usr/local/lib
 CFLAGS:=-g
 BIN:=generic_bin
 
+.PHONY : all clean test memcheck
 all:
-	gcc main.c $(CFLAGS) $(INCLUDE) $(LIBS) -o $(BIN) 
-clean:
-	rm ./$(BIN)
+	gcc main.c $(CFLAGS) $(INCLUDE) $(LIBS) -o $(BIN)
+
 test:
 	./$(BIN)
+
+memcheck:
+	valgrind --tool=memcheck --leak-check=full ./$(BIN)
+
+clean:
+	rm ./$(BIN)

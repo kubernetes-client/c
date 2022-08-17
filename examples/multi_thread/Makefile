@@ -5,14 +5,18 @@ CFLAGS:=-g
 BIN:= multi_thread_bin
 OBJECTS:=main.o watch_pod.o create_pod.o
 
+.PHONY : all clean test memcheck
 all: $(OBJECTS)
 	$(CC) -o $(BIN) $(OBJECTS) $(LIBS)
 
 $(OBJECTS): %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-.PHONY : clean test
-clean:
-	rm $(BIN) $(OBJECTS)
 test:
 	./$(BIN)
+
+memcheck:
+	valgrind --tool=memcheck --leak-check=full ./$(BIN)
+
+clean:
+	rm $(BIN) $(OBJECTS)
