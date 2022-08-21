@@ -31,6 +31,7 @@ test:
 	kubectl wait --for=condition=ready --all pod -n default --timeout=60s
 	cd list_pod; make test
 	cd delete_pod; make test
+	kubectl wait --for=delete pod/test-pod-6 -n default --timeout=120s
 	cd list_secret; make test
 	cd configmap; make test
 	cd generic; make test
@@ -44,6 +45,7 @@ memcheck:
 	kubectl wait --for=condition=ready --all pod -n default --timeout=60s
 	cd list_pod; make memcheck
 	cd delete_pod; make memcheck
+	kubectl wait --for=delete pod/test-pod-6 -n default --timeout=120s
 	cd list_secret; make memcheck
 	cd configmap; make memcheck
 	cd generic; make memcheck
