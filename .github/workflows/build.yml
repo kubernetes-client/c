@@ -16,6 +16,15 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libssl-dev libcurl4-openssl-dev uncrustify valgrind
+    - name: Prepare libyaml
+      run: |
+        git clone https://github.com/yaml/libyaml --depth 1 --branch release/0.2.5
+        cd libyaml
+        mkdir build
+        cd build
+        cmake .. -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON
+        make -j $(cat /proc/cpuinfo | grep processor | wc -l)
+        sudo make install
     - name: Prepare libwebsockets
       run: |
         git clone https://libwebsockets.org/repo/libwebsockets --depth 1 --branch v4.2-stable
@@ -24,15 +33,6 @@ jobs:
         cd build
         cmake .. -DLWS_WITHOUT_TESTAPPS=ON -DLWS_WITHOUT_TEST_SERVER=ON-DLWS_WITHOUT_TEST_SERVER_EXTPOLL=ON \
               -DLWS_WITHOUT_TEST_PING=ON -DLWS_WITHOUT_TEST_CLIENT=ON -DCMAKE_C_FLAGS="-fpic"
-        make -j $(cat /proc/cpuinfo | grep processor | wc -l)
-        sudo make install
-    - name: Prepare libyaml
-      run: |
-        git clone https://github.com/yaml/libyaml --depth 1 --branch release/0.2.5
-        cd libyaml
-        mkdir build
-        cd build
-        cmake .. -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON
         make -j $(cat /proc/cpuinfo | grep processor | wc -l)
         sudo make install
     - name: Build client library
