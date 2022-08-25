@@ -202,7 +202,7 @@ static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * proper
                 if (0 == strcmp(key->data.scalar.value, KEY_CLUSTER)) {
                     property->cluster = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_NAMESPACE)) {
-                    property->namespace = strdup(value->data.scalar.value);
+                    property->_namespace = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_USER)) {
                     property->user = strdup(value->data.scalar.value);
                 }
@@ -802,8 +802,8 @@ static int append_key_map_to_mapping_node(yaml_document_t * output_document, int
         }
 
         /* Add 'namespace': '' */
-        if (property->namespace) {
-            if (-1 == append_key_stringvalue_to_mapping_node(output_document, map, KEY_NAMESPACE, property->namespace)) {
+        if (property->_namespace) {
+            if (-1 == append_key_stringvalue_to_mapping_node(output_document, map, KEY_NAMESPACE, property->_namespace)) {
                 return -1;
             }
         }
