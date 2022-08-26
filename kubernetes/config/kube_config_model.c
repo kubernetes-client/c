@@ -102,9 +102,9 @@ void kubeconfig_property_free(kubeconfig_property_t * property)
             free(property->cluster);
             property->cluster = NULL;
         }
-        if (property->namespace) {
-            free(property->namespace);
-            property->namespace = NULL;
+        if (property->_namespace) {
+            free(property->_namespace);
+            property->_namespace = NULL;
         }
         if (property->user) {
             free(property->user);
