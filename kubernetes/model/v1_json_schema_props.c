@@ -912,15 +912,19 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     cJSON *dependencies = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "dependencies");
     if (dependencies) { 
     cJSON *dependencies_local_map = NULL;
-    if(!cJSON_IsObject(dependencies)) {
+    if(!cJSON_IsObject(dependencies) && !cJSON_IsNull(dependencies))
+    {
         goto end;//primitive map container
     }
-    dependenciesList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(dependencies_local_map, dependencies)
+    if(cJSON_IsObject(dependencies))
     {
-		cJSON *localMapObject = dependencies_local_map;
-        list_addElement(dependenciesList , localMapKeyPair);
+        dependenciesList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(dependencies_local_map, dependencies)
+        {
+            cJSON *localMapObject = dependencies_local_map;
+            list_addElement(dependenciesList , localMapKeyPair);
+        }
     }
     }
 

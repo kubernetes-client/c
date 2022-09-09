@@ -128,20 +128,24 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
     cJSON *hard = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_specJSON, "hard");
     if (hard) { 
     cJSON *hard_local_map = NULL;
-    if(!cJSON_IsObject(hard)) {
+    if(!cJSON_IsObject(hard) && !cJSON_IsNull(hard))
+    {
         goto end;//primitive map container
     }
-    hardList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(hard_local_map, hard)
+    if(cJSON_IsObject(hard))
     {
-		cJSON *localMapObject = hard_local_map;
-        if(!cJSON_IsString(localMapObject))
+        hardList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(hard_local_map, hard)
         {
-            goto end;
+            cJSON *localMapObject = hard_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(hardList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(hardList , localMapKeyPair);
     }
     }
 

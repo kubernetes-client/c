@@ -181,20 +181,24 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     cJSON *binary_data = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "binaryData");
     if (binary_data) { 
     cJSON *binary_data_local_map = NULL;
-    if(!cJSON_IsObject(binary_data)) {
+    if(!cJSON_IsObject(binary_data) && !cJSON_IsNull(binary_data))
+    {
         goto end;//primitive map container
     }
-    binary_dataList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(binary_data_local_map, binary_data)
+    if(cJSON_IsObject(binary_data))
     {
-		cJSON *localMapObject = binary_data_local_map;
-        if(!cJSON_IsString(localMapObject))
+        binary_dataList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(binary_data_local_map, binary_data)
         {
-            goto end;
+            cJSON *localMapObject = binary_data_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(binary_dataList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(binary_dataList , localMapKeyPair);
     }
     }
 
@@ -202,20 +206,24 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     cJSON *data = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "data");
     if (data) { 
     cJSON *data_local_map = NULL;
-    if(!cJSON_IsObject(data)) {
+    if(!cJSON_IsObject(data) && !cJSON_IsNull(data))
+    {
         goto end;//primitive map container
     }
-    dataList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(data_local_map, data)
+    if(cJSON_IsObject(data))
     {
-		cJSON *localMapObject = data_local_map;
-        if(!cJSON_IsString(localMapObject))
+        dataList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(data_local_map, data)
         {
-            goto end;
+            cJSON *localMapObject = data_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(dataList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(dataList , localMapKeyPair);
     }
     }
 

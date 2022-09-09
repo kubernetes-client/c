@@ -137,20 +137,24 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_specJSON, "selector");
     if (selector) { 
     cJSON *selector_local_map = NULL;
-    if(!cJSON_IsObject(selector)) {
+    if(!cJSON_IsObject(selector) && !cJSON_IsNull(selector))
+    {
         goto end;//primitive map container
     }
-    selectorList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(selector_local_map, selector)
+    if(cJSON_IsObject(selector))
     {
-		cJSON *localMapObject = selector_local_map;
-        if(!cJSON_IsString(localMapObject))
+        selectorList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(selector_local_map, selector)
         {
-            goto end;
+            cJSON *localMapObject = selector_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(selectorList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(selectorList , localMapKeyPair);
     }
     }
 

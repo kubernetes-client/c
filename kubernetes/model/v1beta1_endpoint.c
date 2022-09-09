@@ -259,20 +259,24 @@ v1beta1_endpoint_t *v1beta1_endpoint_parseFromJSON(cJSON *v1beta1_endpointJSON){
     cJSON *topology = cJSON_GetObjectItemCaseSensitive(v1beta1_endpointJSON, "topology");
     if (topology) { 
     cJSON *topology_local_map = NULL;
-    if(!cJSON_IsObject(topology)) {
+    if(!cJSON_IsObject(topology) && !cJSON_IsNull(topology))
+    {
         goto end;//primitive map container
     }
-    topologyList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(topology_local_map, topology)
+    if(cJSON_IsObject(topology))
     {
-		cJSON *localMapObject = topology_local_map;
-        if(!cJSON_IsString(localMapObject))
+        topologyList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(topology_local_map, topology)
         {
-            goto end;
+            cJSON *localMapObject = topology_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(topologyList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(topologyList , localMapKeyPair);
     }
     }
 

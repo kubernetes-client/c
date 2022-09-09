@@ -204,15 +204,19 @@ v1beta1_pod_disruption_budget_status_t *v1beta1_pod_disruption_budget_status_par
     cJSON *disrupted_pods = cJSON_GetObjectItemCaseSensitive(v1beta1_pod_disruption_budget_statusJSON, "disruptedPods");
     if (disrupted_pods) { 
     cJSON *disrupted_pods_local_map = NULL;
-    if(!cJSON_IsObject(disrupted_pods)) {
+    if(!cJSON_IsObject(disrupted_pods) && !cJSON_IsNull(disrupted_pods))
+    {
         goto end;//primitive map container
     }
-    disrupted_podsList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(disrupted_pods_local_map, disrupted_pods)
+    if(cJSON_IsObject(disrupted_pods))
     {
-		cJSON *localMapObject = disrupted_pods_local_map;
-        list_addElement(disrupted_podsList , localMapKeyPair);
+        disrupted_podsList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(disrupted_pods_local_map, disrupted_pods)
+        {
+            cJSON *localMapObject = disrupted_pods_local_map;
+            list_addElement(disrupted_podsList , localMapKeyPair);
+        }
     }
     }
 

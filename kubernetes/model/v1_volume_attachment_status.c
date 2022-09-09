@@ -150,20 +150,24 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
     cJSON *attachment_metadata = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attachmentMetadata");
     if (attachment_metadata) { 
     cJSON *attachment_metadata_local_map = NULL;
-    if(!cJSON_IsObject(attachment_metadata)) {
+    if(!cJSON_IsObject(attachment_metadata) && !cJSON_IsNull(attachment_metadata))
+    {
         goto end;//primitive map container
     }
-    attachment_metadataList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(attachment_metadata_local_map, attachment_metadata)
+    if(cJSON_IsObject(attachment_metadata))
     {
-		cJSON *localMapObject = attachment_metadata_local_map;
-        if(!cJSON_IsString(localMapObject))
+        attachment_metadataList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(attachment_metadata_local_map, attachment_metadata)
         {
-            goto end;
+            cJSON *localMapObject = attachment_metadata_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(attachment_metadataList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(attachment_metadataList , localMapKeyPair);
     }
     }
 

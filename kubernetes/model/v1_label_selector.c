@@ -130,20 +130,24 @@ v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSO
     cJSON *match_labels = cJSON_GetObjectItemCaseSensitive(v1_label_selectorJSON, "matchLabels");
     if (match_labels) { 
     cJSON *match_labels_local_map = NULL;
-    if(!cJSON_IsObject(match_labels)) {
+    if(!cJSON_IsObject(match_labels) && !cJSON_IsNull(match_labels))
+    {
         goto end;//primitive map container
     }
-    match_labelsList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(match_labels_local_map, match_labels)
+    if(cJSON_IsObject(match_labels))
     {
-		cJSON *localMapObject = match_labels_local_map;
-        if(!cJSON_IsString(localMapObject))
+        match_labelsList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(match_labels_local_map, match_labels)
         {
-            goto end;
+            cJSON *localMapObject = match_labels_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(match_labelsList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(match_labelsList , localMapKeyPair);
     }
     }
 

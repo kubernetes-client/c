@@ -243,20 +243,24 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     cJSON *deprecated_topology = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "deprecatedTopology");
     if (deprecated_topology) { 
     cJSON *deprecated_topology_local_map = NULL;
-    if(!cJSON_IsObject(deprecated_topology)) {
+    if(!cJSON_IsObject(deprecated_topology) && !cJSON_IsNull(deprecated_topology))
+    {
         goto end;//primitive map container
     }
-    deprecated_topologyList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(deprecated_topology_local_map, deprecated_topology)
+    if(cJSON_IsObject(deprecated_topology))
     {
-		cJSON *localMapObject = deprecated_topology_local_map;
-        if(!cJSON_IsString(localMapObject))
+        deprecated_topologyList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(deprecated_topology_local_map, deprecated_topology)
         {
-            goto end;
+            cJSON *localMapObject = deprecated_topology_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(deprecated_topologyList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(deprecated_topologyList , localMapKeyPair);
     }
     }
 

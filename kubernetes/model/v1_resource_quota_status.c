@@ -112,20 +112,24 @@ v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(cJSON *v1_res
     cJSON *hard = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_statusJSON, "hard");
     if (hard) { 
     cJSON *hard_local_map = NULL;
-    if(!cJSON_IsObject(hard)) {
+    if(!cJSON_IsObject(hard) && !cJSON_IsNull(hard))
+    {
         goto end;//primitive map container
     }
-    hardList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(hard_local_map, hard)
+    if(cJSON_IsObject(hard))
     {
-		cJSON *localMapObject = hard_local_map;
-        if(!cJSON_IsString(localMapObject))
+        hardList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(hard_local_map, hard)
         {
-            goto end;
+            cJSON *localMapObject = hard_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(hardList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(hardList , localMapKeyPair);
     }
     }
 
@@ -133,20 +137,24 @@ v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(cJSON *v1_res
     cJSON *used = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_statusJSON, "used");
     if (used) { 
     cJSON *used_local_map = NULL;
-    if(!cJSON_IsObject(used)) {
+    if(!cJSON_IsObject(used) && !cJSON_IsNull(used))
+    {
         goto end;//primitive map container
     }
-    usedList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(used_local_map, used)
+    if(cJSON_IsObject(used))
     {
-		cJSON *localMapObject = used_local_map;
-        if(!cJSON_IsString(localMapObject))
+        usedList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(used_local_map, used)
         {
-            goto end;
+            cJSON *localMapObject = used_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(usedList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(usedList , localMapKeyPair);
     }
     }
 
