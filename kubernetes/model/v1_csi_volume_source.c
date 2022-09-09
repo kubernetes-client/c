@@ -174,20 +174,24 @@ v1_csi_volume_source_t *v1_csi_volume_source_parseFromJSON(cJSON *v1_csi_volume_
     cJSON *volume_attributes = cJSON_GetObjectItemCaseSensitive(v1_csi_volume_sourceJSON, "volumeAttributes");
     if (volume_attributes) { 
     cJSON *volume_attributes_local_map = NULL;
-    if(!cJSON_IsObject(volume_attributes)) {
+    if(!cJSON_IsObject(volume_attributes) && !cJSON_IsNull(volume_attributes))
+    {
         goto end;//primitive map container
     }
-    volume_attributesList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(volume_attributes_local_map, volume_attributes)
+    if(cJSON_IsObject(volume_attributes))
     {
-		cJSON *localMapObject = volume_attributes_local_map;
-        if(!cJSON_IsString(localMapObject))
+        volume_attributesList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(volume_attributes_local_map, volume_attributes)
         {
-            goto end;
+            cJSON *localMapObject = volume_attributes_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(volume_attributesList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(volume_attributesList , localMapKeyPair);
     }
     }
 

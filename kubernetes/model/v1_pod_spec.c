@@ -944,20 +944,24 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     cJSON *node_selector = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "nodeSelector");
     if (node_selector) { 
     cJSON *node_selector_local_map = NULL;
-    if(!cJSON_IsObject(node_selector)) {
+    if(!cJSON_IsObject(node_selector) && !cJSON_IsNull(node_selector))
+    {
         goto end;//primitive map container
     }
-    node_selectorList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(node_selector_local_map, node_selector)
+    if(cJSON_IsObject(node_selector))
     {
-		cJSON *localMapObject = node_selector_local_map;
-        if(!cJSON_IsString(localMapObject))
+        node_selectorList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(node_selector_local_map, node_selector)
         {
-            goto end;
+            cJSON *localMapObject = node_selector_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(node_selectorList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(node_selectorList , localMapKeyPair);
     }
     }
 
@@ -971,20 +975,24 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     cJSON *overhead = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "overhead");
     if (overhead) { 
     cJSON *overhead_local_map = NULL;
-    if(!cJSON_IsObject(overhead)) {
+    if(!cJSON_IsObject(overhead) && !cJSON_IsNull(overhead))
+    {
         goto end;//primitive map container
     }
-    overheadList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(overhead_local_map, overhead)
+    if(cJSON_IsObject(overhead))
     {
-		cJSON *localMapObject = overhead_local_map;
-        if(!cJSON_IsString(localMapObject))
+        overheadList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(overhead_local_map, overhead)
         {
-            goto end;
+            cJSON *localMapObject = overhead_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(overheadList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(overheadList , localMapKeyPair);
     }
     }
 

@@ -130,15 +130,19 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     cJSON *extra = cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "extra");
     if (extra) { 
     cJSON *extra_local_map = NULL;
-    if(!cJSON_IsObject(extra)) {
+    if(!cJSON_IsObject(extra) && !cJSON_IsNull(extra))
+    {
         goto end;//primitive map container
     }
-    extraList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(extra_local_map, extra)
+    if(cJSON_IsObject(extra))
     {
-		cJSON *localMapObject = extra_local_map;
-        list_addElement(extraList , localMapKeyPair);
+        extraList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(extra_local_map, extra)
+        {
+            cJSON *localMapObject = extra_local_map;
+            list_addElement(extraList , localMapKeyPair);
+        }
     }
     }
 

@@ -314,20 +314,24 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
     cJSON *parameters = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "parameters");
     if (parameters) { 
     cJSON *parameters_local_map = NULL;
-    if(!cJSON_IsObject(parameters)) {
+    if(!cJSON_IsObject(parameters) && !cJSON_IsNull(parameters))
+    {
         goto end;//primitive map container
     }
-    parametersList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(parameters_local_map, parameters)
+    if(cJSON_IsObject(parameters))
     {
-		cJSON *localMapObject = parameters_local_map;
-        if(!cJSON_IsString(localMapObject))
+        parametersList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(parameters_local_map, parameters)
         {
-            goto end;
+            cJSON *localMapObject = parameters_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(parametersList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(parametersList , localMapKeyPair);
     }
     }
 

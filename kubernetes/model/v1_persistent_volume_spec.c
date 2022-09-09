@@ -742,20 +742,24 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "capacity");
     if (capacity) { 
     cJSON *capacity_local_map = NULL;
-    if(!cJSON_IsObject(capacity)) {
+    if(!cJSON_IsObject(capacity) && !cJSON_IsNull(capacity))
+    {
         goto end;//primitive map container
     }
-    capacityList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(capacity_local_map, capacity)
+    if(cJSON_IsObject(capacity))
     {
-		cJSON *localMapObject = capacity_local_map;
-        if(!cJSON_IsString(localMapObject))
+        capacityList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(capacity_local_map, capacity)
         {
-            goto end;
+            cJSON *localMapObject = capacity_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(capacityList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(capacityList , localMapKeyPair);
     }
     }
 

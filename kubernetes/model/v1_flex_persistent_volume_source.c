@@ -159,20 +159,24 @@ v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJS
     cJSON *options = cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "options");
     if (options) { 
     cJSON *options_local_map = NULL;
-    if(!cJSON_IsObject(options)) {
+    if(!cJSON_IsObject(options) && !cJSON_IsNull(options))
+    {
         goto end;//primitive map container
     }
-    optionsList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(options_local_map, options)
+    if(cJSON_IsObject(options))
     {
-		cJSON *localMapObject = options_local_map;
-        if(!cJSON_IsString(localMapObject))
+        optionsList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(options_local_map, options)
         {
-            goto end;
+            cJSON *localMapObject = options_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(optionsList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(optionsList , localMapKeyPair);
     }
     }
 

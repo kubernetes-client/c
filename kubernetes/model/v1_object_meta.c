@@ -351,20 +351,24 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     cJSON *annotations = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "annotations");
     if (annotations) { 
     cJSON *annotations_local_map = NULL;
-    if(!cJSON_IsObject(annotations)) {
+    if(!cJSON_IsObject(annotations) && !cJSON_IsNull(annotations))
+    {
         goto end;//primitive map container
     }
-    annotationsList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(annotations_local_map, annotations)
+    if(cJSON_IsObject(annotations))
     {
-		cJSON *localMapObject = annotations_local_map;
-        if(!cJSON_IsString(localMapObject))
+        annotationsList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(annotations_local_map, annotations)
         {
-            goto end;
+            cJSON *localMapObject = annotations_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(annotationsList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(annotationsList , localMapKeyPair);
     }
     }
 
@@ -445,20 +449,24 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     cJSON *labels = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "labels");
     if (labels) { 
     cJSON *labels_local_map = NULL;
-    if(!cJSON_IsObject(labels)) {
+    if(!cJSON_IsObject(labels) && !cJSON_IsNull(labels))
+    {
         goto end;//primitive map container
     }
-    labelsList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(labels_local_map, labels)
+    if(cJSON_IsObject(labels))
     {
-		cJSON *localMapObject = labels_local_map;
-        if(!cJSON_IsString(localMapObject))
+        labelsList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(labels_local_map, labels)
         {
-            goto end;
+            cJSON *localMapObject = labels_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(labelsList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(labelsList , localMapKeyPair);
     }
     }
 

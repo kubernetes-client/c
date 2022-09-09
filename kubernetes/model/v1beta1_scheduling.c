@@ -109,20 +109,24 @@ v1beta1_scheduling_t *v1beta1_scheduling_parseFromJSON(cJSON *v1beta1_scheduling
     cJSON *node_selector = cJSON_GetObjectItemCaseSensitive(v1beta1_schedulingJSON, "nodeSelector");
     if (node_selector) { 
     cJSON *node_selector_local_map = NULL;
-    if(!cJSON_IsObject(node_selector)) {
+    if(!cJSON_IsObject(node_selector) && !cJSON_IsNull(node_selector))
+    {
         goto end;//primitive map container
     }
-    node_selectorList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(node_selector_local_map, node_selector)
+    if(cJSON_IsObject(node_selector))
     {
-		cJSON *localMapObject = node_selector_local_map;
-        if(!cJSON_IsString(localMapObject))
+        node_selectorList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(node_selector_local_map, node_selector)
         {
-            goto end;
+            cJSON *localMapObject = node_selector_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(node_selectorList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(node_selectorList , localMapKeyPair);
     }
     }
 

@@ -232,20 +232,24 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     cJSON *_default = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "default");
     if (_default) { 
     cJSON *_default_local_map = NULL;
-    if(!cJSON_IsObject(_default)) {
+    if(!cJSON_IsObject(_default) && !cJSON_IsNull(_default))
+    {
         goto end;//primitive map container
     }
-    _defaultList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(_default_local_map, _default)
+    if(cJSON_IsObject(_default))
     {
-		cJSON *localMapObject = _default_local_map;
-        if(!cJSON_IsString(localMapObject))
+        _defaultList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(_default_local_map, _default)
         {
-            goto end;
+            cJSON *localMapObject = _default_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(_defaultList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(_defaultList , localMapKeyPair);
     }
     }
 
@@ -253,20 +257,24 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     cJSON *default_request = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "defaultRequest");
     if (default_request) { 
     cJSON *default_request_local_map = NULL;
-    if(!cJSON_IsObject(default_request)) {
+    if(!cJSON_IsObject(default_request) && !cJSON_IsNull(default_request))
+    {
         goto end;//primitive map container
     }
-    default_requestList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(default_request_local_map, default_request)
+    if(cJSON_IsObject(default_request))
     {
-		cJSON *localMapObject = default_request_local_map;
-        if(!cJSON_IsString(localMapObject))
+        default_requestList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(default_request_local_map, default_request)
         {
-            goto end;
+            cJSON *localMapObject = default_request_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(default_requestList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(default_requestList , localMapKeyPair);
     }
     }
 
@@ -274,20 +282,24 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     cJSON *max = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "max");
     if (max) { 
     cJSON *max_local_map = NULL;
-    if(!cJSON_IsObject(max)) {
+    if(!cJSON_IsObject(max) && !cJSON_IsNull(max))
+    {
         goto end;//primitive map container
     }
-    maxList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(max_local_map, max)
+    if(cJSON_IsObject(max))
     {
-		cJSON *localMapObject = max_local_map;
-        if(!cJSON_IsString(localMapObject))
+        maxList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(max_local_map, max)
         {
-            goto end;
+            cJSON *localMapObject = max_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(maxList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(maxList , localMapKeyPair);
     }
     }
 
@@ -295,20 +307,24 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     cJSON *max_limit_request_ratio = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "maxLimitRequestRatio");
     if (max_limit_request_ratio) { 
     cJSON *max_limit_request_ratio_local_map = NULL;
-    if(!cJSON_IsObject(max_limit_request_ratio)) {
+    if(!cJSON_IsObject(max_limit_request_ratio) && !cJSON_IsNull(max_limit_request_ratio))
+    {
         goto end;//primitive map container
     }
-    max_limit_request_ratioList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(max_limit_request_ratio_local_map, max_limit_request_ratio)
+    if(cJSON_IsObject(max_limit_request_ratio))
     {
-		cJSON *localMapObject = max_limit_request_ratio_local_map;
-        if(!cJSON_IsString(localMapObject))
+        max_limit_request_ratioList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(max_limit_request_ratio_local_map, max_limit_request_ratio)
         {
-            goto end;
+            cJSON *localMapObject = max_limit_request_ratio_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(max_limit_request_ratioList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(max_limit_request_ratioList , localMapKeyPair);
     }
     }
 
@@ -316,20 +332,24 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     cJSON *min = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "min");
     if (min) { 
     cJSON *min_local_map = NULL;
-    if(!cJSON_IsObject(min)) {
+    if(!cJSON_IsObject(min) && !cJSON_IsNull(min))
+    {
         goto end;//primitive map container
     }
-    minList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(min_local_map, min)
+    if(cJSON_IsObject(min))
     {
-		cJSON *localMapObject = min_local_map;
-        if(!cJSON_IsString(localMapObject))
+        minList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(min_local_map, min)
         {
-            goto end;
+            cJSON *localMapObject = min_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(minList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(minList , localMapKeyPair);
     }
     }
 

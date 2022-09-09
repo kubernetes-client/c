@@ -77,20 +77,24 @@ v1beta1_overhead_t *v1beta1_overhead_parseFromJSON(cJSON *v1beta1_overheadJSON){
     cJSON *pod_fixed = cJSON_GetObjectItemCaseSensitive(v1beta1_overheadJSON, "podFixed");
     if (pod_fixed) { 
     cJSON *pod_fixed_local_map = NULL;
-    if(!cJSON_IsObject(pod_fixed)) {
+    if(!cJSON_IsObject(pod_fixed) && !cJSON_IsNull(pod_fixed))
+    {
         goto end;//primitive map container
     }
-    pod_fixedList = list_createList();
-    keyValuePair_t *localMapKeyPair;
-    cJSON_ArrayForEach(pod_fixed_local_map, pod_fixed)
+    if(cJSON_IsObject(pod_fixed))
     {
-		cJSON *localMapObject = pod_fixed_local_map;
-        if(!cJSON_IsString(localMapObject))
+        pod_fixedList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(pod_fixed_local_map, pod_fixed)
         {
-            goto end;
+            cJSON *localMapObject = pod_fixed_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(pod_fixedList , localMapKeyPair);
         }
-        localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
-        list_addElement(pod_fixedList , localMapKeyPair);
     }
     }
 
