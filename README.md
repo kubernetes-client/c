@@ -41,7 +41,10 @@ cd ${CLIENT_REPO_ROOT}/kubernetes
 # Build
 mkdir build
 cd build
+# If you don't need to debug the C client library:
 cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
+# If you want to use `gdb` to debug the C client library, add `-DCMAKE_BUILD_TYPE=Debug` to the cmake command line, e.g.
+# cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/usr/local ..
 make
 sudo make install
 ```
@@ -169,6 +172,10 @@ Refer to the [example](https://github.com/kubernetes-client/c/tree/master/exampl
 ## Documentation
 
 All APIs and Models' documentation can be found at the [Generated client's README file](https://github.com/kubernetes-client/c/blob/master/kubernetes/README.md#documentation-for-api-endpoints)
+
+## Versions and Compatibility
+
+See [versioning-and-compatibility.md](./docs/versioning-and-compatibility.md)
 
 ## Community, discussion, contribution, and support
 
