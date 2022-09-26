@@ -19,7 +19,6 @@ void create_configmap(apiClient_t * apiClient, char *name, char *namespace_)
 
     v1_object_meta_t *meta = v1_object_meta_create(NULL,
                                                    NULL,
-                                                   NULL,
                                                    0,
                                                    NULL,
                                                    NULL,
