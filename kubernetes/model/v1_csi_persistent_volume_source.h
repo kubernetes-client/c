@@ -24,6 +24,7 @@ typedef struct v1_csi_persistent_volume_source_t {
     struct v1_secret_reference_t *controller_publish_secret_ref; //model
     char *driver; // string
     char *fs_type; // string
+    struct v1_secret_reference_t *node_expand_secret_ref; //model
     struct v1_secret_reference_t *node_publish_secret_ref; //model
     struct v1_secret_reference_t *node_stage_secret_ref; //model
     int read_only; //boolean
@@ -37,6 +38,7 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create(
     v1_secret_reference_t *controller_publish_secret_ref,
     char *driver,
     char *fs_type,
+    v1_secret_reference_t *node_expand_secret_ref,
     v1_secret_reference_t *node_publish_secret_ref,
     v1_secret_reference_t *node_stage_secret_ref,
     int read_only,

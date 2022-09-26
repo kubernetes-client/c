@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **lifecycle** | [**v1_lifecycle_t**](v1_lifecycle.md) \* |  | [optional] 
 **liveness_probe** | [**v1_probe_t**](v1_probe.md) \* |  | [optional] 
 **name** | **char \*** | Name of the container specified as a DNS_LABEL. Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated. | 
-**ports** | [**list_t**](v1_container_port.md) \* | List of ports to expose from the container. Exposing a port here gives the system additional information about the network connections a container uses, but is primarily informational. Not specifying a port here DOES NOT prevent that port from being exposed. Any port which is listening on the default \&quot;0.0.0.0\&quot; address inside a container will be accessible from the network. Cannot be updated. | [optional] 
+**ports** | [**list_t**](v1_container_port.md) \* | List of ports to expose from the container. Not specifying a port here DOES NOT prevent that port from being exposed. Any port which is listening on the default \&quot;0.0.0.0\&quot; address inside a container will be accessible from the network. Modifying this array with strategic merge patch may corrupt the data. For more information See https://github.com/kubernetes/kubernetes/issues/108255. Cannot be updated. | [optional] 
 **readiness_probe** | [**v1_probe_t**](v1_probe.md) \* |  | [optional] 
 **resources** | [**v1_resource_requirements_t**](v1_resource_requirements.md) \* |  | [optional] 
 **security_context** | [**v1_security_context_t**](v1_security_context.md) \* |  | [optional] 

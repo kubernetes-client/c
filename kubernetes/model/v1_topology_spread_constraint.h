@@ -21,8 +21,11 @@ typedef struct v1_topology_spread_constraint_t v1_topology_spread_constraint_t;
 
 typedef struct v1_topology_spread_constraint_t {
     struct v1_label_selector_t *label_selector; //model
+    list_t *match_label_keys; //primitive container
     int max_skew; //numeric
     int min_domains; //numeric
+    char *node_affinity_policy; // string
+    char *node_taints_policy; // string
     char *topology_key; // string
     char *when_unsatisfiable; // string
 
@@ -30,8 +33,11 @@ typedef struct v1_topology_spread_constraint_t {
 
 v1_topology_spread_constraint_t *v1_topology_spread_constraint_create(
     v1_label_selector_t *label_selector,
+    list_t *match_label_keys,
     int max_skew,
     int min_domains,
+    char *node_affinity_policy,
+    char *node_taints_policy,
     char *topology_key,
     char *when_unsatisfiable
 );

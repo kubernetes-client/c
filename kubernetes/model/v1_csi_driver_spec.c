@@ -10,6 +10,7 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_create(
     char *fs_group_policy,
     int pod_info_on_mount,
     int requires_republish,
+    int se_linux_mount,
     int storage_capacity,
     list_t *token_requests,
     list_t *volume_lifecycle_modes
@@ -22,6 +23,7 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_create(
     v1_csi_driver_spec_local_var->fs_group_policy = fs_group_policy;
     v1_csi_driver_spec_local_var->pod_info_on_mount = pod_info_on_mount;
     v1_csi_driver_spec_local_var->requires_republish = requires_republish;
+    v1_csi_driver_spec_local_var->se_linux_mount = se_linux_mount;
     v1_csi_driver_spec_local_var->storage_capacity = storage_capacity;
     v1_csi_driver_spec_local_var->token_requests = token_requests;
     v1_csi_driver_spec_local_var->volume_lifecycle_modes = volume_lifecycle_modes;
@@ -86,6 +88,14 @@ cJSON *v1_csi_driver_spec_convertToJSON(v1_csi_driver_spec_t *v1_csi_driver_spec
     // v1_csi_driver_spec->requires_republish
     if(v1_csi_driver_spec->requires_republish) {
     if(cJSON_AddBoolToObject(item, "requiresRepublish", v1_csi_driver_spec->requires_republish) == NULL) {
+    goto fail; //Bool
+    }
+    }
+
+
+    // v1_csi_driver_spec->se_linux_mount
+    if(v1_csi_driver_spec->se_linux_mount) {
+    if(cJSON_AddBoolToObject(item, "seLinuxMount", v1_csi_driver_spec->se_linux_mount) == NULL) {
     goto fail; //Bool
     }
     }
@@ -189,6 +199,15 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
     }
     }
 
+    // v1_csi_driver_spec->se_linux_mount
+    cJSON *se_linux_mount = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "seLinuxMount");
+    if (se_linux_mount) { 
+    if(!cJSON_IsBool(se_linux_mount))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1_csi_driver_spec->storage_capacity
     cJSON *storage_capacity = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "storageCapacity");
     if (storage_capacity) { 
@@ -244,6 +263,7 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
         fs_group_policy ? strdup(fs_group_policy->valuestring) : NULL,
         pod_info_on_mount ? pod_info_on_mount->valueint : 0,
         requires_republish ? requires_republish->valueint : 0,
+        se_linux_mount ? se_linux_mount->valueint : 0,
         storage_capacity ? storage_capacity->valueint : 0,
         token_requests ? token_requestsList : NULL,
         volume_lifecycle_modes ? volume_lifecycle_modesList : NULL

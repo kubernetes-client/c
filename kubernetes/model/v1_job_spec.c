@@ -12,6 +12,7 @@ v1_job_spec_t *v1_job_spec_create(
     int completions,
     int manual_selector,
     int parallelism,
+    v1_pod_failure_policy_t *pod_failure_policy,
     v1_label_selector_t *selector,
     int suspend,
     v1_pod_template_spec_t *_template,
@@ -27,6 +28,7 @@ v1_job_spec_t *v1_job_spec_create(
     v1_job_spec_local_var->completions = completions;
     v1_job_spec_local_var->manual_selector = manual_selector;
     v1_job_spec_local_var->parallelism = parallelism;
+    v1_job_spec_local_var->pod_failure_policy = pod_failure_policy;
     v1_job_spec_local_var->selector = selector;
     v1_job_spec_local_var->suspend = suspend;
     v1_job_spec_local_var->_template = _template;
@@ -44,6 +46,10 @@ void v1_job_spec_free(v1_job_spec_t *v1_job_spec) {
     if (v1_job_spec->completion_mode) {
         free(v1_job_spec->completion_mode);
         v1_job_spec->completion_mode = NULL;
+    }
+    if (v1_job_spec->pod_failure_policy) {
+        v1_pod_failure_policy_free(v1_job_spec->pod_failure_policy);
+        v1_job_spec->pod_failure_policy = NULL;
     }
     if (v1_job_spec->selector) {
         v1_label_selector_free(v1_job_spec->selector);
@@ -107,6 +113,19 @@ cJSON *v1_job_spec_convertToJSON(v1_job_spec_t *v1_job_spec) {
     }
 
 
+    // v1_job_spec->pod_failure_policy
+    if(v1_job_spec->pod_failure_policy) {
+    cJSON *pod_failure_policy_local_JSON = v1_pod_failure_policy_convertToJSON(v1_job_spec->pod_failure_policy);
+    if(pod_failure_policy_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "podFailurePolicy", pod_failure_policy_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_job_spec->selector
     if(v1_job_spec->selector) {
     cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_job_spec->selector);
@@ -160,6 +179,9 @@ fail:
 v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     v1_job_spec_t *v1_job_spec_local_var = NULL;
+
+    // define the local variable for v1_job_spec->pod_failure_policy
+    v1_pod_failure_policy_t *pod_failure_policy_local_nonprim = NULL;
 
     // define the local variable for v1_job_spec->selector
     v1_label_selector_t *selector_local_nonprim = NULL;
@@ -221,6 +243,12 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
     }
     }
 
+    // v1_job_spec->pod_failure_policy
+    cJSON *pod_failure_policy = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "podFailurePolicy");
+    if (pod_failure_policy) { 
+    pod_failure_policy_local_nonprim = v1_pod_failure_policy_parseFromJSON(pod_failure_policy); //nonprimitive
+    }
+
     // v1_job_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "selector");
     if (selector) { 
@@ -262,6 +290,7 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
         completions ? completions->valuedouble : 0,
         manual_selector ? manual_selector->valueint : 0,
         parallelism ? parallelism->valuedouble : 0,
+        pod_failure_policy ? pod_failure_policy_local_nonprim : NULL,
         selector ? selector_local_nonprim : NULL,
         suspend ? suspend->valueint : 0,
         _template_local_nonprim,
@@ -270,6 +299,10 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     return v1_job_spec_local_var;
 end:
+    if (pod_failure_policy_local_nonprim) {
+        v1_pod_failure_policy_free(pod_failure_policy_local_nonprim);
+        pod_failure_policy_local_nonprim = NULL;
+    }
     if (selector_local_nonprim) {
         v1_label_selector_free(selector_local_nonprim);
         selector_local_nonprim = NULL;

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **controller_publish_secret_ref** | [**v1_secret_reference_t**](v1_secret_reference.md) \* |  | [optional] 
 **driver** | **char \*** | driver is the name of the driver to use for this volume. Required. | 
 **fs_type** | **char \*** | fsType to mount. Must be a filesystem type supported by the host operating system. Ex. \&quot;ext4\&quot;, \&quot;xfs\&quot;, \&quot;ntfs\&quot;. | [optional] 
+**node_expand_secret_ref** | [**v1_secret_reference_t**](v1_secret_reference.md) \* |  | [optional] 
 **node_publish_secret_ref** | [**v1_secret_reference_t**](v1_secret_reference.md) \* |  | [optional] 
 **node_stage_secret_ref** | [**v1_secret_reference_t**](v1_secret_reference.md) \* |  | [optional] 
 **read_only** | **int** | readOnly value to pass to ControllerPublishVolumeRequest. Defaults to false (read/write). | [optional] 

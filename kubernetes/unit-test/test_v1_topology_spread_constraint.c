@@ -25,16 +25,22 @@ v1_topology_spread_constraint_t* instantiate_v1_topology_spread_constraint(int i
     v1_topology_spread_constraint = v1_topology_spread_constraint_create(
        // false, not to have infinite recursion
       instantiate_v1_label_selector(0),
+      list_createList(),
       56,
       56,
+      "0",
+      "0",
       "0",
       "0"
     );
   } else {
     v1_topology_spread_constraint = v1_topology_spread_constraint_create(
       NULL,
+      list_createList(),
       56,
       56,
+      "0",
+      "0",
       "0",
       "0"
     );

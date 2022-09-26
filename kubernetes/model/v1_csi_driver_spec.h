@@ -24,6 +24,7 @@ typedef struct v1_csi_driver_spec_t {
     char *fs_group_policy; // string
     int pod_info_on_mount; //boolean
     int requires_republish; //boolean
+    int se_linux_mount; //boolean
     int storage_capacity; //boolean
     list_t *token_requests; //nonprimitive container
     list_t *volume_lifecycle_modes; //primitive container
@@ -35,6 +36,7 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_create(
     char *fs_group_policy,
     int pod_info_on_mount,
     int requires_republish,
+    int se_linux_mount,
     int storage_capacity,
     list_t *token_requests,
     list_t *volume_lifecycle_modes

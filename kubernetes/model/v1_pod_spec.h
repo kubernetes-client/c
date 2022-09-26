@@ -43,6 +43,7 @@ typedef struct v1_pod_spec_t {
     int host_ipc; //boolean
     int host_network; //boolean
     int host_pid; //boolean
+    int host_users; //boolean
     char *hostname; // string
     list_t *image_pull_secrets; //nonprimitive container
     list_t *init_containers; //nonprimitive container
@@ -83,6 +84,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     int host_ipc,
     int host_network,
     int host_pid,
+    int host_users,
     char *hostname,
     list_t *image_pull_secrets,
     list_t *init_containers,

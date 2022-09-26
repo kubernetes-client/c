@@ -20,6 +20,7 @@ v1_csi_persistent_volume_source_t* instantiate_v1_csi_persistent_volume_source(i
 #include "test_v1_secret_reference.c"
 #include "test_v1_secret_reference.c"
 #include "test_v1_secret_reference.c"
+#include "test_v1_secret_reference.c"
 
 
 v1_csi_persistent_volume_source_t* instantiate_v1_csi_persistent_volume_source(int include_optional) {
@@ -36,6 +37,8 @@ v1_csi_persistent_volume_source_t* instantiate_v1_csi_persistent_volume_source(i
       instantiate_v1_secret_reference(0),
        // false, not to have infinite recursion
       instantiate_v1_secret_reference(0),
+       // false, not to have infinite recursion
+      instantiate_v1_secret_reference(0),
       1,
       list_createList(),
       "0"
@@ -46,6 +49,7 @@ v1_csi_persistent_volume_source_t* instantiate_v1_csi_persistent_volume_source(i
       NULL,
       "0",
       "0",
+      NULL,
       NULL,
       NULL,
       1,

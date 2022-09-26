@@ -18,6 +18,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     int host_ipc,
     int host_network,
     int host_pid,
+    int host_users,
     char *hostname,
     list_t *image_pull_secrets,
     list_t *init_containers,
@@ -59,6 +60,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     v1_pod_spec_local_var->host_ipc = host_ipc;
     v1_pod_spec_local_var->host_network = host_network;
     v1_pod_spec_local_var->host_pid = host_pid;
+    v1_pod_spec_local_var->host_users = host_users;
     v1_pod_spec_local_var->hostname = hostname;
     v1_pod_spec_local_var->image_pull_secrets = image_pull_secrets;
     v1_pod_spec_local_var->init_containers = init_containers;
@@ -380,6 +382,14 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     // v1_pod_spec->host_pid
     if(v1_pod_spec->host_pid) {
     if(cJSON_AddBoolToObject(item, "hostPID", v1_pod_spec->host_pid) == NULL) {
+    goto fail; //Bool
+    }
+    }
+
+
+    // v1_pod_spec->host_users
+    if(v1_pod_spec->host_users) {
+    if(cJSON_AddBoolToObject(item, "hostUsers", v1_pod_spec->host_users) == NULL) {
     goto fail; //Bool
     }
     }
@@ -880,6 +890,15 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     }
     }
 
+    // v1_pod_spec->host_users
+    cJSON *host_users = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "hostUsers");
+    if (host_users) { 
+    if(!cJSON_IsBool(host_users))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1_pod_spec->hostname
     cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "hostname");
     if (hostname) { 
@@ -1208,6 +1227,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         host_ipc ? host_ipc->valueint : 0,
         host_network ? host_network->valueint : 0,
         host_pid ? host_pid->valueint : 0,
+        host_users ? host_users->valueint : 0,
         hostname ? strdup(hostname->valuestring) : NULL,
         image_pull_secrets ? image_pull_secretsList : NULL,
         init_containers ? init_containersList : NULL,

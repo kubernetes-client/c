@@ -7,7 +7,6 @@
 
 v1_object_meta_t *v1_object_meta_create(
     list_t* annotations,
-    char *cluster_name,
     char *creation_timestamp,
     long deletion_grace_period_seconds,
     char *deletion_timestamp,
@@ -28,7 +27,6 @@ v1_object_meta_t *v1_object_meta_create(
         return NULL;
     }
     v1_object_meta_local_var->annotations = annotations;
-    v1_object_meta_local_var->cluster_name = cluster_name;
     v1_object_meta_local_var->creation_timestamp = creation_timestamp;
     v1_object_meta_local_var->deletion_grace_period_seconds = deletion_grace_period_seconds;
     v1_object_meta_local_var->deletion_timestamp = deletion_timestamp;
@@ -62,10 +60,6 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
         }
         list_freeList(v1_object_meta->annotations);
         v1_object_meta->annotations = NULL;
-    }
-    if (v1_object_meta->cluster_name) {
-        free(v1_object_meta->cluster_name);
-        v1_object_meta->cluster_name = NULL;
     }
     if (v1_object_meta->creation_timestamp) {
         free(v1_object_meta->creation_timestamp);
@@ -152,14 +146,6 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
             goto fail;
         }
     }
-    }
-    }
-
-
-    // v1_object_meta->cluster_name
-    if(v1_object_meta->cluster_name) {
-    if(cJSON_AddStringToObject(item, "clusterName", v1_object_meta->cluster_name) == NULL) {
-    goto fail; //String
     }
     }
 
@@ -372,15 +358,6 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     }
     }
 
-    // v1_object_meta->cluster_name
-    cJSON *cluster_name = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "clusterName");
-    if (cluster_name) { 
-    if(!cJSON_IsString(cluster_name))
-    {
-    goto end; //String
-    }
-    }
-
     // v1_object_meta->creation_timestamp
     cJSON *creation_timestamp = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "creationTimestamp");
     if (creation_timestamp) { 
@@ -560,7 +537,6 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     v1_object_meta_local_var = v1_object_meta_create (
         annotations ? annotationsList : NULL,
-        cluster_name ? strdup(cluster_name->valuestring) : NULL,
         creation_timestamp ? strdup(creation_timestamp->valuestring) : NULL,
         deletion_grace_period_seconds ? deletion_grace_period_seconds->valuedouble : 0,
         deletion_timestamp ? strdup(deletion_timestamp->valuestring) : NULL,
