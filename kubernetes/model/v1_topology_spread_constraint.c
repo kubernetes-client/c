@@ -7,8 +7,11 @@
 
 v1_topology_spread_constraint_t *v1_topology_spread_constraint_create(
     v1_label_selector_t *label_selector,
+    list_t *match_label_keys,
     int max_skew,
     int min_domains,
+    char *node_affinity_policy,
+    char *node_taints_policy,
     char *topology_key,
     char *when_unsatisfiable
     ) {
@@ -17,8 +20,11 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_create(
         return NULL;
     }
     v1_topology_spread_constraint_local_var->label_selector = label_selector;
+    v1_topology_spread_constraint_local_var->match_label_keys = match_label_keys;
     v1_topology_spread_constraint_local_var->max_skew = max_skew;
     v1_topology_spread_constraint_local_var->min_domains = min_domains;
+    v1_topology_spread_constraint_local_var->node_affinity_policy = node_affinity_policy;
+    v1_topology_spread_constraint_local_var->node_taints_policy = node_taints_policy;
     v1_topology_spread_constraint_local_var->topology_key = topology_key;
     v1_topology_spread_constraint_local_var->when_unsatisfiable = when_unsatisfiable;
 
@@ -34,6 +40,21 @@ void v1_topology_spread_constraint_free(v1_topology_spread_constraint_t *v1_topo
     if (v1_topology_spread_constraint->label_selector) {
         v1_label_selector_free(v1_topology_spread_constraint->label_selector);
         v1_topology_spread_constraint->label_selector = NULL;
+    }
+    if (v1_topology_spread_constraint->match_label_keys) {
+        list_ForEach(listEntry, v1_topology_spread_constraint->match_label_keys) {
+            free(listEntry->data);
+        }
+        list_freeList(v1_topology_spread_constraint->match_label_keys);
+        v1_topology_spread_constraint->match_label_keys = NULL;
+    }
+    if (v1_topology_spread_constraint->node_affinity_policy) {
+        free(v1_topology_spread_constraint->node_affinity_policy);
+        v1_topology_spread_constraint->node_affinity_policy = NULL;
+    }
+    if (v1_topology_spread_constraint->node_taints_policy) {
+        free(v1_topology_spread_constraint->node_taints_policy);
+        v1_topology_spread_constraint->node_taints_policy = NULL;
     }
     if (v1_topology_spread_constraint->topology_key) {
         free(v1_topology_spread_constraint->topology_key);
@@ -62,6 +83,23 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
     }
 
 
+    // v1_topology_spread_constraint->match_label_keys
+    if(v1_topology_spread_constraint->match_label_keys) {
+    cJSON *match_label_keys = cJSON_AddArrayToObject(item, "matchLabelKeys");
+    if(match_label_keys == NULL) {
+        goto fail; //primitive container
+    }
+
+    listEntry_t *match_label_keysListEntry;
+    list_ForEach(match_label_keysListEntry, v1_topology_spread_constraint->match_label_keys) {
+    if(cJSON_AddStringToObject(match_label_keys, "", (char*)match_label_keysListEntry->data) == NULL)
+    {
+        goto fail;
+    }
+    }
+    }
+
+
     // v1_topology_spread_constraint->max_skew
     if (!v1_topology_spread_constraint->max_skew) {
         goto fail;
@@ -75,6 +113,22 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
     if(v1_topology_spread_constraint->min_domains) {
     if(cJSON_AddNumberToObject(item, "minDomains", v1_topology_spread_constraint->min_domains) == NULL) {
     goto fail; //Numeric
+    }
+    }
+
+
+    // v1_topology_spread_constraint->node_affinity_policy
+    if(v1_topology_spread_constraint->node_affinity_policy) {
+    if(cJSON_AddStringToObject(item, "nodeAffinityPolicy", v1_topology_spread_constraint->node_affinity_policy) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // v1_topology_spread_constraint->node_taints_policy
+    if(v1_topology_spread_constraint->node_taints_policy) {
+    if(cJSON_AddStringToObject(item, "nodeTaintsPolicy", v1_topology_spread_constraint->node_taints_policy) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -111,10 +165,32 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
     // define the local variable for v1_topology_spread_constraint->label_selector
     v1_label_selector_t *label_selector_local_nonprim = NULL;
 
+    // define the local list for v1_topology_spread_constraint->match_label_keys
+    list_t *match_label_keysList = NULL;
+
     // v1_topology_spread_constraint->label_selector
     cJSON *label_selector = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "labelSelector");
     if (label_selector) { 
     label_selector_local_nonprim = v1_label_selector_parseFromJSON(label_selector); //nonprimitive
+    }
+
+    // v1_topology_spread_constraint->match_label_keys
+    cJSON *match_label_keys = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "matchLabelKeys");
+    if (match_label_keys) { 
+    cJSON *match_label_keys_local = NULL;
+    if(!cJSON_IsArray(match_label_keys)) {
+        goto end;//primitive container
+    }
+    match_label_keysList = list_createList();
+
+    cJSON_ArrayForEach(match_label_keys_local, match_label_keys)
+    {
+        if(!cJSON_IsString(match_label_keys_local))
+        {
+            goto end;
+        }
+        list_addElement(match_label_keysList , strdup(match_label_keys_local->valuestring));
+    }
     }
 
     // v1_topology_spread_constraint->max_skew
@@ -135,6 +211,24 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
     if(!cJSON_IsNumber(min_domains))
     {
     goto end; //Numeric
+    }
+    }
+
+    // v1_topology_spread_constraint->node_affinity_policy
+    cJSON *node_affinity_policy = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "nodeAffinityPolicy");
+    if (node_affinity_policy) { 
+    if(!cJSON_IsString(node_affinity_policy))
+    {
+    goto end; //String
+    }
+    }
+
+    // v1_topology_spread_constraint->node_taints_policy
+    cJSON *node_taints_policy = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "nodeTaintsPolicy");
+    if (node_taints_policy) { 
+    if(!cJSON_IsString(node_taints_policy))
+    {
+    goto end; //String
     }
     }
 
@@ -165,8 +259,11 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
 
     v1_topology_spread_constraint_local_var = v1_topology_spread_constraint_create (
         label_selector ? label_selector_local_nonprim : NULL,
+        match_label_keys ? match_label_keysList : NULL,
         max_skew->valuedouble,
         min_domains ? min_domains->valuedouble : 0,
+        node_affinity_policy ? strdup(node_affinity_policy->valuestring) : NULL,
+        node_taints_policy ? strdup(node_taints_policy->valuestring) : NULL,
         strdup(topology_key->valuestring),
         strdup(when_unsatisfiable->valuestring)
         );
@@ -176,6 +273,15 @@ end:
     if (label_selector_local_nonprim) {
         v1_label_selector_free(label_selector_local_nonprim);
         label_selector_local_nonprim = NULL;
+    }
+    if (match_label_keysList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, match_label_keysList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(match_label_keysList);
+        match_label_keysList = NULL;
     }
     return NULL;
 

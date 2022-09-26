@@ -10,6 +10,7 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create(
     v1_secret_reference_t *controller_publish_secret_ref,
     char *driver,
     char *fs_type,
+    v1_secret_reference_t *node_expand_secret_ref,
     v1_secret_reference_t *node_publish_secret_ref,
     v1_secret_reference_t *node_stage_secret_ref,
     int read_only,
@@ -24,6 +25,7 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create(
     v1_csi_persistent_volume_source_local_var->controller_publish_secret_ref = controller_publish_secret_ref;
     v1_csi_persistent_volume_source_local_var->driver = driver;
     v1_csi_persistent_volume_source_local_var->fs_type = fs_type;
+    v1_csi_persistent_volume_source_local_var->node_expand_secret_ref = node_expand_secret_ref;
     v1_csi_persistent_volume_source_local_var->node_publish_secret_ref = node_publish_secret_ref;
     v1_csi_persistent_volume_source_local_var->node_stage_secret_ref = node_stage_secret_ref;
     v1_csi_persistent_volume_source_local_var->read_only = read_only;
@@ -54,6 +56,10 @@ void v1_csi_persistent_volume_source_free(v1_csi_persistent_volume_source_t *v1_
     if (v1_csi_persistent_volume_source->fs_type) {
         free(v1_csi_persistent_volume_source->fs_type);
         v1_csi_persistent_volume_source->fs_type = NULL;
+    }
+    if (v1_csi_persistent_volume_source->node_expand_secret_ref) {
+        v1_secret_reference_free(v1_csi_persistent_volume_source->node_expand_secret_ref);
+        v1_csi_persistent_volume_source->node_expand_secret_ref = NULL;
     }
     if (v1_csi_persistent_volume_source->node_publish_secret_ref) {
         v1_secret_reference_free(v1_csi_persistent_volume_source->node_publish_secret_ref);
@@ -122,6 +128,19 @@ cJSON *v1_csi_persistent_volume_source_convertToJSON(v1_csi_persistent_volume_so
     if(v1_csi_persistent_volume_source->fs_type) {
     if(cJSON_AddStringToObject(item, "fsType", v1_csi_persistent_volume_source->fs_type) == NULL) {
     goto fail; //String
+    }
+    }
+
+
+    // v1_csi_persistent_volume_source->node_expand_secret_ref
+    if(v1_csi_persistent_volume_source->node_expand_secret_ref) {
+    cJSON *node_expand_secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_csi_persistent_volume_source->node_expand_secret_ref);
+    if(node_expand_secret_ref_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "nodeExpandSecretRef", node_expand_secret_ref_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
     }
     }
 
@@ -206,6 +225,9 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
     // define the local variable for v1_csi_persistent_volume_source->controller_publish_secret_ref
     v1_secret_reference_t *controller_publish_secret_ref_local_nonprim = NULL;
 
+    // define the local variable for v1_csi_persistent_volume_source->node_expand_secret_ref
+    v1_secret_reference_t *node_expand_secret_ref_local_nonprim = NULL;
+
     // define the local variable for v1_csi_persistent_volume_source->node_publish_secret_ref
     v1_secret_reference_t *node_publish_secret_ref_local_nonprim = NULL;
 
@@ -246,6 +268,12 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
     {
     goto end; //String
     }
+    }
+
+    // v1_csi_persistent_volume_source->node_expand_secret_ref
+    cJSON *node_expand_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "nodeExpandSecretRef");
+    if (node_expand_secret_ref) { 
+    node_expand_secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(node_expand_secret_ref); //nonprimitive
     }
 
     // v1_csi_persistent_volume_source->node_publish_secret_ref
@@ -312,6 +340,7 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
         controller_publish_secret_ref ? controller_publish_secret_ref_local_nonprim : NULL,
         strdup(driver->valuestring),
         fs_type ? strdup(fs_type->valuestring) : NULL,
+        node_expand_secret_ref ? node_expand_secret_ref_local_nonprim : NULL,
         node_publish_secret_ref ? node_publish_secret_ref_local_nonprim : NULL,
         node_stage_secret_ref ? node_stage_secret_ref_local_nonprim : NULL,
         read_only ? read_only->valueint : 0,
@@ -328,6 +357,10 @@ end:
     if (controller_publish_secret_ref_local_nonprim) {
         v1_secret_reference_free(controller_publish_secret_ref_local_nonprim);
         controller_publish_secret_ref_local_nonprim = NULL;
+    }
+    if (node_expand_secret_ref_local_nonprim) {
+        v1_secret_reference_free(node_expand_secret_ref_local_nonprim);
+        node_expand_secret_ref_local_nonprim = NULL;
     }
     if (node_publish_secret_ref_local_nonprim) {
         v1_secret_reference_free(node_publish_secret_ref_local_nonprim);

@@ -1,7 +1,7 @@
 /*
  * v1beta2_limited_priority_level_configuration.h
  *
- * LimitedPriorityLevelConfiguration specifies how to handle requests that are subject to limits. It addresses two issues:  * How are requests for this priority level limited?  * What should be done with requests that exceed the limit?
+ * LimitedPriorityLevelConfiguration specifies how to handle requests that are subject to limits. It addresses two issues:   - How are requests for this priority level limited?   - What should be done with requests that exceed the limit?
  */
 
 #ifndef _v1beta2_limited_priority_level_configuration_H_

@@ -22,7 +22,6 @@ typedef struct v1_object_meta_t v1_object_meta_t;
 
 typedef struct v1_object_meta_t {
     list_t* annotations; //map
-    char *cluster_name; // string
     char *creation_timestamp; //date time
     long deletion_grace_period_seconds; //numeric
     char *deletion_timestamp; //date time
@@ -42,7 +41,6 @@ typedef struct v1_object_meta_t {
 
 v1_object_meta_t *v1_object_meta_create(
     list_t* annotations,
-    char *cluster_name,
     char *creation_timestamp,
     long deletion_grace_period_seconds,
     char *deletion_timestamp,

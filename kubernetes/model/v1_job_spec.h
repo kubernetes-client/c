@@ -16,6 +16,7 @@
 typedef struct v1_job_spec_t v1_job_spec_t;
 
 #include "v1_label_selector.h"
+#include "v1_pod_failure_policy.h"
 #include "v1_pod_template_spec.h"
 
 
@@ -27,6 +28,7 @@ typedef struct v1_job_spec_t {
     int completions; //numeric
     int manual_selector; //boolean
     int parallelism; //numeric
+    struct v1_pod_failure_policy_t *pod_failure_policy; //model
     struct v1_label_selector_t *selector; //model
     int suspend; //boolean
     struct v1_pod_template_spec_t *_template; //model
@@ -41,6 +43,7 @@ v1_job_spec_t *v1_job_spec_create(
     int completions,
     int manual_selector,
     int parallelism,
+    v1_pod_failure_policy_t *pod_failure_policy,
     v1_label_selector_t *selector,
     int suspend,
     v1_pod_template_spec_t *_template,
