@@ -196,7 +196,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
     // v1_managed_fields_entry->time
     cJSON *time = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "time");
     if (time) { 
-    if(!cJSON_IsString(time))
+    if(!cJSON_IsString(time) && !cJSON_IsNull(time))
     {
     goto end; //DateTime
     }
@@ -210,7 +210,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
         manager ? strdup(manager->valuestring) : NULL,
         operation ? strdup(operation->valuestring) : NULL,
         subresource ? strdup(subresource->valuestring) : NULL,
-        time ? strdup(time->valuestring) : NULL
+        time && !cJSON_IsNull(time) ? strdup(time->valuestring) : NULL
         );
 
     return v1_managed_fields_entry_local_var;

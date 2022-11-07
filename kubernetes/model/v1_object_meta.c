@@ -361,7 +361,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     // v1_object_meta->creation_timestamp
     cJSON *creation_timestamp = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "creationTimestamp");
     if (creation_timestamp) { 
-    if(!cJSON_IsString(creation_timestamp))
+    if(!cJSON_IsString(creation_timestamp) && !cJSON_IsNull(creation_timestamp))
     {
     goto end; //DateTime
     }
@@ -379,7 +379,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     // v1_object_meta->deletion_timestamp
     cJSON *deletion_timestamp = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "deletionTimestamp");
     if (deletion_timestamp) { 
-    if(!cJSON_IsString(deletion_timestamp))
+    if(!cJSON_IsString(deletion_timestamp) && !cJSON_IsNull(deletion_timestamp))
     {
     goto end; //DateTime
     }
@@ -537,9 +537,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     v1_object_meta_local_var = v1_object_meta_create (
         annotations ? annotationsList : NULL,
-        creation_timestamp ? strdup(creation_timestamp->valuestring) : NULL,
+        creation_timestamp && !cJSON_IsNull(creation_timestamp) ? strdup(creation_timestamp->valuestring) : NULL,
         deletion_grace_period_seconds ? deletion_grace_period_seconds->valuedouble : 0,
-        deletion_timestamp ? strdup(deletion_timestamp->valuestring) : NULL,
+        deletion_timestamp && !cJSON_IsNull(deletion_timestamp) ? strdup(deletion_timestamp->valuestring) : NULL,
         finalizers ? finalizersList : NULL,
         generate_name ? strdup(generate_name->valuestring) : NULL,
         generation ? generation->valuedouble : 0,

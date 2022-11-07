@@ -111,7 +111,7 @@ v1beta2_flow_schema_condition_t *v1beta2_flow_schema_condition_parseFromJSON(cJS
     // v1beta2_flow_schema_condition->last_transition_time
     cJSON *last_transition_time = cJSON_GetObjectItemCaseSensitive(v1beta2_flow_schema_conditionJSON, "lastTransitionTime");
     if (last_transition_time) { 
-    if(!cJSON_IsString(last_transition_time))
+    if(!cJSON_IsString(last_transition_time) && !cJSON_IsNull(last_transition_time))
     {
     goto end; //DateTime
     }
@@ -155,7 +155,7 @@ v1beta2_flow_schema_condition_t *v1beta2_flow_schema_condition_parseFromJSON(cJS
 
 
     v1beta2_flow_schema_condition_local_var = v1beta2_flow_schema_condition_create (
-        last_transition_time ? strdup(last_transition_time->valuestring) : NULL,
+        last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
         message ? strdup(message->valuestring) : NULL,
         reason ? strdup(reason->valuestring) : NULL,
         status ? strdup(status->valuestring) : NULL,

@@ -78,7 +78,7 @@ v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
     // v1_volume_error->time
     cJSON *time = cJSON_GetObjectItemCaseSensitive(v1_volume_errorJSON, "time");
     if (time) { 
-    if(!cJSON_IsString(time))
+    if(!cJSON_IsString(time) && !cJSON_IsNull(time))
     {
     goto end; //DateTime
     }
@@ -87,7 +87,7 @@ v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
 
     v1_volume_error_local_var = v1_volume_error_create (
         message ? strdup(message->valuestring) : NULL,
-        time ? strdup(time->valuestring) : NULL
+        time && !cJSON_IsNull(time) ? strdup(time->valuestring) : NULL
         );
 
     return v1_volume_error_local_var;

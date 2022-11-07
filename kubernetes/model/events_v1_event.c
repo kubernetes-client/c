@@ -343,7 +343,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     // events_v1_event->deprecated_first_timestamp
     cJSON *deprecated_first_timestamp = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "deprecatedFirstTimestamp");
     if (deprecated_first_timestamp) { 
-    if(!cJSON_IsString(deprecated_first_timestamp))
+    if(!cJSON_IsString(deprecated_first_timestamp) && !cJSON_IsNull(deprecated_first_timestamp))
     {
     goto end; //DateTime
     }
@@ -352,7 +352,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     // events_v1_event->deprecated_last_timestamp
     cJSON *deprecated_last_timestamp = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "deprecatedLastTimestamp");
     if (deprecated_last_timestamp) { 
-    if(!cJSON_IsString(deprecated_last_timestamp))
+    if(!cJSON_IsString(deprecated_last_timestamp) && !cJSON_IsNull(deprecated_last_timestamp))
     {
     goto end; //DateTime
     }
@@ -371,7 +371,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     }
 
     
-    if(!cJSON_IsString(event_time))
+    if(!cJSON_IsString(event_time) && !cJSON_IsNull(event_time))
     {
     goto end; //DateTime
     }
@@ -459,8 +459,8 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
         action ? strdup(action->valuestring) : NULL,
         api_version ? strdup(api_version->valuestring) : NULL,
         deprecated_count ? deprecated_count->valuedouble : 0,
-        deprecated_first_timestamp ? strdup(deprecated_first_timestamp->valuestring) : NULL,
-        deprecated_last_timestamp ? strdup(deprecated_last_timestamp->valuestring) : NULL,
+        deprecated_first_timestamp && !cJSON_IsNull(deprecated_first_timestamp) ? strdup(deprecated_first_timestamp->valuestring) : NULL,
+        deprecated_last_timestamp && !cJSON_IsNull(deprecated_last_timestamp) ? strdup(deprecated_last_timestamp->valuestring) : NULL,
         deprecated_source ? deprecated_source_local_nonprim : NULL,
         strdup(event_time->valuestring),
         kind ? strdup(kind->valuestring) : NULL,

@@ -130,7 +130,7 @@ v1_condition_t *v1_condition_parseFromJSON(cJSON *v1_conditionJSON){
     }
 
     
-    if(!cJSON_IsString(last_transition_time))
+    if(!cJSON_IsString(last_transition_time) && !cJSON_IsNull(last_transition_time))
     {
     goto end; //DateTime
     }

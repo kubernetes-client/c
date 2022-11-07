@@ -195,7 +195,7 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
     // v1_job_status->completion_time
     cJSON *completion_time = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "completionTime");
     if (completion_time) { 
-    if(!cJSON_IsString(completion_time))
+    if(!cJSON_IsString(completion_time) && !cJSON_IsNull(completion_time))
     {
     goto end; //DateTime
     }
@@ -243,7 +243,7 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
     // v1_job_status->start_time
     cJSON *start_time = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "startTime");
     if (start_time) { 
-    if(!cJSON_IsString(start_time))
+    if(!cJSON_IsString(start_time) && !cJSON_IsNull(start_time))
     {
     goto end; //DateTime
     }
@@ -268,11 +268,11 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
     v1_job_status_local_var = v1_job_status_create (
         active ? active->valuedouble : 0,
         completed_indexes ? strdup(completed_indexes->valuestring) : NULL,
-        completion_time ? strdup(completion_time->valuestring) : NULL,
+        completion_time && !cJSON_IsNull(completion_time) ? strdup(completion_time->valuestring) : NULL,
         conditions ? conditionsList : NULL,
         failed ? failed->valuedouble : 0,
         ready ? ready->valuedouble : 0,
-        start_time ? strdup(start_time->valuestring) : NULL,
+        start_time && !cJSON_IsNull(start_time) ? strdup(start_time->valuestring) : NULL,
         succeeded ? succeeded->valuedouble : 0,
         uncounted_terminated_pods ? uncounted_terminated_pods_local_nonprim : NULL
         );

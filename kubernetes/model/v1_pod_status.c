@@ -481,7 +481,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     // v1_pod_status->start_time
     cJSON *start_time = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "startTime");
     if (start_time) { 
-    if(!cJSON_IsString(start_time))
+    if(!cJSON_IsString(start_time) && !cJSON_IsNull(start_time))
     {
     goto end; //DateTime
     }
@@ -501,7 +501,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         pod_ips ? pod_ipsList : NULL,
         qos_class ? strdup(qos_class->valuestring) : NULL,
         reason ? strdup(reason->valuestring) : NULL,
-        start_time ? strdup(start_time->valuestring) : NULL
+        start_time && !cJSON_IsNull(start_time) ? strdup(start_time->valuestring) : NULL
         );
 
     return v1_pod_status_local_var;

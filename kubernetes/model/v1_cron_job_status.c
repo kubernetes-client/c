@@ -122,7 +122,7 @@ v1_cron_job_status_t *v1_cron_job_status_parseFromJSON(cJSON *v1_cron_job_status
     // v1_cron_job_status->last_schedule_time
     cJSON *last_schedule_time = cJSON_GetObjectItemCaseSensitive(v1_cron_job_statusJSON, "lastScheduleTime");
     if (last_schedule_time) { 
-    if(!cJSON_IsString(last_schedule_time))
+    if(!cJSON_IsString(last_schedule_time) && !cJSON_IsNull(last_schedule_time))
     {
     goto end; //DateTime
     }
@@ -131,7 +131,7 @@ v1_cron_job_status_t *v1_cron_job_status_parseFromJSON(cJSON *v1_cron_job_status
     // v1_cron_job_status->last_successful_time
     cJSON *last_successful_time = cJSON_GetObjectItemCaseSensitive(v1_cron_job_statusJSON, "lastSuccessfulTime");
     if (last_successful_time) { 
-    if(!cJSON_IsString(last_successful_time))
+    if(!cJSON_IsString(last_successful_time) && !cJSON_IsNull(last_successful_time))
     {
     goto end; //DateTime
     }
@@ -140,8 +140,8 @@ v1_cron_job_status_t *v1_cron_job_status_parseFromJSON(cJSON *v1_cron_job_status
 
     v1_cron_job_status_local_var = v1_cron_job_status_create (
         active ? activeList : NULL,
-        last_schedule_time ? strdup(last_schedule_time->valuestring) : NULL,
-        last_successful_time ? strdup(last_successful_time->valuestring) : NULL
+        last_schedule_time && !cJSON_IsNull(last_schedule_time) ? strdup(last_schedule_time->valuestring) : NULL,
+        last_successful_time && !cJSON_IsNull(last_successful_time) ? strdup(last_successful_time->valuestring) : NULL
         );
 
     return v1_cron_job_status_local_var;

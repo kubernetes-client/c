@@ -123,7 +123,7 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
     // v1_taint->time_added
     cJSON *time_added = cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "timeAdded");
     if (time_added) { 
-    if(!cJSON_IsString(time_added))
+    if(!cJSON_IsString(time_added) && !cJSON_IsNull(time_added))
     {
     goto end; //DateTime
     }
@@ -142,7 +142,7 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
     v1_taint_local_var = v1_taint_create (
         strdup(effect->valuestring),
         strdup(key->valuestring),
-        time_added ? strdup(time_added->valuestring) : NULL,
+        time_added && !cJSON_IsNull(time_added) ? strdup(time_added->valuestring) : NULL,
         value ? strdup(value->valuestring) : NULL
         );
 
