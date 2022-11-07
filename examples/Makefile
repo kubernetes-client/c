@@ -11,6 +11,7 @@ all:
 	cd exec_pod; make
 	cd list_secret; make
 	cd configmap; make
+	cd list_event; make
 
 clean:
 	cd create_pod; make clean
@@ -25,6 +26,7 @@ clean:
 	cd exec_pod; make clean
 	cd list_secret; make clean
 	cd configmap; make clean
+	cd list_event; make clean
 
 test:
 	cd create_pod; make test;
@@ -34,6 +36,7 @@ test:
 	kubectl wait --for=delete pod/test-pod-6 -n default --timeout=120s
 	cd list_secret; make test
 	cd configmap; make test
+	cd list_event; make test
 	cd generic; make test
 	cd multi_thread; make test;
 	kubectl wait --for=condition=ready pod/test-pod-8 -n default --timeout=60s
@@ -48,6 +51,7 @@ memcheck:
 	kubectl wait --for=delete pod/test-pod-6 -n default --timeout=120s
 	cd list_secret; make memcheck
 	cd configmap; make memcheck
+	cd list_event; make test
 	cd generic; make memcheck
 	cd multi_thread; make memcheck;
 	kubectl wait --for=condition=ready pod/test-pod-8 -n default --timeout=60s
