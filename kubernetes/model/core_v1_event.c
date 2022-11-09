@@ -344,7 +344,7 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     // core_v1_event->event_time
     cJSON *event_time = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "eventTime");
     if (event_time) { 
-    if(!cJSON_IsString(event_time))
+    if(!cJSON_IsString(event_time) && !cJSON_IsNull(event_time))
     {
     goto end; //DateTime
     }
@@ -353,7 +353,7 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     // core_v1_event->first_timestamp
     cJSON *first_timestamp = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "firstTimestamp");
     if (first_timestamp) { 
-    if(!cJSON_IsString(first_timestamp))
+    if(!cJSON_IsString(first_timestamp) && !cJSON_IsNull(first_timestamp))
     {
     goto end; //DateTime
     }
@@ -380,7 +380,7 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     // core_v1_event->last_timestamp
     cJSON *last_timestamp = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "lastTimestamp");
     if (last_timestamp) { 
-    if(!cJSON_IsString(last_timestamp))
+    if(!cJSON_IsString(last_timestamp) && !cJSON_IsNull(last_timestamp))
     {
     goto end; //DateTime
     }
@@ -463,11 +463,11 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
         action ? strdup(action->valuestring) : NULL,
         api_version ? strdup(api_version->valuestring) : NULL,
         count ? count->valuedouble : 0,
-        event_time ? strdup(event_time->valuestring) : NULL,
-        first_timestamp ? strdup(first_timestamp->valuestring) : NULL,
+        event_time && !cJSON_IsNull(event_time) ? strdup(event_time->valuestring) : NULL,
+        first_timestamp && !cJSON_IsNull(first_timestamp) ? strdup(first_timestamp->valuestring) : NULL,
         involved_object_local_nonprim,
         kind ? strdup(kind->valuestring) : NULL,
-        last_timestamp ? strdup(last_timestamp->valuestring) : NULL,
+        last_timestamp && !cJSON_IsNull(last_timestamp) ? strdup(last_timestamp->valuestring) : NULL,
         message ? strdup(message->valuestring) : NULL,
         metadata_local_nonprim,
         reason ? strdup(reason->valuestring) : NULL,

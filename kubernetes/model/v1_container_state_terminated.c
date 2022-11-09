@@ -153,7 +153,7 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
     // v1_container_state_terminated->finished_at
     cJSON *finished_at = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "finishedAt");
     if (finished_at) { 
-    if(!cJSON_IsString(finished_at))
+    if(!cJSON_IsString(finished_at) && !cJSON_IsNull(finished_at))
     {
     goto end; //DateTime
     }
@@ -189,7 +189,7 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
     // v1_container_state_terminated->started_at
     cJSON *started_at = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "startedAt");
     if (started_at) { 
-    if(!cJSON_IsString(started_at))
+    if(!cJSON_IsString(started_at) && !cJSON_IsNull(started_at))
     {
     goto end; //DateTime
     }
@@ -199,11 +199,11 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
     v1_container_state_terminated_local_var = v1_container_state_terminated_create (
         container_id ? strdup(container_id->valuestring) : NULL,
         exit_code->valuedouble,
-        finished_at ? strdup(finished_at->valuestring) : NULL,
+        finished_at && !cJSON_IsNull(finished_at) ? strdup(finished_at->valuestring) : NULL,
         message ? strdup(message->valuestring) : NULL,
         reason ? strdup(reason->valuestring) : NULL,
         signal ? signal->valuedouble : 0,
-        started_at ? strdup(started_at->valuestring) : NULL
+        started_at && !cJSON_IsNull(started_at) ? strdup(started_at->valuestring) : NULL
         );
 
     return v1_container_state_terminated_local_var;

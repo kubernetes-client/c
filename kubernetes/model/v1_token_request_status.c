@@ -75,7 +75,7 @@ v1_token_request_status_t *v1_token_request_status_parseFromJSON(cJSON *v1_token
     }
 
     
-    if(!cJSON_IsString(expiration_timestamp))
+    if(!cJSON_IsString(expiration_timestamp) && !cJSON_IsNull(expiration_timestamp))
     {
     goto end; //DateTime
     }

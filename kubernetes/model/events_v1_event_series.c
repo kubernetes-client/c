@@ -83,7 +83,7 @@ events_v1_event_series_t *events_v1_event_series_parseFromJSON(cJSON *events_v1_
     }
 
     
-    if(!cJSON_IsString(last_observed_time))
+    if(!cJSON_IsString(last_observed_time) && !cJSON_IsNull(last_observed_time))
     {
     goto end; //DateTime
     }

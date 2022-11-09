@@ -55,7 +55,7 @@ v1_container_state_running_t *v1_container_state_running_parseFromJSON(cJSON *v1
     // v1_container_state_running->started_at
     cJSON *started_at = cJSON_GetObjectItemCaseSensitive(v1_container_state_runningJSON, "startedAt");
     if (started_at) { 
-    if(!cJSON_IsString(started_at))
+    if(!cJSON_IsString(started_at) && !cJSON_IsNull(started_at))
     {
     goto end; //DateTime
     }
@@ -63,7 +63,7 @@ v1_container_state_running_t *v1_container_state_running_parseFromJSON(cJSON *v1
 
 
     v1_container_state_running_local_var = v1_container_state_running_create (
-        started_at ? strdup(started_at->valuestring) : NULL
+        started_at && !cJSON_IsNull(started_at) ? strdup(started_at->valuestring) : NULL
         );
 
     return v1_container_state_running_local_var;

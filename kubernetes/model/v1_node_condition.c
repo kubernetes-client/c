@@ -127,7 +127,7 @@ v1_node_condition_t *v1_node_condition_parseFromJSON(cJSON *v1_node_conditionJSO
     // v1_node_condition->last_heartbeat_time
     cJSON *last_heartbeat_time = cJSON_GetObjectItemCaseSensitive(v1_node_conditionJSON, "lastHeartbeatTime");
     if (last_heartbeat_time) { 
-    if(!cJSON_IsString(last_heartbeat_time))
+    if(!cJSON_IsString(last_heartbeat_time) && !cJSON_IsNull(last_heartbeat_time))
     {
     goto end; //DateTime
     }
@@ -136,7 +136,7 @@ v1_node_condition_t *v1_node_condition_parseFromJSON(cJSON *v1_node_conditionJSO
     // v1_node_condition->last_transition_time
     cJSON *last_transition_time = cJSON_GetObjectItemCaseSensitive(v1_node_conditionJSON, "lastTransitionTime");
     if (last_transition_time) { 
-    if(!cJSON_IsString(last_transition_time))
+    if(!cJSON_IsString(last_transition_time) && !cJSON_IsNull(last_transition_time))
     {
     goto end; //DateTime
     }
@@ -186,8 +186,8 @@ v1_node_condition_t *v1_node_condition_parseFromJSON(cJSON *v1_node_conditionJSO
 
 
     v1_node_condition_local_var = v1_node_condition_create (
-        last_heartbeat_time ? strdup(last_heartbeat_time->valuestring) : NULL,
-        last_transition_time ? strdup(last_transition_time->valuestring) : NULL,
+        last_heartbeat_time && !cJSON_IsNull(last_heartbeat_time) ? strdup(last_heartbeat_time->valuestring) : NULL,
+        last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
         message ? strdup(message->valuestring) : NULL,
         reason ? strdup(reason->valuestring) : NULL,
         strdup(status->valuestring),

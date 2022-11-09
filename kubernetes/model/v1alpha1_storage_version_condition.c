@@ -124,7 +124,7 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
     // v1alpha1_storage_version_condition->last_transition_time
     cJSON *last_transition_time = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_conditionJSON, "lastTransitionTime");
     if (last_transition_time) { 
-    if(!cJSON_IsString(last_transition_time))
+    if(!cJSON_IsString(last_transition_time) && !cJSON_IsNull(last_transition_time))
     {
     goto end; //DateTime
     }
@@ -186,7 +186,7 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
 
 
     v1alpha1_storage_version_condition_local_var = v1alpha1_storage_version_condition_create (
-        last_transition_time ? strdup(last_transition_time->valuestring) : NULL,
+        last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
         message ? strdup(message->valuestring) : NULL,
         observed_generation ? observed_generation->valuedouble : 0,
         strdup(reason->valuestring),

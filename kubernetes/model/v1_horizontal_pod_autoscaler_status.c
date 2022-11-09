@@ -130,7 +130,7 @@ v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_parse
     // v1_horizontal_pod_autoscaler_status->last_scale_time
     cJSON *last_scale_time = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_statusJSON, "lastScaleTime");
     if (last_scale_time) { 
-    if(!cJSON_IsString(last_scale_time))
+    if(!cJSON_IsString(last_scale_time) && !cJSON_IsNull(last_scale_time))
     {
     goto end; //DateTime
     }
@@ -150,7 +150,7 @@ v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_parse
         current_cpu_utilization_percentage ? current_cpu_utilization_percentage->valuedouble : 0,
         current_replicas->valuedouble,
         desired_replicas->valuedouble,
-        last_scale_time ? strdup(last_scale_time->valuestring) : NULL,
+        last_scale_time && !cJSON_IsNull(last_scale_time) ? strdup(last_scale_time->valuestring) : NULL,
         observed_generation ? observed_generation->valuedouble : 0
         );
 

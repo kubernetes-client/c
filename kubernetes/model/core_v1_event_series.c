@@ -74,7 +74,7 @@ core_v1_event_series_t *core_v1_event_series_parseFromJSON(cJSON *core_v1_event_
     // core_v1_event_series->last_observed_time
     cJSON *last_observed_time = cJSON_GetObjectItemCaseSensitive(core_v1_event_seriesJSON, "lastObservedTime");
     if (last_observed_time) { 
-    if(!cJSON_IsString(last_observed_time))
+    if(!cJSON_IsString(last_observed_time) && !cJSON_IsNull(last_observed_time))
     {
     goto end; //DateTime
     }
@@ -83,7 +83,7 @@ core_v1_event_series_t *core_v1_event_series_parseFromJSON(cJSON *core_v1_event_
 
     core_v1_event_series_local_var = core_v1_event_series_create (
         count ? count->valuedouble : 0,
-        last_observed_time ? strdup(last_observed_time->valuestring) : NULL
+        last_observed_time && !cJSON_IsNull(last_observed_time) ? strdup(last_observed_time->valuestring) : NULL
         );
 
     return core_v1_event_series_local_var;

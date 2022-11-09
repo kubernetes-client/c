@@ -103,7 +103,7 @@ v1_lease_spec_t *v1_lease_spec_parseFromJSON(cJSON *v1_lease_specJSON){
     // v1_lease_spec->acquire_time
     cJSON *acquire_time = cJSON_GetObjectItemCaseSensitive(v1_lease_specJSON, "acquireTime");
     if (acquire_time) { 
-    if(!cJSON_IsString(acquire_time))
+    if(!cJSON_IsString(acquire_time) && !cJSON_IsNull(acquire_time))
     {
     goto end; //DateTime
     }
@@ -139,7 +139,7 @@ v1_lease_spec_t *v1_lease_spec_parseFromJSON(cJSON *v1_lease_specJSON){
     // v1_lease_spec->renew_time
     cJSON *renew_time = cJSON_GetObjectItemCaseSensitive(v1_lease_specJSON, "renewTime");
     if (renew_time) { 
-    if(!cJSON_IsString(renew_time))
+    if(!cJSON_IsString(renew_time) && !cJSON_IsNull(renew_time))
     {
     goto end; //DateTime
     }
@@ -147,11 +147,11 @@ v1_lease_spec_t *v1_lease_spec_parseFromJSON(cJSON *v1_lease_specJSON){
 
 
     v1_lease_spec_local_var = v1_lease_spec_create (
-        acquire_time ? strdup(acquire_time->valuestring) : NULL,
+        acquire_time && !cJSON_IsNull(acquire_time) ? strdup(acquire_time->valuestring) : NULL,
         holder_identity ? strdup(holder_identity->valuestring) : NULL,
         lease_duration_seconds ? lease_duration_seconds->valuedouble : 0,
         lease_transitions ? lease_transitions->valuedouble : 0,
-        renew_time ? strdup(renew_time->valuestring) : NULL
+        renew_time && !cJSON_IsNull(renew_time) ? strdup(renew_time->valuestring) : NULL
         );
 
     return v1_lease_spec_local_var;

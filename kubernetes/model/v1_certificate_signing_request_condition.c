@@ -127,7 +127,7 @@ v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condi
     // v1_certificate_signing_request_condition->last_transition_time
     cJSON *last_transition_time = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_conditionJSON, "lastTransitionTime");
     if (last_transition_time) { 
-    if(!cJSON_IsString(last_transition_time))
+    if(!cJSON_IsString(last_transition_time) && !cJSON_IsNull(last_transition_time))
     {
     goto end; //DateTime
     }
@@ -136,7 +136,7 @@ v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condi
     // v1_certificate_signing_request_condition->last_update_time
     cJSON *last_update_time = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_conditionJSON, "lastUpdateTime");
     if (last_update_time) { 
-    if(!cJSON_IsString(last_update_time))
+    if(!cJSON_IsString(last_update_time) && !cJSON_IsNull(last_update_time))
     {
     goto end; //DateTime
     }
@@ -186,8 +186,8 @@ v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condi
 
 
     v1_certificate_signing_request_condition_local_var = v1_certificate_signing_request_condition_create (
-        last_transition_time ? strdup(last_transition_time->valuestring) : NULL,
-        last_update_time ? strdup(last_update_time->valuestring) : NULL,
+        last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
+        last_update_time && !cJSON_IsNull(last_update_time) ? strdup(last_update_time->valuestring) : NULL,
         message ? strdup(message->valuestring) : NULL,
         reason ? strdup(reason->valuestring) : NULL,
         strdup(status->valuestring),
