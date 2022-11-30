@@ -1074,7 +1074,7 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -1099,7 +1099,7 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -1112,7 +1112,7 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -1161,7 +1161,7 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -1458,7 +1458,7 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _na
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -1483,7 +1483,7 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _na
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -1496,7 +1496,7 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _na
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -1545,7 +1545,7 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _na
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -1842,7 +1842,7 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _n
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -1867,7 +1867,7 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _n
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -1880,7 +1880,7 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _n
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -1929,7 +1929,7 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _n
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -2226,7 +2226,7 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _n
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -2251,7 +2251,7 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _n
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -2264,7 +2264,7 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _n
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -2313,7 +2313,7 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _n
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -2610,7 +2610,7 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -2635,7 +2635,7 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -2648,7 +2648,7 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -2697,7 +2697,7 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -2980,7 +2980,7 @@ AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -2993,7 +2993,7 @@ AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -3209,7 +3209,7 @@ AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char *
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -3222,7 +3222,7 @@ AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char *
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -3438,7 +3438,7 @@ AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char 
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -3451,7 +3451,7 @@ AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char 
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -3667,7 +3667,7 @@ AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char 
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -3680,7 +3680,7 @@ AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char 
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -3896,7 +3896,7 @@ AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -3909,7 +3909,7 @@ AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -4148,7 +4148,7 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -4197,7 +4197,7 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -4246,7 +4246,7 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -4259,7 +4259,7 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -4461,7 +4461,7 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -4510,7 +4510,7 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -4559,7 +4559,7 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -4572,7 +4572,7 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -4774,7 +4774,7 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -4823,7 +4823,7 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -4872,7 +4872,7 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -4885,7 +4885,7 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -5109,7 +5109,7 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _names
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -5158,7 +5158,7 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _names
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -5195,7 +5195,7 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _names
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -5208,7 +5208,7 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _names
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -5433,7 +5433,7 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , ch
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -5482,7 +5482,7 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , ch
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -5519,7 +5519,7 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , ch
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -5532,7 +5532,7 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , ch
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -5757,7 +5757,7 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -5806,7 +5806,7 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -5843,7 +5843,7 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -5856,7 +5856,7 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -6081,7 +6081,7 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -6130,7 +6130,7 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -6167,7 +6167,7 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -6180,7 +6180,7 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -6405,7 +6405,7 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , 
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -6454,7 +6454,7 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , 
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -6491,7 +6491,7 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , 
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -6504,7 +6504,7 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , 
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -6707,7 +6707,7 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -6756,7 +6756,7 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -6805,7 +6805,7 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -6818,7 +6818,7 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -7020,7 +7020,7 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -7069,7 +7069,7 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -7118,7 +7118,7 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -7131,7 +7131,7 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -7401,7 +7401,7 @@ AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -7633,7 +7633,7 @@ AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -7865,7 +7865,7 @@ AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , c
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -8097,7 +8097,7 @@ AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char *
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -8329,7 +8329,7 @@ AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , c
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -8561,7 +8561,7 @@ AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -8793,7 +8793,7 @@ AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char *
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -9025,7 +9025,7 @@ AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , c
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -9257,7 +9257,7 @@ AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -9489,7 +9489,7 @@ AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -9721,7 +9721,7 @@ AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -9953,7 +9953,7 @@ AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name ,
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);

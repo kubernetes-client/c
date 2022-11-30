@@ -269,7 +269,7 @@ InternalApiserverV1alpha1API_deleteCollectionStorageVersion(apiClient_t *apiClie
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -294,7 +294,7 @@ InternalApiserverV1alpha1API_deleteCollectionStorageVersion(apiClient_t *apiClie
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -307,7 +307,7 @@ InternalApiserverV1alpha1API_deleteCollectionStorageVersion(apiClient_t *apiClie
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -356,7 +356,7 @@ InternalApiserverV1alpha1API_deleteCollectionStorageVersion(apiClient_t *apiClie
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -628,7 +628,7 @@ InternalApiserverV1alpha1API_deleteStorageVersion(apiClient_t *apiClient, char *
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -641,7 +641,7 @@ InternalApiserverV1alpha1API_deleteStorageVersion(apiClient_t *apiClient, char *
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -891,7 +891,7 @@ InternalApiserverV1alpha1API_listStorageVersion(apiClient_t *apiClient, char * p
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -940,7 +940,7 @@ InternalApiserverV1alpha1API_listStorageVersion(apiClient_t *apiClient, char * p
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -977,7 +977,7 @@ InternalApiserverV1alpha1API_listStorageVersion(apiClient_t *apiClient, char * p
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -990,7 +990,7 @@ InternalApiserverV1alpha1API_listStorageVersion(apiClient_t *apiClient, char * p
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -1250,7 +1250,7 @@ InternalApiserverV1alpha1API_patchStorageVersion(apiClient_t *apiClient, char * 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -1471,7 +1471,7 @@ InternalApiserverV1alpha1API_patchStorageVersionStatus(apiClient_t *apiClient, c
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);

@@ -661,7 +661,7 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char * pret
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -686,7 +686,7 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char * pret
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -699,7 +699,7 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char * pret
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -748,7 +748,7 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char * pret
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -1044,7 +1044,7 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -1069,7 +1069,7 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -1082,7 +1082,7 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -1131,7 +1131,7 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -1428,7 +1428,7 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -1453,7 +1453,7 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -1466,7 +1466,7 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -1515,7 +1515,7 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -1788,7 +1788,7 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char * name , char * 
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -1801,7 +1801,7 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char * name , char * 
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -2016,7 +2016,7 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char * name , ch
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -2029,7 +2029,7 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char * name , ch
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -2245,7 +2245,7 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char * nam
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (gracePeriodSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -2258,7 +2258,7 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char * nam
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (orphanDependents)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
@@ -2509,7 +2509,7 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char * pretty , int all
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -2558,7 +2558,7 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char * pretty , int all
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -2595,7 +2595,7 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char * pretty , int all
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -2608,7 +2608,7 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char * pretty , int all
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -2810,7 +2810,7 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWat
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -2859,7 +2859,7 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWat
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -2908,7 +2908,7 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWat
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -2921,7 +2921,7 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWat
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -3145,7 +3145,7 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char * _namespace 
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -3194,7 +3194,7 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char * _namespace 
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -3231,7 +3231,7 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char * _namespace 
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -3244,7 +3244,7 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char * _namespace 
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -3469,7 +3469,7 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * _name
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -3518,7 +3518,7 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * _name
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -3555,7 +3555,7 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * _name
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -3568,7 +3568,7 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * _name
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -3771,7 +3771,7 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int al
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (allowWatchBookmarks)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
@@ -3820,7 +3820,7 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int al
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (limit)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
@@ -3869,7 +3869,7 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int al
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (timeoutSeconds)
+    if (1) // Always send integer parameters to the API server
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
@@ -3882,7 +3882,7 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int al
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (watch)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
@@ -4142,7 +4142,7 @@ NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char * name , object_t
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -4373,7 +4373,7 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char * name , cha
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -4605,7 +4605,7 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char * name
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -4837,7 +4837,7 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
@@ -5069,7 +5069,7 @@ NetworkingV1API_patchNamespacedNetworkPolicyStatus(apiClient_t *apiClient, char 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
+    if (1) // Always send boolean parameters to the API server
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
