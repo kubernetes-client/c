@@ -12,7 +12,7 @@ void delete_a_pod(apiClient_t * apiClient)
                                                         "default",  // char *namespace
                                                         NULL,   // char *pretty
                                                         NULL,   // char *dryRun
-                                                        0,  // int gracePeriodSeconds
+                                                        30,  // int gracePeriodSeconds
                                                         0,  // int orphanDependents
                                                         NULL,   // char *propagationPolicy
                                                         NULL    // v1_delete_options_t *body
