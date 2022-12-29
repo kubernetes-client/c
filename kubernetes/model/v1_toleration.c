@@ -107,7 +107,7 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
     // v1_toleration->effect
     cJSON *effect = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "effect");
     if (effect) { 
-    if(!cJSON_IsString(effect))
+    if(!cJSON_IsString(effect) && !cJSON_IsNull(effect))
     {
     goto end; //String
     }
@@ -116,7 +116,7 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
     // v1_toleration->key
     cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "key");
     if (key) { 
-    if(!cJSON_IsString(key))
+    if(!cJSON_IsString(key) && !cJSON_IsNull(key))
     {
     goto end; //String
     }
@@ -125,7 +125,7 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
     // v1_toleration->_operator
     cJSON *_operator = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "operator");
     if (_operator) { 
-    if(!cJSON_IsString(_operator))
+    if(!cJSON_IsString(_operator) && !cJSON_IsNull(_operator))
     {
     goto end; //String
     }
@@ -143,7 +143,7 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
     // v1_toleration->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "value");
     if (value) { 
-    if(!cJSON_IsString(value))
+    if(!cJSON_IsString(value) && !cJSON_IsNull(value))
     {
     goto end; //String
     }
@@ -151,11 +151,11 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
 
 
     v1_toleration_local_var = v1_toleration_create (
-        effect ? strdup(effect->valuestring) : NULL,
-        key ? strdup(key->valuestring) : NULL,
-        _operator ? strdup(_operator->valuestring) : NULL,
+        effect && !cJSON_IsNull(effect) ? strdup(effect->valuestring) : NULL,
+        key && !cJSON_IsNull(key) ? strdup(key->valuestring) : NULL,
+        _operator && !cJSON_IsNull(_operator) ? strdup(_operator->valuestring) : NULL,
         toleration_seconds ? toleration_seconds->valuedouble : 0,
-        value ? strdup(value->valuestring) : NULL
+        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
         );
 
     return v1_toleration_local_var;

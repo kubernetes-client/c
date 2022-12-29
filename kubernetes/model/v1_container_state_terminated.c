@@ -132,7 +132,7 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
     // v1_container_state_terminated->container_id
     cJSON *container_id = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "containerID");
     if (container_id) { 
-    if(!cJSON_IsString(container_id))
+    if(!cJSON_IsString(container_id) && !cJSON_IsNull(container_id))
     {
     goto end; //String
     }
@@ -162,7 +162,7 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
     // v1_container_state_terminated->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -171,7 +171,7 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
     // v1_container_state_terminated->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason))
+    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -197,11 +197,11 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
 
 
     v1_container_state_terminated_local_var = v1_container_state_terminated_create (
-        container_id ? strdup(container_id->valuestring) : NULL,
+        container_id && !cJSON_IsNull(container_id) ? strdup(container_id->valuestring) : NULL,
         exit_code->valuedouble,
         finished_at && !cJSON_IsNull(finished_at) ? strdup(finished_at->valuestring) : NULL,
-        message ? strdup(message->valuestring) : NULL,
-        reason ? strdup(reason->valuestring) : NULL,
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
         signal ? signal->valuedouble : 0,
         started_at && !cJSON_IsNull(started_at) ? strdup(started_at->valuestring) : NULL
         );

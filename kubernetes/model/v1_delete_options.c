@@ -154,7 +154,7 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
     // v1_delete_options->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -191,7 +191,7 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
     // v1_delete_options->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -215,7 +215,7 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
     // v1_delete_options->propagation_policy
     cJSON *propagation_policy = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "propagationPolicy");
     if (propagation_policy) { 
-    if(!cJSON_IsString(propagation_policy))
+    if(!cJSON_IsString(propagation_policy) && !cJSON_IsNull(propagation_policy))
     {
     goto end; //String
     }
@@ -223,13 +223,13 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
 
 
     v1_delete_options_local_var = v1_delete_options_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         dry_run ? dry_runList : NULL,
         grace_period_seconds ? grace_period_seconds->valuedouble : 0,
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         orphan_dependents ? orphan_dependents->valueint : 0,
         preconditions ? preconditions_local_nonprim : NULL,
-        propagation_policy ? strdup(propagation_policy->valuestring) : NULL
+        propagation_policy && !cJSON_IsNull(propagation_policy) ? strdup(propagation_policy->valuestring) : NULL
         );
 
     return v1_delete_options_local_var;

@@ -174,7 +174,7 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
     // v1_rbd_persistent_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type))
+    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
@@ -195,7 +195,7 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
     // v1_rbd_persistent_volume_source->keyring
     cJSON *keyring = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "keyring");
     if (keyring) { 
-    if(!cJSON_IsString(keyring))
+    if(!cJSON_IsString(keyring) && !cJSON_IsNull(keyring))
     {
     goto end; //String
     }
@@ -226,7 +226,7 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
     // v1_rbd_persistent_volume_source->pool
     cJSON *pool = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "pool");
     if (pool) { 
-    if(!cJSON_IsString(pool))
+    if(!cJSON_IsString(pool) && !cJSON_IsNull(pool))
     {
     goto end; //String
     }
@@ -250,7 +250,7 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
     // v1_rbd_persistent_volume_source->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "user");
     if (user) { 
-    if(!cJSON_IsString(user))
+    if(!cJSON_IsString(user) && !cJSON_IsNull(user))
     {
     goto end; //String
     }
@@ -258,14 +258,14 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
 
 
     v1_rbd_persistent_volume_source_local_var = v1_rbd_persistent_volume_source_create (
-        fs_type ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         strdup(image->valuestring),
-        keyring ? strdup(keyring->valuestring) : NULL,
+        keyring && !cJSON_IsNull(keyring) ? strdup(keyring->valuestring) : NULL,
         monitorsList,
-        pool ? strdup(pool->valuestring) : NULL,
+        pool && !cJSON_IsNull(pool) ? strdup(pool->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
         secret_ref ? secret_ref_local_nonprim : NULL,
-        user ? strdup(user->valuestring) : NULL
+        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
         );
 
     return v1_rbd_persistent_volume_source_local_var;

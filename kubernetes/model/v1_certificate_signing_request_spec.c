@@ -270,7 +270,7 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
     // v1_certificate_signing_request_spec->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid))
+    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -298,7 +298,7 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
     // v1_certificate_signing_request_spec->username
     cJSON *username = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "username");
     if (username) { 
-    if(!cJSON_IsString(username))
+    if(!cJSON_IsString(username) && !cJSON_IsNull(username))
     {
     goto end; //String
     }
@@ -311,9 +311,9 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
         groups ? groupsList : NULL,
         strdup(request->valuestring),
         strdup(signer_name->valuestring),
-        uid ? strdup(uid->valuestring) : NULL,
+        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL,
         usages ? usagesList : NULL,
-        username ? strdup(username->valuestring) : NULL
+        username && !cJSON_IsNull(username) ? strdup(username->valuestring) : NULL
         );
 
     return v1_certificate_signing_request_spec_local_var;

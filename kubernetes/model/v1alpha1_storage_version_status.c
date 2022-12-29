@@ -119,7 +119,7 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
     // v1alpha1_storage_version_status->common_encoding_version
     cJSON *common_encoding_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_statusJSON, "commonEncodingVersion");
     if (common_encoding_version) { 
-    if(!cJSON_IsString(common_encoding_version))
+    if(!cJSON_IsString(common_encoding_version) && !cJSON_IsNull(common_encoding_version))
     {
     goto end; //String
     }
@@ -169,7 +169,7 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
 
 
     v1alpha1_storage_version_status_local_var = v1alpha1_storage_version_status_create (
-        common_encoding_version ? strdup(common_encoding_version->valuestring) : NULL,
+        common_encoding_version && !cJSON_IsNull(common_encoding_version) ? strdup(common_encoding_version->valuestring) : NULL,
         conditions ? conditionsList : NULL,
         storage_versions ? storage_versionsList : NULL
         );

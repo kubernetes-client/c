@@ -139,7 +139,7 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
     // v1_object_reference->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_object_referenceJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -148,7 +148,7 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
     // v1_object_reference->field_path
     cJSON *field_path = cJSON_GetObjectItemCaseSensitive(v1_object_referenceJSON, "fieldPath");
     if (field_path) { 
-    if(!cJSON_IsString(field_path))
+    if(!cJSON_IsString(field_path) && !cJSON_IsNull(field_path))
     {
     goto end; //String
     }
@@ -157,7 +157,7 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
     // v1_object_reference->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_object_referenceJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -166,7 +166,7 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
     // v1_object_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_object_referenceJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -175,7 +175,7 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
     // v1_object_reference->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_object_referenceJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace))
+    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
@@ -184,7 +184,7 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
     // v1_object_reference->resource_version
     cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_object_referenceJSON, "resourceVersion");
     if (resource_version) { 
-    if(!cJSON_IsString(resource_version))
+    if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
     {
     goto end; //String
     }
@@ -193,7 +193,7 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
     // v1_object_reference->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_object_referenceJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid))
+    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -201,13 +201,13 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
 
 
     v1_object_reference_local_var = v1_object_reference_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        field_path ? strdup(field_path->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
-        name ? strdup(name->valuestring) : NULL,
-        _namespace ? strdup(_namespace->valuestring) : NULL,
-        resource_version ? strdup(resource_version->valuestring) : NULL,
-        uid ? strdup(uid->valuestring) : NULL
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        field_path && !cJSON_IsNull(field_path) ? strdup(field_path->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
+        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
+        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
         );
 
     return v1_object_reference_local_var;

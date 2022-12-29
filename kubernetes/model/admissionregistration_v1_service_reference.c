@@ -119,7 +119,7 @@ admissionregistration_v1_service_reference_t *admissionregistration_v1_service_r
     // admissionregistration_v1_service_reference->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(admissionregistration_v1_service_referenceJSON, "path");
     if (path) { 
-    if(!cJSON_IsString(path))
+    if(!cJSON_IsString(path) && !cJSON_IsNull(path))
     {
     goto end; //String
     }
@@ -138,7 +138,7 @@ admissionregistration_v1_service_reference_t *admissionregistration_v1_service_r
     admissionregistration_v1_service_reference_local_var = admissionregistration_v1_service_reference_create (
         strdup(name->valuestring),
         strdup(_namespace->valuestring),
-        path ? strdup(path->valuestring) : NULL,
+        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
         port ? port->valuedouble : 0
         );
 

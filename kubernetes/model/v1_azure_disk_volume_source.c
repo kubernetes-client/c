@@ -123,7 +123,7 @@ v1_azure_disk_volume_source_t *v1_azure_disk_volume_source_parseFromJSON(cJSON *
     // v1_azure_disk_volume_source->caching_mode
     cJSON *caching_mode = cJSON_GetObjectItemCaseSensitive(v1_azure_disk_volume_sourceJSON, "cachingMode");
     if (caching_mode) { 
-    if(!cJSON_IsString(caching_mode))
+    if(!cJSON_IsString(caching_mode) && !cJSON_IsNull(caching_mode))
     {
     goto end; //String
     }
@@ -156,7 +156,7 @@ v1_azure_disk_volume_source_t *v1_azure_disk_volume_source_parseFromJSON(cJSON *
     // v1_azure_disk_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_azure_disk_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type))
+    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
@@ -165,7 +165,7 @@ v1_azure_disk_volume_source_t *v1_azure_disk_volume_source_parseFromJSON(cJSON *
     // v1_azure_disk_volume_source->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_azure_disk_volume_sourceJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -182,11 +182,11 @@ v1_azure_disk_volume_source_t *v1_azure_disk_volume_source_parseFromJSON(cJSON *
 
 
     v1_azure_disk_volume_source_local_var = v1_azure_disk_volume_source_create (
-        caching_mode ? strdup(caching_mode->valuestring) : NULL,
+        caching_mode && !cJSON_IsNull(caching_mode) ? strdup(caching_mode->valuestring) : NULL,
         strdup(disk_name->valuestring),
         strdup(disk_uri->valuestring),
-        fs_type ? strdup(fs_type->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         read_only ? read_only->valueint : 0
         );
 

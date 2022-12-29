@@ -167,7 +167,7 @@ v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_parseFromJSON(cJSON *v1_cep
     // v1_ceph_fs_volume_source->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "path");
     if (path) { 
-    if(!cJSON_IsString(path))
+    if(!cJSON_IsString(path) && !cJSON_IsNull(path))
     {
     goto end; //String
     }
@@ -185,7 +185,7 @@ v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_parseFromJSON(cJSON *v1_cep
     // v1_ceph_fs_volume_source->secret_file
     cJSON *secret_file = cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "secretFile");
     if (secret_file) { 
-    if(!cJSON_IsString(secret_file))
+    if(!cJSON_IsString(secret_file) && !cJSON_IsNull(secret_file))
     {
     goto end; //String
     }
@@ -200,7 +200,7 @@ v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_parseFromJSON(cJSON *v1_cep
     // v1_ceph_fs_volume_source->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "user");
     if (user) { 
-    if(!cJSON_IsString(user))
+    if(!cJSON_IsString(user) && !cJSON_IsNull(user))
     {
     goto end; //String
     }
@@ -209,11 +209,11 @@ v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_parseFromJSON(cJSON *v1_cep
 
     v1_ceph_fs_volume_source_local_var = v1_ceph_fs_volume_source_create (
         monitorsList,
-        path ? strdup(path->valuestring) : NULL,
+        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
-        secret_file ? strdup(secret_file->valuestring) : NULL,
+        secret_file && !cJSON_IsNull(secret_file) ? strdup(secret_file->valuestring) : NULL,
         secret_ref ? secret_ref_local_nonprim : NULL,
-        user ? strdup(user->valuestring) : NULL
+        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
         );
 
     return v1_ceph_fs_volume_source_local_var;

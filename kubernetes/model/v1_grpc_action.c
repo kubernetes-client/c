@@ -78,7 +78,7 @@ v1_grpc_action_t *v1_grpc_action_parseFromJSON(cJSON *v1_grpc_actionJSON){
     // v1_grpc_action->service
     cJSON *service = cJSON_GetObjectItemCaseSensitive(v1_grpc_actionJSON, "service");
     if (service) { 
-    if(!cJSON_IsString(service))
+    if(!cJSON_IsString(service) && !cJSON_IsNull(service))
     {
     goto end; //String
     }
@@ -87,7 +87,7 @@ v1_grpc_action_t *v1_grpc_action_parseFromJSON(cJSON *v1_grpc_actionJSON){
 
     v1_grpc_action_local_var = v1_grpc_action_create (
         port->valuedouble,
-        service ? strdup(service->valuestring) : NULL
+        service && !cJSON_IsNull(service) ? strdup(service->valuestring) : NULL
         );
 
     return v1_grpc_action_local_var;

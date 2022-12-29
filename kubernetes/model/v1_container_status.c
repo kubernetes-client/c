@@ -176,7 +176,7 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     // v1_container_status->container_id
     cJSON *container_id = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "containerID");
     if (container_id) { 
-    if(!cJSON_IsString(container_id))
+    if(!cJSON_IsString(container_id) && !cJSON_IsNull(container_id))
     {
     goto end; //String
     }
@@ -265,7 +265,7 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
 
     v1_container_status_local_var = v1_container_status_create (
-        container_id ? strdup(container_id->valuestring) : NULL,
+        container_id && !cJSON_IsNull(container_id) ? strdup(container_id->valuestring) : NULL,
         strdup(image->valuestring),
         strdup(image_id->valuestring),
         last_state ? last_state_local_nonprim : NULL,

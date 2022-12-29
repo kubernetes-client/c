@@ -411,7 +411,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     // v1_service_spec->cluster_ip
     cJSON *cluster_ip = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "clusterIP");
     if (cluster_ip) { 
-    if(!cJSON_IsString(cluster_ip))
+    if(!cJSON_IsString(cluster_ip) && !cJSON_IsNull(cluster_ip))
     {
     goto end; //String
     }
@@ -458,7 +458,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     // v1_service_spec->external_name
     cJSON *external_name = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalName");
     if (external_name) { 
-    if(!cJSON_IsString(external_name))
+    if(!cJSON_IsString(external_name) && !cJSON_IsNull(external_name))
     {
     goto end; //String
     }
@@ -467,7 +467,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     // v1_service_spec->external_traffic_policy
     cJSON *external_traffic_policy = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalTrafficPolicy");
     if (external_traffic_policy) { 
-    if(!cJSON_IsString(external_traffic_policy))
+    if(!cJSON_IsString(external_traffic_policy) && !cJSON_IsNull(external_traffic_policy))
     {
     goto end; //String
     }
@@ -485,7 +485,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     // v1_service_spec->internal_traffic_policy
     cJSON *internal_traffic_policy = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "internalTrafficPolicy");
     if (internal_traffic_policy) { 
-    if(!cJSON_IsString(internal_traffic_policy))
+    if(!cJSON_IsString(internal_traffic_policy) && !cJSON_IsNull(internal_traffic_policy))
     {
     goto end; //String
     }
@@ -513,7 +513,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     // v1_service_spec->ip_family_policy
     cJSON *ip_family_policy = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "ipFamilyPolicy");
     if (ip_family_policy) { 
-    if(!cJSON_IsString(ip_family_policy))
+    if(!cJSON_IsString(ip_family_policy) && !cJSON_IsNull(ip_family_policy))
     {
     goto end; //String
     }
@@ -522,7 +522,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     // v1_service_spec->load_balancer_class
     cJSON *load_balancer_class = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "loadBalancerClass");
     if (load_balancer_class) { 
-    if(!cJSON_IsString(load_balancer_class))
+    if(!cJSON_IsString(load_balancer_class) && !cJSON_IsNull(load_balancer_class))
     {
     goto end; //String
     }
@@ -531,7 +531,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     // v1_service_spec->load_balancer_ip
     cJSON *load_balancer_ip = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "loadBalancerIP");
     if (load_balancer_ip) { 
-    if(!cJSON_IsString(load_balancer_ip))
+    if(!cJSON_IsString(load_balancer_ip) && !cJSON_IsNull(load_balancer_ip))
     {
     goto end; //String
     }
@@ -614,7 +614,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     // v1_service_spec->session_affinity
     cJSON *session_affinity = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "sessionAffinity");
     if (session_affinity) { 
-    if(!cJSON_IsString(session_affinity))
+    if(!cJSON_IsString(session_affinity) && !cJSON_IsNull(session_affinity))
     {
     goto end; //String
     }
@@ -629,7 +629,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     // v1_service_spec->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type))
+    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -638,24 +638,24 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     v1_service_spec_local_var = v1_service_spec_create (
         allocate_load_balancer_node_ports ? allocate_load_balancer_node_ports->valueint : 0,
-        cluster_ip ? strdup(cluster_ip->valuestring) : NULL,
+        cluster_ip && !cJSON_IsNull(cluster_ip) ? strdup(cluster_ip->valuestring) : NULL,
         cluster_ips ? cluster_ipsList : NULL,
         external_ips ? external_ipsList : NULL,
-        external_name ? strdup(external_name->valuestring) : NULL,
-        external_traffic_policy ? strdup(external_traffic_policy->valuestring) : NULL,
+        external_name && !cJSON_IsNull(external_name) ? strdup(external_name->valuestring) : NULL,
+        external_traffic_policy && !cJSON_IsNull(external_traffic_policy) ? strdup(external_traffic_policy->valuestring) : NULL,
         health_check_node_port ? health_check_node_port->valuedouble : 0,
-        internal_traffic_policy ? strdup(internal_traffic_policy->valuestring) : NULL,
+        internal_traffic_policy && !cJSON_IsNull(internal_traffic_policy) ? strdup(internal_traffic_policy->valuestring) : NULL,
         ip_families ? ip_familiesList : NULL,
-        ip_family_policy ? strdup(ip_family_policy->valuestring) : NULL,
-        load_balancer_class ? strdup(load_balancer_class->valuestring) : NULL,
-        load_balancer_ip ? strdup(load_balancer_ip->valuestring) : NULL,
+        ip_family_policy && !cJSON_IsNull(ip_family_policy) ? strdup(ip_family_policy->valuestring) : NULL,
+        load_balancer_class && !cJSON_IsNull(load_balancer_class) ? strdup(load_balancer_class->valuestring) : NULL,
+        load_balancer_ip && !cJSON_IsNull(load_balancer_ip) ? strdup(load_balancer_ip->valuestring) : NULL,
         load_balancer_source_ranges ? load_balancer_source_rangesList : NULL,
         ports ? portsList : NULL,
         publish_not_ready_addresses ? publish_not_ready_addresses->valueint : 0,
         selector ? selectorList : NULL,
-        session_affinity ? strdup(session_affinity->valuestring) : NULL,
+        session_affinity && !cJSON_IsNull(session_affinity) ? strdup(session_affinity->valuestring) : NULL,
         session_affinity_config ? session_affinity_config_local_nonprim : NULL,
-        type ? strdup(type->valuestring) : NULL
+        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return v1_service_spec_local_var;

@@ -114,7 +114,7 @@ v1_binding_t *v1_binding_parseFromJSON(cJSON *v1_bindingJSON){
     // v1_binding->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -123,7 +123,7 @@ v1_binding_t *v1_binding_parseFromJSON(cJSON *v1_bindingJSON){
     // v1_binding->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -146,8 +146,8 @@ v1_binding_t *v1_binding_parseFromJSON(cJSON *v1_bindingJSON){
 
 
     v1_binding_local_var = v1_binding_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         target_local_nonprim
         );

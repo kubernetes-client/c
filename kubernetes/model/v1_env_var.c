@@ -104,7 +104,7 @@ v1_env_var_t *v1_env_var_parseFromJSON(cJSON *v1_env_varJSON){
     // v1_env_var->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_env_varJSON, "value");
     if (value) { 
-    if(!cJSON_IsString(value))
+    if(!cJSON_IsString(value) && !cJSON_IsNull(value))
     {
     goto end; //String
     }
@@ -119,7 +119,7 @@ v1_env_var_t *v1_env_var_parseFromJSON(cJSON *v1_env_varJSON){
 
     v1_env_var_local_var = v1_env_var_create (
         strdup(name->valuestring),
-        value ? strdup(value->valuestring) : NULL,
+        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL,
         value_from ? value_from_local_nonprim : NULL
         );
 

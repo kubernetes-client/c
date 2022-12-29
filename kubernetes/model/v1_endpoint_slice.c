@@ -183,7 +183,7 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
     // v1_endpoint_slice->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_endpoint_sliceJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -216,7 +216,7 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
     // v1_endpoint_slice->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_endpoint_sliceJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -252,9 +252,9 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
 
     v1_endpoint_slice_local_var = v1_endpoint_slice_create (
         strdup(address_type->valuestring),
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         endpointsList,
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         ports ? portsList : NULL
         );

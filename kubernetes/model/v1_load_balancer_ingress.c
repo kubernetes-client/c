@@ -101,7 +101,7 @@ v1_load_balancer_ingress_t *v1_load_balancer_ingress_parseFromJSON(cJSON *v1_loa
     // v1_load_balancer_ingress->hostname
     cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1_load_balancer_ingressJSON, "hostname");
     if (hostname) { 
-    if(!cJSON_IsString(hostname))
+    if(!cJSON_IsString(hostname) && !cJSON_IsNull(hostname))
     {
     goto end; //String
     }
@@ -110,7 +110,7 @@ v1_load_balancer_ingress_t *v1_load_balancer_ingress_parseFromJSON(cJSON *v1_loa
     // v1_load_balancer_ingress->ip
     cJSON *ip = cJSON_GetObjectItemCaseSensitive(v1_load_balancer_ingressJSON, "ip");
     if (ip) { 
-    if(!cJSON_IsString(ip))
+    if(!cJSON_IsString(ip) && !cJSON_IsNull(ip))
     {
     goto end; //String
     }
@@ -139,8 +139,8 @@ v1_load_balancer_ingress_t *v1_load_balancer_ingress_parseFromJSON(cJSON *v1_loa
 
 
     v1_load_balancer_ingress_local_var = v1_load_balancer_ingress_create (
-        hostname ? strdup(hostname->valuestring) : NULL,
-        ip ? strdup(ip->valuestring) : NULL,
+        hostname && !cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
+        ip && !cJSON_IsNull(ip) ? strdup(ip->valuestring) : NULL,
         ports ? portsList : NULL
         );
 

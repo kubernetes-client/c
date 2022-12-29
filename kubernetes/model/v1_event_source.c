@@ -69,7 +69,7 @@ v1_event_source_t *v1_event_source_parseFromJSON(cJSON *v1_event_sourceJSON){
     // v1_event_source->component
     cJSON *component = cJSON_GetObjectItemCaseSensitive(v1_event_sourceJSON, "component");
     if (component) { 
-    if(!cJSON_IsString(component))
+    if(!cJSON_IsString(component) && !cJSON_IsNull(component))
     {
     goto end; //String
     }
@@ -78,7 +78,7 @@ v1_event_source_t *v1_event_source_parseFromJSON(cJSON *v1_event_sourceJSON){
     // v1_event_source->host
     cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_event_sourceJSON, "host");
     if (host) { 
-    if(!cJSON_IsString(host))
+    if(!cJSON_IsString(host) && !cJSON_IsNull(host))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_event_source_t *v1_event_source_parseFromJSON(cJSON *v1_event_sourceJSON){
 
 
     v1_event_source_local_var = v1_event_source_create (
-        component ? strdup(component->valuestring) : NULL,
-        host ? strdup(host->valuestring) : NULL
+        component && !cJSON_IsNull(component) ? strdup(component->valuestring) : NULL,
+        host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL
         );
 
     return v1_event_source_local_var;

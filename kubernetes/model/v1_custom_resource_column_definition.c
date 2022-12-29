@@ -124,7 +124,7 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
     // v1_custom_resource_column_definition->description
     cJSON *description = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "description");
     if (description) { 
-    if(!cJSON_IsString(description))
+    if(!cJSON_IsString(description) && !cJSON_IsNull(description))
     {
     goto end; //String
     }
@@ -133,7 +133,7 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
     // v1_custom_resource_column_definition->format
     cJSON *format = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "format");
     if (format) { 
-    if(!cJSON_IsString(format))
+    if(!cJSON_IsString(format) && !cJSON_IsNull(format))
     {
     goto end; //String
     }
@@ -186,8 +186,8 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
 
 
     v1_custom_resource_column_definition_local_var = v1_custom_resource_column_definition_create (
-        description ? strdup(description->valuestring) : NULL,
-        format ? strdup(format->valuestring) : NULL,
+        description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
+        format && !cJSON_IsNull(format) ? strdup(format->valuestring) : NULL,
         strdup(json_path->valuestring),
         strdup(name->valuestring),
         priority ? priority->valuedouble : 0,

@@ -97,7 +97,7 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
     // v1_se_linux_options->level
     cJSON *level = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "level");
     if (level) { 
-    if(!cJSON_IsString(level))
+    if(!cJSON_IsString(level) && !cJSON_IsNull(level))
     {
     goto end; //String
     }
@@ -106,7 +106,7 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
     // v1_se_linux_options->role
     cJSON *role = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "role");
     if (role) { 
-    if(!cJSON_IsString(role))
+    if(!cJSON_IsString(role) && !cJSON_IsNull(role))
     {
     goto end; //String
     }
@@ -115,7 +115,7 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
     // v1_se_linux_options->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type))
+    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -124,7 +124,7 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
     // v1_se_linux_options->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "user");
     if (user) { 
-    if(!cJSON_IsString(user))
+    if(!cJSON_IsString(user) && !cJSON_IsNull(user))
     {
     goto end; //String
     }
@@ -132,10 +132,10 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
 
 
     v1_se_linux_options_local_var = v1_se_linux_options_create (
-        level ? strdup(level->valuestring) : NULL,
-        role ? strdup(role->valuestring) : NULL,
-        type ? strdup(type->valuestring) : NULL,
-        user ? strdup(user->valuestring) : NULL
+        level && !cJSON_IsNull(level) ? strdup(level->valuestring) : NULL,
+        role && !cJSON_IsNull(role) ? strdup(role->valuestring) : NULL,
+        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL,
+        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
         );
 
     return v1_se_linux_options_local_var;

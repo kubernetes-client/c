@@ -165,7 +165,7 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
     // v1_status->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -189,7 +189,7 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
     // v1_status->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -198,7 +198,7 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
     // v1_status->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -213,7 +213,7 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
     // v1_status->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason))
+    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -222,7 +222,7 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
     // v1_status->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "status");
     if (status) { 
-    if(!cJSON_IsString(status))
+    if(!cJSON_IsString(status) && !cJSON_IsNull(status))
     {
     goto end; //String
     }
@@ -230,14 +230,14 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
 
     v1_status_local_var = v1_status_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         code ? code->valuedouble : 0,
         details ? details_local_nonprim : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
-        message ? strdup(message->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
-        reason ? strdup(reason->valuestring) : NULL,
-        status ? strdup(status->valuestring) : NULL
+        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
+        status && !cJSON_IsNull(status) ? strdup(status->valuestring) : NULL
         );
 
     return v1_status_local_var;

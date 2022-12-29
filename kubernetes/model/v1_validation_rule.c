@@ -70,7 +70,7 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
     // v1_validation_rule->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -90,7 +90,7 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
 
 
     v1_validation_rule_local_var = v1_validation_rule_create (
-        message ? strdup(message->valuestring) : NULL,
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         strdup(rule->valuestring)
         );
 

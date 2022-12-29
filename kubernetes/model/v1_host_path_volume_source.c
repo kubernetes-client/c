@@ -82,7 +82,7 @@ v1_host_path_volume_source_t *v1_host_path_volume_source_parseFromJSON(cJSON *v1
     // v1_host_path_volume_source->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_host_path_volume_sourceJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type))
+    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -91,7 +91,7 @@ v1_host_path_volume_source_t *v1_host_path_volume_source_parseFromJSON(cJSON *v1
 
     v1_host_path_volume_source_local_var = v1_host_path_volume_source_create (
         strdup(path->valuestring),
-        type ? strdup(type->valuestring) : NULL
+        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return v1_host_path_volume_source_local_var;

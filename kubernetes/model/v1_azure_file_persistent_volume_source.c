@@ -116,7 +116,7 @@ v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source
     // v1_azure_file_persistent_volume_source->secret_namespace
     cJSON *secret_namespace = cJSON_GetObjectItemCaseSensitive(v1_azure_file_persistent_volume_sourceJSON, "secretNamespace");
     if (secret_namespace) { 
-    if(!cJSON_IsString(secret_namespace))
+    if(!cJSON_IsString(secret_namespace) && !cJSON_IsNull(secret_namespace))
     {
     goto end; //String
     }
@@ -138,7 +138,7 @@ v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source
     v1_azure_file_persistent_volume_source_local_var = v1_azure_file_persistent_volume_source_create (
         read_only ? read_only->valueint : 0,
         strdup(secret_name->valuestring),
-        secret_namespace ? strdup(secret_namespace->valuestring) : NULL,
+        secret_namespace && !cJSON_IsNull(secret_namespace) ? strdup(secret_namespace->valuestring) : NULL,
         strdup(share_name->valuestring)
         );
 

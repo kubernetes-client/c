@@ -133,7 +133,7 @@ v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_conf
     // v1_node_config_status->error
     cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "error");
     if (error) { 
-    if(!cJSON_IsString(error))
+    if(!cJSON_IsString(error) && !cJSON_IsNull(error))
     {
     goto end; //String
     }
@@ -149,7 +149,7 @@ v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_conf
     v1_node_config_status_local_var = v1_node_config_status_create (
         active ? active_local_nonprim : NULL,
         assigned ? assigned_local_nonprim : NULL,
-        error ? strdup(error->valuestring) : NULL,
+        error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
         last_known_good ? last_known_good_local_nonprim : NULL
         );
 

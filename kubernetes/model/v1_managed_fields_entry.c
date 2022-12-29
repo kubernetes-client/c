@@ -144,7 +144,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
     // v1_managed_fields_entry->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -153,7 +153,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
     // v1_managed_fields_entry->fields_type
     cJSON *fields_type = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "fieldsType");
     if (fields_type) { 
-    if(!cJSON_IsString(fields_type))
+    if(!cJSON_IsString(fields_type) && !cJSON_IsNull(fields_type))
     {
     goto end; //String
     }
@@ -169,7 +169,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
     // v1_managed_fields_entry->manager
     cJSON *manager = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "manager");
     if (manager) { 
-    if(!cJSON_IsString(manager))
+    if(!cJSON_IsString(manager) && !cJSON_IsNull(manager))
     {
     goto end; //String
     }
@@ -178,7 +178,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
     // v1_managed_fields_entry->operation
     cJSON *operation = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "operation");
     if (operation) { 
-    if(!cJSON_IsString(operation))
+    if(!cJSON_IsString(operation) && !cJSON_IsNull(operation))
     {
     goto end; //String
     }
@@ -187,7 +187,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
     // v1_managed_fields_entry->subresource
     cJSON *subresource = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "subresource");
     if (subresource) { 
-    if(!cJSON_IsString(subresource))
+    if(!cJSON_IsString(subresource) && !cJSON_IsNull(subresource))
     {
     goto end; //String
     }
@@ -204,12 +204,12 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
 
 
     v1_managed_fields_entry_local_var = v1_managed_fields_entry_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        fields_type ? strdup(fields_type->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        fields_type && !cJSON_IsNull(fields_type) ? strdup(fields_type->valuestring) : NULL,
         fields_v1 ? fields_v1_local_object : NULL,
-        manager ? strdup(manager->valuestring) : NULL,
-        operation ? strdup(operation->valuestring) : NULL,
-        subresource ? strdup(subresource->valuestring) : NULL,
+        manager && !cJSON_IsNull(manager) ? strdup(manager->valuestring) : NULL,
+        operation && !cJSON_IsNull(operation) ? strdup(operation->valuestring) : NULL,
+        subresource && !cJSON_IsNull(subresource) ? strdup(subresource->valuestring) : NULL,
         time && !cJSON_IsNull(time) ? strdup(time->valuestring) : NULL
         );
 

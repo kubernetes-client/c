@@ -77,7 +77,7 @@ v1_ingress_class_spec_t *v1_ingress_class_spec_parseFromJSON(cJSON *v1_ingress_c
     // v1_ingress_class_spec->controller
     cJSON *controller = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_specJSON, "controller");
     if (controller) { 
-    if(!cJSON_IsString(controller))
+    if(!cJSON_IsString(controller) && !cJSON_IsNull(controller))
     {
     goto end; //String
     }
@@ -91,7 +91,7 @@ v1_ingress_class_spec_t *v1_ingress_class_spec_parseFromJSON(cJSON *v1_ingress_c
 
 
     v1_ingress_class_spec_local_var = v1_ingress_class_spec_create (
-        controller ? strdup(controller->valuestring) : NULL,
+        controller && !cJSON_IsNull(controller) ? strdup(controller->valuestring) : NULL,
         parameters ? parameters_local_nonprim : NULL
         );
 

@@ -83,7 +83,7 @@ v1_deployment_strategy_t *v1_deployment_strategy_parseFromJSON(cJSON *v1_deploym
     // v1_deployment_strategy->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_deployment_strategyJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type))
+    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -92,7 +92,7 @@ v1_deployment_strategy_t *v1_deployment_strategy_parseFromJSON(cJSON *v1_deploym
 
     v1_deployment_strategy_local_var = v1_deployment_strategy_create (
         rolling_update ? rolling_update_local_nonprim : NULL,
-        type ? strdup(type->valuestring) : NULL
+        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return v1_deployment_strategy_local_var;

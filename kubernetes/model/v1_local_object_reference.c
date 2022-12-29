@@ -55,7 +55,7 @@ v1_local_object_reference_t *v1_local_object_reference_parseFromJSON(cJSON *v1_l
     // v1_local_object_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_local_object_referenceJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -63,7 +63,7 @@ v1_local_object_reference_t *v1_local_object_reference_parseFromJSON(cJSON *v1_l
 
 
     v1_local_object_reference_local_var = v1_local_object_reference_create (
-        name ? strdup(name->valuestring) : NULL
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL
         );
 
     return v1_local_object_reference_local_var;

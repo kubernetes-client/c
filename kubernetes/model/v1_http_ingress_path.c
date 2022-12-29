@@ -102,7 +102,7 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
     // v1_http_ingress_path->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "path");
     if (path) { 
-    if(!cJSON_IsString(path))
+    if(!cJSON_IsString(path) && !cJSON_IsNull(path))
     {
     goto end; //String
     }
@@ -123,7 +123,7 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
 
     v1_http_ingress_path_local_var = v1_http_ingress_path_create (
         backend_local_nonprim,
-        path ? strdup(path->valuestring) : NULL,
+        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
         strdup(path_type->valuestring)
         );
 

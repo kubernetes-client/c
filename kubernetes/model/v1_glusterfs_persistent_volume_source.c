@@ -107,7 +107,7 @@ v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source_p
     // v1_glusterfs_persistent_volume_source->endpoints_namespace
     cJSON *endpoints_namespace = cJSON_GetObjectItemCaseSensitive(v1_glusterfs_persistent_volume_sourceJSON, "endpointsNamespace");
     if (endpoints_namespace) { 
-    if(!cJSON_IsString(endpoints_namespace))
+    if(!cJSON_IsString(endpoints_namespace) && !cJSON_IsNull(endpoints_namespace))
     {
     goto end; //String
     }
@@ -137,7 +137,7 @@ v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source_p
 
     v1_glusterfs_persistent_volume_source_local_var = v1_glusterfs_persistent_volume_source_create (
         strdup(endpoints->valuestring),
-        endpoints_namespace ? strdup(endpoints_namespace->valuestring) : NULL,
+        endpoints_namespace && !cJSON_IsNull(endpoints_namespace) ? strdup(endpoints_namespace->valuestring) : NULL,
         strdup(path->valuestring),
         read_only ? read_only->valueint : 0
         );

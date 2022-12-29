@@ -88,7 +88,7 @@ v2_metric_value_status_t *v2_metric_value_status_parseFromJSON(cJSON *v2_metric_
     // v2_metric_value_status->average_value
     cJSON *average_value = cJSON_GetObjectItemCaseSensitive(v2_metric_value_statusJSON, "averageValue");
     if (average_value) { 
-    if(!cJSON_IsString(average_value))
+    if(!cJSON_IsString(average_value) && !cJSON_IsNull(average_value))
     {
     goto end; //String
     }
@@ -97,7 +97,7 @@ v2_metric_value_status_t *v2_metric_value_status_parseFromJSON(cJSON *v2_metric_
     // v2_metric_value_status->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v2_metric_value_statusJSON, "value");
     if (value) { 
-    if(!cJSON_IsString(value))
+    if(!cJSON_IsString(value) && !cJSON_IsNull(value))
     {
     goto end; //String
     }
@@ -106,8 +106,8 @@ v2_metric_value_status_t *v2_metric_value_status_parseFromJSON(cJSON *v2_metric_
 
     v2_metric_value_status_local_var = v2_metric_value_status_create (
         average_utilization ? average_utilization->valuedouble : 0,
-        average_value ? strdup(average_value->valuestring) : NULL,
-        value ? strdup(value->valuestring) : NULL
+        average_value && !cJSON_IsNull(average_value) ? strdup(average_value->valuestring) : NULL,
+        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
         );
 
     return v2_metric_value_status_local_var;

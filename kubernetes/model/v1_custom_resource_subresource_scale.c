@@ -85,7 +85,7 @@ v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale_par
     // v1_custom_resource_subresource_scale->label_selector_path
     cJSON *label_selector_path = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresource_scaleJSON, "labelSelectorPath");
     if (label_selector_path) { 
-    if(!cJSON_IsString(label_selector_path))
+    if(!cJSON_IsString(label_selector_path) && !cJSON_IsNull(label_selector_path))
     {
     goto end; //String
     }
@@ -117,7 +117,7 @@ v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale_par
 
 
     v1_custom_resource_subresource_scale_local_var = v1_custom_resource_subresource_scale_create (
-        label_selector_path ? strdup(label_selector_path->valuestring) : NULL,
+        label_selector_path && !cJSON_IsNull(label_selector_path) ? strdup(label_selector_path->valuestring) : NULL,
         strdup(spec_replicas_path->valuestring),
         strdup(status_replicas_path->valuestring)
         );

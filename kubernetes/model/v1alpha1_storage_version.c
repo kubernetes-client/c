@@ -134,7 +134,7 @@ v1alpha1_storage_version_t *v1alpha1_storage_version_parseFromJSON(cJSON *v1alph
     // v1alpha1_storage_version->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_versionJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -143,7 +143,7 @@ v1alpha1_storage_version_t *v1alpha1_storage_version_parseFromJSON(cJSON *v1alph
     // v1alpha1_storage_version->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_versionJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -176,8 +176,8 @@ v1alpha1_storage_version_t *v1alpha1_storage_version_parseFromJSON(cJSON *v1alph
 
 
     v1alpha1_storage_version_local_var = v1alpha1_storage_version_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec_local_object,
         status_local_nonprim

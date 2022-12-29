@@ -806,7 +806,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // v1_pod_spec->dns_policy
     cJSON *dns_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "dnsPolicy");
     if (dns_policy) { 
-    if(!cJSON_IsString(dns_policy))
+    if(!cJSON_IsString(dns_policy) && !cJSON_IsNull(dns_policy))
     {
     goto end; //String
     }
@@ -902,7 +902,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // v1_pod_spec->hostname
     cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "hostname");
     if (hostname) { 
-    if(!cJSON_IsString(hostname))
+    if(!cJSON_IsString(hostname) && !cJSON_IsNull(hostname))
     {
     goto end; //String
     }
@@ -953,7 +953,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // v1_pod_spec->node_name
     cJSON *node_name = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "nodeName");
     if (node_name) { 
-    if(!cJSON_IsString(node_name))
+    if(!cJSON_IsString(node_name) && !cJSON_IsNull(node_name))
     {
     goto end; //String
     }
@@ -1018,7 +1018,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // v1_pod_spec->preemption_policy
     cJSON *preemption_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "preemptionPolicy");
     if (preemption_policy) { 
-    if(!cJSON_IsString(preemption_policy))
+    if(!cJSON_IsString(preemption_policy) && !cJSON_IsNull(preemption_policy))
     {
     goto end; //String
     }
@@ -1036,7 +1036,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // v1_pod_spec->priority_class_name
     cJSON *priority_class_name = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "priorityClassName");
     if (priority_class_name) { 
-    if(!cJSON_IsString(priority_class_name))
+    if(!cJSON_IsString(priority_class_name) && !cJSON_IsNull(priority_class_name))
     {
     goto end; //String
     }
@@ -1066,7 +1066,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // v1_pod_spec->restart_policy
     cJSON *restart_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "restartPolicy");
     if (restart_policy) { 
-    if(!cJSON_IsString(restart_policy))
+    if(!cJSON_IsString(restart_policy) && !cJSON_IsNull(restart_policy))
     {
     goto end; //String
     }
@@ -1075,7 +1075,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // v1_pod_spec->runtime_class_name
     cJSON *runtime_class_name = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "runtimeClassName");
     if (runtime_class_name) { 
-    if(!cJSON_IsString(runtime_class_name))
+    if(!cJSON_IsString(runtime_class_name) && !cJSON_IsNull(runtime_class_name))
     {
     goto end; //String
     }
@@ -1084,7 +1084,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // v1_pod_spec->scheduler_name
     cJSON *scheduler_name = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "schedulerName");
     if (scheduler_name) { 
-    if(!cJSON_IsString(scheduler_name))
+    if(!cJSON_IsString(scheduler_name) && !cJSON_IsNull(scheduler_name))
     {
     goto end; //String
     }
@@ -1099,7 +1099,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // v1_pod_spec->service_account
     cJSON *service_account = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "serviceAccount");
     if (service_account) { 
-    if(!cJSON_IsString(service_account))
+    if(!cJSON_IsString(service_account) && !cJSON_IsNull(service_account))
     {
     goto end; //String
     }
@@ -1108,7 +1108,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // v1_pod_spec->service_account_name
     cJSON *service_account_name = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "serviceAccountName");
     if (service_account_name) { 
-    if(!cJSON_IsString(service_account_name))
+    if(!cJSON_IsString(service_account_name) && !cJSON_IsNull(service_account_name))
     {
     goto end; //String
     }
@@ -1135,7 +1135,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // v1_pod_spec->subdomain
     cJSON *subdomain = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "subdomain");
     if (subdomain) { 
-    if(!cJSON_IsString(subdomain))
+    if(!cJSON_IsString(subdomain) && !cJSON_IsNull(subdomain))
     {
     goto end; //String
     }
@@ -1220,7 +1220,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         automount_service_account_token ? automount_service_account_token->valueint : 0,
         containersList,
         dns_config ? dns_config_local_nonprim : NULL,
-        dns_policy ? strdup(dns_policy->valuestring) : NULL,
+        dns_policy && !cJSON_IsNull(dns_policy) ? strdup(dns_policy->valuestring) : NULL,
         enable_service_links ? enable_service_links->valueint : 0,
         ephemeral_containers ? ephemeral_containersList : NULL,
         host_aliases ? host_aliasesList : NULL,
@@ -1228,26 +1228,26 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         host_network ? host_network->valueint : 0,
         host_pid ? host_pid->valueint : 0,
         host_users ? host_users->valueint : 0,
-        hostname ? strdup(hostname->valuestring) : NULL,
+        hostname && !cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
         image_pull_secrets ? image_pull_secretsList : NULL,
         init_containers ? init_containersList : NULL,
-        node_name ? strdup(node_name->valuestring) : NULL,
+        node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
         node_selector ? node_selectorList : NULL,
         os ? os_local_nonprim : NULL,
         overhead ? overheadList : NULL,
-        preemption_policy ? strdup(preemption_policy->valuestring) : NULL,
+        preemption_policy && !cJSON_IsNull(preemption_policy) ? strdup(preemption_policy->valuestring) : NULL,
         priority ? priority->valuedouble : 0,
-        priority_class_name ? strdup(priority_class_name->valuestring) : NULL,
+        priority_class_name && !cJSON_IsNull(priority_class_name) ? strdup(priority_class_name->valuestring) : NULL,
         readiness_gates ? readiness_gatesList : NULL,
-        restart_policy ? strdup(restart_policy->valuestring) : NULL,
-        runtime_class_name ? strdup(runtime_class_name->valuestring) : NULL,
-        scheduler_name ? strdup(scheduler_name->valuestring) : NULL,
+        restart_policy && !cJSON_IsNull(restart_policy) ? strdup(restart_policy->valuestring) : NULL,
+        runtime_class_name && !cJSON_IsNull(runtime_class_name) ? strdup(runtime_class_name->valuestring) : NULL,
+        scheduler_name && !cJSON_IsNull(scheduler_name) ? strdup(scheduler_name->valuestring) : NULL,
         security_context ? security_context_local_nonprim : NULL,
-        service_account ? strdup(service_account->valuestring) : NULL,
-        service_account_name ? strdup(service_account_name->valuestring) : NULL,
+        service_account && !cJSON_IsNull(service_account) ? strdup(service_account->valuestring) : NULL,
+        service_account_name && !cJSON_IsNull(service_account_name) ? strdup(service_account_name->valuestring) : NULL,
         set_hostname_as_fqdn ? set_hostname_as_fqdn->valueint : 0,
         share_process_namespace ? share_process_namespace->valueint : 0,
-        subdomain ? strdup(subdomain->valuestring) : NULL,
+        subdomain && !cJSON_IsNull(subdomain) ? strdup(subdomain->valuestring) : NULL,
         termination_grace_period_seconds ? termination_grace_period_seconds->valuedouble : 0,
         tolerations ? tolerationsList : NULL,
         topology_spread_constraints ? topology_spread_constraintsList : NULL,

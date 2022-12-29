@@ -137,7 +137,7 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
     // v1_config_map_volume_source->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -156,7 +156,7 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
     v1_config_map_volume_source_local_var = v1_config_map_volume_source_create (
         default_mode ? default_mode->valuedouble : 0,
         items ? itemsList : NULL,
-        name ? strdup(name->valuestring) : NULL,
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         optional ? optional->valueint : 0
         );
 

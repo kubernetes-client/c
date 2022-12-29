@@ -184,7 +184,7 @@ v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_par
     // v1_scale_io_persistent_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_scale_io_persistent_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type))
+    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
@@ -205,7 +205,7 @@ v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_par
     // v1_scale_io_persistent_volume_source->protection_domain
     cJSON *protection_domain = cJSON_GetObjectItemCaseSensitive(v1_scale_io_persistent_volume_sourceJSON, "protectionDomain");
     if (protection_domain) { 
-    if(!cJSON_IsString(protection_domain))
+    if(!cJSON_IsString(protection_domain) && !cJSON_IsNull(protection_domain))
     {
     goto end; //String
     }
@@ -241,7 +241,7 @@ v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_par
     // v1_scale_io_persistent_volume_source->storage_mode
     cJSON *storage_mode = cJSON_GetObjectItemCaseSensitive(v1_scale_io_persistent_volume_sourceJSON, "storageMode");
     if (storage_mode) { 
-    if(!cJSON_IsString(storage_mode))
+    if(!cJSON_IsString(storage_mode) && !cJSON_IsNull(storage_mode))
     {
     goto end; //String
     }
@@ -250,7 +250,7 @@ v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_par
     // v1_scale_io_persistent_volume_source->storage_pool
     cJSON *storage_pool = cJSON_GetObjectItemCaseSensitive(v1_scale_io_persistent_volume_sourceJSON, "storagePool");
     if (storage_pool) { 
-    if(!cJSON_IsString(storage_pool))
+    if(!cJSON_IsString(storage_pool) && !cJSON_IsNull(storage_pool))
     {
     goto end; //String
     }
@@ -271,7 +271,7 @@ v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_par
     // v1_scale_io_persistent_volume_source->volume_name
     cJSON *volume_name = cJSON_GetObjectItemCaseSensitive(v1_scale_io_persistent_volume_sourceJSON, "volumeName");
     if (volume_name) { 
-    if(!cJSON_IsString(volume_name))
+    if(!cJSON_IsString(volume_name) && !cJSON_IsNull(volume_name))
     {
     goto end; //String
     }
@@ -279,16 +279,16 @@ v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_par
 
 
     v1_scale_io_persistent_volume_source_local_var = v1_scale_io_persistent_volume_source_create (
-        fs_type ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         strdup(gateway->valuestring),
-        protection_domain ? strdup(protection_domain->valuestring) : NULL,
+        protection_domain && !cJSON_IsNull(protection_domain) ? strdup(protection_domain->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
         secret_ref_local_nonprim,
         ssl_enabled ? ssl_enabled->valueint : 0,
-        storage_mode ? strdup(storage_mode->valuestring) : NULL,
-        storage_pool ? strdup(storage_pool->valuestring) : NULL,
+        storage_mode && !cJSON_IsNull(storage_mode) ? strdup(storage_mode->valuestring) : NULL,
+        storage_pool && !cJSON_IsNull(storage_pool) ? strdup(storage_pool->valuestring) : NULL,
         strdup(system->valuestring),
-        volume_name ? strdup(volume_name->valuestring) : NULL
+        volume_name && !cJSON_IsNull(volume_name) ? strdup(volume_name->valuestring) : NULL
         );
 
     return v1_scale_io_persistent_volume_source_local_var;

@@ -136,7 +136,7 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
     // authentication_v1_token_request->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -145,7 +145,7 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
     // authentication_v1_token_request->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -174,8 +174,8 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
 
 
     authentication_v1_token_request_local_var = authentication_v1_token_request_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec_local_nonprim,
         status ? status_local_nonprim : NULL

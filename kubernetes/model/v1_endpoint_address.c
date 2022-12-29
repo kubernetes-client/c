@@ -106,7 +106,7 @@ v1_endpoint_address_t *v1_endpoint_address_parseFromJSON(cJSON *v1_endpoint_addr
     // v1_endpoint_address->hostname
     cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1_endpoint_addressJSON, "hostname");
     if (hostname) { 
-    if(!cJSON_IsString(hostname))
+    if(!cJSON_IsString(hostname) && !cJSON_IsNull(hostname))
     {
     goto end; //String
     }
@@ -127,7 +127,7 @@ v1_endpoint_address_t *v1_endpoint_address_parseFromJSON(cJSON *v1_endpoint_addr
     // v1_endpoint_address->node_name
     cJSON *node_name = cJSON_GetObjectItemCaseSensitive(v1_endpoint_addressJSON, "nodeName");
     if (node_name) { 
-    if(!cJSON_IsString(node_name))
+    if(!cJSON_IsString(node_name) && !cJSON_IsNull(node_name))
     {
     goto end; //String
     }
@@ -141,9 +141,9 @@ v1_endpoint_address_t *v1_endpoint_address_parseFromJSON(cJSON *v1_endpoint_addr
 
 
     v1_endpoint_address_local_var = v1_endpoint_address_create (
-        hostname ? strdup(hostname->valuestring) : NULL,
+        hostname && !cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
         strdup(ip->valuestring),
-        node_name ? strdup(node_name->valuestring) : NULL,
+        node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
         target_ref ? target_ref_local_nonprim : NULL
         );
 

@@ -147,7 +147,7 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
     // v1_cron_job_spec->concurrency_policy
     cJSON *concurrency_policy = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "concurrencyPolicy");
     if (concurrency_policy) { 
-    if(!cJSON_IsString(concurrency_policy))
+    if(!cJSON_IsString(concurrency_policy) && !cJSON_IsNull(concurrency_policy))
     {
     goto end; //String
     }
@@ -213,7 +213,7 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
     // v1_cron_job_spec->time_zone
     cJSON *time_zone = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "timeZone");
     if (time_zone) { 
-    if(!cJSON_IsString(time_zone))
+    if(!cJSON_IsString(time_zone) && !cJSON_IsNull(time_zone))
     {
     goto end; //String
     }
@@ -221,14 +221,14 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
 
     v1_cron_job_spec_local_var = v1_cron_job_spec_create (
-        concurrency_policy ? strdup(concurrency_policy->valuestring) : NULL,
+        concurrency_policy && !cJSON_IsNull(concurrency_policy) ? strdup(concurrency_policy->valuestring) : NULL,
         failed_jobs_history_limit ? failed_jobs_history_limit->valuedouble : 0,
         job_template_local_nonprim,
         strdup(schedule->valuestring),
         starting_deadline_seconds ? starting_deadline_seconds->valuedouble : 0,
         successful_jobs_history_limit ? successful_jobs_history_limit->valuedouble : 0,
         suspend ? suspend->valueint : 0,
-        time_zone ? strdup(time_zone->valuestring) : NULL
+        time_zone && !cJSON_IsNull(time_zone) ? strdup(time_zone->valuestring) : NULL
         );
 
     return v1_cron_job_spec_local_var;

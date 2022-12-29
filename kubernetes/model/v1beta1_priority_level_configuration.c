@@ -135,7 +135,7 @@ v1beta1_priority_level_configuration_t *v1beta1_priority_level_configuration_par
     // v1beta1_priority_level_configuration->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1beta1_priority_level_configurationJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -144,7 +144,7 @@ v1beta1_priority_level_configuration_t *v1beta1_priority_level_configuration_par
     // v1beta1_priority_level_configuration->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1beta1_priority_level_configurationJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -170,8 +170,8 @@ v1beta1_priority_level_configuration_t *v1beta1_priority_level_configuration_par
 
 
     v1beta1_priority_level_configuration_local_var = v1beta1_priority_level_configuration_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL,
         status ? status_local_nonprim : NULL

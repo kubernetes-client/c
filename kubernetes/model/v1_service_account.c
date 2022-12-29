@@ -165,7 +165,7 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
     // v1_service_account->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -204,7 +204,7 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
     // v1_service_account->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -239,10 +239,10 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
 
     v1_service_account_local_var = v1_service_account_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         automount_service_account_token ? automount_service_account_token->valueint : 0,
         image_pull_secrets ? image_pull_secretsList : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         secrets ? secretsList : NULL
         );

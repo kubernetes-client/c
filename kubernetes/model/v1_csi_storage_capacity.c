@@ -156,7 +156,7 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
     // v1_csi_storage_capacity->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -165,7 +165,7 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
     // v1_csi_storage_capacity->capacity
     cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "capacity");
     if (capacity) { 
-    if(!cJSON_IsString(capacity))
+    if(!cJSON_IsString(capacity) && !cJSON_IsNull(capacity))
     {
     goto end; //String
     }
@@ -174,7 +174,7 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
     // v1_csi_storage_capacity->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -183,7 +183,7 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
     // v1_csi_storage_capacity->maximum_volume_size
     cJSON *maximum_volume_size = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "maximumVolumeSize");
     if (maximum_volume_size) { 
-    if(!cJSON_IsString(maximum_volume_size))
+    if(!cJSON_IsString(maximum_volume_size) && !cJSON_IsNull(maximum_volume_size))
     {
     goto end; //String
     }
@@ -215,10 +215,10 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
 
 
     v1_csi_storage_capacity_local_var = v1_csi_storage_capacity_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        capacity ? strdup(capacity->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
-        maximum_volume_size ? strdup(maximum_volume_size->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        capacity && !cJSON_IsNull(capacity) ? strdup(capacity->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        maximum_volume_size && !cJSON_IsNull(maximum_volume_size) ? strdup(maximum_volume_size->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         node_topology ? node_topology_local_nonprim : NULL,
         strdup(storage_class_name->valuestring)

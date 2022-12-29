@@ -160,7 +160,7 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
     // v1_status_details->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "group");
     if (group) { 
-    if(!cJSON_IsString(group))
+    if(!cJSON_IsString(group) && !cJSON_IsNull(group))
     {
     goto end; //String
     }
@@ -169,7 +169,7 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
     // v1_status_details->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -178,7 +178,7 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
     // v1_status_details->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -196,7 +196,7 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
     // v1_status_details->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid))
+    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -205,11 +205,11 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
 
     v1_status_details_local_var = v1_status_details_create (
         causes ? causesList : NULL,
-        group ? strdup(group->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
-        name ? strdup(name->valuestring) : NULL,
+        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         retry_after_seconds ? retry_after_seconds->valuedouble : 0,
-        uid ? strdup(uid->valuestring) : NULL
+        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
         );
 
     return v1_status_details_local_var;

@@ -106,7 +106,7 @@ apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config
     // apiextensions_v1_webhook_client_config->url
     cJSON *url = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "url");
     if (url) { 
-    if(!cJSON_IsString(url))
+    if(!cJSON_IsString(url) && !cJSON_IsNull(url))
     {
     goto end; //String
     }
@@ -116,7 +116,7 @@ apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config
     apiextensions_v1_webhook_client_config_local_var = apiextensions_v1_webhook_client_config_create (
         ca_bundle ? strdup(ca_bundle->valuestring) : NULL,
         service ? service_local_nonprim : NULL,
-        url ? strdup(url->valuestring) : NULL
+        url && !cJSON_IsNull(url) ? strdup(url->valuestring) : NULL
         );
 
     return apiextensions_v1_webhook_client_config_local_var;

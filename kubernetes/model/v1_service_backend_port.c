@@ -65,7 +65,7 @@ v1_service_backend_port_t *v1_service_backend_port_parseFromJSON(cJSON *v1_servi
     // v1_service_backend_port->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_service_backend_portJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -82,7 +82,7 @@ v1_service_backend_port_t *v1_service_backend_port_parseFromJSON(cJSON *v1_servi
 
 
     v1_service_backend_port_local_var = v1_service_backend_port_create (
-        name ? strdup(name->valuestring) : NULL,
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         number ? number->valuedouble : 0
         );
 

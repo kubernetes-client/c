@@ -317,7 +317,7 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     // core_v1_event->action
     cJSON *action = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "action");
     if (action) { 
-    if(!cJSON_IsString(action))
+    if(!cJSON_IsString(action) && !cJSON_IsNull(action))
     {
     goto end; //String
     }
@@ -326,7 +326,7 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     // core_v1_event->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -371,7 +371,7 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     // core_v1_event->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -389,7 +389,7 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     // core_v1_event->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -407,7 +407,7 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     // core_v1_event->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason))
+    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -422,7 +422,7 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     // core_v1_event->reporting_component
     cJSON *reporting_component = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "reportingComponent");
     if (reporting_component) { 
-    if(!cJSON_IsString(reporting_component))
+    if(!cJSON_IsString(reporting_component) && !cJSON_IsNull(reporting_component))
     {
     goto end; //String
     }
@@ -431,7 +431,7 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     // core_v1_event->reporting_instance
     cJSON *reporting_instance = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "reportingInstance");
     if (reporting_instance) { 
-    if(!cJSON_IsString(reporting_instance))
+    if(!cJSON_IsString(reporting_instance) && !cJSON_IsNull(reporting_instance))
     {
     goto end; //String
     }
@@ -452,7 +452,7 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     // core_v1_event->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type))
+    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -460,23 +460,23 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
 
 
     core_v1_event_local_var = core_v1_event_create (
-        action ? strdup(action->valuestring) : NULL,
-        api_version ? strdup(api_version->valuestring) : NULL,
+        action && !cJSON_IsNull(action) ? strdup(action->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         count ? count->valuedouble : 0,
         event_time && !cJSON_IsNull(event_time) ? strdup(event_time->valuestring) : NULL,
         first_timestamp && !cJSON_IsNull(first_timestamp) ? strdup(first_timestamp->valuestring) : NULL,
         involved_object_local_nonprim,
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         last_timestamp && !cJSON_IsNull(last_timestamp) ? strdup(last_timestamp->valuestring) : NULL,
-        message ? strdup(message->valuestring) : NULL,
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         metadata_local_nonprim,
-        reason ? strdup(reason->valuestring) : NULL,
+        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
         related ? related_local_nonprim : NULL,
-        reporting_component ? strdup(reporting_component->valuestring) : NULL,
-        reporting_instance ? strdup(reporting_instance->valuestring) : NULL,
+        reporting_component && !cJSON_IsNull(reporting_component) ? strdup(reporting_component->valuestring) : NULL,
+        reporting_instance && !cJSON_IsNull(reporting_instance) ? strdup(reporting_instance->valuestring) : NULL,
         series ? series_local_nonprim : NULL,
         source ? source_local_nonprim : NULL,
-        type ? strdup(type->valuestring) : NULL
+        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return core_v1_event_local_var;

@@ -264,7 +264,7 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
     // v1_csi_persistent_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type))
+    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
@@ -339,7 +339,7 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
         controller_expand_secret_ref ? controller_expand_secret_ref_local_nonprim : NULL,
         controller_publish_secret_ref ? controller_publish_secret_ref_local_nonprim : NULL,
         strdup(driver->valuestring),
-        fs_type ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         node_expand_secret_ref ? node_expand_secret_ref_local_nonprim : NULL,
         node_publish_secret_ref ? node_publish_secret_ref_local_nonprim : NULL,
         node_stage_secret_ref ? node_stage_secret_ref_local_nonprim : NULL,

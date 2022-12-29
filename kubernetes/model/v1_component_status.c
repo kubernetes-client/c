@@ -123,7 +123,7 @@ v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_sta
     // v1_component_status->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -153,7 +153,7 @@ v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_sta
     // v1_component_status->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -167,9 +167,9 @@ v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_sta
 
 
     v1_component_status_local_var = v1_component_status_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         conditions ? conditionsList : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL
         );
 

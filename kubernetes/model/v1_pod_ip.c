@@ -55,7 +55,7 @@ v1_pod_ip_t *v1_pod_ip_parseFromJSON(cJSON *v1_pod_ipJSON){
     // v1_pod_ip->ip
     cJSON *ip = cJSON_GetObjectItemCaseSensitive(v1_pod_ipJSON, "ip");
     if (ip) { 
-    if(!cJSON_IsString(ip))
+    if(!cJSON_IsString(ip) && !cJSON_IsNull(ip))
     {
     goto end; //String
     }
@@ -63,7 +63,7 @@ v1_pod_ip_t *v1_pod_ip_parseFromJSON(cJSON *v1_pod_ipJSON){
 
 
     v1_pod_ip_local_var = v1_pod_ip_create (
-        ip ? strdup(ip->valuestring) : NULL
+        ip && !cJSON_IsNull(ip) ? strdup(ip->valuestring) : NULL
         );
 
     return v1_pod_ip_local_var;

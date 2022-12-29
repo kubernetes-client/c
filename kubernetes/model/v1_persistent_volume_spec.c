@@ -869,7 +869,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     // v1_persistent_volume_spec->persistent_volume_reclaim_policy
     cJSON *persistent_volume_reclaim_policy = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "persistentVolumeReclaimPolicy");
     if (persistent_volume_reclaim_policy) { 
-    if(!cJSON_IsString(persistent_volume_reclaim_policy))
+    if(!cJSON_IsString(persistent_volume_reclaim_policy) && !cJSON_IsNull(persistent_volume_reclaim_policy))
     {
     goto end; //String
     }
@@ -908,7 +908,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     // v1_persistent_volume_spec->storage_class_name
     cJSON *storage_class_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "storageClassName");
     if (storage_class_name) { 
-    if(!cJSON_IsString(storage_class_name))
+    if(!cJSON_IsString(storage_class_name) && !cJSON_IsNull(storage_class_name))
     {
     goto end; //String
     }
@@ -923,7 +923,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     // v1_persistent_volume_spec->volume_mode
     cJSON *volume_mode = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "volumeMode");
     if (volume_mode) { 
-    if(!cJSON_IsString(volume_mode))
+    if(!cJSON_IsString(volume_mode) && !cJSON_IsNull(volume_mode))
     {
     goto end; //String
     }
@@ -957,15 +957,15 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
         mount_options ? mount_optionsList : NULL,
         nfs ? nfs_local_nonprim : NULL,
         node_affinity ? node_affinity_local_nonprim : NULL,
-        persistent_volume_reclaim_policy ? strdup(persistent_volume_reclaim_policy->valuestring) : NULL,
+        persistent_volume_reclaim_policy && !cJSON_IsNull(persistent_volume_reclaim_policy) ? strdup(persistent_volume_reclaim_policy->valuestring) : NULL,
         photon_persistent_disk ? photon_persistent_disk_local_nonprim : NULL,
         portworx_volume ? portworx_volume_local_nonprim : NULL,
         quobyte ? quobyte_local_nonprim : NULL,
         rbd ? rbd_local_nonprim : NULL,
         scale_io ? scale_io_local_nonprim : NULL,
-        storage_class_name ? strdup(storage_class_name->valuestring) : NULL,
+        storage_class_name && !cJSON_IsNull(storage_class_name) ? strdup(storage_class_name->valuestring) : NULL,
         storageos ? storageos_local_nonprim : NULL,
-        volume_mode ? strdup(volume_mode->valuestring) : NULL,
+        volume_mode && !cJSON_IsNull(volume_mode) ? strdup(volume_mode->valuestring) : NULL,
         vsphere_volume ? vsphere_volume_local_nonprim : NULL
         );
 

@@ -146,7 +146,7 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
     // v1_api_service_spec->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "group");
     if (group) { 
-    if(!cJSON_IsString(group))
+    if(!cJSON_IsString(group) && !cJSON_IsNull(group))
     {
     goto end; //String
     }
@@ -182,7 +182,7 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
     // v1_api_service_spec->version
     cJSON *version = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "version");
     if (version) { 
-    if(!cJSON_IsString(version))
+    if(!cJSON_IsString(version) && !cJSON_IsNull(version))
     {
     goto end; //String
     }
@@ -203,11 +203,11 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     v1_api_service_spec_local_var = v1_api_service_spec_create (
         ca_bundle ? strdup(ca_bundle->valuestring) : NULL,
-        group ? strdup(group->valuestring) : NULL,
+        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         group_priority_minimum->valuedouble,
         insecure_skip_tls_verify ? insecure_skip_tls_verify->valueint : 0,
         service ? service_local_nonprim : NULL,
-        version ? strdup(version->valuestring) : NULL,
+        version && !cJSON_IsNull(version) ? strdup(version->valuestring) : NULL,
         version_priority->valuedouble
         );
 

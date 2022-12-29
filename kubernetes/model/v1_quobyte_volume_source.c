@@ -123,7 +123,7 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quo
     // v1_quobyte_volume_source->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "group");
     if (group) { 
-    if(!cJSON_IsString(group))
+    if(!cJSON_IsString(group) && !cJSON_IsNull(group))
     {
     goto end; //String
     }
@@ -153,7 +153,7 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quo
     // v1_quobyte_volume_source->tenant
     cJSON *tenant = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "tenant");
     if (tenant) { 
-    if(!cJSON_IsString(tenant))
+    if(!cJSON_IsString(tenant) && !cJSON_IsNull(tenant))
     {
     goto end; //String
     }
@@ -162,7 +162,7 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quo
     // v1_quobyte_volume_source->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "user");
     if (user) { 
-    if(!cJSON_IsString(user))
+    if(!cJSON_IsString(user) && !cJSON_IsNull(user))
     {
     goto end; //String
     }
@@ -182,11 +182,11 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quo
 
 
     v1_quobyte_volume_source_local_var = v1_quobyte_volume_source_create (
-        group ? strdup(group->valuestring) : NULL,
+        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
         strdup(registry->valuestring),
-        tenant ? strdup(tenant->valuestring) : NULL,
-        user ? strdup(user->valuestring) : NULL,
+        tenant && !cJSON_IsNull(tenant) ? strdup(tenant->valuestring) : NULL,
+        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL,
         strdup(volume->valuestring)
         );
 

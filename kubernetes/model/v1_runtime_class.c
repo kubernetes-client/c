@@ -150,7 +150,7 @@ v1_runtime_class_t *v1_runtime_class_parseFromJSON(cJSON *v1_runtime_classJSON){
     // v1_runtime_class->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -171,7 +171,7 @@ v1_runtime_class_t *v1_runtime_class_parseFromJSON(cJSON *v1_runtime_classJSON){
     // v1_runtime_class->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -197,9 +197,9 @@ v1_runtime_class_t *v1_runtime_class_parseFromJSON(cJSON *v1_runtime_classJSON){
 
 
     v1_runtime_class_local_var = v1_runtime_class_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         strdup(handler->valuestring),
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         overhead ? overhead_local_nonprim : NULL,
         scheduling ? scheduling_local_nonprim : NULL

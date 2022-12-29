@@ -376,7 +376,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     // v1_pod_status->host_ip
     cJSON *host_ip = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "hostIP");
     if (host_ip) { 
-    if(!cJSON_IsString(host_ip))
+    if(!cJSON_IsString(host_ip) && !cJSON_IsNull(host_ip))
     {
     goto end; //String
     }
@@ -406,7 +406,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     // v1_pod_status->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -415,7 +415,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     // v1_pod_status->nominated_node_name
     cJSON *nominated_node_name = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "nominatedNodeName");
     if (nominated_node_name) { 
-    if(!cJSON_IsString(nominated_node_name))
+    if(!cJSON_IsString(nominated_node_name) && !cJSON_IsNull(nominated_node_name))
     {
     goto end; //String
     }
@@ -424,7 +424,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     // v1_pod_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "phase");
     if (phase) { 
-    if(!cJSON_IsString(phase))
+    if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
     {
     goto end; //String
     }
@@ -433,7 +433,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     // v1_pod_status->pod_ip
     cJSON *pod_ip = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "podIP");
     if (pod_ip) { 
-    if(!cJSON_IsString(pod_ip))
+    if(!cJSON_IsString(pod_ip) && !cJSON_IsNull(pod_ip))
     {
     goto end; //String
     }
@@ -463,7 +463,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     // v1_pod_status->qos_class
     cJSON *qos_class = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "qosClass");
     if (qos_class) { 
-    if(!cJSON_IsString(qos_class))
+    if(!cJSON_IsString(qos_class) && !cJSON_IsNull(qos_class))
     {
     goto end; //String
     }
@@ -472,7 +472,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     // v1_pod_status->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason))
+    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -492,15 +492,15 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         conditions ? conditionsList : NULL,
         container_statuses ? container_statusesList : NULL,
         ephemeral_container_statuses ? ephemeral_container_statusesList : NULL,
-        host_ip ? strdup(host_ip->valuestring) : NULL,
+        host_ip && !cJSON_IsNull(host_ip) ? strdup(host_ip->valuestring) : NULL,
         init_container_statuses ? init_container_statusesList : NULL,
-        message ? strdup(message->valuestring) : NULL,
-        nominated_node_name ? strdup(nominated_node_name->valuestring) : NULL,
-        phase ? strdup(phase->valuestring) : NULL,
-        pod_ip ? strdup(pod_ip->valuestring) : NULL,
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        nominated_node_name && !cJSON_IsNull(nominated_node_name) ? strdup(nominated_node_name->valuestring) : NULL,
+        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
+        pod_ip && !cJSON_IsNull(pod_ip) ? strdup(pod_ip->valuestring) : NULL,
         pod_ips ? pod_ipsList : NULL,
-        qos_class ? strdup(qos_class->valuestring) : NULL,
-        reason ? strdup(reason->valuestring) : NULL,
+        qos_class && !cJSON_IsNull(qos_class) ? strdup(qos_class->valuestring) : NULL,
+        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
         start_time && !cJSON_IsNull(start_time) ? strdup(start_time->valuestring) : NULL
         );
 

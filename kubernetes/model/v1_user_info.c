@@ -168,7 +168,7 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     // v1_user_info->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid))
+    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -177,7 +177,7 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     // v1_user_info->username
     cJSON *username = cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "username");
     if (username) { 
-    if(!cJSON_IsString(username))
+    if(!cJSON_IsString(username) && !cJSON_IsNull(username))
     {
     goto end; //String
     }
@@ -187,8 +187,8 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     v1_user_info_local_var = v1_user_info_create (
         extra ? extraList : NULL,
         groups ? groupsList : NULL,
-        uid ? strdup(uid->valuestring) : NULL,
-        username ? strdup(username->valuestring) : NULL
+        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL,
+        username && !cJSON_IsNull(username) ? strdup(username->valuestring) : NULL
         );
 
     return v1_user_info_local_var;

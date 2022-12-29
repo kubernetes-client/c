@@ -103,7 +103,7 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
     // v1_host_alias->ip
     cJSON *ip = cJSON_GetObjectItemCaseSensitive(v1_host_aliasJSON, "ip");
     if (ip) { 
-    if(!cJSON_IsString(ip))
+    if(!cJSON_IsString(ip) && !cJSON_IsNull(ip))
     {
     goto end; //String
     }
@@ -112,7 +112,7 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
 
     v1_host_alias_local_var = v1_host_alias_create (
         hostnames ? hostnamesList : NULL,
-        ip ? strdup(ip->valuestring) : NULL
+        ip && !cJSON_IsNull(ip) ? strdup(ip->valuestring) : NULL
         );
 
     return v1_host_alias_local_var;

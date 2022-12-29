@@ -69,7 +69,7 @@ v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_parseFromJSON(cJSON *v1
     // v1_empty_dir_volume_source->medium
     cJSON *medium = cJSON_GetObjectItemCaseSensitive(v1_empty_dir_volume_sourceJSON, "medium");
     if (medium) { 
-    if(!cJSON_IsString(medium))
+    if(!cJSON_IsString(medium) && !cJSON_IsNull(medium))
     {
     goto end; //String
     }
@@ -78,7 +78,7 @@ v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_parseFromJSON(cJSON *v1
     // v1_empty_dir_volume_source->size_limit
     cJSON *size_limit = cJSON_GetObjectItemCaseSensitive(v1_empty_dir_volume_sourceJSON, "sizeLimit");
     if (size_limit) { 
-    if(!cJSON_IsString(size_limit))
+    if(!cJSON_IsString(size_limit) && !cJSON_IsNull(size_limit))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_parseFromJSON(cJSON *v1
 
 
     v1_empty_dir_volume_source_local_var = v1_empty_dir_volume_source_create (
-        medium ? strdup(medium->valuestring) : NULL,
-        size_limit ? strdup(size_limit->valuestring) : NULL
+        medium && !cJSON_IsNull(medium) ? strdup(medium->valuestring) : NULL,
+        size_limit && !cJSON_IsNull(size_limit) ? strdup(size_limit->valuestring) : NULL
         );
 
     return v1_empty_dir_volume_source_local_var;

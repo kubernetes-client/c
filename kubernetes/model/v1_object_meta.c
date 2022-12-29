@@ -407,7 +407,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     // v1_object_meta->generate_name
     cJSON *generate_name = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "generateName");
     if (generate_name) { 
-    if(!cJSON_IsString(generate_name))
+    if(!cJSON_IsString(generate_name) && !cJSON_IsNull(generate_name))
     {
     goto end; //String
     }
@@ -471,7 +471,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     // v1_object_meta->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -480,7 +480,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     // v1_object_meta->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace))
+    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
@@ -510,7 +510,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     // v1_object_meta->resource_version
     cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "resourceVersion");
     if (resource_version) { 
-    if(!cJSON_IsString(resource_version))
+    if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
     {
     goto end; //String
     }
@@ -519,7 +519,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     // v1_object_meta->self_link
     cJSON *self_link = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "selfLink");
     if (self_link) { 
-    if(!cJSON_IsString(self_link))
+    if(!cJSON_IsString(self_link) && !cJSON_IsNull(self_link))
     {
     goto end; //String
     }
@@ -528,7 +528,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     // v1_object_meta->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid))
+    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -541,16 +541,16 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
         deletion_grace_period_seconds ? deletion_grace_period_seconds->valuedouble : 0,
         deletion_timestamp && !cJSON_IsNull(deletion_timestamp) ? strdup(deletion_timestamp->valuestring) : NULL,
         finalizers ? finalizersList : NULL,
-        generate_name ? strdup(generate_name->valuestring) : NULL,
+        generate_name && !cJSON_IsNull(generate_name) ? strdup(generate_name->valuestring) : NULL,
         generation ? generation->valuedouble : 0,
         labels ? labelsList : NULL,
         managed_fields ? managed_fieldsList : NULL,
-        name ? strdup(name->valuestring) : NULL,
-        _namespace ? strdup(_namespace->valuestring) : NULL,
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
         owner_references ? owner_referencesList : NULL,
-        resource_version ? strdup(resource_version->valuestring) : NULL,
-        self_link ? strdup(self_link->valuestring) : NULL,
-        uid ? strdup(uid->valuestring) : NULL
+        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
+        self_link && !cJSON_IsNull(self_link) ? strdup(self_link->valuestring) : NULL,
+        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
         );
 
     return v1_object_meta_local_var;

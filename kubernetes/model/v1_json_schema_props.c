@@ -822,7 +822,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     // v1_json_schema_props->ref
     cJSON *ref = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "$ref");
     if (ref) { 
-    if(!cJSON_IsString(ref))
+    if(!cJSON_IsString(ref) && !cJSON_IsNull(ref))
     {
     goto end; //String
     }
@@ -831,7 +831,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     // v1_json_schema_props->schema
     cJSON *schema = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "$schema");
     if (schema) { 
-    if(!cJSON_IsString(schema))
+    if(!cJSON_IsString(schema) && !cJSON_IsNull(schema))
     {
     goto end; //String
     }
@@ -931,7 +931,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     // v1_json_schema_props->description
     cJSON *description = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "description");
     if (description) { 
-    if(!cJSON_IsString(description))
+    if(!cJSON_IsString(description) && !cJSON_IsNull(description))
     {
     goto end; //String
     }
@@ -992,7 +992,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     // v1_json_schema_props->format
     cJSON *format = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "format");
     if (format) { 
-    if(!cJSON_IsString(format))
+    if(!cJSON_IsString(format) && !cJSON_IsNull(format))
     {
     goto end; //String
     }
@@ -1001,7 +1001,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     // v1_json_schema_props->id
     cJSON *id = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "id");
     if (id) { 
-    if(!cJSON_IsString(id))
+    if(!cJSON_IsString(id) && !cJSON_IsNull(id))
     {
     goto end; //String
     }
@@ -1134,7 +1134,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     // v1_json_schema_props->pattern
     cJSON *pattern = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "pattern");
     if (pattern) { 
-    if(!cJSON_IsString(pattern))
+    if(!cJSON_IsString(pattern) && !cJSON_IsNull(pattern))
     {
     goto end; //String
     }
@@ -1178,7 +1178,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     // v1_json_schema_props->title
     cJSON *title = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "title");
     if (title) { 
-    if(!cJSON_IsString(title))
+    if(!cJSON_IsString(title) && !cJSON_IsNull(title))
     {
     goto end; //String
     }
@@ -1187,7 +1187,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     // v1_json_schema_props->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type))
+    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -1242,7 +1242,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     // v1_json_schema_props->x_kubernetes_list_type
     cJSON *x_kubernetes_list_type = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "x-kubernetes-list-type");
     if (x_kubernetes_list_type) { 
-    if(!cJSON_IsString(x_kubernetes_list_type))
+    if(!cJSON_IsString(x_kubernetes_list_type) && !cJSON_IsNull(x_kubernetes_list_type))
     {
     goto end; //String
     }
@@ -1251,7 +1251,7 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
     // v1_json_schema_props->x_kubernetes_map_type
     cJSON *x_kubernetes_map_type = cJSON_GetObjectItemCaseSensitive(v1_json_schema_propsJSON, "x-kubernetes-map-type");
     if (x_kubernetes_map_type) { 
-    if(!cJSON_IsString(x_kubernetes_map_type))
+    if(!cJSON_IsString(x_kubernetes_map_type) && !cJSON_IsNull(x_kubernetes_map_type))
     {
     goto end; //String
     }
@@ -1289,8 +1289,8 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
 
 
     v1_json_schema_props_local_var = v1_json_schema_props_create (
-        ref ? strdup(ref->valuestring) : NULL,
-        schema ? strdup(schema->valuestring) : NULL,
+        ref && !cJSON_IsNull(ref) ? strdup(ref->valuestring) : NULL,
+        schema && !cJSON_IsNull(schema) ? strdup(schema->valuestring) : NULL,
         additional_items ? additional_items_local_object : NULL,
         additional_properties ? additional_properties_local_object : NULL,
         all_of ? all_ofList : NULL,
@@ -1298,14 +1298,14 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
         _default ? _default_local_object : NULL,
         definitions ? definitionsList : NULL,
         dependencies ? dependenciesList : NULL,
-        description ? strdup(description->valuestring) : NULL,
+        description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
         _enum ? _enumList : NULL,
         example ? example_local_object : NULL,
         exclusive_maximum ? exclusive_maximum->valueint : 0,
         exclusive_minimum ? exclusive_minimum->valueint : 0,
         external_docs ? external_docs_local_nonprim : NULL,
-        format ? strdup(format->valuestring) : NULL,
-        id ? strdup(id->valuestring) : NULL,
+        format && !cJSON_IsNull(format) ? strdup(format->valuestring) : NULL,
+        id && !cJSON_IsNull(id) ? strdup(id->valuestring) : NULL,
         items ? items_local_object : NULL,
         max_items ? max_items->valuedouble : 0,
         max_length ? max_length->valuedouble : 0,
@@ -1319,18 +1319,18 @@ v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema
         _not ? _not_local_nonprim : NULL,
         nullable ? nullable->valueint : 0,
         one_of ? one_ofList : NULL,
-        pattern ? strdup(pattern->valuestring) : NULL,
+        pattern && !cJSON_IsNull(pattern) ? strdup(pattern->valuestring) : NULL,
         pattern_properties ? pattern_propertiesList : NULL,
         properties ? propertiesList : NULL,
         required ? requiredList : NULL,
-        title ? strdup(title->valuestring) : NULL,
-        type ? strdup(type->valuestring) : NULL,
+        title && !cJSON_IsNull(title) ? strdup(title->valuestring) : NULL,
+        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL,
         unique_items ? unique_items->valueint : 0,
         x_kubernetes_embedded_resource ? x_kubernetes_embedded_resource->valueint : 0,
         x_kubernetes_int_or_string ? x_kubernetes_int_or_string->valueint : 0,
         x_kubernetes_list_map_keys ? x_kubernetes_list_map_keysList : NULL,
-        x_kubernetes_list_type ? strdup(x_kubernetes_list_type->valuestring) : NULL,
-        x_kubernetes_map_type ? strdup(x_kubernetes_map_type->valuestring) : NULL,
+        x_kubernetes_list_type && !cJSON_IsNull(x_kubernetes_list_type) ? strdup(x_kubernetes_list_type->valuestring) : NULL,
+        x_kubernetes_map_type && !cJSON_IsNull(x_kubernetes_map_type) ? strdup(x_kubernetes_map_type->valuestring) : NULL,
         x_kubernetes_preserve_unknown_fields ? x_kubernetes_preserve_unknown_fields->valueint : 0,
         x_kubernetes_validations ? x_kubernetes_validationsList : NULL
         );

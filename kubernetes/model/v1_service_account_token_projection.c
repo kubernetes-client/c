@@ -80,7 +80,7 @@ v1_service_account_token_projection_t *v1_service_account_token_projection_parse
     // v1_service_account_token_projection->audience
     cJSON *audience = cJSON_GetObjectItemCaseSensitive(v1_service_account_token_projectionJSON, "audience");
     if (audience) { 
-    if(!cJSON_IsString(audience))
+    if(!cJSON_IsString(audience) && !cJSON_IsNull(audience))
     {
     goto end; //String
     }
@@ -109,7 +109,7 @@ v1_service_account_token_projection_t *v1_service_account_token_projection_parse
 
 
     v1_service_account_token_projection_local_var = v1_service_account_token_projection_create (
-        audience ? strdup(audience->valuestring) : NULL,
+        audience && !cJSON_IsNull(audience) ? strdup(audience->valuestring) : NULL,
         expiration_seconds ? expiration_seconds->valuedouble : 0,
         strdup(path->valuestring)
         );

@@ -69,7 +69,7 @@ v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_pers
     // v1_stateful_set_persistent_volume_claim_retention_policy->when_deleted
     cJSON *when_deleted = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_persistent_volume_claim_retention_policyJSON, "whenDeleted");
     if (when_deleted) { 
-    if(!cJSON_IsString(when_deleted))
+    if(!cJSON_IsString(when_deleted) && !cJSON_IsNull(when_deleted))
     {
     goto end; //String
     }
@@ -78,7 +78,7 @@ v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_pers
     // v1_stateful_set_persistent_volume_claim_retention_policy->when_scaled
     cJSON *when_scaled = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_persistent_volume_claim_retention_policyJSON, "whenScaled");
     if (when_scaled) { 
-    if(!cJSON_IsString(when_scaled))
+    if(!cJSON_IsString(when_scaled) && !cJSON_IsNull(when_scaled))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_pers
 
 
     v1_stateful_set_persistent_volume_claim_retention_policy_local_var = v1_stateful_set_persistent_volume_claim_retention_policy_create (
-        when_deleted ? strdup(when_deleted->valuestring) : NULL,
-        when_scaled ? strdup(when_scaled->valuestring) : NULL
+        when_deleted && !cJSON_IsNull(when_deleted) ? strdup(when_deleted->valuestring) : NULL,
+        when_scaled && !cJSON_IsNull(when_scaled) ? strdup(when_scaled->valuestring) : NULL
         );
 
     return v1_stateful_set_persistent_volume_claim_retention_policy_local_var;

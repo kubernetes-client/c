@@ -84,7 +84,7 @@ v1_resource_field_selector_t *v1_resource_field_selector_parseFromJSON(cJSON *v1
     // v1_resource_field_selector->container_name
     cJSON *container_name = cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "containerName");
     if (container_name) { 
-    if(!cJSON_IsString(container_name))
+    if(!cJSON_IsString(container_name) && !cJSON_IsNull(container_name))
     {
     goto end; //String
     }
@@ -93,7 +93,7 @@ v1_resource_field_selector_t *v1_resource_field_selector_parseFromJSON(cJSON *v1
     // v1_resource_field_selector->divisor
     cJSON *divisor = cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "divisor");
     if (divisor) { 
-    if(!cJSON_IsString(divisor))
+    if(!cJSON_IsString(divisor) && !cJSON_IsNull(divisor))
     {
     goto end; //String
     }
@@ -113,8 +113,8 @@ v1_resource_field_selector_t *v1_resource_field_selector_parseFromJSON(cJSON *v1
 
 
     v1_resource_field_selector_local_var = v1_resource_field_selector_create (
-        container_name ? strdup(container_name->valuestring) : NULL,
-        divisor ? strdup(divisor->valuestring) : NULL,
+        container_name && !cJSON_IsNull(container_name) ? strdup(container_name->valuestring) : NULL,
+        divisor && !cJSON_IsNull(divisor) ? strdup(divisor->valuestring) : NULL,
         strdup(resource->valuestring)
         );
 

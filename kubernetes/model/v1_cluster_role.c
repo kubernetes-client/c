@@ -151,7 +151,7 @@ v1_cluster_role_t *v1_cluster_role_parseFromJSON(cJSON *v1_cluster_roleJSON){
     // v1_cluster_role->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_cluster_roleJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -160,7 +160,7 @@ v1_cluster_role_t *v1_cluster_role_parseFromJSON(cJSON *v1_cluster_roleJSON){
     // v1_cluster_role->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_cluster_roleJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -196,8 +196,8 @@ v1_cluster_role_t *v1_cluster_role_parseFromJSON(cJSON *v1_cluster_roleJSON){
 
     v1_cluster_role_local_var = v1_cluster_role_create (
         aggregation_rule ? aggregation_rule_local_nonprim : NULL,
-        api_version ? strdup(api_version->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         rules ? rulesList : NULL
         );

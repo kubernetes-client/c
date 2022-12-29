@@ -133,7 +133,7 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
     // v1alpha1_storage_version_condition->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_conditionJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -187,7 +187,7 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
 
     v1alpha1_storage_version_condition_local_var = v1alpha1_storage_version_condition_create (
         last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
-        message ? strdup(message->valuestring) : NULL,
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         observed_generation ? observed_generation->valuedouble : 0,
         strdup(reason->valuestring),
         strdup(status->valuestring),

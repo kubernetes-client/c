@@ -83,7 +83,7 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
     // v1_persistent_volume_status->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_statusJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -92,7 +92,7 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
     // v1_persistent_volume_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_statusJSON, "phase");
     if (phase) { 
-    if(!cJSON_IsString(phase))
+    if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
     {
     goto end; //String
     }
@@ -101,7 +101,7 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
     // v1_persistent_volume_status->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_statusJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason))
+    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -109,9 +109,9 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
 
 
     v1_persistent_volume_status_local_var = v1_persistent_volume_status_create (
-        message ? strdup(message->valuestring) : NULL,
-        phase ? strdup(phase->valuestring) : NULL,
-        reason ? strdup(reason->valuestring) : NULL
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
+        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
         );
 
     return v1_persistent_volume_status_local_var;

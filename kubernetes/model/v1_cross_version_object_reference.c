@@ -85,7 +85,7 @@ v1_cross_version_object_reference_t *v1_cross_version_object_reference_parseFrom
     // v1_cross_version_object_reference->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_cross_version_object_referenceJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -117,7 +117,7 @@ v1_cross_version_object_reference_t *v1_cross_version_object_reference_parseFrom
 
 
     v1_cross_version_object_reference_local_var = v1_cross_version_object_reference_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         strdup(kind->valuestring),
         strdup(name->valuestring)
         );

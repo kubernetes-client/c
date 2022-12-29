@@ -77,7 +77,7 @@ v1_ingress_rule_t *v1_ingress_rule_parseFromJSON(cJSON *v1_ingress_ruleJSON){
     // v1_ingress_rule->host
     cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_ingress_ruleJSON, "host");
     if (host) { 
-    if(!cJSON_IsString(host))
+    if(!cJSON_IsString(host) && !cJSON_IsNull(host))
     {
     goto end; //String
     }
@@ -91,7 +91,7 @@ v1_ingress_rule_t *v1_ingress_rule_parseFromJSON(cJSON *v1_ingress_ruleJSON){
 
 
     v1_ingress_rule_local_var = v1_ingress_rule_create (
-        host ? strdup(host->valuestring) : NULL,
+        host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
         http ? http_local_nonprim : NULL
         );
 

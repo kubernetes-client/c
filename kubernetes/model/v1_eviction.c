@@ -113,7 +113,7 @@ v1_eviction_t *v1_eviction_parseFromJSON(cJSON *v1_evictionJSON){
     // v1_eviction->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -128,7 +128,7 @@ v1_eviction_t *v1_eviction_parseFromJSON(cJSON *v1_evictionJSON){
     // v1_eviction->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -142,9 +142,9 @@ v1_eviction_t *v1_eviction_parseFromJSON(cJSON *v1_evictionJSON){
 
 
     v1_eviction_local_var = v1_eviction_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         delete_options ? delete_options_local_nonprim : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL
         );
 
