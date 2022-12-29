@@ -231,7 +231,7 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     // v1_pod_security_context->fs_group_change_policy
     cJSON *fs_group_change_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "fsGroupChangePolicy");
     if (fs_group_change_policy) { 
-    if(!cJSON_IsString(fs_group_change_policy))
+    if(!cJSON_IsString(fs_group_change_policy) && !cJSON_IsNull(fs_group_change_policy))
     {
     goto end; //String
     }
@@ -331,7 +331,7 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     v1_pod_security_context_local_var = v1_pod_security_context_create (
         fs_group ? fs_group->valuedouble : 0,
-        fs_group_change_policy ? strdup(fs_group_change_policy->valuestring) : NULL,
+        fs_group_change_policy && !cJSON_IsNull(fs_group_change_policy) ? strdup(fs_group_change_policy->valuestring) : NULL,
         run_as_group ? run_as_group->valuedouble : 0,
         run_as_non_root ? run_as_non_root->valueint : 0,
         run_as_user ? run_as_user->valuedouble : 0,

@@ -55,7 +55,7 @@ v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_parseFrom
     // v1_self_subject_rules_review_spec->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_self_subject_rules_review_specJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace))
+    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
@@ -63,7 +63,7 @@ v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_parseFrom
 
 
     v1_self_subject_rules_review_spec_local_var = v1_self_subject_rules_review_spec_create (
-        _namespace ? strdup(_namespace->valuestring) : NULL
+        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
         );
 
     return v1_self_subject_rules_review_spec_local_var;

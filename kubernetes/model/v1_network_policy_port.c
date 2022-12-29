@@ -102,7 +102,7 @@ v1_network_policy_port_t *v1_network_policy_port_parseFromJSON(cJSON *v1_network
     // v1_network_policy_port->protocol
     cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_network_policy_portJSON, "protocol");
     if (protocol) { 
-    if(!cJSON_IsString(protocol))
+    if(!cJSON_IsString(protocol) && !cJSON_IsNull(protocol))
     {
     goto end; //String
     }
@@ -112,7 +112,7 @@ v1_network_policy_port_t *v1_network_policy_port_parseFromJSON(cJSON *v1_network
     v1_network_policy_port_local_var = v1_network_policy_port_create (
         end_port ? end_port->valuedouble : 0,
         port ? port_local_nonprim : NULL,
-        protocol ? strdup(protocol->valuestring) : NULL
+        protocol && !cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL
         );
 
     return v1_network_policy_port_local_var;

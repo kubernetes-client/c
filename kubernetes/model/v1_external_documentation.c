@@ -69,7 +69,7 @@ v1_external_documentation_t *v1_external_documentation_parseFromJSON(cJSON *v1_e
     // v1_external_documentation->description
     cJSON *description = cJSON_GetObjectItemCaseSensitive(v1_external_documentationJSON, "description");
     if (description) { 
-    if(!cJSON_IsString(description))
+    if(!cJSON_IsString(description) && !cJSON_IsNull(description))
     {
     goto end; //String
     }
@@ -78,7 +78,7 @@ v1_external_documentation_t *v1_external_documentation_parseFromJSON(cJSON *v1_e
     // v1_external_documentation->url
     cJSON *url = cJSON_GetObjectItemCaseSensitive(v1_external_documentationJSON, "url");
     if (url) { 
-    if(!cJSON_IsString(url))
+    if(!cJSON_IsString(url) && !cJSON_IsNull(url))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_external_documentation_t *v1_external_documentation_parseFromJSON(cJSON *v1_e
 
 
     v1_external_documentation_local_var = v1_external_documentation_create (
-        description ? strdup(description->valuestring) : NULL,
-        url ? strdup(url->valuestring) : NULL
+        description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
+        url && !cJSON_IsNull(url) ? strdup(url->valuestring) : NULL
         );
 
     return v1_external_documentation_local_var;

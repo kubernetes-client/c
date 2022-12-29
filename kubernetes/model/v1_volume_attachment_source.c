@@ -83,7 +83,7 @@ v1_volume_attachment_source_t *v1_volume_attachment_source_parseFromJSON(cJSON *
     // v1_volume_attachment_source->persistent_volume_name
     cJSON *persistent_volume_name = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_sourceJSON, "persistentVolumeName");
     if (persistent_volume_name) { 
-    if(!cJSON_IsString(persistent_volume_name))
+    if(!cJSON_IsString(persistent_volume_name) && !cJSON_IsNull(persistent_volume_name))
     {
     goto end; //String
     }
@@ -92,7 +92,7 @@ v1_volume_attachment_source_t *v1_volume_attachment_source_parseFromJSON(cJSON *
 
     v1_volume_attachment_source_local_var = v1_volume_attachment_source_create (
         inline_volume_spec ? inline_volume_spec_local_nonprim : NULL,
-        persistent_volume_name ? strdup(persistent_volume_name->valuestring) : NULL
+        persistent_volume_name && !cJSON_IsNull(persistent_volume_name) ? strdup(persistent_volume_name->valuestring) : NULL
         );
 
     return v1_volume_attachment_source_local_var;

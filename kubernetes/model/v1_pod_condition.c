@@ -145,7 +145,7 @@ v1_pod_condition_t *v1_pod_condition_parseFromJSON(cJSON *v1_pod_conditionJSON){
     // v1_pod_condition->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_pod_conditionJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -154,7 +154,7 @@ v1_pod_condition_t *v1_pod_condition_parseFromJSON(cJSON *v1_pod_conditionJSON){
     // v1_pod_condition->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_pod_conditionJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason))
+    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -188,8 +188,8 @@ v1_pod_condition_t *v1_pod_condition_parseFromJSON(cJSON *v1_pod_conditionJSON){
     v1_pod_condition_local_var = v1_pod_condition_create (
         last_probe_time && !cJSON_IsNull(last_probe_time) ? strdup(last_probe_time->valuestring) : NULL,
         last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
-        message ? strdup(message->valuestring) : NULL,
-        reason ? strdup(reason->valuestring) : NULL,
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
         strdup(status->valuestring),
         strdup(type->valuestring)
         );

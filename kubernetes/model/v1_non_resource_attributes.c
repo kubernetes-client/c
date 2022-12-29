@@ -69,7 +69,7 @@ v1_non_resource_attributes_t *v1_non_resource_attributes_parseFromJSON(cJSON *v1
     // v1_non_resource_attributes->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_non_resource_attributesJSON, "path");
     if (path) { 
-    if(!cJSON_IsString(path))
+    if(!cJSON_IsString(path) && !cJSON_IsNull(path))
     {
     goto end; //String
     }
@@ -78,7 +78,7 @@ v1_non_resource_attributes_t *v1_non_resource_attributes_parseFromJSON(cJSON *v1
     // v1_non_resource_attributes->verb
     cJSON *verb = cJSON_GetObjectItemCaseSensitive(v1_non_resource_attributesJSON, "verb");
     if (verb) { 
-    if(!cJSON_IsString(verb))
+    if(!cJSON_IsString(verb) && !cJSON_IsNull(verb))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_non_resource_attributes_t *v1_non_resource_attributes_parseFromJSON(cJSON *v1
 
 
     v1_non_resource_attributes_local_var = v1_non_resource_attributes_create (
-        path ? strdup(path->valuestring) : NULL,
-        verb ? strdup(verb->valuestring) : NULL
+        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
+        verb && !cJSON_IsNull(verb) ? strdup(verb->valuestring) : NULL
         );
 
     return v1_non_resource_attributes_local_var;

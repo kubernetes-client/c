@@ -175,7 +175,7 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
     // v1_csi_driver_spec->fs_group_policy
     cJSON *fs_group_policy = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "fsGroupPolicy");
     if (fs_group_policy) { 
-    if(!cJSON_IsString(fs_group_policy))
+    if(!cJSON_IsString(fs_group_policy) && !cJSON_IsNull(fs_group_policy))
     {
     goto end; //String
     }
@@ -260,7 +260,7 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     v1_csi_driver_spec_local_var = v1_csi_driver_spec_create (
         attach_required ? attach_required->valueint : 0,
-        fs_group_policy ? strdup(fs_group_policy->valuestring) : NULL,
+        fs_group_policy && !cJSON_IsNull(fs_group_policy) ? strdup(fs_group_policy->valuestring) : NULL,
         pod_info_on_mount ? pod_info_on_mount->valueint : 0,
         requires_republish ? requires_republish->valueint : 0,
         se_linux_mount ? se_linux_mount->valueint : 0,

@@ -83,7 +83,7 @@ v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
     // v1_status_cause->field
     cJSON *field = cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "field");
     if (field) { 
-    if(!cJSON_IsString(field))
+    if(!cJSON_IsString(field) && !cJSON_IsNull(field))
     {
     goto end; //String
     }
@@ -92,7 +92,7 @@ v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
     // v1_status_cause->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -101,7 +101,7 @@ v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
     // v1_status_cause->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason))
+    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -109,9 +109,9 @@ v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
 
 
     v1_status_cause_local_var = v1_status_cause_create (
-        field ? strdup(field->valuestring) : NULL,
-        message ? strdup(message->valuestring) : NULL,
-        reason ? strdup(reason->valuestring) : NULL
+        field && !cJSON_IsNull(field) ? strdup(field->valuestring) : NULL,
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
         );
 
     return v1_status_cause_local_var;

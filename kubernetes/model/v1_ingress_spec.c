@@ -147,7 +147,7 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
     // v1_ingress_spec->ingress_class_name
     cJSON *ingress_class_name = cJSON_GetObjectItemCaseSensitive(v1_ingress_specJSON, "ingressClassName");
     if (ingress_class_name) { 
-    if(!cJSON_IsString(ingress_class_name))
+    if(!cJSON_IsString(ingress_class_name) && !cJSON_IsNull(ingress_class_name))
     {
     goto end; //String
     }
@@ -198,7 +198,7 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
 
     v1_ingress_spec_local_var = v1_ingress_spec_create (
         default_backend ? default_backend_local_nonprim : NULL,
-        ingress_class_name ? strdup(ingress_class_name->valuestring) : NULL,
+        ingress_class_name && !cJSON_IsNull(ingress_class_name) ? strdup(ingress_class_name->valuestring) : NULL,
         rules ? rulesList : NULL,
         tls ? tlsList : NULL
         );

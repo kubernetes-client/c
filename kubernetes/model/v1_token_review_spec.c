@@ -103,7 +103,7 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
     // v1_token_review_spec->token
     cJSON *token = cJSON_GetObjectItemCaseSensitive(v1_token_review_specJSON, "token");
     if (token) { 
-    if(!cJSON_IsString(token))
+    if(!cJSON_IsString(token) && !cJSON_IsNull(token))
     {
     goto end; //String
     }
@@ -112,7 +112,7 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
 
     v1_token_review_spec_local_var = v1_token_review_spec_create (
         audiences ? audiencesList : NULL,
-        token ? strdup(token->valuestring) : NULL
+        token && !cJSON_IsNull(token) ? strdup(token->valuestring) : NULL
         );
 
     return v1_token_review_spec_local_var;

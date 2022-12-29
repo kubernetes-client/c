@@ -97,7 +97,7 @@ v1_bound_object_reference_t *v1_bound_object_reference_parseFromJSON(cJSON *v1_b
     // v1_bound_object_reference->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_bound_object_referenceJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -106,7 +106,7 @@ v1_bound_object_reference_t *v1_bound_object_reference_parseFromJSON(cJSON *v1_b
     // v1_bound_object_reference->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_bound_object_referenceJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -115,7 +115,7 @@ v1_bound_object_reference_t *v1_bound_object_reference_parseFromJSON(cJSON *v1_b
     // v1_bound_object_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_bound_object_referenceJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -124,7 +124,7 @@ v1_bound_object_reference_t *v1_bound_object_reference_parseFromJSON(cJSON *v1_b
     // v1_bound_object_reference->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_bound_object_referenceJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid))
+    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -132,10 +132,10 @@ v1_bound_object_reference_t *v1_bound_object_reference_parseFromJSON(cJSON *v1_b
 
 
     v1_bound_object_reference_local_var = v1_bound_object_reference_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
-        name ? strdup(name->valuestring) : NULL,
-        uid ? strdup(uid->valuestring) : NULL
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
         );
 
     return v1_bound_object_reference_local_var;

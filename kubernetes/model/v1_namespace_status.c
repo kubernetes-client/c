@@ -108,7 +108,7 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
     // v1_namespace_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_namespace_statusJSON, "phase");
     if (phase) { 
-    if(!cJSON_IsString(phase))
+    if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
     {
     goto end; //String
     }
@@ -117,7 +117,7 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
 
     v1_namespace_status_local_var = v1_namespace_status_create (
         conditions ? conditionsList : NULL,
-        phase ? strdup(phase->valuestring) : NULL
+        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL
         );
 
     return v1_namespace_status_local_var;

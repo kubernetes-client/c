@@ -150,7 +150,7 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
     // v1_config_map_node_config_source->resource_version
     cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "resourceVersion");
     if (resource_version) { 
-    if(!cJSON_IsString(resource_version))
+    if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
     {
     goto end; //String
     }
@@ -159,7 +159,7 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
     // v1_config_map_node_config_source->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid))
+    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -170,8 +170,8 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
         strdup(kubelet_config_key->valuestring),
         strdup(name->valuestring),
         strdup(_namespace->valuestring),
-        resource_version ? strdup(resource_version->valuestring) : NULL,
-        uid ? strdup(uid->valuestring) : NULL
+        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
+        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
         );
 
     return v1_config_map_node_config_source_local_var;

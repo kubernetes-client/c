@@ -70,7 +70,7 @@ v1_object_field_selector_t *v1_object_field_selector_parseFromJSON(cJSON *v1_obj
     // v1_object_field_selector->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_object_field_selectorJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -90,7 +90,7 @@ v1_object_field_selector_t *v1_object_field_selector_parseFromJSON(cJSON *v1_obj
 
 
     v1_object_field_selector_local_var = v1_object_field_selector_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         strdup(field_path->valuestring)
         );
 

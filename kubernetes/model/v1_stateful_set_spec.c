@@ -237,7 +237,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     // v1_stateful_set_spec->pod_management_policy
     cJSON *pod_management_policy = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "podManagementPolicy");
     if (pod_management_policy) { 
-    if(!cJSON_IsString(pod_management_policy))
+    if(!cJSON_IsString(pod_management_policy) && !cJSON_IsNull(pod_management_policy))
     {
     goto end; //String
     }
@@ -322,7 +322,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     v1_stateful_set_spec_local_var = v1_stateful_set_spec_create (
         min_ready_seconds ? min_ready_seconds->valuedouble : 0,
         persistent_volume_claim_retention_policy ? persistent_volume_claim_retention_policy_local_nonprim : NULL,
-        pod_management_policy ? strdup(pod_management_policy->valuestring) : NULL,
+        pod_management_policy && !cJSON_IsNull(pod_management_policy) ? strdup(pod_management_policy->valuestring) : NULL,
         replicas ? replicas->valuedouble : 0,
         revision_history_limit ? revision_history_limit->valuedouble : 0,
         selector_local_nonprim,

@@ -113,7 +113,7 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
     // v1_ingress_class_parameters_reference->api_group
     cJSON *api_group = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "apiGroup");
     if (api_group) { 
-    if(!cJSON_IsString(api_group))
+    if(!cJSON_IsString(api_group) && !cJSON_IsNull(api_group))
     {
     goto end; //String
     }
@@ -146,7 +146,7 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
     // v1_ingress_class_parameters_reference->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace))
+    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
@@ -155,7 +155,7 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
     // v1_ingress_class_parameters_reference->scope
     cJSON *scope = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "scope");
     if (scope) { 
-    if(!cJSON_IsString(scope))
+    if(!cJSON_IsString(scope) && !cJSON_IsNull(scope))
     {
     goto end; //String
     }
@@ -163,11 +163,11 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
 
 
     v1_ingress_class_parameters_reference_local_var = v1_ingress_class_parameters_reference_create (
-        api_group ? strdup(api_group->valuestring) : NULL,
+        api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
         strdup(kind->valuestring),
         strdup(name->valuestring),
-        _namespace ? strdup(_namespace->valuestring) : NULL,
-        scope ? strdup(scope->valuestring) : NULL
+        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
+        scope && !cJSON_IsNull(scope) ? strdup(scope->valuestring) : NULL
         );
 
     return v1_ingress_class_parameters_reference_local_var;

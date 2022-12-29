@@ -100,7 +100,7 @@ v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit
     // v1_pod_failure_policy_on_exit_codes_requirement->container_name
     cJSON *container_name = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policy_on_exit_codes_requirementJSON, "containerName");
     if (container_name) { 
-    if(!cJSON_IsString(container_name))
+    if(!cJSON_IsString(container_name) && !cJSON_IsNull(container_name))
     {
     goto end; //String
     }
@@ -148,7 +148,7 @@ v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit
 
 
     v1_pod_failure_policy_on_exit_codes_requirement_local_var = v1_pod_failure_policy_on_exit_codes_requirement_create (
-        container_name ? strdup(container_name->valuestring) : NULL,
+        container_name && !cJSON_IsNull(container_name) ? strdup(container_name->valuestring) : NULL,
         strdup(_operator->valuestring),
         valuesList
         );

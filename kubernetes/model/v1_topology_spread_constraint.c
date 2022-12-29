@@ -217,7 +217,7 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
     // v1_topology_spread_constraint->node_affinity_policy
     cJSON *node_affinity_policy = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "nodeAffinityPolicy");
     if (node_affinity_policy) { 
-    if(!cJSON_IsString(node_affinity_policy))
+    if(!cJSON_IsString(node_affinity_policy) && !cJSON_IsNull(node_affinity_policy))
     {
     goto end; //String
     }
@@ -226,7 +226,7 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
     // v1_topology_spread_constraint->node_taints_policy
     cJSON *node_taints_policy = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "nodeTaintsPolicy");
     if (node_taints_policy) { 
-    if(!cJSON_IsString(node_taints_policy))
+    if(!cJSON_IsString(node_taints_policy) && !cJSON_IsNull(node_taints_policy))
     {
     goto end; //String
     }
@@ -262,8 +262,8 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
         match_label_keys ? match_label_keysList : NULL,
         max_skew->valuedouble,
         min_domains ? min_domains->valuedouble : 0,
-        node_affinity_policy ? strdup(node_affinity_policy->valuestring) : NULL,
-        node_taints_policy ? strdup(node_taints_policy->valuestring) : NULL,
+        node_affinity_policy && !cJSON_IsNull(node_affinity_policy) ? strdup(node_affinity_policy->valuestring) : NULL,
+        node_taints_policy && !cJSON_IsNull(node_taints_policy) ? strdup(node_taints_policy->valuestring) : NULL,
         strdup(topology_key->valuestring),
         strdup(when_unsatisfiable->valuestring)
         );

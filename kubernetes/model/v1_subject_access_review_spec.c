@@ -224,7 +224,7 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
     // v1_subject_access_review_spec->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid))
+    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -233,7 +233,7 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
     // v1_subject_access_review_spec->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "user");
     if (user) { 
-    if(!cJSON_IsString(user))
+    if(!cJSON_IsString(user) && !cJSON_IsNull(user))
     {
     goto end; //String
     }
@@ -245,8 +245,8 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
         groups ? groupsList : NULL,
         non_resource_attributes ? non_resource_attributes_local_nonprim : NULL,
         resource_attributes ? resource_attributes_local_nonprim : NULL,
-        uid ? strdup(uid->valuestring) : NULL,
-        user ? strdup(user->valuestring) : NULL
+        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL,
+        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
         );
 
     return v1_subject_access_review_spec_local_var;

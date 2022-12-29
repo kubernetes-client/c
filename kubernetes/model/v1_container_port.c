@@ -116,7 +116,7 @@ v1_container_port_t *v1_container_port_parseFromJSON(cJSON *v1_container_portJSO
     // v1_container_port->host_ip
     cJSON *host_ip = cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "hostIP");
     if (host_ip) { 
-    if(!cJSON_IsString(host_ip))
+    if(!cJSON_IsString(host_ip) && !cJSON_IsNull(host_ip))
     {
     goto end; //String
     }
@@ -134,7 +134,7 @@ v1_container_port_t *v1_container_port_parseFromJSON(cJSON *v1_container_portJSO
     // v1_container_port->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -143,7 +143,7 @@ v1_container_port_t *v1_container_port_parseFromJSON(cJSON *v1_container_portJSO
     // v1_container_port->protocol
     cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "protocol");
     if (protocol) { 
-    if(!cJSON_IsString(protocol))
+    if(!cJSON_IsString(protocol) && !cJSON_IsNull(protocol))
     {
     goto end; //String
     }
@@ -152,10 +152,10 @@ v1_container_port_t *v1_container_port_parseFromJSON(cJSON *v1_container_portJSO
 
     v1_container_port_local_var = v1_container_port_create (
         container_port->valuedouble,
-        host_ip ? strdup(host_ip->valuestring) : NULL,
+        host_ip && !cJSON_IsNull(host_ip) ? strdup(host_ip->valuestring) : NULL,
         host_port ? host_port->valuedouble : 0,
-        name ? strdup(name->valuestring) : NULL,
-        protocol ? strdup(protocol->valuestring) : NULL
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        protocol && !cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL
         );
 
     return v1_container_port_local_var;

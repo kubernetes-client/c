@@ -138,7 +138,7 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
     // v1_http_get_action->host
     cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "host");
     if (host) { 
-    if(!cJSON_IsString(host))
+    if(!cJSON_IsString(host) && !cJSON_IsNull(host))
     {
     goto end; //String
     }
@@ -168,7 +168,7 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
     // v1_http_get_action->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "path");
     if (path) { 
-    if(!cJSON_IsString(path))
+    if(!cJSON_IsString(path) && !cJSON_IsNull(path))
     {
     goto end; //String
     }
@@ -186,7 +186,7 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
     // v1_http_get_action->scheme
     cJSON *scheme = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "scheme");
     if (scheme) { 
-    if(!cJSON_IsString(scheme))
+    if(!cJSON_IsString(scheme) && !cJSON_IsNull(scheme))
     {
     goto end; //String
     }
@@ -194,11 +194,11 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
 
     v1_http_get_action_local_var = v1_http_get_action_create (
-        host ? strdup(host->valuestring) : NULL,
+        host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
         http_headers ? http_headersList : NULL,
-        path ? strdup(path->valuestring) : NULL,
+        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
         port_local_nonprim,
-        scheme ? strdup(scheme->valuestring) : NULL
+        scheme && !cJSON_IsNull(scheme) ? strdup(scheme->valuestring) : NULL
         );
 
     return v1_http_get_action_local_var;

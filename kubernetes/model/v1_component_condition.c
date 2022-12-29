@@ -99,7 +99,7 @@ v1_component_condition_t *v1_component_condition_parseFromJSON(cJSON *v1_compone
     // v1_component_condition->error
     cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "error");
     if (error) { 
-    if(!cJSON_IsString(error))
+    if(!cJSON_IsString(error) && !cJSON_IsNull(error))
     {
     goto end; //String
     }
@@ -108,7 +108,7 @@ v1_component_condition_t *v1_component_condition_parseFromJSON(cJSON *v1_compone
     // v1_component_condition->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -140,8 +140,8 @@ v1_component_condition_t *v1_component_condition_parseFromJSON(cJSON *v1_compone
 
 
     v1_component_condition_local_var = v1_component_condition_create (
-        error ? strdup(error->valuestring) : NULL,
-        message ? strdup(message->valuestring) : NULL,
+        error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         strdup(status->valuestring),
         strdup(type->valuestring)
         );

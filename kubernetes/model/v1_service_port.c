@@ -126,7 +126,7 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
     // v1_service_port->app_protocol
     cJSON *app_protocol = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "appProtocol");
     if (app_protocol) { 
-    if(!cJSON_IsString(app_protocol))
+    if(!cJSON_IsString(app_protocol) && !cJSON_IsNull(app_protocol))
     {
     goto end; //String
     }
@@ -135,7 +135,7 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
     // v1_service_port->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -165,7 +165,7 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
     // v1_service_port->protocol
     cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "protocol");
     if (protocol) { 
-    if(!cJSON_IsString(protocol))
+    if(!cJSON_IsString(protocol) && !cJSON_IsNull(protocol))
     {
     goto end; //String
     }
@@ -179,11 +179,11 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
 
     v1_service_port_local_var = v1_service_port_create (
-        app_protocol ? strdup(app_protocol->valuestring) : NULL,
-        name ? strdup(name->valuestring) : NULL,
+        app_protocol && !cJSON_IsNull(app_protocol) ? strdup(app_protocol->valuestring) : NULL,
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         node_port ? node_port->valuedouble : 0,
         port->valuedouble,
-        protocol ? strdup(protocol->valuestring) : NULL,
+        protocol && !cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL,
         target_port ? target_port_local_nonprim : NULL
         );
 

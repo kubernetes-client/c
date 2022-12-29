@@ -243,7 +243,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     // v1_persistent_volume_claim_spec->storage_class_name
     cJSON *storage_class_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "storageClassName");
     if (storage_class_name) { 
-    if(!cJSON_IsString(storage_class_name))
+    if(!cJSON_IsString(storage_class_name) && !cJSON_IsNull(storage_class_name))
     {
     goto end; //String
     }
@@ -252,7 +252,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     // v1_persistent_volume_claim_spec->volume_mode
     cJSON *volume_mode = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "volumeMode");
     if (volume_mode) { 
-    if(!cJSON_IsString(volume_mode))
+    if(!cJSON_IsString(volume_mode) && !cJSON_IsNull(volume_mode))
     {
     goto end; //String
     }
@@ -261,7 +261,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     // v1_persistent_volume_claim_spec->volume_name
     cJSON *volume_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "volumeName");
     if (volume_name) { 
-    if(!cJSON_IsString(volume_name))
+    if(!cJSON_IsString(volume_name) && !cJSON_IsNull(volume_name))
     {
     goto end; //String
     }
@@ -274,9 +274,9 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
         data_source_ref ? data_source_ref_local_nonprim : NULL,
         resources ? resources_local_nonprim : NULL,
         selector ? selector_local_nonprim : NULL,
-        storage_class_name ? strdup(storage_class_name->valuestring) : NULL,
-        volume_mode ? strdup(volume_mode->valuestring) : NULL,
-        volume_name ? strdup(volume_name->valuestring) : NULL
+        storage_class_name && !cJSON_IsNull(storage_class_name) ? strdup(storage_class_name->valuestring) : NULL,
+        volume_mode && !cJSON_IsNull(volume_mode) ? strdup(volume_mode->valuestring) : NULL,
+        volume_name && !cJSON_IsNull(volume_name) ? strdup(volume_name->valuestring) : NULL
         );
 
     return v1_persistent_volume_claim_spec_local_var;

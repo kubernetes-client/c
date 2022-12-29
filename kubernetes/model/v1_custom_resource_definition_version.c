@@ -208,7 +208,7 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     // v1_custom_resource_definition_version->deprecation_warning
     cJSON *deprecation_warning = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "deprecationWarning");
     if (deprecation_warning) { 
-    if(!cJSON_IsString(deprecation_warning))
+    if(!cJSON_IsString(deprecation_warning) && !cJSON_IsNull(deprecation_warning))
     {
     goto end; //String
     }
@@ -266,7 +266,7 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     v1_custom_resource_definition_version_local_var = v1_custom_resource_definition_version_create (
         additional_printer_columns ? additional_printer_columnsList : NULL,
         deprecated ? deprecated->valueint : 0,
-        deprecation_warning ? strdup(deprecation_warning->valuestring) : NULL,
+        deprecation_warning && !cJSON_IsNull(deprecation_warning) ? strdup(deprecation_warning->valuestring) : NULL,
         strdup(name->valuestring),
         schema ? schema_local_nonprim : NULL,
         served->valueint,

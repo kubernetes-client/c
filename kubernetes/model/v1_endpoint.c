@@ -273,7 +273,7 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     // v1_endpoint->hostname
     cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "hostname");
     if (hostname) { 
-    if(!cJSON_IsString(hostname))
+    if(!cJSON_IsString(hostname) && !cJSON_IsNull(hostname))
     {
     goto end; //String
     }
@@ -282,7 +282,7 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     // v1_endpoint->node_name
     cJSON *node_name = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "nodeName");
     if (node_name) { 
-    if(!cJSON_IsString(node_name))
+    if(!cJSON_IsString(node_name) && !cJSON_IsNull(node_name))
     {
     goto end; //String
     }
@@ -297,7 +297,7 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     // v1_endpoint->zone
     cJSON *zone = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "zone");
     if (zone) { 
-    if(!cJSON_IsString(zone))
+    if(!cJSON_IsString(zone) && !cJSON_IsNull(zone))
     {
     goto end; //String
     }
@@ -309,10 +309,10 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
         conditions ? conditions_local_nonprim : NULL,
         deprecated_topology ? deprecated_topologyList : NULL,
         hints ? hints_local_nonprim : NULL,
-        hostname ? strdup(hostname->valuestring) : NULL,
-        node_name ? strdup(node_name->valuestring) : NULL,
+        hostname && !cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
+        node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
         target_ref ? target_ref_local_nonprim : NULL,
-        zone ? strdup(zone->valuestring) : NULL
+        zone && !cJSON_IsNull(zone) ? strdup(zone->valuestring) : NULL
         );
 
     return v1_endpoint_local_var;

@@ -246,7 +246,7 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
     // v1_api_resource->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "group");
     if (group) { 
-    if(!cJSON_IsString(group))
+    if(!cJSON_IsString(group) && !cJSON_IsNull(group))
     {
     goto end; //String
     }
@@ -322,7 +322,7 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
     // v1_api_resource->storage_version_hash
     cJSON *storage_version_hash = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "storageVersionHash");
     if (storage_version_hash) { 
-    if(!cJSON_IsString(storage_version_hash))
+    if(!cJSON_IsString(storage_version_hash) && !cJSON_IsNull(storage_version_hash))
     {
     goto end; //String
     }
@@ -353,7 +353,7 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
     // v1_api_resource->version
     cJSON *version = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "version");
     if (version) { 
-    if(!cJSON_IsString(version))
+    if(!cJSON_IsString(version) && !cJSON_IsNull(version))
     {
     goto end; //String
     }
@@ -362,15 +362,15 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     v1_api_resource_local_var = v1_api_resource_create (
         categories ? categoriesList : NULL,
-        group ? strdup(group->valuestring) : NULL,
+        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         strdup(kind->valuestring),
         strdup(name->valuestring),
         namespaced->valueint,
         short_names ? short_namesList : NULL,
         strdup(singular_name->valuestring),
-        storage_version_hash ? strdup(storage_version_hash->valuestring) : NULL,
+        storage_version_hash && !cJSON_IsNull(storage_version_hash) ? strdup(storage_version_hash->valuestring) : NULL,
         verbsList,
-        version ? strdup(version->valuestring) : NULL
+        version && !cJSON_IsNull(version) ? strdup(version->valuestring) : NULL
         );
 
     return v1_api_resource_local_var;

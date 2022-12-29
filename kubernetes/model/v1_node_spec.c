@@ -182,7 +182,7 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     // v1_node_spec->external_id
     cJSON *external_id = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "externalID");
     if (external_id) { 
-    if(!cJSON_IsString(external_id))
+    if(!cJSON_IsString(external_id) && !cJSON_IsNull(external_id))
     {
     goto end; //String
     }
@@ -191,7 +191,7 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     // v1_node_spec->pod_cidr
     cJSON *pod_cidr = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "podCIDR");
     if (pod_cidr) { 
-    if(!cJSON_IsString(pod_cidr))
+    if(!cJSON_IsString(pod_cidr) && !cJSON_IsNull(pod_cidr))
     {
     goto end; //String
     }
@@ -219,7 +219,7 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     // v1_node_spec->provider_id
     cJSON *provider_id = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "providerID");
     if (provider_id) { 
-    if(!cJSON_IsString(provider_id))
+    if(!cJSON_IsString(provider_id) && !cJSON_IsNull(provider_id))
     {
     goto end; //String
     }
@@ -258,10 +258,10 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     v1_node_spec_local_var = v1_node_spec_create (
         config_source ? config_source_local_nonprim : NULL,
-        external_id ? strdup(external_id->valuestring) : NULL,
-        pod_cidr ? strdup(pod_cidr->valuestring) : NULL,
+        external_id && !cJSON_IsNull(external_id) ? strdup(external_id->valuestring) : NULL,
+        pod_cidr && !cJSON_IsNull(pod_cidr) ? strdup(pod_cidr->valuestring) : NULL,
         pod_cidrs ? pod_cidrsList : NULL,
-        provider_id ? strdup(provider_id->valuestring) : NULL,
+        provider_id && !cJSON_IsNull(provider_id) ? strdup(provider_id->valuestring) : NULL,
         taints ? taintsList : NULL,
         unschedulable ? unschedulable->valueint : 0
         );

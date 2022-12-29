@@ -139,7 +139,7 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
     // v1_resource_attributes->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "group");
     if (group) { 
-    if(!cJSON_IsString(group))
+    if(!cJSON_IsString(group) && !cJSON_IsNull(group))
     {
     goto end; //String
     }
@@ -148,7 +148,7 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
     // v1_resource_attributes->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -157,7 +157,7 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
     // v1_resource_attributes->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace))
+    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
@@ -166,7 +166,7 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
     // v1_resource_attributes->resource
     cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "resource");
     if (resource) { 
-    if(!cJSON_IsString(resource))
+    if(!cJSON_IsString(resource) && !cJSON_IsNull(resource))
     {
     goto end; //String
     }
@@ -175,7 +175,7 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
     // v1_resource_attributes->subresource
     cJSON *subresource = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "subresource");
     if (subresource) { 
-    if(!cJSON_IsString(subresource))
+    if(!cJSON_IsString(subresource) && !cJSON_IsNull(subresource))
     {
     goto end; //String
     }
@@ -184,7 +184,7 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
     // v1_resource_attributes->verb
     cJSON *verb = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "verb");
     if (verb) { 
-    if(!cJSON_IsString(verb))
+    if(!cJSON_IsString(verb) && !cJSON_IsNull(verb))
     {
     goto end; //String
     }
@@ -193,7 +193,7 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
     // v1_resource_attributes->version
     cJSON *version = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "version");
     if (version) { 
-    if(!cJSON_IsString(version))
+    if(!cJSON_IsString(version) && !cJSON_IsNull(version))
     {
     goto end; //String
     }
@@ -201,13 +201,13 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
 
 
     v1_resource_attributes_local_var = v1_resource_attributes_create (
-        group ? strdup(group->valuestring) : NULL,
-        name ? strdup(name->valuestring) : NULL,
-        _namespace ? strdup(_namespace->valuestring) : NULL,
-        resource ? strdup(resource->valuestring) : NULL,
-        subresource ? strdup(subresource->valuestring) : NULL,
-        verb ? strdup(verb->valuestring) : NULL,
-        version ? strdup(version->valuestring) : NULL
+        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
+        resource && !cJSON_IsNull(resource) ? strdup(resource->valuestring) : NULL,
+        subresource && !cJSON_IsNull(subresource) ? strdup(subresource->valuestring) : NULL,
+        verb && !cJSON_IsNull(verb) ? strdup(verb->valuestring) : NULL,
+        version && !cJSON_IsNull(version) ? strdup(version->valuestring) : NULL
         );
 
     return v1_resource_attributes_local_var;

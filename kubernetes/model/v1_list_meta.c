@@ -93,7 +93,7 @@ v1_list_meta_t *v1_list_meta_parseFromJSON(cJSON *v1_list_metaJSON){
     // v1_list_meta->_continue
     cJSON *_continue = cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "continue");
     if (_continue) { 
-    if(!cJSON_IsString(_continue))
+    if(!cJSON_IsString(_continue) && !cJSON_IsNull(_continue))
     {
     goto end; //String
     }
@@ -111,7 +111,7 @@ v1_list_meta_t *v1_list_meta_parseFromJSON(cJSON *v1_list_metaJSON){
     // v1_list_meta->resource_version
     cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "resourceVersion");
     if (resource_version) { 
-    if(!cJSON_IsString(resource_version))
+    if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
     {
     goto end; //String
     }
@@ -120,7 +120,7 @@ v1_list_meta_t *v1_list_meta_parseFromJSON(cJSON *v1_list_metaJSON){
     // v1_list_meta->self_link
     cJSON *self_link = cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "selfLink");
     if (self_link) { 
-    if(!cJSON_IsString(self_link))
+    if(!cJSON_IsString(self_link) && !cJSON_IsNull(self_link))
     {
     goto end; //String
     }
@@ -128,10 +128,10 @@ v1_list_meta_t *v1_list_meta_parseFromJSON(cJSON *v1_list_metaJSON){
 
 
     v1_list_meta_local_var = v1_list_meta_create (
-        _continue ? strdup(_continue->valuestring) : NULL,
+        _continue && !cJSON_IsNull(_continue) ? strdup(_continue->valuestring) : NULL,
         remaining_item_count ? remaining_item_count->valuedouble : 0,
-        resource_version ? strdup(resource_version->valuestring) : NULL,
-        self_link ? strdup(self_link->valuestring) : NULL
+        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
+        self_link && !cJSON_IsNull(self_link) ? strdup(self_link->valuestring) : NULL
         );
 
     return v1_list_meta_local_var;

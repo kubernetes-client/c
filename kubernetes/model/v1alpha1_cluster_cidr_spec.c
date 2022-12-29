@@ -102,7 +102,7 @@ v1alpha1_cluster_cidr_spec_t *v1alpha1_cluster_cidr_spec_parseFromJSON(cJSON *v1
     // v1alpha1_cluster_cidr_spec->ipv4
     cJSON *ipv4 = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_cidr_specJSON, "ipv4");
     if (ipv4) { 
-    if(!cJSON_IsString(ipv4))
+    if(!cJSON_IsString(ipv4) && !cJSON_IsNull(ipv4))
     {
     goto end; //String
     }
@@ -111,7 +111,7 @@ v1alpha1_cluster_cidr_spec_t *v1alpha1_cluster_cidr_spec_parseFromJSON(cJSON *v1
     // v1alpha1_cluster_cidr_spec->ipv6
     cJSON *ipv6 = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_cidr_specJSON, "ipv6");
     if (ipv6) { 
-    if(!cJSON_IsString(ipv6))
+    if(!cJSON_IsString(ipv6) && !cJSON_IsNull(ipv6))
     {
     goto end; //String
     }
@@ -137,8 +137,8 @@ v1alpha1_cluster_cidr_spec_t *v1alpha1_cluster_cidr_spec_parseFromJSON(cJSON *v1
 
 
     v1alpha1_cluster_cidr_spec_local_var = v1alpha1_cluster_cidr_spec_create (
-        ipv4 ? strdup(ipv4->valuestring) : NULL,
-        ipv6 ? strdup(ipv6->valuestring) : NULL,
+        ipv4 && !cJSON_IsNull(ipv4) ? strdup(ipv4->valuestring) : NULL,
+        ipv6 && !cJSON_IsNull(ipv6) ? strdup(ipv6->valuestring) : NULL,
         node_selector ? node_selector_local_nonprim : NULL,
         per_node_host_bits->valuedouble
         );

@@ -118,7 +118,7 @@ v2beta2_hpa_scaling_rules_t *v2beta2_hpa_scaling_rules_parseFromJSON(cJSON *v2be
     // v2beta2_hpa_scaling_rules->select_policy
     cJSON *select_policy = cJSON_GetObjectItemCaseSensitive(v2beta2_hpa_scaling_rulesJSON, "selectPolicy");
     if (select_policy) { 
-    if(!cJSON_IsString(select_policy))
+    if(!cJSON_IsString(select_policy) && !cJSON_IsNull(select_policy))
     {
     goto end; //String
     }
@@ -136,7 +136,7 @@ v2beta2_hpa_scaling_rules_t *v2beta2_hpa_scaling_rules_parseFromJSON(cJSON *v2be
 
     v2beta2_hpa_scaling_rules_local_var = v2beta2_hpa_scaling_rules_create (
         policies ? policiesList : NULL,
-        select_policy ? strdup(select_policy->valuestring) : NULL,
+        select_policy && !cJSON_IsNull(select_policy) ? strdup(select_policy->valuestring) : NULL,
         stabilization_window_seconds ? stabilization_window_seconds->valuedouble : 0
         );
 

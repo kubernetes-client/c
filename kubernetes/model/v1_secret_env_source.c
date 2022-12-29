@@ -65,7 +65,7 @@ v1_secret_env_source_t *v1_secret_env_source_parseFromJSON(cJSON *v1_secret_env_
     // v1_secret_env_source->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_secret_env_sourceJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -82,7 +82,7 @@ v1_secret_env_source_t *v1_secret_env_source_parseFromJSON(cJSON *v1_secret_env_
 
 
     v1_secret_env_source_local_var = v1_secret_env_source_create (
-        name ? strdup(name->valuestring) : NULL,
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         optional ? optional->valueint : 0
         );
 

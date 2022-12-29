@@ -227,7 +227,7 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
     // v1_security_context->proc_mount
     cJSON *proc_mount = cJSON_GetObjectItemCaseSensitive(v1_security_contextJSON, "procMount");
     if (proc_mount) { 
-    if(!cJSON_IsString(proc_mount))
+    if(!cJSON_IsString(proc_mount) && !cJSON_IsNull(proc_mount))
     {
     goto end; //String
     }
@@ -292,7 +292,7 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
         allow_privilege_escalation ? allow_privilege_escalation->valueint : 0,
         capabilities ? capabilities_local_nonprim : NULL,
         privileged ? privileged->valueint : 0,
-        proc_mount ? strdup(proc_mount->valuestring) : NULL,
+        proc_mount && !cJSON_IsNull(proc_mount) ? strdup(proc_mount->valuestring) : NULL,
         read_only_root_filesystem ? read_only_root_filesystem->valueint : 0,
         run_as_group ? run_as_group->valuedouble : 0,
         run_as_non_root ? run_as_non_root->valueint : 0,

@@ -103,7 +103,7 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
     // v1_ingress_tls->secret_name
     cJSON *secret_name = cJSON_GetObjectItemCaseSensitive(v1_ingress_tlsJSON, "secretName");
     if (secret_name) { 
-    if(!cJSON_IsString(secret_name))
+    if(!cJSON_IsString(secret_name) && !cJSON_IsNull(secret_name))
     {
     goto end; //String
     }
@@ -112,7 +112,7 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
 
     v1_ingress_tls_local_var = v1_ingress_tls_create (
         hosts ? hostsList : NULL,
-        secret_name ? strdup(secret_name->valuestring) : NULL
+        secret_name && !cJSON_IsNull(secret_name) ? strdup(secret_name->valuestring) : NULL
         );
 
     return v1_ingress_tls_local_var;

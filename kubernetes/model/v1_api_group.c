@@ -171,7 +171,7 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
     // v1_api_group->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -180,7 +180,7 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
     // v1_api_group->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -251,8 +251,8 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
 
 
     v1_api_group_local_var = v1_api_group_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         strdup(name->valuestring),
         preferred_version ? preferred_version_local_nonprim : NULL,
         server_address_by_client_cidrs ? server_address_by_client_cidrsList : NULL,

@@ -98,7 +98,7 @@ v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_virtual_disk_volume_source_p
     // v1_vsphere_virtual_disk_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_vsphere_virtual_disk_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type))
+    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
@@ -107,7 +107,7 @@ v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_virtual_disk_volume_source_p
     // v1_vsphere_virtual_disk_volume_source->storage_policy_id
     cJSON *storage_policy_id = cJSON_GetObjectItemCaseSensitive(v1_vsphere_virtual_disk_volume_sourceJSON, "storagePolicyID");
     if (storage_policy_id) { 
-    if(!cJSON_IsString(storage_policy_id))
+    if(!cJSON_IsString(storage_policy_id) && !cJSON_IsNull(storage_policy_id))
     {
     goto end; //String
     }
@@ -116,7 +116,7 @@ v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_virtual_disk_volume_source_p
     // v1_vsphere_virtual_disk_volume_source->storage_policy_name
     cJSON *storage_policy_name = cJSON_GetObjectItemCaseSensitive(v1_vsphere_virtual_disk_volume_sourceJSON, "storagePolicyName");
     if (storage_policy_name) { 
-    if(!cJSON_IsString(storage_policy_name))
+    if(!cJSON_IsString(storage_policy_name) && !cJSON_IsNull(storage_policy_name))
     {
     goto end; //String
     }
@@ -136,9 +136,9 @@ v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_virtual_disk_volume_source_p
 
 
     v1_vsphere_virtual_disk_volume_source_local_var = v1_vsphere_virtual_disk_volume_source_create (
-        fs_type ? strdup(fs_type->valuestring) : NULL,
-        storage_policy_id ? strdup(storage_policy_id->valuestring) : NULL,
-        storage_policy_name ? strdup(storage_policy_name->valuestring) : NULL,
+        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        storage_policy_id && !cJSON_IsNull(storage_policy_id) ? strdup(storage_policy_id->valuestring) : NULL,
+        storage_policy_name && !cJSON_IsNull(storage_policy_name) ? strdup(storage_policy_name->valuestring) : NULL,
         strdup(volume_path->valuestring)
         );
 

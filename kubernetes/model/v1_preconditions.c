@@ -69,7 +69,7 @@ v1_preconditions_t *v1_preconditions_parseFromJSON(cJSON *v1_preconditionsJSON){
     // v1_preconditions->resource_version
     cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_preconditionsJSON, "resourceVersion");
     if (resource_version) { 
-    if(!cJSON_IsString(resource_version))
+    if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
     {
     goto end; //String
     }
@@ -78,7 +78,7 @@ v1_preconditions_t *v1_preconditions_parseFromJSON(cJSON *v1_preconditionsJSON){
     // v1_preconditions->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_preconditionsJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid))
+    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_preconditions_t *v1_preconditions_parseFromJSON(cJSON *v1_preconditionsJSON){
 
 
     v1_preconditions_local_var = v1_preconditions_create (
-        resource_version ? strdup(resource_version->valuestring) : NULL,
-        uid ? strdup(uid->valuestring) : NULL
+        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
+        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
         );
 
     return v1_preconditions_local_var;

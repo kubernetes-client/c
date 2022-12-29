@@ -78,7 +78,7 @@ v1_tcp_socket_action_t *v1_tcp_socket_action_parseFromJSON(cJSON *v1_tcp_socket_
     // v1_tcp_socket_action->host
     cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_tcp_socket_actionJSON, "host");
     if (host) { 
-    if(!cJSON_IsString(host))
+    if(!cJSON_IsString(host) && !cJSON_IsNull(host))
     {
     goto end; //String
     }
@@ -95,7 +95,7 @@ v1_tcp_socket_action_t *v1_tcp_socket_action_parseFromJSON(cJSON *v1_tcp_socket_
 
 
     v1_tcp_socket_action_local_var = v1_tcp_socket_action_create (
-        host ? strdup(host->valuestring) : NULL,
+        host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
         port_local_nonprim
         );
 

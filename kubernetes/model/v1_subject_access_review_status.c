@@ -111,7 +111,7 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
     // v1_subject_access_review_status->evaluation_error
     cJSON *evaluation_error = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_statusJSON, "evaluationError");
     if (evaluation_error) { 
-    if(!cJSON_IsString(evaluation_error))
+    if(!cJSON_IsString(evaluation_error) && !cJSON_IsNull(evaluation_error))
     {
     goto end; //String
     }
@@ -120,7 +120,7 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
     // v1_subject_access_review_status->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_statusJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason))
+    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -130,8 +130,8 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
     v1_subject_access_review_status_local_var = v1_subject_access_review_status_create (
         allowed->valueint,
         denied ? denied->valueint : 0,
-        evaluation_error ? strdup(evaluation_error->valuestring) : NULL,
-        reason ? strdup(reason->valuestring) : NULL
+        evaluation_error && !cJSON_IsNull(evaluation_error) ? strdup(evaluation_error->valuestring) : NULL,
+        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
         );
 
     return v1_subject_access_review_status_local_var;

@@ -83,7 +83,7 @@ v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_parseFromJSON
     // v1_stateful_set_update_strategy->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_update_strategyJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type))
+    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -92,7 +92,7 @@ v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_parseFromJSON
 
     v1_stateful_set_update_strategy_local_var = v1_stateful_set_update_strategy_create (
         rolling_update ? rolling_update_local_nonprim : NULL,
-        type ? strdup(type->valuestring) : NULL
+        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return v1_stateful_set_update_strategy_local_var;

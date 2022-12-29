@@ -70,7 +70,7 @@ v1_seccomp_profile_t *v1_seccomp_profile_parseFromJSON(cJSON *v1_seccomp_profile
     // v1_seccomp_profile->localhost_profile
     cJSON *localhost_profile = cJSON_GetObjectItemCaseSensitive(v1_seccomp_profileJSON, "localhostProfile");
     if (localhost_profile) { 
-    if(!cJSON_IsString(localhost_profile))
+    if(!cJSON_IsString(localhost_profile) && !cJSON_IsNull(localhost_profile))
     {
     goto end; //String
     }
@@ -90,7 +90,7 @@ v1_seccomp_profile_t *v1_seccomp_profile_parseFromJSON(cJSON *v1_seccomp_profile
 
 
     v1_seccomp_profile_local_var = v1_seccomp_profile_create (
-        localhost_profile ? strdup(localhost_profile->valuestring) : NULL,
+        localhost_profile && !cJSON_IsNull(localhost_profile) ? strdup(localhost_profile->valuestring) : NULL,
         strdup(type->valuestring)
         );
 

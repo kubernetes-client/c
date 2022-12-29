@@ -132,7 +132,7 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
     // v1_taint->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "value");
     if (value) { 
-    if(!cJSON_IsString(value))
+    if(!cJSON_IsString(value) && !cJSON_IsNull(value))
     {
     goto end; //String
     }
@@ -143,7 +143,7 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
         strdup(effect->valuestring),
         strdup(key->valuestring),
         time_added && !cJSON_IsNull(time_added) ? strdup(time_added->valuestring) : NULL,
-        value ? strdup(value->valuestring) : NULL
+        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
         );
 
     return v1_taint_local_var;

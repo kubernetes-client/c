@@ -115,7 +115,7 @@ v1_storage_os_persistent_volume_source_t *v1_storage_os_persistent_volume_source
     // v1_storage_os_persistent_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_storage_os_persistent_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type))
+    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
@@ -139,7 +139,7 @@ v1_storage_os_persistent_volume_source_t *v1_storage_os_persistent_volume_source
     // v1_storage_os_persistent_volume_source->volume_name
     cJSON *volume_name = cJSON_GetObjectItemCaseSensitive(v1_storage_os_persistent_volume_sourceJSON, "volumeName");
     if (volume_name) { 
-    if(!cJSON_IsString(volume_name))
+    if(!cJSON_IsString(volume_name) && !cJSON_IsNull(volume_name))
     {
     goto end; //String
     }
@@ -148,7 +148,7 @@ v1_storage_os_persistent_volume_source_t *v1_storage_os_persistent_volume_source
     // v1_storage_os_persistent_volume_source->volume_namespace
     cJSON *volume_namespace = cJSON_GetObjectItemCaseSensitive(v1_storage_os_persistent_volume_sourceJSON, "volumeNamespace");
     if (volume_namespace) { 
-    if(!cJSON_IsString(volume_namespace))
+    if(!cJSON_IsString(volume_namespace) && !cJSON_IsNull(volume_namespace))
     {
     goto end; //String
     }
@@ -156,11 +156,11 @@ v1_storage_os_persistent_volume_source_t *v1_storage_os_persistent_volume_source
 
 
     v1_storage_os_persistent_volume_source_local_var = v1_storage_os_persistent_volume_source_create (
-        fs_type ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
         secret_ref ? secret_ref_local_nonprim : NULL,
-        volume_name ? strdup(volume_name->valuestring) : NULL,
-        volume_namespace ? strdup(volume_namespace->valuestring) : NULL
+        volume_name && !cJSON_IsNull(volume_name) ? strdup(volume_name->valuestring) : NULL,
+        volume_namespace && !cJSON_IsNull(volume_namespace) ? strdup(volume_namespace->valuestring) : NULL
         );
 
     return v1_storage_os_persistent_volume_source_local_var;

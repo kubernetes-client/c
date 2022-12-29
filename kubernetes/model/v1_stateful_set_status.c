@@ -220,7 +220,7 @@ v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_statefu
     // v1_stateful_set_status->current_revision
     cJSON *current_revision = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "currentRevision");
     if (current_revision) { 
-    if(!cJSON_IsString(current_revision))
+    if(!cJSON_IsString(current_revision) && !cJSON_IsNull(current_revision))
     {
     goto end; //String
     }
@@ -259,7 +259,7 @@ v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_statefu
     // v1_stateful_set_status->update_revision
     cJSON *update_revision = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "updateRevision");
     if (update_revision) { 
-    if(!cJSON_IsString(update_revision))
+    if(!cJSON_IsString(update_revision) && !cJSON_IsNull(update_revision))
     {
     goto end; //String
     }
@@ -280,11 +280,11 @@ v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_statefu
         collision_count ? collision_count->valuedouble : 0,
         conditions ? conditionsList : NULL,
         current_replicas ? current_replicas->valuedouble : 0,
-        current_revision ? strdup(current_revision->valuestring) : NULL,
+        current_revision && !cJSON_IsNull(current_revision) ? strdup(current_revision->valuestring) : NULL,
         observed_generation ? observed_generation->valuedouble : 0,
         ready_replicas ? ready_replicas->valuedouble : 0,
         replicas->valuedouble,
-        update_revision ? strdup(update_revision->valuestring) : NULL,
+        update_revision && !cJSON_IsNull(update_revision) ? strdup(update_revision->valuestring) : NULL,
         updated_replicas ? updated_replicas->valuedouble : 0
         );
 

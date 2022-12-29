@@ -223,7 +223,7 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
     // v1_iscsi_persistent_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_iscsi_persistent_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type))
+    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
@@ -232,7 +232,7 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
     // v1_iscsi_persistent_volume_source->initiator_name
     cJSON *initiator_name = cJSON_GetObjectItemCaseSensitive(v1_iscsi_persistent_volume_sourceJSON, "initiatorName");
     if (initiator_name) { 
-    if(!cJSON_IsString(initiator_name))
+    if(!cJSON_IsString(initiator_name) && !cJSON_IsNull(initiator_name))
     {
     goto end; //String
     }
@@ -253,7 +253,7 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
     // v1_iscsi_persistent_volume_source->iscsi_interface
     cJSON *iscsi_interface = cJSON_GetObjectItemCaseSensitive(v1_iscsi_persistent_volume_sourceJSON, "iscsiInterface");
     if (iscsi_interface) { 
-    if(!cJSON_IsString(iscsi_interface))
+    if(!cJSON_IsString(iscsi_interface) && !cJSON_IsNull(iscsi_interface))
     {
     goto end; //String
     }
@@ -321,10 +321,10 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
     v1_iscsi_persistent_volume_source_local_var = v1_iscsi_persistent_volume_source_create (
         chap_auth_discovery ? chap_auth_discovery->valueint : 0,
         chap_auth_session ? chap_auth_session->valueint : 0,
-        fs_type ? strdup(fs_type->valuestring) : NULL,
-        initiator_name ? strdup(initiator_name->valuestring) : NULL,
+        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        initiator_name && !cJSON_IsNull(initiator_name) ? strdup(initiator_name->valuestring) : NULL,
         strdup(iqn->valuestring),
-        iscsi_interface ? strdup(iscsi_interface->valuestring) : NULL,
+        iscsi_interface && !cJSON_IsNull(iscsi_interface) ? strdup(iscsi_interface->valuestring) : NULL,
         lun->valuedouble,
         portals ? portalsList : NULL,
         read_only ? read_only->valueint : 0,

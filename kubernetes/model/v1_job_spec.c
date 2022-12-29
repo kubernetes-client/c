@@ -210,7 +210,7 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
     // v1_job_spec->completion_mode
     cJSON *completion_mode = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "completionMode");
     if (completion_mode) { 
-    if(!cJSON_IsString(completion_mode))
+    if(!cJSON_IsString(completion_mode) && !cJSON_IsNull(completion_mode))
     {
     goto end; //String
     }
@@ -286,7 +286,7 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
     v1_job_spec_local_var = v1_job_spec_create (
         active_deadline_seconds ? active_deadline_seconds->valuedouble : 0,
         backoff_limit ? backoff_limit->valuedouble : 0,
-        completion_mode ? strdup(completion_mode->valuestring) : NULL,
+        completion_mode && !cJSON_IsNull(completion_mode) ? strdup(completion_mode->valuestring) : NULL,
         completions ? completions->valuedouble : 0,
         manual_selector ? manual_selector->valueint : 0,
         parallelism ? parallelism->valuedouble : 0,

@@ -69,7 +69,7 @@ v1_pod_dns_config_option_t *v1_pod_dns_config_option_parseFromJSON(cJSON *v1_pod
     // v1_pod_dns_config_option->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_pod_dns_config_optionJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name))
+    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -78,7 +78,7 @@ v1_pod_dns_config_option_t *v1_pod_dns_config_option_parseFromJSON(cJSON *v1_pod
     // v1_pod_dns_config_option->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_pod_dns_config_optionJSON, "value");
     if (value) { 
-    if(!cJSON_IsString(value))
+    if(!cJSON_IsString(value) && !cJSON_IsNull(value))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_pod_dns_config_option_t *v1_pod_dns_config_option_parseFromJSON(cJSON *v1_pod
 
 
     v1_pod_dns_config_option_local_var = v1_pod_dns_config_option_create (
-        name ? strdup(name->valuestring) : NULL,
-        value ? strdup(value->valuestring) : NULL
+        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
         );
 
     return v1_pod_dns_config_option_local_var;

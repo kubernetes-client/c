@@ -81,7 +81,7 @@ v1_port_status_t *v1_port_status_parseFromJSON(cJSON *v1_port_statusJSON){
     // v1_port_status->error
     cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_port_statusJSON, "error");
     if (error) { 
-    if(!cJSON_IsString(error))
+    if(!cJSON_IsString(error) && !cJSON_IsNull(error))
     {
     goto end; //String
     }
@@ -113,7 +113,7 @@ v1_port_status_t *v1_port_status_parseFromJSON(cJSON *v1_port_statusJSON){
 
 
     v1_port_status_local_var = v1_port_status_create (
-        error ? strdup(error->valuestring) : NULL,
+        error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
         port->valuedouble,
         strdup(protocol->valuestring)
         );

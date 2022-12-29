@@ -122,7 +122,7 @@ v2_horizontal_pod_autoscaler_condition_t *v2_horizontal_pod_autoscaler_condition
     // v2_horizontal_pod_autoscaler_condition->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_conditionJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -131,7 +131,7 @@ v2_horizontal_pod_autoscaler_condition_t *v2_horizontal_pod_autoscaler_condition
     // v2_horizontal_pod_autoscaler_condition->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_conditionJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason))
+    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -164,8 +164,8 @@ v2_horizontal_pod_autoscaler_condition_t *v2_horizontal_pod_autoscaler_condition
 
     v2_horizontal_pod_autoscaler_condition_local_var = v2_horizontal_pod_autoscaler_condition_create (
         last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
-        message ? strdup(message->valuestring) : NULL,
-        reason ? strdup(reason->valuestring) : NULL,
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
         strdup(status->valuestring),
         strdup(type->valuestring)
         );

@@ -84,7 +84,7 @@ v1_git_repo_volume_source_t *v1_git_repo_volume_source_parseFromJSON(cJSON *v1_g
     // v1_git_repo_volume_source->directory
     cJSON *directory = cJSON_GetObjectItemCaseSensitive(v1_git_repo_volume_sourceJSON, "directory");
     if (directory) { 
-    if(!cJSON_IsString(directory))
+    if(!cJSON_IsString(directory) && !cJSON_IsNull(directory))
     {
     goto end; //String
     }
@@ -105,7 +105,7 @@ v1_git_repo_volume_source_t *v1_git_repo_volume_source_parseFromJSON(cJSON *v1_g
     // v1_git_repo_volume_source->revision
     cJSON *revision = cJSON_GetObjectItemCaseSensitive(v1_git_repo_volume_sourceJSON, "revision");
     if (revision) { 
-    if(!cJSON_IsString(revision))
+    if(!cJSON_IsString(revision) && !cJSON_IsNull(revision))
     {
     goto end; //String
     }
@@ -113,9 +113,9 @@ v1_git_repo_volume_source_t *v1_git_repo_volume_source_parseFromJSON(cJSON *v1_g
 
 
     v1_git_repo_volume_source_local_var = v1_git_repo_volume_source_create (
-        directory ? strdup(directory->valuestring) : NULL,
+        directory && !cJSON_IsNull(directory) ? strdup(directory->valuestring) : NULL,
         strdup(repository->valuestring),
-        revision ? strdup(revision->valuestring) : NULL
+        revision && !cJSON_IsNull(revision) ? strdup(revision->valuestring) : NULL
         );
 
     return v1_git_repo_volume_source_local_var;

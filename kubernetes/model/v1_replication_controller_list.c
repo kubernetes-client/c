@@ -124,7 +124,7 @@ v1_replication_controller_list_t *v1_replication_controller_list_parseFromJSON(c
     // v1_replication_controller_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_listJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -157,7 +157,7 @@ v1_replication_controller_list_t *v1_replication_controller_list_parseFromJSON(c
     // v1_replication_controller_list->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_listJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -171,9 +171,9 @@ v1_replication_controller_list_t *v1_replication_controller_list_parseFromJSON(c
 
 
     v1_replication_controller_list_local_var = v1_replication_controller_list_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         itemsList,
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL
         );
 

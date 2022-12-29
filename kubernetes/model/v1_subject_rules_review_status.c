@@ -132,7 +132,7 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
     // v1_subject_rules_review_status->evaluation_error
     cJSON *evaluation_error = cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "evaluationError");
     if (evaluation_error) { 
-    if(!cJSON_IsString(evaluation_error))
+    if(!cJSON_IsString(evaluation_error) && !cJSON_IsNull(evaluation_error))
     {
     goto end; //String
     }
@@ -200,7 +200,7 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
 
 
     v1_subject_rules_review_status_local_var = v1_subject_rules_review_status_create (
-        evaluation_error ? strdup(evaluation_error->valuestring) : NULL,
+        evaluation_error && !cJSON_IsNull(evaluation_error) ? strdup(evaluation_error->valuestring) : NULL,
         incomplete->valueint,
         non_resource_rulesList,
         resource_rulesList

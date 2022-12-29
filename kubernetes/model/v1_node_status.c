@@ -479,7 +479,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     // v1_node_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "phase");
     if (phase) { 
-    if(!cJSON_IsString(phase))
+    if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
     {
     goto end; //String
     }
@@ -535,7 +535,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
         daemon_endpoints ? daemon_endpoints_local_nonprim : NULL,
         images ? imagesList : NULL,
         node_info ? node_info_local_nonprim : NULL,
-        phase ? strdup(phase->valuestring) : NULL,
+        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
         volumes_attached ? volumes_attachedList : NULL,
         volumes_in_use ? volumes_in_useList : NULL
         );

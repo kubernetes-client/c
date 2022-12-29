@@ -140,7 +140,7 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
     // v1_priority_class->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -149,7 +149,7 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
     // v1_priority_class->description
     cJSON *description = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "description");
     if (description) { 
-    if(!cJSON_IsString(description))
+    if(!cJSON_IsString(description) && !cJSON_IsNull(description))
     {
     goto end; //String
     }
@@ -167,7 +167,7 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
     // v1_priority_class->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -182,7 +182,7 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
     // v1_priority_class->preemption_policy
     cJSON *preemption_policy = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "preemptionPolicy");
     if (preemption_policy) { 
-    if(!cJSON_IsString(preemption_policy))
+    if(!cJSON_IsString(preemption_policy) && !cJSON_IsNull(preemption_policy))
     {
     goto end; //String
     }
@@ -202,12 +202,12 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
 
 
     v1_priority_class_local_var = v1_priority_class_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        description ? strdup(description->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
         global_default ? global_default->valueint : 0,
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
-        preemption_policy ? strdup(preemption_policy->valuestring) : NULL,
+        preemption_policy && !cJSON_IsNull(preemption_policy) ? strdup(preemption_policy->valuestring) : NULL,
         value->valuedouble
         );
 

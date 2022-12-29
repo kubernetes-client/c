@@ -132,7 +132,7 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
     // v1_api_versions->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_versionsJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -141,7 +141,7 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
     // v1_api_versions->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_api_versionsJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -195,8 +195,8 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
 
 
     v1_api_versions_local_var = v1_api_versions_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         server_address_by_client_cidrsList,
         versionsList
         );

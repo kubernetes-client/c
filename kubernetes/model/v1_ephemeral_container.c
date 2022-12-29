@@ -600,7 +600,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     // v1_ephemeral_container->image
     cJSON *image = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "image");
     if (image) { 
-    if(!cJSON_IsString(image))
+    if(!cJSON_IsString(image) && !cJSON_IsNull(image))
     {
     goto end; //String
     }
@@ -609,7 +609,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     // v1_ephemeral_container->image_pull_policy
     cJSON *image_pull_policy = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "imagePullPolicy");
     if (image_pull_policy) { 
-    if(!cJSON_IsString(image_pull_policy))
+    if(!cJSON_IsString(image_pull_policy) && !cJSON_IsNull(image_pull_policy))
     {
     goto end; //String
     }
@@ -705,7 +705,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     // v1_ephemeral_container->target_container_name
     cJSON *target_container_name = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "targetContainerName");
     if (target_container_name) { 
-    if(!cJSON_IsString(target_container_name))
+    if(!cJSON_IsString(target_container_name) && !cJSON_IsNull(target_container_name))
     {
     goto end; //String
     }
@@ -714,7 +714,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     // v1_ephemeral_container->termination_message_path
     cJSON *termination_message_path = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "terminationMessagePath");
     if (termination_message_path) { 
-    if(!cJSON_IsString(termination_message_path))
+    if(!cJSON_IsString(termination_message_path) && !cJSON_IsNull(termination_message_path))
     {
     goto end; //String
     }
@@ -723,7 +723,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     // v1_ephemeral_container->termination_message_policy
     cJSON *termination_message_policy = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "terminationMessagePolicy");
     if (termination_message_policy) { 
-    if(!cJSON_IsString(termination_message_policy))
+    if(!cJSON_IsString(termination_message_policy) && !cJSON_IsNull(termination_message_policy))
     {
     goto end; //String
     }
@@ -783,7 +783,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     // v1_ephemeral_container->working_dir
     cJSON *working_dir = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "workingDir");
     if (working_dir) { 
-    if(!cJSON_IsString(working_dir))
+    if(!cJSON_IsString(working_dir) && !cJSON_IsNull(working_dir))
     {
     goto end; //String
     }
@@ -795,8 +795,8 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
         command ? commandList : NULL,
         env ? envList : NULL,
         env_from ? env_fromList : NULL,
-        image ? strdup(image->valuestring) : NULL,
-        image_pull_policy ? strdup(image_pull_policy->valuestring) : NULL,
+        image && !cJSON_IsNull(image) ? strdup(image->valuestring) : NULL,
+        image_pull_policy && !cJSON_IsNull(image_pull_policy) ? strdup(image_pull_policy->valuestring) : NULL,
         lifecycle ? lifecycle_local_nonprim : NULL,
         liveness_probe ? liveness_probe_local_nonprim : NULL,
         strdup(name->valuestring),
@@ -807,13 +807,13 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
         startup_probe ? startup_probe_local_nonprim : NULL,
         _stdin ? _stdin->valueint : 0,
         stdin_once ? stdin_once->valueint : 0,
-        target_container_name ? strdup(target_container_name->valuestring) : NULL,
-        termination_message_path ? strdup(termination_message_path->valuestring) : NULL,
-        termination_message_policy ? strdup(termination_message_policy->valuestring) : NULL,
+        target_container_name && !cJSON_IsNull(target_container_name) ? strdup(target_container_name->valuestring) : NULL,
+        termination_message_path && !cJSON_IsNull(termination_message_path) ? strdup(termination_message_path->valuestring) : NULL,
+        termination_message_policy && !cJSON_IsNull(termination_message_policy) ? strdup(termination_message_policy->valuestring) : NULL,
         tty ? tty->valueint : 0,
         volume_devices ? volume_devicesList : NULL,
         volume_mounts ? volume_mountsList : NULL,
-        working_dir ? strdup(working_dir->valuestring) : NULL
+        working_dir && !cJSON_IsNull(working_dir) ? strdup(working_dir->valuestring) : NULL
         );
 
     return v1_ephemeral_container_local_var;

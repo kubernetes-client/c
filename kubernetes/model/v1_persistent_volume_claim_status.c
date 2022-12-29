@@ -290,7 +290,7 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     // v1_persistent_volume_claim_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "phase");
     if (phase) { 
-    if(!cJSON_IsString(phase))
+    if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
     {
     goto end; //String
     }
@@ -299,7 +299,7 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     // v1_persistent_volume_claim_status->resize_status
     cJSON *resize_status = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "resizeStatus");
     if (resize_status) { 
-    if(!cJSON_IsString(resize_status))
+    if(!cJSON_IsString(resize_status) && !cJSON_IsNull(resize_status))
     {
     goto end; //String
     }
@@ -311,8 +311,8 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
         allocated_resources ? allocated_resourcesList : NULL,
         capacity ? capacityList : NULL,
         conditions ? conditionsList : NULL,
-        phase ? strdup(phase->valuestring) : NULL,
-        resize_status ? strdup(resize_status->valuestring) : NULL
+        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
+        resize_status && !cJSON_IsNull(resize_status) ? strdup(resize_status->valuestring) : NULL
         );
 
     return v1_persistent_volume_claim_status_local_var;

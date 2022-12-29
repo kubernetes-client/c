@@ -135,7 +135,7 @@ v1_replication_controller_t *v1_replication_controller_parseFromJSON(cJSON *v1_r
     // v1_replication_controller->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_replication_controllerJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -144,7 +144,7 @@ v1_replication_controller_t *v1_replication_controller_parseFromJSON(cJSON *v1_r
     // v1_replication_controller->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_replication_controllerJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -170,8 +170,8 @@ v1_replication_controller_t *v1_replication_controller_parseFromJSON(cJSON *v1_r
 
 
     v1_replication_controller_local_var = v1_replication_controller_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
-        kind ? strdup(kind->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL,
         status ? status_local_nonprim : NULL

@@ -70,7 +70,7 @@ v1_local_volume_source_t *v1_local_volume_source_parseFromJSON(cJSON *v1_local_v
     // v1_local_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_local_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type))
+    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
@@ -90,7 +90,7 @@ v1_local_volume_source_t *v1_local_volume_source_parseFromJSON(cJSON *v1_local_v
 
 
     v1_local_volume_source_local_var = v1_local_volume_source_create (
-        fs_type ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         strdup(path->valuestring)
         );
 

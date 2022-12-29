@@ -316,7 +316,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     // events_v1_event->action
     cJSON *action = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "action");
     if (action) { 
-    if(!cJSON_IsString(action))
+    if(!cJSON_IsString(action) && !cJSON_IsNull(action))
     {
     goto end; //String
     }
@@ -325,7 +325,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     // events_v1_event->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -379,7 +379,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     // events_v1_event->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -394,7 +394,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     // events_v1_event->note
     cJSON *note = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "note");
     if (note) { 
-    if(!cJSON_IsString(note))
+    if(!cJSON_IsString(note) && !cJSON_IsNull(note))
     {
     goto end; //String
     }
@@ -403,7 +403,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     // events_v1_event->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason))
+    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -424,7 +424,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     // events_v1_event->reporting_controller
     cJSON *reporting_controller = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "reportingController");
     if (reporting_controller) { 
-    if(!cJSON_IsString(reporting_controller))
+    if(!cJSON_IsString(reporting_controller) && !cJSON_IsNull(reporting_controller))
     {
     goto end; //String
     }
@@ -433,7 +433,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     // events_v1_event->reporting_instance
     cJSON *reporting_instance = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "reportingInstance");
     if (reporting_instance) { 
-    if(!cJSON_IsString(reporting_instance))
+    if(!cJSON_IsString(reporting_instance) && !cJSON_IsNull(reporting_instance))
     {
     goto end; //String
     }
@@ -448,7 +448,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     // events_v1_event->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type))
+    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -456,23 +456,23 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
 
     events_v1_event_local_var = events_v1_event_create (
-        action ? strdup(action->valuestring) : NULL,
-        api_version ? strdup(api_version->valuestring) : NULL,
+        action && !cJSON_IsNull(action) ? strdup(action->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         deprecated_count ? deprecated_count->valuedouble : 0,
         deprecated_first_timestamp && !cJSON_IsNull(deprecated_first_timestamp) ? strdup(deprecated_first_timestamp->valuestring) : NULL,
         deprecated_last_timestamp && !cJSON_IsNull(deprecated_last_timestamp) ? strdup(deprecated_last_timestamp->valuestring) : NULL,
         deprecated_source ? deprecated_source_local_nonprim : NULL,
         strdup(event_time->valuestring),
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
-        note ? strdup(note->valuestring) : NULL,
-        reason ? strdup(reason->valuestring) : NULL,
+        note && !cJSON_IsNull(note) ? strdup(note->valuestring) : NULL,
+        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
         regarding ? regarding_local_nonprim : NULL,
         related ? related_local_nonprim : NULL,
-        reporting_controller ? strdup(reporting_controller->valuestring) : NULL,
-        reporting_instance ? strdup(reporting_instance->valuestring) : NULL,
+        reporting_controller && !cJSON_IsNull(reporting_controller) ? strdup(reporting_controller->valuestring) : NULL,
+        reporting_instance && !cJSON_IsNull(reporting_instance) ? strdup(reporting_instance->valuestring) : NULL,
         series ? series_local_nonprim : NULL,
-        type ? strdup(type->valuestring) : NULL
+        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return events_v1_event_local_var;

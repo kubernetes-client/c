@@ -105,7 +105,7 @@ v1_env_from_source_t *v1_env_from_source_parseFromJSON(cJSON *v1_env_from_source
     // v1_env_from_source->prefix
     cJSON *prefix = cJSON_GetObjectItemCaseSensitive(v1_env_from_sourceJSON, "prefix");
     if (prefix) { 
-    if(!cJSON_IsString(prefix))
+    if(!cJSON_IsString(prefix) && !cJSON_IsNull(prefix))
     {
     goto end; //String
     }
@@ -120,7 +120,7 @@ v1_env_from_source_t *v1_env_from_source_parseFromJSON(cJSON *v1_env_from_source
 
     v1_env_from_source_local_var = v1_env_from_source_create (
         config_map_ref ? config_map_ref_local_nonprim : NULL,
-        prefix ? strdup(prefix->valuestring) : NULL,
+        prefix && !cJSON_IsNull(prefix) ? strdup(prefix->valuestring) : NULL,
         secret_ref ? secret_ref_local_nonprim : NULL
         );
 

@@ -135,7 +135,7 @@ v1_volume_mount_t *v1_volume_mount_parseFromJSON(cJSON *v1_volume_mountJSON){
     // v1_volume_mount->mount_propagation
     cJSON *mount_propagation = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "mountPropagation");
     if (mount_propagation) { 
-    if(!cJSON_IsString(mount_propagation))
+    if(!cJSON_IsString(mount_propagation) && !cJSON_IsNull(mount_propagation))
     {
     goto end; //String
     }
@@ -165,7 +165,7 @@ v1_volume_mount_t *v1_volume_mount_parseFromJSON(cJSON *v1_volume_mountJSON){
     // v1_volume_mount->sub_path
     cJSON *sub_path = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "subPath");
     if (sub_path) { 
-    if(!cJSON_IsString(sub_path))
+    if(!cJSON_IsString(sub_path) && !cJSON_IsNull(sub_path))
     {
     goto end; //String
     }
@@ -174,7 +174,7 @@ v1_volume_mount_t *v1_volume_mount_parseFromJSON(cJSON *v1_volume_mountJSON){
     // v1_volume_mount->sub_path_expr
     cJSON *sub_path_expr = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "subPathExpr");
     if (sub_path_expr) { 
-    if(!cJSON_IsString(sub_path_expr))
+    if(!cJSON_IsString(sub_path_expr) && !cJSON_IsNull(sub_path_expr))
     {
     goto end; //String
     }
@@ -183,11 +183,11 @@ v1_volume_mount_t *v1_volume_mount_parseFromJSON(cJSON *v1_volume_mountJSON){
 
     v1_volume_mount_local_var = v1_volume_mount_create (
         strdup(mount_path->valuestring),
-        mount_propagation ? strdup(mount_propagation->valuestring) : NULL,
+        mount_propagation && !cJSON_IsNull(mount_propagation) ? strdup(mount_propagation->valuestring) : NULL,
         strdup(name->valuestring),
         read_only ? read_only->valueint : 0,
-        sub_path ? strdup(sub_path->valuestring) : NULL,
-        sub_path_expr ? strdup(sub_path_expr->valuestring) : NULL
+        sub_path && !cJSON_IsNull(sub_path) ? strdup(sub_path->valuestring) : NULL,
+        sub_path_expr && !cJSON_IsNull(sub_path_expr) ? strdup(sub_path_expr->valuestring) : NULL
         );
 
     return v1_volume_mount_local_var;

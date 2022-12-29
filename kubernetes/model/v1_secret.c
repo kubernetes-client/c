@@ -185,7 +185,7 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
     // v1_secret->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -228,7 +228,7 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
     // v1_secret->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -268,7 +268,7 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
     // v1_secret->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type))
+    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -276,13 +276,13 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
 
     v1_secret_local_var = v1_secret_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         data ? dataList : NULL,
         immutable ? immutable->valueint : 0,
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         string_data ? string_dataList : NULL,
-        type ? strdup(type->valuestring) : NULL
+        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return v1_secret_local_var;

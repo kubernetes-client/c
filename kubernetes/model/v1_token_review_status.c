@@ -144,7 +144,7 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
     // v1_token_review_status->error
     cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "error");
     if (error) { 
-    if(!cJSON_IsString(error))
+    if(!cJSON_IsString(error) && !cJSON_IsNull(error))
     {
     goto end; //String
     }
@@ -160,7 +160,7 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
     v1_token_review_status_local_var = v1_token_review_status_create (
         audiences ? audiencesList : NULL,
         authenticated ? authenticated->valueint : 0,
-        error ? strdup(error->valuestring) : NULL,
+        error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
         user ? user_local_nonprim : NULL
         );
 

@@ -247,7 +247,7 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
     // v1_rule_with_operations->scope
     cJSON *scope = cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "scope");
     if (scope) { 
-    if(!cJSON_IsString(scope))
+    if(!cJSON_IsString(scope) && !cJSON_IsNull(scope))
     {
     goto end; //String
     }
@@ -259,7 +259,7 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
         api_versions ? api_versionsList : NULL,
         operations ? operationsList : NULL,
         resources ? resourcesList : NULL,
-        scope ? strdup(scope->valuestring) : NULL
+        scope && !cJSON_IsNull(scope) ? strdup(scope->valuestring) : NULL
         );
 
     return v1_rule_with_operations_local_var;

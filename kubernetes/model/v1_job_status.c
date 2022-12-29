@@ -186,7 +186,7 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
     // v1_job_status->completed_indexes
     cJSON *completed_indexes = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "completedIndexes");
     if (completed_indexes) { 
-    if(!cJSON_IsString(completed_indexes))
+    if(!cJSON_IsString(completed_indexes) && !cJSON_IsNull(completed_indexes))
     {
     goto end; //String
     }
@@ -267,7 +267,7 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     v1_job_status_local_var = v1_job_status_create (
         active ? active->valuedouble : 0,
-        completed_indexes ? strdup(completed_indexes->valuestring) : NULL,
+        completed_indexes && !cJSON_IsNull(completed_indexes) ? strdup(completed_indexes->valuestring) : NULL,
         completion_time && !cJSON_IsNull(completion_time) ? strdup(completion_time->valuestring) : NULL,
         conditions ? conditionsList : NULL,
         failed ? failed->valuedouble : 0,

@@ -188,7 +188,7 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
     // v1_custom_resource_definition_names->list_kind
     cJSON *list_kind = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_namesJSON, "listKind");
     if (list_kind) { 
-    if(!cJSON_IsString(list_kind))
+    if(!cJSON_IsString(list_kind) && !cJSON_IsNull(list_kind))
     {
     goto end; //String
     }
@@ -228,7 +228,7 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
     // v1_custom_resource_definition_names->singular
     cJSON *singular = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_namesJSON, "singular");
     if (singular) { 
-    if(!cJSON_IsString(singular))
+    if(!cJSON_IsString(singular) && !cJSON_IsNull(singular))
     {
     goto end; //String
     }
@@ -238,10 +238,10 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
     v1_custom_resource_definition_names_local_var = v1_custom_resource_definition_names_create (
         categories ? categoriesList : NULL,
         strdup(kind->valuestring),
-        list_kind ? strdup(list_kind->valuestring) : NULL,
+        list_kind && !cJSON_IsNull(list_kind) ? strdup(list_kind->valuestring) : NULL,
         strdup(plural->valuestring),
         short_names ? short_namesList : NULL,
-        singular ? strdup(singular->valuestring) : NULL
+        singular && !cJSON_IsNull(singular) ? strdup(singular->valuestring) : NULL
         );
 
     return v1_custom_resource_definition_names_local_var;

@@ -120,7 +120,7 @@ v1beta2_priority_level_configuration_condition_t *v1beta2_priority_level_configu
     // v1beta2_priority_level_configuration_condition->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1beta2_priority_level_configuration_conditionJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message))
+    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
     goto end; //String
     }
@@ -129,7 +129,7 @@ v1beta2_priority_level_configuration_condition_t *v1beta2_priority_level_configu
     // v1beta2_priority_level_configuration_condition->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1beta2_priority_level_configuration_conditionJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason))
+    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -138,7 +138,7 @@ v1beta2_priority_level_configuration_condition_t *v1beta2_priority_level_configu
     // v1beta2_priority_level_configuration_condition->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1beta2_priority_level_configuration_conditionJSON, "status");
     if (status) { 
-    if(!cJSON_IsString(status))
+    if(!cJSON_IsString(status) && !cJSON_IsNull(status))
     {
     goto end; //String
     }
@@ -147,7 +147,7 @@ v1beta2_priority_level_configuration_condition_t *v1beta2_priority_level_configu
     // v1beta2_priority_level_configuration_condition->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1beta2_priority_level_configuration_conditionJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type))
+    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -156,10 +156,10 @@ v1beta2_priority_level_configuration_condition_t *v1beta2_priority_level_configu
 
     v1beta2_priority_level_configuration_condition_local_var = v1beta2_priority_level_configuration_condition_create (
         last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
-        message ? strdup(message->valuestring) : NULL,
-        reason ? strdup(reason->valuestring) : NULL,
-        status ? strdup(status->valuestring) : NULL,
-        type ? strdup(type->valuestring) : NULL
+        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
+        status && !cJSON_IsNull(status) ? strdup(status->valuestring) : NULL,
+        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return v1beta2_priority_level_configuration_condition_local_var;

@@ -98,7 +98,7 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
     // v1alpha1_server_storage_version->api_server_id
     cJSON *api_server_id = cJSON_GetObjectItemCaseSensitive(v1alpha1_server_storage_versionJSON, "apiServerID");
     if (api_server_id) { 
-    if(!cJSON_IsString(api_server_id))
+    if(!cJSON_IsString(api_server_id) && !cJSON_IsNull(api_server_id))
     {
     goto end; //String
     }
@@ -126,7 +126,7 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
     // v1alpha1_server_storage_version->encoding_version
     cJSON *encoding_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_server_storage_versionJSON, "encodingVersion");
     if (encoding_version) { 
-    if(!cJSON_IsString(encoding_version))
+    if(!cJSON_IsString(encoding_version) && !cJSON_IsNull(encoding_version))
     {
     goto end; //String
     }
@@ -134,9 +134,9 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
 
 
     v1alpha1_server_storage_version_local_var = v1alpha1_server_storage_version_create (
-        api_server_id ? strdup(api_server_id->valuestring) : NULL,
+        api_server_id && !cJSON_IsNull(api_server_id) ? strdup(api_server_id->valuestring) : NULL,
         decodable_versions ? decodable_versionsList : NULL,
-        encoding_version ? strdup(encoding_version->valuestring) : NULL
+        encoding_version && !cJSON_IsNull(encoding_version) ? strdup(encoding_version->valuestring) : NULL
         );
 
     return v1alpha1_server_storage_version_local_var;

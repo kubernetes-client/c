@@ -146,7 +146,7 @@ v1_secret_volume_source_t *v1_secret_volume_source_parseFromJSON(cJSON *v1_secre
     // v1_secret_volume_source->secret_name
     cJSON *secret_name = cJSON_GetObjectItemCaseSensitive(v1_secret_volume_sourceJSON, "secretName");
     if (secret_name) { 
-    if(!cJSON_IsString(secret_name))
+    if(!cJSON_IsString(secret_name) && !cJSON_IsNull(secret_name))
     {
     goto end; //String
     }
@@ -157,7 +157,7 @@ v1_secret_volume_source_t *v1_secret_volume_source_parseFromJSON(cJSON *v1_secre
         default_mode ? default_mode->valuedouble : 0,
         items ? itemsList : NULL,
         optional ? optional->valueint : 0,
-        secret_name ? strdup(secret_name->valuestring) : NULL
+        secret_name && !cJSON_IsNull(secret_name) ? strdup(secret_name->valuestring) : NULL
         );
 
     return v1_secret_volume_source_local_var;

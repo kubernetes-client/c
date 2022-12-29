@@ -171,7 +171,7 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     // v1_config_map->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version))
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
     goto end; //String
     }
@@ -239,7 +239,7 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     // v1_config_map->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind))
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -253,11 +253,11 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
 
     v1_config_map_local_var = v1_config_map_create (
-        api_version ? strdup(api_version->valuestring) : NULL,
+        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         binary_data ? binary_dataList : NULL,
         data ? dataList : NULL,
         immutable ? immutable->valueint : 0,
-        kind ? strdup(kind->valuestring) : NULL,
+        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL
         );
 

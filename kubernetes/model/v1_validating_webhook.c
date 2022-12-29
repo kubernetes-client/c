@@ -269,7 +269,7 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
     // v1_validating_webhook->failure_policy
     cJSON *failure_policy = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "failurePolicy");
     if (failure_policy) { 
-    if(!cJSON_IsString(failure_policy))
+    if(!cJSON_IsString(failure_policy) && !cJSON_IsNull(failure_policy))
     {
     goto end; //String
     }
@@ -278,7 +278,7 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
     // v1_validating_webhook->match_policy
     cJSON *match_policy = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "matchPolicy");
     if (match_policy) { 
-    if(!cJSON_IsString(match_policy))
+    if(!cJSON_IsString(match_policy) && !cJSON_IsNull(match_policy))
     {
     goto end; //String
     }
@@ -354,8 +354,8 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
     v1_validating_webhook_local_var = v1_validating_webhook_create (
         admission_review_versionsList,
         client_config_local_nonprim,
-        failure_policy ? strdup(failure_policy->valuestring) : NULL,
-        match_policy ? strdup(match_policy->valuestring) : NULL,
+        failure_policy && !cJSON_IsNull(failure_policy) ? strdup(failure_policy->valuestring) : NULL,
+        match_policy && !cJSON_IsNull(match_policy) ? strdup(match_policy->valuestring) : NULL,
         strdup(name->valuestring),
         namespace_selector ? namespace_selector_local_nonprim : NULL,
         object_selector ? object_selector_local_nonprim : NULL,

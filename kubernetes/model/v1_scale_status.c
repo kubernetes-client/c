@@ -78,7 +78,7 @@ v1_scale_status_t *v1_scale_status_parseFromJSON(cJSON *v1_scale_statusJSON){
     // v1_scale_status->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_scale_statusJSON, "selector");
     if (selector) { 
-    if(!cJSON_IsString(selector))
+    if(!cJSON_IsString(selector) && !cJSON_IsNull(selector))
     {
     goto end; //String
     }
@@ -87,7 +87,7 @@ v1_scale_status_t *v1_scale_status_parseFromJSON(cJSON *v1_scale_statusJSON){
 
     v1_scale_status_local_var = v1_scale_status_create (
         replicas->valuedouble,
-        selector ? strdup(selector->valuestring) : NULL
+        selector && !cJSON_IsNull(selector) ? strdup(selector->valuestring) : NULL
         );
 
     return v1_scale_status_local_var;
