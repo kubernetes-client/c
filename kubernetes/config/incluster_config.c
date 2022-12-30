@@ -66,8 +66,7 @@ static int setBasePathInCluster(char **pBasePath)
 
     int basePathSize = strlen(SERVICE_HTTPS_PREFIX) + strlen(service_host_env) + strlen(service_port_env) + 2 /* 1 for ':', 1 for '\0' */ ;
     bool isIPv6 = false;
-    if (strchr(service_host_env, ':') == NULL)
-    {
+    if (strchr(service_host_env, ':') != NULL) {
         isIPv6 = true;
         // Takes into account the square brackets to escape the IP v6 address.
         basePathSize += 2;
