@@ -65,13 +65,24 @@ static int setBasePathInCluster(char **pBasePath)
     }
 
     int basePathSize = strlen(SERVICE_HTTPS_PREFIX) + strlen(service_host_env) + strlen(service_port_env) + 2 /* 1 for ':', 1 for '\0' */ ;
+    bool isIPv6 = false;
+    if (strchr(service_host_env, ':') == NULL)
+    {
+        isIPv6 = true;
+        // Takes into account the square brackets to escape the IP v6 address.
+        basePathSize += 2;
+    }
     char *basePath = calloc(basePathSize, sizeof(char));
     if (!basePath) {
         fprintf(stderr, "%s: Cannot allocate the memory for base path for kubernetes service.\n", fname);
         return -1;
     }
 
-    snprintf(basePath, basePathSize, "%s%s:%s", SERVICE_HTTPS_PREFIX, service_host_env, service_port_env);
+    if (isIPv6) {
+        snprintf(basePath, basePathSize, "%s[%s]:%s", SERVICE_HTTPS_PREFIX, service_host_env, service_port_env);
+    } else {
+        snprintf(basePath, basePathSize, "%s%s:%s", SERVICE_HTTPS_PREFIX, service_host_env, service_port_env);
+    }
     *pBasePath = basePath;
     return 0;
 }
