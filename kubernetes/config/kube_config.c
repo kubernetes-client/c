@@ -111,7 +111,7 @@ static char *getWorkingConfigFile(const char *configFileNamePassedIn)
         configFileName = strdup(configFileNamePassedIn);
     } else {
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__APPLE__)
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__APPLE__) || !defined(HAVE_SECURE_GETENV)
         kubeconfig_env = getenv(ENV_KUBECONFIG);
 #elif __linux || defined(__EMSCRIPTEN__)
         kubeconfig_env = secure_getenv(ENV_KUBECONFIG);
@@ -119,7 +119,7 @@ static char *getWorkingConfigFile(const char *configFileNamePassedIn)
         if (kubeconfig_env) {
             configFileName = strdup(kubeconfig_env);
         } else {
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__APPLE__)
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__APPLE__) || !defined(HAVE_SECURE_GETENV)
             homedir_env = getenv(ENV_HOME);
 #elif __linux || defined(__EMSCRIPTEN__)
             homedir_env = secure_getenv(ENV_HOME);
