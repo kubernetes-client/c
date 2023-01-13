@@ -46,6 +46,8 @@ mapping :: = MAPPING - START(node node) * MAPPING - END
 #define KEY_CERTIFICATE_AUTHORITY_DATA "certificate-authority-data"
 #define KEY_INSECURE_SKIP_TLS_VERIFY "insecure-skip-tls-verify"
 #define KEY_SERVER "server"
+#define KEY_CLIENT_CERTIFICATE "client-certificate"
+#define KEY_CLIENT_KEY "client-key"
 #define KEY_CLIENT_CERTIFICATE_DATA "client-certificate-data"
 #define KEY_CLIENT_KEY_DATA "client-key-data"
 #define KEY_STAUTS "status"
@@ -54,6 +56,31 @@ mapping :: = MAPPING - START(node node) * MAPPING - END
 #define KEY_CLIENT_KEY_DATA2 "clientKeyData"
 
 #define VALUE_TRUE_LOWERCASE_STRING "true"
+
+static char *load_file_content(const char *path) {
+
+    static char fname[] = "load_file_content()";
+
+    char *buffer;
+    FILE *fh = fopen(path, "rb");
+
+    if (fh == NULL) {
+        fprintf(stderr, "%s: Cannot parse file path: %s\n", fname, path);
+        return NULL;
+    }
+
+    fseek(fh, 0L, SEEK_END);
+    long s = ftell(fh);
+    rewind(fh);
+    buffer = malloc(s);
+    if ( buffer != NULL )
+    {
+        fread(buffer, s, 1, fh);
+    }
+    fclose(fh);
+    fh = NULL;
+    return buffer;
+}
 
 static int parse_kubeconfig_yaml_string_sequence(char ***p_strings, int *p_strings_count, yaml_document_t * document, yaml_node_t * node)
 {
@@ -193,7 +220,11 @@ static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * proper
                     property->insecure_skip_tls_verify = (0 == strcmp(value->data.scalar.value, VALUE_TRUE_LOWERCASE_STRING)); //libyaml fails to parse true, but it can parse "true"!
                 }
             } else if (KUBECONFIG_PROPERTY_TYPE_USER == property->type) {
-                if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE_DATA)) {
+                if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE)) {
+                    property->client_certificate_data = load_file_content(value->data.scalar.value);
+                } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_KEY)) {
+                    property->client_key_data = load_file_content(value->data.scalar.value);
+                } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE_DATA)) {
                     property->client_certificate_data = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_KEY_DATA)) {
                     property->client_key_data = strdup(value->data.scalar.value);
@@ -1090,3 +1121,4 @@ int kubeyaml_save_kubeconfig(const kubeconfig_t * kubeconfig)
 
     return -1;
 }
+
