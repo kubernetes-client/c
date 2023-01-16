@@ -57,7 +57,8 @@ mapping :: = MAPPING - START(node node) * MAPPING - END
 
 #define VALUE_TRUE_LOWERCASE_STRING "true"
 
-static char *load_file_content(const char *path) {
+static char *load_file_content(const char *path)
+{
 
     static char fname[] = "load_file_content()";
 
@@ -73,8 +74,7 @@ static char *load_file_content(const char *path) {
     long s = ftell(fh);
     rewind(fh);
     buffer = malloc(s);
-    if ( buffer != NULL )
-    {
+    if (buffer != NULL) {
         fread(buffer, s, 1, fh);
     }
     fclose(fh);
@@ -217,7 +217,7 @@ static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * proper
                 } else if (0 == strcmp(key->data.scalar.value, KEY_SERVER)) {
                     property->server = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_INSECURE_SKIP_TLS_VERIFY)) {
-                    property->insecure_skip_tls_verify = (0 == strcmp(value->data.scalar.value, VALUE_TRUE_LOWERCASE_STRING)); //libyaml fails to parse true, but it can parse "true"!
+                    property->insecure_skip_tls_verify = (0 == strcmp(value->data.scalar.value, VALUE_TRUE_LOWERCASE_STRING));  //libyaml fails to parse true, but it can parse "true"!
                 }
             } else if (KUBECONFIG_PROPERTY_TYPE_USER == property->type) {
                 if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE)) {
@@ -1119,4 +1119,3 @@ int kubeyaml_save_kubeconfig(const kubeconfig_t * kubeconfig)
 
     return -1;
 }
-
