@@ -1,5 +1,6 @@
 all:
 	cd create_pod; make
+	cd list_pod_with_invalid_kubeconfig; make
 	cd list_pod; make
 	cd list_pod_incluster; make
 	cd delete_pod; make
@@ -15,6 +16,7 @@ all:
 
 clean:
 	cd create_pod; make clean
+	cd list_pod_with_invalid_kubeconfig; make clean
 	cd list_pod; make clean
 	cd list_pod_incluster; make clean
 	cd delete_pod; make clean
