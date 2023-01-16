@@ -31,6 +31,7 @@ clean:
 test:
 	cd create_pod; make test;
 	kubectl wait --for=condition=ready --all pod -n default --timeout=60s
+	cd list_pod_with_invalid_kubeconfig; make test
 	cd list_pod; make test
 	cd delete_pod; make test
 	kubectl wait --for=delete pod/test-pod-6 -n default --timeout=120s
@@ -46,6 +47,7 @@ test:
 memcheck:
 	cd create_pod; make memcheck;
 	kubectl wait --for=condition=ready --all pod -n default --timeout=60s
+	cd list_pod_with_invalid_kubeconfig; make memcheck
 	cd list_pod; make memcheck
 	cd delete_pod; make memcheck
 	kubectl wait --for=delete pod/test-pod-6 -n default --timeout=120s

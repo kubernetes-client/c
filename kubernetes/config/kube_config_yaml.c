@@ -425,14 +425,6 @@ int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig)
 {
     static char fname[] = "kubeyaml_load_kubeconfig()";
 
-    yaml_parser_t parser;
-    yaml_document_t document;
-
-    int done = 0;
-
-    /* Create the Parser object. */
-    yaml_parser_initialize(&parser);
-
     /* Set a file input. */
     FILE *input = NULL;
     if (kubeconfig->fileName) {
@@ -446,8 +438,14 @@ int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig)
         return -1;
     }
 
+    yaml_parser_t parser;
+    yaml_document_t document;
+
+    /* Create the Parser object. */
+    yaml_parser_initialize(&parser);
     yaml_parser_set_input_file(&parser, input);
 
+    int done = 0;
     while (!done) {
 
         if (!yaml_parser_load(&parser, &document)) {
