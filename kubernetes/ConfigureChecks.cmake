@@ -2,3 +2,4 @@ include(CheckFunctionExists)
 
 check_function_exists(strndup HAVE_STRNDUP)
 check_function_exists(secure_getenv HAVE_SECURE_GETENV)
+check_function_exists(getenv HAVE_GETENV)
