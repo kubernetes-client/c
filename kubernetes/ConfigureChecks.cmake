@@ -1,4 +1,5 @@
-include(CheckFunctionExists)
+include(CheckCXXSymbolExists)
 
-check_function_exists(strndup HAVE_STRNDUP)
-check_function_exists(secure_getenv HAVE_SECURE_GETENV)
+check_cxx_symbol_exists(strndup "string.h" HAVE_STRNDUP)
+check_cxx_symbol_exists(secure_getenv "stdlib.h" HAVE_SECURE_GETENV)
+check_cxx_symbol_exists(getenv "stdlib.h" HAVE_GETENV)

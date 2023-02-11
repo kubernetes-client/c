@@ -45,19 +45,23 @@ static int setBasePathInCluster(char **pBasePath)
 {
     static char fname[] = "setBasePathInCluster()";
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__APPLE__) || !defined(HAVE_SECURE_GETENV)
-    const char *service_host_env = getenv(SERVICE_HOST_ENV_NAME);
-#elif __linux || defined(__EMSCRIPTEN__)
+#if defined(HAVE_SECURE_GETENV)
     const char *service_host_env = secure_getenv(SERVICE_HOST_ENV_NAME);
+#elif defined(HAVE_GETENV)
+    const char *service_host_env = getenv(SERVICE_HOST_ENV_NAME);
+#else
+    const char *service_host_env = NULL;
 #endif
     if (!service_host_env) {
         fprintf(stderr, "%s: Cannot retrieve the kubernetes service host inside a pod by the env %s.\n", fname, SERVICE_HOST_ENV_NAME);
         return -1;
     }
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__APPLE__) || !defined(HAVE_SECURE_GETENV)
-    const char *service_port_env = getenv(SERVICE_PORT_ENV_NAME);
-#elif __linux || defined(__EMSCRIPTEN__)
+#if defined(HAVE_SECURE_GETENV)
     const char *service_port_env = secure_getenv(SERVICE_PORT_ENV_NAME);
+#elif defined(HAVE_GETENV)
+    const char *service_port_env = getenv(SERVICE_PORT_ENV_NAME);
+#else
+    const char *service_port_env = NULL;
 #endif
     if (!service_port_env) {
         fprintf(stderr, "%s: Cannot retrieve the kubernetes service port inside a pod by the env %s.\n", fname, SERVICE_PORT_ENV_NAME);
