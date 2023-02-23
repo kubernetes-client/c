@@ -7,6 +7,8 @@
 
 v1beta2_limited_priority_level_configuration_t *v1beta2_limited_priority_level_configuration_create(
     int assured_concurrency_shares,
+    int borrowing_limit_percent,
+    int lendable_percent,
     v1beta2_limit_response_t *limit_response
     ) {
     v1beta2_limited_priority_level_configuration_t *v1beta2_limited_priority_level_configuration_local_var = malloc(sizeof(v1beta2_limited_priority_level_configuration_t));
@@ -14,6 +16,8 @@ v1beta2_limited_priority_level_configuration_t *v1beta2_limited_priority_level_c
         return NULL;
     }
     v1beta2_limited_priority_level_configuration_local_var->assured_concurrency_shares = assured_concurrency_shares;
+    v1beta2_limited_priority_level_configuration_local_var->borrowing_limit_percent = borrowing_limit_percent;
+    v1beta2_limited_priority_level_configuration_local_var->lendable_percent = lendable_percent;
     v1beta2_limited_priority_level_configuration_local_var->limit_response = limit_response;
 
     return v1beta2_limited_priority_level_configuration_local_var;
@@ -38,6 +42,22 @@ cJSON *v1beta2_limited_priority_level_configuration_convertToJSON(v1beta2_limite
     // v1beta2_limited_priority_level_configuration->assured_concurrency_shares
     if(v1beta2_limited_priority_level_configuration->assured_concurrency_shares) {
     if(cJSON_AddNumberToObject(item, "assuredConcurrencyShares", v1beta2_limited_priority_level_configuration->assured_concurrency_shares) == NULL) {
+    goto fail; //Numeric
+    }
+    }
+
+
+    // v1beta2_limited_priority_level_configuration->borrowing_limit_percent
+    if(v1beta2_limited_priority_level_configuration->borrowing_limit_percent) {
+    if(cJSON_AddNumberToObject(item, "borrowingLimitPercent", v1beta2_limited_priority_level_configuration->borrowing_limit_percent) == NULL) {
+    goto fail; //Numeric
+    }
+    }
+
+
+    // v1beta2_limited_priority_level_configuration->lendable_percent
+    if(v1beta2_limited_priority_level_configuration->lendable_percent) {
+    if(cJSON_AddNumberToObject(item, "lendablePercent", v1beta2_limited_priority_level_configuration->lendable_percent) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -79,6 +99,24 @@ v1beta2_limited_priority_level_configuration_t *v1beta2_limited_priority_level_c
     }
     }
 
+    // v1beta2_limited_priority_level_configuration->borrowing_limit_percent
+    cJSON *borrowing_limit_percent = cJSON_GetObjectItemCaseSensitive(v1beta2_limited_priority_level_configurationJSON, "borrowingLimitPercent");
+    if (borrowing_limit_percent) { 
+    if(!cJSON_IsNumber(borrowing_limit_percent))
+    {
+    goto end; //Numeric
+    }
+    }
+
+    // v1beta2_limited_priority_level_configuration->lendable_percent
+    cJSON *lendable_percent = cJSON_GetObjectItemCaseSensitive(v1beta2_limited_priority_level_configurationJSON, "lendablePercent");
+    if (lendable_percent) { 
+    if(!cJSON_IsNumber(lendable_percent))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1beta2_limited_priority_level_configuration->limit_response
     cJSON *limit_response = cJSON_GetObjectItemCaseSensitive(v1beta2_limited_priority_level_configurationJSON, "limitResponse");
     if (limit_response) { 
@@ -88,6 +126,8 @@ v1beta2_limited_priority_level_configuration_t *v1beta2_limited_priority_level_c
 
     v1beta2_limited_priority_level_configuration_local_var = v1beta2_limited_priority_level_configuration_create (
         assured_concurrency_shares ? assured_concurrency_shares->valuedouble : 0,
+        borrowing_limit_percent ? borrowing_limit_percent->valuedouble : 0,
+        lendable_percent ? lendable_percent->valuedouble : 0,
         limit_response ? limit_response_local_nonprim : NULL
         );
 

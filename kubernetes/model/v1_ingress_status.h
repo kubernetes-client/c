@@ -15,17 +15,17 @@
 
 typedef struct v1_ingress_status_t v1_ingress_status_t;
 
-#include "v1_load_balancer_status.h"
+#include "v1_ingress_load_balancer_status.h"
 
 
 
 typedef struct v1_ingress_status_t {
-    struct v1_load_balancer_status_t *load_balancer; //model
+    struct v1_ingress_load_balancer_status_t *load_balancer; //model
 
 } v1_ingress_status_t;
 
 v1_ingress_status_t *v1_ingress_status_create(
-    v1_load_balancer_status_t *load_balancer
+    v1_ingress_load_balancer_status_t *load_balancer
 );
 
 void v1_ingress_status_free(v1_ingress_status_t *v1_ingress_status);

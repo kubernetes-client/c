@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**CustomObjectsAPI_deleteCollectionClusterCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_deleteCollectionClusterCustomObject) | **DELETE** /apis/{group}/{version}/{plural} | 
 [**CustomObjectsAPI_deleteCollectionNamespacedCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_deleteCollectionNamespacedCustomObject) | **DELETE** /apis/{group}/{version}/namespaces/{namespace}/{plural} | 
 [**CustomObjectsAPI_deleteNamespacedCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_deleteNamespacedCustomObject) | **DELETE** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name} | 
+[**CustomObjectsAPI_getAPIResources**](CustomObjectsAPI.md#CustomObjectsAPI_getAPIResources) | **GET** /apis/{group}/{version} | 
 [**CustomObjectsAPI_getClusterCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObject) | **GET** /apis/{group}/{version}/{plural}/{name} | 
 [**CustomObjectsAPI_getClusterCustomObjectScale**](CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObjectScale) | **GET** /apis/{group}/{version}/{plural}/{name}/scale | 
 [**CustomObjectsAPI_getClusterCustomObjectStatus**](CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObjectStatus) | **GET** /apis/{group}/{version}/{plural}/{name}/status | 
@@ -240,6 +241,36 @@ Name | Type | Description  | Notes
 ### Return type
 
 [object_t](object.md) *
+
+
+### Authorization
+
+[BearerToken](../README.md#BearerToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **CustomObjectsAPI_getAPIResources**
+```c
+// get available resources
+//
+v1_api_resource_list_t* CustomObjectsAPI_getAPIResources(apiClient_t *apiClient, char * group, char * version);
+```
+
+### Parameters
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
+**group** | **char \*** | The custom resource&#39;s group name | 
+**version** | **char \*** | The custom resource&#39;s version | 
+
+### Return type
+
+[v1_api_resource_list_t](v1_api_resource_list.md) *
 
 
 ### Authorization

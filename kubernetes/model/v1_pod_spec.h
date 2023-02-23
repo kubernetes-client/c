@@ -23,6 +23,8 @@ typedef struct v1_pod_spec_t v1_pod_spec_t;
 #include "v1_pod_dns_config.h"
 #include "v1_pod_os.h"
 #include "v1_pod_readiness_gate.h"
+#include "v1_pod_resource_claim.h"
+#include "v1_pod_scheduling_gate.h"
 #include "v1_pod_security_context.h"
 #include "v1_toleration.h"
 #include "v1_topology_spread_constraint.h"
@@ -55,9 +57,11 @@ typedef struct v1_pod_spec_t {
     int priority; //numeric
     char *priority_class_name; // string
     list_t *readiness_gates; //nonprimitive container
+    list_t *resource_claims; //nonprimitive container
     char *restart_policy; // string
     char *runtime_class_name; // string
     char *scheduler_name; // string
+    list_t *scheduling_gates; //nonprimitive container
     struct v1_pod_security_context_t *security_context; //model
     char *service_account; // string
     char *service_account_name; // string
@@ -96,9 +100,11 @@ v1_pod_spec_t *v1_pod_spec_create(
     int priority,
     char *priority_class_name,
     list_t *readiness_gates,
+    list_t *resource_claims,
     char *restart_policy,
     char *runtime_class_name,
     char *scheduler_name,
+    list_t *scheduling_gates,
     v1_pod_security_context_t *security_context,
     char *service_account,
     char *service_account_name,

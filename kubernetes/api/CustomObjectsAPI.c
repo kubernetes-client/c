@@ -1323,6 +1323,93 @@ end:
 
 }
 
+// get available resources
+//
+v1_api_resource_list_t*
+CustomObjectsAPI_getAPIResources(apiClient_t *apiClient, char * group , char * version )
+{
+    list_t    *localVarQueryParameters = NULL;
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_createList();
+    list_t *localVarContentType = NULL;
+    char      *localVarBodyParameters = NULL;
+
+    // create the path
+    long sizeOfPath = strlen("/apis/{group}/{version}")+1;
+    char *localVarPath = malloc(sizeOfPath);
+    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}");
+
+
+    // Path Params
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen("{ group }");
+    if(group == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_group = malloc(sizeOfPathParams_group);
+    sprintf(localVarToReplace_group, "{%s}", "group");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
+
+    // Path Params
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen("{ version }");
+    if(version == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_version = malloc(sizeOfPathParams_version);
+    sprintf(localVarToReplace_version, "{%s}", "version");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
+
+
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    "GET");
+
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
+    //nonprimitive not container
+    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+    if(elementToReturn == NULL) {
+        // return 0;
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    
+    
+    
+    list_freeList(localVarHeaderType);
+    
+    free(localVarPath);
+    free(localVarToReplace_group);
+    free(localVarToReplace_version);
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
 // Returns a cluster scoped custom object
 //
 object_t*

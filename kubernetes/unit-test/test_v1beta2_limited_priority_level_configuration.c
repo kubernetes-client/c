@@ -24,11 +24,15 @@ v1beta2_limited_priority_level_configuration_t* instantiate_v1beta2_limited_prio
   if (include_optional) {
     v1beta2_limited_priority_level_configuration = v1beta2_limited_priority_level_configuration_create(
       56,
+      56,
+      56,
        // false, not to have infinite recursion
       instantiate_v1beta2_limit_response(0)
     );
   } else {
     v1beta2_limited_priority_level_configuration = v1beta2_limited_priority_level_configuration_create(
+      56,
+      56,
       56,
       NULL
     );

@@ -15,16 +15,19 @@
 
 typedef struct v1_resource_requirements_t v1_resource_requirements_t;
 
+#include "v1_resource_claim.h"
 
 
 
 typedef struct v1_resource_requirements_t {
+    list_t *claims; //nonprimitive container
     list_t* limits; //map
     list_t* requests; //map
 
 } v1_resource_requirements_t;
 
 v1_resource_requirements_t *v1_resource_requirements_create(
+    list_t *claims,
     list_t* limits,
     list_t* requests
 );

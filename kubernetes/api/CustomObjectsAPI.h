@@ -6,6 +6,7 @@
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
 #include "../model/object.h"
+#include "../model/v1_api_resource_list.h"
 #include "../model/v1_delete_options.h"
 
 
@@ -43,6 +44,12 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
 //
 object_t*
 CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body );
+
+
+// get available resources
+//
+v1_api_resource_list_t*
+CustomObjectsAPI_getAPIResources(apiClient_t *apiClient, char * group , char * version );
 
 
 // Returns a cluster scoped custom object

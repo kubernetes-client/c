@@ -26,13 +26,15 @@ v1_pod_disruption_budget_spec_t* instantiate_v1_pod_disruption_budget_spec(int i
       "0",
       "0",
        // false, not to have infinite recursion
-      instantiate_v1_label_selector(0)
+      instantiate_v1_label_selector(0),
+      "0"
     );
   } else {
     v1_pod_disruption_budget_spec = v1_pod_disruption_budget_spec_create(
       "0",
       "0",
-      NULL
+      NULL,
+      "0"
     );
   }
 

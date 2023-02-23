@@ -16,6 +16,7 @@
 #include "../model/v1_stateful_set_spec.h"
 v1_stateful_set_spec_t* instantiate_v1_stateful_set_spec(int include_optional);
 
+#include "test_v1_stateful_set_ordinals.c"
 #include "test_v1_stateful_set_persistent_volume_claim_retention_policy.c"
 #include "test_v1_label_selector.c"
 #include "test_v1_pod_template_spec.c"
@@ -27,6 +28,8 @@ v1_stateful_set_spec_t* instantiate_v1_stateful_set_spec(int include_optional) {
   if (include_optional) {
     v1_stateful_set_spec = v1_stateful_set_spec_create(
       56,
+       // false, not to have infinite recursion
+      instantiate_v1_stateful_set_ordinals(0),
        // false, not to have infinite recursion
       instantiate_v1_stateful_set_persistent_volume_claim_retention_policy(0),
       "0",
@@ -44,6 +47,7 @@ v1_stateful_set_spec_t* instantiate_v1_stateful_set_spec(int include_optional) {
   } else {
     v1_stateful_set_spec = v1_stateful_set_spec_create(
       56,
+      NULL,
       NULL,
       "0",
       56,

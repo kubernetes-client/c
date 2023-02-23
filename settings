@@ -1,8 +1,8 @@
 # Kubernetes branch/tag to get the OpenAPI spec from.
-export KUBERNETES_BRANCH="release-1.25"
+export KUBERNETES_BRANCH="release-1.26"
 
 # client version is not currently used by the code generator.
-export CLIENT_VERSION="0.5.0"
+export CLIENT_VERSION="0.6.0"
 
 # Name of the release package
 export PACKAGE_NAME="client"

@@ -16,7 +16,7 @@
 #include "../model/v1_ingress_status.h"
 v1_ingress_status_t* instantiate_v1_ingress_status(int include_optional);
 
-#include "test_v1_load_balancer_status.c"
+#include "test_v1_ingress_load_balancer_status.c"
 
 
 v1_ingress_status_t* instantiate_v1_ingress_status(int include_optional) {
@@ -24,7 +24,7 @@ v1_ingress_status_t* instantiate_v1_ingress_status(int include_optional) {
   if (include_optional) {
     v1_ingress_status = v1_ingress_status_create(
        // false, not to have infinite recursion
-      instantiate_v1_load_balancer_status(0)
+      instantiate_v1_ingress_load_balancer_status(0)
     );
   } else {
     v1_ingress_status = v1_ingress_status_create(

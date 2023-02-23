@@ -24,13 +24,15 @@ typedef struct v1_pod_disruption_budget_spec_t {
     int_or_string_t *max_unavailable; // custom
     int_or_string_t *min_available; // custom
     struct v1_label_selector_t *selector; //model
+    char *unhealthy_pod_eviction_policy; // string
 
 } v1_pod_disruption_budget_spec_t;
 
 v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_create(
     int_or_string_t *max_unavailable,
     int_or_string_t *min_available,
-    v1_label_selector_t *selector
+    v1_label_selector_t *selector,
+    char *unhealthy_pod_eviction_policy
 );
 
 void v1_pod_disruption_budget_spec_free(v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec);

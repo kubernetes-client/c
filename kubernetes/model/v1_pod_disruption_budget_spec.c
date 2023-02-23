@@ -8,7 +8,8 @@
 v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_create(
     int_or_string_t *max_unavailable,
     int_or_string_t *min_available,
-    v1_label_selector_t *selector
+    v1_label_selector_t *selector,
+    char *unhealthy_pod_eviction_policy
     ) {
     v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_local_var = malloc(sizeof(v1_pod_disruption_budget_spec_t));
     if (!v1_pod_disruption_budget_spec_local_var) {
@@ -17,6 +18,7 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_create(
     v1_pod_disruption_budget_spec_local_var->max_unavailable = max_unavailable;
     v1_pod_disruption_budget_spec_local_var->min_available = min_available;
     v1_pod_disruption_budget_spec_local_var->selector = selector;
+    v1_pod_disruption_budget_spec_local_var->unhealthy_pod_eviction_policy = unhealthy_pod_eviction_policy;
 
     return v1_pod_disruption_budget_spec_local_var;
 }
@@ -38,6 +40,10 @@ void v1_pod_disruption_budget_spec_free(v1_pod_disruption_budget_spec_t *v1_pod_
     if (v1_pod_disruption_budget_spec->selector) {
         v1_label_selector_free(v1_pod_disruption_budget_spec->selector);
         v1_pod_disruption_budget_spec->selector = NULL;
+    }
+    if (v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy) {
+        free(v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy);
+        v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy = NULL;
     }
     free(v1_pod_disruption_budget_spec);
 }
@@ -83,6 +89,14 @@ cJSON *v1_pod_disruption_budget_spec_convertToJSON(v1_pod_disruption_budget_spec
     }
     }
 
+
+    // v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy
+    if(v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy) {
+    if(cJSON_AddStringToObject(item, "unhealthyPodEvictionPolicy", v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy) == NULL) {
+    goto fail; //String
+    }
+    }
+
     return item;
 fail:
     if (item) {
@@ -122,11 +136,21 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(cJS
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
+    // v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy
+    cJSON *unhealthy_pod_eviction_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "unhealthyPodEvictionPolicy");
+    if (unhealthy_pod_eviction_policy) { 
+    if(!cJSON_IsString(unhealthy_pod_eviction_policy) && !cJSON_IsNull(unhealthy_pod_eviction_policy))
+    {
+    goto end; //String
+    }
+    }
+
 
     v1_pod_disruption_budget_spec_local_var = v1_pod_disruption_budget_spec_create (
         max_unavailable ? max_unavailable_local_nonprim : NULL,
         min_available ? min_available_local_nonprim : NULL,
-        selector ? selector_local_nonprim : NULL
+        selector ? selector_local_nonprim : NULL,
+        unhealthy_pod_eviction_policy && !cJSON_IsNull(unhealthy_pod_eviction_policy) ? strdup(unhealthy_pod_eviction_policy->valuestring) : NULL
         );
 
     return v1_pod_disruption_budget_spec_local_var;
