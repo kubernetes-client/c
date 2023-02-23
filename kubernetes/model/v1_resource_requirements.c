@@ -6,6 +6,7 @@
 
 
 v1_resource_requirements_t *v1_resource_requirements_create(
+    list_t *claims,
     list_t* limits,
     list_t* requests
     ) {
@@ -13,6 +14,7 @@ v1_resource_requirements_t *v1_resource_requirements_create(
     if (!v1_resource_requirements_local_var) {
         return NULL;
     }
+    v1_resource_requirements_local_var->claims = claims;
     v1_resource_requirements_local_var->limits = limits;
     v1_resource_requirements_local_var->requests = requests;
 
@@ -25,6 +27,13 @@ void v1_resource_requirements_free(v1_resource_requirements_t *v1_resource_requi
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_resource_requirements->claims) {
+        list_ForEach(listEntry, v1_resource_requirements->claims) {
+            v1_resource_claim_free(listEntry->data);
+        }
+        list_freeList(v1_resource_requirements->claims);
+        v1_resource_requirements->claims = NULL;
+    }
     if (v1_resource_requirements->limits) {
         list_ForEach(listEntry, v1_resource_requirements->limits) {
             keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
@@ -50,6 +59,26 @@ void v1_resource_requirements_free(v1_resource_requirements_t *v1_resource_requi
 
 cJSON *v1_resource_requirements_convertToJSON(v1_resource_requirements_t *v1_resource_requirements) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1_resource_requirements->claims
+    if(v1_resource_requirements->claims) {
+    cJSON *claims = cJSON_AddArrayToObject(item, "claims");
+    if(claims == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *claimsListEntry;
+    if (v1_resource_requirements->claims) {
+    list_ForEach(claimsListEntry, v1_resource_requirements->claims) {
+    cJSON *itemLocal = v1_resource_claim_convertToJSON(claimsListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(claims, itemLocal);
+    }
+    }
+    }
+
 
     // v1_resource_requirements->limits
     if(v1_resource_requirements->limits) {
@@ -102,11 +131,35 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
 
     v1_resource_requirements_t *v1_resource_requirements_local_var = NULL;
 
+    // define the local list for v1_resource_requirements->claims
+    list_t *claimsList = NULL;
+
     // define the local map for v1_resource_requirements->limits
     list_t *limitsList = NULL;
 
     // define the local map for v1_resource_requirements->requests
     list_t *requestsList = NULL;
+
+    // v1_resource_requirements->claims
+    cJSON *claims = cJSON_GetObjectItemCaseSensitive(v1_resource_requirementsJSON, "claims");
+    if (claims) { 
+    cJSON *claims_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(claims)){
+        goto end; //nonprimitive container
+    }
+
+    claimsList = list_createList();
+
+    cJSON_ArrayForEach(claims_local_nonprimitive,claims )
+    {
+        if(!cJSON_IsObject(claims_local_nonprimitive)){
+            goto end;
+        }
+        v1_resource_claim_t *claimsItem = v1_resource_claim_parseFromJSON(claims_local_nonprimitive);
+
+        list_addElement(claimsList, claimsItem);
+    }
+    }
 
     // v1_resource_requirements->limits
     cJSON *limits = cJSON_GetObjectItemCaseSensitive(v1_resource_requirementsJSON, "limits");
@@ -160,12 +213,22 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
 
 
     v1_resource_requirements_local_var = v1_resource_requirements_create (
+        claims ? claimsList : NULL,
         limits ? limitsList : NULL,
         requests ? requestsList : NULL
         );
 
     return v1_resource_requirements_local_var;
 end:
+    if (claimsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, claimsList) {
+            v1_resource_claim_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(claimsList);
+        claimsList = NULL;
+    }
     if (limitsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, limitsList) {

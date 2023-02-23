@@ -18,6 +18,7 @@ typedef struct v1_stateful_set_spec_t v1_stateful_set_spec_t;
 #include "v1_label_selector.h"
 #include "v1_persistent_volume_claim.h"
 #include "v1_pod_template_spec.h"
+#include "v1_stateful_set_ordinals.h"
 #include "v1_stateful_set_persistent_volume_claim_retention_policy.h"
 #include "v1_stateful_set_update_strategy.h"
 
@@ -25,6 +26,7 @@ typedef struct v1_stateful_set_spec_t v1_stateful_set_spec_t;
 
 typedef struct v1_stateful_set_spec_t {
     int min_ready_seconds; //numeric
+    struct v1_stateful_set_ordinals_t *ordinals; //model
     struct v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy; //model
     char *pod_management_policy; // string
     int replicas; //numeric
@@ -39,6 +41,7 @@ typedef struct v1_stateful_set_spec_t {
 
 v1_stateful_set_spec_t *v1_stateful_set_spec_create(
     int min_ready_seconds,
+    v1_stateful_set_ordinals_t *ordinals,
     v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy,
     char *pod_management_policy,
     int replicas,

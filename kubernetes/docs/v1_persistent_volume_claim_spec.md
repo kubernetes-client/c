@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **access_modes** | **list_t \*** | accessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1 | [optional] 
 **data_source** | [**v1_typed_local_object_reference_t**](v1_typed_local_object_reference.md) \* |  | [optional] 
-**data_source_ref** | [**v1_typed_local_object_reference_t**](v1_typed_local_object_reference.md) \* |  | [optional] 
+**data_source_ref** | [**v1_typed_object_reference_t**](v1_typed_object_reference.md) \* |  | [optional] 
 **resources** | [**v1_resource_requirements_t**](v1_resource_requirements.md) \* |  | [optional] 
 **selector** | [**v1_label_selector_t**](v1_label_selector.md) \* |  | [optional] 
 **storage_class_name** | **char \*** | storageClassName is the name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1 | [optional] 

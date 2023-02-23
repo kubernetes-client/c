@@ -8,7 +8,7 @@
 v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create(
     list_t *access_modes,
     v1_typed_local_object_reference_t *data_source,
-    v1_typed_local_object_reference_t *data_source_ref,
+    v1_typed_object_reference_t *data_source_ref,
     v1_resource_requirements_t *resources,
     v1_label_selector_t *selector,
     char *storage_class_name,
@@ -49,7 +49,7 @@ void v1_persistent_volume_claim_spec_free(v1_persistent_volume_claim_spec_t *v1_
         v1_persistent_volume_claim_spec->data_source = NULL;
     }
     if (v1_persistent_volume_claim_spec->data_source_ref) {
-        v1_typed_local_object_reference_free(v1_persistent_volume_claim_spec->data_source_ref);
+        v1_typed_object_reference_free(v1_persistent_volume_claim_spec->data_source_ref);
         v1_persistent_volume_claim_spec->data_source_ref = NULL;
     }
     if (v1_persistent_volume_claim_spec->resources) {
@@ -110,7 +110,7 @@ cJSON *v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_
 
     // v1_persistent_volume_claim_spec->data_source_ref
     if(v1_persistent_volume_claim_spec->data_source_ref) {
-    cJSON *data_source_ref_local_JSON = v1_typed_local_object_reference_convertToJSON(v1_persistent_volume_claim_spec->data_source_ref);
+    cJSON *data_source_ref_local_JSON = v1_typed_object_reference_convertToJSON(v1_persistent_volume_claim_spec->data_source_ref);
     if(data_source_ref_local_JSON == NULL) {
     goto fail; //model
     }
@@ -189,7 +189,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     v1_typed_local_object_reference_t *data_source_local_nonprim = NULL;
 
     // define the local variable for v1_persistent_volume_claim_spec->data_source_ref
-    v1_typed_local_object_reference_t *data_source_ref_local_nonprim = NULL;
+    v1_typed_object_reference_t *data_source_ref_local_nonprim = NULL;
 
     // define the local variable for v1_persistent_volume_claim_spec->resources
     v1_resource_requirements_t *resources_local_nonprim = NULL;
@@ -225,7 +225,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     // v1_persistent_volume_claim_spec->data_source_ref
     cJSON *data_source_ref = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "dataSourceRef");
     if (data_source_ref) { 
-    data_source_ref_local_nonprim = v1_typed_local_object_reference_parseFromJSON(data_source_ref); //nonprimitive
+    data_source_ref_local_nonprim = v1_typed_object_reference_parseFromJSON(data_source_ref); //nonprimitive
     }
 
     // v1_persistent_volume_claim_spec->resources
@@ -295,7 +295,7 @@ end:
         data_source_local_nonprim = NULL;
     }
     if (data_source_ref_local_nonprim) {
-        v1_typed_local_object_reference_free(data_source_ref_local_nonprim);
+        v1_typed_object_reference_free(data_source_ref_local_nonprim);
         data_source_ref_local_nonprim = NULL;
     }
     if (resources_local_nonprim) {

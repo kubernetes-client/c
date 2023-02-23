@@ -1,0 +1,139 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "v1alpha1_validating_admission_policy_binding_spec.h"
+
+
+
+v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec_create(
+    v1alpha1_match_resources_t *match_resources,
+    v1alpha1_param_ref_t *param_ref,
+    char *policy_name
+    ) {
+    v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec_local_var = malloc(sizeof(v1alpha1_validating_admission_policy_binding_spec_t));
+    if (!v1alpha1_validating_admission_policy_binding_spec_local_var) {
+        return NULL;
+    }
+    v1alpha1_validating_admission_policy_binding_spec_local_var->match_resources = match_resources;
+    v1alpha1_validating_admission_policy_binding_spec_local_var->param_ref = param_ref;
+    v1alpha1_validating_admission_policy_binding_spec_local_var->policy_name = policy_name;
+
+    return v1alpha1_validating_admission_policy_binding_spec_local_var;
+}
+
+
+void v1alpha1_validating_admission_policy_binding_spec_free(v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec) {
+    if(NULL == v1alpha1_validating_admission_policy_binding_spec){
+        return ;
+    }
+    listEntry_t *listEntry;
+    if (v1alpha1_validating_admission_policy_binding_spec->match_resources) {
+        v1alpha1_match_resources_free(v1alpha1_validating_admission_policy_binding_spec->match_resources);
+        v1alpha1_validating_admission_policy_binding_spec->match_resources = NULL;
+    }
+    if (v1alpha1_validating_admission_policy_binding_spec->param_ref) {
+        v1alpha1_param_ref_free(v1alpha1_validating_admission_policy_binding_spec->param_ref);
+        v1alpha1_validating_admission_policy_binding_spec->param_ref = NULL;
+    }
+    if (v1alpha1_validating_admission_policy_binding_spec->policy_name) {
+        free(v1alpha1_validating_admission_policy_binding_spec->policy_name);
+        v1alpha1_validating_admission_policy_binding_spec->policy_name = NULL;
+    }
+    free(v1alpha1_validating_admission_policy_binding_spec);
+}
+
+cJSON *v1alpha1_validating_admission_policy_binding_spec_convertToJSON(v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec) {
+    cJSON *item = cJSON_CreateObject();
+
+    // v1alpha1_validating_admission_policy_binding_spec->match_resources
+    if(v1alpha1_validating_admission_policy_binding_spec->match_resources) {
+    cJSON *match_resources_local_JSON = v1alpha1_match_resources_convertToJSON(v1alpha1_validating_admission_policy_binding_spec->match_resources);
+    if(match_resources_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "matchResources", match_resources_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
+    // v1alpha1_validating_admission_policy_binding_spec->param_ref
+    if(v1alpha1_validating_admission_policy_binding_spec->param_ref) {
+    cJSON *param_ref_local_JSON = v1alpha1_param_ref_convertToJSON(v1alpha1_validating_admission_policy_binding_spec->param_ref);
+    if(param_ref_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "paramRef", param_ref_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
+    // v1alpha1_validating_admission_policy_binding_spec->policy_name
+    if(v1alpha1_validating_admission_policy_binding_spec->policy_name) {
+    if(cJSON_AddStringToObject(item, "policyName", v1alpha1_validating_admission_policy_binding_spec->policy_name) == NULL) {
+    goto fail; //String
+    }
+    }
+
+    return item;
+fail:
+    if (item) {
+        cJSON_Delete(item);
+    }
+    return NULL;
+}
+
+v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec_parseFromJSON(cJSON *v1alpha1_validating_admission_policy_binding_specJSON){
+
+    v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec_local_var = NULL;
+
+    // define the local variable for v1alpha1_validating_admission_policy_binding_spec->match_resources
+    v1alpha1_match_resources_t *match_resources_local_nonprim = NULL;
+
+    // define the local variable for v1alpha1_validating_admission_policy_binding_spec->param_ref
+    v1alpha1_param_ref_t *param_ref_local_nonprim = NULL;
+
+    // v1alpha1_validating_admission_policy_binding_spec->match_resources
+    cJSON *match_resources = cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_binding_specJSON, "matchResources");
+    if (match_resources) { 
+    match_resources_local_nonprim = v1alpha1_match_resources_parseFromJSON(match_resources); //nonprimitive
+    }
+
+    // v1alpha1_validating_admission_policy_binding_spec->param_ref
+    cJSON *param_ref = cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_binding_specJSON, "paramRef");
+    if (param_ref) { 
+    param_ref_local_nonprim = v1alpha1_param_ref_parseFromJSON(param_ref); //nonprimitive
+    }
+
+    // v1alpha1_validating_admission_policy_binding_spec->policy_name
+    cJSON *policy_name = cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_binding_specJSON, "policyName");
+    if (policy_name) { 
+    if(!cJSON_IsString(policy_name) && !cJSON_IsNull(policy_name))
+    {
+    goto end; //String
+    }
+    }
+
+
+    v1alpha1_validating_admission_policy_binding_spec_local_var = v1alpha1_validating_admission_policy_binding_spec_create (
+        match_resources ? match_resources_local_nonprim : NULL,
+        param_ref ? param_ref_local_nonprim : NULL,
+        policy_name && !cJSON_IsNull(policy_name) ? strdup(policy_name->valuestring) : NULL
+        );
+
+    return v1alpha1_validating_admission_policy_binding_spec_local_var;
+end:
+    if (match_resources_local_nonprim) {
+        v1alpha1_match_resources_free(match_resources_local_nonprim);
+        match_resources_local_nonprim = NULL;
+    }
+    if (param_ref_local_nonprim) {
+        v1alpha1_param_ref_free(param_ref_local_nonprim);
+        param_ref_local_nonprim = NULL;
+    }
+    return NULL;
+
+}

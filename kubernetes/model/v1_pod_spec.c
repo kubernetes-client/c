@@ -30,9 +30,11 @@ v1_pod_spec_t *v1_pod_spec_create(
     int priority,
     char *priority_class_name,
     list_t *readiness_gates,
+    list_t *resource_claims,
     char *restart_policy,
     char *runtime_class_name,
     char *scheduler_name,
+    list_t *scheduling_gates,
     v1_pod_security_context_t *security_context,
     char *service_account,
     char *service_account_name,
@@ -72,9 +74,11 @@ v1_pod_spec_t *v1_pod_spec_create(
     v1_pod_spec_local_var->priority = priority;
     v1_pod_spec_local_var->priority_class_name = priority_class_name;
     v1_pod_spec_local_var->readiness_gates = readiness_gates;
+    v1_pod_spec_local_var->resource_claims = resource_claims;
     v1_pod_spec_local_var->restart_policy = restart_policy;
     v1_pod_spec_local_var->runtime_class_name = runtime_class_name;
     v1_pod_spec_local_var->scheduler_name = scheduler_name;
+    v1_pod_spec_local_var->scheduling_gates = scheduling_gates;
     v1_pod_spec_local_var->security_context = security_context;
     v1_pod_spec_local_var->service_account = service_account;
     v1_pod_spec_local_var->service_account_name = service_account_name;
@@ -189,6 +193,13 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         list_freeList(v1_pod_spec->readiness_gates);
         v1_pod_spec->readiness_gates = NULL;
     }
+    if (v1_pod_spec->resource_claims) {
+        list_ForEach(listEntry, v1_pod_spec->resource_claims) {
+            v1_pod_resource_claim_free(listEntry->data);
+        }
+        list_freeList(v1_pod_spec->resource_claims);
+        v1_pod_spec->resource_claims = NULL;
+    }
     if (v1_pod_spec->restart_policy) {
         free(v1_pod_spec->restart_policy);
         v1_pod_spec->restart_policy = NULL;
@@ -200,6 +211,13 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
     if (v1_pod_spec->scheduler_name) {
         free(v1_pod_spec->scheduler_name);
         v1_pod_spec->scheduler_name = NULL;
+    }
+    if (v1_pod_spec->scheduling_gates) {
+        list_ForEach(listEntry, v1_pod_spec->scheduling_gates) {
+            v1_pod_scheduling_gate_free(listEntry->data);
+        }
+        list_freeList(v1_pod_spec->scheduling_gates);
+        v1_pod_spec->scheduling_gates = NULL;
     }
     if (v1_pod_spec->security_context) {
         v1_pod_security_context_free(v1_pod_spec->security_context);
@@ -548,6 +566,26 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     }
 
 
+    // v1_pod_spec->resource_claims
+    if(v1_pod_spec->resource_claims) {
+    cJSON *resource_claims = cJSON_AddArrayToObject(item, "resourceClaims");
+    if(resource_claims == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *resource_claimsListEntry;
+    if (v1_pod_spec->resource_claims) {
+    list_ForEach(resource_claimsListEntry, v1_pod_spec->resource_claims) {
+    cJSON *itemLocal = v1_pod_resource_claim_convertToJSON(resource_claimsListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(resource_claims, itemLocal);
+    }
+    }
+    }
+
+
     // v1_pod_spec->restart_policy
     if(v1_pod_spec->restart_policy) {
     if(cJSON_AddStringToObject(item, "restartPolicy", v1_pod_spec->restart_policy) == NULL) {
@@ -568,6 +606,26 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     if(v1_pod_spec->scheduler_name) {
     if(cJSON_AddStringToObject(item, "schedulerName", v1_pod_spec->scheduler_name) == NULL) {
     goto fail; //String
+    }
+    }
+
+
+    // v1_pod_spec->scheduling_gates
+    if(v1_pod_spec->scheduling_gates) {
+    cJSON *scheduling_gates = cJSON_AddArrayToObject(item, "schedulingGates");
+    if(scheduling_gates == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *scheduling_gatesListEntry;
+    if (v1_pod_spec->scheduling_gates) {
+    list_ForEach(scheduling_gatesListEntry, v1_pod_spec->scheduling_gates) {
+    cJSON *itemLocal = v1_pod_scheduling_gate_convertToJSON(scheduling_gatesListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(scheduling_gates, itemLocal);
+    }
     }
     }
 
@@ -736,6 +794,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // define the local list for v1_pod_spec->readiness_gates
     list_t *readiness_gatesList = NULL;
+
+    // define the local list for v1_pod_spec->resource_claims
+    list_t *resource_claimsList = NULL;
+
+    // define the local list for v1_pod_spec->scheduling_gates
+    list_t *scheduling_gatesList = NULL;
 
     // define the local variable for v1_pod_spec->security_context
     v1_pod_security_context_t *security_context_local_nonprim = NULL;
@@ -1063,6 +1127,27 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     }
     }
 
+    // v1_pod_spec->resource_claims
+    cJSON *resource_claims = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "resourceClaims");
+    if (resource_claims) { 
+    cJSON *resource_claims_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(resource_claims)){
+        goto end; //nonprimitive container
+    }
+
+    resource_claimsList = list_createList();
+
+    cJSON_ArrayForEach(resource_claims_local_nonprimitive,resource_claims )
+    {
+        if(!cJSON_IsObject(resource_claims_local_nonprimitive)){
+            goto end;
+        }
+        v1_pod_resource_claim_t *resource_claimsItem = v1_pod_resource_claim_parseFromJSON(resource_claims_local_nonprimitive);
+
+        list_addElement(resource_claimsList, resource_claimsItem);
+    }
+    }
+
     // v1_pod_spec->restart_policy
     cJSON *restart_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "restartPolicy");
     if (restart_policy) { 
@@ -1087,6 +1172,27 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     if(!cJSON_IsString(scheduler_name) && !cJSON_IsNull(scheduler_name))
     {
     goto end; //String
+    }
+    }
+
+    // v1_pod_spec->scheduling_gates
+    cJSON *scheduling_gates = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "schedulingGates");
+    if (scheduling_gates) { 
+    cJSON *scheduling_gates_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(scheduling_gates)){
+        goto end; //nonprimitive container
+    }
+
+    scheduling_gatesList = list_createList();
+
+    cJSON_ArrayForEach(scheduling_gates_local_nonprimitive,scheduling_gates )
+    {
+        if(!cJSON_IsObject(scheduling_gates_local_nonprimitive)){
+            goto end;
+        }
+        v1_pod_scheduling_gate_t *scheduling_gatesItem = v1_pod_scheduling_gate_parseFromJSON(scheduling_gates_local_nonprimitive);
+
+        list_addElement(scheduling_gatesList, scheduling_gatesItem);
     }
     }
 
@@ -1239,9 +1345,11 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         priority ? priority->valuedouble : 0,
         priority_class_name && !cJSON_IsNull(priority_class_name) ? strdup(priority_class_name->valuestring) : NULL,
         readiness_gates ? readiness_gatesList : NULL,
+        resource_claims ? resource_claimsList : NULL,
         restart_policy && !cJSON_IsNull(restart_policy) ? strdup(restart_policy->valuestring) : NULL,
         runtime_class_name && !cJSON_IsNull(runtime_class_name) ? strdup(runtime_class_name->valuestring) : NULL,
         scheduler_name && !cJSON_IsNull(scheduler_name) ? strdup(scheduler_name->valuestring) : NULL,
+        scheduling_gates ? scheduling_gatesList : NULL,
         security_context ? security_context_local_nonprim : NULL,
         service_account && !cJSON_IsNull(service_account) ? strdup(service_account->valuestring) : NULL,
         service_account_name && !cJSON_IsNull(service_account_name) ? strdup(service_account_name->valuestring) : NULL,
@@ -1349,6 +1457,24 @@ end:
         }
         list_freeList(readiness_gatesList);
         readiness_gatesList = NULL;
+    }
+    if (resource_claimsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, resource_claimsList) {
+            v1_pod_resource_claim_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(resource_claimsList);
+        resource_claimsList = NULL;
+    }
+    if (scheduling_gatesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, scheduling_gatesList) {
+            v1_pod_scheduling_gate_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(scheduling_gatesList);
+        scheduling_gatesList = NULL;
     }
     if (security_context_local_nonprim) {
         v1_pod_security_context_free(security_context_local_nonprim);

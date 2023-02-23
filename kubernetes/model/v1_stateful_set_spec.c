@@ -7,6 +7,7 @@
 
 v1_stateful_set_spec_t *v1_stateful_set_spec_create(
     int min_ready_seconds,
+    v1_stateful_set_ordinals_t *ordinals,
     v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy,
     char *pod_management_policy,
     int replicas,
@@ -22,6 +23,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_create(
         return NULL;
     }
     v1_stateful_set_spec_local_var->min_ready_seconds = min_ready_seconds;
+    v1_stateful_set_spec_local_var->ordinals = ordinals;
     v1_stateful_set_spec_local_var->persistent_volume_claim_retention_policy = persistent_volume_claim_retention_policy;
     v1_stateful_set_spec_local_var->pod_management_policy = pod_management_policy;
     v1_stateful_set_spec_local_var->replicas = replicas;
@@ -41,6 +43,10 @@ void v1_stateful_set_spec_free(v1_stateful_set_spec_t *v1_stateful_set_spec) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_stateful_set_spec->ordinals) {
+        v1_stateful_set_ordinals_free(v1_stateful_set_spec->ordinals);
+        v1_stateful_set_spec->ordinals = NULL;
+    }
     if (v1_stateful_set_spec->persistent_volume_claim_retention_policy) {
         v1_stateful_set_persistent_volume_claim_retention_policy_free(v1_stateful_set_spec->persistent_volume_claim_retention_policy);
         v1_stateful_set_spec->persistent_volume_claim_retention_policy = NULL;
@@ -82,6 +88,19 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     if(v1_stateful_set_spec->min_ready_seconds) {
     if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_stateful_set_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
+    }
+    }
+
+
+    // v1_stateful_set_spec->ordinals
+    if(v1_stateful_set_spec->ordinals) {
+    cJSON *ordinals_local_JSON = v1_stateful_set_ordinals_convertToJSON(v1_stateful_set_spec->ordinals);
+    if(ordinals_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "ordinals", ordinals_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
     }
     }
 
@@ -204,6 +223,9 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     v1_stateful_set_spec_t *v1_stateful_set_spec_local_var = NULL;
 
+    // define the local variable for v1_stateful_set_spec->ordinals
+    v1_stateful_set_ordinals_t *ordinals_local_nonprim = NULL;
+
     // define the local variable for v1_stateful_set_spec->persistent_volume_claim_retention_policy
     v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy_local_nonprim = NULL;
 
@@ -226,6 +248,12 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     {
     goto end; //Numeric
     }
+    }
+
+    // v1_stateful_set_spec->ordinals
+    cJSON *ordinals = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "ordinals");
+    if (ordinals) { 
+    ordinals_local_nonprim = v1_stateful_set_ordinals_parseFromJSON(ordinals); //nonprimitive
     }
 
     // v1_stateful_set_spec->persistent_volume_claim_retention_policy
@@ -321,6 +349,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     v1_stateful_set_spec_local_var = v1_stateful_set_spec_create (
         min_ready_seconds ? min_ready_seconds->valuedouble : 0,
+        ordinals ? ordinals_local_nonprim : NULL,
         persistent_volume_claim_retention_policy ? persistent_volume_claim_retention_policy_local_nonprim : NULL,
         pod_management_policy && !cJSON_IsNull(pod_management_policy) ? strdup(pod_management_policy->valuestring) : NULL,
         replicas ? replicas->valuedouble : 0,
@@ -334,6 +363,10 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     return v1_stateful_set_spec_local_var;
 end:
+    if (ordinals_local_nonprim) {
+        v1_stateful_set_ordinals_free(ordinals_local_nonprim);
+        ordinals_local_nonprim = NULL;
+    }
     if (persistent_volume_claim_retention_policy_local_nonprim) {
         v1_stateful_set_persistent_volume_claim_retention_policy_free(persistent_volume_claim_retention_policy_local_nonprim);
         persistent_volume_claim_retention_policy_local_nonprim = NULL;

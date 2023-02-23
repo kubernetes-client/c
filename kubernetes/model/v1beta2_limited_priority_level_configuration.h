@@ -21,12 +21,16 @@ typedef struct v1beta2_limited_priority_level_configuration_t v1beta2_limited_pr
 
 typedef struct v1beta2_limited_priority_level_configuration_t {
     int assured_concurrency_shares; //numeric
+    int borrowing_limit_percent; //numeric
+    int lendable_percent; //numeric
     struct v1beta2_limit_response_t *limit_response; //model
 
 } v1beta2_limited_priority_level_configuration_t;
 
 v1beta2_limited_priority_level_configuration_t *v1beta2_limited_priority_level_configuration_create(
     int assured_concurrency_shares,
+    int borrowing_limit_percent,
+    int lendable_percent,
     v1beta2_limit_response_t *limit_response
 );
 
