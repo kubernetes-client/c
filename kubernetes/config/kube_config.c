@@ -93,6 +93,10 @@ static int setApiKeys(list_t ** pApiKeys, const char *token)
         return -1;
     }
 
+    if (strlen(BEARER_TOKEN_TEMPLATE) + strlen(token) >= BEARER_TOKEN_BUFFER_SIZE) {
+        fprintf(stderr, "%s: The buffer for bearer token is insufficient.\n", fname);
+        return -1;
+    }
     char tokenValue[BEARER_TOKEN_BUFFER_SIZE];
     memset(tokenValue, 0, sizeof(tokenValue));
     snprintf(tokenValue, BEARER_TOKEN_BUFFER_SIZE, BEARER_TOKEN_TEMPLATE, token);
