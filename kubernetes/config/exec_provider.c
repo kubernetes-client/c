@@ -5,9 +5,9 @@
 #include <errno.h>
 
 #define ARGS_DELIM " "
-#define KUBECONFIG_EXEC_ARGS_BUFFER_SIZE 1024
-#define KUBECONFIG_EXEC_COMMAND_BUFFER_SIZE 1024
-#define KUBECONFIG_STRING_BUFFER_SIZE 1024
+#define KUBECONFIG_EXEC_ARGS_BUFFER_SIZE 4096
+#define KUBECONFIG_EXEC_COMMAND_BUFFER_SIZE 4096
+#define KUBECONFIG_STRING_BUFFER_SIZE 4096
 #define KUBECONFIG_EXEC_RESULT_BUFFER_SIZE 4096
 
 int kube_exec_and_get_result(ExecCredential_t * exec_credential, const kubeconfig_property_t * exec)
@@ -69,7 +69,7 @@ int kube_exec_and_get_result(ExecCredential_t * exec_credential, const kubeconfi
 #ifndef _WIN32
     fp = popen(command_string, "r");    /* r means read from stdout */
 #else
-    fp = _popen(command_string, "r");    /* r means read from stdout */
+    fp = _popen(command_string, "r");   /* r means read from stdout */
 #endif
     if (fp) {
         result_string = calloc(1, KUBECONFIG_EXEC_RESULT_BUFFER_SIZE);
