@@ -1,3 +1,5 @@
+#include <config.h>
+
 #define _GNU_SOURCE
 #include <stdlib.h>
 #ifndef _WIN32
