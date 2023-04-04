@@ -228,6 +228,8 @@ static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * proper
                     property->client_certificate_data = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_KEY_DATA)) {
                     property->client_key_data = strdup(value->data.scalar.value);
+                } else if (0 == strcmp(key->data.scalar.value, KEY_TOKEN)) {
+                    property->token = strdup(value->data.scalar.value);
                 }
             } else if (KUBECONFIG_PROPERTY_TYPE_CONTEXT == property->type) {
                 if (0 == strcmp(key->data.scalar.value, KEY_CLUSTER)) {
