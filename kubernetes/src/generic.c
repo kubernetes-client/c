@@ -5,7 +5,7 @@
 genericClient_t* genericClient_create(apiClient_t *client, const char *apiGroup, const char* apiVersion, const char* resourcePlural) {
     genericClient_t *result = malloc(sizeof(genericClient_t));
     result->client = client;
-    result->apiGroup = strdup(apiGroup);
+    result->apiGroup = apiGroup ? strdup(apiGroup) : NULL;
     result->apiVersion = strdup(apiVersion);
     result->resourcePlural = strdup(resourcePlural);
 
