@@ -34,6 +34,7 @@ typedef struct v1_pod_status_t {
     list_t *pod_ips; //nonprimitive container
     char *qos_class; // string
     char *reason; // string
+    char *resize; // string
     char *start_time; //date time
 
 } v1_pod_status_t;
@@ -51,6 +52,7 @@ v1_pod_status_t *v1_pod_status_create(
     list_t *pod_ips,
     char *qos_class,
     char *reason,
+    char *resize,
     char *start_time
 );
 

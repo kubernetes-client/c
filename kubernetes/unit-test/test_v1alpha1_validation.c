@@ -24,10 +24,12 @@ v1alpha1_validation_t* instantiate_v1alpha1_validation(int include_optional) {
     v1alpha1_validation = v1alpha1_validation_create(
       "0",
       "0",
+      "0",
       "0"
     );
   } else {
     v1alpha1_validation = v1alpha1_validation_create(
+      "0",
       "0",
       "0",
       "0"

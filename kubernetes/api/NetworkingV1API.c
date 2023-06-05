@@ -592,7 +592,7 @@ end:
 // delete collection of IngressClass
 //
 v1_status_t*
-NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -742,6 +742,19 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char * pret
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -943,6 +956,18 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char * pret
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -965,7 +990,7 @@ end:
 // delete collection of Ingress
 //
 v1_status_t*
-NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1128,6 +1153,19 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     }
 
     // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -1327,6 +1365,18 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -1349,7 +1399,7 @@ end:
 // delete collection of NetworkPolicy
 //
 v1_status_t*
-NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1512,6 +1562,19 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     }
 
     // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -1710,6 +1773,18 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     if(keyPairQuery_resourceVersionMatch){
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
+    }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -2476,7 +2551,7 @@ end:
 // list or watch objects of kind IngressClass
 //
 v1_ingress_class_list_t*
-NetworkingV1API_listIngressClass(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+NetworkingV1API_listIngressClass(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2589,6 +2664,19 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char * pretty , int all
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -2755,6 +2843,18 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char * pretty , int all
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2789,7 +2889,7 @@ end:
 // list or watch objects of kind Ingress
 //
 v1_ingress_list_t*
-NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2902,6 +3002,19 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWat
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -3068,6 +3181,18 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWat
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -3102,7 +3227,7 @@ end:
 // list or watch objects of kind Ingress
 //
 v1_ingress_list_t*
-NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3228,6 +3353,19 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char * _namespace 
     }
 
     // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -3392,6 +3530,18 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char * _namespace 
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -3426,7 +3576,7 @@ end:
 // list or watch objects of kind NetworkPolicy
 //
 v1_network_policy_list_t*
-NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3549,6 +3699,19 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * _name
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -3716,6 +3879,18 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * _name
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -3750,7 +3925,7 @@ end:
 // list or watch objects of kind NetworkPolicy
 //
 v1_network_policy_list_t*
-NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3863,6 +4038,19 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int al
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -4028,6 +4216,18 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int al
     if(keyPairQuery_resourceVersionMatch){
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
+    }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);

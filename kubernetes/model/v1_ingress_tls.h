@@ -1,7 +1,7 @@
 /*
  * v1_ingress_tls.h
  *
- * IngressTLS describes the transport layer security associated with an Ingress.
+ * IngressTLS describes the transport layer security associated with an ingress.
  */
 
 #ifndef _v1_ingress_tls_H_

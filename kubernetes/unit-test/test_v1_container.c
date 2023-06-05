@@ -42,6 +42,7 @@ v1_container_t* instantiate_v1_container(int include_optional) {
       list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_probe(0),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_resource_requirements(0),
        // false, not to have infinite recursion
@@ -70,6 +71,7 @@ v1_container_t* instantiate_v1_container(int include_optional) {
       "0",
       list_createList(),
       NULL,
+      list_createList(),
       NULL,
       NULL,
       NULL,

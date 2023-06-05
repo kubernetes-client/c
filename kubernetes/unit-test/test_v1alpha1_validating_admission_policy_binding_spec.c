@@ -28,13 +28,15 @@ v1alpha1_validating_admission_policy_binding_spec_t* instantiate_v1alpha1_valida
       instantiate_v1alpha1_match_resources(0),
        // false, not to have infinite recursion
       instantiate_v1alpha1_param_ref(0),
-      "0"
+      "0",
+      list_createList()
     );
   } else {
     v1alpha1_validating_admission_policy_binding_spec = v1alpha1_validating_admission_policy_binding_spec_create(
       NULL,
       NULL,
-      "0"
+      "0",
+      list_createList()
     );
   }
 

@@ -17,8 +17,9 @@ void list_secret(apiClient_t * apiClient)
                                                                    0,   // int limit
                                                                    NULL,    // char * resourceVersion
                                                                    NULL,    // char * resourceVersionMatch
+                                                                   0,   // sendInitialEvents
                                                                    0,   // int timeoutSeconds
-                                                                   0    //int watch
+                                                                   0    // int watch
         );
 
     printf("The return code of HTTP request=%ld\n", apiClient->response_code);

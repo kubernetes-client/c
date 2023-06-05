@@ -17,6 +17,7 @@ typedef struct v1_mutating_webhook_t v1_mutating_webhook_t;
 
 #include "admissionregistration_v1_webhook_client_config.h"
 #include "v1_label_selector.h"
+#include "v1_match_condition.h"
 #include "v1_rule_with_operations.h"
 
 
@@ -25,6 +26,7 @@ typedef struct v1_mutating_webhook_t {
     list_t *admission_review_versions; //primitive container
     struct admissionregistration_v1_webhook_client_config_t *client_config; //model
     char *failure_policy; // string
+    list_t *match_conditions; //nonprimitive container
     char *match_policy; // string
     char *name; // string
     struct v1_label_selector_t *namespace_selector; //model
@@ -40,6 +42,7 @@ v1_mutating_webhook_t *v1_mutating_webhook_create(
     list_t *admission_review_versions,
     admissionregistration_v1_webhook_client_config_t *client_config,
     char *failure_policy,
+    list_t *match_conditions,
     char *match_policy,
     char *name,
     v1_label_selector_t *namespace_selector,

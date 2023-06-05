@@ -118,6 +118,7 @@ set(SRCS
     model/v1_container.c
     model/v1_container_image.c
     model/v1_container_port.c
+    model/v1_container_resize_policy.c
     model/v1_container_state.c
     model/v1_container_state_running.c
     model/v1_container_state_terminated.c
@@ -254,6 +255,7 @@ set(SRCS
     model/v1_local_subject_access_review.c
     model/v1_local_volume_source.c
     model/v1_managed_fields_entry.c
+    model/v1_match_condition.c
     model/v1_mutating_webhook.c
     model/v1_mutating_webhook_configuration.c
     model/v1_mutating_webhook_configuration_list.c
@@ -463,31 +465,23 @@ set(SRCS
     model/v1_webhook_conversion.c
     model/v1_weighted_pod_affinity_term.c
     model/v1_windows_security_context_options.c
-    model/v1alpha1_allocation_result.c
+    model/v1alpha1_audit_annotation.c
     model/v1alpha1_cluster_cidr.c
     model/v1alpha1_cluster_cidr_list.c
     model/v1alpha1_cluster_cidr_spec.c
+    model/v1alpha1_cluster_trust_bundle.c
+    model/v1alpha1_cluster_trust_bundle_list.c
+    model/v1alpha1_cluster_trust_bundle_spec.c
+    model/v1alpha1_expression_warning.c
+    model/v1alpha1_ip_address.c
+    model/v1alpha1_ip_address_list.c
+    model/v1alpha1_ip_address_spec.c
+    model/v1alpha1_match_condition.c
     model/v1alpha1_match_resources.c
     model/v1alpha1_named_rule_with_operations.c
     model/v1alpha1_param_kind.c
     model/v1alpha1_param_ref.c
-    model/v1alpha1_pod_scheduling.c
-    model/v1alpha1_pod_scheduling_list.c
-    model/v1alpha1_pod_scheduling_spec.c
-    model/v1alpha1_pod_scheduling_status.c
-    model/v1alpha1_resource_claim.c
-    model/v1alpha1_resource_claim_consumer_reference.c
-    model/v1alpha1_resource_claim_list.c
-    model/v1alpha1_resource_claim_parameters_reference.c
-    model/v1alpha1_resource_claim_scheduling_status.c
-    model/v1alpha1_resource_claim_spec.c
-    model/v1alpha1_resource_claim_status.c
-    model/v1alpha1_resource_claim_template.c
-    model/v1alpha1_resource_claim_template_list.c
-    model/v1alpha1_resource_claim_template_spec.c
-    model/v1alpha1_resource_class.c
-    model/v1alpha1_resource_class_list.c
-    model/v1alpha1_resource_class_parameters_reference.c
+    model/v1alpha1_parent_reference.c
     model/v1alpha1_self_subject_review.c
     model/v1alpha1_self_subject_review_status.c
     model/v1alpha1_server_storage_version.c
@@ -495,15 +489,36 @@ set(SRCS
     model/v1alpha1_storage_version_condition.c
     model/v1alpha1_storage_version_list.c
     model/v1alpha1_storage_version_status.c
+    model/v1alpha1_type_checking.c
     model/v1alpha1_validating_admission_policy.c
     model/v1alpha1_validating_admission_policy_binding.c
     model/v1alpha1_validating_admission_policy_binding_list.c
     model/v1alpha1_validating_admission_policy_binding_spec.c
     model/v1alpha1_validating_admission_policy_list.c
     model/v1alpha1_validating_admission_policy_spec.c
+    model/v1alpha1_validating_admission_policy_status.c
     model/v1alpha1_validation.c
-    model/v1beta1_csi_storage_capacity.c
-    model/v1beta1_csi_storage_capacity_list.c
+    model/v1alpha2_allocation_result.c
+    model/v1alpha2_pod_scheduling_context.c
+    model/v1alpha2_pod_scheduling_context_list.c
+    model/v1alpha2_pod_scheduling_context_spec.c
+    model/v1alpha2_pod_scheduling_context_status.c
+    model/v1alpha2_resource_claim.c
+    model/v1alpha2_resource_claim_consumer_reference.c
+    model/v1alpha2_resource_claim_list.c
+    model/v1alpha2_resource_claim_parameters_reference.c
+    model/v1alpha2_resource_claim_scheduling_status.c
+    model/v1alpha2_resource_claim_spec.c
+    model/v1alpha2_resource_claim_status.c
+    model/v1alpha2_resource_claim_template.c
+    model/v1alpha2_resource_claim_template_list.c
+    model/v1alpha2_resource_claim_template_spec.c
+    model/v1alpha2_resource_class.c
+    model/v1alpha2_resource_class_list.c
+    model/v1alpha2_resource_class_parameters_reference.c
+    model/v1alpha2_resource_handle.c
+    model/v1beta1_self_subject_review.c
+    model/v1beta1_self_subject_review_status.c
     model/v1beta2_flow_distinguisher_method.c
     model/v1beta2_flow_schema.c
     model/v1beta2_flow_schema_condition.c
@@ -586,6 +601,7 @@ set(SRCS
     api/AuthenticationAPI.c
     api/AuthenticationV1API.c
     api/AuthenticationV1alpha1API.c
+    api/AuthenticationV1beta1API.c
     api/AuthorizationAPI.c
     api/AuthorizationV1API.c
     api/AutoscalingAPI.c
@@ -595,6 +611,7 @@ set(SRCS
     api/BatchV1API.c
     api/CertificatesAPI.c
     api/CertificatesV1API.c
+    api/CertificatesV1alpha1API.c
     api/CoordinationAPI.c
     api/CoordinationV1API.c
     api/CoreAPI.c
@@ -621,12 +638,11 @@ set(SRCS
     api/RbacAuthorizationAPI.c
     api/RbacAuthorizationV1API.c
     api/ResourceAPI.c
-    api/ResourceV1alpha1API.c
+    api/ResourceV1alpha2API.c
     api/SchedulingAPI.c
     api/SchedulingV1API.c
     api/StorageAPI.c
     api/StorageV1API.c
-    api/StorageV1beta1API.c
     api/VersionAPI.c
     api/WellKnownAPI.c
 
@@ -703,6 +719,7 @@ set(HDRS
     model/v1_container.h
     model/v1_container_image.h
     model/v1_container_port.h
+    model/v1_container_resize_policy.h
     model/v1_container_state.h
     model/v1_container_state_running.h
     model/v1_container_state_terminated.h
@@ -839,6 +856,7 @@ set(HDRS
     model/v1_local_subject_access_review.h
     model/v1_local_volume_source.h
     model/v1_managed_fields_entry.h
+    model/v1_match_condition.h
     model/v1_mutating_webhook.h
     model/v1_mutating_webhook_configuration.h
     model/v1_mutating_webhook_configuration_list.h
@@ -1048,31 +1066,23 @@ set(HDRS
     model/v1_webhook_conversion.h
     model/v1_weighted_pod_affinity_term.h
     model/v1_windows_security_context_options.h
-    model/v1alpha1_allocation_result.h
+    model/v1alpha1_audit_annotation.h
     model/v1alpha1_cluster_cidr.h
     model/v1alpha1_cluster_cidr_list.h
     model/v1alpha1_cluster_cidr_spec.h
+    model/v1alpha1_cluster_trust_bundle.h
+    model/v1alpha1_cluster_trust_bundle_list.h
+    model/v1alpha1_cluster_trust_bundle_spec.h
+    model/v1alpha1_expression_warning.h
+    model/v1alpha1_ip_address.h
+    model/v1alpha1_ip_address_list.h
+    model/v1alpha1_ip_address_spec.h
+    model/v1alpha1_match_condition.h
     model/v1alpha1_match_resources.h
     model/v1alpha1_named_rule_with_operations.h
     model/v1alpha1_param_kind.h
     model/v1alpha1_param_ref.h
-    model/v1alpha1_pod_scheduling.h
-    model/v1alpha1_pod_scheduling_list.h
-    model/v1alpha1_pod_scheduling_spec.h
-    model/v1alpha1_pod_scheduling_status.h
-    model/v1alpha1_resource_claim.h
-    model/v1alpha1_resource_claim_consumer_reference.h
-    model/v1alpha1_resource_claim_list.h
-    model/v1alpha1_resource_claim_parameters_reference.h
-    model/v1alpha1_resource_claim_scheduling_status.h
-    model/v1alpha1_resource_claim_spec.h
-    model/v1alpha1_resource_claim_status.h
-    model/v1alpha1_resource_claim_template.h
-    model/v1alpha1_resource_claim_template_list.h
-    model/v1alpha1_resource_claim_template_spec.h
-    model/v1alpha1_resource_class.h
-    model/v1alpha1_resource_class_list.h
-    model/v1alpha1_resource_class_parameters_reference.h
+    model/v1alpha1_parent_reference.h
     model/v1alpha1_self_subject_review.h
     model/v1alpha1_self_subject_review_status.h
     model/v1alpha1_server_storage_version.h
@@ -1080,15 +1090,36 @@ set(HDRS
     model/v1alpha1_storage_version_condition.h
     model/v1alpha1_storage_version_list.h
     model/v1alpha1_storage_version_status.h
+    model/v1alpha1_type_checking.h
     model/v1alpha1_validating_admission_policy.h
     model/v1alpha1_validating_admission_policy_binding.h
     model/v1alpha1_validating_admission_policy_binding_list.h
     model/v1alpha1_validating_admission_policy_binding_spec.h
     model/v1alpha1_validating_admission_policy_list.h
     model/v1alpha1_validating_admission_policy_spec.h
+    model/v1alpha1_validating_admission_policy_status.h
     model/v1alpha1_validation.h
-    model/v1beta1_csi_storage_capacity.h
-    model/v1beta1_csi_storage_capacity_list.h
+    model/v1alpha2_allocation_result.h
+    model/v1alpha2_pod_scheduling_context.h
+    model/v1alpha2_pod_scheduling_context_list.h
+    model/v1alpha2_pod_scheduling_context_spec.h
+    model/v1alpha2_pod_scheduling_context_status.h
+    model/v1alpha2_resource_claim.h
+    model/v1alpha2_resource_claim_consumer_reference.h
+    model/v1alpha2_resource_claim_list.h
+    model/v1alpha2_resource_claim_parameters_reference.h
+    model/v1alpha2_resource_claim_scheduling_status.h
+    model/v1alpha2_resource_claim_spec.h
+    model/v1alpha2_resource_claim_status.h
+    model/v1alpha2_resource_claim_template.h
+    model/v1alpha2_resource_claim_template_list.h
+    model/v1alpha2_resource_claim_template_spec.h
+    model/v1alpha2_resource_class.h
+    model/v1alpha2_resource_class_list.h
+    model/v1alpha2_resource_class_parameters_reference.h
+    model/v1alpha2_resource_handle.h
+    model/v1beta1_self_subject_review.h
+    model/v1beta1_self_subject_review_status.h
     model/v1beta2_flow_distinguisher_method.h
     model/v1beta2_flow_schema.h
     model/v1beta2_flow_schema_condition.h
@@ -1171,6 +1202,7 @@ set(HDRS
     api/AuthenticationAPI.h
     api/AuthenticationV1API.h
     api/AuthenticationV1alpha1API.h
+    api/AuthenticationV1beta1API.h
     api/AuthorizationAPI.h
     api/AuthorizationV1API.h
     api/AutoscalingAPI.h
@@ -1180,6 +1212,7 @@ set(HDRS
     api/BatchV1API.h
     api/CertificatesAPI.h
     api/CertificatesV1API.h
+    api/CertificatesV1alpha1API.h
     api/CoordinationAPI.h
     api/CoordinationV1API.h
     api/CoreAPI.h
@@ -1206,12 +1239,11 @@ set(HDRS
     api/RbacAuthorizationAPI.h
     api/RbacAuthorizationV1API.h
     api/ResourceAPI.h
-    api/ResourceV1alpha1API.h
+    api/ResourceV1alpha2API.h
     api/SchedulingAPI.h
     api/SchedulingV1API.h
     api/StorageAPI.h
     api/StorageV1API.h
-    api/StorageV1beta1API.h
     api/VersionAPI.h
     api/WellKnownAPI.h
 
@@ -1308,6 +1340,7 @@ set(HDRS "")
 #    unit-tests/manual-AuthenticationAPI.c
 #    unit-tests/manual-AuthenticationV1API.c
 #    unit-tests/manual-AuthenticationV1alpha1API.c
+#    unit-tests/manual-AuthenticationV1beta1API.c
 #    unit-tests/manual-AuthorizationAPI.c
 #    unit-tests/manual-AuthorizationV1API.c
 #    unit-tests/manual-AutoscalingAPI.c
@@ -1317,6 +1350,7 @@ set(HDRS "")
 #    unit-tests/manual-BatchV1API.c
 #    unit-tests/manual-CertificatesAPI.c
 #    unit-tests/manual-CertificatesV1API.c
+#    unit-tests/manual-CertificatesV1alpha1API.c
 #    unit-tests/manual-CoordinationAPI.c
 #    unit-tests/manual-CoordinationV1API.c
 #    unit-tests/manual-CoreAPI.c
@@ -1343,12 +1377,11 @@ set(HDRS "")
 #    unit-tests/manual-RbacAuthorizationAPI.c
 #    unit-tests/manual-RbacAuthorizationV1API.c
 #    unit-tests/manual-ResourceAPI.c
-#    unit-tests/manual-ResourceV1alpha1API.c
+#    unit-tests/manual-ResourceV1alpha2API.c
 #    unit-tests/manual-SchedulingAPI.c
 #    unit-tests/manual-SchedulingV1API.c
 #    unit-tests/manual-StorageAPI.c
 #    unit-tests/manual-StorageV1API.c
-#    unit-tests/manual-StorageV1beta1API.c
 #    unit-tests/manual-VersionAPI.c
 #    unit-tests/manual-WellKnownAPI.c
 #)

@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**effect** | **char \*** | Required. The effect of the taint on pods that do not tolerate the taint. Valid effects are NoSchedule, PreferNoSchedule and NoExecute.   | 
+**effect** | **char \*** | Required. The effect of the taint on pods that do not tolerate the taint. Valid effects are NoSchedule, PreferNoSchedule and NoExecute. | 
 **key** | **char \*** | Required. The taint key to be applied to a node. | 
 **time_added** | **char \*** | TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints. | [optional] 
 **value** | **char \*** | The taint value corresponding to the taint key. | [optional] 

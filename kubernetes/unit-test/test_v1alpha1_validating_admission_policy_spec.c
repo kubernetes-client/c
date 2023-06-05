@@ -24,7 +24,9 @@ v1alpha1_validating_admission_policy_spec_t* instantiate_v1alpha1_validating_adm
   v1alpha1_validating_admission_policy_spec_t* v1alpha1_validating_admission_policy_spec = NULL;
   if (include_optional) {
     v1alpha1_validating_admission_policy_spec = v1alpha1_validating_admission_policy_spec_create(
+      list_createList(),
       "0",
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1alpha1_match_resources(0),
        // false, not to have infinite recursion
@@ -33,7 +35,9 @@ v1alpha1_validating_admission_policy_spec_t* instantiate_v1alpha1_validating_adm
     );
   } else {
     v1alpha1_validating_admission_policy_spec = v1alpha1_validating_admission_policy_spec_create(
+      list_createList(),
       "0",
+      list_createList(),
       NULL,
       NULL,
       list_createList()

@@ -79,6 +79,7 @@ void list_configmap(apiClient_t * apiClient, char *namespace_)
                                                                               0,    // int limit
                                                                               NULL, // char * resourceVersion
                                                                               NULL, // char * resourceVersionMatch
+                                                                              0,    // sendInitialEvents
                                                                               0,    // int timeoutSeconds
                                                                               0 //int watch
         );

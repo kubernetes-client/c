@@ -1,7 +1,7 @@
 /*
  * v1_network_policy_status.h
  *
- * NetworkPolicyStatus describe the current state of the NetworkPolicy.
+ * NetworkPolicyStatus describes the current state of the NetworkPolicy.
  */
 
 #ifndef _v1_network_policy_status_H_

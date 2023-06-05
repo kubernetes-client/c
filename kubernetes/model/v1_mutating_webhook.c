@@ -9,6 +9,7 @@ v1_mutating_webhook_t *v1_mutating_webhook_create(
     list_t *admission_review_versions,
     admissionregistration_v1_webhook_client_config_t *client_config,
     char *failure_policy,
+    list_t *match_conditions,
     char *match_policy,
     char *name,
     v1_label_selector_t *namespace_selector,
@@ -25,6 +26,7 @@ v1_mutating_webhook_t *v1_mutating_webhook_create(
     v1_mutating_webhook_local_var->admission_review_versions = admission_review_versions;
     v1_mutating_webhook_local_var->client_config = client_config;
     v1_mutating_webhook_local_var->failure_policy = failure_policy;
+    v1_mutating_webhook_local_var->match_conditions = match_conditions;
     v1_mutating_webhook_local_var->match_policy = match_policy;
     v1_mutating_webhook_local_var->name = name;
     v1_mutating_webhook_local_var->namespace_selector = namespace_selector;
@@ -57,6 +59,13 @@ void v1_mutating_webhook_free(v1_mutating_webhook_t *v1_mutating_webhook) {
     if (v1_mutating_webhook->failure_policy) {
         free(v1_mutating_webhook->failure_policy);
         v1_mutating_webhook->failure_policy = NULL;
+    }
+    if (v1_mutating_webhook->match_conditions) {
+        list_ForEach(listEntry, v1_mutating_webhook->match_conditions) {
+            v1_match_condition_free(listEntry->data);
+        }
+        list_freeList(v1_mutating_webhook->match_conditions);
+        v1_mutating_webhook->match_conditions = NULL;
     }
     if (v1_mutating_webhook->match_policy) {
         free(v1_mutating_webhook->match_policy);
@@ -131,6 +140,26 @@ cJSON *v1_mutating_webhook_convertToJSON(v1_mutating_webhook_t *v1_mutating_webh
     if(v1_mutating_webhook->failure_policy) {
     if(cJSON_AddStringToObject(item, "failurePolicy", v1_mutating_webhook->failure_policy) == NULL) {
     goto fail; //String
+    }
+    }
+
+
+    // v1_mutating_webhook->match_conditions
+    if(v1_mutating_webhook->match_conditions) {
+    cJSON *match_conditions = cJSON_AddArrayToObject(item, "matchConditions");
+    if(match_conditions == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *match_conditionsListEntry;
+    if (v1_mutating_webhook->match_conditions) {
+    list_ForEach(match_conditionsListEntry, v1_mutating_webhook->match_conditions) {
+    cJSON *itemLocal = v1_match_condition_convertToJSON(match_conditionsListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(match_conditions, itemLocal);
+    }
     }
     }
 
@@ -240,6 +269,9 @@ v1_mutating_webhook_t *v1_mutating_webhook_parseFromJSON(cJSON *v1_mutating_webh
     // define the local variable for v1_mutating_webhook->client_config
     admissionregistration_v1_webhook_client_config_t *client_config_local_nonprim = NULL;
 
+    // define the local list for v1_mutating_webhook->match_conditions
+    list_t *match_conditionsList = NULL;
+
     // define the local variable for v1_mutating_webhook->namespace_selector
     v1_label_selector_t *namespace_selector_local_nonprim = NULL;
 
@@ -286,6 +318,27 @@ v1_mutating_webhook_t *v1_mutating_webhook_parseFromJSON(cJSON *v1_mutating_webh
     if(!cJSON_IsString(failure_policy) && !cJSON_IsNull(failure_policy))
     {
     goto end; //String
+    }
+    }
+
+    // v1_mutating_webhook->match_conditions
+    cJSON *match_conditions = cJSON_GetObjectItemCaseSensitive(v1_mutating_webhookJSON, "matchConditions");
+    if (match_conditions) { 
+    cJSON *match_conditions_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(match_conditions)){
+        goto end; //nonprimitive container
+    }
+
+    match_conditionsList = list_createList();
+
+    cJSON_ArrayForEach(match_conditions_local_nonprimitive,match_conditions )
+    {
+        if(!cJSON_IsObject(match_conditions_local_nonprimitive)){
+            goto end;
+        }
+        v1_match_condition_t *match_conditionsItem = v1_match_condition_parseFromJSON(match_conditions_local_nonprimitive);
+
+        list_addElement(match_conditionsList, match_conditionsItem);
     }
     }
 
@@ -378,6 +431,7 @@ v1_mutating_webhook_t *v1_mutating_webhook_parseFromJSON(cJSON *v1_mutating_webh
         admission_review_versionsList,
         client_config_local_nonprim,
         failure_policy && !cJSON_IsNull(failure_policy) ? strdup(failure_policy->valuestring) : NULL,
+        match_conditions ? match_conditionsList : NULL,
         match_policy && !cJSON_IsNull(match_policy) ? strdup(match_policy->valuestring) : NULL,
         strdup(name->valuestring),
         namespace_selector ? namespace_selector_local_nonprim : NULL,
@@ -402,6 +456,15 @@ end:
     if (client_config_local_nonprim) {
         admissionregistration_v1_webhook_client_config_free(client_config_local_nonprim);
         client_config_local_nonprim = NULL;
+    }
+    if (match_conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, match_conditionsList) {
+            v1_match_condition_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(match_conditionsList);
+        match_conditionsList = NULL;
     }
     if (namespace_selector_local_nonprim) {
         v1_label_selector_free(namespace_selector_local_nonprim);

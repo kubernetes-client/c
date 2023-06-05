@@ -18,6 +18,7 @@ v1alpha1_validating_admission_policy_t* instantiate_v1alpha1_validating_admissio
 
 #include "test_v1_object_meta.c"
 #include "test_v1alpha1_validating_admission_policy_spec.c"
+#include "test_v1alpha1_validating_admission_policy_status.c"
 
 
 v1alpha1_validating_admission_policy_t* instantiate_v1alpha1_validating_admission_policy(int include_optional) {
@@ -29,12 +30,15 @@ v1alpha1_validating_admission_policy_t* instantiate_v1alpha1_validating_admissio
        // false, not to have infinite recursion
       instantiate_v1_object_meta(0),
        // false, not to have infinite recursion
-      instantiate_v1alpha1_validating_admission_policy_spec(0)
+      instantiate_v1alpha1_validating_admission_policy_spec(0),
+       // false, not to have infinite recursion
+      instantiate_v1alpha1_validating_admission_policy_status(0)
     );
   } else {
     v1alpha1_validating_admission_policy = v1alpha1_validating_admission_policy_create(
       "0",
       "0",
+      NULL,
       NULL,
       NULL
     );
