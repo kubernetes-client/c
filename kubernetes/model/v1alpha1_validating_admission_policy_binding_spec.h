@@ -24,13 +24,15 @@ typedef struct v1alpha1_validating_admission_policy_binding_spec_t {
     struct v1alpha1_match_resources_t *match_resources; //model
     struct v1alpha1_param_ref_t *param_ref; //model
     char *policy_name; // string
+    list_t *validation_actions; //primitive container
 
 } v1alpha1_validating_admission_policy_binding_spec_t;
 
 v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec_create(
     v1alpha1_match_resources_t *match_resources,
     v1alpha1_param_ref_t *param_ref,
-    char *policy_name
+    char *policy_name,
+    list_t *validation_actions
 );
 
 void v1alpha1_validating_admission_policy_binding_spec_free(v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec);

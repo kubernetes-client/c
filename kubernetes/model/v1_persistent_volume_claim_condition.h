@@ -1,7 +1,7 @@
 /*
  * v1_persistent_volume_claim_condition.h
  *
- * PersistentVolumeClaimCondition contails details about state of pvc
+ * PersistentVolumeClaimCondition contains details about state of pvc
  */
 
 #ifndef _v1_persistent_volume_claim_condition_H_

@@ -16,6 +16,7 @@
 typedef struct v1_container_t v1_container_t;
 
 #include "v1_container_port.h"
+#include "v1_container_resize_policy.h"
 #include "v1_env_from_source.h"
 #include "v1_env_var.h"
 #include "v1_lifecycle.h"
@@ -39,6 +40,7 @@ typedef struct v1_container_t {
     char *name; // string
     list_t *ports; //nonprimitive container
     struct v1_probe_t *readiness_probe; //model
+    list_t *resize_policy; //nonprimitive container
     struct v1_resource_requirements_t *resources; //model
     struct v1_security_context_t *security_context; //model
     struct v1_probe_t *startup_probe; //model
@@ -65,6 +67,7 @@ v1_container_t *v1_container_create(
     char *name,
     list_t *ports,
     v1_probe_t *readiness_probe,
+    list_t *resize_policy,
     v1_resource_requirements_t *resources,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,

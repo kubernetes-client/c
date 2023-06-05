@@ -23,10 +23,12 @@ v1_validation_rule_t* instantiate_v1_validation_rule(int include_optional) {
   if (include_optional) {
     v1_validation_rule = v1_validation_rule_create(
       "0",
+      "0",
       "0"
     );
   } else {
     v1_validation_rule = v1_validation_rule_create(
+      "0",
       "0",
       "0"
     );

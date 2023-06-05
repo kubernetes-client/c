@@ -7,6 +7,7 @@
 
 v1_validation_rule_t *v1_validation_rule_create(
     char *message,
+    char *message_expression,
     char *rule
     ) {
     v1_validation_rule_t *v1_validation_rule_local_var = malloc(sizeof(v1_validation_rule_t));
@@ -14,6 +15,7 @@ v1_validation_rule_t *v1_validation_rule_create(
         return NULL;
     }
     v1_validation_rule_local_var->message = message;
+    v1_validation_rule_local_var->message_expression = message_expression;
     v1_validation_rule_local_var->rule = rule;
 
     return v1_validation_rule_local_var;
@@ -29,6 +31,10 @@ void v1_validation_rule_free(v1_validation_rule_t *v1_validation_rule) {
         free(v1_validation_rule->message);
         v1_validation_rule->message = NULL;
     }
+    if (v1_validation_rule->message_expression) {
+        free(v1_validation_rule->message_expression);
+        v1_validation_rule->message_expression = NULL;
+    }
     if (v1_validation_rule->rule) {
         free(v1_validation_rule->rule);
         v1_validation_rule->rule = NULL;
@@ -42,6 +48,14 @@ cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule
     // v1_validation_rule->message
     if(v1_validation_rule->message) {
     if(cJSON_AddStringToObject(item, "message", v1_validation_rule->message) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // v1_validation_rule->message_expression
+    if(v1_validation_rule->message_expression) {
+    if(cJSON_AddStringToObject(item, "messageExpression", v1_validation_rule->message_expression) == NULL) {
     goto fail; //String
     }
     }
@@ -76,6 +90,15 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
     }
     }
 
+    // v1_validation_rule->message_expression
+    cJSON *message_expression = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "messageExpression");
+    if (message_expression) { 
+    if(!cJSON_IsString(message_expression) && !cJSON_IsNull(message_expression))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_validation_rule->rule
     cJSON *rule = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "rule");
     if (!rule) {
@@ -91,6 +114,7 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
 
     v1_validation_rule_local_var = v1_validation_rule_create (
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        message_expression && !cJSON_IsNull(message_expression) ? strdup(message_expression->valuestring) : NULL,
         strdup(rule->valuestring)
         );
 

@@ -29,6 +29,7 @@ v1_mutating_webhook_t* instantiate_v1_mutating_webhook(int include_optional) {
        // false, not to have infinite recursion
       instantiate_admissionregistration_v1_webhook_client_config(0),
       "0",
+      list_createList(),
       "0",
       "0",
        // false, not to have infinite recursion
@@ -45,6 +46,7 @@ v1_mutating_webhook_t* instantiate_v1_mutating_webhook(int include_optional) {
       list_createList(),
       NULL,
       "0",
+      list_createList(),
       "0",
       "0",
       NULL,

@@ -17,6 +17,7 @@
 v1_container_status_t* instantiate_v1_container_status(int include_optional);
 
 #include "test_v1_container_state.c"
+#include "test_v1_resource_requirements.c"
 #include "test_v1_container_state.c"
 
 
@@ -24,6 +25,7 @@ v1_container_status_t* instantiate_v1_container_status(int include_optional) {
   v1_container_status_t* v1_container_status = NULL;
   if (include_optional) {
     v1_container_status = v1_container_status_create(
+      list_createList(),
       "0",
       "0",
       "0",
@@ -31,6 +33,8 @@ v1_container_status_t* instantiate_v1_container_status(int include_optional) {
       instantiate_v1_container_state(0),
       "0",
       1,
+       // false, not to have infinite recursion
+      instantiate_v1_resource_requirements(0),
       56,
       1,
        // false, not to have infinite recursion
@@ -38,12 +42,14 @@ v1_container_status_t* instantiate_v1_container_status(int include_optional) {
     );
   } else {
     v1_container_status = v1_container_status_create(
+      list_createList(),
       "0",
       "0",
       "0",
       NULL,
       "0",
       1,
+      NULL,
       56,
       1,
       NULL

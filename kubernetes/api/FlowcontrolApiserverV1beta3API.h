@@ -30,13 +30,13 @@ FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration(apiClient_t *api
 // delete collection of FlowSchema
 //
 v1_status_t*
-FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
+FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete collection of PriorityLevelConfiguration
 //
 v1_status_t*
-FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body );
+FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body );
 
 
 // delete a FlowSchema
@@ -60,13 +60,13 @@ FlowcontrolApiserverV1beta3API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind FlowSchema
 //
 v1beta3_flow_schema_list_t*
-FlowcontrolApiserverV1beta3API_listFlowSchema(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
+FlowcontrolApiserverV1beta3API_listFlowSchema(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch );
 
 
 // list or watch objects of kind PriorityLevelConfiguration
 //
 v1beta3_priority_level_configuration_list_t*
-FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch );
+FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch );
 
 
 // partially update the specified FlowSchema

@@ -418,7 +418,7 @@ end:
 // delete collection of CertificateSigningRequest
 //
 v1_status_t*
-CertificatesV1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+CertificatesV1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -568,6 +568,19 @@ CertificatesV1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClie
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -769,6 +782,18 @@ CertificatesV1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClie
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -858,7 +883,7 @@ end:
 // list or watch objects of kind CertificateSigningRequest
 //
 v1_certificate_signing_request_list_t*
-CertificatesV1API_listCertificateSigningRequest(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+CertificatesV1API_listCertificateSigningRequest(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -971,6 +996,19 @@ CertificatesV1API_listCertificateSigningRequest(apiClient_t *apiClient, char * p
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -1136,6 +1174,18 @@ CertificatesV1API_listCertificateSigningRequest(apiClient_t *apiClient, char * p
     if(keyPairQuery_resourceVersionMatch){
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
+    }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);

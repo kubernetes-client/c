@@ -1387,7 +1387,7 @@ end:
 // delete collection of CSIDriver
 //
 v1_status_t*
-StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1540,6 +1540,19 @@ StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char * pretty , c
     }
 
     // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -1738,6 +1751,18 @@ StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char * pretty , c
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -1760,7 +1785,7 @@ end:
 // delete collection of CSINode
 //
 v1_status_t*
-StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1913,6 +1938,19 @@ StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char * pretty , cha
     }
 
     // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -2111,6 +2149,18 @@ StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char * pretty , cha
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2133,7 +2183,7 @@ end:
 // delete collection of CSIStorageCapacity
 //
 v1_status_t*
-StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2293,6 +2343,19 @@ StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -2495,6 +2558,18 @@ StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2517,7 +2592,7 @@ end:
 // delete collection of StorageClass
 //
 v1_status_t*
-StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2670,6 +2745,19 @@ StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char * pretty 
     }
 
     // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -2868,6 +2956,18 @@ StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char * pretty 
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2890,7 +2990,7 @@ end:
 // delete collection of VolumeAttachment
 //
 v1_status_t*
-StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3043,6 +3143,19 @@ StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char * pre
     }
 
     // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -3240,6 +3353,18 @@ StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char * pre
     if(keyPairQuery_resourceVersionMatch){
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
+    }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -3995,7 +4120,7 @@ end:
 // list or watch objects of kind CSIDriver
 //
 v1_csi_driver_list_t*
-StorageV1API_listCSIDriver(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+StorageV1API_listCSIDriver(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4108,6 +4233,19 @@ StorageV1API_listCSIDriver(apiClient_t *apiClient, char * pretty , int allowWatc
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -4274,6 +4412,18 @@ StorageV1API_listCSIDriver(apiClient_t *apiClient, char * pretty , int allowWatc
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -4308,7 +4458,7 @@ end:
 // list or watch objects of kind CSINode
 //
 v1_csi_node_list_t*
-StorageV1API_listCSINode(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+StorageV1API_listCSINode(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4421,6 +4571,19 @@ StorageV1API_listCSINode(apiClient_t *apiClient, char * pretty , int allowWatchB
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -4587,6 +4750,18 @@ StorageV1API_listCSINode(apiClient_t *apiClient, char * pretty , int allowWatchB
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -4621,7 +4796,7 @@ end:
 // list or watch objects of kind CSIStorageCapacity
 //
 v1_csi_storage_capacity_list_t*
-StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4734,6 +4909,19 @@ StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int 
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -4900,6 +5088,18 @@ StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int 
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -4934,7 +5134,7 @@ end:
 // list or watch objects of kind CSIStorageCapacity
 //
 v1_csi_storage_capacity_list_t*
-StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5057,6 +5257,19 @@ StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _na
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -5224,6 +5437,18 @@ StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char * _na
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -5258,7 +5483,7 @@ end:
 // list or watch objects of kind StorageClass
 //
 v1_storage_class_list_t*
-StorageV1API_listStorageClass(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+StorageV1API_listStorageClass(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5371,6 +5596,19 @@ StorageV1API_listStorageClass(apiClient_t *apiClient, char * pretty , int allowW
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -5537,6 +5775,18 @@ StorageV1API_listStorageClass(apiClient_t *apiClient, char * pretty , int allowW
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -5571,7 +5821,7 @@ end:
 // list or watch objects of kind VolumeAttachment
 //
 v1_volume_attachment_list_t*
-StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5684,6 +5934,19 @@ StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char * pretty , int al
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -5849,6 +6112,18 @@ StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char * pretty , int al
     if(keyPairQuery_resourceVersionMatch){
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
+    }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);

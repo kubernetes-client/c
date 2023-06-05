@@ -8,6 +8,7 @@
 v1alpha1_validation_t *v1alpha1_validation_create(
     char *expression,
     char *message,
+    char *message_expression,
     char *reason
     ) {
     v1alpha1_validation_t *v1alpha1_validation_local_var = malloc(sizeof(v1alpha1_validation_t));
@@ -16,6 +17,7 @@ v1alpha1_validation_t *v1alpha1_validation_create(
     }
     v1alpha1_validation_local_var->expression = expression;
     v1alpha1_validation_local_var->message = message;
+    v1alpha1_validation_local_var->message_expression = message_expression;
     v1alpha1_validation_local_var->reason = reason;
 
     return v1alpha1_validation_local_var;
@@ -34,6 +36,10 @@ void v1alpha1_validation_free(v1alpha1_validation_t *v1alpha1_validation) {
     if (v1alpha1_validation->message) {
         free(v1alpha1_validation->message);
         v1alpha1_validation->message = NULL;
+    }
+    if (v1alpha1_validation->message_expression) {
+        free(v1alpha1_validation->message_expression);
+        v1alpha1_validation->message_expression = NULL;
     }
     if (v1alpha1_validation->reason) {
         free(v1alpha1_validation->reason);
@@ -57,6 +63,14 @@ cJSON *v1alpha1_validation_convertToJSON(v1alpha1_validation_t *v1alpha1_validat
     // v1alpha1_validation->message
     if(v1alpha1_validation->message) {
     if(cJSON_AddStringToObject(item, "message", v1alpha1_validation->message) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // v1alpha1_validation->message_expression
+    if(v1alpha1_validation->message_expression) {
+    if(cJSON_AddStringToObject(item, "messageExpression", v1alpha1_validation->message_expression) == NULL) {
     goto fail; //String
     }
     }
@@ -102,6 +116,15 @@ v1alpha1_validation_t *v1alpha1_validation_parseFromJSON(cJSON *v1alpha1_validat
     }
     }
 
+    // v1alpha1_validation->message_expression
+    cJSON *message_expression = cJSON_GetObjectItemCaseSensitive(v1alpha1_validationJSON, "messageExpression");
+    if (message_expression) { 
+    if(!cJSON_IsString(message_expression) && !cJSON_IsNull(message_expression))
+    {
+    goto end; //String
+    }
+    }
+
     // v1alpha1_validation->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1alpha1_validationJSON, "reason");
     if (reason) { 
@@ -115,6 +138,7 @@ v1alpha1_validation_t *v1alpha1_validation_parseFromJSON(cJSON *v1alpha1_validat
     v1alpha1_validation_local_var = v1alpha1_validation_create (
         strdup(expression->valuestring),
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        message_expression && !cJSON_IsNull(message_expression) ? strdup(message_expression->valuestring) : NULL,
         reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
         );
 

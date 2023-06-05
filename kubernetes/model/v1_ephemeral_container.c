@@ -17,6 +17,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_create(
     char *name,
     list_t *ports,
     v1_probe_t *readiness_probe,
+    list_t *resize_policy,
     v1_resource_requirements_t *resources,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,
@@ -45,6 +46,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_create(
     v1_ephemeral_container_local_var->name = name;
     v1_ephemeral_container_local_var->ports = ports;
     v1_ephemeral_container_local_var->readiness_probe = readiness_probe;
+    v1_ephemeral_container_local_var->resize_policy = resize_policy;
     v1_ephemeral_container_local_var->resources = resources;
     v1_ephemeral_container_local_var->security_context = security_context;
     v1_ephemeral_container_local_var->startup_probe = startup_probe;
@@ -125,6 +127,13 @@ void v1_ephemeral_container_free(v1_ephemeral_container_t *v1_ephemeral_containe
     if (v1_ephemeral_container->readiness_probe) {
         v1_probe_free(v1_ephemeral_container->readiness_probe);
         v1_ephemeral_container->readiness_probe = NULL;
+    }
+    if (v1_ephemeral_container->resize_policy) {
+        list_ForEach(listEntry, v1_ephemeral_container->resize_policy) {
+            v1_container_resize_policy_free(listEntry->data);
+        }
+        list_freeList(v1_ephemeral_container->resize_policy);
+        v1_ephemeral_container->resize_policy = NULL;
     }
     if (v1_ephemeral_container->resources) {
         v1_resource_requirements_free(v1_ephemeral_container->resources);
@@ -332,6 +341,26 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     }
 
 
+    // v1_ephemeral_container->resize_policy
+    if(v1_ephemeral_container->resize_policy) {
+    cJSON *resize_policy = cJSON_AddArrayToObject(item, "resizePolicy");
+    if(resize_policy == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *resize_policyListEntry;
+    if (v1_ephemeral_container->resize_policy) {
+    list_ForEach(resize_policyListEntry, v1_ephemeral_container->resize_policy) {
+    cJSON *itemLocal = v1_container_resize_policy_convertToJSON(resize_policyListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(resize_policy, itemLocal);
+    }
+    }
+    }
+
+
     // v1_ephemeral_container->resources
     if(v1_ephemeral_container->resources) {
     cJSON *resources_local_JSON = v1_resource_requirements_convertToJSON(v1_ephemeral_container->resources);
@@ -502,6 +531,9 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     // define the local variable for v1_ephemeral_container->readiness_probe
     v1_probe_t *readiness_probe_local_nonprim = NULL;
 
+    // define the local list for v1_ephemeral_container->resize_policy
+    list_t *resize_policyList = NULL;
+
     // define the local variable for v1_ephemeral_container->resources
     v1_resource_requirements_t *resources_local_nonprim = NULL;
 
@@ -666,6 +698,27 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     readiness_probe_local_nonprim = v1_probe_parseFromJSON(readiness_probe); //nonprimitive
     }
 
+    // v1_ephemeral_container->resize_policy
+    cJSON *resize_policy = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "resizePolicy");
+    if (resize_policy) { 
+    cJSON *resize_policy_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(resize_policy)){
+        goto end; //nonprimitive container
+    }
+
+    resize_policyList = list_createList();
+
+    cJSON_ArrayForEach(resize_policy_local_nonprimitive,resize_policy )
+    {
+        if(!cJSON_IsObject(resize_policy_local_nonprimitive)){
+            goto end;
+        }
+        v1_container_resize_policy_t *resize_policyItem = v1_container_resize_policy_parseFromJSON(resize_policy_local_nonprimitive);
+
+        list_addElement(resize_policyList, resize_policyItem);
+    }
+    }
+
     // v1_ephemeral_container->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "resources");
     if (resources) { 
@@ -802,6 +855,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
         strdup(name->valuestring),
         ports ? portsList : NULL,
         readiness_probe ? readiness_probe_local_nonprim : NULL,
+        resize_policy ? resize_policyList : NULL,
         resources ? resources_local_nonprim : NULL,
         security_context ? security_context_local_nonprim : NULL,
         startup_probe ? startup_probe_local_nonprim : NULL,
@@ -874,6 +928,15 @@ end:
     if (readiness_probe_local_nonprim) {
         v1_probe_free(readiness_probe_local_nonprim);
         readiness_probe_local_nonprim = NULL;
+    }
+    if (resize_policyList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, resize_policyList) {
+            v1_container_resize_policy_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(resize_policyList);
+        resize_policyList = NULL;
     }
     if (resources_local_nonprim) {
         v1_resource_requirements_free(resources_local_nonprim);

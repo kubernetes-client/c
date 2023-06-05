@@ -1,7 +1,7 @@
 /*
  * v1_pod_failure_policy_rule.h
  *
- * PodFailurePolicyRule describes how a pod failure is handled when the requirements are met. One of OnExitCodes and onPodConditions, but not both, can be used in each rule.
+ * PodFailurePolicyRule describes how a pod failure is handled when the requirements are met. One of onExitCodes and onPodConditions, but not both, can be used in each rule.
  */
 
 #ifndef _v1_pod_failure_policy_rule_H_

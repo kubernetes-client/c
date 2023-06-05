@@ -21,6 +21,7 @@ typedef struct v1alpha1_validation_t v1alpha1_validation_t;
 typedef struct v1alpha1_validation_t {
     char *expression; // string
     char *message; // string
+    char *message_expression; // string
     char *reason; // string
 
 } v1alpha1_validation_t;
@@ -28,6 +29,7 @@ typedef struct v1alpha1_validation_t {
 v1alpha1_validation_t *v1alpha1_validation_create(
     char *expression,
     char *message,
+    char *message_expression,
     char *reason
 );
 

@@ -407,7 +407,7 @@ end:
 // delete collection of CronJob
 //
 v1_status_t*
-BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -570,6 +570,19 @@ BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * _nam
     }
 
     // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -769,6 +782,18 @@ BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * _nam
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -791,7 +816,7 @@ end:
 // delete collection of Job
 //
 v1_status_t*
-BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , v1_delete_options_t * body )
+BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -954,6 +979,19 @@ BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char * _namespa
     }
 
     // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -1152,6 +1190,18 @@ BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char * _namespa
     if(keyPairQuery_resourceVersionMatch){
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
+    }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -1700,7 +1750,7 @@ end:
 // list or watch objects of kind CronJob
 //
 v1_cron_job_list_t*
-BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1813,6 +1863,19 @@ BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBoo
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -1979,6 +2042,18 @@ BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBoo
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2013,7 +2088,7 @@ end:
 // list or watch objects of kind Job
 //
 v1_job_list_t*
-BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2126,6 +2201,19 @@ BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmar
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -2292,6 +2380,18 @@ BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmar
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2326,7 +2426,7 @@ end:
 // list or watch objects of kind CronJob
 //
 v1_cron_job_list_t*
-BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2452,6 +2552,19 @@ BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace , cha
     }
 
     // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -2616,6 +2729,18 @@ BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace , cha
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
     }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2650,7 +2775,7 @@ end:
 // list or watch objects of kind Job
 //
 v1_job_list_t*
-BatchV1API_listNamespacedJob(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+BatchV1API_listNamespacedJob(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2773,6 +2898,19 @@ BatchV1API_listNamespacedJob(apiClient_t *apiClient, char * _namespace , char * 
         valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
         keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
         list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_sendInitialEvents = NULL;
+    char * valueQuery_sendInitialEvents = NULL;
+    keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
+    if (1) // Always send boolean parameters to the API server
+    {
+        keyQuery_sendInitialEvents = strdup("sendInitialEvents");
+        valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
+        list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
 
     // query parameters
@@ -2939,6 +3077,18 @@ BatchV1API_listNamespacedJob(apiClient_t *apiClient, char * _namespace , char * 
     if(keyPairQuery_resourceVersionMatch){
         keyValuePair_free(keyPairQuery_resourceVersionMatch);
         keyPairQuery_resourceVersionMatch = NULL;
+    }
+    if(keyQuery_sendInitialEvents){
+        free(keyQuery_sendInitialEvents);
+        keyQuery_sendInitialEvents = NULL;
+    }
+    if(valueQuery_sendInitialEvents){
+        free(valueQuery_sendInitialEvents);
+        valueQuery_sendInitialEvents = NULL;
+    }
+    if(keyPairQuery_sendInitialEvents){
+        keyValuePair_free(keyPairQuery_sendInitialEvents);
+        keyPairQuery_sendInitialEvents = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);

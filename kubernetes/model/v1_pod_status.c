@@ -18,6 +18,7 @@ v1_pod_status_t *v1_pod_status_create(
     list_t *pod_ips,
     char *qos_class,
     char *reason,
+    char *resize,
     char *start_time
     ) {
     v1_pod_status_t *v1_pod_status_local_var = malloc(sizeof(v1_pod_status_t));
@@ -36,6 +37,7 @@ v1_pod_status_t *v1_pod_status_create(
     v1_pod_status_local_var->pod_ips = pod_ips;
     v1_pod_status_local_var->qos_class = qos_class;
     v1_pod_status_local_var->reason = reason;
+    v1_pod_status_local_var->resize = resize;
     v1_pod_status_local_var->start_time = start_time;
 
     return v1_pod_status_local_var;
@@ -109,6 +111,10 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
     if (v1_pod_status->reason) {
         free(v1_pod_status->reason);
         v1_pod_status->reason = NULL;
+    }
+    if (v1_pod_status->resize) {
+        free(v1_pod_status->resize);
+        v1_pod_status->resize = NULL;
     }
     if (v1_pod_status->start_time) {
         free(v1_pod_status->start_time);
@@ -271,6 +277,14 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     // v1_pod_status->reason
     if(v1_pod_status->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_pod_status->reason) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // v1_pod_status->resize
+    if(v1_pod_status->resize) {
+    if(cJSON_AddStringToObject(item, "resize", v1_pod_status->resize) == NULL) {
     goto fail; //String
     }
     }
@@ -478,6 +492,15 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     }
     }
 
+    // v1_pod_status->resize
+    cJSON *resize = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "resize");
+    if (resize) { 
+    if(!cJSON_IsString(resize) && !cJSON_IsNull(resize))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_pod_status->start_time
     cJSON *start_time = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "startTime");
     if (start_time) { 
@@ -501,6 +524,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         pod_ips ? pod_ipsList : NULL,
         qos_class && !cJSON_IsNull(qos_class) ? strdup(qos_class->valuestring) : NULL,
         reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
+        resize && !cJSON_IsNull(resize) ? strdup(resize->valuestring) : NULL,
         start_time && !cJSON_IsNull(start_time) ? strdup(start_time->valuestring) : NULL
         );
 

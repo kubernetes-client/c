@@ -17,6 +17,7 @@ typedef struct v1alpha1_validating_admission_policy_t v1alpha1_validating_admiss
 
 #include "v1_object_meta.h"
 #include "v1alpha1_validating_admission_policy_spec.h"
+#include "v1alpha1_validating_admission_policy_status.h"
 
 
 
@@ -25,6 +26,7 @@ typedef struct v1alpha1_validating_admission_policy_t {
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
     struct v1alpha1_validating_admission_policy_spec_t *spec; //model
+    struct v1alpha1_validating_admission_policy_status_t *status; //model
 
 } v1alpha1_validating_admission_policy_t;
 
@@ -32,7 +34,8 @@ v1alpha1_validating_admission_policy_t *v1alpha1_validating_admission_policy_cre
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
-    v1alpha1_validating_admission_policy_spec_t *spec
+    v1alpha1_validating_admission_policy_spec_t *spec,
+    v1alpha1_validating_admission_policy_status_t *status
 );
 
 void v1alpha1_validating_admission_policy_free(v1alpha1_validating_admission_policy_t *v1alpha1_validating_admission_policy);

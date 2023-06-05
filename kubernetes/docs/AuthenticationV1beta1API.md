@@ -4,29 +4,30 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AuthenticationV1beta1API_createTokenReview**](AuthenticationV1beta1API.md#AuthenticationV1beta1API_createTokenReview) | **POST** /apis/authentication.k8s.io/v1beta1/tokenreviews | 
+[**AuthenticationV1beta1API_createSelfSubjectReview**](AuthenticationV1beta1API.md#AuthenticationV1beta1API_createSelfSubjectReview) | **POST** /apis/authentication.k8s.io/v1beta1/selfsubjectreviews | 
 [**AuthenticationV1beta1API_getAPIResources**](AuthenticationV1beta1API.md#AuthenticationV1beta1API_getAPIResources) | **GET** /apis/authentication.k8s.io/v1beta1/ | 
 
 
-# **AuthenticationV1beta1API_createTokenReview**
+# **AuthenticationV1beta1API_createSelfSubjectReview**
 ```c
-// create a TokenReview
+// create a SelfSubjectReview
 //
-v1beta1_token_review_t* AuthenticationV1beta1API_createTokenReview(apiClient_t *apiClient, v1beta1_token_review_t * body, char * dryRun, char * fieldManager, char * pretty);
+v1beta1_self_subject_review_t* AuthenticationV1beta1API_createSelfSubjectReview(apiClient_t *apiClient, v1beta1_self_subject_review_t * body, char * dryRun, char * fieldManager, char * fieldValidation, char * pretty);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**body** | **[v1beta1_token_review_t](v1beta1_token_review.md) \*** |  | 
+**body** | **[v1beta1_self_subject_review_t](v1beta1_self_subject_review.md) \*** |  | 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 
 ### Return type
 
-[v1beta1_token_review_t](v1beta1_token_review.md) *
+[v1beta1_self_subject_review_t](v1beta1_self_subject_review.md) *
 
 
 ### Authorization
