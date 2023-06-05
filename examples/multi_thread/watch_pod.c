@@ -101,6 +101,7 @@ void *watch_pod_thread_func(void *arg)
                                 0,  /* limit */
                                 NULL,   /* resourceVersion */
                                 NULL,    /* resourceVersionMatch */
+                                0,  /* sendInitialEvents */
                                 0,  /* timeoutSeconds
                                        Setting the value to 0 means the watch never stops.
                                      */
