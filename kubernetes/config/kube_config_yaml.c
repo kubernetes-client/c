@@ -44,6 +44,7 @@ mapping :: = MAPPING - START(node node) * MAPPING - END
 #define KEY_USER_AUTH_PROVIDER_CONFIG_IDP_ISSUE_URL "idp-issuer-url"
 #define KEY_USER_AUTH_PROVIDER_CONFIG_REFRESH_TOKEN "refresh-token"
 #define KEY_CERTIFICATE_AUTHORITY_DATA "certificate-authority-data"
+#define KEY_CERTIFICATE_AUTHORITY "certificate-authority"
 #define KEY_INSECURE_SKIP_TLS_VERIFY "insecure-skip-tls-verify"
 #define KEY_SERVER "server"
 #define KEY_CLIENT_CERTIFICATE "client-certificate"
@@ -192,7 +193,7 @@ static int parse_kubeconfig_yaml_string_mapping_sequence(keyValuePair_t *** p_st
 
 static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * property, yaml_document_t * document, yaml_node_t * node)
 {
-    static char fname[] = "parse_kubeconfig_yaml_property_info_mapping()";
+    static char fname[] = "parse_kubeconfig_yaml_property_mapping()";
 
     yaml_node_pair_t *pair = NULL;
     yaml_node_t *key = NULL;
@@ -214,6 +215,8 @@ static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * proper
             if (KUBECONFIG_PROPERTY_TYPE_CLUSTER == property->type) {
                 if (0 == strcmp(key->data.scalar.value, KEY_CERTIFICATE_AUTHORITY_DATA)) {
                     property->certificate_authority_data = strdup(value->data.scalar.value);
+                } else if (0 == strcmp(key->data.scalar.value, KEY_CERTIFICATE_AUTHORITY)) {
+                    property->certificate_authority_data = load_file_content(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_SERVER)) {
                     property->server = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_INSECURE_SKIP_TLS_VERIFY)) {
