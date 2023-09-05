@@ -6,16 +6,21 @@ on:
       kubernetesBranch:
         type: string
         required: true
-        description: 'The remote kubernetes release branch to fetch openapi spec. .e.g. "release-1.23"'
+        description: 'The remote kubernetes release branch to fetch openapi spec. e.g. "release-1.28"'
       genCommit:
         type: string
         required: true
         default: 'master'
         description: 'The commit to use for the kubernetes-client/gen repo'
+      oagCommit:
+        type: string
+        required: true
+        default: 'master'
+        description: 'The commit to use for the OpenAPITools/openapi-generator repo. e.g. "v7.0.0"'
       clientVersion:
         type: string
         required: true
-        default: '0.3.0'
+        default: '0.8.0'
         description: 'Semvar to use for the version number' 
 
 
@@ -57,7 +62,7 @@ jobs:
           export PACKAGE_NAME="client"
 
           # OpenAPI-Generator branch/tag to generate the client library
-          export OPENAPI_GENERATOR_COMMIT="master"
+          export OPENAPI_GENERATOR_COMMIT="${{ github.event.inputs.oagCommit }}"
 
           export USERNAME=kubernetes
           EOF
