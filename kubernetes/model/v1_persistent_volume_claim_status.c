@@ -7,22 +7,22 @@
 
 v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_create(
     list_t *access_modes,
+    list_t* allocated_resource_statuses,
     list_t* allocated_resources,
     list_t* capacity,
     list_t *conditions,
-    char *phase,
-    char *resize_status
+    char *phase
     ) {
     v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_local_var = malloc(sizeof(v1_persistent_volume_claim_status_t));
     if (!v1_persistent_volume_claim_status_local_var) {
         return NULL;
     }
     v1_persistent_volume_claim_status_local_var->access_modes = access_modes;
+    v1_persistent_volume_claim_status_local_var->allocated_resource_statuses = allocated_resource_statuses;
     v1_persistent_volume_claim_status_local_var->allocated_resources = allocated_resources;
     v1_persistent_volume_claim_status_local_var->capacity = capacity;
     v1_persistent_volume_claim_status_local_var->conditions = conditions;
     v1_persistent_volume_claim_status_local_var->phase = phase;
-    v1_persistent_volume_claim_status_local_var->resize_status = resize_status;
 
     return v1_persistent_volume_claim_status_local_var;
 }
@@ -39,6 +39,16 @@ void v1_persistent_volume_claim_status_free(v1_persistent_volume_claim_status_t 
         }
         list_freeList(v1_persistent_volume_claim_status->access_modes);
         v1_persistent_volume_claim_status->access_modes = NULL;
+    }
+    if (v1_persistent_volume_claim_status->allocated_resource_statuses) {
+        list_ForEach(listEntry, v1_persistent_volume_claim_status->allocated_resource_statuses) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_freeList(v1_persistent_volume_claim_status->allocated_resource_statuses);
+        v1_persistent_volume_claim_status->allocated_resource_statuses = NULL;
     }
     if (v1_persistent_volume_claim_status->allocated_resources) {
         list_ForEach(listEntry, v1_persistent_volume_claim_status->allocated_resources) {
@@ -71,10 +81,6 @@ void v1_persistent_volume_claim_status_free(v1_persistent_volume_claim_status_t 
         free(v1_persistent_volume_claim_status->phase);
         v1_persistent_volume_claim_status->phase = NULL;
     }
-    if (v1_persistent_volume_claim_status->resize_status) {
-        free(v1_persistent_volume_claim_status->resize_status);
-        v1_persistent_volume_claim_status->resize_status = NULL;
-    }
     free(v1_persistent_volume_claim_status);
 }
 
@@ -93,6 +99,26 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
     if(cJSON_AddStringToObject(access_modes, "", (char*)access_modesListEntry->data) == NULL)
     {
         goto fail;
+    }
+    }
+    }
+
+
+    // v1_persistent_volume_claim_status->allocated_resource_statuses
+    if(v1_persistent_volume_claim_status->allocated_resource_statuses) {
+    cJSON *allocated_resource_statuses = cJSON_AddObjectToObject(item, "allocatedResourceStatuses");
+    if(allocated_resource_statuses == NULL) {
+        goto fail; //primitive map container
+    }
+    cJSON *localMapObject = allocated_resource_statuses;
+    listEntry_t *allocated_resource_statusesListEntry;
+    if (v1_persistent_volume_claim_status->allocated_resource_statuses) {
+    list_ForEach(allocated_resource_statusesListEntry, v1_persistent_volume_claim_status->allocated_resource_statuses) {
+        keyValuePair_t *localKeyValue = (keyValuePair_t*)allocated_resource_statusesListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        {
+            goto fail;
+        }
     }
     }
     }
@@ -165,14 +191,6 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
     }
     }
 
-
-    // v1_persistent_volume_claim_status->resize_status
-    if(v1_persistent_volume_claim_status->resize_status) {
-    if(cJSON_AddStringToObject(item, "resizeStatus", v1_persistent_volume_claim_status->resize_status) == NULL) {
-    goto fail; //String
-    }
-    }
-
     return item;
 fail:
     if (item) {
@@ -187,6 +205,9 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
 
     // define the local list for v1_persistent_volume_claim_status->access_modes
     list_t *access_modesList = NULL;
+
+    // define the local map for v1_persistent_volume_claim_status->allocated_resource_statuses
+    list_t *allocated_resource_statusesList = NULL;
 
     // define the local map for v1_persistent_volume_claim_status->allocated_resources
     list_t *allocated_resourcesList = NULL;
@@ -213,6 +234,31 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
             goto end;
         }
         list_addElement(access_modesList , strdup(access_modes_local->valuestring));
+    }
+    }
+
+    // v1_persistent_volume_claim_status->allocated_resource_statuses
+    cJSON *allocated_resource_statuses = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "allocatedResourceStatuses");
+    if (allocated_resource_statuses) { 
+    cJSON *allocated_resource_statuses_local_map = NULL;
+    if(!cJSON_IsObject(allocated_resource_statuses) && !cJSON_IsNull(allocated_resource_statuses))
+    {
+        goto end;//primitive map container
+    }
+    if(cJSON_IsObject(allocated_resource_statuses))
+    {
+        allocated_resource_statusesList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(allocated_resource_statuses_local_map, allocated_resource_statuses)
+        {
+            cJSON *localMapObject = allocated_resource_statuses_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(allocated_resource_statusesList , localMapKeyPair);
+        }
     }
     }
 
@@ -296,23 +342,14 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     }
     }
 
-    // v1_persistent_volume_claim_status->resize_status
-    cJSON *resize_status = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "resizeStatus");
-    if (resize_status) { 
-    if(!cJSON_IsString(resize_status) && !cJSON_IsNull(resize_status))
-    {
-    goto end; //String
-    }
-    }
-
 
     v1_persistent_volume_claim_status_local_var = v1_persistent_volume_claim_status_create (
         access_modes ? access_modesList : NULL,
+        allocated_resource_statuses ? allocated_resource_statusesList : NULL,
         allocated_resources ? allocated_resourcesList : NULL,
         capacity ? capacityList : NULL,
         conditions ? conditionsList : NULL,
-        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
-        resize_status && !cJSON_IsNull(resize_status) ? strdup(resize_status->valuestring) : NULL
+        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL
         );
 
     return v1_persistent_volume_claim_status_local_var;
@@ -325,6 +362,20 @@ end:
         }
         list_freeList(access_modesList);
         access_modesList = NULL;
+    }
+    if (allocated_resource_statusesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, allocated_resource_statusesList) {
+            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(allocated_resource_statusesList);
+        allocated_resource_statusesList = NULL;
     }
     if (allocated_resourcesList) {
         listEntry_t *listEntry = NULL;

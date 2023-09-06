@@ -11,7 +11,8 @@ v1alpha1_validating_admission_policy_spec_t *v1alpha1_validating_admission_polic
     list_t *match_conditions,
     v1alpha1_match_resources_t *match_constraints,
     v1alpha1_param_kind_t *param_kind,
-    list_t *validations
+    list_t *validations,
+    list_t *variables
     ) {
     v1alpha1_validating_admission_policy_spec_t *v1alpha1_validating_admission_policy_spec_local_var = malloc(sizeof(v1alpha1_validating_admission_policy_spec_t));
     if (!v1alpha1_validating_admission_policy_spec_local_var) {
@@ -23,6 +24,7 @@ v1alpha1_validating_admission_policy_spec_t *v1alpha1_validating_admission_polic
     v1alpha1_validating_admission_policy_spec_local_var->match_constraints = match_constraints;
     v1alpha1_validating_admission_policy_spec_local_var->param_kind = param_kind;
     v1alpha1_validating_admission_policy_spec_local_var->validations = validations;
+    v1alpha1_validating_admission_policy_spec_local_var->variables = variables;
 
     return v1alpha1_validating_admission_policy_spec_local_var;
 }
@@ -65,6 +67,13 @@ void v1alpha1_validating_admission_policy_spec_free(v1alpha1_validating_admissio
         }
         list_freeList(v1alpha1_validating_admission_policy_spec->validations);
         v1alpha1_validating_admission_policy_spec->validations = NULL;
+    }
+    if (v1alpha1_validating_admission_policy_spec->variables) {
+        list_ForEach(listEntry, v1alpha1_validating_admission_policy_spec->variables) {
+            v1alpha1_variable_free(listEntry->data);
+        }
+        list_freeList(v1alpha1_validating_admission_policy_spec->variables);
+        v1alpha1_validating_admission_policy_spec->variables = NULL;
     }
     free(v1alpha1_validating_admission_policy_spec);
 }
@@ -165,6 +174,26 @@ cJSON *v1alpha1_validating_admission_policy_spec_convertToJSON(v1alpha1_validati
     }
     }
 
+
+    // v1alpha1_validating_admission_policy_spec->variables
+    if(v1alpha1_validating_admission_policy_spec->variables) {
+    cJSON *variables = cJSON_AddArrayToObject(item, "variables");
+    if(variables == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *variablesListEntry;
+    if (v1alpha1_validating_admission_policy_spec->variables) {
+    list_ForEach(variablesListEntry, v1alpha1_validating_admission_policy_spec->variables) {
+    cJSON *itemLocal = v1alpha1_variable_convertToJSON(variablesListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(variables, itemLocal);
+    }
+    }
+    }
+
     return item;
 fail:
     if (item) {
@@ -191,6 +220,9 @@ v1alpha1_validating_admission_policy_spec_t *v1alpha1_validating_admission_polic
 
     // define the local list for v1alpha1_validating_admission_policy_spec->validations
     list_t *validationsList = NULL;
+
+    // define the local list for v1alpha1_validating_admission_policy_spec->variables
+    list_t *variablesList = NULL;
 
     // v1alpha1_validating_admission_policy_spec->audit_annotations
     cJSON *audit_annotations = cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_specJSON, "auditAnnotations");
@@ -276,6 +308,27 @@ v1alpha1_validating_admission_policy_spec_t *v1alpha1_validating_admission_polic
     }
     }
 
+    // v1alpha1_validating_admission_policy_spec->variables
+    cJSON *variables = cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_specJSON, "variables");
+    if (variables) { 
+    cJSON *variables_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(variables)){
+        goto end; //nonprimitive container
+    }
+
+    variablesList = list_createList();
+
+    cJSON_ArrayForEach(variables_local_nonprimitive,variables )
+    {
+        if(!cJSON_IsObject(variables_local_nonprimitive)){
+            goto end;
+        }
+        v1alpha1_variable_t *variablesItem = v1alpha1_variable_parseFromJSON(variables_local_nonprimitive);
+
+        list_addElement(variablesList, variablesItem);
+    }
+    }
+
 
     v1alpha1_validating_admission_policy_spec_local_var = v1alpha1_validating_admission_policy_spec_create (
         audit_annotations ? audit_annotationsList : NULL,
@@ -283,7 +336,8 @@ v1alpha1_validating_admission_policy_spec_t *v1alpha1_validating_admission_polic
         match_conditions ? match_conditionsList : NULL,
         match_constraints ? match_constraints_local_nonprim : NULL,
         param_kind ? param_kind_local_nonprim : NULL,
-        validations ? validationsList : NULL
+        validations ? validationsList : NULL,
+        variables ? variablesList : NULL
         );
 
     return v1alpha1_validating_admission_policy_spec_local_var;
@@ -322,6 +376,15 @@ end:
         }
         list_freeList(validationsList);
         validationsList = NULL;
+    }
+    if (variablesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, variablesList) {
+            v1alpha1_variable_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(variablesList);
+        variablesList = NULL;
     }
     return NULL;
 

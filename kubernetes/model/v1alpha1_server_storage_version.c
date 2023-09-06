@@ -8,7 +8,8 @@
 v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_create(
     char *api_server_id,
     list_t *decodable_versions,
-    char *encoding_version
+    char *encoding_version,
+    list_t *served_versions
     ) {
     v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_local_var = malloc(sizeof(v1alpha1_server_storage_version_t));
     if (!v1alpha1_server_storage_version_local_var) {
@@ -17,6 +18,7 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_create(
     v1alpha1_server_storage_version_local_var->api_server_id = api_server_id;
     v1alpha1_server_storage_version_local_var->decodable_versions = decodable_versions;
     v1alpha1_server_storage_version_local_var->encoding_version = encoding_version;
+    v1alpha1_server_storage_version_local_var->served_versions = served_versions;
 
     return v1alpha1_server_storage_version_local_var;
 }
@@ -41,6 +43,13 @@ void v1alpha1_server_storage_version_free(v1alpha1_server_storage_version_t *v1a
     if (v1alpha1_server_storage_version->encoding_version) {
         free(v1alpha1_server_storage_version->encoding_version);
         v1alpha1_server_storage_version->encoding_version = NULL;
+    }
+    if (v1alpha1_server_storage_version->served_versions) {
+        list_ForEach(listEntry, v1alpha1_server_storage_version->served_versions) {
+            free(listEntry->data);
+        }
+        list_freeList(v1alpha1_server_storage_version->served_versions);
+        v1alpha1_server_storage_version->served_versions = NULL;
     }
     free(v1alpha1_server_storage_version);
 }
@@ -80,6 +89,23 @@ cJSON *v1alpha1_server_storage_version_convertToJSON(v1alpha1_server_storage_ver
     }
     }
 
+
+    // v1alpha1_server_storage_version->served_versions
+    if(v1alpha1_server_storage_version->served_versions) {
+    cJSON *served_versions = cJSON_AddArrayToObject(item, "servedVersions");
+    if(served_versions == NULL) {
+        goto fail; //primitive container
+    }
+
+    listEntry_t *served_versionsListEntry;
+    list_ForEach(served_versionsListEntry, v1alpha1_server_storage_version->served_versions) {
+    if(cJSON_AddStringToObject(served_versions, "", (char*)served_versionsListEntry->data) == NULL)
+    {
+        goto fail;
+    }
+    }
+    }
+
     return item;
 fail:
     if (item) {
@@ -94,6 +120,9 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
 
     // define the local list for v1alpha1_server_storage_version->decodable_versions
     list_t *decodable_versionsList = NULL;
+
+    // define the local list for v1alpha1_server_storage_version->served_versions
+    list_t *served_versionsList = NULL;
 
     // v1alpha1_server_storage_version->api_server_id
     cJSON *api_server_id = cJSON_GetObjectItemCaseSensitive(v1alpha1_server_storage_versionJSON, "apiServerID");
@@ -132,11 +161,31 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
     }
     }
 
+    // v1alpha1_server_storage_version->served_versions
+    cJSON *served_versions = cJSON_GetObjectItemCaseSensitive(v1alpha1_server_storage_versionJSON, "servedVersions");
+    if (served_versions) { 
+    cJSON *served_versions_local = NULL;
+    if(!cJSON_IsArray(served_versions)) {
+        goto end;//primitive container
+    }
+    served_versionsList = list_createList();
+
+    cJSON_ArrayForEach(served_versions_local, served_versions)
+    {
+        if(!cJSON_IsString(served_versions_local))
+        {
+            goto end;
+        }
+        list_addElement(served_versionsList , strdup(served_versions_local->valuestring));
+    }
+    }
+
 
     v1alpha1_server_storage_version_local_var = v1alpha1_server_storage_version_create (
         api_server_id && !cJSON_IsNull(api_server_id) ? strdup(api_server_id->valuestring) : NULL,
         decodable_versions ? decodable_versionsList : NULL,
-        encoding_version && !cJSON_IsNull(encoding_version) ? strdup(encoding_version->valuestring) : NULL
+        encoding_version && !cJSON_IsNull(encoding_version) ? strdup(encoding_version->valuestring) : NULL,
+        served_versions ? served_versionsList : NULL
         );
 
     return v1alpha1_server_storage_version_local_var;
@@ -149,6 +198,15 @@ end:
         }
         list_freeList(decodable_versionsList);
         decodable_versionsList = NULL;
+    }
+    if (served_versionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, served_versionsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(served_versionsList);
+        served_versionsList = NULL;
     }
     return NULL;
 

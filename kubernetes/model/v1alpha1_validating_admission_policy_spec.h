@@ -20,6 +20,7 @@ typedef struct v1alpha1_validating_admission_policy_spec_t v1alpha1_validating_a
 #include "v1alpha1_match_resources.h"
 #include "v1alpha1_param_kind.h"
 #include "v1alpha1_validation.h"
+#include "v1alpha1_variable.h"
 
 
 
@@ -30,6 +31,7 @@ typedef struct v1alpha1_validating_admission_policy_spec_t {
     struct v1alpha1_match_resources_t *match_constraints; //model
     struct v1alpha1_param_kind_t *param_kind; //model
     list_t *validations; //nonprimitive container
+    list_t *variables; //nonprimitive container
 
 } v1alpha1_validating_admission_policy_spec_t;
 
@@ -39,7 +41,8 @@ v1alpha1_validating_admission_policy_spec_t *v1alpha1_validating_admission_polic
     list_t *match_conditions,
     v1alpha1_match_resources_t *match_constraints,
     v1alpha1_param_kind_t *param_kind,
-    list_t *validations
+    list_t *validations,
+    list_t *variables
 );
 
 void v1alpha1_validating_admission_policy_spec_free(v1alpha1_validating_admission_policy_spec_t *v1alpha1_validating_admission_policy_spec);

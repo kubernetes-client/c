@@ -206,6 +206,7 @@ set(SRCS
     model/v1_horizontal_pod_autoscaler_spec.c
     model/v1_horizontal_pod_autoscaler_status.c
     model/v1_host_alias.c
+    model/v1_host_ip.c
     model/v1_host_path_volume_source.c
     model/v1_http_get_action.c
     model/v1_http_header.c
@@ -271,7 +272,6 @@ set(SRCS
     model/v1_network_policy_peer.c
     model/v1_network_policy_port.c
     model/v1_network_policy_spec.c
-    model/v1_network_policy_status.c
     model/v1_nfs_volume_source.c
     model/v1_node.c
     model/v1_node_address.c
@@ -326,6 +326,7 @@ set(SRCS
     model/v1_pod_os.c
     model/v1_pod_readiness_gate.c
     model/v1_pod_resource_claim.c
+    model/v1_pod_resource_claim_status.c
     model/v1_pod_scheduling_gate.c
     model/v1_pod_security_context.c
     model/v1_pod_spec.c
@@ -395,6 +396,8 @@ set(SRCS
     model/v1_security_context.c
     model/v1_self_subject_access_review.c
     model/v1_self_subject_access_review_spec.c
+    model/v1_self_subject_review.c
+    model/v1_self_subject_review_status.c
     model/v1_self_subject_rules_review.c
     model/v1_self_subject_rules_review_spec.c
     model/v1_server_address_by_client_cidr.c
@@ -498,6 +501,7 @@ set(SRCS
     model/v1alpha1_validating_admission_policy_spec.c
     model/v1alpha1_validating_admission_policy_status.c
     model/v1alpha1_validation.c
+    model/v1alpha1_variable.c
     model/v1alpha2_allocation_result.c
     model/v1alpha2_pod_scheduling_context.c
     model/v1alpha2_pod_scheduling_context_list.c
@@ -517,8 +521,26 @@ set(SRCS
     model/v1alpha2_resource_class_list.c
     model/v1alpha2_resource_class_parameters_reference.c
     model/v1alpha2_resource_handle.c
+    model/v1beta1_audit_annotation.c
+    model/v1beta1_expression_warning.c
+    model/v1beta1_match_condition.c
+    model/v1beta1_match_resources.c
+    model/v1beta1_named_rule_with_operations.c
+    model/v1beta1_param_kind.c
+    model/v1beta1_param_ref.c
     model/v1beta1_self_subject_review.c
     model/v1beta1_self_subject_review_status.c
+    model/v1beta1_type_checking.c
+    model/v1beta1_validating_admission_policy.c
+    model/v1beta1_validating_admission_policy_binding.c
+    model/v1beta1_validating_admission_policy_binding_list.c
+    model/v1beta1_validating_admission_policy_binding_spec.c
+    model/v1beta1_validating_admission_policy_list.c
+    model/v1beta1_validating_admission_policy_spec.c
+    model/v1beta1_validating_admission_policy_status.c
+    model/v1beta1_validation.c
+    model/v1beta1_variable.c
+    model/v1beta2_exempt_priority_level_configuration.c
     model/v1beta2_flow_distinguisher_method.c
     model/v1beta2_flow_schema.c
     model/v1beta2_flow_schema_condition.c
@@ -541,6 +563,7 @@ set(SRCS
     model/v1beta2_service_account_subject.c
     model/v1beta2_subject.c
     model/v1beta2_user_subject.c
+    model/v1beta3_exempt_priority_level_configuration.c
     model/v1beta3_flow_distinguisher_method.c
     model/v1beta3_flow_schema.c
     model/v1beta3_flow_schema_condition.c
@@ -591,6 +614,7 @@ set(SRCS
     api/AdmissionregistrationAPI.c
     api/AdmissionregistrationV1API.c
     api/AdmissionregistrationV1alpha1API.c
+    api/AdmissionregistrationV1beta1API.c
     api/ApiextensionsAPI.c
     api/ApiextensionsV1API.c
     api/ApiregistrationAPI.c
@@ -807,6 +831,7 @@ set(HDRS
     model/v1_horizontal_pod_autoscaler_spec.h
     model/v1_horizontal_pod_autoscaler_status.h
     model/v1_host_alias.h
+    model/v1_host_ip.h
     model/v1_host_path_volume_source.h
     model/v1_http_get_action.h
     model/v1_http_header.h
@@ -872,7 +897,6 @@ set(HDRS
     model/v1_network_policy_peer.h
     model/v1_network_policy_port.h
     model/v1_network_policy_spec.h
-    model/v1_network_policy_status.h
     model/v1_nfs_volume_source.h
     model/v1_node.h
     model/v1_node_address.h
@@ -927,6 +951,7 @@ set(HDRS
     model/v1_pod_os.h
     model/v1_pod_readiness_gate.h
     model/v1_pod_resource_claim.h
+    model/v1_pod_resource_claim_status.h
     model/v1_pod_scheduling_gate.h
     model/v1_pod_security_context.h
     model/v1_pod_spec.h
@@ -996,6 +1021,8 @@ set(HDRS
     model/v1_security_context.h
     model/v1_self_subject_access_review.h
     model/v1_self_subject_access_review_spec.h
+    model/v1_self_subject_review.h
+    model/v1_self_subject_review_status.h
     model/v1_self_subject_rules_review.h
     model/v1_self_subject_rules_review_spec.h
     model/v1_server_address_by_client_cidr.h
@@ -1099,6 +1126,7 @@ set(HDRS
     model/v1alpha1_validating_admission_policy_spec.h
     model/v1alpha1_validating_admission_policy_status.h
     model/v1alpha1_validation.h
+    model/v1alpha1_variable.h
     model/v1alpha2_allocation_result.h
     model/v1alpha2_pod_scheduling_context.h
     model/v1alpha2_pod_scheduling_context_list.h
@@ -1118,8 +1146,26 @@ set(HDRS
     model/v1alpha2_resource_class_list.h
     model/v1alpha2_resource_class_parameters_reference.h
     model/v1alpha2_resource_handle.h
+    model/v1beta1_audit_annotation.h
+    model/v1beta1_expression_warning.h
+    model/v1beta1_match_condition.h
+    model/v1beta1_match_resources.h
+    model/v1beta1_named_rule_with_operations.h
+    model/v1beta1_param_kind.h
+    model/v1beta1_param_ref.h
     model/v1beta1_self_subject_review.h
     model/v1beta1_self_subject_review_status.h
+    model/v1beta1_type_checking.h
+    model/v1beta1_validating_admission_policy.h
+    model/v1beta1_validating_admission_policy_binding.h
+    model/v1beta1_validating_admission_policy_binding_list.h
+    model/v1beta1_validating_admission_policy_binding_spec.h
+    model/v1beta1_validating_admission_policy_list.h
+    model/v1beta1_validating_admission_policy_spec.h
+    model/v1beta1_validating_admission_policy_status.h
+    model/v1beta1_validation.h
+    model/v1beta1_variable.h
+    model/v1beta2_exempt_priority_level_configuration.h
     model/v1beta2_flow_distinguisher_method.h
     model/v1beta2_flow_schema.h
     model/v1beta2_flow_schema_condition.h
@@ -1142,6 +1188,7 @@ set(HDRS
     model/v1beta2_service_account_subject.h
     model/v1beta2_subject.h
     model/v1beta2_user_subject.h
+    model/v1beta3_exempt_priority_level_configuration.h
     model/v1beta3_flow_distinguisher_method.h
     model/v1beta3_flow_schema.h
     model/v1beta3_flow_schema_condition.h
@@ -1192,6 +1239,7 @@ set(HDRS
     api/AdmissionregistrationAPI.h
     api/AdmissionregistrationV1API.h
     api/AdmissionregistrationV1alpha1API.h
+    api/AdmissionregistrationV1beta1API.h
     api/ApiextensionsAPI.h
     api/ApiextensionsV1API.h
     api/ApiregistrationAPI.h
@@ -1330,6 +1378,7 @@ set(HDRS "")
 #    unit-tests/manual-AdmissionregistrationAPI.c
 #    unit-tests/manual-AdmissionregistrationV1API.c
 #    unit-tests/manual-AdmissionregistrationV1alpha1API.c
+#    unit-tests/manual-AdmissionregistrationV1beta1API.c
 #    unit-tests/manual-ApiextensionsAPI.c
 #    unit-tests/manual-ApiextensionsV1API.c
 #    unit-tests/manual-ApiregistrationAPI.c

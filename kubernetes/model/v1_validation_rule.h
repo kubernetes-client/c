@@ -19,15 +19,19 @@ typedef struct v1_validation_rule_t v1_validation_rule_t;
 
 
 typedef struct v1_validation_rule_t {
+    char *field_path; // string
     char *message; // string
     char *message_expression; // string
+    char *reason; // string
     char *rule; // string
 
 } v1_validation_rule_t;
 
 v1_validation_rule_t *v1_validation_rule_create(
+    char *field_path,
     char *message,
     char *message_expression,
+    char *reason,
     char *rule
 );
 

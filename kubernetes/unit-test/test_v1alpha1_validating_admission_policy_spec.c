@@ -31,6 +31,7 @@ v1alpha1_validating_admission_policy_spec_t* instantiate_v1alpha1_validating_adm
       instantiate_v1alpha1_match_resources(0),
        // false, not to have infinite recursion
       instantiate_v1alpha1_param_kind(0),
+      list_createList(),
       list_createList()
     );
   } else {
@@ -40,6 +41,7 @@ v1alpha1_validating_admission_policy_spec_t* instantiate_v1alpha1_validating_adm
       list_createList(),
       NULL,
       NULL,
+      list_createList(),
       list_createList()
     );
   }

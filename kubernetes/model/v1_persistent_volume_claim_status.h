@@ -21,21 +21,21 @@ typedef struct v1_persistent_volume_claim_status_t v1_persistent_volume_claim_st
 
 typedef struct v1_persistent_volume_claim_status_t {
     list_t *access_modes; //primitive container
+    list_t* allocated_resource_statuses; //map
     list_t* allocated_resources; //map
     list_t* capacity; //map
     list_t *conditions; //nonprimitive container
     char *phase; // string
-    char *resize_status; // string
 
 } v1_persistent_volume_claim_status_t;
 
 v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_create(
     list_t *access_modes,
+    list_t* allocated_resource_statuses,
     list_t* allocated_resources,
     list_t* capacity,
     list_t *conditions,
-    char *phase,
-    char *resize_status
+    char *phase
 );
 
 void v1_persistent_volume_claim_status_free(v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status);

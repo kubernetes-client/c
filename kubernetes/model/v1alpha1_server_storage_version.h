@@ -22,13 +22,15 @@ typedef struct v1alpha1_server_storage_version_t {
     char *api_server_id; // string
     list_t *decodable_versions; //primitive container
     char *encoding_version; // string
+    list_t *served_versions; //primitive container
 
 } v1alpha1_server_storage_version_t;
 
 v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_create(
     char *api_server_id,
     list_t *decodable_versions,
-    char *encoding_version
+    char *encoding_version,
+    list_t *served_versions
 );
 
 void v1alpha1_server_storage_version_free(v1alpha1_server_storage_version_t *v1alpha1_server_storage_version);

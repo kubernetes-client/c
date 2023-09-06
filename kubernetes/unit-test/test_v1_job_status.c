@@ -28,8 +28,10 @@ v1_job_status_t* instantiate_v1_job_status(int include_optional) {
       "2013-10-20T19:20:30+01:00",
       list_createList(),
       56,
+      "0",
       56,
       "2013-10-20T19:20:30+01:00",
+      56,
       56,
        // false, not to have infinite recursion
       instantiate_v1_uncounted_terminated_pods(0)
@@ -41,8 +43,10 @@ v1_job_status_t* instantiate_v1_job_status(int include_optional) {
       "2013-10-20T19:20:30+01:00",
       list_createList(),
       56,
+      "0",
       56,
       "2013-10-20T19:20:30+01:00",
+      56,
       56,
       NULL
     );

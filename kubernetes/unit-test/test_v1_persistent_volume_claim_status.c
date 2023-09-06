@@ -26,7 +26,7 @@ v1_persistent_volume_claim_status_t* instantiate_v1_persistent_volume_claim_stat
       list_createList(),
       list_createList(),
       list_createList(),
-      "0",
+      list_createList(),
       "0"
     );
   } else {
@@ -35,7 +35,7 @@ v1_persistent_volume_claim_status_t* instantiate_v1_persistent_volume_claim_stat
       list_createList(),
       list_createList(),
       list_createList(),
-      "0",
+      list_createList(),
       "0"
     );
   }

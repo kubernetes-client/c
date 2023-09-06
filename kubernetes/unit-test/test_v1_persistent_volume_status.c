@@ -22,12 +22,14 @@ v1_persistent_volume_status_t* instantiate_v1_persistent_volume_status(int inclu
   v1_persistent_volume_status_t* v1_persistent_volume_status = NULL;
   if (include_optional) {
     v1_persistent_volume_status = v1_persistent_volume_status_create(
+      "2013-10-20T19:20:30+01:00",
       "0",
       "0",
       "0"
     );
   } else {
     v1_persistent_volume_status = v1_persistent_volume_status_create(
+      "2013-10-20T19:20:30+01:00",
       "0",
       "0",
       "0"

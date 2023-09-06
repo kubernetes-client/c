@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**OpenidAPI_getServiceAccountIssuerOpenIDKeyset**](OpenidAPI.md#OpenidAPI_getServiceAccountIssuerOpenIDKeyset) | **GET** /openid/v1/jwks/ | 
+[**OpenidAPI_getServiceAccountIssuerOpenIDKeyset**](OpenidAPI.md#OpenidAPI_getServiceAccountIssuerOpenIDKeyset) | **GET** /openid/v1/jwks | 
 
 
 # **OpenidAPI_getServiceAccountIssuerOpenIDKeyset**

@@ -24,13 +24,15 @@ v1alpha1_server_storage_version_t* instantiate_v1alpha1_server_storage_version(i
     v1alpha1_server_storage_version = v1alpha1_server_storage_version_create(
       "0",
       list_createList(),
-      "0"
+      "0",
+      list_createList()
     );
   } else {
     v1alpha1_server_storage_version = v1alpha1_server_storage_version_create(
       "0",
       list_createList(),
-      "0"
+      "0",
+      list_createList()
     );
   }
 

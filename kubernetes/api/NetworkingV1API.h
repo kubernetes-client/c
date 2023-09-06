@@ -131,12 +131,6 @@ v1_network_policy_t*
 NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
 
 
-// partially update status of the specified NetworkPolicy
-//
-v1_network_policy_t*
-NetworkingV1API_patchNamespacedNetworkPolicyStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
-
-
 // read the specified IngressClass
 //
 v1_ingress_class_t*
@@ -161,12 +155,6 @@ v1_network_policy_t*
 NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
 
 
-// read status of the specified NetworkPolicy
-//
-v1_network_policy_t*
-NetworkingV1API_readNamespacedNetworkPolicyStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
-
-
 // replace the specified IngressClass
 //
 v1_ingress_class_t*
@@ -189,11 +177,5 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char * na
 //
 v1_network_policy_t*
 NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char * name , char * _namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
-
-
-// replace status of the specified NetworkPolicy
-//
-v1_network_policy_t*
-NetworkingV1API_replaceNamespacedNetworkPolicyStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_network_policy_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
 
 

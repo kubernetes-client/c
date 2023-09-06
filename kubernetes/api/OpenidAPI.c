@@ -25,9 +25,9 @@ OpenidAPI_getServiceAccountIssuerOpenIDKeyset(apiClient_t *apiClient)
     char      *localVarBodyParameters = NULL;
 
     // create the path
-    long sizeOfPath = strlen("/openid/v1/jwks/")+1;
+    long sizeOfPath = strlen("/openid/v1/jwks")+1;
     char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/openid/v1/jwks/");
+    snprintf(localVarPath, sizeOfPath, "/openid/v1/jwks");
 
 
 

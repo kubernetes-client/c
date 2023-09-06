@@ -25,9 +25,9 @@ WellKnownAPI_getServiceAccountIssuerOpenIDConfiguration(apiClient_t *apiClient)
     char      *localVarBodyParameters = NULL;
 
     // create the path
-    long sizeOfPath = strlen("/.well-known/openid-configuration/")+1;
+    long sizeOfPath = strlen("/.well-known/openid-configuration")+1;
     char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/.well-known/openid-configuration/");
+    snprintf(localVarPath, sizeOfPath, "/.well-known/openid-configuration");
 
 
 

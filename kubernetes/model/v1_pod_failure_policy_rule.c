@@ -71,9 +71,7 @@ cJSON *v1_pod_failure_policy_rule_convertToJSON(v1_pod_failure_policy_rule_t *v1
 
 
     // v1_pod_failure_policy_rule->on_pod_conditions
-    if (!v1_pod_failure_policy_rule->on_pod_conditions) {
-        goto fail;
-    }
+    if(v1_pod_failure_policy_rule->on_pod_conditions) {
     cJSON *on_pod_conditions = cJSON_AddArrayToObject(item, "onPodConditions");
     if(on_pod_conditions == NULL) {
     goto fail; //nonprimitive container
@@ -87,6 +85,7 @@ cJSON *v1_pod_failure_policy_rule_convertToJSON(v1_pod_failure_policy_rule_t *v1
     goto fail;
     }
     cJSON_AddItemToArray(on_pod_conditions, itemLocal);
+    }
     }
     }
 
@@ -128,11 +127,7 @@ v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_parseFromJSON(cJSON *v1
 
     // v1_pod_failure_policy_rule->on_pod_conditions
     cJSON *on_pod_conditions = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policy_ruleJSON, "onPodConditions");
-    if (!on_pod_conditions) {
-        goto end;
-    }
-
-    
+    if (on_pod_conditions) { 
     cJSON *on_pod_conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(on_pod_conditions)){
         goto end; //nonprimitive container
@@ -149,12 +144,13 @@ v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_parseFromJSON(cJSON *v1
 
         list_addElement(on_pod_conditionsList, on_pod_conditionsItem);
     }
+    }
 
 
     v1_pod_failure_policy_rule_local_var = v1_pod_failure_policy_rule_create (
         strdup(action->valuestring),
         on_exit_codes ? on_exit_codes_local_nonprim : NULL,
-        on_pod_conditionsList
+        on_pod_conditions ? on_pod_conditionsList : NULL
         );
 
     return v1_pod_failure_policy_rule_local_var;

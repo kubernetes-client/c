@@ -45,6 +45,7 @@ v1_ephemeral_container_t* instantiate_v1_ephemeral_container(int include_optiona
       list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_resource_requirements(0),
+      "0",
        // false, not to have infinite recursion
       instantiate_v1_security_context(0),
        // false, not to have infinite recursion
@@ -74,6 +75,7 @@ v1_ephemeral_container_t* instantiate_v1_ephemeral_container(int include_optiona
       NULL,
       list_createList(),
       NULL,
+      "0",
       NULL,
       NULL,
       1,

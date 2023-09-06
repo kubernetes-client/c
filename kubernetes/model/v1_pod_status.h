@@ -16,8 +16,10 @@
 typedef struct v1_pod_status_t v1_pod_status_t;
 
 #include "v1_container_status.h"
+#include "v1_host_ip.h"
 #include "v1_pod_condition.h"
 #include "v1_pod_ip.h"
+#include "v1_pod_resource_claim_status.h"
 
 
 
@@ -26,6 +28,7 @@ typedef struct v1_pod_status_t {
     list_t *container_statuses; //nonprimitive container
     list_t *ephemeral_container_statuses; //nonprimitive container
     char *host_ip; // string
+    list_t *host_ips; //nonprimitive container
     list_t *init_container_statuses; //nonprimitive container
     char *message; // string
     char *nominated_node_name; // string
@@ -35,6 +38,7 @@ typedef struct v1_pod_status_t {
     char *qos_class; // string
     char *reason; // string
     char *resize; // string
+    list_t *resource_claim_statuses; //nonprimitive container
     char *start_time; //date time
 
 } v1_pod_status_t;
@@ -44,6 +48,7 @@ v1_pod_status_t *v1_pod_status_create(
     list_t *container_statuses,
     list_t *ephemeral_container_statuses,
     char *host_ip,
+    list_t *host_ips,
     list_t *init_container_statuses,
     char *message,
     char *nominated_node_name,
@@ -53,6 +58,7 @@ v1_pod_status_t *v1_pod_status_create(
     char *qos_class,
     char *reason,
     char *resize,
+    list_t *resource_claim_statuses,
     char *start_time
 );
 
