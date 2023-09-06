@@ -11,9 +11,11 @@ v1_job_status_t *v1_job_status_create(
     char *completion_time,
     list_t *conditions,
     int failed,
+    char *failed_indexes,
     int ready,
     char *start_time,
     int succeeded,
+    int terminating,
     v1_uncounted_terminated_pods_t *uncounted_terminated_pods
     ) {
     v1_job_status_t *v1_job_status_local_var = malloc(sizeof(v1_job_status_t));
@@ -25,9 +27,11 @@ v1_job_status_t *v1_job_status_create(
     v1_job_status_local_var->completion_time = completion_time;
     v1_job_status_local_var->conditions = conditions;
     v1_job_status_local_var->failed = failed;
+    v1_job_status_local_var->failed_indexes = failed_indexes;
     v1_job_status_local_var->ready = ready;
     v1_job_status_local_var->start_time = start_time;
     v1_job_status_local_var->succeeded = succeeded;
+    v1_job_status_local_var->terminating = terminating;
     v1_job_status_local_var->uncounted_terminated_pods = uncounted_terminated_pods;
 
     return v1_job_status_local_var;
@@ -53,6 +57,10 @@ void v1_job_status_free(v1_job_status_t *v1_job_status) {
         }
         list_freeList(v1_job_status->conditions);
         v1_job_status->conditions = NULL;
+    }
+    if (v1_job_status->failed_indexes) {
+        free(v1_job_status->failed_indexes);
+        v1_job_status->failed_indexes = NULL;
     }
     if (v1_job_status->start_time) {
         free(v1_job_status->start_time);
@@ -120,6 +128,14 @@ cJSON *v1_job_status_convertToJSON(v1_job_status_t *v1_job_status) {
     }
 
 
+    // v1_job_status->failed_indexes
+    if(v1_job_status->failed_indexes) {
+    if(cJSON_AddStringToObject(item, "failedIndexes", v1_job_status->failed_indexes) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
     // v1_job_status->ready
     if(v1_job_status->ready) {
     if(cJSON_AddNumberToObject(item, "ready", v1_job_status->ready) == NULL) {
@@ -139,6 +155,14 @@ cJSON *v1_job_status_convertToJSON(v1_job_status_t *v1_job_status) {
     // v1_job_status->succeeded
     if(v1_job_status->succeeded) {
     if(cJSON_AddNumberToObject(item, "succeeded", v1_job_status->succeeded) == NULL) {
+    goto fail; //Numeric
+    }
+    }
+
+
+    // v1_job_status->terminating
+    if(v1_job_status->terminating) {
+    if(cJSON_AddNumberToObject(item, "terminating", v1_job_status->terminating) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -231,6 +255,15 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
     }
     }
 
+    // v1_job_status->failed_indexes
+    cJSON *failed_indexes = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "failedIndexes");
+    if (failed_indexes) { 
+    if(!cJSON_IsString(failed_indexes) && !cJSON_IsNull(failed_indexes))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_job_status->ready
     cJSON *ready = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "ready");
     if (ready) { 
@@ -258,6 +291,15 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
     }
     }
 
+    // v1_job_status->terminating
+    cJSON *terminating = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "terminating");
+    if (terminating) { 
+    if(!cJSON_IsNumber(terminating))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1_job_status->uncounted_terminated_pods
     cJSON *uncounted_terminated_pods = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "uncountedTerminatedPods");
     if (uncounted_terminated_pods) { 
@@ -271,9 +313,11 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
         completion_time && !cJSON_IsNull(completion_time) ? strdup(completion_time->valuestring) : NULL,
         conditions ? conditionsList : NULL,
         failed ? failed->valuedouble : 0,
+        failed_indexes && !cJSON_IsNull(failed_indexes) ? strdup(failed_indexes->valuestring) : NULL,
         ready ? ready->valuedouble : 0,
         start_time && !cJSON_IsNull(start_time) ? strdup(start_time->valuestring) : NULL,
         succeeded ? succeeded->valuedouble : 0,
+        terminating ? terminating->valuedouble : 0,
         uncounted_terminated_pods ? uncounted_terminated_pods_local_nonprim : NULL
         );
 

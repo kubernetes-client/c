@@ -19,6 +19,7 @@ v1_container_t *v1_container_create(
     v1_probe_t *readiness_probe,
     list_t *resize_policy,
     v1_resource_requirements_t *resources,
+    char *restart_policy,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,
     int _stdin,
@@ -47,6 +48,7 @@ v1_container_t *v1_container_create(
     v1_container_local_var->readiness_probe = readiness_probe;
     v1_container_local_var->resize_policy = resize_policy;
     v1_container_local_var->resources = resources;
+    v1_container_local_var->restart_policy = restart_policy;
     v1_container_local_var->security_context = security_context;
     v1_container_local_var->startup_probe = startup_probe;
     v1_container_local_var->_stdin = _stdin;
@@ -136,6 +138,10 @@ void v1_container_free(v1_container_t *v1_container) {
     if (v1_container->resources) {
         v1_resource_requirements_free(v1_container->resources);
         v1_container->resources = NULL;
+    }
+    if (v1_container->restart_policy) {
+        free(v1_container->restart_policy);
+        v1_container->restart_policy = NULL;
     }
     if (v1_container->security_context) {
         v1_security_context_free(v1_container->security_context);
@@ -364,6 +370,14 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     cJSON_AddItemToObject(item, "resources", resources_local_JSON);
     if(item->child == NULL) {
     goto fail;
+    }
+    }
+
+
+    // v1_container->restart_policy
+    if(v1_container->restart_policy) {
+    if(cJSON_AddStringToObject(item, "restartPolicy", v1_container->restart_policy) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -711,6 +725,15 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     resources_local_nonprim = v1_resource_requirements_parseFromJSON(resources); //nonprimitive
     }
 
+    // v1_container->restart_policy
+    cJSON *restart_policy = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "restartPolicy");
+    if (restart_policy) { 
+    if(!cJSON_IsString(restart_policy) && !cJSON_IsNull(restart_policy))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_container->security_context
     cJSON *security_context = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "securityContext");
     if (security_context) { 
@@ -834,6 +857,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
         readiness_probe ? readiness_probe_local_nonprim : NULL,
         resize_policy ? resize_policyList : NULL,
         resources ? resources_local_nonprim : NULL,
+        restart_policy && !cJSON_IsNull(restart_policy) ? strdup(restart_policy->valuestring) : NULL,
         security_context ? security_context_local_nonprim : NULL,
         startup_probe ? startup_probe_local_nonprim : NULL,
         _stdin ? _stdin->valueint : 0,

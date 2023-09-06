@@ -27,6 +27,7 @@ v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
       list_createList(),
       "0",
       list_createList(),
+      list_createList(),
       "0",
       "0",
       "0",
@@ -35,6 +36,7 @@ v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
       "0",
       "0",
       "0",
+      list_createList(),
       "2013-10-20T19:20:30+01:00"
     );
   } else {
@@ -44,6 +46,7 @@ v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
       list_createList(),
       "0",
       list_createList(),
+      list_createList(),
       "0",
       "0",
       "0",
@@ -52,6 +55,7 @@ v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
       "0",
       "0",
       "0",
+      list_createList(),
       "2013-10-20T19:20:30+01:00"
     );
   }

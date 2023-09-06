@@ -27,12 +27,15 @@ v1_job_spec_t* instantiate_v1_job_spec(int include_optional) {
     v1_job_spec = v1_job_spec_create(
       56,
       56,
+      56,
       "0",
       56,
       1,
       56,
+      56,
        // false, not to have infinite recursion
       instantiate_v1_pod_failure_policy(0),
+      "0",
        // false, not to have infinite recursion
       instantiate_v1_label_selector(0),
       1,
@@ -44,11 +47,14 @@ v1_job_spec_t* instantiate_v1_job_spec(int include_optional) {
     v1_job_spec = v1_job_spec_create(
       56,
       56,
+      56,
       "0",
       56,
       1,
       56,
+      56,
       NULL,
+      "0",
       NULL,
       1,
       NULL,

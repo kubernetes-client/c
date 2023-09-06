@@ -24,11 +24,14 @@ typedef struct v1_job_spec_t v1_job_spec_t;
 typedef struct v1_job_spec_t {
     long active_deadline_seconds; //numeric
     int backoff_limit; //numeric
+    int backoff_limit_per_index; //numeric
     char *completion_mode; // string
     int completions; //numeric
     int manual_selector; //boolean
+    int max_failed_indexes; //numeric
     int parallelism; //numeric
     struct v1_pod_failure_policy_t *pod_failure_policy; //model
+    char *pod_replacement_policy; // string
     struct v1_label_selector_t *selector; //model
     int suspend; //boolean
     struct v1_pod_template_spec_t *_template; //model
@@ -39,11 +42,14 @@ typedef struct v1_job_spec_t {
 v1_job_spec_t *v1_job_spec_create(
     long active_deadline_seconds,
     int backoff_limit,
+    int backoff_limit_per_index,
     char *completion_mode,
     int completions,
     int manual_selector,
+    int max_failed_indexes,
     int parallelism,
     v1_pod_failure_policy_t *pod_failure_policy,
+    char *pod_replacement_policy,
     v1_label_selector_t *selector,
     int suspend,
     v1_pod_template_spec_t *_template,

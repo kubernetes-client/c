@@ -42,6 +42,7 @@ typedef struct v1_ephemeral_container_t {
     struct v1_probe_t *readiness_probe; //model
     list_t *resize_policy; //nonprimitive container
     struct v1_resource_requirements_t *resources; //model
+    char *restart_policy; // string
     struct v1_security_context_t *security_context; //model
     struct v1_probe_t *startup_probe; //model
     int _stdin; //boolean
@@ -70,6 +71,7 @@ v1_ephemeral_container_t *v1_ephemeral_container_create(
     v1_probe_t *readiness_probe,
     list_t *resize_policy,
     v1_resource_requirements_t *resources,
+    char *restart_policy,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,
     int _stdin,

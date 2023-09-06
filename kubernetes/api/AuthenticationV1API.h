@@ -6,7 +6,14 @@
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
 #include "../model/v1_api_resource_list.h"
+#include "../model/v1_self_subject_review.h"
 #include "../model/v1_token_review.h"
+
+
+// create a SelfSubjectReview
+//
+v1_self_subject_review_t*
+AuthenticationV1API_createSelfSubjectReview(apiClient_t *apiClient, v1_self_subject_review_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty );
 
 
 // create a TokenReview

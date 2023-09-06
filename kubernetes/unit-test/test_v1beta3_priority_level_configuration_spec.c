@@ -16,6 +16,7 @@
 #include "../model/v1beta3_priority_level_configuration_spec.h"
 v1beta3_priority_level_configuration_spec_t* instantiate_v1beta3_priority_level_configuration_spec(int include_optional);
 
+#include "test_v1beta3_exempt_priority_level_configuration.c"
 #include "test_v1beta3_limited_priority_level_configuration.c"
 
 
@@ -24,11 +25,14 @@ v1beta3_priority_level_configuration_spec_t* instantiate_v1beta3_priority_level_
   if (include_optional) {
     v1beta3_priority_level_configuration_spec = v1beta3_priority_level_configuration_spec_create(
        // false, not to have infinite recursion
+      instantiate_v1beta3_exempt_priority_level_configuration(0),
+       // false, not to have infinite recursion
       instantiate_v1beta3_limited_priority_level_configuration(0),
       "0"
     );
   } else {
     v1beta3_priority_level_configuration_spec = v1beta3_priority_level_configuration_spec_create(
+      NULL,
       NULL,
       "0"
     );

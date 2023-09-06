@@ -26,9 +26,11 @@ typedef struct v1_job_status_t {
     char *completion_time; //date time
     list_t *conditions; //nonprimitive container
     int failed; //numeric
+    char *failed_indexes; // string
     int ready; //numeric
     char *start_time; //date time
     int succeeded; //numeric
+    int terminating; //numeric
     struct v1_uncounted_terminated_pods_t *uncounted_terminated_pods; //model
 
 } v1_job_status_t;
@@ -39,9 +41,11 @@ v1_job_status_t *v1_job_status_create(
     char *completion_time,
     list_t *conditions,
     int failed,
+    char *failed_indexes,
     int ready,
     char *start_time,
     int succeeded,
+    int terminating,
     v1_uncounted_terminated_pods_t *uncounted_terminated_pods
 );
 

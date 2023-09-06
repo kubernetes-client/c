@@ -19,6 +19,7 @@ typedef struct v1_persistent_volume_status_t v1_persistent_volume_status_t;
 
 
 typedef struct v1_persistent_volume_status_t {
+    char *last_phase_transition_time; //date time
     char *message; // string
     char *phase; // string
     char *reason; // string
@@ -26,6 +27,7 @@ typedef struct v1_persistent_volume_status_t {
 } v1_persistent_volume_status_t;
 
 v1_persistent_volume_status_t *v1_persistent_volume_status_create(
+    char *last_phase_transition_time,
     char *message,
     char *phase,
     char *reason

@@ -16,6 +16,7 @@
 #include "../model/v1alpha1_param_ref.h"
 v1alpha1_param_ref_t* instantiate_v1alpha1_param_ref(int include_optional);
 
+#include "test_v1_label_selector.c"
 
 
 v1alpha1_param_ref_t* instantiate_v1alpha1_param_ref(int include_optional) {
@@ -23,12 +24,17 @@ v1alpha1_param_ref_t* instantiate_v1alpha1_param_ref(int include_optional) {
   if (include_optional) {
     v1alpha1_param_ref = v1alpha1_param_ref_create(
       "0",
-      "0"
+      "0",
+      "0",
+       // false, not to have infinite recursion
+      instantiate_v1_label_selector(0)
     );
   } else {
     v1alpha1_param_ref = v1alpha1_param_ref_create(
       "0",
-      "0"
+      "0",
+      "0",
+      NULL
     );
   }
 

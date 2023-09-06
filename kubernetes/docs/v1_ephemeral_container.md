@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **readiness_probe** | [**v1_probe_t**](v1_probe.md) \* |  | [optional] 
 **resize_policy** | [**list_t**](v1_container_resize_policy.md) \* | Resources resize policy for the container. | [optional] 
 **resources** | [**v1_resource_requirements_t**](v1_resource_requirements.md) \* |  | [optional] 
+**restart_policy** | **char \*** | Restart policy for the container to manage the restart behavior of each container within a pod. This may only be set for init containers. You cannot set this field on ephemeral containers. | [optional] 
 **security_context** | [**v1_security_context_t**](v1_security_context.md) \* |  | [optional] 
 **startup_probe** | [**v1_probe_t**](v1_probe.md) \* |  | [optional] 
 **_stdin** | **int** | Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false. | [optional] 
