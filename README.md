@@ -86,16 +86,16 @@ list all pods:
     pod_list = CoreV1API_listNamespacedPod(apiClient,
                                           "default",    /*namespace */
                                            NULL,    /* pretty */
-                                           0,       /* allowWatchBookmarks */
+                                           NULL,    /* allowWatchBookmarks */
                                            NULL,    /* continue */
                                            NULL,    /* fieldSelector */
                                            NULL,    /* labelSelector */
-                                           0,       /* limit */
+                                           NULL,    /* limit */
                                            NULL,    /* resourceVersion */
                                            NULL,    /* resourceVersionMatch */
-                                           0,       /* sendInitialEvents */
-                                           0,       /* timeoutSeconds */
-                                           0        /* watch */
+                                           NULL,    /* sendInitialEvents */
+                                           NULL,    /* timeoutSeconds */
+                                           NULL     /* watch */
         );
     printf("return code=%ld\n", apiClient->response_code);
     if (pod_list) {
@@ -132,16 +132,16 @@ list all pods in cluster:
     pod_list = CoreV1API_listNamespacedPod(apiClient,
                                           "default",    /*namespace */
                                            NULL,    /* pretty */
-                                           0,       /* allowWatchBookmarks */
+                                           NULL,    /* allowWatchBookmarks */
                                            NULL,    /* continue */
                                            NULL,    /* fieldSelector */
                                            NULL,    /* labelSelector */
-                                           0,       /* limit */
+                                           NULL,    /* limit */
                                            NULL,    /* resourceVersion */
                                            NULL,    /* resourceVersionMatch */
-                                           0,       /* sendInitialEvents */
-                                           0,       /* timeoutSeconds */
-                                           0        /* watch */
+                                           NULL,    /* sendInitialEvents */
+                                           NULL,    /* timeoutSeconds */
+                                           NULL     /* watch */
         );
     printf("return code=%ld\n", apiClient->response_code);
     if (pod_list) {
@@ -156,6 +156,50 @@ list all pods in cluster:
     apiKeys = NULL;
     apiClient_unsetupGlobalEnv();
 ```
+
+## How to send integer or boolean parameters to API Server
+
+If you want to send an integer or boolean parameter to the API server, you will see that the data type in API function is `int *`, e.g.
+
+```c
+// list or watch objects of kind Pod
+//
+v1_pod_list_t* CoreV1API_listNamespacedPod(apiClient_t *apiClient, 
+                                           char *_namespace, 
+                                           char *pretty, 
+                                           int *allowWatchBookmarks, /* <-- here */
+                                           char *_continue, 
+                                           char *fieldSelector, 
+                                           char *labelSelector, 
+                                           int *limit,               /* <-- here */
+                                           char *resourceVersion, 
+                                           char *resourceVersionMatch, 
+                                           int *sendInitialEvents,   /* <-- here */
+                                           int *timeoutSeconds,      /* <-- here */
+                                           int *watch);              /* <-- here */
+```
+
+For example we can send `timeoutSeconds` and `watch` using the following usage:
+
+```c
+int timeoutSeconds = 30;
+int watch = 1;
+pod_list = CoreV1API_listNamespacedPod(apiClient, "default",    /*namespace */
+                                       NULL,    /* pretty */
+                                       NULL,    /* allowWatchBookmarks */
+                                       NULL,    /* continue */
+                                       NULL,    /* fieldSelector */
+                                       NULL,    /* labelSelector */
+                                       NULL,    /* limit */
+                                       NULL,    /* resourceVersion */
+                                       NULL,    /* resourceVersionMatch */
+                                       NULL,    /* sendInitialEvents */
+                                       &timeoutSeconds,    /* timeoutSeconds */
+                                       &watch   /* watch */
+);
+```
+
+Setting the parameter to `NULL` means not to send the parameter to the API Server, and the API Server will use the default value for this parameter.
 
 ## Aggregated APIs and CRD-based APIs
 
