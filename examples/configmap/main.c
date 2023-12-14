@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 void create_configmap(apiClient_t * apiClient, char *name, char *namespace_)
-{ 
+{
     char *api_version = strdup("v1");
     char *kind = strdup("ConfigMap");
 
@@ -41,12 +41,12 @@ void create_configmap(apiClient_t * apiClient, char *name, char *namespace_)
                                                  meta);
 
     v1_config_map_t *ret_config_map = CoreV1API_createNamespacedConfigMap(apiClient,
-                                                                        namespace_,
-                                                                        body,
-                                                                        NULL,
-                                                                        NULL,
-                                                                        NULL,
-                                                                        NULL);
+                                                                          namespace_,
+                                                                          body,
+                                                                          NULL,
+                                                                          NULL,
+                                                                          NULL,
+                                                                          NULL);
 
     printf("%s: The return code of HTTP request=%ld\n", __func__, apiClient->response_code);
 
@@ -70,18 +70,18 @@ void create_configmap(apiClient_t * apiClient, char *name, char *namespace_)
 void list_configmap(apiClient_t * apiClient, char *namespace_)
 {
     v1_config_map_list_t *config_map_list = CoreV1API_listNamespacedConfigMap(apiClient,
-                                                                              namespace_,    // char *namespace
+                                                                              namespace_,   // char *namespace
                                                                               "true",   // char *pretty
-                                                                              0,    // int allowWatchBookmarks
-                                                                              NULL, // char * _continue
-                                                                              NULL, // char * fieldSelector
-                                                                              NULL, // char * labelSelector
-                                                                              0,    // int limit
-                                                                              NULL, // char * resourceVersion
-                                                                              NULL, // char * resourceVersionMatch
-                                                                              0,    // sendInitialEvents
-                                                                              0,    // int timeoutSeconds
-                                                                              0 //int watch
+                                                                              NULL, // int *allowWatchBookmarks
+                                                                              NULL, // char *_continue
+                                                                              NULL, // char *fieldSelector
+                                                                              NULL, // char *labelSelector
+                                                                              NULL, // int *limit
+                                                                              NULL, // char *resourceVersion
+                                                                              NULL, // char *resourceVersionMatch
+                                                                              NULL, // sendInitialEvents
+                                                                              NULL, // int *timeoutSeconds
+                                                                              NULL  //int *watch
         );
 
     printf("%s: The return code of HTTP request=%ld\n", __func__, apiClient->response_code);
@@ -117,14 +117,14 @@ void list_configmap(apiClient_t * apiClient, char *namespace_)
 void delete_configmap(apiClient_t * apiClient, char *name, char *namespace_)
 {
     v1_status_t *status = CoreV1API_deleteNamespacedConfigMap(apiClient,
-                                                        name,   // char *name
-                                                        namespace_,  // char *namespace
-                                                        NULL,   // char *pretty
-                                                        NULL,   // char *dryRun
-                                                        0,  // int gracePeriodSeconds
-                                                        0,  // int orphanDependents
-                                                        NULL,   // char *propagationPolicy
-                                                        NULL    // v1_delete_options_t *body
+                                                              name, // char *name
+                                                              namespace_,   // char *namespace
+                                                              NULL, // char *pretty
+                                                              NULL, // char *dryRun
+                                                              NULL, // int *gracePeriodSeconds
+                                                              NULL, // int *orphanDependents
+                                                              NULL, // char *propagationPolicy
+                                                              NULL  // v1_delete_options_t *body
         );
 
     printf("The return code of HTTP request=%ld\n", apiClient->response_code);

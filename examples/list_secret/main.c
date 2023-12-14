@@ -10,16 +10,16 @@ void list_secret(apiClient_t * apiClient)
     v1_secret_list_t *secret_list = CoreV1API_listNamespacedSecret(apiClient,
                                                                    "default",   // char *namespace
                                                                    "true",  // char *pretty
-                                                                   0,   // int allowWatchBookmarks
-                                                                   NULL,    // char * _continue
-                                                                   NULL,    // char * fieldSelector
-                                                                   NULL,    // char * labelSelector
-                                                                   0,   // int limit
-                                                                   NULL,    // char * resourceVersion
-                                                                   NULL,    // char * resourceVersionMatch
-                                                                   0,   // sendInitialEvents
-                                                                   0,   // int timeoutSeconds
-                                                                   0    // int watch
+                                                                   NULL,    // int *allowWatchBookmarks
+                                                                   NULL,    // char *_continue
+                                                                   NULL,    // char *fieldSelector
+                                                                   NULL,    // char *labelSelector
+                                                                   NULL,    // int *limit
+                                                                   NULL,    // char *resourceVersion
+                                                                   NULL,    // char *resourceVersionMatch
+                                                                   NULL,    // int *sendInitialEvents
+                                                                   NULL,    // int *timeoutSeconds
+                                                                   NULL // int *watch
         );
 
     printf("The return code of HTTP request=%ld\n", apiClient->response_code);

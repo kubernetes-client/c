@@ -8,14 +8,14 @@
 void delete_a_pod(apiClient_t * apiClient)
 {
     v1_pod_t *pod = CoreV1API_deleteNamespacedPod(apiClient,
-                                                        "test-pod-6",   // char *name
-                                                        "default",  // char *namespace
-                                                        NULL,   // char *pretty
-                                                        NULL,   // char *dryRun
-                                                        30,  // int gracePeriodSeconds
-                                                        0,  // int orphanDependents
-                                                        NULL,   // char *propagationPolicy
-                                                        NULL    // v1_delete_options_t *body
+                                                  "test-pod-6", // char *name
+                                                  "default",    // char *namespace
+                                                  NULL, // char *pretty
+                                                  NULL, // char *dryRun
+                                                  NULL, // int *gracePeriodSeconds
+                                                  NULL, // int *orphanDependents
+                                                  NULL, // char *propagationPolicy
+                                                  NULL  // v1_delete_options_t *body
         );
 
     printf("The return code of HTTP request=%ld\n", apiClient->response_code);

@@ -92,20 +92,20 @@ void *watch_pod_thread_func(void *arg)
     apiClient->data_callback_func = my_pod_watch_handler;
     apiClient->progress_func = my_watch_progress_func;
 
+    int timeoutSeconds = 0;     /* Setting the value to 0 means the watch never stops. */
+    int watch = 1;
     CoreV1API_listNamespacedPod(apiClient, "default",   /*namespace */
                                 NULL,   /* pretty */
-                                0,  /* allowWatchBookmarks */
+                                NULL,   /* allowWatchBookmarks */
                                 NULL,   /* continue */
                                 NULL,   /* fieldSelector */
                                 NULL,   /* labelSelector */
-                                0,  /* limit */
+                                NULL,   /* limit */
                                 NULL,   /* resourceVersion */
-                                NULL,    /* resourceVersionMatch */
-                                0,  /* sendInitialEvents */
-                                0,  /* timeoutSeconds
-                                       Setting the value to 0 means the watch never stops.
-                                     */
-                                1   /* watch */
+                                NULL,   /* resourceVersionMatch */
+                                NULL,   /* sendInitialEvents */
+                                &timeoutSeconds,    /* timeoutSeconds */
+                                &watch  /* watch */
         );
 
     apiClient_free(apiClient);
