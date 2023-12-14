@@ -15,7 +15,7 @@
 // create a ValidatingAdmissionPolicy
 //
 v1beta1_validating_admission_policy_t*
-AdmissionregistrationV1beta1API_createValidatingAdmissionPolicy(apiClient_t *apiClient, v1beta1_validating_admission_policy_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AdmissionregistrationV1beta1API_createValidatingAdmissionPolicy(apiClient_t *apiClient, v1beta1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -200,7 +200,7 @@ end:
 // create a ValidatingAdmissionPolicyBinding
 //
 v1beta1_validating_admission_policy_binding_t*
-AdmissionregistrationV1beta1API_createValidatingAdmissionPolicyBinding(apiClient_t *apiClient, v1beta1_validating_admission_policy_binding_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AdmissionregistrationV1beta1API_createValidatingAdmissionPolicyBinding(apiClient_t *apiClient, v1beta1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -385,7 +385,7 @@ end:
 // delete collection of ValidatingAdmissionPolicy
 //
 v1_status_t*
-AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
+AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -454,11 +454,11 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy(apiCli
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -479,11 +479,11 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy(apiCli
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -492,11 +492,11 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy(apiCli
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -541,11 +541,11 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy(apiCli
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -554,11 +554,11 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy(apiCli
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -783,7 +783,7 @@ end:
 // delete collection of ValidatingAdmissionPolicyBinding
 //
 v1_status_t*
-AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
+AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -852,11 +852,11 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -877,11 +877,11 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -890,11 +890,11 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -939,11 +939,11 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -952,11 +952,11 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -1181,7 +1181,7 @@ end:
 // delete a ValidatingAdmissionPolicy
 //
 v1_status_t*
-AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1236,11 +1236,11 @@ AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy(apiClient_t *api
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -1249,11 +1249,11 @@ AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy(apiClient_t *api
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -1399,7 +1399,7 @@ end:
 // delete a ValidatingAdmissionPolicyBinding
 //
 v1_status_t*
-AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1454,11 +1454,11 @@ AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding(apiClient
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -1467,11 +1467,11 @@ AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding(apiClient
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -1684,7 +1684,7 @@ end:
 // list or watch objects of kind ValidatingAdmissionPolicy
 //
 v1beta1_validating_admission_policy_list_t*
-AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1717,11 +1717,11 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy(apiClient_t *apiCl
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -1766,11 +1766,11 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy(apiClient_t *apiCl
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -1803,11 +1803,11 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy(apiClient_t *apiCl
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -1816,11 +1816,11 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy(apiClient_t *apiCl
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -1829,11 +1829,11 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy(apiClient_t *apiCl
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -2022,7 +2022,7 @@ end:
 // list or watch objects of kind ValidatingAdmissionPolicyBinding
 //
 v1beta1_validating_admission_policy_binding_list_t*
-AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2055,11 +2055,11 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding(apiClient_t
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -2104,11 +2104,11 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding(apiClient_t
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -2141,11 +2141,11 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding(apiClient_t
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -2154,11 +2154,11 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding(apiClient_t
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -2167,11 +2167,11 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding(apiClient_t
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -2360,7 +2360,7 @@ end:
 // partially update the specified ValidatingAdmissionPolicy
 //
 v1beta1_validating_admission_policy_t*
-AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2439,11 +2439,11 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy(apiClient_t *apiC
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -2581,7 +2581,7 @@ end:
 // partially update the specified ValidatingAdmissionPolicyBinding
 //
 v1beta1_validating_admission_policy_binding_t*
-AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2660,11 +2660,11 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding(apiClient_
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -2802,7 +2802,7 @@ end:
 // partially update status of the specified ValidatingAdmissionPolicy
 //
 v1beta1_validating_admission_policy_t*
-AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2881,11 +2881,11 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus(apiClient_t
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -3023,7 +3023,7 @@ end:
 // read the specified ValidatingAdmissionPolicy
 //
 v1beta1_validating_admission_policy_t*
-AdmissionregistrationV1beta1API_readValidatingAdmissionPolicy(apiClient_t *apiClient, char * name , char * pretty )
+AdmissionregistrationV1beta1API_readValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3125,7 +3125,7 @@ end:
 // read the specified ValidatingAdmissionPolicyBinding
 //
 v1beta1_validating_admission_policy_binding_t*
-AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * name , char * pretty )
+AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3227,7 +3227,7 @@ end:
 // read status of the specified ValidatingAdmissionPolicy
 //
 v1beta1_validating_admission_policy_t*
-AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char * name , char * pretty )
+AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char *name, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3329,7 +3329,7 @@ end:
 // replace the specified ValidatingAdmissionPolicy
 //
 v1beta1_validating_admission_policy_t*
-AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicy(apiClient_t *apiClient, char * name , v1beta1_validating_admission_policy_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, v1beta1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3521,7 +3521,7 @@ end:
 // replace the specified ValidatingAdmissionPolicyBinding
 //
 v1beta1_validating_admission_policy_binding_t*
-AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * name , v1beta1_validating_admission_policy_binding_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, v1beta1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3713,7 +3713,7 @@ end:
 // replace status of the specified ValidatingAdmissionPolicy
 //
 v1beta1_validating_admission_policy_t*
-AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char * name , v1beta1_validating_admission_policy_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char *name, v1beta1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;

@@ -16,19 +16,19 @@
 // create a PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , v1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
+PolicyV1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_namespace, v1_pod_disruption_budget_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // delete collection of PodDisruptionBudget
 //
 v1_status_t*
-PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body );
+PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a PodDisruptionBudget
 //
 v1_status_t*
-PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
+PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
@@ -40,48 +40,48 @@ PolicyV1API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind PodDisruptionBudget
 //
 v1_pod_disruption_budget_list_t*
-PolicyV1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch );
+PolicyV1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 
 
 // list or watch objects of kind PodDisruptionBudget
 //
 v1_pod_disruption_budget_list_t*
-PolicyV1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch );
+PolicyV1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 
 
 // partially update the specified PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
+PolicyV1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // partially update status of the specified PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
+PolicyV1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // read the specified PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
+PolicyV1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 
 
 // read status of the specified PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty );
+PolicyV1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 
 
 // replace the specified PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
+PolicyV1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name, char *_namespace, v1_pod_disruption_budget_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // replace status of the specified PodDisruptionBudget
 //
 v1_pod_disruption_budget_t*
-PolicyV1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_pod_disruption_budget_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
+PolicyV1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char *name, char *_namespace, v1_pod_disruption_budget_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 

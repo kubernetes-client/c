@@ -15,7 +15,7 @@
 // create a LocalSubjectAccessReview
 //
 v1_local_subject_access_review_t*
-AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClient, char * _namespace , v1_local_subject_access_review_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
+AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClient, char *_namespace, v1_local_subject_access_review_t *body, char *dryRun, char *fieldManager, char *fieldValidation, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -211,7 +211,7 @@ end:
 // create a SelfSubjectAccessReview
 //
 v1_self_subject_access_review_t*
-AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self_subject_access_review_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
+AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self_subject_access_review_t *body, char *dryRun, char *fieldManager, char *fieldValidation, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -396,7 +396,7 @@ end:
 // create a SelfSubjectRulesReview
 //
 v1_self_subject_rules_review_t*
-AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_subject_rules_review_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
+AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_subject_rules_review_t *body, char *dryRun, char *fieldManager, char *fieldValidation, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -581,7 +581,7 @@ end:
 // create a SubjectAccessReview
 //
 v1_subject_access_review_t*
-AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_access_review_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty )
+AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_access_review_t *body, char *dryRun, char *fieldManager, char *fieldValidation, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
