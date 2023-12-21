@@ -7,16 +7,16 @@ void list_pod(apiClient_t * apiClient)
     v1_pod_list_t *pod_list = NULL;
     pod_list = CoreV1API_listNamespacedPod(apiClient, "default",    /*namespace */
                                            NULL,    /* pretty */
-                                           0,   /* allowWatchBookmarks */
+                                           NULL,    /* allowWatchBookmarks */
                                            NULL,    /* continue */
                                            NULL,    /* fieldSelector */
                                            NULL,    /* labelSelector */
-                                           0,   /* limit */
+                                           NULL,    /* limit */
                                            NULL,    /* resourceVersion */
                                            NULL,    /* resourceVersionMatch */
-                                           0,   /* sendInitialEvents */
-                                           0,   /* timeoutSeconds */
-                                           0    /* watch */
+                                           NULL,    /* sendInitialEvents */
+                                           NULL,    /* timeoutSeconds */
+                                           NULL /* watch */
         );
     printf("The return code of HTTP request=%ld\n", apiClient->response_code);
     if (pod_list) {

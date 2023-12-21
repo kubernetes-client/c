@@ -72,18 +72,21 @@ void watch_list_pod(apiClient_t * apiClient)
 {
     apiClient->data_callback_func = my_pod_watch_handler;
 
+    int watch = 1;
+    int timeoutSeconds = 30;    /* Watch for 30 seconds */
+    // int timeoutSeconds = 0;  /* Set timeoutSeconds to 0 to keep watching and not exit */
     CoreV1API_listNamespacedPod(apiClient, "default",   /*namespace */
                                 NULL,   /* pretty */
-                                0,  /* allowWatchBookmarks */
+                                NULL,   /* allowWatchBookmarks */
                                 NULL,   /* continue */
                                 NULL,   /* fieldSelector */
                                 NULL,   /* labelSelector */
-                                0,  /* limit */
+                                NULL,   /* limit */
                                 NULL,   /* resourceVersion */
                                 NULL,   /* resourceVersionMatch */
-                                0,  /* sendInitialEvents */
-                                0,  /* timeoutSeconds */
-                                1   /* watch */
+                                NULL,   /* sendInitialEvents */
+                                &timeoutSeconds,    /* timeoutSeconds */
+                                &watch  /* watch */
         );
 }
 

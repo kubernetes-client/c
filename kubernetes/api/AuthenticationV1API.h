@@ -13,13 +13,13 @@
 // create a SelfSubjectReview
 //
 v1_self_subject_review_t*
-AuthenticationV1API_createSelfSubjectReview(apiClient_t *apiClient, v1_self_subject_review_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty );
+AuthenticationV1API_createSelfSubjectReview(apiClient_t *apiClient, v1_self_subject_review_t *body, char *dryRun, char *fieldManager, char *fieldValidation, char *pretty);
 
 
 // create a TokenReview
 //
 v1_token_review_t*
-AuthenticationV1API_createTokenReview(apiClient_t *apiClient, v1_token_review_t * body , char * dryRun , char * fieldManager , char * fieldValidation , char * pretty );
+AuthenticationV1API_createTokenReview(apiClient_t *apiClient, v1_token_review_t *body, char *dryRun, char *fieldManager, char *fieldValidation, char *pretty);
 
 
 // get available resources

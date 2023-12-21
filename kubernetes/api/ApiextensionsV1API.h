@@ -16,19 +16,19 @@
 // create a CustomResourceDefinition
 //
 v1_custom_resource_definition_t*
-ApiextensionsV1API_createCustomResourceDefinition(apiClient_t *apiClient, v1_custom_resource_definition_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
+ApiextensionsV1API_createCustomResourceDefinition(apiClient_t *apiClient, v1_custom_resource_definition_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // delete collection of CustomResourceDefinition
 //
 v1_status_t*
-ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClient, char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body );
+ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a CustomResourceDefinition
 //
 v1_status_t*
-ApiextensionsV1API_deleteCustomResourceDefinition(apiClient_t *apiClient, char * name , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body );
+ApiextensionsV1API_deleteCustomResourceDefinition(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
@@ -40,42 +40,42 @@ ApiextensionsV1API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind CustomResourceDefinition
 //
 v1_custom_resource_definition_list_t*
-ApiextensionsV1API_listCustomResourceDefinition(apiClient_t *apiClient, char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch );
+ApiextensionsV1API_listCustomResourceDefinition(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 
 
 // partially update the specified CustomResourceDefinition
 //
 v1_custom_resource_definition_t*
-ApiextensionsV1API_patchCustomResourceDefinition(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
+ApiextensionsV1API_patchCustomResourceDefinition(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // partially update status of the specified CustomResourceDefinition
 //
 v1_custom_resource_definition_t*
-ApiextensionsV1API_patchCustomResourceDefinitionStatus(apiClient_t *apiClient, char * name , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force );
+ApiextensionsV1API_patchCustomResourceDefinitionStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // read the specified CustomResourceDefinition
 //
 v1_custom_resource_definition_t*
-ApiextensionsV1API_readCustomResourceDefinition(apiClient_t *apiClient, char * name , char * pretty );
+ApiextensionsV1API_readCustomResourceDefinition(apiClient_t *apiClient, char *name, char *pretty);
 
 
 // read status of the specified CustomResourceDefinition
 //
 v1_custom_resource_definition_t*
-ApiextensionsV1API_readCustomResourceDefinitionStatus(apiClient_t *apiClient, char * name , char * pretty );
+ApiextensionsV1API_readCustomResourceDefinitionStatus(apiClient_t *apiClient, char *name, char *pretty);
 
 
 // replace the specified CustomResourceDefinition
 //
 v1_custom_resource_definition_t*
-ApiextensionsV1API_replaceCustomResourceDefinition(apiClient_t *apiClient, char * name , v1_custom_resource_definition_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
+ApiextensionsV1API_replaceCustomResourceDefinition(apiClient_t *apiClient, char *name, v1_custom_resource_definition_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // replace status of the specified CustomResourceDefinition
 //
 v1_custom_resource_definition_t*
-ApiextensionsV1API_replaceCustomResourceDefinitionStatus(apiClient_t *apiClient, char * name , v1_custom_resource_definition_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation );
+ApiextensionsV1API_replaceCustomResourceDefinitionStatus(apiClient_t *apiClient, char *name, v1_custom_resource_definition_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 

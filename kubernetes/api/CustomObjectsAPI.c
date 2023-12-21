@@ -15,7 +15,7 @@
 // Creates a cluster scoped Custom object
 //
 object_t*
-CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char * group , char * version , char * plural , object_t * body , char * pretty , char * dryRun , char * fieldManager )
+CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, object_t *body, char *pretty, char *dryRun, char *fieldManager)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -199,7 +199,7 @@ end:
 // Creates a namespace scoped Custom object
 //
 object_t*
-CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , object_t * body , char * pretty , char * dryRun , char * fieldManager )
+CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, object_t *body, char *pretty, char *dryRun, char *fieldManager)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -394,7 +394,7 @@ end:
 // Deletes the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char * group , char * version , char * plural , char * name , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body )
+CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -455,11 +455,11 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char * group 
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -468,11 +468,11 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char * group 
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -615,7 +615,7 @@ end:
 // Delete collection of cluster scoped custom objects
 //
 object_t*
-CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, char * group , char * version , char * plural , char * pretty , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body )
+CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -678,11 +678,11 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -691,11 +691,11 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -849,7 +849,7 @@ end:
 // Delete collection of namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * pretty , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body )
+CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -922,11 +922,11 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -935,11 +935,11 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -1094,7 +1094,7 @@ end:
 // Deletes the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , char * dryRun , v1_delete_options_t * body )
+CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1165,11 +1165,11 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * gro
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -1178,11 +1178,11 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char * gro
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -1326,7 +1326,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-CustomObjectsAPI_getAPIResources(apiClient_t *apiClient, char * group , char * version )
+CustomObjectsAPI_getAPIResources(apiClient_t *apiClient, char *group, char *version)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1413,7 +1413,7 @@ end:
 // Returns a cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_getClusterCustomObject(apiClient_t *apiClient, char * group , char * version , char * plural , char * name )
+CustomObjectsAPI_getClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1522,7 +1522,7 @@ end:
 // read scale of the specified custom object
 //
 object_t*
-CustomObjectsAPI_getClusterCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * plural , char * name )
+CustomObjectsAPI_getClusterCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *plural, char *name)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1633,7 +1633,7 @@ end:
 // read status of the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_getClusterCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * plural , char * name )
+CustomObjectsAPI_getClusterCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *plural, char *name)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1744,7 +1744,7 @@ end:
 // Returns a namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name )
+CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1864,7 +1864,7 @@ end:
 // read scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name )
+CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1986,7 +1986,7 @@ end:
 // read status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name )
+CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -2108,7 +2108,7 @@ end:
 // list or watch cluster scoped custom objects
 //
 object_t*
-CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , char * version , char * plural , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2171,11 +2171,11 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -2220,11 +2220,11 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -2257,11 +2257,11 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -2270,11 +2270,11 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char * group , 
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -2451,7 +2451,7 @@ end:
 // list or watch namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
+CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2524,11 +2524,11 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -2573,11 +2573,11 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -2610,11 +2610,11 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -2623,11 +2623,11 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char * group
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -2805,7 +2805,7 @@ end:
 // patch the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char * group , char * version , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
+CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2890,11 +2890,11 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char * group ,
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -3003,7 +3003,7 @@ end:
 // partially update scale of the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
+CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3088,11 +3088,11 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char * gr
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -3203,7 +3203,7 @@ end:
 // partially update status of the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
+CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3288,11 +3288,11 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char * g
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -3403,7 +3403,7 @@ end:
 // patch the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
+CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3498,11 +3498,11 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char * grou
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -3612,7 +3612,7 @@ end:
 // partially update scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
+CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3707,11 +3707,11 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -3824,7 +3824,7 @@ end:
 // partially update status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager , int force )
+CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3919,11 +3919,11 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -4036,7 +4036,7 @@ end:
 // replace the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char * group , char * version , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
+CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4207,7 +4207,7 @@ end:
 // replace scale of the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
+CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4384,7 +4384,7 @@ end:
 // replace status of the cluster scoped specified custom object
 //
 object_t*
-CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
+CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4561,7 +4561,7 @@ end:
 // replace the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
+CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4743,7 +4743,7 @@ end:
 // replace scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
+CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4931,7 +4931,7 @@ end:
 // replace status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, char * group , char * version , char * _namespace , char * plural , char * name , object_t * body , char * dryRun , char * fieldManager )
+CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;

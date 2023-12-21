@@ -15,7 +15,7 @@
 // create a ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_createNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , v1_controller_revision_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_createNamespacedControllerRevision(apiClient_t *apiClient, char *_namespace, v1_controller_revision_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -211,7 +211,7 @@ end:
 // create a DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_createNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_createNamespacedDaemonSet(apiClient_t *apiClient, char *_namespace, v1_daemon_set_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -407,7 +407,7 @@ end:
 // create a Deployment
 //
 v1_deployment_t*
-AppsV1API_createNamespacedDeployment(apiClient_t *apiClient, char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_createNamespacedDeployment(apiClient_t *apiClient, char *_namespace, v1_deployment_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -603,7 +603,7 @@ end:
 // create a ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_createNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_createNamespacedReplicaSet(apiClient_t *apiClient, char *_namespace, v1_replica_set_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -799,7 +799,7 @@ end:
 // create a StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_createNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_createNamespacedStatefulSet(apiClient_t *apiClient, char *_namespace, v1_stateful_set_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -995,7 +995,7 @@ end:
 // delete collection of ControllerRevision
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
+AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1074,11 +1074,11 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -1099,11 +1099,11 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -1112,11 +1112,11 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -1161,11 +1161,11 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -1174,11 +1174,11 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -1404,7 +1404,7 @@ end:
 // delete collection of DaemonSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
+AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1483,11 +1483,11 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _na
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -1508,11 +1508,11 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _na
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -1521,11 +1521,11 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _na
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -1570,11 +1570,11 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _na
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -1583,11 +1583,11 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char * _na
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -1813,7 +1813,7 @@ end:
 // delete collection of Deployment
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
+AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1892,11 +1892,11 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _n
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -1917,11 +1917,11 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _n
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -1930,11 +1930,11 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _n
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -1979,11 +1979,11 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _n
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -1992,11 +1992,11 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char * _n
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -2222,7 +2222,7 @@ end:
 // delete collection of ReplicaSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
+AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2301,11 +2301,11 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _n
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -2326,11 +2326,11 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _n
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -2339,11 +2339,11 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _n
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -2388,11 +2388,11 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _n
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -2401,11 +2401,11 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char * _n
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -2631,7 +2631,7 @@ end:
 // delete collection of StatefulSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , char * pretty , char * _continue , char * dryRun , char * fieldSelector , int gracePeriodSeconds , char * labelSelector , int limit , int orphanDependents , char * propagationPolicy , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , v1_delete_options_t * body )
+AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2710,11 +2710,11 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -2735,11 +2735,11 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -2748,11 +2748,11 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -2797,11 +2797,11 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -2810,11 +2810,11 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char * _
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -3040,7 +3040,7 @@ end:
 // delete a ControllerRevision
 //
 v1_status_t*
-AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3105,11 +3105,11 @@ AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -3118,11 +3118,11 @@ AppsV1API_deleteNamespacedControllerRevision(apiClient_t *apiClient, char * name
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -3269,7 +3269,7 @@ end:
 // delete a DaemonSet
 //
 v1_status_t*
-AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3334,11 +3334,11 @@ AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char *
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -3347,11 +3347,11 @@ AppsV1API_deleteNamespacedDaemonSet(apiClient_t *apiClient, char * name , char *
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -3498,7 +3498,7 @@ end:
 // delete a Deployment
 //
 v1_status_t*
-AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3563,11 +3563,11 @@ AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char 
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -3576,11 +3576,11 @@ AppsV1API_deleteNamespacedDeployment(apiClient_t *apiClient, char * name , char 
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -3727,7 +3727,7 @@ end:
 // delete a ReplicaSet
 //
 v1_status_t*
-AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3792,11 +3792,11 @@ AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char 
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -3805,11 +3805,11 @@ AppsV1API_deleteNamespacedReplicaSet(apiClient_t *apiClient, char * name , char 
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -3956,7 +3956,7 @@ end:
 // delete a StatefulSet
 //
 v1_status_t*
-AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty , char * dryRun , int gracePeriodSeconds , int orphanDependents , char * propagationPolicy , v1_delete_options_t * body )
+AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4021,11 +4021,11 @@ AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char
     char *keyQuery_gracePeriodSeconds = NULL;
     char * valueQuery_gracePeriodSeconds = NULL;
     keyValuePair_t *keyPairQuery_gracePeriodSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (gracePeriodSeconds)
     {
         keyQuery_gracePeriodSeconds = strdup("gracePeriodSeconds");
         valueQuery_gracePeriodSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", gracePeriodSeconds);
+        snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
     }
@@ -4034,11 +4034,11 @@ AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char * name , char
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (orphanDependents)
     {
         keyQuery_orphanDependents = strdup("orphanDependents");
         valueQuery_orphanDependents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", orphanDependents);
+        snprintf(valueQuery_orphanDependents, MAX_NUMBER_LENGTH, "%d", *orphanDependents);
         keyPairQuery_orphanDependents = keyValuePair_create(keyQuery_orphanDependents, valueQuery_orphanDependents);
         list_addElement(localVarQueryParameters,keyPairQuery_orphanDependents);
     }
@@ -4252,7 +4252,7 @@ end:
 // list or watch objects of kind ControllerRevision
 //
 v1_controller_revision_list_t*
-AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4273,11 +4273,11 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -4322,11 +4322,11 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -4371,11 +4371,11 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -4384,11 +4384,11 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -4397,11 +4397,11 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int all
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -4590,7 +4590,7 @@ end:
 // list or watch objects of kind DaemonSet
 //
 v1_daemon_set_list_t*
-AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4611,11 +4611,11 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -4660,11 +4660,11 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -4709,11 +4709,11 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -4722,11 +4722,11 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -4735,11 +4735,11 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBo
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -4928,7 +4928,7 @@ end:
 // list or watch objects of kind Deployment
 //
 v1_deployment_list_t*
-AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4949,11 +4949,11 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -4998,11 +4998,11 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -5047,11 +5047,11 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -5060,11 +5060,11 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -5073,11 +5073,11 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -5266,7 +5266,7 @@ end:
 // list or watch objects of kind ControllerRevision
 //
 v1_controller_revision_list_t*
-AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5309,11 +5309,11 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _names
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -5358,11 +5358,11 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _names
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -5395,11 +5395,11 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _names
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -5408,11 +5408,11 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _names
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -5421,11 +5421,11 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char * _names
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -5615,7 +5615,7 @@ end:
 // list or watch objects of kind DaemonSet
 //
 v1_daemon_set_list_t*
-AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5658,11 +5658,11 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , ch
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -5707,11 +5707,11 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , ch
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -5744,11 +5744,11 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , ch
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -5757,11 +5757,11 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , ch
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -5770,11 +5770,11 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char * _namespace , ch
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -5964,7 +5964,7 @@ end:
 // list or watch objects of kind Deployment
 //
 v1_deployment_list_t*
-AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6007,11 +6007,11 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -6056,11 +6056,11 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -6093,11 +6093,11 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -6106,11 +6106,11 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -6119,11 +6119,11 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -6313,7 +6313,7 @@ end:
 // list or watch objects of kind ReplicaSet
 //
 v1_replica_set_list_t*
-AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6356,11 +6356,11 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -6405,11 +6405,11 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -6442,11 +6442,11 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -6455,11 +6455,11 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -6468,11 +6468,11 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char * _namespace , c
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -6662,7 +6662,7 @@ end:
 // list or watch objects of kind StatefulSet
 //
 v1_stateful_set_list_t*
-AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , char * pretty , int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6705,11 +6705,11 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , 
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -6754,11 +6754,11 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , 
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -6791,11 +6791,11 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , 
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -6804,11 +6804,11 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , 
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -6817,11 +6817,11 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char * _namespace , 
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -7011,7 +7011,7 @@ end:
 // list or watch objects of kind ReplicaSet
 //
 v1_replica_set_list_t*
-AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7032,11 +7032,11 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -7081,11 +7081,11 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -7130,11 +7130,11 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -7143,11 +7143,11 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -7156,11 +7156,11 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int allowWatchB
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -7349,7 +7349,7 @@ end:
 // list or watch objects of kind StatefulSet
 //
 v1_stateful_set_list_t*
-AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int sendInitialEvents , int timeoutSeconds , int watch )
+AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7370,11 +7370,11 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
     char *keyQuery_allowWatchBookmarks = NULL;
     char * valueQuery_allowWatchBookmarks = NULL;
     keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (allowWatchBookmarks)
     {
         keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
         valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", allowWatchBookmarks);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
         keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
@@ -7419,11 +7419,11 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
     keyValuePair_t *keyPairQuery_limit = 0;
-    if (1) // Always send integer parameters to the API server
+    if (limit)
     {
         keyQuery_limit = strdup("limit");
         valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", limit);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
         keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
@@ -7468,11 +7468,11 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
     char *keyQuery_sendInitialEvents = NULL;
     char * valueQuery_sendInitialEvents = NULL;
     keyValuePair_t *keyPairQuery_sendInitialEvents = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (sendInitialEvents)
     {
         keyQuery_sendInitialEvents = strdup("sendInitialEvents");
         valueQuery_sendInitialEvents = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", sendInitialEvents);
+        snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
     }
@@ -7481,11 +7481,11 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
-    if (1) // Always send integer parameters to the API server
+    if (timeoutSeconds)
     {
         keyQuery_timeoutSeconds = strdup("timeoutSeconds");
         valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", timeoutSeconds);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
         keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
     }
@@ -7494,11 +7494,11 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int allowWatch
     char *keyQuery_watch = NULL;
     char * valueQuery_watch = NULL;
     keyValuePair_t *keyPairQuery_watch = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (watch)
     {
         keyQuery_watch = strdup("watch");
         valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", watch);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
         keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
         list_addElement(localVarQueryParameters,keyPairQuery_watch);
     }
@@ -7687,7 +7687,7 @@ end:
 // partially update the specified ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7776,11 +7776,11 @@ AppsV1API_patchNamespacedControllerRevision(apiClient_t *apiClient, char * name 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -7919,7 +7919,7 @@ end:
 // partially update the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -8008,11 +8008,11 @@ AppsV1API_patchNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -8151,7 +8151,7 @@ end:
 // partially update status of the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -8240,11 +8240,11 @@ AppsV1API_patchNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , c
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -8383,7 +8383,7 @@ end:
 // partially update the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -8472,11 +8472,11 @@ AppsV1API_patchNamespacedDeployment(apiClient_t *apiClient, char * name , char *
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -8615,7 +8615,7 @@ end:
 // partially update scale of the specified Deployment
 //
 v1_scale_t*
-AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -8704,11 +8704,11 @@ AppsV1API_patchNamespacedDeploymentScale(apiClient_t *apiClient, char * name , c
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -8847,7 +8847,7 @@ end:
 // partially update status of the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -8936,11 +8936,11 @@ AppsV1API_patchNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -9079,7 +9079,7 @@ end:
 // partially update the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -9168,11 +9168,11 @@ AppsV1API_patchNamespacedReplicaSet(apiClient_t *apiClient, char * name , char *
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -9311,7 +9311,7 @@ end:
 // partially update scale of the specified ReplicaSet
 //
 v1_scale_t*
-AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -9400,11 +9400,11 @@ AppsV1API_patchNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , c
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -9543,7 +9543,7 @@ end:
 // partially update status of the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -9632,11 +9632,11 @@ AppsV1API_patchNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -9775,7 +9775,7 @@ end:
 // partially update the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -9864,11 +9864,11 @@ AppsV1API_patchNamespacedStatefulSet(apiClient_t *apiClient, char * name , char 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -10007,7 +10007,7 @@ end:
 // partially update scale of the specified StatefulSet
 //
 v1_scale_t*
-AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -10096,11 +10096,11 @@ AppsV1API_patchNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , 
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -10239,7 +10239,7 @@ end:
 // partially update status of the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * _namespace , object_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation , int force )
+AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -10328,11 +10328,11 @@ AppsV1API_patchNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name ,
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
-    if (1) // Always send boolean parameters to the API server
+    if (force)
     {
         keyQuery_force = strdup("force");
         valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", force);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
         keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
         list_addElement(localVarQueryParameters,keyPairQuery_force);
     }
@@ -10471,7 +10471,7 @@ end:
 // read the specified ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedControllerRevision(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -10584,7 +10584,7 @@ end:
 // read the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedDaemonSet(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -10697,7 +10697,7 @@ end:
 // read status of the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_readNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedDaemonSetStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -10810,7 +10810,7 @@ end:
 // read the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedDeployment(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -10923,7 +10923,7 @@ end:
 // read scale of the specified Deployment
 //
 v1_scale_t*
-AppsV1API_readNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedDeploymentScale(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -11036,7 +11036,7 @@ end:
 // read status of the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_readNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedDeploymentStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -11149,7 +11149,7 @@ end:
 // read the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedReplicaSet(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -11262,7 +11262,7 @@ end:
 // read scale of the specified ReplicaSet
 //
 v1_scale_t*
-AppsV1API_readNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedReplicaSetScale(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -11375,7 +11375,7 @@ end:
 // read status of the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_readNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedReplicaSetStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -11488,7 +11488,7 @@ end:
 // read the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedStatefulSet(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -11601,7 +11601,7 @@ end:
 // read scale of the specified StatefulSet
 //
 v1_scale_t*
-AppsV1API_readNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedStatefulSetScale(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -11714,7 +11714,7 @@ end:
 // read status of the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_readNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * _namespace , char * pretty )
+AppsV1API_readNamespacedStatefulSetStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -11827,7 +11827,7 @@ end:
 // replace the specified ControllerRevision
 //
 v1_controller_revision_t*
-AppsV1API_replaceNamespacedControllerRevision(apiClient_t *apiClient, char * name , char * _namespace , v1_controller_revision_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedControllerRevision(apiClient_t *apiClient, char *name, char *_namespace, v1_controller_revision_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -12030,7 +12030,7 @@ end:
 // replace the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char * name , char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedDaemonSet(apiClient_t *apiClient, char *name, char *_namespace, v1_daemon_set_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -12233,7 +12233,7 @@ end:
 // replace status of the specified DaemonSet
 //
 v1_daemon_set_t*
-AppsV1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_daemon_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedDaemonSetStatus(apiClient_t *apiClient, char *name, char *_namespace, v1_daemon_set_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -12436,7 +12436,7 @@ end:
 // replace the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_replaceNamespacedDeployment(apiClient_t *apiClient, char * name , char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedDeployment(apiClient_t *apiClient, char *name, char *_namespace, v1_deployment_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -12639,7 +12639,7 @@ end:
 // replace scale of the specified Deployment
 //
 v1_scale_t*
-AppsV1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedDeploymentScale(apiClient_t *apiClient, char *name, char *_namespace, v1_scale_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -12842,7 +12842,7 @@ end:
 // replace status of the specified Deployment
 //
 v1_deployment_t*
-AppsV1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_deployment_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedDeploymentStatus(apiClient_t *apiClient, char *name, char *_namespace, v1_deployment_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -13045,7 +13045,7 @@ end:
 // replace the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char * name , char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedReplicaSet(apiClient_t *apiClient, char *name, char *_namespace, v1_replica_set_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -13248,7 +13248,7 @@ end:
 // replace scale of the specified ReplicaSet
 //
 v1_scale_t*
-AppsV1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedReplicaSetScale(apiClient_t *apiClient, char *name, char *_namespace, v1_scale_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -13451,7 +13451,7 @@ end:
 // replace status of the specified ReplicaSet
 //
 v1_replica_set_t*
-AppsV1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_replica_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedReplicaSetStatus(apiClient_t *apiClient, char *name, char *_namespace, v1_replica_set_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -13654,7 +13654,7 @@ end:
 // replace the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_replaceNamespacedStatefulSet(apiClient_t *apiClient, char * name , char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedStatefulSet(apiClient_t *apiClient, char *name, char *_namespace, v1_stateful_set_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -13857,7 +13857,7 @@ end:
 // replace scale of the specified StatefulSet
 //
 v1_scale_t*
-AppsV1API_replaceNamespacedStatefulSetScale(apiClient_t *apiClient, char * name , char * _namespace , v1_scale_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedStatefulSetScale(apiClient_t *apiClient, char *name, char *_namespace, v1_scale_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -14060,7 +14060,7 @@ end:
 // replace status of the specified StatefulSet
 //
 v1_stateful_set_t*
-AppsV1API_replaceNamespacedStatefulSetStatus(apiClient_t *apiClient, char * name , char * _namespace , v1_stateful_set_t * body , char * pretty , char * dryRun , char * fieldManager , char * fieldValidation )
+AppsV1API_replaceNamespacedStatefulSetStatus(apiClient_t *apiClient, char *name, char *_namespace, v1_stateful_set_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;

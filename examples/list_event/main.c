@@ -10,16 +10,16 @@ void list_event(apiClient_t * apiClient)
 {
     core_v1_event_list_t *event_list = CoreV1API_listNamespacedEvent(apiClient, "default",  /*namespace */
                                                                      "true",    /* pretty */
-                                                                     0, /* allowWatchBookmarks */
+                                                                     NULL,  /* allowWatchBookmarks */
                                                                      NULL,  /* continue */
                                                                      NULL,  /* fieldSelector */
                                                                      NULL,  /* labelSelector */
-                                                                     0, /* limit */
+                                                                     NULL,  /* limit */
                                                                      NULL,  /* resourceVersion */
                                                                      NULL,  /* resourceVersionMatch */
-                                                                     0, /* sendInitialEvents */
-                                                                     0, /* timeoutSeconds */
-                                                                     0  /* watch */
+                                                                     NULL,  /* sendInitialEvents */
+                                                                     NULL,  /* timeoutSeconds */
+                                                                     NULL   /* watch */
         );
     printf("The return code of HTTP request=%ld\n", apiClient->response_code);
     if (event_list) {
