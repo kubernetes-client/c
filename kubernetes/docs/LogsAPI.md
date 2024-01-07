@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 # **LogsAPI_logFileHandler**
 ```c
-void LogsAPI_logFileHandler(apiClient_t *apiClient, char * logpath);
+void LogsAPI_logFileHandler(apiClient_t *apiClient, char *logpath);
 ```
 
 ### Parameters

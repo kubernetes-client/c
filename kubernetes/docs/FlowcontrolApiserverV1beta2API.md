@@ -31,7 +31,7 @@ Method | HTTP request | Description
 ```c
 // create a FlowSchema
 //
-v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_createFlowSchema(apiClient_t *apiClient, v1beta2_flow_schema_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_createFlowSchema(apiClient_t *apiClient, v1beta2_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -64,7 +64,7 @@ Name | Type | Description  | Notes
 ```c
 // create a PriorityLevelConfiguration
 //
-v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_createPriorityLevelConfiguration(apiClient_t *apiClient, v1beta2_priority_level_configuration_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_createPriorityLevelConfiguration(apiClient_t *apiClient, v1beta2_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -97,7 +97,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of FlowSchema
 //
-v1_status_t* FlowcontrolApiserverV1beta2API_deleteCollectionFlowSchema(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* FlowcontrolApiserverV1beta2API_deleteCollectionFlowSchema(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -139,7 +139,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of PriorityLevelConfiguration
 //
-v1_status_t* FlowcontrolApiserverV1beta2API_deleteCollectionPriorityLevelConfiguration(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* FlowcontrolApiserverV1beta2API_deleteCollectionPriorityLevelConfiguration(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -181,7 +181,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a FlowSchema
 //
-v1_status_t* FlowcontrolApiserverV1beta2API_deleteFlowSchema(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* FlowcontrolApiserverV1beta2API_deleteFlowSchema(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -216,7 +216,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a PriorityLevelConfiguration
 //
-v1_status_t* FlowcontrolApiserverV1beta2API_deletePriorityLevelConfiguration(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* FlowcontrolApiserverV1beta2API_deletePriorityLevelConfiguration(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -279,7 +279,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind FlowSchema
 //
-v1beta2_flow_schema_list_t* FlowcontrolApiserverV1beta2API_listFlowSchema(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1beta2_flow_schema_list_t* FlowcontrolApiserverV1beta2API_listFlowSchema(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -318,7 +318,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind PriorityLevelConfiguration
 //
-v1beta2_priority_level_configuration_list_t* FlowcontrolApiserverV1beta2API_listPriorityLevelConfiguration(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1beta2_priority_level_configuration_list_t* FlowcontrolApiserverV1beta2API_listPriorityLevelConfiguration(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -357,7 +357,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified FlowSchema
 //
-v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_patchFlowSchema(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_patchFlowSchema(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -392,7 +392,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update status of the specified FlowSchema
 //
-v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_patchFlowSchemaStatus(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_patchFlowSchemaStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -427,7 +427,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified PriorityLevelConfiguration
 //
-v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_patchPriorityLevelConfiguration(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_patchPriorityLevelConfiguration(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -462,7 +462,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update status of the specified PriorityLevelConfiguration
 //
-v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_patchPriorityLevelConfigurationStatus(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_patchPriorityLevelConfigurationStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -497,7 +497,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified FlowSchema
 //
-v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_readFlowSchema(apiClient_t *apiClient, char * name, char * pretty);
+v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_readFlowSchema(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -527,7 +527,7 @@ Name | Type | Description  | Notes
 ```c
 // read status of the specified FlowSchema
 //
-v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_readFlowSchemaStatus(apiClient_t *apiClient, char * name, char * pretty);
+v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_readFlowSchemaStatus(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -557,7 +557,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified PriorityLevelConfiguration
 //
-v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_readPriorityLevelConfiguration(apiClient_t *apiClient, char * name, char * pretty);
+v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_readPriorityLevelConfiguration(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -587,7 +587,7 @@ Name | Type | Description  | Notes
 ```c
 // read status of the specified PriorityLevelConfiguration
 //
-v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_readPriorityLevelConfigurationStatus(apiClient_t *apiClient, char * name, char * pretty);
+v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_readPriorityLevelConfigurationStatus(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -617,7 +617,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified FlowSchema
 //
-v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_replaceFlowSchema(apiClient_t *apiClient, char * name, v1beta2_flow_schema_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_replaceFlowSchema(apiClient_t *apiClient, char *name, v1beta2_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -651,7 +651,7 @@ Name | Type | Description  | Notes
 ```c
 // replace status of the specified FlowSchema
 //
-v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_replaceFlowSchemaStatus(apiClient_t *apiClient, char * name, v1beta2_flow_schema_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1beta2_flow_schema_t* FlowcontrolApiserverV1beta2API_replaceFlowSchemaStatus(apiClient_t *apiClient, char *name, v1beta2_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -685,7 +685,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified PriorityLevelConfiguration
 //
-v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_replacePriorityLevelConfiguration(apiClient_t *apiClient, char * name, v1beta2_priority_level_configuration_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_replacePriorityLevelConfiguration(apiClient_t *apiClient, char *name, v1beta2_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -719,7 +719,7 @@ Name | Type | Description  | Notes
 ```c
 // replace status of the specified PriorityLevelConfiguration
 //
-v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_replacePriorityLevelConfigurationStatus(apiClient_t *apiClient, char * name, v1beta2_priority_level_configuration_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1beta2_priority_level_configuration_t* FlowcontrolApiserverV1beta2API_replacePriorityLevelConfigurationStatus(apiClient_t *apiClient, char *name, v1beta2_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters

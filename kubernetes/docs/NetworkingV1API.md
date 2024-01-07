@@ -37,7 +37,7 @@ Method | HTTP request | Description
 ```c
 // create an IngressClass
 //
-v1_ingress_class_t* NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_ingress_class_t* NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 ```c
 // create an Ingress
 //
-v1_ingress_t* NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char * _namespace, v1_ingress_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_ingress_t* NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char *_namespace, v1_ingress_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -104,7 +104,7 @@ Name | Type | Description  | Notes
 ```c
 // create a NetworkPolicy
 //
-v1_network_policy_t* NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char * _namespace, v1_network_policy_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_network_policy_t* NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char *_namespace, v1_network_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -138,7 +138,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of IngressClass
 //
-v1_status_t* NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -180,7 +180,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of Ingress
 //
-v1_status_t* NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char * _namespace, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -223,7 +223,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of NetworkPolicy
 //
-v1_status_t* NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, char * _namespace, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -266,7 +266,7 @@ Name | Type | Description  | Notes
 ```c
 // delete an IngressClass
 //
-v1_status_t* NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -301,7 +301,7 @@ Name | Type | Description  | Notes
 ```c
 // delete an Ingress
 //
-v1_status_t* NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char * name, char * _namespace, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -337,7 +337,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a NetworkPolicy
 //
-v1_status_t* NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char * name, char * _namespace, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -401,7 +401,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind IngressClass
 //
-v1_ingress_class_list_t* NetworkingV1API_listIngressClass(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_ingress_class_list_t* NetworkingV1API_listIngressClass(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -440,7 +440,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind Ingress
 //
-v1_ingress_list_t* NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * pretty, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_ingress_list_t* NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -479,7 +479,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind Ingress
 //
-v1_ingress_list_t* NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char * _namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_ingress_list_t* NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -519,7 +519,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind NetworkPolicy
 //
-v1_network_policy_list_t* NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char * _namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_network_policy_list_t* NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -559,7 +559,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind NetworkPolicy
 //
-v1_network_policy_list_t* NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * pretty, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_network_policy_list_t* NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -598,7 +598,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified IngressClass
 //
-v1_ingress_class_t* NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_ingress_class_t* NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -633,7 +633,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified Ingress
 //
-v1_ingress_t* NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_ingress_t* NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -669,7 +669,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update status of the specified Ingress
 //
-v1_ingress_t* NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_ingress_t* NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -705,7 +705,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified NetworkPolicy
 //
-v1_network_policy_t* NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_network_policy_t* NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -741,7 +741,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified IngressClass
 //
-v1_ingress_class_t* NetworkingV1API_readIngressClass(apiClient_t *apiClient, char * name, char * pretty);
+v1_ingress_class_t* NetworkingV1API_readIngressClass(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -771,7 +771,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified Ingress
 //
-v1_ingress_t* NetworkingV1API_readNamespacedIngress(apiClient_t *apiClient, char * name, char * _namespace, char * pretty);
+v1_ingress_t* NetworkingV1API_readNamespacedIngress(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -802,7 +802,7 @@ Name | Type | Description  | Notes
 ```c
 // read status of the specified Ingress
 //
-v1_ingress_t* NetworkingV1API_readNamespacedIngressStatus(apiClient_t *apiClient, char * name, char * _namespace, char * pretty);
+v1_ingress_t* NetworkingV1API_readNamespacedIngressStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -833,7 +833,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified NetworkPolicy
 //
-v1_network_policy_t* NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char * name, char * _namespace, char * pretty);
+v1_network_policy_t* NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -864,7 +864,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified IngressClass
 //
-v1_ingress_class_t* NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char * name, v1_ingress_class_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_ingress_class_t* NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char *name, v1_ingress_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -898,7 +898,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified Ingress
 //
-v1_ingress_t* NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char * name, char * _namespace, v1_ingress_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_ingress_t* NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char *name, char *_namespace, v1_ingress_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -933,7 +933,7 @@ Name | Type | Description  | Notes
 ```c
 // replace status of the specified Ingress
 //
-v1_ingress_t* NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char * name, char * _namespace, v1_ingress_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_ingress_t* NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char *name, char *_namespace, v1_ingress_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -968,7 +968,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified NetworkPolicy
 //
-v1_network_policy_t* NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char * name, char * _namespace, v1_network_policy_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_network_policy_t* NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, char *_namespace, v1_network_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters

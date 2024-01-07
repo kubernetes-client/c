@@ -33,7 +33,7 @@ Method | HTTP request | Description
 ```c
 // create a CronJob
 //
-v1_cron_job_t* BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char * _namespace, v1_cron_job_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_cron_job_t* BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char *_namespace, v1_cron_job_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -67,7 +67,7 @@ Name | Type | Description  | Notes
 ```c
 // create a Job
 //
-v1_job_t* BatchV1API_createNamespacedJob(apiClient_t *apiClient, char * _namespace, v1_job_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_job_t* BatchV1API_createNamespacedJob(apiClient_t *apiClient, char *_namespace, v1_job_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -101,7 +101,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of CronJob
 //
-v1_status_t* BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char * _namespace, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -144,7 +144,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of Job
 //
-v1_status_t* BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char * _namespace, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -187,7 +187,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a CronJob
 //
-v1_status_t* BatchV1API_deleteNamespacedCronJob(apiClient_t *apiClient, char * name, char * _namespace, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* BatchV1API_deleteNamespacedCronJob(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -223,7 +223,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a Job
 //
-v1_status_t* BatchV1API_deleteNamespacedJob(apiClient_t *apiClient, char * name, char * _namespace, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* BatchV1API_deleteNamespacedJob(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -287,7 +287,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind CronJob
 //
-v1_cron_job_list_t* BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * pretty, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_cron_job_list_t* BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -326,7 +326,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind Job
 //
-v1_job_list_t* BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * pretty, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_job_list_t* BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -365,7 +365,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind CronJob
 //
-v1_cron_job_list_t* BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char * _namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_cron_job_list_t* BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -405,7 +405,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind Job
 //
-v1_job_list_t* BatchV1API_listNamespacedJob(apiClient_t *apiClient, char * _namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_job_list_t* BatchV1API_listNamespacedJob(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -445,7 +445,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified CronJob
 //
-v1_cron_job_t* BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_cron_job_t* BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -481,7 +481,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update status of the specified CronJob
 //
-v1_cron_job_t* BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_cron_job_t* BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -517,7 +517,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified Job
 //
-v1_job_t* BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_job_t* BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -553,7 +553,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update status of the specified Job
 //
-v1_job_t* BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_job_t* BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -589,7 +589,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified CronJob
 //
-v1_cron_job_t* BatchV1API_readNamespacedCronJob(apiClient_t *apiClient, char * name, char * _namespace, char * pretty);
+v1_cron_job_t* BatchV1API_readNamespacedCronJob(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -620,7 +620,7 @@ Name | Type | Description  | Notes
 ```c
 // read status of the specified CronJob
 //
-v1_cron_job_t* BatchV1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char * name, char * _namespace, char * pretty);
+v1_cron_job_t* BatchV1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -651,7 +651,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified Job
 //
-v1_job_t* BatchV1API_readNamespacedJob(apiClient_t *apiClient, char * name, char * _namespace, char * pretty);
+v1_job_t* BatchV1API_readNamespacedJob(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -682,7 +682,7 @@ Name | Type | Description  | Notes
 ```c
 // read status of the specified Job
 //
-v1_job_t* BatchV1API_readNamespacedJobStatus(apiClient_t *apiClient, char * name, char * _namespace, char * pretty);
+v1_job_t* BatchV1API_readNamespacedJobStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -713,7 +713,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified CronJob
 //
-v1_cron_job_t* BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char * name, char * _namespace, v1_cron_job_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_cron_job_t* BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char *name, char *_namespace, v1_cron_job_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -748,7 +748,7 @@ Name | Type | Description  | Notes
 ```c
 // replace status of the specified CronJob
 //
-v1_cron_job_t* BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char * name, char * _namespace, v1_cron_job_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_cron_job_t* BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char *name, char *_namespace, v1_cron_job_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -783,7 +783,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified Job
 //
-v1_job_t* BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char * name, char * _namespace, v1_job_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_job_t* BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char *name, char *_namespace, v1_job_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -818,7 +818,7 @@ Name | Type | Description  | Notes
 ```c
 // replace status of the specified Job
 //
-v1_job_t* BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char * name, char * _namespace, v1_job_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_job_t* BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char *name, char *_namespace, v1_job_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
