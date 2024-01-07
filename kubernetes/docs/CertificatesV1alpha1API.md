@@ -18,7 +18,7 @@ Method | HTTP request | Description
 ```c
 // create a ClusterTrustBundle
 //
-v1alpha1_cluster_trust_bundle_t* CertificatesV1alpha1API_createClusterTrustBundle(apiClient_t *apiClient, v1alpha1_cluster_trust_bundle_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1alpha1_cluster_trust_bundle_t* CertificatesV1alpha1API_createClusterTrustBundle(apiClient_t *apiClient, v1alpha1_cluster_trust_bundle_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -51,7 +51,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a ClusterTrustBundle
 //
-v1_status_t* CertificatesV1alpha1API_deleteClusterTrustBundle(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* CertificatesV1alpha1API_deleteClusterTrustBundle(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -86,7 +86,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of ClusterTrustBundle
 //
-v1_status_t* CertificatesV1alpha1API_deleteCollectionClusterTrustBundle(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* CertificatesV1alpha1API_deleteCollectionClusterTrustBundle(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -156,7 +156,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind ClusterTrustBundle
 //
-v1alpha1_cluster_trust_bundle_list_t* CertificatesV1alpha1API_listClusterTrustBundle(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1alpha1_cluster_trust_bundle_list_t* CertificatesV1alpha1API_listClusterTrustBundle(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -195,7 +195,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified ClusterTrustBundle
 //
-v1alpha1_cluster_trust_bundle_t* CertificatesV1alpha1API_patchClusterTrustBundle(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1alpha1_cluster_trust_bundle_t* CertificatesV1alpha1API_patchClusterTrustBundle(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -230,7 +230,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified ClusterTrustBundle
 //
-v1alpha1_cluster_trust_bundle_t* CertificatesV1alpha1API_readClusterTrustBundle(apiClient_t *apiClient, char * name, char * pretty);
+v1alpha1_cluster_trust_bundle_t* CertificatesV1alpha1API_readClusterTrustBundle(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -260,7 +260,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified ClusterTrustBundle
 //
-v1alpha1_cluster_trust_bundle_t* CertificatesV1alpha1API_replaceClusterTrustBundle(apiClient_t *apiClient, char * name, v1alpha1_cluster_trust_bundle_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1alpha1_cluster_trust_bundle_t* CertificatesV1alpha1API_replaceClusterTrustBundle(apiClient_t *apiClient, char *name, v1alpha1_cluster_trust_bundle_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters

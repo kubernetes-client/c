@@ -28,7 +28,7 @@ Method | HTTP request | Description
 ```c
 // create a ValidatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_createValidatingAdmissionPolicy(apiClient_t *apiClient, v1beta1_validating_admission_policy_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_createValidatingAdmissionPolicy(apiClient_t *apiClient, v1beta1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -61,7 +61,7 @@ Name | Type | Description  | Notes
 ```c
 // create a ValidatingAdmissionPolicyBinding
 //
-v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_createValidatingAdmissionPolicyBinding(apiClient_t *apiClient, v1beta1_validating_admission_policy_binding_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_createValidatingAdmissionPolicyBinding(apiClient_t *apiClient, v1beta1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of ValidatingAdmissionPolicy
 //
-v1_status_t* AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -136,7 +136,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of ValidatingAdmissionPolicyBinding
 //
-v1_status_t* AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -178,7 +178,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a ValidatingAdmissionPolicy
 //
-v1_status_t* AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -213,7 +213,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a ValidatingAdmissionPolicyBinding
 //
-v1_status_t* AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -276,7 +276,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind ValidatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_list_t* AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1beta1_validating_admission_policy_list_t* AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -315,7 +315,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind ValidatingAdmissionPolicyBinding
 //
-v1beta1_validating_admission_policy_binding_list_t* AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1beta1_validating_admission_policy_binding_list_t* AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -354,7 +354,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified ValidatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -389,7 +389,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified ValidatingAdmissionPolicyBinding
 //
-v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -424,7 +424,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update status of the specified ValidatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -459,7 +459,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified ValidatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_readValidatingAdmissionPolicy(apiClient_t *apiClient, char * name, char * pretty);
+v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_readValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -489,7 +489,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified ValidatingAdmissionPolicyBinding
 //
-v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * name, char * pretty);
+v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -519,7 +519,7 @@ Name | Type | Description  | Notes
 ```c
 // read status of the specified ValidatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char * name, char * pretty);
+v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -549,7 +549,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified ValidatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicy(apiClient_t *apiClient, char * name, v1beta1_validating_admission_policy_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, v1beta1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -583,7 +583,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified ValidatingAdmissionPolicyBinding
 //
-v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char * name, v1beta1_validating_admission_policy_binding_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, v1beta1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -617,7 +617,7 @@ Name | Type | Description  | Notes
 ```c
 // replace status of the specified ValidatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char * name, v1beta1_validating_admission_policy_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char *name, v1beta1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters

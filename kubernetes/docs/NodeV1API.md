@@ -18,7 +18,7 @@ Method | HTTP request | Description
 ```c
 // create a RuntimeClass
 //
-v1_runtime_class_t* NodeV1API_createRuntimeClass(apiClient_t *apiClient, v1_runtime_class_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_runtime_class_t* NodeV1API_createRuntimeClass(apiClient_t *apiClient, v1_runtime_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -51,7 +51,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of RuntimeClass
 //
-v1_status_t* NodeV1API_deleteCollectionRuntimeClass(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* NodeV1API_deleteCollectionRuntimeClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -93,7 +93,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a RuntimeClass
 //
-v1_status_t* NodeV1API_deleteRuntimeClass(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* NodeV1API_deleteRuntimeClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -156,7 +156,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind RuntimeClass
 //
-v1_runtime_class_list_t* NodeV1API_listRuntimeClass(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_runtime_class_list_t* NodeV1API_listRuntimeClass(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -195,7 +195,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified RuntimeClass
 //
-v1_runtime_class_t* NodeV1API_patchRuntimeClass(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_runtime_class_t* NodeV1API_patchRuntimeClass(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -230,7 +230,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified RuntimeClass
 //
-v1_runtime_class_t* NodeV1API_readRuntimeClass(apiClient_t *apiClient, char * name, char * pretty);
+v1_runtime_class_t* NodeV1API_readRuntimeClass(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -260,7 +260,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified RuntimeClass
 //
-v1_runtime_class_t* NodeV1API_replaceRuntimeClass(apiClient_t *apiClient, char * name, v1_runtime_class_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_runtime_class_t* NodeV1API_replaceRuntimeClass(apiClient_t *apiClient, char *name, v1_runtime_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters

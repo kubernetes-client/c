@@ -41,7 +41,7 @@ Method | HTTP request | Description
 ```c
 // create a ClusterRole
 //
-v1_cluster_role_t* RbacAuthorizationV1API_createClusterRole(apiClient_t *apiClient, v1_cluster_role_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_cluster_role_t* RbacAuthorizationV1API_createClusterRole(apiClient_t *apiClient, v1_cluster_role_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 ```c
 // create a ClusterRoleBinding
 //
-v1_cluster_role_binding_t* RbacAuthorizationV1API_createClusterRoleBinding(apiClient_t *apiClient, v1_cluster_role_binding_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_cluster_role_binding_t* RbacAuthorizationV1API_createClusterRoleBinding(apiClient_t *apiClient, v1_cluster_role_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -107,7 +107,7 @@ Name | Type | Description  | Notes
 ```c
 // create a Role
 //
-v1_role_t* RbacAuthorizationV1API_createNamespacedRole(apiClient_t *apiClient, char * _namespace, v1_role_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_role_t* RbacAuthorizationV1API_createNamespacedRole(apiClient_t *apiClient, char *_namespace, v1_role_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -141,7 +141,7 @@ Name | Type | Description  | Notes
 ```c
 // create a RoleBinding
 //
-v1_role_binding_t* RbacAuthorizationV1API_createNamespacedRoleBinding(apiClient_t *apiClient, char * _namespace, v1_role_binding_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_role_binding_t* RbacAuthorizationV1API_createNamespacedRoleBinding(apiClient_t *apiClient, char *_namespace, v1_role_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -175,7 +175,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a ClusterRole
 //
-v1_status_t* RbacAuthorizationV1API_deleteClusterRole(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* RbacAuthorizationV1API_deleteClusterRole(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -210,7 +210,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a ClusterRoleBinding
 //
-v1_status_t* RbacAuthorizationV1API_deleteClusterRoleBinding(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* RbacAuthorizationV1API_deleteClusterRoleBinding(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of ClusterRole
 //
-v1_status_t* RbacAuthorizationV1API_deleteCollectionClusterRole(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* RbacAuthorizationV1API_deleteCollectionClusterRole(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -287,7 +287,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of ClusterRoleBinding
 //
-v1_status_t* RbacAuthorizationV1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* RbacAuthorizationV1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -329,7 +329,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of Role
 //
-v1_status_t* RbacAuthorizationV1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, char * _namespace, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* RbacAuthorizationV1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -372,7 +372,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of RoleBinding
 //
-v1_status_t* RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiClient, char * _namespace, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -415,7 +415,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a Role
 //
-v1_status_t* RbacAuthorizationV1API_deleteNamespacedRole(apiClient_t *apiClient, char * name, char * _namespace, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* RbacAuthorizationV1API_deleteNamespacedRole(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -451,7 +451,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a RoleBinding
 //
-v1_status_t* RbacAuthorizationV1API_deleteNamespacedRoleBinding(apiClient_t *apiClient, char * name, char * _namespace, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* RbacAuthorizationV1API_deleteNamespacedRoleBinding(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -515,7 +515,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind ClusterRole
 //
-v1_cluster_role_list_t* RbacAuthorizationV1API_listClusterRole(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_cluster_role_list_t* RbacAuthorizationV1API_listClusterRole(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -554,7 +554,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind ClusterRoleBinding
 //
-v1_cluster_role_binding_list_t* RbacAuthorizationV1API_listClusterRoleBinding(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_cluster_role_binding_list_t* RbacAuthorizationV1API_listClusterRoleBinding(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -593,7 +593,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind Role
 //
-v1_role_list_t* RbacAuthorizationV1API_listNamespacedRole(apiClient_t *apiClient, char * _namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_role_list_t* RbacAuthorizationV1API_listNamespacedRole(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -633,7 +633,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind RoleBinding
 //
-v1_role_binding_list_t* RbacAuthorizationV1API_listNamespacedRoleBinding(apiClient_t *apiClient, char * _namespace, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_role_binding_list_t* RbacAuthorizationV1API_listNamespacedRoleBinding(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -673,7 +673,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind RoleBinding
 //
-v1_role_binding_list_t* RbacAuthorizationV1API_listRoleBindingForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * pretty, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_role_binding_list_t* RbacAuthorizationV1API_listRoleBindingForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -712,7 +712,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind Role
 //
-v1_role_list_t* RbacAuthorizationV1API_listRoleForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * pretty, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_role_list_t* RbacAuthorizationV1API_listRoleForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -751,7 +751,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified ClusterRole
 //
-v1_cluster_role_t* RbacAuthorizationV1API_patchClusterRole(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_cluster_role_t* RbacAuthorizationV1API_patchClusterRole(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -786,7 +786,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified ClusterRoleBinding
 //
-v1_cluster_role_binding_t* RbacAuthorizationV1API_patchClusterRoleBinding(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_cluster_role_binding_t* RbacAuthorizationV1API_patchClusterRoleBinding(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -821,7 +821,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified Role
 //
-v1_role_t* RbacAuthorizationV1API_patchNamespacedRole(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_role_t* RbacAuthorizationV1API_patchNamespacedRole(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -857,7 +857,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified RoleBinding
 //
-v1_role_binding_t* RbacAuthorizationV1API_patchNamespacedRoleBinding(apiClient_t *apiClient, char * name, char * _namespace, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_role_binding_t* RbacAuthorizationV1API_patchNamespacedRoleBinding(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -893,7 +893,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified ClusterRole
 //
-v1_cluster_role_t* RbacAuthorizationV1API_readClusterRole(apiClient_t *apiClient, char * name, char * pretty);
+v1_cluster_role_t* RbacAuthorizationV1API_readClusterRole(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -923,7 +923,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified ClusterRoleBinding
 //
-v1_cluster_role_binding_t* RbacAuthorizationV1API_readClusterRoleBinding(apiClient_t *apiClient, char * name, char * pretty);
+v1_cluster_role_binding_t* RbacAuthorizationV1API_readClusterRoleBinding(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -953,7 +953,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified Role
 //
-v1_role_t* RbacAuthorizationV1API_readNamespacedRole(apiClient_t *apiClient, char * name, char * _namespace, char * pretty);
+v1_role_t* RbacAuthorizationV1API_readNamespacedRole(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -984,7 +984,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified RoleBinding
 //
-v1_role_binding_t* RbacAuthorizationV1API_readNamespacedRoleBinding(apiClient_t *apiClient, char * name, char * _namespace, char * pretty);
+v1_role_binding_t* RbacAuthorizationV1API_readNamespacedRoleBinding(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -1015,7 +1015,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified ClusterRole
 //
-v1_cluster_role_t* RbacAuthorizationV1API_replaceClusterRole(apiClient_t *apiClient, char * name, v1_cluster_role_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_cluster_role_t* RbacAuthorizationV1API_replaceClusterRole(apiClient_t *apiClient, char *name, v1_cluster_role_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -1049,7 +1049,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified ClusterRoleBinding
 //
-v1_cluster_role_binding_t* RbacAuthorizationV1API_replaceClusterRoleBinding(apiClient_t *apiClient, char * name, v1_cluster_role_binding_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_cluster_role_binding_t* RbacAuthorizationV1API_replaceClusterRoleBinding(apiClient_t *apiClient, char *name, v1_cluster_role_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -1083,7 +1083,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified Role
 //
-v1_role_t* RbacAuthorizationV1API_replaceNamespacedRole(apiClient_t *apiClient, char * name, char * _namespace, v1_role_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_role_t* RbacAuthorizationV1API_replaceNamespacedRole(apiClient_t *apiClient, char *name, char *_namespace, v1_role_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -1118,7 +1118,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified RoleBinding
 //
-v1_role_binding_t* RbacAuthorizationV1API_replaceNamespacedRoleBinding(apiClient_t *apiClient, char * name, char * _namespace, v1_role_binding_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_role_binding_t* RbacAuthorizationV1API_replaceNamespacedRoleBinding(apiClient_t *apiClient, char *name, char *_namespace, v1_role_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters

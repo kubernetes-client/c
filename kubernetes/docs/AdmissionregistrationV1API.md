@@ -25,7 +25,7 @@ Method | HTTP request | Description
 ```c
 // create a MutatingWebhookConfiguration
 //
-v1_mutating_webhook_configuration_t* AdmissionregistrationV1API_createMutatingWebhookConfiguration(apiClient_t *apiClient, v1_mutating_webhook_configuration_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_mutating_webhook_configuration_t* AdmissionregistrationV1API_createMutatingWebhookConfiguration(apiClient_t *apiClient, v1_mutating_webhook_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -58,7 +58,7 @@ Name | Type | Description  | Notes
 ```c
 // create a ValidatingWebhookConfiguration
 //
-v1_validating_webhook_configuration_t* AdmissionregistrationV1API_createValidatingWebhookConfiguration(apiClient_t *apiClient, v1_validating_webhook_configuration_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_validating_webhook_configuration_t* AdmissionregistrationV1API_createValidatingWebhookConfiguration(apiClient_t *apiClient, v1_validating_webhook_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -91,7 +91,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of MutatingWebhookConfiguration
 //
-v1_status_t* AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* AdmissionregistrationV1API_deleteCollectionMutatingWebhookConfiguration(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -133,7 +133,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of ValidatingWebhookConfiguration
 //
-v1_status_t* AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* AdmissionregistrationV1API_deleteCollectionValidatingWebhookConfiguration(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -175,7 +175,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a MutatingWebhookConfiguration
 //
-v1_status_t* AdmissionregistrationV1API_deleteMutatingWebhookConfiguration(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* AdmissionregistrationV1API_deleteMutatingWebhookConfiguration(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -210,7 +210,7 @@ Name | Type | Description  | Notes
 ```c
 // delete a ValidatingWebhookConfiguration
 //
-v1_status_t* AdmissionregistrationV1API_deleteValidatingWebhookConfiguration(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* AdmissionregistrationV1API_deleteValidatingWebhookConfiguration(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -273,7 +273,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind MutatingWebhookConfiguration
 //
-v1_mutating_webhook_configuration_list_t* AdmissionregistrationV1API_listMutatingWebhookConfiguration(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_mutating_webhook_configuration_list_t* AdmissionregistrationV1API_listMutatingWebhookConfiguration(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -312,7 +312,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind ValidatingWebhookConfiguration
 //
-v1_validating_webhook_configuration_list_t* AdmissionregistrationV1API_listValidatingWebhookConfiguration(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_validating_webhook_configuration_list_t* AdmissionregistrationV1API_listValidatingWebhookConfiguration(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -351,7 +351,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified MutatingWebhookConfiguration
 //
-v1_mutating_webhook_configuration_t* AdmissionregistrationV1API_patchMutatingWebhookConfiguration(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_mutating_webhook_configuration_t* AdmissionregistrationV1API_patchMutatingWebhookConfiguration(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -386,7 +386,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified ValidatingWebhookConfiguration
 //
-v1_validating_webhook_configuration_t* AdmissionregistrationV1API_patchValidatingWebhookConfiguration(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_validating_webhook_configuration_t* AdmissionregistrationV1API_patchValidatingWebhookConfiguration(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -421,7 +421,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified MutatingWebhookConfiguration
 //
-v1_mutating_webhook_configuration_t* AdmissionregistrationV1API_readMutatingWebhookConfiguration(apiClient_t *apiClient, char * name, char * pretty);
+v1_mutating_webhook_configuration_t* AdmissionregistrationV1API_readMutatingWebhookConfiguration(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -451,7 +451,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified ValidatingWebhookConfiguration
 //
-v1_validating_webhook_configuration_t* AdmissionregistrationV1API_readValidatingWebhookConfiguration(apiClient_t *apiClient, char * name, char * pretty);
+v1_validating_webhook_configuration_t* AdmissionregistrationV1API_readValidatingWebhookConfiguration(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -481,7 +481,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified MutatingWebhookConfiguration
 //
-v1_mutating_webhook_configuration_t* AdmissionregistrationV1API_replaceMutatingWebhookConfiguration(apiClient_t *apiClient, char * name, v1_mutating_webhook_configuration_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_mutating_webhook_configuration_t* AdmissionregistrationV1API_replaceMutatingWebhookConfiguration(apiClient_t *apiClient, char *name, v1_mutating_webhook_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -515,7 +515,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified ValidatingWebhookConfiguration
 //
-v1_validating_webhook_configuration_t* AdmissionregistrationV1API_replaceValidatingWebhookConfiguration(apiClient_t *apiClient, char * name, v1_validating_webhook_configuration_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_validating_webhook_configuration_t* AdmissionregistrationV1API_replaceValidatingWebhookConfiguration(apiClient_t *apiClient, char *name, v1_validating_webhook_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters

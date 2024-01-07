@@ -21,7 +21,7 @@ Method | HTTP request | Description
 ```c
 // create an APIService
 //
-v1_api_service_t* ApiregistrationV1API_createAPIService(apiClient_t *apiClient, v1_api_service_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_api_service_t* ApiregistrationV1API_createAPIService(apiClient_t *apiClient, v1_api_service_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -54,7 +54,7 @@ Name | Type | Description  | Notes
 ```c
 // delete an APIService
 //
-v1_status_t* ApiregistrationV1API_deleteAPIService(apiClient_t *apiClient, char * name, char * pretty, char * dryRun, int gracePeriodSeconds, int orphanDependents, char * propagationPolicy, v1_delete_options_t * body);
+v1_status_t* ApiregistrationV1API_deleteAPIService(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 ```c
 // delete collection of APIService
 //
-v1_status_t* ApiregistrationV1API_deleteCollectionAPIService(apiClient_t *apiClient, char * pretty, char * _continue, char * dryRun, char * fieldSelector, int gracePeriodSeconds, char * labelSelector, int limit, int orphanDependents, char * propagationPolicy, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, v1_delete_options_t * body);
+v1_status_t* ApiregistrationV1API_deleteCollectionAPIService(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -159,7 +159,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch objects of kind APIService
 //
-v1_api_service_list_t* ApiregistrationV1API_listAPIService(apiClient_t *apiClient, char * pretty, int allowWatchBookmarks, char * _continue, char * fieldSelector, char * labelSelector, int limit, char * resourceVersion, char * resourceVersionMatch, int sendInitialEvents, int timeoutSeconds, int watch);
+v1_api_service_list_t* ApiregistrationV1API_listAPIService(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -198,7 +198,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update the specified APIService
 //
-v1_api_service_t* ApiregistrationV1API_patchAPIService(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_api_service_t* ApiregistrationV1API_patchAPIService(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -233,7 +233,7 @@ Name | Type | Description  | Notes
 ```c
 // partially update status of the specified APIService
 //
-v1_api_service_t* ApiregistrationV1API_patchAPIServiceStatus(apiClient_t *apiClient, char * name, object_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation, int force);
+v1_api_service_t* ApiregistrationV1API_patchAPIServiceStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -268,7 +268,7 @@ Name | Type | Description  | Notes
 ```c
 // read the specified APIService
 //
-v1_api_service_t* ApiregistrationV1API_readAPIService(apiClient_t *apiClient, char * name, char * pretty);
+v1_api_service_t* ApiregistrationV1API_readAPIService(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -298,7 +298,7 @@ Name | Type | Description  | Notes
 ```c
 // read status of the specified APIService
 //
-v1_api_service_t* ApiregistrationV1API_readAPIServiceStatus(apiClient_t *apiClient, char * name, char * pretty);
+v1_api_service_t* ApiregistrationV1API_readAPIServiceStatus(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -328,7 +328,7 @@ Name | Type | Description  | Notes
 ```c
 // replace the specified APIService
 //
-v1_api_service_t* ApiregistrationV1API_replaceAPIService(apiClient_t *apiClient, char * name, v1_api_service_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_api_service_t* ApiregistrationV1API_replaceAPIService(apiClient_t *apiClient, char *name, v1_api_service_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -362,7 +362,7 @@ Name | Type | Description  | Notes
 ```c
 // replace status of the specified APIService
 //
-v1_api_service_t* ApiregistrationV1API_replaceAPIServiceStatus(apiClient_t *apiClient, char * name, v1_api_service_t * body, char * pretty, char * dryRun, char * fieldManager, char * fieldValidation);
+v1_api_service_t* ApiregistrationV1API_replaceAPIServiceStatus(apiClient_t *apiClient, char *name, v1_api_service_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters

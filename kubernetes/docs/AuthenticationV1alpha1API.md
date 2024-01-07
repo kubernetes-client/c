@@ -12,7 +12,7 @@ Method | HTTP request | Description
 ```c
 // create a SelfSubjectReview
 //
-v1alpha1_self_subject_review_t* AuthenticationV1alpha1API_createSelfSubjectReview(apiClient_t *apiClient, v1alpha1_self_subject_review_t * body, char * dryRun, char * fieldManager, char * fieldValidation, char * pretty);
+v1alpha1_self_subject_review_t* AuthenticationV1alpha1API_createSelfSubjectReview(apiClient_t *apiClient, v1alpha1_self_subject_review_t *body, char *dryRun, char *fieldManager, char *fieldValidation, char *pretty);
 ```
 
 ### Parameters
