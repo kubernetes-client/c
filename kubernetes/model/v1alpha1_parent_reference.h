@@ -23,7 +23,6 @@ typedef struct v1alpha1_parent_reference_t {
     char *name; // string
     char *_namespace; // string
     char *resource; // string
-    char *uid; // string
 
 } v1alpha1_parent_reference_t;
 
@@ -31,8 +30,7 @@ v1alpha1_parent_reference_t *v1alpha1_parent_reference_create(
     char *group,
     char *name,
     char *_namespace,
-    char *resource,
-    char *uid
+    char *resource
 );
 
 void v1alpha1_parent_reference_free(v1alpha1_parent_reference_t *v1alpha1_parent_reference);

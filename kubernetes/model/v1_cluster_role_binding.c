@@ -49,7 +49,7 @@ void v1_cluster_role_binding_free(v1_cluster_role_binding_t *v1_cluster_role_bin
     }
     if (v1_cluster_role_binding->subjects) {
         list_ForEach(listEntry, v1_cluster_role_binding->subjects) {
-            v1_subject_free(listEntry->data);
+            rbac_v1_subject_free(listEntry->data);
         }
         list_freeList(v1_cluster_role_binding->subjects);
         v1_cluster_role_binding->subjects = NULL;
@@ -113,7 +113,7 @@ cJSON *v1_cluster_role_binding_convertToJSON(v1_cluster_role_binding_t *v1_clust
     listEntry_t *subjectsListEntry;
     if (v1_cluster_role_binding->subjects) {
     list_ForEach(subjectsListEntry, v1_cluster_role_binding->subjects) {
-    cJSON *itemLocal = v1_subject_convertToJSON(subjectsListEntry->data);
+    cJSON *itemLocal = rbac_v1_subject_convertToJSON(subjectsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
@@ -191,7 +191,7 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
         if(!cJSON_IsObject(subjects_local_nonprimitive)){
             goto end;
         }
-        v1_subject_t *subjectsItem = v1_subject_parseFromJSON(subjects_local_nonprimitive);
+        rbac_v1_subject_t *subjectsItem = rbac_v1_subject_parseFromJSON(subjects_local_nonprimitive);
 
         list_addElement(subjectsList, subjectsItem);
     }
@@ -219,7 +219,7 @@ end:
     if (subjectsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, subjectsList) {
-            v1_subject_free(listEntry->data);
+            rbac_v1_subject_free(listEntry->data);
             listEntry->data = NULL;
         }
         list_freeList(subjectsList);

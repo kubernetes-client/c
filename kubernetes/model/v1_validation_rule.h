@@ -22,6 +22,7 @@ typedef struct v1_validation_rule_t {
     char *field_path; // string
     char *message; // string
     char *message_expression; // string
+    int optional_old_self; //boolean
     char *reason; // string
     char *rule; // string
 
@@ -31,6 +32,7 @@ v1_validation_rule_t *v1_validation_rule_create(
     char *field_path,
     char *message,
     char *message_expression,
+    int optional_old_self,
     char *reason,
     char *rule
 );

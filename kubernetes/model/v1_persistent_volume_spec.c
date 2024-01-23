@@ -34,6 +34,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
     v1_scale_io_persistent_volume_source_t *scale_io,
     char *storage_class_name,
     v1_storage_os_persistent_volume_source_t *storageos,
+    char *volume_attributes_class_name,
     char *volume_mode,
     v1_vsphere_virtual_disk_volume_source_t *vsphere_volume
     ) {
@@ -69,6 +70,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
     v1_persistent_volume_spec_local_var->scale_io = scale_io;
     v1_persistent_volume_spec_local_var->storage_class_name = storage_class_name;
     v1_persistent_volume_spec_local_var->storageos = storageos;
+    v1_persistent_volume_spec_local_var->volume_attributes_class_name = volume_attributes_class_name;
     v1_persistent_volume_spec_local_var->volume_mode = volume_mode;
     v1_persistent_volume_spec_local_var->vsphere_volume = vsphere_volume;
 
@@ -204,6 +206,10 @@ void v1_persistent_volume_spec_free(v1_persistent_volume_spec_t *v1_persistent_v
     if (v1_persistent_volume_spec->storageos) {
         v1_storage_os_persistent_volume_source_free(v1_persistent_volume_spec->storageos);
         v1_persistent_volume_spec->storageos = NULL;
+    }
+    if (v1_persistent_volume_spec->volume_attributes_class_name) {
+        free(v1_persistent_volume_spec->volume_attributes_class_name);
+        v1_persistent_volume_spec->volume_attributes_class_name = NULL;
     }
     if (v1_persistent_volume_spec->volume_mode) {
         free(v1_persistent_volume_spec->volume_mode);
@@ -588,6 +594,14 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     }
 
 
+    // v1_persistent_volume_spec->volume_attributes_class_name
+    if(v1_persistent_volume_spec->volume_attributes_class_name) {
+    if(cJSON_AddStringToObject(item, "volumeAttributesClassName", v1_persistent_volume_spec->volume_attributes_class_name) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
     // v1_persistent_volume_spec->volume_mode
     if(v1_persistent_volume_spec->volume_mode) {
     if(cJSON_AddStringToObject(item, "volumeMode", v1_persistent_volume_spec->volume_mode) == NULL) {
@@ -920,6 +934,15 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     storageos_local_nonprim = v1_storage_os_persistent_volume_source_parseFromJSON(storageos); //nonprimitive
     }
 
+    // v1_persistent_volume_spec->volume_attributes_class_name
+    cJSON *volume_attributes_class_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "volumeAttributesClassName");
+    if (volume_attributes_class_name) { 
+    if(!cJSON_IsString(volume_attributes_class_name) && !cJSON_IsNull(volume_attributes_class_name))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_persistent_volume_spec->volume_mode
     cJSON *volume_mode = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "volumeMode");
     if (volume_mode) { 
@@ -965,6 +988,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
         scale_io ? scale_io_local_nonprim : NULL,
         storage_class_name && !cJSON_IsNull(storage_class_name) ? strdup(storage_class_name->valuestring) : NULL,
         storageos ? storageos_local_nonprim : NULL,
+        volume_attributes_class_name && !cJSON_IsNull(volume_attributes_class_name) ? strdup(volume_attributes_class_name->valuestring) : NULL,
         volume_mode && !cJSON_IsNull(volume_mode) ? strdup(volume_mode->valuestring) : NULL,
         vsphere_volume ? vsphere_volume_local_nonprim : NULL
         );

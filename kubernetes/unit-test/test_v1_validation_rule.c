@@ -25,6 +25,7 @@ v1_validation_rule_t* instantiate_v1_validation_rule(int include_optional) {
       "0",
       "0",
       "0",
+      1,
       "0",
       "0"
     );
@@ -33,6 +34,7 @@ v1_validation_rule_t* instantiate_v1_validation_rule(int include_optional) {
       "0",
       "0",
       "0",
+      1,
       "0",
       "0"
     );

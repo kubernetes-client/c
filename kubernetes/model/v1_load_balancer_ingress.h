@@ -22,6 +22,7 @@ typedef struct v1_load_balancer_ingress_t v1_load_balancer_ingress_t;
 typedef struct v1_load_balancer_ingress_t {
     char *hostname; // string
     char *ip; // string
+    char *ip_mode; // string
     list_t *ports; //nonprimitive container
 
 } v1_load_balancer_ingress_t;
@@ -29,6 +30,7 @@ typedef struct v1_load_balancer_ingress_t {
 v1_load_balancer_ingress_t *v1_load_balancer_ingress_create(
     char *hostname,
     char *ip,
+    char *ip_mode,
     list_t *ports
 );
 

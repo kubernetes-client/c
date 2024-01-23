@@ -18,6 +18,7 @@ v1_lifecycle_handler_t* instantiate_v1_lifecycle_handler(int include_optional);
 
 #include "test_v1_exec_action.c"
 #include "test_v1_http_get_action.c"
+#include "test_v1_sleep_action.c"
 #include "test_v1_tcp_socket_action.c"
 
 
@@ -30,10 +31,13 @@ v1_lifecycle_handler_t* instantiate_v1_lifecycle_handler(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_http_get_action(0),
        // false, not to have infinite recursion
+      instantiate_v1_sleep_action(0),
+       // false, not to have infinite recursion
       instantiate_v1_tcp_socket_action(0)
     );
   } else {
     v1_lifecycle_handler = v1_lifecycle_handler_create(
+      NULL,
       NULL,
       NULL,
       NULL

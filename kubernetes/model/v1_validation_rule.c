@@ -9,6 +9,7 @@ v1_validation_rule_t *v1_validation_rule_create(
     char *field_path,
     char *message,
     char *message_expression,
+    int optional_old_self,
     char *reason,
     char *rule
     ) {
@@ -19,6 +20,7 @@ v1_validation_rule_t *v1_validation_rule_create(
     v1_validation_rule_local_var->field_path = field_path;
     v1_validation_rule_local_var->message = message;
     v1_validation_rule_local_var->message_expression = message_expression;
+    v1_validation_rule_local_var->optional_old_self = optional_old_self;
     v1_validation_rule_local_var->reason = reason;
     v1_validation_rule_local_var->rule = rule;
 
@@ -81,6 +83,14 @@ cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule
     }
 
 
+    // v1_validation_rule->optional_old_self
+    if(v1_validation_rule->optional_old_self) {
+    if(cJSON_AddBoolToObject(item, "optionalOldSelf", v1_validation_rule->optional_old_self) == NULL) {
+    goto fail; //Bool
+    }
+    }
+
+
     // v1_validation_rule->reason
     if(v1_validation_rule->reason) {
     if(cJSON_AddStringToObject(item, "reason", v1_validation_rule->reason) == NULL) {
@@ -136,6 +146,15 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
     }
     }
 
+    // v1_validation_rule->optional_old_self
+    cJSON *optional_old_self = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "optionalOldSelf");
+    if (optional_old_self) { 
+    if(!cJSON_IsBool(optional_old_self))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1_validation_rule->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "reason");
     if (reason) { 
@@ -162,6 +181,7 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
         field_path && !cJSON_IsNull(field_path) ? strdup(field_path->valuestring) : NULL,
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         message_expression && !cJSON_IsNull(message_expression) ? strdup(message_expression->valuestring) : NULL,
+        optional_old_self ? optional_old_self->valueint : 0,
         reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
         strdup(rule->valuestring)
         );

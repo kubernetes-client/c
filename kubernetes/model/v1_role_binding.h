@@ -15,9 +15,9 @@
 
 typedef struct v1_role_binding_t v1_role_binding_t;
 
+#include "rbac_v1_subject.h"
 #include "v1_object_meta.h"
 #include "v1_role_ref.h"
-#include "v1_subject.h"
 
 
 

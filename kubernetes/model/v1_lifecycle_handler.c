@@ -8,6 +8,7 @@
 v1_lifecycle_handler_t *v1_lifecycle_handler_create(
     v1_exec_action_t *exec,
     v1_http_get_action_t *http_get,
+    v1_sleep_action_t *sleep,
     v1_tcp_socket_action_t *tcp_socket
     ) {
     v1_lifecycle_handler_t *v1_lifecycle_handler_local_var = malloc(sizeof(v1_lifecycle_handler_t));
@@ -16,6 +17,7 @@ v1_lifecycle_handler_t *v1_lifecycle_handler_create(
     }
     v1_lifecycle_handler_local_var->exec = exec;
     v1_lifecycle_handler_local_var->http_get = http_get;
+    v1_lifecycle_handler_local_var->sleep = sleep;
     v1_lifecycle_handler_local_var->tcp_socket = tcp_socket;
 
     return v1_lifecycle_handler_local_var;
@@ -34,6 +36,10 @@ void v1_lifecycle_handler_free(v1_lifecycle_handler_t *v1_lifecycle_handler) {
     if (v1_lifecycle_handler->http_get) {
         v1_http_get_action_free(v1_lifecycle_handler->http_get);
         v1_lifecycle_handler->http_get = NULL;
+    }
+    if (v1_lifecycle_handler->sleep) {
+        v1_sleep_action_free(v1_lifecycle_handler->sleep);
+        v1_lifecycle_handler->sleep = NULL;
     }
     if (v1_lifecycle_handler->tcp_socket) {
         v1_tcp_socket_action_free(v1_lifecycle_handler->tcp_socket);
@@ -71,6 +77,19 @@ cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_h
     }
 
 
+    // v1_lifecycle_handler->sleep
+    if(v1_lifecycle_handler->sleep) {
+    cJSON *sleep_local_JSON = v1_sleep_action_convertToJSON(v1_lifecycle_handler->sleep);
+    if(sleep_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "sleep", sleep_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_lifecycle_handler->tcp_socket
     if(v1_lifecycle_handler->tcp_socket) {
     cJSON *tcp_socket_local_JSON = v1_tcp_socket_action_convertToJSON(v1_lifecycle_handler->tcp_socket);
@@ -101,6 +120,9 @@ v1_lifecycle_handler_t *v1_lifecycle_handler_parseFromJSON(cJSON *v1_lifecycle_h
     // define the local variable for v1_lifecycle_handler->http_get
     v1_http_get_action_t *http_get_local_nonprim = NULL;
 
+    // define the local variable for v1_lifecycle_handler->sleep
+    v1_sleep_action_t *sleep_local_nonprim = NULL;
+
     // define the local variable for v1_lifecycle_handler->tcp_socket
     v1_tcp_socket_action_t *tcp_socket_local_nonprim = NULL;
 
@@ -116,6 +138,12 @@ v1_lifecycle_handler_t *v1_lifecycle_handler_parseFromJSON(cJSON *v1_lifecycle_h
     http_get_local_nonprim = v1_http_get_action_parseFromJSON(http_get); //nonprimitive
     }
 
+    // v1_lifecycle_handler->sleep
+    cJSON *sleep = cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "sleep");
+    if (sleep) { 
+    sleep_local_nonprim = v1_sleep_action_parseFromJSON(sleep); //nonprimitive
+    }
+
     // v1_lifecycle_handler->tcp_socket
     cJSON *tcp_socket = cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "tcpSocket");
     if (tcp_socket) { 
@@ -126,6 +154,7 @@ v1_lifecycle_handler_t *v1_lifecycle_handler_parseFromJSON(cJSON *v1_lifecycle_h
     v1_lifecycle_handler_local_var = v1_lifecycle_handler_create (
         exec ? exec_local_nonprim : NULL,
         http_get ? http_get_local_nonprim : NULL,
+        sleep ? sleep_local_nonprim : NULL,
         tcp_socket ? tcp_socket_local_nonprim : NULL
         );
 
@@ -138,6 +167,10 @@ end:
     if (http_get_local_nonprim) {
         v1_http_get_action_free(http_get_local_nonprim);
         http_get_local_nonprim = NULL;
+    }
+    if (sleep_local_nonprim) {
+        v1_sleep_action_free(sleep_local_nonprim);
+        sleep_local_nonprim = NULL;
     }
     if (tcp_socket_local_nonprim) {
         v1_tcp_socket_action_free(tcp_socket_local_nonprim);

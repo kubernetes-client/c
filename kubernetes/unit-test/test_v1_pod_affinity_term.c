@@ -26,6 +26,8 @@ v1_pod_affinity_term_t* instantiate_v1_pod_affinity_term(int include_optional) {
     v1_pod_affinity_term = v1_pod_affinity_term_create(
        // false, not to have infinite recursion
       instantiate_v1_label_selector(0),
+      list_createList(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_label_selector(0),
       list_createList(),
@@ -34,6 +36,8 @@ v1_pod_affinity_term_t* instantiate_v1_pod_affinity_term(int include_optional) {
   } else {
     v1_pod_affinity_term = v1_pod_affinity_term_create(
       NULL,
+      list_createList(),
+      list_createList(),
       NULL,
       list_createList(),
       "0"
