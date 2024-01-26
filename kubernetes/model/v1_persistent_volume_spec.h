@@ -71,6 +71,7 @@ typedef struct v1_persistent_volume_spec_t {
     struct v1_scale_io_persistent_volume_source_t *scale_io; //model
     char *storage_class_name; // string
     struct v1_storage_os_persistent_volume_source_t *storageos; //model
+    char *volume_attributes_class_name; // string
     char *volume_mode; // string
     struct v1_vsphere_virtual_disk_volume_source_t *vsphere_volume; //model
 
@@ -105,6 +106,7 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
     v1_scale_io_persistent_volume_source_t *scale_io,
     char *storage_class_name,
     v1_storage_os_persistent_volume_source_t *storageos,
+    char *volume_attributes_class_name,
     char *volume_mode,
     v1_vsphere_virtual_disk_volume_source_t *vsphere_volume
 );

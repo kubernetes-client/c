@@ -16,6 +16,7 @@
 #include "../model/v1_volume_projection.h"
 v1_volume_projection_t* instantiate_v1_volume_projection(int include_optional);
 
+#include "test_v1_cluster_trust_bundle_projection.c"
 #include "test_v1_config_map_projection.c"
 #include "test_v1_downward_api_projection.c"
 #include "test_v1_secret_projection.c"
@@ -27,6 +28,8 @@ v1_volume_projection_t* instantiate_v1_volume_projection(int include_optional) {
   if (include_optional) {
     v1_volume_projection = v1_volume_projection_create(
        // false, not to have infinite recursion
+      instantiate_v1_cluster_trust_bundle_projection(0),
+       // false, not to have infinite recursion
       instantiate_v1_config_map_projection(0),
        // false, not to have infinite recursion
       instantiate_v1_downward_api_projection(0),
@@ -37,6 +40,7 @@ v1_volume_projection_t* instantiate_v1_volume_projection(int include_optional) {
     );
   } else {
     v1_volume_projection = v1_volume_projection_create(
+      NULL,
       NULL,
       NULL,
       NULL,

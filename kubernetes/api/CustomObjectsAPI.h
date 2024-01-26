@@ -13,13 +13,13 @@
 // Creates a cluster scoped Custom object
 //
 object_t*
-CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, object_t *body, char *pretty, char *dryRun, char *fieldManager);
+CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // Creates a namespace scoped Custom object
 //
 object_t*
-CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, object_t *body, char *pretty, char *dryRun, char *fieldManager);
+CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // Deletes the specified cluster scoped custom object
@@ -31,13 +31,13 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char *group, 
 // Delete collection of cluster scoped custom objects
 //
 object_t*
-CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body);
+CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, char *labelSelector, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body);
 
 
 // Delete collection of namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body);
+CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, char *labelSelector, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body);
 
 
 // Deletes the specified namespace scoped custom object
@@ -103,72 +103,72 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char *group,
 // patch the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force);
+CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // partially update scale of the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force);
+CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // partially update status of the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force);
+CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // patch the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force);
+CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // partially update scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force);
+CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // partially update status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force);
+CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // replace the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager);
+CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // replace scale of the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager);
+CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // replace status of the cluster scoped specified custom object
 //
 object_t*
-CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager);
+CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // replace the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager);
+CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // replace scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager);
+CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // replace status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager);
+CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation);
 
 

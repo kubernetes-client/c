@@ -98,6 +98,7 @@ v1_persistent_volume_spec_t* instantiate_v1_persistent_volume_spec(int include_o
        // false, not to have infinite recursion
       instantiate_v1_storage_os_persistent_volume_source(0),
       "0",
+      "0",
        // false, not to have infinite recursion
       instantiate_v1_vsphere_virtual_disk_volume_source(0)
     );
@@ -131,6 +132,7 @@ v1_persistent_volume_spec_t* instantiate_v1_persistent_volume_spec(int include_o
       NULL,
       "0",
       NULL,
+      "0",
       "0",
       NULL
     );

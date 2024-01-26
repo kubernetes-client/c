@@ -17,7 +17,7 @@ CLIENT_REPO_ROOT=${PWD}/c
 sudo apt-get install libssl-dev libcurl4-openssl-dev uncrustify
 
 # Build pre-requisite: libwebsockets
-git clone https://libwebsockets.org/repo/libwebsockets --depth 1 --branch v4.2-stable
+git clone https://github.com/warmcat/libwebsockets --depth 1 --branch v4.2-stable
 cd libwebsockets
 mkdir build
 cd build

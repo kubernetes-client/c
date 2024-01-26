@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:0-${VARIANT}
 RUN apt-get update && \
     apt-get install -qq -y git libssl-dev libcurl4-openssl-dev uncrustify cmake g++
 
-RUN git clone https://libwebsockets.org/repo/libwebsockets --depth 1 --branch v4.2-stable && \
+RUN git clone https://github.com/warmcat/libwebsockets --depth 1 --branch v4.2-stable && \
     cd libwebsockets && \
     mkdir build && \
     cd build && \

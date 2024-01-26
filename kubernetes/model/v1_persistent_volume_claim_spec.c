@@ -9,9 +9,10 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create(
     list_t *access_modes,
     v1_typed_local_object_reference_t *data_source,
     v1_typed_object_reference_t *data_source_ref,
-    v1_resource_requirements_t *resources,
+    v1_volume_resource_requirements_t *resources,
     v1_label_selector_t *selector,
     char *storage_class_name,
+    char *volume_attributes_class_name,
     char *volume_mode,
     char *volume_name
     ) {
@@ -25,6 +26,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create(
     v1_persistent_volume_claim_spec_local_var->resources = resources;
     v1_persistent_volume_claim_spec_local_var->selector = selector;
     v1_persistent_volume_claim_spec_local_var->storage_class_name = storage_class_name;
+    v1_persistent_volume_claim_spec_local_var->volume_attributes_class_name = volume_attributes_class_name;
     v1_persistent_volume_claim_spec_local_var->volume_mode = volume_mode;
     v1_persistent_volume_claim_spec_local_var->volume_name = volume_name;
 
@@ -53,7 +55,7 @@ void v1_persistent_volume_claim_spec_free(v1_persistent_volume_claim_spec_t *v1_
         v1_persistent_volume_claim_spec->data_source_ref = NULL;
     }
     if (v1_persistent_volume_claim_spec->resources) {
-        v1_resource_requirements_free(v1_persistent_volume_claim_spec->resources);
+        v1_volume_resource_requirements_free(v1_persistent_volume_claim_spec->resources);
         v1_persistent_volume_claim_spec->resources = NULL;
     }
     if (v1_persistent_volume_claim_spec->selector) {
@@ -63,6 +65,10 @@ void v1_persistent_volume_claim_spec_free(v1_persistent_volume_claim_spec_t *v1_
     if (v1_persistent_volume_claim_spec->storage_class_name) {
         free(v1_persistent_volume_claim_spec->storage_class_name);
         v1_persistent_volume_claim_spec->storage_class_name = NULL;
+    }
+    if (v1_persistent_volume_claim_spec->volume_attributes_class_name) {
+        free(v1_persistent_volume_claim_spec->volume_attributes_class_name);
+        v1_persistent_volume_claim_spec->volume_attributes_class_name = NULL;
     }
     if (v1_persistent_volume_claim_spec->volume_mode) {
         free(v1_persistent_volume_claim_spec->volume_mode);
@@ -123,7 +129,7 @@ cJSON *v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_
 
     // v1_persistent_volume_claim_spec->resources
     if(v1_persistent_volume_claim_spec->resources) {
-    cJSON *resources_local_JSON = v1_resource_requirements_convertToJSON(v1_persistent_volume_claim_spec->resources);
+    cJSON *resources_local_JSON = v1_volume_resource_requirements_convertToJSON(v1_persistent_volume_claim_spec->resources);
     if(resources_local_JSON == NULL) {
     goto fail; //model
     }
@@ -150,6 +156,14 @@ cJSON *v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_
     // v1_persistent_volume_claim_spec->storage_class_name
     if(v1_persistent_volume_claim_spec->storage_class_name) {
     if(cJSON_AddStringToObject(item, "storageClassName", v1_persistent_volume_claim_spec->storage_class_name) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // v1_persistent_volume_claim_spec->volume_attributes_class_name
+    if(v1_persistent_volume_claim_spec->volume_attributes_class_name) {
+    if(cJSON_AddStringToObject(item, "volumeAttributesClassName", v1_persistent_volume_claim_spec->volume_attributes_class_name) == NULL) {
     goto fail; //String
     }
     }
@@ -192,7 +206,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     v1_typed_object_reference_t *data_source_ref_local_nonprim = NULL;
 
     // define the local variable for v1_persistent_volume_claim_spec->resources
-    v1_resource_requirements_t *resources_local_nonprim = NULL;
+    v1_volume_resource_requirements_t *resources_local_nonprim = NULL;
 
     // define the local variable for v1_persistent_volume_claim_spec->selector
     v1_label_selector_t *selector_local_nonprim = NULL;
@@ -231,7 +245,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     // v1_persistent_volume_claim_spec->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "resources");
     if (resources) { 
-    resources_local_nonprim = v1_resource_requirements_parseFromJSON(resources); //nonprimitive
+    resources_local_nonprim = v1_volume_resource_requirements_parseFromJSON(resources); //nonprimitive
     }
 
     // v1_persistent_volume_claim_spec->selector
@@ -244,6 +258,15 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     cJSON *storage_class_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "storageClassName");
     if (storage_class_name) { 
     if(!cJSON_IsString(storage_class_name) && !cJSON_IsNull(storage_class_name))
+    {
+    goto end; //String
+    }
+    }
+
+    // v1_persistent_volume_claim_spec->volume_attributes_class_name
+    cJSON *volume_attributes_class_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "volumeAttributesClassName");
+    if (volume_attributes_class_name) { 
+    if(!cJSON_IsString(volume_attributes_class_name) && !cJSON_IsNull(volume_attributes_class_name))
     {
     goto end; //String
     }
@@ -275,6 +298,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
         resources ? resources_local_nonprim : NULL,
         selector ? selector_local_nonprim : NULL,
         storage_class_name && !cJSON_IsNull(storage_class_name) ? strdup(storage_class_name->valuestring) : NULL,
+        volume_attributes_class_name && !cJSON_IsNull(volume_attributes_class_name) ? strdup(volume_attributes_class_name->valuestring) : NULL,
         volume_mode && !cJSON_IsNull(volume_mode) ? strdup(volume_mode->valuestring) : NULL,
         volume_name && !cJSON_IsNull(volume_name) ? strdup(volume_name->valuestring) : NULL
         );
@@ -299,7 +323,7 @@ end:
         data_source_ref_local_nonprim = NULL;
     }
     if (resources_local_nonprim) {
-        v1_resource_requirements_free(resources_local_nonprim);
+        v1_volume_resource_requirements_free(resources_local_nonprim);
         resources_local_nonprim = NULL;
     }
     if (selector_local_nonprim) {

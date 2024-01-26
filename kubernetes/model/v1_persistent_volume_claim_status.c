@@ -11,6 +11,8 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_create(
     list_t* allocated_resources,
     list_t* capacity,
     list_t *conditions,
+    char *current_volume_attributes_class_name,
+    v1_modify_volume_status_t *modify_volume_status,
     char *phase
     ) {
     v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_local_var = malloc(sizeof(v1_persistent_volume_claim_status_t));
@@ -22,6 +24,8 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_create(
     v1_persistent_volume_claim_status_local_var->allocated_resources = allocated_resources;
     v1_persistent_volume_claim_status_local_var->capacity = capacity;
     v1_persistent_volume_claim_status_local_var->conditions = conditions;
+    v1_persistent_volume_claim_status_local_var->current_volume_attributes_class_name = current_volume_attributes_class_name;
+    v1_persistent_volume_claim_status_local_var->modify_volume_status = modify_volume_status;
     v1_persistent_volume_claim_status_local_var->phase = phase;
 
     return v1_persistent_volume_claim_status_local_var;
@@ -76,6 +80,14 @@ void v1_persistent_volume_claim_status_free(v1_persistent_volume_claim_status_t 
         }
         list_freeList(v1_persistent_volume_claim_status->conditions);
         v1_persistent_volume_claim_status->conditions = NULL;
+    }
+    if (v1_persistent_volume_claim_status->current_volume_attributes_class_name) {
+        free(v1_persistent_volume_claim_status->current_volume_attributes_class_name);
+        v1_persistent_volume_claim_status->current_volume_attributes_class_name = NULL;
+    }
+    if (v1_persistent_volume_claim_status->modify_volume_status) {
+        v1_modify_volume_status_free(v1_persistent_volume_claim_status->modify_volume_status);
+        v1_persistent_volume_claim_status->modify_volume_status = NULL;
     }
     if (v1_persistent_volume_claim_status->phase) {
         free(v1_persistent_volume_claim_status->phase);
@@ -184,6 +196,27 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
     }
 
 
+    // v1_persistent_volume_claim_status->current_volume_attributes_class_name
+    if(v1_persistent_volume_claim_status->current_volume_attributes_class_name) {
+    if(cJSON_AddStringToObject(item, "currentVolumeAttributesClassName", v1_persistent_volume_claim_status->current_volume_attributes_class_name) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // v1_persistent_volume_claim_status->modify_volume_status
+    if(v1_persistent_volume_claim_status->modify_volume_status) {
+    cJSON *modify_volume_status_local_JSON = v1_modify_volume_status_convertToJSON(v1_persistent_volume_claim_status->modify_volume_status);
+    if(modify_volume_status_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "modifyVolumeStatus", modify_volume_status_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_persistent_volume_claim_status->phase
     if(v1_persistent_volume_claim_status->phase) {
     if(cJSON_AddStringToObject(item, "phase", v1_persistent_volume_claim_status->phase) == NULL) {
@@ -217,6 +250,9 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
 
     // define the local list for v1_persistent_volume_claim_status->conditions
     list_t *conditionsList = NULL;
+
+    // define the local variable for v1_persistent_volume_claim_status->modify_volume_status
+    v1_modify_volume_status_t *modify_volume_status_local_nonprim = NULL;
 
     // v1_persistent_volume_claim_status->access_modes
     cJSON *access_modes = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "accessModes");
@@ -333,6 +369,21 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     }
     }
 
+    // v1_persistent_volume_claim_status->current_volume_attributes_class_name
+    cJSON *current_volume_attributes_class_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "currentVolumeAttributesClassName");
+    if (current_volume_attributes_class_name) { 
+    if(!cJSON_IsString(current_volume_attributes_class_name) && !cJSON_IsNull(current_volume_attributes_class_name))
+    {
+    goto end; //String
+    }
+    }
+
+    // v1_persistent_volume_claim_status->modify_volume_status
+    cJSON *modify_volume_status = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "modifyVolumeStatus");
+    if (modify_volume_status) { 
+    modify_volume_status_local_nonprim = v1_modify_volume_status_parseFromJSON(modify_volume_status); //nonprimitive
+    }
+
     // v1_persistent_volume_claim_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "phase");
     if (phase) { 
@@ -349,6 +400,8 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
         allocated_resources ? allocated_resourcesList : NULL,
         capacity ? capacityList : NULL,
         conditions ? conditionsList : NULL,
+        current_volume_attributes_class_name && !cJSON_IsNull(current_volume_attributes_class_name) ? strdup(current_volume_attributes_class_name->valuestring) : NULL,
+        modify_volume_status ? modify_volume_status_local_nonprim : NULL,
         phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL
         );
 
@@ -413,6 +466,10 @@ end:
         }
         list_freeList(conditionsList);
         conditionsList = NULL;
+    }
+    if (modify_volume_status_local_nonprim) {
+        v1_modify_volume_status_free(modify_volume_status_local_nonprim);
+        modify_volume_status_local_nonprim = NULL;
     }
     return NULL;
 

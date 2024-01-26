@@ -25,12 +25,10 @@ v1alpha1_parent_reference_t* instantiate_v1alpha1_parent_reference(int include_o
       "0",
       "0",
       "0",
-      "0",
       "0"
     );
   } else {
     v1alpha1_parent_reference = v1alpha1_parent_reference_create(
-      "0",
       "0",
       "0",
       "0",

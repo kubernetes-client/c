@@ -9,8 +9,7 @@ v1alpha1_parent_reference_t *v1alpha1_parent_reference_create(
     char *group,
     char *name,
     char *_namespace,
-    char *resource,
-    char *uid
+    char *resource
     ) {
     v1alpha1_parent_reference_t *v1alpha1_parent_reference_local_var = malloc(sizeof(v1alpha1_parent_reference_t));
     if (!v1alpha1_parent_reference_local_var) {
@@ -20,7 +19,6 @@ v1alpha1_parent_reference_t *v1alpha1_parent_reference_create(
     v1alpha1_parent_reference_local_var->name = name;
     v1alpha1_parent_reference_local_var->_namespace = _namespace;
     v1alpha1_parent_reference_local_var->resource = resource;
-    v1alpha1_parent_reference_local_var->uid = uid;
 
     return v1alpha1_parent_reference_local_var;
 }
@@ -46,10 +44,6 @@ void v1alpha1_parent_reference_free(v1alpha1_parent_reference_t *v1alpha1_parent
     if (v1alpha1_parent_reference->resource) {
         free(v1alpha1_parent_reference->resource);
         v1alpha1_parent_reference->resource = NULL;
-    }
-    if (v1alpha1_parent_reference->uid) {
-        free(v1alpha1_parent_reference->uid);
-        v1alpha1_parent_reference->uid = NULL;
     }
     free(v1alpha1_parent_reference);
 }
@@ -84,14 +78,6 @@ cJSON *v1alpha1_parent_reference_convertToJSON(v1alpha1_parent_reference_t *v1al
     // v1alpha1_parent_reference->resource
     if(v1alpha1_parent_reference->resource) {
     if(cJSON_AddStringToObject(item, "resource", v1alpha1_parent_reference->resource) == NULL) {
-    goto fail; //String
-    }
-    }
-
-
-    // v1alpha1_parent_reference->uid
-    if(v1alpha1_parent_reference->uid) {
-    if(cJSON_AddStringToObject(item, "uid", v1alpha1_parent_reference->uid) == NULL) {
     goto fail; //String
     }
     }
@@ -144,22 +130,12 @@ v1alpha1_parent_reference_t *v1alpha1_parent_reference_parseFromJSON(cJSON *v1al
     }
     }
 
-    // v1alpha1_parent_reference->uid
-    cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1alpha1_parent_referenceJSON, "uid");
-    if (uid) { 
-    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
-    {
-    goto end; //String
-    }
-    }
-
 
     v1alpha1_parent_reference_local_var = v1alpha1_parent_reference_create (
         group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
-        resource && !cJSON_IsNull(resource) ? strdup(resource->valuestring) : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
+        resource && !cJSON_IsNull(resource) ? strdup(resource->valuestring) : NULL
         );
 
     return v1alpha1_parent_reference_local_var;

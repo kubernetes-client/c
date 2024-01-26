@@ -15,7 +15,7 @@
 // Creates a cluster scoped Custom object
 //
 object_t*
-CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, object_t *body, char *pretty, char *dryRun, char *fieldManager)
+CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -96,6 +96,18 @@ CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, 
         valueQuery_fieldManager = strdup((fieldManager));
         keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
+    }
+
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
     }
 
     // Body Param
@@ -189,6 +201,18 @@ CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -199,7 +223,7 @@ end:
 // Creates a namespace scoped Custom object
 //
 object_t*
-CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, object_t *body, char *pretty, char *dryRun, char *fieldManager)
+CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -290,6 +314,18 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *grou
         valueQuery_fieldManager = strdup((fieldManager));
         keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
+    }
+
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
     }
 
     // Body Param
@@ -383,6 +419,18 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *grou
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:
@@ -615,7 +663,7 @@ end:
 // Delete collection of cluster scoped custom objects
 //
 object_t*
-CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body)
+CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, char *labelSelector, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -672,6 +720,18 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery_labelSelector = NULL;
+    char * valueQuery_labelSelector = NULL;
+    keyValuePair_t *keyPairQuery_labelSelector = 0;
+    if (labelSelector)
+    {
+        keyQuery_labelSelector = strdup("labelSelector");
+        valueQuery_labelSelector = strdup((labelSelector));
+        keyPairQuery_labelSelector = keyValuePair_create(keyQuery_labelSelector, valueQuery_labelSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_labelSelector);
     }
 
     // query parameters
@@ -791,6 +851,18 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
+    if(keyQuery_labelSelector){
+        free(keyQuery_labelSelector);
+        keyQuery_labelSelector = NULL;
+    }
+    if(valueQuery_labelSelector){
+        free(valueQuery_labelSelector);
+        valueQuery_labelSelector = NULL;
+    }
+    if(keyPairQuery_labelSelector){
+        keyValuePair_free(keyPairQuery_labelSelector);
+        keyPairQuery_labelSelector = NULL;
+    }
     if(keyQuery_gracePeriodSeconds){
         free(keyQuery_gracePeriodSeconds);
         keyQuery_gracePeriodSeconds = NULL;
@@ -849,7 +921,7 @@ end:
 // Delete collection of namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body)
+CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, char *labelSelector, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -916,6 +988,18 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
         valueQuery_pretty = strdup((pretty));
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery_labelSelector = NULL;
+    char * valueQuery_labelSelector = NULL;
+    keyValuePair_t *keyPairQuery_labelSelector = 0;
+    if (labelSelector)
+    {
+        keyQuery_labelSelector = strdup("labelSelector");
+        valueQuery_labelSelector = strdup((labelSelector));
+        keyPairQuery_labelSelector = keyValuePair_create(keyQuery_labelSelector, valueQuery_labelSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_labelSelector);
     }
 
     // query parameters
@@ -1035,6 +1119,18 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     if(keyPairQuery_pretty){
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
+    }
+    if(keyQuery_labelSelector){
+        free(keyQuery_labelSelector);
+        keyQuery_labelSelector = NULL;
+    }
+    if(valueQuery_labelSelector){
+        free(valueQuery_labelSelector);
+        valueQuery_labelSelector = NULL;
+    }
+    if(keyPairQuery_labelSelector){
+        keyValuePair_free(keyPairQuery_labelSelector);
+        keyPairQuery_labelSelector = NULL;
     }
     if(keyQuery_gracePeriodSeconds){
         free(keyQuery_gracePeriodSeconds);
@@ -2805,7 +2901,7 @@ end:
 // patch the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
+CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2884,6 +2980,18 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, c
         valueQuery_fieldManager = strdup((fieldManager));
         keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
+    }
+
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
     }
 
     // query parameters
@@ -2980,6 +3088,18 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, c
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     if(keyQuery_force){
         free(keyQuery_force);
@@ -3003,7 +3123,7 @@ end:
 // partially update scale of the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
+CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3085,6 +3205,18 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *gro
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -3181,6 +3313,18 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *gro
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -3203,7 +3347,7 @@ end:
 // partially update status of the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
+CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3285,6 +3429,18 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *gr
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -3381,6 +3537,18 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *gr
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -3403,7 +3571,7 @@ end:
 // patch the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
+CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3495,6 +3663,18 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -3590,6 +3770,18 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -3612,7 +3804,7 @@ end:
 // partially update scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
+CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3704,6 +3896,18 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -3802,6 +4006,18 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -3824,7 +4040,7 @@ end:
 // partially update status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, int *force)
+CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3916,6 +4132,18 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     }
 
     // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
     char *keyQuery_force = NULL;
     char * valueQuery_force = NULL;
     keyValuePair_t *keyPairQuery_force = 0;
@@ -4014,6 +4242,18 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     if(keyQuery_force){
         free(keyQuery_force);
         keyQuery_force = NULL;
@@ -4036,7 +4276,7 @@ end:
 // replace the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
+CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4117,6 +4357,18 @@ CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group,
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -4197,6 +4449,18 @@ CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group,
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -4207,7 +4471,7 @@ end:
 // replace scale of the specified cluster scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
+CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4288,6 +4552,18 @@ CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *g
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -4374,6 +4650,18 @@ CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *g
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -4384,7 +4672,7 @@ end:
 // replace status of the cluster scoped specified custom object
 //
 object_t*
-CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
+CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4465,6 +4753,18 @@ CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -4551,6 +4851,18 @@ CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -4561,7 +4873,7 @@ end:
 // replace the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
+CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4652,6 +4964,18 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *gro
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -4733,6 +5057,18 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *gro
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -4743,7 +5079,7 @@ end:
 // replace scale of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
+CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4834,6 +5170,18 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -4921,6 +5269,18 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
     }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -4931,7 +5291,7 @@ end:
 // replace status of the specified namespace scoped custom object
 //
 object_t*
-CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager)
+CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *name, object_t *body, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5022,6 +5382,18 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
         list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
     }
 
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
@@ -5108,6 +5480,18 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     if(keyPairQuery_fieldManager){
         keyValuePair_free(keyPairQuery_fieldManager);
         keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
     }
     return elementToReturn;
 end:

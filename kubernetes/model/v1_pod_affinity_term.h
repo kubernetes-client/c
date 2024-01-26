@@ -21,6 +21,8 @@ typedef struct v1_pod_affinity_term_t v1_pod_affinity_term_t;
 
 typedef struct v1_pod_affinity_term_t {
     struct v1_label_selector_t *label_selector; //model
+    list_t *match_label_keys; //primitive container
+    list_t *mismatch_label_keys; //primitive container
     struct v1_label_selector_t *namespace_selector; //model
     list_t *namespaces; //primitive container
     char *topology_key; // string
@@ -29,6 +31,8 @@ typedef struct v1_pod_affinity_term_t {
 
 v1_pod_affinity_term_t *v1_pod_affinity_term_create(
     v1_label_selector_t *label_selector,
+    list_t *match_label_keys,
+    list_t *mismatch_label_keys,
     v1_label_selector_t *namespace_selector,
     list_t *namespaces,
     char *topology_key
