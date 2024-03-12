@@ -56,11 +56,7 @@ char* callInternal(genericClient_t *client,
 {
     apiClient_invoke(client->client, path, queryParameters, headerParameters, formParameters, headerType, contentType, body, method);
 
-    if (client->client->response_code == 200) {
-        printf("%s\n","OK");
-    }
     if (client->client->response_code == 401) {
-        printf("%s\n","Unauthorized");
         return NULL;
     }
     char* elementToReturn =  strndup((char*)client->client->dataReceived, client->client->dataReceivedLen);
@@ -138,7 +134,6 @@ char* Generic_createNamespacedResource(genericClient_t *client, const char *ns, 
 char* Generic_createResource(genericClient_t *client, const char* body) {
     char path[128];
     makeResourcePath(path, client, "");
-    printf("%s\n", path);
     return callSimplifiedInternal(client, path, "POST", body);
 }
 
