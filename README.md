@@ -52,6 +52,9 @@ sudo make install
 ## (Optional) Installing using vcpkg on Windows
 If you want to install the C client using vcpkg, please refer to [vcpkg.md](https://github.com/kubernetes-client/c/blob/master/docs/vcpkg.md)
 
+## (Optional) Installing using conan on Windows, Linux, Mac
+If you want to install the C client using conan, please refer to [conan.md](https://github.com/kubernetes-client/c/blob/master/docs/conan.md)
+
 ## Building an example
 ```bash
 cd ${CLIENT_REPO_ROOT}/examples/list_pod
