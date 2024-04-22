@@ -59,12 +59,7 @@ class kubernetes_client_cRecipe(ConanFile):
         self.cpp_info.libs = ["kubernetes"]
 
     def requirements(self):
-        self.requires("libcurl/[^7.58]", headers=True, libs=True, transitive_headers=True)
-        self.requires("openssl/[~1.1]", headers=True, libs=True, transitive_headers=True)
-        self.requires("libwebsockets/4.2.0", headers=True, libs=True, transitive_headers=True)
-        self.requires("libyaml/0.2.5", headers=True, libs=True, transitive_headers=True)
-
-    
-
-    
-
+        self.requires("libcurl/[^8]", transitive_headers=True)
+        self.requires("openssl/[~1.1]")
+        self.requires("libwebsockets/4.2.0", transitive_headers=True)
+        self.requires("libyaml/0.2.5")

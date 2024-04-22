@@ -1,5 +1,5 @@
 # Installing using conan
-### Prerequisites
+## Prerequisites
 1- Python 3
 https://www.python.org/downloads/
 
@@ -7,7 +7,7 @@ https://www.python.org/downloads/
 https://docs.conan.io/2/installation.html
 
 ## Build and Install the repo to local system by using conan
-1- Navigate to `kubernetes` directory, then use `conan create .` command. This will build the repo from source as static library.
+1- Navigate to `kubernetes` directory, then use `conan create` command. This will build the repo from source as static library.
 ```
 cd  kubernetes
 conan create . --build=missing
@@ -55,7 +55,7 @@ class ExampleRecipe(ConanFile):
 conan install . --build=missing
 ```
 
-3- Finally, edit your `CMakeLists.txt` of your project to link against libraries. In this case, we link to `kubernetes_client_c` library.
+3- Finally, edit `CMakeLists.txt` of your project to link against libraries. In this case, we link to `kubernetes_client_c` library.
 
 Add these lines after declaring the target in CMakeLists.
 
