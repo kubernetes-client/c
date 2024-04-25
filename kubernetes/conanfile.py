@@ -16,8 +16,8 @@ class kubernetes_client_cRecipe(ConanFile):
 
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": False, "fPIC": True}
+    options = {"shared": [True, False], "fPIC": [True, False], "openssl_shared":[True, False], "openssl_version": ["1", "3"], "curl_version": ["7", "8"]}
+    default_options = {"shared": False, "fPIC": True, "openssl_shared": True, "openssl_version": "3", "curl_version": "8"}
 
     # Sources are located in the same place as this recipe, copy them to the recipe
     exports_sources = "config.h.in", "ConfigureChecks.cmake", "PreTarget.cmake", "PostTarget.cmake", "CMakeLists.txt", "src/*", "external/*", "api/*", "model/*", "include/*", "config/*", "watch/*", "websocket/*"
@@ -29,6 +29,7 @@ class kubernetes_client_cRecipe(ConanFile):
     def configure(self):
         if self.options.shared:
             self.options.rm_safe("fPIC")
+        self.options["openssl/*"].shared = self.options.openssl_shared
 
     def layout(self):
         cmake_layout(self)
@@ -59,7 +60,7 @@ class kubernetes_client_cRecipe(ConanFile):
         self.cpp_info.libs = ["kubernetes"]
 
     def requirements(self):
-        self.requires("libcurl/[^8]", transitive_headers=True)
-        self.requires("openssl/[~1.1]")
-        self.requires("libwebsockets/4.2.0", transitive_headers=True)
-        self.requires("libyaml/0.2.5")
+        self.requires("libcurl/[~{}]".format(self.options.curl_version), transitive_headers=True)
+        self.requires("openssl/[~{}]".format(self.options.openssl_version), force=True)
+        self.requires("libwebsockets/[^4]", transitive_headers=True)
+        self.requires("libyaml/[^0.2]")
