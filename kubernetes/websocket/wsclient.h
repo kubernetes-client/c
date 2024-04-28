@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-typedef void (*data_callback_func) (void **, long *);
+typedef void (*data_callback_function) (void **, long *);
 
 typedef enum wsc_mode_t {
     WSC_MODE_NORMAL = 0,
@@ -23,7 +23,7 @@ typedef struct wsclient_t {
     long data_to_send_len;
     void *data_received;
     long data_received_len;
-    data_callback_func data_callback_func;
+    data_callback_function data_callback_func;
     int log_mask;
     lws_sorted_usec_list_t sul; /* schedule connection retry */
     struct lws *wsi;        /* related wsi if any */
