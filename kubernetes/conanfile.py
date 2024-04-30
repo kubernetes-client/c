@@ -11,13 +11,14 @@ class kubernetes_client_cRecipe(ConanFile):
     # Optional metadata
     license = "Apache-2.0"
     url = "https://github.com/kubernetes-client/c"
+    homepage = "https://github.com/kubernetes-client/c"
     description = "Official C client library for Kubernetes"
     topics = ("kubernetes", "k8s", "kubernetes-client", "k8s-client")
 
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False], "fPIC": [True, False], "openssl_shared":[True, False], "curl_version": ["7", "8"]}
-    default_options = {"shared": False, "fPIC": True, "openssl_shared": True, "curl_version": "8"}
+    options = {"shared": [True, False], "fPIC": [True, False], "curl_version": ["7", "8"]}
+    default_options = {"shared": False, "fPIC": True, "curl_version": "8"}
 
     # Sources are located in the same place as this recipe, copy them to the recipe
     exports_sources = "config.h.in", "ConfigureChecks.cmake", "PreTarget.cmake", "PostTarget.cmake", "CMakeLists.txt", "src/*", "external/*", "api/*", "model/*", "include/*", "config/*", "watch/*", "websocket/*"
@@ -29,7 +30,7 @@ class kubernetes_client_cRecipe(ConanFile):
     def configure(self):
         if self.options.shared:
             self.options.rm_safe("fPIC")
-        self.options["openssl/*"].shared = self.options.openssl_shared
+        self.options["libwebsockets/*"].with_zlib = "zlib"
 
     def layout(self):
         cmake_layout(self)
@@ -61,6 +62,6 @@ class kubernetes_client_cRecipe(ConanFile):
 
     def requirements(self):
         self.requires("libcurl/[~{}]".format(self.options.curl_version), transitive_headers=True)
-        self.requires("openssl/[^3]", force=True)
+        self.requires("openssl/[~3]", force=True)
         self.requires("libwebsockets/[^4.2]", transitive_headers=True)
         self.requires("libyaml/[^0.2.5]")
