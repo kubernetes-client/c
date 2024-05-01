@@ -5,15 +5,7 @@ ARG VARIANT="jammy"
 FROM mcr.microsoft.com/vscode/devcontainers/base:0-${VARIANT}
 
 RUN apt-get update && \
-    apt-get install -qq -y git libssl-dev libcurl4-openssl-dev uncrustify cmake g++
-
-RUN git clone https://github.com/warmcat/libwebsockets --depth 1 --branch v4.2-stable && \
-    cd libwebsockets && \
-    mkdir build && \
-    cd build && \
-    cmake -DLWS_WITHOUT_TESTAPPS=ON -DLWS_WITHOUT_TEST_SERVER=ON-DLWS_WITHOUT_TEST_SERVER_EXTPOLL=ON \
-      -DLWS_WITHOUT_TEST_PING=ON -DLWS_WITHOUT_TEST_CLIENT=ON -DCMAKE_C_FLAGS="-fpic" -DCMAKE_INSTALL_PREFIX=/usr/local .. && \
-    make && make install
+    apt-get install -qq -y git libssl-dev libcurl4-openssl-dev libwebsockets-dev uncrustify cmake g++
 
 # Build pre-requisite: libyaml
 RUN git clone https://github.com/yaml/libyaml --depth 1 --branch release/0.2.5 && \
