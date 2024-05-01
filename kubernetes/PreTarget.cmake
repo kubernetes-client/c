@@ -44,5 +44,5 @@ list(APPEND HDRS
         include/generic.h
         include/utils.h)
 
-find_package(libwebsockets CONFIG REQUIRED)
+find_package(Libwebsockets CONFIG REQUIRED)
 find_package(yaml CONFIG REQUIRED)

@@ -1,6 +1,6 @@
 find_package(OpenSSL REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(yaml CONFIG REQUIRED)
-find_package(libwebsockets CONFIG REQUIRED)
+find_package(Libwebsockets CONFIG REQUIRED)
 
 include("${CMAKE_CURRENT_LIST_DIR}/@pkgName@Targets.cmake")

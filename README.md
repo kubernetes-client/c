@@ -14,17 +14,7 @@ git clone https://github.com/kubernetes-client/c
 CLIENT_REPO_ROOT=${PWD}/c
 
 # Install pre-requisites
-sudo apt-get install libssl-dev libcurl4-openssl-dev uncrustify
-
-# Build pre-requisite: libwebsockets
-git clone https://github.com/warmcat/libwebsockets --depth 1 --branch v4.2-stable
-cd libwebsockets
-mkdir build
-cd build
-cmake -DLWS_WITHOUT_TESTAPPS=ON -DLWS_WITHOUT_TEST_SERVER=ON -DLWS_WITHOUT_TEST_SERVER_EXTPOLL=ON \
-      -DLWS_WITHOUT_TEST_PING=ON -DLWS_WITHOUT_TEST_CLIENT=ON -DCMAKE_C_FLAGS="-fpic" -DCMAKE_INSTALL_PREFIX=/usr/local ..
-make
-sudo make install
+sudo apt-get install libssl-dev libcurl4-openssl-dev libwebsockets-dev uncrustify
 
 # Build pre-requisite: libyaml
 git clone https://github.com/yaml/libyaml --depth 1 --branch release/0.2.5
