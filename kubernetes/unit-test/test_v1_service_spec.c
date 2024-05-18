@@ -42,6 +42,7 @@ v1_service_spec_t* instantiate_v1_service_spec(int include_optional) {
       "0",
        // false, not to have infinite recursion
       instantiate_v1_session_affinity_config(0),
+      "0",
       "0"
     );
   } else {
@@ -64,6 +65,7 @@ v1_service_spec_t* instantiate_v1_service_spec(int include_optional) {
       list_createList(),
       "0",
       NULL,
+      "0",
       "0"
     );
   }

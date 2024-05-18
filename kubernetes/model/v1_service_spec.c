@@ -24,6 +24,7 @@ v1_service_spec_t *v1_service_spec_create(
     list_t* selector,
     char *session_affinity,
     v1_session_affinity_config_t *session_affinity_config,
+    char *traffic_distribution,
     char *type
     ) {
     v1_service_spec_t *v1_service_spec_local_var = malloc(sizeof(v1_service_spec_t));
@@ -48,6 +49,7 @@ v1_service_spec_t *v1_service_spec_create(
     v1_service_spec_local_var->selector = selector;
     v1_service_spec_local_var->session_affinity = session_affinity;
     v1_service_spec_local_var->session_affinity_config = session_affinity_config;
+    v1_service_spec_local_var->traffic_distribution = traffic_distribution;
     v1_service_spec_local_var->type = type;
 
     return v1_service_spec_local_var;
@@ -139,6 +141,10 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
     if (v1_service_spec->session_affinity_config) {
         v1_session_affinity_config_free(v1_service_spec->session_affinity_config);
         v1_service_spec->session_affinity_config = NULL;
+    }
+    if (v1_service_spec->traffic_distribution) {
+        free(v1_service_spec->traffic_distribution);
+        v1_service_spec->traffic_distribution = NULL;
     }
     if (v1_service_spec->type) {
         free(v1_service_spec->type);
@@ -355,6 +361,14 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
     cJSON_AddItemToObject(item, "sessionAffinityConfig", session_affinity_config_local_JSON);
     if(item->child == NULL) {
     goto fail;
+    }
+    }
+
+
+    // v1_service_spec->traffic_distribution
+    if(v1_service_spec->traffic_distribution) {
+    if(cJSON_AddStringToObject(item, "trafficDistribution", v1_service_spec->traffic_distribution) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -626,6 +640,15 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     session_affinity_config_local_nonprim = v1_session_affinity_config_parseFromJSON(session_affinity_config); //nonprimitive
     }
 
+    // v1_service_spec->traffic_distribution
+    cJSON *traffic_distribution = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "trafficDistribution");
+    if (traffic_distribution) { 
+    if(!cJSON_IsString(traffic_distribution) && !cJSON_IsNull(traffic_distribution))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_service_spec->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "type");
     if (type) { 
@@ -655,6 +678,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
         selector ? selectorList : NULL,
         session_affinity && !cJSON_IsNull(session_affinity) ? strdup(session_affinity->valuestring) : NULL,
         session_affinity_config ? session_affinity_config_local_nonprim : NULL,
+        traffic_distribution && !cJSON_IsNull(traffic_distribution) ? strdup(traffic_distribution->valuestring) : NULL,
         type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 

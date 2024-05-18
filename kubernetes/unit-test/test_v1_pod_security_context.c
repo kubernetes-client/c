@@ -16,6 +16,7 @@
 #include "../model/v1_pod_security_context.h"
 v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optional);
 
+#include "test_v1_app_armor_profile.c"
 #include "test_v1_se_linux_options.c"
 #include "test_v1_seccomp_profile.c"
 #include "test_v1_windows_security_context_options.c"
@@ -25,6 +26,8 @@ v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optio
   v1_pod_security_context_t* v1_pod_security_context = NULL;
   if (include_optional) {
     v1_pod_security_context = v1_pod_security_context_create(
+       // false, not to have infinite recursion
+      instantiate_v1_app_armor_profile(0),
       56,
       "0",
       56,
@@ -41,6 +44,7 @@ v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optio
     );
   } else {
     v1_pod_security_context = v1_pod_security_context_create(
+      NULL,
       56,
       "0",
       56,

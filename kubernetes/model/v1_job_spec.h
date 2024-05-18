@@ -18,6 +18,7 @@ typedef struct v1_job_spec_t v1_job_spec_t;
 #include "v1_label_selector.h"
 #include "v1_pod_failure_policy.h"
 #include "v1_pod_template_spec.h"
+#include "v1_success_policy.h"
 
 
 
@@ -27,12 +28,14 @@ typedef struct v1_job_spec_t {
     int backoff_limit_per_index; //numeric
     char *completion_mode; // string
     int completions; //numeric
+    char *managed_by; // string
     int manual_selector; //boolean
     int max_failed_indexes; //numeric
     int parallelism; //numeric
     struct v1_pod_failure_policy_t *pod_failure_policy; //model
     char *pod_replacement_policy; // string
     struct v1_label_selector_t *selector; //model
+    struct v1_success_policy_t *success_policy; //model
     int suspend; //boolean
     struct v1_pod_template_spec_t *_template; //model
     int ttl_seconds_after_finished; //numeric
@@ -45,12 +48,14 @@ v1_job_spec_t *v1_job_spec_create(
     int backoff_limit_per_index,
     char *completion_mode,
     int completions,
+    char *managed_by,
     int manual_selector,
     int max_failed_indexes,
     int parallelism,
     v1_pod_failure_policy_t *pod_failure_policy,
     char *pod_replacement_policy,
     v1_label_selector_t *selector,
+    v1_success_policy_t *success_policy,
     int suspend,
     v1_pod_template_spec_t *_template,
     int ttl_seconds_after_finished

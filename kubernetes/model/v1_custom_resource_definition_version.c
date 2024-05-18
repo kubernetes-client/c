@@ -11,6 +11,7 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_c
     char *deprecation_warning,
     char *name,
     v1_custom_resource_validation_t *schema,
+    list_t *selectable_fields,
     int served,
     int storage,
     v1_custom_resource_subresources_t *subresources
@@ -24,6 +25,7 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_c
     v1_custom_resource_definition_version_local_var->deprecation_warning = deprecation_warning;
     v1_custom_resource_definition_version_local_var->name = name;
     v1_custom_resource_definition_version_local_var->schema = schema;
+    v1_custom_resource_definition_version_local_var->selectable_fields = selectable_fields;
     v1_custom_resource_definition_version_local_var->served = served;
     v1_custom_resource_definition_version_local_var->storage = storage;
     v1_custom_resource_definition_version_local_var->subresources = subresources;
@@ -55,6 +57,13 @@ void v1_custom_resource_definition_version_free(v1_custom_resource_definition_ve
     if (v1_custom_resource_definition_version->schema) {
         v1_custom_resource_validation_free(v1_custom_resource_definition_version->schema);
         v1_custom_resource_definition_version->schema = NULL;
+    }
+    if (v1_custom_resource_definition_version->selectable_fields) {
+        list_ForEach(listEntry, v1_custom_resource_definition_version->selectable_fields) {
+            v1_selectable_field_free(listEntry->data);
+        }
+        list_freeList(v1_custom_resource_definition_version->selectable_fields);
+        v1_custom_resource_definition_version->selectable_fields = NULL;
     }
     if (v1_custom_resource_definition_version->subresources) {
         v1_custom_resource_subresources_free(v1_custom_resource_definition_version->subresources);
@@ -124,6 +133,26 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     }
 
 
+    // v1_custom_resource_definition_version->selectable_fields
+    if(v1_custom_resource_definition_version->selectable_fields) {
+    cJSON *selectable_fields = cJSON_AddArrayToObject(item, "selectableFields");
+    if(selectable_fields == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *selectable_fieldsListEntry;
+    if (v1_custom_resource_definition_version->selectable_fields) {
+    list_ForEach(selectable_fieldsListEntry, v1_custom_resource_definition_version->selectable_fields) {
+    cJSON *itemLocal = v1_selectable_field_convertToJSON(selectable_fieldsListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(selectable_fields, itemLocal);
+    }
+    }
+    }
+
+
     // v1_custom_resource_definition_version->served
     if (!v1_custom_resource_definition_version->served) {
         goto fail;
@@ -171,6 +200,9 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
 
     // define the local variable for v1_custom_resource_definition_version->schema
     v1_custom_resource_validation_t *schema_local_nonprim = NULL;
+
+    // define the local list for v1_custom_resource_definition_version->selectable_fields
+    list_t *selectable_fieldsList = NULL;
 
     // define the local variable for v1_custom_resource_definition_version->subresources
     v1_custom_resource_subresources_t *subresources_local_nonprim = NULL;
@@ -232,6 +264,27 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     schema_local_nonprim = v1_custom_resource_validation_parseFromJSON(schema); //nonprimitive
     }
 
+    // v1_custom_resource_definition_version->selectable_fields
+    cJSON *selectable_fields = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "selectableFields");
+    if (selectable_fields) { 
+    cJSON *selectable_fields_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(selectable_fields)){
+        goto end; //nonprimitive container
+    }
+
+    selectable_fieldsList = list_createList();
+
+    cJSON_ArrayForEach(selectable_fields_local_nonprimitive,selectable_fields )
+    {
+        if(!cJSON_IsObject(selectable_fields_local_nonprimitive)){
+            goto end;
+        }
+        v1_selectable_field_t *selectable_fieldsItem = v1_selectable_field_parseFromJSON(selectable_fields_local_nonprimitive);
+
+        list_addElement(selectable_fieldsList, selectable_fieldsItem);
+    }
+    }
+
     // v1_custom_resource_definition_version->served
     cJSON *served = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "served");
     if (!served) {
@@ -269,6 +322,7 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
         deprecation_warning && !cJSON_IsNull(deprecation_warning) ? strdup(deprecation_warning->valuestring) : NULL,
         strdup(name->valuestring),
         schema ? schema_local_nonprim : NULL,
+        selectable_fields ? selectable_fieldsList : NULL,
         served->valueint,
         storage->valueint,
         subresources ? subresources_local_nonprim : NULL
@@ -288,6 +342,15 @@ end:
     if (schema_local_nonprim) {
         v1_custom_resource_validation_free(schema_local_nonprim);
         schema_local_nonprim = NULL;
+    }
+    if (selectable_fieldsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, selectable_fieldsList) {
+            v1_selectable_field_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(selectable_fieldsList);
+        selectable_fieldsList = NULL;
     }
     if (subresources_local_nonprim) {
         v1_custom_resource_subresources_free(subresources_local_nonprim);

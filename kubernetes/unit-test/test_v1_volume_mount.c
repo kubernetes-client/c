@@ -27,6 +27,7 @@ v1_volume_mount_t* instantiate_v1_volume_mount(int include_optional) {
       "0",
       1,
       "0",
+      "0",
       "0"
     );
   } else {
@@ -35,6 +36,7 @@ v1_volume_mount_t* instantiate_v1_volume_mount(int include_optional) {
       "0",
       "0",
       1,
+      "0",
       "0",
       "0"
     );

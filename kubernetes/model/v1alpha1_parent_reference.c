@@ -60,10 +60,11 @@ cJSON *v1alpha1_parent_reference_convertToJSON(v1alpha1_parent_reference_t *v1al
 
 
     // v1alpha1_parent_reference->name
-    if(v1alpha1_parent_reference->name) {
+    if (!v1alpha1_parent_reference->name) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "name", v1alpha1_parent_reference->name) == NULL) {
     goto fail; //String
-    }
     }
 
 
@@ -76,10 +77,11 @@ cJSON *v1alpha1_parent_reference_convertToJSON(v1alpha1_parent_reference_t *v1al
 
 
     // v1alpha1_parent_reference->resource
-    if(v1alpha1_parent_reference->resource) {
+    if (!v1alpha1_parent_reference->resource) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "resource", v1alpha1_parent_reference->resource) == NULL) {
     goto fail; //String
-    }
     }
 
     return item;
@@ -105,11 +107,14 @@ v1alpha1_parent_reference_t *v1alpha1_parent_reference_parseFromJSON(cJSON *v1al
 
     // v1alpha1_parent_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha1_parent_referenceJSON, "name");
-    if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if (!name) {
+        goto end;
+    }
+
+    
+    if(!cJSON_IsString(name))
     {
     goto end; //String
-    }
     }
 
     // v1alpha1_parent_reference->_namespace
@@ -123,19 +128,22 @@ v1alpha1_parent_reference_t *v1alpha1_parent_reference_parseFromJSON(cJSON *v1al
 
     // v1alpha1_parent_reference->resource
     cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1alpha1_parent_referenceJSON, "resource");
-    if (resource) { 
-    if(!cJSON_IsString(resource) && !cJSON_IsNull(resource))
+    if (!resource) {
+        goto end;
+    }
+
+    
+    if(!cJSON_IsString(resource))
     {
     goto end; //String
-    }
     }
 
 
     v1alpha1_parent_reference_local_var = v1alpha1_parent_reference_create (
         group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        strdup(name->valuestring),
         _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
-        resource && !cJSON_IsNull(resource) ? strdup(resource->valuestring) : NULL
+        strdup(resource->valuestring)
         );
 
     return v1alpha1_parent_reference_local_var;

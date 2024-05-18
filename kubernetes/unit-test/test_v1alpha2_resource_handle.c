@@ -16,6 +16,7 @@
 #include "../model/v1alpha2_resource_handle.h"
 v1alpha2_resource_handle_t* instantiate_v1alpha2_resource_handle(int include_optional);
 
+#include "test_v1alpha2_structured_resource_handle.c"
 
 
 v1alpha2_resource_handle_t* instantiate_v1alpha2_resource_handle(int include_optional) {
@@ -23,12 +24,15 @@ v1alpha2_resource_handle_t* instantiate_v1alpha2_resource_handle(int include_opt
   if (include_optional) {
     v1alpha2_resource_handle = v1alpha2_resource_handle_create(
       "0",
-      "0"
+      "0",
+       // false, not to have infinite recursion
+      instantiate_v1alpha2_structured_resource_handle(0)
     );
   } else {
     v1alpha2_resource_handle = v1alpha2_resource_handle_create(
       "0",
-      "0"
+      "0",
+      NULL
     );
   }
 

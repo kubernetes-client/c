@@ -15,6 +15,7 @@
 
 typedef struct v1_pod_security_context_t v1_pod_security_context_t;
 
+#include "v1_app_armor_profile.h"
 #include "v1_se_linux_options.h"
 #include "v1_seccomp_profile.h"
 #include "v1_sysctl.h"
@@ -23,6 +24,7 @@ typedef struct v1_pod_security_context_t v1_pod_security_context_t;
 
 
 typedef struct v1_pod_security_context_t {
+    struct v1_app_armor_profile_t *app_armor_profile; //model
     long fs_group; //numeric
     char *fs_group_change_policy; // string
     long run_as_group; //numeric
@@ -37,6 +39,7 @@ typedef struct v1_pod_security_context_t {
 } v1_pod_security_context_t;
 
 v1_pod_security_context_t *v1_pod_security_context_create(
+    v1_app_armor_profile_t *app_armor_profile,
     long fs_group,
     char *fs_group_change_policy,
     long run_as_group,

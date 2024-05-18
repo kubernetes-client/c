@@ -17,6 +17,7 @@ typedef struct v1_container_status_t v1_container_status_t;
 
 #include "v1_container_state.h"
 #include "v1_resource_requirements.h"
+#include "v1_volume_mount_status.h"
 
 
 
@@ -32,6 +33,7 @@ typedef struct v1_container_status_t {
     int restart_count; //numeric
     int started; //boolean
     struct v1_container_state_t *state; //model
+    list_t *volume_mounts; //nonprimitive container
 
 } v1_container_status_t;
 
@@ -46,7 +48,8 @@ v1_container_status_t *v1_container_status_create(
     v1_resource_requirements_t *resources,
     int restart_count,
     int started,
-    v1_container_state_t *state
+    v1_container_state_t *state,
+    list_t *volume_mounts
 );
 
 void v1_container_status_free(v1_container_status_t *v1_container_status);

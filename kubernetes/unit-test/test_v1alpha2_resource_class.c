@@ -32,6 +32,7 @@ v1alpha2_resource_class_t* instantiate_v1alpha2_resource_class(int include_optio
       instantiate_v1_object_meta(0),
        // false, not to have infinite recursion
       instantiate_v1alpha2_resource_class_parameters_reference(0),
+      1,
        // false, not to have infinite recursion
       instantiate_v1_node_selector(0)
     );
@@ -42,6 +43,7 @@ v1alpha2_resource_class_t* instantiate_v1alpha2_resource_class(int include_optio
       "0",
       NULL,
       NULL,
+      1,
       NULL
     );
   }

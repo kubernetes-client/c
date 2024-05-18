@@ -10,6 +10,7 @@ v1_volume_mount_t *v1_volume_mount_create(
     char *mount_propagation,
     char *name,
     int read_only,
+    char *recursive_read_only,
     char *sub_path,
     char *sub_path_expr
     ) {
@@ -21,6 +22,7 @@ v1_volume_mount_t *v1_volume_mount_create(
     v1_volume_mount_local_var->mount_propagation = mount_propagation;
     v1_volume_mount_local_var->name = name;
     v1_volume_mount_local_var->read_only = read_only;
+    v1_volume_mount_local_var->recursive_read_only = recursive_read_only;
     v1_volume_mount_local_var->sub_path = sub_path;
     v1_volume_mount_local_var->sub_path_expr = sub_path_expr;
 
@@ -44,6 +46,10 @@ void v1_volume_mount_free(v1_volume_mount_t *v1_volume_mount) {
     if (v1_volume_mount->name) {
         free(v1_volume_mount->name);
         v1_volume_mount->name = NULL;
+    }
+    if (v1_volume_mount->recursive_read_only) {
+        free(v1_volume_mount->recursive_read_only);
+        v1_volume_mount->recursive_read_only = NULL;
     }
     if (v1_volume_mount->sub_path) {
         free(v1_volume_mount->sub_path);
@@ -89,6 +95,14 @@ cJSON *v1_volume_mount_convertToJSON(v1_volume_mount_t *v1_volume_mount) {
     if(v1_volume_mount->read_only) {
     if(cJSON_AddBoolToObject(item, "readOnly", v1_volume_mount->read_only) == NULL) {
     goto fail; //Bool
+    }
+    }
+
+
+    // v1_volume_mount->recursive_read_only
+    if(v1_volume_mount->recursive_read_only) {
+    if(cJSON_AddStringToObject(item, "recursiveReadOnly", v1_volume_mount->recursive_read_only) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -162,6 +176,15 @@ v1_volume_mount_t *v1_volume_mount_parseFromJSON(cJSON *v1_volume_mountJSON){
     }
     }
 
+    // v1_volume_mount->recursive_read_only
+    cJSON *recursive_read_only = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "recursiveReadOnly");
+    if (recursive_read_only) { 
+    if(!cJSON_IsString(recursive_read_only) && !cJSON_IsNull(recursive_read_only))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_volume_mount->sub_path
     cJSON *sub_path = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "subPath");
     if (sub_path) { 
@@ -186,6 +209,7 @@ v1_volume_mount_t *v1_volume_mount_parseFromJSON(cJSON *v1_volume_mountJSON){
         mount_propagation && !cJSON_IsNull(mount_propagation) ? strdup(mount_propagation->valuestring) : NULL,
         strdup(name->valuestring),
         read_only ? read_only->valueint : 0,
+        recursive_read_only && !cJSON_IsNull(recursive_read_only) ? strdup(recursive_read_only->valuestring) : NULL,
         sub_path && !cJSON_IsNull(sub_path) ? strdup(sub_path->valuestring) : NULL,
         sub_path_expr && !cJSON_IsNull(sub_path_expr) ? strdup(sub_path_expr->valuestring) : NULL
         );

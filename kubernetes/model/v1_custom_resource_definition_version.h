@@ -18,6 +18,7 @@ typedef struct v1_custom_resource_definition_version_t v1_custom_resource_defini
 #include "v1_custom_resource_column_definition.h"
 #include "v1_custom_resource_subresources.h"
 #include "v1_custom_resource_validation.h"
+#include "v1_selectable_field.h"
 
 
 
@@ -27,6 +28,7 @@ typedef struct v1_custom_resource_definition_version_t {
     char *deprecation_warning; // string
     char *name; // string
     struct v1_custom_resource_validation_t *schema; //model
+    list_t *selectable_fields; //nonprimitive container
     int served; //boolean
     int storage; //boolean
     struct v1_custom_resource_subresources_t *subresources; //model
@@ -39,6 +41,7 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_c
     char *deprecation_warning,
     char *name,
     v1_custom_resource_validation_t *schema,
+    list_t *selectable_fields,
     int served,
     int storage,
     v1_custom_resource_subresources_t *subresources

@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **last_transition_time** | **char \*** | Last time the condition transitioned from one status to another. | [optional] 
-**message** | **char \*** | A human readable message indicating details about the transition. | [optional] 
+**message** | **char \*** | A human readable message indicating details about the transition. | 
 **observed_generation** | **long** | If set, this represents the .metadata.generation that the condition was set based upon. | [optional] 
 **reason** | **char \*** | The reason for the condition&#39;s last transition. | 
 **status** | **char \*** | Status of the condition, one of True, False, Unknown. | 
