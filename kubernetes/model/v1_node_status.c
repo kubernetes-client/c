@@ -15,6 +15,7 @@ v1_node_status_t *v1_node_status_create(
     list_t *images,
     v1_node_system_info_t *node_info,
     char *phase,
+    list_t *runtime_handlers,
     list_t *volumes_attached,
     list_t *volumes_in_use
     ) {
@@ -31,6 +32,7 @@ v1_node_status_t *v1_node_status_create(
     v1_node_status_local_var->images = images;
     v1_node_status_local_var->node_info = node_info;
     v1_node_status_local_var->phase = phase;
+    v1_node_status_local_var->runtime_handlers = runtime_handlers;
     v1_node_status_local_var->volumes_attached = volumes_attached;
     v1_node_status_local_var->volumes_in_use = volumes_in_use;
 
@@ -99,6 +101,13 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
     if (v1_node_status->phase) {
         free(v1_node_status->phase);
         v1_node_status->phase = NULL;
+    }
+    if (v1_node_status->runtime_handlers) {
+        list_ForEach(listEntry, v1_node_status->runtime_handlers) {
+            v1_node_runtime_handler_free(listEntry->data);
+        }
+        list_freeList(v1_node_status->runtime_handlers);
+        v1_node_status->runtime_handlers = NULL;
     }
     if (v1_node_status->volumes_attached) {
         list_ForEach(listEntry, v1_node_status->volumes_attached) {
@@ -267,6 +276,26 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     }
 
 
+    // v1_node_status->runtime_handlers
+    if(v1_node_status->runtime_handlers) {
+    cJSON *runtime_handlers = cJSON_AddArrayToObject(item, "runtimeHandlers");
+    if(runtime_handlers == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *runtime_handlersListEntry;
+    if (v1_node_status->runtime_handlers) {
+    list_ForEach(runtime_handlersListEntry, v1_node_status->runtime_handlers) {
+    cJSON *itemLocal = v1_node_runtime_handler_convertToJSON(runtime_handlersListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(runtime_handlers, itemLocal);
+    }
+    }
+    }
+
+
     // v1_node_status->volumes_attached
     if(v1_node_status->volumes_attached) {
     cJSON *volumes_attached = cJSON_AddArrayToObject(item, "volumesAttached");
@@ -338,6 +367,9 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // define the local variable for v1_node_status->node_info
     v1_node_system_info_t *node_info_local_nonprim = NULL;
+
+    // define the local list for v1_node_status->runtime_handlers
+    list_t *runtime_handlersList = NULL;
 
     // define the local list for v1_node_status->volumes_attached
     list_t *volumes_attachedList = NULL;
@@ -485,6 +517,27 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     }
     }
 
+    // v1_node_status->runtime_handlers
+    cJSON *runtime_handlers = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "runtimeHandlers");
+    if (runtime_handlers) { 
+    cJSON *runtime_handlers_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(runtime_handlers)){
+        goto end; //nonprimitive container
+    }
+
+    runtime_handlersList = list_createList();
+
+    cJSON_ArrayForEach(runtime_handlers_local_nonprimitive,runtime_handlers )
+    {
+        if(!cJSON_IsObject(runtime_handlers_local_nonprimitive)){
+            goto end;
+        }
+        v1_node_runtime_handler_t *runtime_handlersItem = v1_node_runtime_handler_parseFromJSON(runtime_handlers_local_nonprimitive);
+
+        list_addElement(runtime_handlersList, runtime_handlersItem);
+    }
+    }
+
     // v1_node_status->volumes_attached
     cJSON *volumes_attached = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "volumesAttached");
     if (volumes_attached) { 
@@ -536,6 +589,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
         images ? imagesList : NULL,
         node_info ? node_info_local_nonprim : NULL,
         phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
+        runtime_handlers ? runtime_handlersList : NULL,
         volumes_attached ? volumes_attachedList : NULL,
         volumes_in_use ? volumes_in_useList : NULL
         );
@@ -608,6 +662,15 @@ end:
     if (node_info_local_nonprim) {
         v1_node_system_info_free(node_info_local_nonprim);
         node_info_local_nonprim = NULL;
+    }
+    if (runtime_handlersList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, runtime_handlersList) {
+            v1_node_runtime_handler_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(runtime_handlersList);
+        runtime_handlersList = NULL;
     }
     if (volumes_attachedList) {
         listEntry_t *listEntry = NULL;

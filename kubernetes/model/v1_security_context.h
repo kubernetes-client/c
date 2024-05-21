@@ -15,6 +15,7 @@
 
 typedef struct v1_security_context_t v1_security_context_t;
 
+#include "v1_app_armor_profile.h"
 #include "v1_capabilities.h"
 #include "v1_se_linux_options.h"
 #include "v1_seccomp_profile.h"
@@ -24,6 +25,7 @@ typedef struct v1_security_context_t v1_security_context_t;
 
 typedef struct v1_security_context_t {
     int allow_privilege_escalation; //boolean
+    struct v1_app_armor_profile_t *app_armor_profile; //model
     struct v1_capabilities_t *capabilities; //model
     int privileged; //boolean
     char *proc_mount; // string
@@ -39,6 +41,7 @@ typedef struct v1_security_context_t {
 
 v1_security_context_t *v1_security_context_create(
     int allow_privilege_escalation,
+    v1_app_armor_profile_t *app_armor_profile,
     v1_capabilities_t *capabilities,
     int privileged,
     char *proc_mount,

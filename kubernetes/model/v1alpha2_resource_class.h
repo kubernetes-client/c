@@ -27,6 +27,7 @@ typedef struct v1alpha2_resource_class_t {
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
     struct v1alpha2_resource_class_parameters_reference_t *parameters_ref; //model
+    int structured_parameters; //boolean
     struct v1_node_selector_t *suitable_nodes; //model
 
 } v1alpha2_resource_class_t;
@@ -37,6 +38,7 @@ v1alpha2_resource_class_t *v1alpha2_resource_class_create(
     char *kind,
     v1_object_meta_t *metadata,
     v1alpha2_resource_class_parameters_reference_t *parameters_ref,
+    int structured_parameters,
     v1_node_selector_t *suitable_nodes
 );
 

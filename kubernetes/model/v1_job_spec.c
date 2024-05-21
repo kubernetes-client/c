@@ -11,12 +11,14 @@ v1_job_spec_t *v1_job_spec_create(
     int backoff_limit_per_index,
     char *completion_mode,
     int completions,
+    char *managed_by,
     int manual_selector,
     int max_failed_indexes,
     int parallelism,
     v1_pod_failure_policy_t *pod_failure_policy,
     char *pod_replacement_policy,
     v1_label_selector_t *selector,
+    v1_success_policy_t *success_policy,
     int suspend,
     v1_pod_template_spec_t *_template,
     int ttl_seconds_after_finished
@@ -30,12 +32,14 @@ v1_job_spec_t *v1_job_spec_create(
     v1_job_spec_local_var->backoff_limit_per_index = backoff_limit_per_index;
     v1_job_spec_local_var->completion_mode = completion_mode;
     v1_job_spec_local_var->completions = completions;
+    v1_job_spec_local_var->managed_by = managed_by;
     v1_job_spec_local_var->manual_selector = manual_selector;
     v1_job_spec_local_var->max_failed_indexes = max_failed_indexes;
     v1_job_spec_local_var->parallelism = parallelism;
     v1_job_spec_local_var->pod_failure_policy = pod_failure_policy;
     v1_job_spec_local_var->pod_replacement_policy = pod_replacement_policy;
     v1_job_spec_local_var->selector = selector;
+    v1_job_spec_local_var->success_policy = success_policy;
     v1_job_spec_local_var->suspend = suspend;
     v1_job_spec_local_var->_template = _template;
     v1_job_spec_local_var->ttl_seconds_after_finished = ttl_seconds_after_finished;
@@ -53,6 +57,10 @@ void v1_job_spec_free(v1_job_spec_t *v1_job_spec) {
         free(v1_job_spec->completion_mode);
         v1_job_spec->completion_mode = NULL;
     }
+    if (v1_job_spec->managed_by) {
+        free(v1_job_spec->managed_by);
+        v1_job_spec->managed_by = NULL;
+    }
     if (v1_job_spec->pod_failure_policy) {
         v1_pod_failure_policy_free(v1_job_spec->pod_failure_policy);
         v1_job_spec->pod_failure_policy = NULL;
@@ -64,6 +72,10 @@ void v1_job_spec_free(v1_job_spec_t *v1_job_spec) {
     if (v1_job_spec->selector) {
         v1_label_selector_free(v1_job_spec->selector);
         v1_job_spec->selector = NULL;
+    }
+    if (v1_job_spec->success_policy) {
+        v1_success_policy_free(v1_job_spec->success_policy);
+        v1_job_spec->success_policy = NULL;
     }
     if (v1_job_spec->_template) {
         v1_pod_template_spec_free(v1_job_spec->_template);
@@ -111,6 +123,14 @@ cJSON *v1_job_spec_convertToJSON(v1_job_spec_t *v1_job_spec) {
     if(v1_job_spec->completions) {
     if(cJSON_AddNumberToObject(item, "completions", v1_job_spec->completions) == NULL) {
     goto fail; //Numeric
+    }
+    }
+
+
+    // v1_job_spec->managed_by
+    if(v1_job_spec->managed_by) {
+    if(cJSON_AddStringToObject(item, "managedBy", v1_job_spec->managed_by) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -173,6 +193,19 @@ cJSON *v1_job_spec_convertToJSON(v1_job_spec_t *v1_job_spec) {
     }
 
 
+    // v1_job_spec->success_policy
+    if(v1_job_spec->success_policy) {
+    cJSON *success_policy_local_JSON = v1_success_policy_convertToJSON(v1_job_spec->success_policy);
+    if(success_policy_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "successPolicy", success_policy_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_job_spec->suspend
     if(v1_job_spec->suspend) {
     if(cJSON_AddBoolToObject(item, "suspend", v1_job_spec->suspend) == NULL) {
@@ -220,6 +253,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
     // define the local variable for v1_job_spec->selector
     v1_label_selector_t *selector_local_nonprim = NULL;
 
+    // define the local variable for v1_job_spec->success_policy
+    v1_success_policy_t *success_policy_local_nonprim = NULL;
+
     // define the local variable for v1_job_spec->_template
     v1_pod_template_spec_t *_template_local_nonprim = NULL;
 
@@ -265,6 +301,15 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
     if(!cJSON_IsNumber(completions))
     {
     goto end; //Numeric
+    }
+    }
+
+    // v1_job_spec->managed_by
+    cJSON *managed_by = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "managedBy");
+    if (managed_by) { 
+    if(!cJSON_IsString(managed_by) && !cJSON_IsNull(managed_by))
+    {
+    goto end; //String
     }
     }
 
@@ -316,6 +361,12 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
+    // v1_job_spec->success_policy
+    cJSON *success_policy = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "successPolicy");
+    if (success_policy) { 
+    success_policy_local_nonprim = v1_success_policy_parseFromJSON(success_policy); //nonprimitive
+    }
+
     // v1_job_spec->suspend
     cJSON *suspend = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "suspend");
     if (suspend) { 
@@ -350,12 +401,14 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
         backoff_limit_per_index ? backoff_limit_per_index->valuedouble : 0,
         completion_mode && !cJSON_IsNull(completion_mode) ? strdup(completion_mode->valuestring) : NULL,
         completions ? completions->valuedouble : 0,
+        managed_by && !cJSON_IsNull(managed_by) ? strdup(managed_by->valuestring) : NULL,
         manual_selector ? manual_selector->valueint : 0,
         max_failed_indexes ? max_failed_indexes->valuedouble : 0,
         parallelism ? parallelism->valuedouble : 0,
         pod_failure_policy ? pod_failure_policy_local_nonprim : NULL,
         pod_replacement_policy && !cJSON_IsNull(pod_replacement_policy) ? strdup(pod_replacement_policy->valuestring) : NULL,
         selector ? selector_local_nonprim : NULL,
+        success_policy ? success_policy_local_nonprim : NULL,
         suspend ? suspend->valueint : 0,
         _template_local_nonprim,
         ttl_seconds_after_finished ? ttl_seconds_after_finished->valuedouble : 0
@@ -370,6 +423,10 @@ end:
     if (selector_local_nonprim) {
         v1_label_selector_free(selector_local_nonprim);
         selector_local_nonprim = NULL;
+    }
+    if (success_policy_local_nonprim) {
+        v1_success_policy_free(success_policy_local_nonprim);
+        success_policy_local_nonprim = NULL;
     }
     if (_template_local_nonprim) {
         v1_pod_template_spec_free(_template_local_nonprim);

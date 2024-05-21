@@ -16,6 +16,7 @@
 #include "../model/v1_security_context.h"
 v1_security_context_t* instantiate_v1_security_context(int include_optional);
 
+#include "test_v1_app_armor_profile.c"
 #include "test_v1_capabilities.c"
 #include "test_v1_se_linux_options.c"
 #include "test_v1_seccomp_profile.c"
@@ -27,6 +28,8 @@ v1_security_context_t* instantiate_v1_security_context(int include_optional) {
   if (include_optional) {
     v1_security_context = v1_security_context_create(
       1,
+       // false, not to have infinite recursion
+      instantiate_v1_app_armor_profile(0),
        // false, not to have infinite recursion
       instantiate_v1_capabilities(0),
       1,
@@ -45,6 +48,7 @@ v1_security_context_t* instantiate_v1_security_context(int include_optional) {
   } else {
     v1_security_context = v1_security_context_create(
       1,
+      NULL,
       NULL,
       1,
       "0",

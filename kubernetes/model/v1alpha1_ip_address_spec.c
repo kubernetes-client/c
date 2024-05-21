@@ -34,7 +34,9 @@ cJSON *v1alpha1_ip_address_spec_convertToJSON(v1alpha1_ip_address_spec_t *v1alph
     cJSON *item = cJSON_CreateObject();
 
     // v1alpha1_ip_address_spec->parent_ref
-    if(v1alpha1_ip_address_spec->parent_ref) {
+    if (!v1alpha1_ip_address_spec->parent_ref) {
+        goto fail;
+    }
     cJSON *parent_ref_local_JSON = v1alpha1_parent_reference_convertToJSON(v1alpha1_ip_address_spec->parent_ref);
     if(parent_ref_local_JSON == NULL) {
     goto fail; //model
@@ -42,7 +44,6 @@ cJSON *v1alpha1_ip_address_spec_convertToJSON(v1alpha1_ip_address_spec_t *v1alph
     cJSON_AddItemToObject(item, "parentRef", parent_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
-    }
     }
 
     return item;
@@ -62,13 +63,16 @@ v1alpha1_ip_address_spec_t *v1alpha1_ip_address_spec_parseFromJSON(cJSON *v1alph
 
     // v1alpha1_ip_address_spec->parent_ref
     cJSON *parent_ref = cJSON_GetObjectItemCaseSensitive(v1alpha1_ip_address_specJSON, "parentRef");
-    if (parent_ref) { 
-    parent_ref_local_nonprim = v1alpha1_parent_reference_parseFromJSON(parent_ref); //nonprimitive
+    if (!parent_ref) {
+        goto end;
     }
+
+    
+    parent_ref_local_nonprim = v1alpha1_parent_reference_parseFromJSON(parent_ref); //nonprimitive
 
 
     v1alpha1_ip_address_spec_local_var = v1alpha1_ip_address_spec_create (
-        parent_ref ? parent_ref_local_nonprim : NULL
+        parent_ref_local_nonprim
         );
 
     return v1alpha1_ip_address_spec_local_var;

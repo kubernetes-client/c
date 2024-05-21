@@ -39,6 +39,7 @@ typedef struct v1_service_spec_t {
     list_t* selector; //map
     char *session_affinity; // string
     struct v1_session_affinity_config_t *session_affinity_config; //model
+    char *traffic_distribution; // string
     char *type; // string
 
 } v1_service_spec_t;
@@ -62,6 +63,7 @@ v1_service_spec_t *v1_service_spec_create(
     list_t* selector,
     char *session_affinity,
     v1_session_affinity_config_t *session_affinity_config,
+    char *traffic_distribution,
     char *type
 );
 

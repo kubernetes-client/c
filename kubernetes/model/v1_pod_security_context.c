@@ -6,6 +6,7 @@
 
 
 v1_pod_security_context_t *v1_pod_security_context_create(
+    v1_app_armor_profile_t *app_armor_profile,
     long fs_group,
     char *fs_group_change_policy,
     long run_as_group,
@@ -21,6 +22,7 @@ v1_pod_security_context_t *v1_pod_security_context_create(
     if (!v1_pod_security_context_local_var) {
         return NULL;
     }
+    v1_pod_security_context_local_var->app_armor_profile = app_armor_profile;
     v1_pod_security_context_local_var->fs_group = fs_group;
     v1_pod_security_context_local_var->fs_group_change_policy = fs_group_change_policy;
     v1_pod_security_context_local_var->run_as_group = run_as_group;
@@ -41,6 +43,10 @@ void v1_pod_security_context_free(v1_pod_security_context_t *v1_pod_security_con
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_pod_security_context->app_armor_profile) {
+        v1_app_armor_profile_free(v1_pod_security_context->app_armor_profile);
+        v1_pod_security_context->app_armor_profile = NULL;
+    }
     if (v1_pod_security_context->fs_group_change_policy) {
         free(v1_pod_security_context->fs_group_change_policy);
         v1_pod_security_context->fs_group_change_policy = NULL;
@@ -76,6 +82,19 @@ void v1_pod_security_context_free(v1_pod_security_context_t *v1_pod_security_con
 
 cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_security_context) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1_pod_security_context->app_armor_profile
+    if(v1_pod_security_context->app_armor_profile) {
+    cJSON *app_armor_profile_local_JSON = v1_app_armor_profile_convertToJSON(v1_pod_security_context->app_armor_profile);
+    if(app_armor_profile_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "appArmorProfile", app_armor_profile_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
 
     // v1_pod_security_context->fs_group
     if(v1_pod_security_context->fs_group) {
@@ -204,6 +223,9 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     v1_pod_security_context_t *v1_pod_security_context_local_var = NULL;
 
+    // define the local variable for v1_pod_security_context->app_armor_profile
+    v1_app_armor_profile_t *app_armor_profile_local_nonprim = NULL;
+
     // define the local variable for v1_pod_security_context->se_linux_options
     v1_se_linux_options_t *se_linux_options_local_nonprim = NULL;
 
@@ -218,6 +240,12 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // define the local variable for v1_pod_security_context->windows_options
     v1_windows_security_context_options_t *windows_options_local_nonprim = NULL;
+
+    // v1_pod_security_context->app_armor_profile
+    cJSON *app_armor_profile = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "appArmorProfile");
+    if (app_armor_profile) { 
+    app_armor_profile_local_nonprim = v1_app_armor_profile_parseFromJSON(app_armor_profile); //nonprimitive
+    }
 
     // v1_pod_security_context->fs_group
     cJSON *fs_group = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "fsGroup");
@@ -330,6 +358,7 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
 
     v1_pod_security_context_local_var = v1_pod_security_context_create (
+        app_armor_profile ? app_armor_profile_local_nonprim : NULL,
         fs_group ? fs_group->valuedouble : 0,
         fs_group_change_policy && !cJSON_IsNull(fs_group_change_policy) ? strdup(fs_group_change_policy->valuestring) : NULL,
         run_as_group ? run_as_group->valuedouble : 0,
@@ -344,6 +373,10 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     return v1_pod_security_context_local_var;
 end:
+    if (app_armor_profile_local_nonprim) {
+        v1_app_armor_profile_free(app_armor_profile_local_nonprim);
+        app_armor_profile_local_nonprim = NULL;
+    }
     if (se_linux_options_local_nonprim) {
         v1_se_linux_options_free(se_linux_options_local_nonprim);
         se_linux_options_local_nonprim = NULL;

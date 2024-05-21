@@ -23,6 +23,7 @@ typedef struct v1_volume_mount_t {
     char *mount_propagation; // string
     char *name; // string
     int read_only; //boolean
+    char *recursive_read_only; // string
     char *sub_path; // string
     char *sub_path_expr; // string
 
@@ -33,6 +34,7 @@ v1_volume_mount_t *v1_volume_mount_create(
     char *mount_propagation,
     char *name,
     int read_only,
+    char *recursive_read_only,
     char *sub_path,
     char *sub_path_expr
 );

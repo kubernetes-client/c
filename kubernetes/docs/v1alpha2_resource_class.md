@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **kind** | **char \*** | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds | [optional] 
 **metadata** | [**v1_object_meta_t**](v1_object_meta.md) \* |  | [optional] 
 **parameters_ref** | [**v1alpha2_resource_class_parameters_reference_t**](v1alpha2_resource_class_parameters_reference.md) \* |  | [optional] 
+**structured_parameters** | **int** | If and only if allocation of claims using this class is handled via structured parameters, then StructuredParameters must be set to true. | [optional] 
 **suitable_nodes** | [**v1_node_selector_t**](v1_node_selector.md) \* |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

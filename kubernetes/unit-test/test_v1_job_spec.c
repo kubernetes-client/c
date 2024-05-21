@@ -18,6 +18,7 @@ v1_job_spec_t* instantiate_v1_job_spec(int include_optional);
 
 #include "test_v1_pod_failure_policy.c"
 #include "test_v1_label_selector.c"
+#include "test_v1_success_policy.c"
 #include "test_v1_pod_template_spec.c"
 
 
@@ -30,6 +31,7 @@ v1_job_spec_t* instantiate_v1_job_spec(int include_optional) {
       56,
       "0",
       56,
+      "0",
       1,
       56,
       56,
@@ -38,6 +40,8 @@ v1_job_spec_t* instantiate_v1_job_spec(int include_optional) {
       "0",
        // false, not to have infinite recursion
       instantiate_v1_label_selector(0),
+       // false, not to have infinite recursion
+      instantiate_v1_success_policy(0),
       1,
        // false, not to have infinite recursion
       instantiate_v1_pod_template_spec(0),
@@ -50,11 +54,13 @@ v1_job_spec_t* instantiate_v1_job_spec(int include_optional) {
       56,
       "0",
       56,
+      "0",
       1,
       56,
       56,
       NULL,
       "0",
+      NULL,
       NULL,
       1,
       NULL,

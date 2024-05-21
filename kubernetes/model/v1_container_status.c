@@ -16,7 +16,8 @@ v1_container_status_t *v1_container_status_create(
     v1_resource_requirements_t *resources,
     int restart_count,
     int started,
-    v1_container_state_t *state
+    v1_container_state_t *state,
+    list_t *volume_mounts
     ) {
     v1_container_status_t *v1_container_status_local_var = malloc(sizeof(v1_container_status_t));
     if (!v1_container_status_local_var) {
@@ -33,6 +34,7 @@ v1_container_status_t *v1_container_status_create(
     v1_container_status_local_var->restart_count = restart_count;
     v1_container_status_local_var->started = started;
     v1_container_status_local_var->state = state;
+    v1_container_status_local_var->volume_mounts = volume_mounts;
 
     return v1_container_status_local_var;
 }
@@ -80,6 +82,13 @@ void v1_container_status_free(v1_container_status_t *v1_container_status) {
     if (v1_container_status->state) {
         v1_container_state_free(v1_container_status->state);
         v1_container_status->state = NULL;
+    }
+    if (v1_container_status->volume_mounts) {
+        list_ForEach(listEntry, v1_container_status->volume_mounts) {
+            v1_volume_mount_status_free(listEntry->data);
+        }
+        list_freeList(v1_container_status->volume_mounts);
+        v1_container_status->volume_mounts = NULL;
     }
     free(v1_container_status);
 }
@@ -206,6 +215,26 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     }
     }
 
+
+    // v1_container_status->volume_mounts
+    if(v1_container_status->volume_mounts) {
+    cJSON *volume_mounts = cJSON_AddArrayToObject(item, "volumeMounts");
+    if(volume_mounts == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *volume_mountsListEntry;
+    if (v1_container_status->volume_mounts) {
+    list_ForEach(volume_mountsListEntry, v1_container_status->volume_mounts) {
+    cJSON *itemLocal = v1_volume_mount_status_convertToJSON(volume_mountsListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(volume_mounts, itemLocal);
+    }
+    }
+    }
+
     return item;
 fail:
     if (item) {
@@ -229,6 +258,9 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // define the local variable for v1_container_status->state
     v1_container_state_t *state_local_nonprim = NULL;
+
+    // define the local list for v1_container_status->volume_mounts
+    list_t *volume_mountsList = NULL;
 
     // v1_container_status->allocated_resources
     cJSON *allocated_resources = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "allocatedResources");
@@ -351,6 +383,27 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     state_local_nonprim = v1_container_state_parseFromJSON(state); //nonprimitive
     }
 
+    // v1_container_status->volume_mounts
+    cJSON *volume_mounts = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "volumeMounts");
+    if (volume_mounts) { 
+    cJSON *volume_mounts_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(volume_mounts)){
+        goto end; //nonprimitive container
+    }
+
+    volume_mountsList = list_createList();
+
+    cJSON_ArrayForEach(volume_mounts_local_nonprimitive,volume_mounts )
+    {
+        if(!cJSON_IsObject(volume_mounts_local_nonprimitive)){
+            goto end;
+        }
+        v1_volume_mount_status_t *volume_mountsItem = v1_volume_mount_status_parseFromJSON(volume_mounts_local_nonprimitive);
+
+        list_addElement(volume_mountsList, volume_mountsItem);
+    }
+    }
+
 
     v1_container_status_local_var = v1_container_status_create (
         allocated_resources ? allocated_resourcesList : NULL,
@@ -363,7 +416,8 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
         resources ? resources_local_nonprim : NULL,
         restart_count->valuedouble,
         started ? started->valueint : 0,
-        state ? state_local_nonprim : NULL
+        state ? state_local_nonprim : NULL,
+        volume_mounts ? volume_mountsList : NULL
         );
 
     return v1_container_status_local_var;
@@ -393,6 +447,15 @@ end:
     if (state_local_nonprim) {
         v1_container_state_free(state_local_nonprim);
         state_local_nonprim = NULL;
+    }
+    if (volume_mountsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, volume_mountsList) {
+            v1_volume_mount_status_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(volume_mountsList);
+        volume_mountsList = NULL;
     }
     return NULL;
 

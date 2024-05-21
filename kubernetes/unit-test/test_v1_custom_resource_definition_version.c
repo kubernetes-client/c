@@ -30,6 +30,7 @@ v1_custom_resource_definition_version_t* instantiate_v1_custom_resource_definiti
       "0",
        // false, not to have infinite recursion
       instantiate_v1_custom_resource_validation(0),
+      list_createList(),
       1,
       1,
        // false, not to have infinite recursion
@@ -42,6 +43,7 @@ v1_custom_resource_definition_version_t* instantiate_v1_custom_resource_definiti
       "0",
       "0",
       NULL,
+      list_createList(),
       1,
       1,
       NULL

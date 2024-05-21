@@ -11,6 +11,7 @@ v1alpha2_resource_class_t *v1alpha2_resource_class_create(
     char *kind,
     v1_object_meta_t *metadata,
     v1alpha2_resource_class_parameters_reference_t *parameters_ref,
+    int structured_parameters,
     v1_node_selector_t *suitable_nodes
     ) {
     v1alpha2_resource_class_t *v1alpha2_resource_class_local_var = malloc(sizeof(v1alpha2_resource_class_t));
@@ -22,6 +23,7 @@ v1alpha2_resource_class_t *v1alpha2_resource_class_create(
     v1alpha2_resource_class_local_var->kind = kind;
     v1alpha2_resource_class_local_var->metadata = metadata;
     v1alpha2_resource_class_local_var->parameters_ref = parameters_ref;
+    v1alpha2_resource_class_local_var->structured_parameters = structured_parameters;
     v1alpha2_resource_class_local_var->suitable_nodes = suitable_nodes;
 
     return v1alpha2_resource_class_local_var;
@@ -114,6 +116,14 @@ cJSON *v1alpha2_resource_class_convertToJSON(v1alpha2_resource_class_t *v1alpha2
     }
 
 
+    // v1alpha2_resource_class->structured_parameters
+    if(v1alpha2_resource_class->structured_parameters) {
+    if(cJSON_AddBoolToObject(item, "structuredParameters", v1alpha2_resource_class->structured_parameters) == NULL) {
+    goto fail; //Bool
+    }
+    }
+
+
     // v1alpha2_resource_class->suitable_nodes
     if(v1alpha2_resource_class->suitable_nodes) {
     cJSON *suitable_nodes_local_JSON = v1_node_selector_convertToJSON(v1alpha2_resource_class->suitable_nodes);
@@ -189,6 +199,15 @@ v1alpha2_resource_class_t *v1alpha2_resource_class_parseFromJSON(cJSON *v1alpha2
     parameters_ref_local_nonprim = v1alpha2_resource_class_parameters_reference_parseFromJSON(parameters_ref); //nonprimitive
     }
 
+    // v1alpha2_resource_class->structured_parameters
+    cJSON *structured_parameters = cJSON_GetObjectItemCaseSensitive(v1alpha2_resource_classJSON, "structuredParameters");
+    if (structured_parameters) { 
+    if(!cJSON_IsBool(structured_parameters))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1alpha2_resource_class->suitable_nodes
     cJSON *suitable_nodes = cJSON_GetObjectItemCaseSensitive(v1alpha2_resource_classJSON, "suitableNodes");
     if (suitable_nodes) { 
@@ -202,6 +221,7 @@ v1alpha2_resource_class_t *v1alpha2_resource_class_parseFromJSON(cJSON *v1alpha2
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         parameters_ref ? parameters_ref_local_nonprim : NULL,
+        structured_parameters ? structured_parameters->valueint : 0,
         suitable_nodes ? suitable_nodes_local_nonprim : NULL
         );
 

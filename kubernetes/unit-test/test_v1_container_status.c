@@ -38,7 +38,8 @@ v1_container_status_t* instantiate_v1_container_status(int include_optional) {
       56,
       1,
        // false, not to have infinite recursion
-      instantiate_v1_container_state(0)
+      instantiate_v1_container_state(0),
+      list_createList()
     );
   } else {
     v1_container_status = v1_container_status_create(
@@ -52,7 +53,8 @@ v1_container_status_t* instantiate_v1_container_status(int include_optional) {
       NULL,
       56,
       1,
-      NULL
+      NULL,
+      list_createList()
     );
   }
 
