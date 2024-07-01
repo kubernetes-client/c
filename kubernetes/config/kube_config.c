@@ -304,21 +304,14 @@ static int kuberconfig_auth_provider(kubeconfig_property_t * current_user, kubec
     return rc;
 }
 
-int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApiKeys, const char *configFileName)
+int load_kube_config_common(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApiKeys, kubeconfig_t *kubeconfig)
 {
-    static char fname[] = "load_kube_config()";
+    static char fname[] = "load_kube_config_common()";
     int rc = 0;
     const kubeconfig_property_t *current_context = NULL;
     const kubeconfig_property_t *current_cluster = NULL;
     kubeconfig_property_t *current_user = NULL;
 
-    kubeconfig_t *kubeconfig = kubeconfig_create();
-    if (!kubeconfig) {
-        fprintf(stderr, "%s: Cannot create kubeconfig.[%s]\n", fname, strerror(errno));
-        return -1;
-    }
-
-    kubeconfig->fileName = getWorkingConfigFile(configFileName);
     rc = kubeyaml_load_kubeconfig(kubeconfig);
     if (0 != rc) {
         fprintf(stderr, "%s: Cannot load the kubeconfig %s\n", fname, kubeconfig->fileName);
@@ -393,8 +386,48 @@ int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApi
     }
 
   end:
+    return rc;
+}
+
+int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApiKeys, const char *configFileName)
+{
+    static char fname[] = "load_kube_config()";
+    int rc = 0;
+
+    kubeconfig_t *kubeconfig = kubeconfig_create();
+    if (!kubeconfig) {
+        fprintf(stderr, "%s: Cannot create kubeconfig.[%s]\n", fname, strerror(errno));
+        return -1;
+    }
+
+    kubeconfig->fileName = getWorkingConfigFile(configFileName);
+
+    rc = load_kube_config_common(pBasePath, pSslConfig, pApiKeys, kubeconfig);
+
     kubeconfig_free(kubeconfig);
     kubeconfig = NULL;
+
+    return rc;
+}
+
+int load_kube_config_buffer(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApiKeys, const char *buffer)
+{
+    static char fname[] = "load_kube_config_buffer()";
+    int rc = 0;
+
+    kubeconfig_t *kubeconfig = kubeconfig_create();
+    if (!kubeconfig) {
+        fprintf(stderr, "%s: Cannot create kubeconfig.[%s]\n", fname, strerror(errno));
+        return -1;
+    }
+
+    kubeconfig->buffer = strdup(buffer);
+
+    rc = load_kube_config_common(pBasePath, pSslConfig, pApiKeys, kubeconfig);
+
+    kubeconfig_free(kubeconfig);
+    kubeconfig = NULL;
+
     return rc;
 }
 

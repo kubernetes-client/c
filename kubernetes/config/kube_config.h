@@ -47,6 +47,44 @@ extern "C" {
     int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApiKeys, const char *configFileName);
 
 /*
+ * load_kube_config_buffer
+ *
+ *
+ * Description:
+ *
+ *
+ * Load kubernetes cluster configuration from specfied buffer
+ *
+ *
+ * Return:
+ *
+ *   0     Success
+ *  -1     Failed
+ *
+ *
+ * Parameter:
+ *
+ *
+ * IN:
+
+ * buffer : kubernetes cluster configuration data
+ *
+ *
+ * OUT:
+ *
+ * pBasePath: The pointer to API server address
+ * pSslConfig: The pointer to SSL configuration for client
+ * pApiKeys: The pointer to API tokens for client
+ *
+ * The memory will be allocated inside this function. User 
+ * should call free_client_config to free the memory after 
+ * these parameters are not used.
+ *
+ */
+
+    int load_kube_config_buffer(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApiKeys, const char *buffer);
+
+/*
  * free_client_config
  *
  *

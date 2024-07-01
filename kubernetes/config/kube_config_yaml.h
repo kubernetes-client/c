@@ -24,12 +24,14 @@ extern "C" {
  *
  * IN:
  * kubeconfig->fileName: kubernetes cluster configuration file name
- *
+ * kubeconfig->buffer: kubernetes cluster configuration data; this is considered only if kubeconfig->fileName is set to NULL
+ * 
  * OUT:
  * kubeconfig: kubernetes cluster configuration
  *
  */
     int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig);
+
 
 /*
  * kubeyaml_parse_exec_crendential

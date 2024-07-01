@@ -224,6 +224,10 @@ void kubeconfig_free(kubeconfig_t * kubeconfig)
         free(kubeconfig->fileName);
         kubeconfig->fileName = NULL;
     }
+    if (kubeconfig->buffer) {
+        free(kubeconfig->buffer);
+        kubeconfig->buffer = NULL;
+    }
     if (kubeconfig->apiVersion) {
         free(kubeconfig->apiVersion);
         kubeconfig->apiVersion = NULL;
