@@ -88,6 +88,7 @@ extern "C" {
 
     typedef struct kubeconfig_t {
         char *fileName;
+        char *buffer;
         char *apiVersion;
         char *preferences;
         char *kind;
