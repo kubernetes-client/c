@@ -314,7 +314,7 @@ int load_kube_config_common(char **pBasePath, sslConfig_t ** pSslConfig, list_t 
 
     rc = kubeyaml_load_kubeconfig(kubeconfig);
     if (0 != rc) {
-        fprintf(stderr, "%s: Cannot load the kubeconfig %s\n", fname, kubeconfig->fileName);
+        fprintf(stderr, "%s: Cannot load the kubeconfig %s\n", fname, kubeconfig->fileName?kubeconfig->fileName:kubeconfig->buffer);
         rc = -1;
         goto end;
     }

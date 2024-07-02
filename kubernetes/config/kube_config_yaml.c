@@ -438,10 +438,11 @@ int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig)
             fprintf(stderr, "%s: Cannot open the file %s.[%s]\n", fname, kubeconfig->fileName, strerror(errno));
             return -1;
         }
+    }
     else if (kubeconfig->buffer) {
         // Nothing to do here for now.
     }
-    } else {
+    else {
         fprintf(stderr, "%s: The kubeconf file name needs be set by kubeconfig->fileName .\n", fname);
         return -1;
     }
@@ -477,12 +478,16 @@ int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig)
 
     /* Cleanup */
     yaml_parser_delete(&parser);
-    fclose(input);
+    if (input) {
+        fclose(input);
+    }
     return 0;
 
   error:
     yaml_parser_delete(&parser);
-    fclose(input);
+    if (input) {
+        fclose(input);
+    }
     return -1;
 }
 
