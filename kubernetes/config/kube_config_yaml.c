@@ -430,6 +430,11 @@ int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig)
 {
     static char fname[] = "kubeyaml_load_kubeconfig()";
 
+    if (kubeconfig->fileName && kubeconfig->buffer) {
+        fprintf(stderr, "%s: Cannot use both kubeconfig->fileName and kubeconfig->buffer.\n", fname);
+        return -1;
+    }
+
     /* Set a file input or use the provided buffer. */
     FILE *input = NULL;
     if (kubeconfig->fileName) {
@@ -443,7 +448,7 @@ int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig)
         // Nothing to do here for now.
     }
     else {
-        fprintf(stderr, "%s: The kubeconf file name needs be set by kubeconfig->fileName .\n", fname);
+        fprintf(stderr, "%s: One of the kubeconfig->fileName or kubeconfig->buffer needs to be set.\n", fname);
         return -1;
     }
 
