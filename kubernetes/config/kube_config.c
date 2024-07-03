@@ -394,18 +394,14 @@ int load_kube_config(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApi
     static char fname[] = "load_kube_config()";
     int rc = 0;
 
-    kubeconfig_t *kubeconfig = kubeconfig_create();
-    if (!kubeconfig) {
-        fprintf(stderr, "%s: Cannot create kubeconfig.[%s]\n", fname, strerror(errno));
-        return -1;
-    }
+    kubeconfig_t kubeconfig;
+    memset(&kubeconfig, 0, sizeof(kubeconfig_t));
 
-    kubeconfig->fileName = getWorkingConfigFile(configFileName);
+    kubeconfig.fileName = getWorkingConfigFile(configFileName);
 
-    rc = load_kube_config_common(pBasePath, pSslConfig, pApiKeys, kubeconfig);
+    rc = load_kube_config_common(pBasePath, pSslConfig, pApiKeys, &kubeconfig);
 
-    kubeconfig_free(kubeconfig);
-    kubeconfig = NULL;
+    kubeconfig_free_members(&kubeconfig);
 
     return rc;
 }
@@ -415,18 +411,14 @@ int load_kube_config_buffer(char **pBasePath, sslConfig_t ** pSslConfig, list_t 
     static char fname[] = "load_kube_config_buffer()";
     int rc = 0;
 
-    kubeconfig_t *kubeconfig = kubeconfig_create();
-    if (!kubeconfig) {
-        fprintf(stderr, "%s: Cannot create kubeconfig.[%s]\n", fname, strerror(errno));
-        return -1;
-    }
+    kubeconfig_t kubeconfig;
+    memset(&kubeconfig, 0, sizeof(kubeconfig_t));
 
-    kubeconfig->buffer = strdup(buffer);
+    kubeconfig.buffer = strdup(buffer);
 
-    rc = load_kube_config_common(pBasePath, pSslConfig, pApiKeys, kubeconfig);
+    rc = load_kube_config_common(pBasePath, pSslConfig, pApiKeys, &kubeconfig);
 
-    kubeconfig_free(kubeconfig);
-    kubeconfig = NULL;
+    kubeconfig_free_members(&kubeconfig);
 
     return rc;
 }

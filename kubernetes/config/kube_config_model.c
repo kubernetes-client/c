@@ -214,7 +214,7 @@ kubeconfig_t *kubeconfig_create()
     return config;
 }
 
-void kubeconfig_free(kubeconfig_t * kubeconfig)
+void kubeconfig_free_members(kubeconfig_t * kubeconfig)
 {
     if (!kubeconfig) {
         return;
@@ -256,6 +256,15 @@ void kubeconfig_free(kubeconfig_t * kubeconfig)
         kubeconfig_properties_free(kubeconfig->contexts, kubeconfig->contexts_count);
         kubeconfig->contexts = NULL;
     }
+}
+
+void kubeconfig_free(kubeconfig_t * kubeconfig)
+{
+    if (!kubeconfig) {
+        return;
+    }
+
+    kubeconfig_free_members(kubeconfig);
 
     free(kubeconfig);
 }
