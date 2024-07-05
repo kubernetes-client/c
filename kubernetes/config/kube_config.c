@@ -304,7 +304,7 @@ static int kuberconfig_auth_provider(kubeconfig_property_t * current_user, kubec
     return rc;
 }
 
-int load_kube_config_common(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApiKeys, kubeconfig_t *kubeconfig)
+int load_kube_config_common(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApiKeys, kubeconfig_t * kubeconfig)
 {
     static char fname[] = "load_kube_config_common()";
     int rc = 0;
@@ -314,7 +314,7 @@ int load_kube_config_common(char **pBasePath, sslConfig_t ** pSslConfig, list_t 
 
     rc = kubeyaml_load_kubeconfig(kubeconfig);
     if (0 != rc) {
-        fprintf(stderr, "%s: Cannot load the kubeconfig %s\n", fname, kubeconfig->fileName?kubeconfig->fileName:kubeconfig->buffer);
+        fprintf(stderr, "%s: Cannot load the kubeconfig %s\n", fname, kubeconfig->fileName ? kubeconfig->fileName : kubeconfig->buffer);
         rc = -1;
         goto end;
     }

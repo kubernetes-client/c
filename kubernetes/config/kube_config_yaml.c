@@ -443,11 +443,9 @@ int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig)
             fprintf(stderr, "%s: Cannot open the file %s.[%s]\n", fname, kubeconfig->fileName, strerror(errno));
             return -1;
         }
-    }
-    else if (kubeconfig->buffer) {
+    } else if (kubeconfig->buffer) {
         // Nothing to do here for now.
-    }
-    else {
+    } else {
         fprintf(stderr, "%s: One of the kubeconfig->fileName or kubeconfig->buffer needs to be set.\n", fname);
         return -1;
     }
@@ -459,9 +457,8 @@ int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig)
     yaml_parser_initialize(&parser);
     if (input) {
         yaml_parser_set_input_file(&parser, input);
-    }
-    else {
-        yaml_parser_set_input_string(&parser, (const unsigned char*)kubeconfig->buffer, strlen(kubeconfig->buffer));
+    } else {
+        yaml_parser_set_input_string(&parser, (const unsigned char *) kubeconfig->buffer, strlen(kubeconfig->buffer));
     }
 
     int done = 0;

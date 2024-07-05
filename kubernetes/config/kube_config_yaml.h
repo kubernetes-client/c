@@ -34,7 +34,6 @@ extern "C" {
  */
     int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig);
 
-
 /*
  * kubeyaml_parse_exec_crendential
  *
