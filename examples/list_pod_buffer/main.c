@@ -63,9 +63,16 @@ static char *getFileData(const char *filePath)
             }
 
             fclose(kubeFile);
+        } else {
+            printf("Could not open %s!\n", kubeConfigFile);
         }
+
         free(kubeConfigFile);
+    } else {
+        printf("Could not determine the path to kubernetes configuration file! Tried: ENV_KUBECONFIG = %s and ENV_HOME = %s\n",
+            getenv(ENV_KUBECONFIG), getenv(ENV_HOME) );
     }
+    
 
     return data;
 }
