@@ -20,25 +20,12 @@ static char *getWorkingConfigFile(const char *configFileNamePassedIn)
     if (configFileNamePassedIn) {
         configFileName = strdup(configFileNamePassedIn);
     } else {
-#if defined(HAVE_SECURE_GETENV)
-        kubeconfig_env = secure_getenv(ENV_KUBECONFIG);
-#elif defined(HAVE_GETENV)
-        kubeconfig_env = getenv(ENV_KUBECONFIG);
-#endif
-        if (kubeconfig_env) {
-            configFileName = strdup(kubeconfig_env);
-        } else {
-#if defined(HAVE_SECURE_GETENV)
-            homedir_env = secure_getenv(ENV_HOME);
-#elif defined(HAVE_GETENV)
-            homedir_env = getenv(ENV_HOME);
-#endif
-            if (homedir_env) {
-                int configFileNameSize = strlen(homedir_env) + strlen(KUBE_CONFIG_DEFAULT_LOCATION) + 1;
-                configFileName = calloc(configFileNameSize, sizeof(char));
-                if (configFileName) {
-                    snprintf(configFileName, configFileNameSize, KUBE_CONFIG_DEFAULT_LOCATION, homedir_env);
-                }
+        homedir_env = getenv(ENV_HOME);
+        if (homedir_env) {
+            int configFileNameSize = strlen(homedir_env) + strlen(KUBE_CONFIG_DEFAULT_LOCATION) + 1;
+            configFileName = calloc(configFileNameSize, sizeof(char));
+            if (configFileName) {
+                snprintf(configFileName, configFileNameSize, KUBE_CONFIG_DEFAULT_LOCATION, homedir_env);
             }
         }
     }
