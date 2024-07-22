@@ -88,6 +88,7 @@ extern "C" {
 
     typedef struct kubeconfig_t {
         char *fileName;
+        char *buffer;
         char *apiVersion;
         char *preferences;
         char *kind;
@@ -112,8 +113,16 @@ extern "C" {
     kubeconfig_property_t **kubeconfig_properties_create(int contexts_count, kubeconfig_property_type_t type);
     void kubeconfig_properties_free(kubeconfig_property_t ** properties, int properties_count);
 
+    // allocate kubeconfig_t structure on heap
     kubeconfig_t *kubeconfig_create();
+
+    // free a kubeconfig_t structure allocated on heap by a call to kubeconfig_create
     void kubeconfig_free(kubeconfig_t * kubeconfig);
+
+    // free internal members of a kubeconfig_t structure.
+    // used when releasing resources for a kubeconfig_t that was not allocated using kubeconfig_create
+    // for example a kubeconfig_t allocated on stack
+    void kubeconfig_free_members(kubeconfig_t * kubeconfig);
 
 #ifdef  __cplusplus
 }

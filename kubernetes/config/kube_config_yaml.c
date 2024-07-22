@@ -430,7 +430,12 @@ int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig)
 {
     static char fname[] = "kubeyaml_load_kubeconfig()";
 
-    /* Set a file input. */
+    if (kubeconfig->fileName && kubeconfig->buffer) {
+        fprintf(stderr, "%s: Cannot use both kubeconfig->fileName and kubeconfig->buffer.\n", fname);
+        return -1;
+    }
+
+    /* Set a file input or use the provided buffer. */
     FILE *input = NULL;
     if (kubeconfig->fileName) {
         input = fopen(kubeconfig->fileName, "rb");
@@ -438,17 +443,23 @@ int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig)
             fprintf(stderr, "%s: Cannot open the file %s.[%s]\n", fname, kubeconfig->fileName, strerror(errno));
             return -1;
         }
+    } else if (kubeconfig->buffer) {
+        // Nothing to do here for now.
     } else {
-        fprintf(stderr, "%s: The kubeconf file name needs be set by kubeconfig->fileName .\n", fname);
+        fprintf(stderr, "%s: One of the kubeconfig->fileName or kubeconfig->buffer needs to be set.\n", fname);
         return -1;
     }
 
+    /* Create the Parser object. */
     yaml_parser_t parser;
     yaml_document_t document;
 
-    /* Create the Parser object. */
     yaml_parser_initialize(&parser);
-    yaml_parser_set_input_file(&parser, input);
+    if (input) {
+        yaml_parser_set_input_file(&parser, input);
+    } else {
+        yaml_parser_set_input_string(&parser, (const unsigned char *) kubeconfig->buffer, strlen(kubeconfig->buffer));
+    }
 
     int done = 0;
     while (!done) {
@@ -469,12 +480,16 @@ int kubeyaml_load_kubeconfig(kubeconfig_t * kubeconfig)
 
     /* Cleanup */
     yaml_parser_delete(&parser);
-    fclose(input);
+    if (input) {
+        fclose(input);
+    }
     return 0;
 
   error:
     yaml_parser_delete(&parser);
-    fclose(input);
+    if (input) {
+        fclose(input);
+    }
     return -1;
 }
 

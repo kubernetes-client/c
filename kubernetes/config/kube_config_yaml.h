@@ -24,7 +24,10 @@ extern "C" {
  *
  * IN:
  * kubeconfig->fileName: kubernetes cluster configuration file name
- *
+ * kubeconfig->buffer: kubernetes cluster configuration data; this is considered only if kubeconfig->fileName is set to NULL
+ * 
+ * Note: One may use either kubeconfig->fileName or kubeconfig->buffer but not both at the same time.
+ * 
  * OUT:
  * kubeconfig: kubernetes cluster configuration
  *
