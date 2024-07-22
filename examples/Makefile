@@ -54,6 +54,7 @@ memcheck:
 	kubectl wait --for=condition=ready --all pod -n default --timeout=60s
 	cd list_pod_with_invalid_kubeconfig; make memcheck
 	cd list_pod; make memcheck
+	cd list_pod_buffer; make memcheck
 	cd delete_pod; make memcheck
 	kubectl wait --for=delete pod/test-pod-6 -n default --timeout=120s
 	cd list_secret; make memcheck
