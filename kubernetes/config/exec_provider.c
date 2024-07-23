@@ -75,12 +75,8 @@ int kube_exec_and_get_result(ExecCredential_t * exec_credential, const kubeconfi
         result_string = calloc(1, KUBECONFIG_EXEC_RESULT_BUFFER_SIZE);
         if (!result_string) {
             fprintf(stderr, "%s: Cannot allocate memory for command result.[%s]\n", fname, strerror(errno));
-#ifndef _WIN32
-            pclose(fp);
-#else
-            _pclose(fp);
-#endif
-            return -1;
+            rc = -1;
+            goto end;
         }
         int result_string_remaining_size = KUBECONFIG_EXEC_RESULT_BUFFER_SIZE - 1;
         char string_buf[KUBECONFIG_STRING_BUFFER_SIZE];
@@ -90,21 +86,11 @@ int kube_exec_and_get_result(ExecCredential_t * exec_credential, const kubeconfi
             if (result_string_remaining_size <= 0) {
                 fprintf(stderr, "%s: The buffer for exec result is not sufficient.\n", fname);
                 rc = -1;
-#ifndef _WIN32
-                pclose(fp);
-#else
-                _pclose(fp);
-#endif
                 goto end;
             }
             strncat(result_string, string_buf, strlen(string_buf));
             memset(string_buf, 0, sizeof(string_buf));
         }
-#ifndef _WIN32
-        pclose(fp);
-#else
-        _pclose(fp);
-#endif
     } else {
         fprintf(stderr, "%s: Cannot open pipe to run command.[%s]\n", fname, strerror(errno));
         return -1;
@@ -115,7 +101,16 @@ int kube_exec_and_get_result(ExecCredential_t * exec_credential, const kubeconfi
   end:
     if (result_string) {
         free(result_string);
+        result_string = NULL;
     }
 
+    if (fp) {
+#ifndef _WIN32
+        pclose(fp);
+#else
+        _pclose(fp);
+#endif
+        fp = NULL;
+    }
     return rc;
 }
