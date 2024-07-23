@@ -1065,6 +1065,7 @@ int kubeyaml_save_kubeconfig(const kubeconfig_t * kubeconfig)
     /* Initialize the emitter object. */
     if (!yaml_emitter_initialize(&emitter)) {
         fprintf(stderr, "%s: Could not initialize the emitter object\n", fname);
+        fclose(output);
         return -1;
     }
 
