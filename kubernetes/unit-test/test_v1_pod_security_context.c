@@ -38,6 +38,7 @@ v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optio
        // false, not to have infinite recursion
       instantiate_v1_seccomp_profile(0),
       list_createList(),
+      "0",
       list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_windows_security_context_options(0)
@@ -53,6 +54,7 @@ v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optio
       NULL,
       NULL,
       list_createList(),
+      "0",
       list_createList(),
       NULL
     );

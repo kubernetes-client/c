@@ -22,10 +22,12 @@ v1_resource_claim_t* instantiate_v1_resource_claim(int include_optional) {
   v1_resource_claim_t* v1_resource_claim = NULL;
   if (include_optional) {
     v1_resource_claim = v1_resource_claim_create(
+      "0",
       "0"
     );
   } else {
     v1_resource_claim = v1_resource_claim_create(
+      "0",
       "0"
     );
   }

@@ -34,7 +34,7 @@ SchedulingV1API_deletePriorityClass(apiClient_t *apiClient, char *name, char *pr
 // get available resources
 //
 v1_api_resource_list_t*
-SchedulingV1API_getAPIResources(apiClient_t *apiClient);
+SchedulingV1API_getAPIResources_28(apiClient_t *apiClient);
 
 
 // list or watch objects of kind PriorityClass

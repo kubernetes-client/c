@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**DiscoveryV1API_createNamespacedEndpointSlice**](DiscoveryV1API.md#DiscoveryV1API_createNamespacedEndpointSlice) | **POST** /apis/discovery.k8s.io/v1/namespaces/{namespace}/endpointslices | 
 [**DiscoveryV1API_deleteCollectionNamespacedEndpointSlice**](DiscoveryV1API.md#DiscoveryV1API_deleteCollectionNamespacedEndpointSlice) | **DELETE** /apis/discovery.k8s.io/v1/namespaces/{namespace}/endpointslices | 
 [**DiscoveryV1API_deleteNamespacedEndpointSlice**](DiscoveryV1API.md#DiscoveryV1API_deleteNamespacedEndpointSlice) | **DELETE** /apis/discovery.k8s.io/v1/namespaces/{namespace}/endpointslices/{name} | 
-[**DiscoveryV1API_getAPIResources**](DiscoveryV1API.md#DiscoveryV1API_getAPIResources) | **GET** /apis/discovery.k8s.io/v1/ | 
+[**DiscoveryV1API_getAPIResources_17**](DiscoveryV1API.md#DiscoveryV1API_getAPIResources_17) | **GET** /apis/discovery.k8s.io/v1/ | 
 [**DiscoveryV1API_listEndpointSliceForAllNamespaces**](DiscoveryV1API.md#DiscoveryV1API_listEndpointSliceForAllNamespaces) | **GET** /apis/discovery.k8s.io/v1/endpointslices | 
 [**DiscoveryV1API_listNamespacedEndpointSlice**](DiscoveryV1API.md#DiscoveryV1API_listNamespacedEndpointSlice) | **GET** /apis/discovery.k8s.io/v1/namespaces/{namespace}/endpointslices | 
 [**DiscoveryV1API_patchNamespacedEndpointSlice**](DiscoveryV1API.md#DiscoveryV1API_patchNamespacedEndpointSlice) | **PATCH** /apis/discovery.k8s.io/v1/namespaces/{namespace}/endpointslices/{name} | 
@@ -128,11 +128,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **DiscoveryV1API_getAPIResources**
+# **DiscoveryV1API_getAPIResources_17**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* DiscoveryV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* DiscoveryV1API_getAPIResources_17(apiClient_t *apiClient);
 ```
 
 ### Parameters

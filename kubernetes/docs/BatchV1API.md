@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**BatchV1API_deleteCollectionNamespacedJob**](BatchV1API.md#BatchV1API_deleteCollectionNamespacedJob) | **DELETE** /apis/batch/v1/namespaces/{namespace}/jobs | 
 [**BatchV1API_deleteNamespacedCronJob**](BatchV1API.md#BatchV1API_deleteNamespacedCronJob) | **DELETE** /apis/batch/v1/namespaces/{namespace}/cronjobs/{name} | 
 [**BatchV1API_deleteNamespacedJob**](BatchV1API.md#BatchV1API_deleteNamespacedJob) | **DELETE** /apis/batch/v1/namespaces/{namespace}/jobs/{name} | 
-[**BatchV1API_getAPIResources**](BatchV1API.md#BatchV1API_getAPIResources) | **GET** /apis/batch/v1/ | 
+[**BatchV1API_getAPIResources_12**](BatchV1API.md#BatchV1API_getAPIResources_12) | **GET** /apis/batch/v1/ | 
 [**BatchV1API_listCronJobForAllNamespaces**](BatchV1API.md#BatchV1API_listCronJobForAllNamespaces) | **GET** /apis/batch/v1/cronjobs | 
 [**BatchV1API_listJobForAllNamespaces**](BatchV1API.md#BatchV1API_listJobForAllNamespaces) | **GET** /apis/batch/v1/jobs | 
 [**BatchV1API_listNamespacedCronJob**](BatchV1API.md#BatchV1API_listNamespacedCronJob) | **GET** /apis/batch/v1/namespaces/{namespace}/cronjobs | 
@@ -255,11 +255,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **BatchV1API_getAPIResources**
+# **BatchV1API_getAPIResources_12**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* BatchV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* BatchV1API_getAPIResources_12(apiClient_t *apiClient);
 ```
 
 ### Parameters

@@ -4,22 +4,22 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**EventsV1API_createNamespacedEvent**](EventsV1API.md#EventsV1API_createNamespacedEvent) | **POST** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
-[**EventsV1API_deleteCollectionNamespacedEvent**](EventsV1API.md#EventsV1API_deleteCollectionNamespacedEvent) | **DELETE** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
-[**EventsV1API_deleteNamespacedEvent**](EventsV1API.md#EventsV1API_deleteNamespacedEvent) | **DELETE** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
-[**EventsV1API_getAPIResources**](EventsV1API.md#EventsV1API_getAPIResources) | **GET** /apis/events.k8s.io/v1/ | 
-[**EventsV1API_listEventForAllNamespaces**](EventsV1API.md#EventsV1API_listEventForAllNamespaces) | **GET** /apis/events.k8s.io/v1/events | 
-[**EventsV1API_listNamespacedEvent**](EventsV1API.md#EventsV1API_listNamespacedEvent) | **GET** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
-[**EventsV1API_patchNamespacedEvent**](EventsV1API.md#EventsV1API_patchNamespacedEvent) | **PATCH** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
-[**EventsV1API_readNamespacedEvent**](EventsV1API.md#EventsV1API_readNamespacedEvent) | **GET** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
-[**EventsV1API_replaceNamespacedEvent**](EventsV1API.md#EventsV1API_replaceNamespacedEvent) | **PUT** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
+[**EventsV1API_createNamespacedEvent_0**](EventsV1API.md#EventsV1API_createNamespacedEvent_0) | **POST** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
+[**EventsV1API_deleteCollectionNamespacedEvent_0**](EventsV1API.md#EventsV1API_deleteCollectionNamespacedEvent_0) | **DELETE** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
+[**EventsV1API_deleteNamespacedEvent_0**](EventsV1API.md#EventsV1API_deleteNamespacedEvent_0) | **DELETE** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
+[**EventsV1API_getAPIResources_18**](EventsV1API.md#EventsV1API_getAPIResources_18) | **GET** /apis/events.k8s.io/v1/ | 
+[**EventsV1API_listEventForAllNamespaces_0**](EventsV1API.md#EventsV1API_listEventForAllNamespaces_0) | **GET** /apis/events.k8s.io/v1/events | 
+[**EventsV1API_listNamespacedEvent_0**](EventsV1API.md#EventsV1API_listNamespacedEvent_0) | **GET** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
+[**EventsV1API_patchNamespacedEvent_0**](EventsV1API.md#EventsV1API_patchNamespacedEvent_0) | **PATCH** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
+[**EventsV1API_readNamespacedEvent_0**](EventsV1API.md#EventsV1API_readNamespacedEvent_0) | **GET** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
+[**EventsV1API_replaceNamespacedEvent_0**](EventsV1API.md#EventsV1API_replaceNamespacedEvent_0) | **PUT** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
 
 
-# **EventsV1API_createNamespacedEvent**
+# **EventsV1API_createNamespacedEvent_0**
 ```c
 // create an Event
 //
-events_v1_event_t* EventsV1API_createNamespacedEvent(apiClient_t *apiClient, char *_namespace, events_v1_event_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+events_v1_event_t* EventsV1API_createNamespacedEvent_0(apiClient_t *apiClient, char *_namespace, events_v1_event_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -49,11 +49,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_deleteCollectionNamespacedEvent**
+# **EventsV1API_deleteCollectionNamespacedEvent_0**
 ```c
 // delete collection of Event
 //
-v1_status_t* EventsV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+v1_status_t* EventsV1API_deleteCollectionNamespacedEvent_0(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -92,11 +92,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_deleteNamespacedEvent**
+# **EventsV1API_deleteNamespacedEvent_0**
 ```c
 // delete an Event
 //
-v1_status_t* EventsV1API_deleteNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+v1_status_t* EventsV1API_deleteNamespacedEvent_0(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -128,11 +128,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_getAPIResources**
+# **EventsV1API_getAPIResources_18**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* EventsV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* EventsV1API_getAPIResources_18(apiClient_t *apiClient);
 ```
 
 ### Parameters
@@ -156,11 +156,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_listEventForAllNamespaces**
+# **EventsV1API_listEventForAllNamespaces_0**
 ```c
 // list or watch objects of kind Event
 //
-events_v1_event_list_t* EventsV1API_listEventForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+events_v1_event_list_t* EventsV1API_listEventForAllNamespaces_0(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -195,11 +195,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_listNamespacedEvent**
+# **EventsV1API_listNamespacedEvent_0**
 ```c
 // list or watch objects of kind Event
 //
-events_v1_event_list_t* EventsV1API_listNamespacedEvent(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+events_v1_event_list_t* EventsV1API_listNamespacedEvent_0(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -235,11 +235,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_patchNamespacedEvent**
+# **EventsV1API_patchNamespacedEvent_0**
 ```c
 // partially update the specified Event
 //
-events_v1_event_t* EventsV1API_patchNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+events_v1_event_t* EventsV1API_patchNamespacedEvent_0(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -271,11 +271,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_readNamespacedEvent**
+# **EventsV1API_readNamespacedEvent_0**
 ```c
 // read the specified Event
 //
-events_v1_event_t* EventsV1API_readNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
+events_v1_event_t* EventsV1API_readNamespacedEvent_0(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -302,11 +302,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_replaceNamespacedEvent**
+# **EventsV1API_replaceNamespacedEvent_0**
 ```c
 // replace the specified Event
 //
-events_v1_event_t* EventsV1API_replaceNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespace, events_v1_event_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+events_v1_event_t* EventsV1API_replaceNamespacedEvent_0(apiClient_t *apiClient, char *name, char *_namespace, events_v1_event_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters

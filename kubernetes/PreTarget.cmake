@@ -1,5 +1,5 @@
 set(PROJECT_VERSION_MAJOR 0)
-set(PROJECT_VERSION_MINOR 10)
+set(PROJECT_VERSION_MINOR 110)
 set(PROJECT_VERSION_PATCH 0)
 
 set(PROJECT_PACKAGE_DESCRIPTION_SUMMARY "The Kubernetes client library for the C programming language.")

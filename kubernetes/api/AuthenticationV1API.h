@@ -25,6 +25,6 @@ AuthenticationV1API_createTokenReview(apiClient_t *apiClient, v1_token_review_t 
 // get available resources
 //
 v1_api_resource_list_t*
-AuthenticationV1API_getAPIResources(apiClient_t *apiClient);
+AuthenticationV1API_getAPIResources_6(apiClient_t *apiClient);
 
 

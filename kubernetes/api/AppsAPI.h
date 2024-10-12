@@ -11,6 +11,6 @@
 // get information of a group
 //
 v1_api_group_t*
-AppsAPI_getAPIGroup(apiClient_t *apiClient);
+AppsAPI_getAPIGroup_2(apiClient_t *apiClient);
 
 

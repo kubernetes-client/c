@@ -20,11 +20,13 @@ typedef struct v1_resource_claim_t v1_resource_claim_t;
 
 typedef struct v1_resource_claim_t {
     char *name; // string
+    char *request; // string
 
 } v1_resource_claim_t;
 
 v1_resource_claim_t *v1_resource_claim_create(
-    char *name
+    char *name,
+    char *request
 );
 
 void v1_resource_claim_free(v1_resource_claim_t *v1_resource_claim);

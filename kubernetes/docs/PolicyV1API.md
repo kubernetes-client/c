@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**PolicyV1API_createNamespacedPodDisruptionBudget**](PolicyV1API.md#PolicyV1API_createNamespacedPodDisruptionBudget) | **POST** /apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets | 
 [**PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget**](PolicyV1API.md#PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget) | **DELETE** /apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets | 
 [**PolicyV1API_deleteNamespacedPodDisruptionBudget**](PolicyV1API.md#PolicyV1API_deleteNamespacedPodDisruptionBudget) | **DELETE** /apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name} | 
-[**PolicyV1API_getAPIResources**](PolicyV1API.md#PolicyV1API_getAPIResources) | **GET** /apis/policy/v1/ | 
+[**PolicyV1API_getAPIResources_25**](PolicyV1API.md#PolicyV1API_getAPIResources_25) | **GET** /apis/policy/v1/ | 
 [**PolicyV1API_listNamespacedPodDisruptionBudget**](PolicyV1API.md#PolicyV1API_listNamespacedPodDisruptionBudget) | **GET** /apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets | 
 [**PolicyV1API_listPodDisruptionBudgetForAllNamespaces**](PolicyV1API.md#PolicyV1API_listPodDisruptionBudgetForAllNamespaces) | **GET** /apis/policy/v1/poddisruptionbudgets | 
 [**PolicyV1API_patchNamespacedPodDisruptionBudget**](PolicyV1API.md#PolicyV1API_patchNamespacedPodDisruptionBudget) | **PATCH** /apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name} | 
@@ -131,11 +131,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **PolicyV1API_getAPIResources**
+# **PolicyV1API_getAPIResources_25**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* PolicyV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* PolicyV1API_getAPIResources_25(apiClient_t *apiClient);
 ```
 
 ### Parameters

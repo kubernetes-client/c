@@ -7,14 +7,16 @@
 
 v1_pod_resource_claim_t *v1_pod_resource_claim_create(
     char *name,
-    v1_claim_source_t *source
+    char *resource_claim_name,
+    char *resource_claim_template_name
     ) {
     v1_pod_resource_claim_t *v1_pod_resource_claim_local_var = malloc(sizeof(v1_pod_resource_claim_t));
     if (!v1_pod_resource_claim_local_var) {
         return NULL;
     }
     v1_pod_resource_claim_local_var->name = name;
-    v1_pod_resource_claim_local_var->source = source;
+    v1_pod_resource_claim_local_var->resource_claim_name = resource_claim_name;
+    v1_pod_resource_claim_local_var->resource_claim_template_name = resource_claim_template_name;
 
     return v1_pod_resource_claim_local_var;
 }
@@ -29,9 +31,13 @@ void v1_pod_resource_claim_free(v1_pod_resource_claim_t *v1_pod_resource_claim) 
         free(v1_pod_resource_claim->name);
         v1_pod_resource_claim->name = NULL;
     }
-    if (v1_pod_resource_claim->source) {
-        v1_claim_source_free(v1_pod_resource_claim->source);
-        v1_pod_resource_claim->source = NULL;
+    if (v1_pod_resource_claim->resource_claim_name) {
+        free(v1_pod_resource_claim->resource_claim_name);
+        v1_pod_resource_claim->resource_claim_name = NULL;
+    }
+    if (v1_pod_resource_claim->resource_claim_template_name) {
+        free(v1_pod_resource_claim->resource_claim_template_name);
+        v1_pod_resource_claim->resource_claim_template_name = NULL;
     }
     free(v1_pod_resource_claim);
 }
@@ -48,15 +54,18 @@ cJSON *v1_pod_resource_claim_convertToJSON(v1_pod_resource_claim_t *v1_pod_resou
     }
 
 
-    // v1_pod_resource_claim->source
-    if(v1_pod_resource_claim->source) {
-    cJSON *source_local_JSON = v1_claim_source_convertToJSON(v1_pod_resource_claim->source);
-    if(source_local_JSON == NULL) {
-    goto fail; //model
+    // v1_pod_resource_claim->resource_claim_name
+    if(v1_pod_resource_claim->resource_claim_name) {
+    if(cJSON_AddStringToObject(item, "resourceClaimName", v1_pod_resource_claim->resource_claim_name) == NULL) {
+    goto fail; //String
     }
-    cJSON_AddItemToObject(item, "source", source_local_JSON);
-    if(item->child == NULL) {
-    goto fail;
+    }
+
+
+    // v1_pod_resource_claim->resource_claim_template_name
+    if(v1_pod_resource_claim->resource_claim_template_name) {
+    if(cJSON_AddStringToObject(item, "resourceClaimTemplateName", v1_pod_resource_claim->resource_claim_template_name) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -72,9 +81,6 @@ v1_pod_resource_claim_t *v1_pod_resource_claim_parseFromJSON(cJSON *v1_pod_resou
 
     v1_pod_resource_claim_t *v1_pod_resource_claim_local_var = NULL;
 
-    // define the local variable for v1_pod_resource_claim->source
-    v1_claim_source_t *source_local_nonprim = NULL;
-
     // v1_pod_resource_claim->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_pod_resource_claimJSON, "name");
     if (!name) {
@@ -87,24 +93,33 @@ v1_pod_resource_claim_t *v1_pod_resource_claim_parseFromJSON(cJSON *v1_pod_resou
     goto end; //String
     }
 
-    // v1_pod_resource_claim->source
-    cJSON *source = cJSON_GetObjectItemCaseSensitive(v1_pod_resource_claimJSON, "source");
-    if (source) { 
-    source_local_nonprim = v1_claim_source_parseFromJSON(source); //nonprimitive
+    // v1_pod_resource_claim->resource_claim_name
+    cJSON *resource_claim_name = cJSON_GetObjectItemCaseSensitive(v1_pod_resource_claimJSON, "resourceClaimName");
+    if (resource_claim_name) { 
+    if(!cJSON_IsString(resource_claim_name) && !cJSON_IsNull(resource_claim_name))
+    {
+    goto end; //String
+    }
+    }
+
+    // v1_pod_resource_claim->resource_claim_template_name
+    cJSON *resource_claim_template_name = cJSON_GetObjectItemCaseSensitive(v1_pod_resource_claimJSON, "resourceClaimTemplateName");
+    if (resource_claim_template_name) { 
+    if(!cJSON_IsString(resource_claim_template_name) && !cJSON_IsNull(resource_claim_template_name))
+    {
+    goto end; //String
+    }
     }
 
 
     v1_pod_resource_claim_local_var = v1_pod_resource_claim_create (
         strdup(name->valuestring),
-        source ? source_local_nonprim : NULL
+        resource_claim_name && !cJSON_IsNull(resource_claim_name) ? strdup(resource_claim_name->valuestring) : NULL,
+        resource_claim_template_name && !cJSON_IsNull(resource_claim_template_name) ? strdup(resource_claim_template_name->valuestring) : NULL
         );
 
     return v1_pod_resource_claim_local_var;
 end:
-    if (source_local_nonprim) {
-        v1_claim_source_free(source_local_nonprim);
-        source_local_nonprim = NULL;
-    }
     return NULL;
 
 }

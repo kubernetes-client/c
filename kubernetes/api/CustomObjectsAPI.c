@@ -1422,7 +1422,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-CustomObjectsAPI_getAPIResources(apiClient_t *apiClient, char *group, char *version)
+CustomObjectsAPI_getAPIResources_33(apiClient_t *apiClient, char *group, char *version)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -2217,6 +2217,349 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char *group, ch
     long sizeOfPath = strlen("/apis/{group}/{version}/{plural}")+1;
     char *localVarPath = malloc(sizeOfPath);
     snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}");
+
+
+    // Path Params
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ group }");
+    if(group == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_group = malloc(sizeOfPathParams_group);
+    sprintf(localVarToReplace_group, "{%s}", "group");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
+
+    // Path Params
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ version }");
+    if(version == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_version = malloc(sizeOfPathParams_version);
+    sprintf(localVarToReplace_version, "{%s}", "version");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
+
+    // Path Params
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ plural }");
+    if(plural == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_plural = malloc(sizeOfPathParams_plural);
+    sprintf(localVarToReplace_plural, "{%s}", "plural");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery_allowWatchBookmarks = NULL;
+    char * valueQuery_allowWatchBookmarks = NULL;
+    keyValuePair_t *keyPairQuery_allowWatchBookmarks = 0;
+    if (allowWatchBookmarks)
+    {
+        keyQuery_allowWatchBookmarks = strdup("allowWatchBookmarks");
+        valueQuery_allowWatchBookmarks = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_allowWatchBookmarks, MAX_NUMBER_LENGTH, "%d", *allowWatchBookmarks);
+        keyPairQuery_allowWatchBookmarks = keyValuePair_create(keyQuery_allowWatchBookmarks, valueQuery_allowWatchBookmarks);
+        list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
+    }
+
+    // query parameters
+    char *keyQuery__continue = NULL;
+    char * valueQuery__continue = NULL;
+    keyValuePair_t *keyPairQuery__continue = 0;
+    if (_continue)
+    {
+        keyQuery__continue = strdup("continue");
+        valueQuery__continue = strdup((_continue));
+        keyPairQuery__continue = keyValuePair_create(keyQuery__continue, valueQuery__continue);
+        list_addElement(localVarQueryParameters,keyPairQuery__continue);
+    }
+
+    // query parameters
+    char *keyQuery_fieldSelector = NULL;
+    char * valueQuery_fieldSelector = NULL;
+    keyValuePair_t *keyPairQuery_fieldSelector = 0;
+    if (fieldSelector)
+    {
+        keyQuery_fieldSelector = strdup("fieldSelector");
+        valueQuery_fieldSelector = strdup((fieldSelector));
+        keyPairQuery_fieldSelector = keyValuePair_create(keyQuery_fieldSelector, valueQuery_fieldSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldSelector);
+    }
+
+    // query parameters
+    char *keyQuery_labelSelector = NULL;
+    char * valueQuery_labelSelector = NULL;
+    keyValuePair_t *keyPairQuery_labelSelector = 0;
+    if (labelSelector)
+    {
+        keyQuery_labelSelector = strdup("labelSelector");
+        valueQuery_labelSelector = strdup((labelSelector));
+        keyPairQuery_labelSelector = keyValuePair_create(keyQuery_labelSelector, valueQuery_labelSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_labelSelector);
+    }
+
+    // query parameters
+    char *keyQuery_limit = NULL;
+    char * valueQuery_limit = NULL;
+    keyValuePair_t *keyPairQuery_limit = 0;
+    if (limit)
+    {
+        keyQuery_limit = strdup("limit");
+        valueQuery_limit = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_limit, MAX_NUMBER_LENGTH, "%d", *limit);
+        keyPairQuery_limit = keyValuePair_create(keyQuery_limit, valueQuery_limit);
+        list_addElement(localVarQueryParameters,keyPairQuery_limit);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersion = NULL;
+    char * valueQuery_resourceVersion = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersion = 0;
+    if (resourceVersion)
+    {
+        keyQuery_resourceVersion = strdup("resourceVersion");
+        valueQuery_resourceVersion = strdup((resourceVersion));
+        keyPairQuery_resourceVersion = keyValuePair_create(keyQuery_resourceVersion, valueQuery_resourceVersion);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersion);
+    }
+
+    // query parameters
+    char *keyQuery_resourceVersionMatch = NULL;
+    char * valueQuery_resourceVersionMatch = NULL;
+    keyValuePair_t *keyPairQuery_resourceVersionMatch = 0;
+    if (resourceVersionMatch)
+    {
+        keyQuery_resourceVersionMatch = strdup("resourceVersionMatch");
+        valueQuery_resourceVersionMatch = strdup((resourceVersionMatch));
+        keyPairQuery_resourceVersionMatch = keyValuePair_create(keyQuery_resourceVersionMatch, valueQuery_resourceVersionMatch);
+        list_addElement(localVarQueryParameters,keyPairQuery_resourceVersionMatch);
+    }
+
+    // query parameters
+    char *keyQuery_timeoutSeconds = NULL;
+    char * valueQuery_timeoutSeconds = NULL;
+    keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
+    if (timeoutSeconds)
+    {
+        keyQuery_timeoutSeconds = strdup("timeoutSeconds");
+        valueQuery_timeoutSeconds = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_timeoutSeconds, MAX_NUMBER_LENGTH, "%d", *timeoutSeconds);
+        keyPairQuery_timeoutSeconds = keyValuePair_create(keyQuery_timeoutSeconds, valueQuery_timeoutSeconds);
+        list_addElement(localVarQueryParameters,keyPairQuery_timeoutSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_watch = NULL;
+    char * valueQuery_watch = NULL;
+    keyValuePair_t *keyPairQuery_watch = 0;
+    if (watch)
+    {
+        keyQuery_watch = strdup("watch");
+        valueQuery_watch = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_watch, MAX_NUMBER_LENGTH, "%d", *watch);
+        keyPairQuery_watch = keyValuePair_create(keyQuery_watch, valueQuery_watch);
+        list_addElement(localVarQueryParameters,keyPairQuery_watch);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    "GET");
+
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
+    //nonprimitive not container
+    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+    if(elementToReturn == NULL) {
+        // return 0;
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_freeList(localVarQueryParameters);
+    
+    
+    list_freeList(localVarHeaderType);
+    
+    free(localVarPath);
+    free(localVarToReplace_group);
+    free(localVarToReplace_version);
+    free(localVarToReplace_plural);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
+    }
+    if(keyQuery_allowWatchBookmarks){
+        free(keyQuery_allowWatchBookmarks);
+        keyQuery_allowWatchBookmarks = NULL;
+    }
+    if(valueQuery_allowWatchBookmarks){
+        free(valueQuery_allowWatchBookmarks);
+        valueQuery_allowWatchBookmarks = NULL;
+    }
+    if(keyPairQuery_allowWatchBookmarks){
+        keyValuePair_free(keyPairQuery_allowWatchBookmarks);
+        keyPairQuery_allowWatchBookmarks = NULL;
+    }
+    if(keyQuery__continue){
+        free(keyQuery__continue);
+        keyQuery__continue = NULL;
+    }
+    if(valueQuery__continue){
+        free(valueQuery__continue);
+        valueQuery__continue = NULL;
+    }
+    if(keyPairQuery__continue){
+        keyValuePair_free(keyPairQuery__continue);
+        keyPairQuery__continue = NULL;
+    }
+    if(keyQuery_fieldSelector){
+        free(keyQuery_fieldSelector);
+        keyQuery_fieldSelector = NULL;
+    }
+    if(valueQuery_fieldSelector){
+        free(valueQuery_fieldSelector);
+        valueQuery_fieldSelector = NULL;
+    }
+    if(keyPairQuery_fieldSelector){
+        keyValuePair_free(keyPairQuery_fieldSelector);
+        keyPairQuery_fieldSelector = NULL;
+    }
+    if(keyQuery_labelSelector){
+        free(keyQuery_labelSelector);
+        keyQuery_labelSelector = NULL;
+    }
+    if(valueQuery_labelSelector){
+        free(valueQuery_labelSelector);
+        valueQuery_labelSelector = NULL;
+    }
+    if(keyPairQuery_labelSelector){
+        keyValuePair_free(keyPairQuery_labelSelector);
+        keyPairQuery_labelSelector = NULL;
+    }
+    if(keyQuery_limit){
+        free(keyQuery_limit);
+        keyQuery_limit = NULL;
+    }
+    if(valueQuery_limit){
+        free(valueQuery_limit);
+        valueQuery_limit = NULL;
+    }
+    if(keyPairQuery_limit){
+        keyValuePair_free(keyPairQuery_limit);
+        keyPairQuery_limit = NULL;
+    }
+    if(keyQuery_resourceVersion){
+        free(keyQuery_resourceVersion);
+        keyQuery_resourceVersion = NULL;
+    }
+    if(valueQuery_resourceVersion){
+        free(valueQuery_resourceVersion);
+        valueQuery_resourceVersion = NULL;
+    }
+    if(keyPairQuery_resourceVersion){
+        keyValuePair_free(keyPairQuery_resourceVersion);
+        keyPairQuery_resourceVersion = NULL;
+    }
+    if(keyQuery_resourceVersionMatch){
+        free(keyQuery_resourceVersionMatch);
+        keyQuery_resourceVersionMatch = NULL;
+    }
+    if(valueQuery_resourceVersionMatch){
+        free(valueQuery_resourceVersionMatch);
+        valueQuery_resourceVersionMatch = NULL;
+    }
+    if(keyPairQuery_resourceVersionMatch){
+        keyValuePair_free(keyPairQuery_resourceVersionMatch);
+        keyPairQuery_resourceVersionMatch = NULL;
+    }
+    if(keyQuery_timeoutSeconds){
+        free(keyQuery_timeoutSeconds);
+        keyQuery_timeoutSeconds = NULL;
+    }
+    if(valueQuery_timeoutSeconds){
+        free(valueQuery_timeoutSeconds);
+        valueQuery_timeoutSeconds = NULL;
+    }
+    if(keyPairQuery_timeoutSeconds){
+        keyValuePair_free(keyPairQuery_timeoutSeconds);
+        keyPairQuery_timeoutSeconds = NULL;
+    }
+    if(keyQuery_watch){
+        free(keyQuery_watch);
+        keyQuery_watch = NULL;
+    }
+    if(valueQuery_watch){
+        free(valueQuery_watch);
+        valueQuery_watch = NULL;
+    }
+    if(keyPairQuery_watch){
+        keyValuePair_free(keyPairQuery_watch);
+        keyPairQuery_watch = NULL;
+    }
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
+// list or watch namespace scoped custom objects
+//
+object_t*
+CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *timeoutSeconds, int *watch)
+{
+    list_t    *localVarQueryParameters = list_createList();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_createList();
+    list_t *localVarContentType = NULL;
+    char      *localVarBodyParameters = NULL;
+
+    // create the path
+    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}#‎")+1;
+    char *localVarPath = malloc(sizeOfPath);
+    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}#‎");
 
 
     // Path Params

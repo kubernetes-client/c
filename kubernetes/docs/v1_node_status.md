@@ -5,10 +5,11 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **addresses** | [**list_t**](v1_node_address.md) \* | List of addresses reachable to the node. Queried from cloud provider, if available. More info: https://kubernetes.io/docs/concepts/nodes/node/#addresses Note: This field is declared as mergeable, but the merge key is not sufficiently unique, which can cause data corruption when it is merged. Callers should instead use a full-replacement patch. See https://pr.k8s.io/79391 for an example. Consumers should assume that addresses can change during the lifetime of a Node. However, there are some exceptions where this may not be possible, such as Pods that inherit a Node&#39;s address in its own status or consumers of the downward API (status.hostIP). | [optional] 
 **allocatable** | **list_t*** | Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity. | [optional] 
-**capacity** | **list_t*** | Capacity represents the total resources of a node. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity | [optional] 
+**capacity** | **list_t*** | Capacity represents the total resources of a node. More info: https://kubernetes.io/docs/reference/node/node-status/#capacity | [optional] 
 **conditions** | [**list_t**](v1_node_condition.md) \* | Conditions is an array of current observed node conditions. More info: https://kubernetes.io/docs/concepts/nodes/node/#condition | [optional] 
 **config** | [**v1_node_config_status_t**](v1_node_config_status.md) \* |  | [optional] 
 **daemon_endpoints** | [**v1_node_daemon_endpoints_t**](v1_node_daemon_endpoints.md) \* |  | [optional] 
+**features** | [**v1_node_features_t**](v1_node_features.md) \* |  | [optional] 
 **images** | [**list_t**](v1_container_image.md) \* | List of container images on this node | [optional] 
 **node_info** | [**v1_node_system_info_t**](v1_node_system_info.md) \* |  | [optional] 
 **phase** | **char \*** | NodePhase is the recently observed lifecycle phase of the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated. | [optional] 

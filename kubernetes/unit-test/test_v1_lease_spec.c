@@ -26,7 +26,9 @@ v1_lease_spec_t* instantiate_v1_lease_spec(int include_optional) {
       "0",
       56,
       56,
-      "2013-10-20T19:20:30+01:00"
+      "0",
+      "2013-10-20T19:20:30+01:00",
+      "0"
     );
   } else {
     v1_lease_spec = v1_lease_spec_create(
@@ -34,7 +36,9 @@ v1_lease_spec_t* instantiate_v1_lease_spec(int include_optional) {
       "0",
       56,
       56,
-      "2013-10-20T19:20:30+01:00"
+      "0",
+      "2013-10-20T19:20:30+01:00",
+      "0"
     );
   }
 

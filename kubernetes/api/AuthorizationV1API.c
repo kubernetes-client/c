@@ -766,7 +766,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-AuthorizationV1API_getAPIResources(apiClient_t *apiClient)
+AuthorizationV1API_getAPIResources_9(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;

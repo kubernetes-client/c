@@ -32,6 +32,7 @@ typedef struct v1_volume_t v1_volume_t;
 #include "v1_git_repo_volume_source.h"
 #include "v1_glusterfs_volume_source.h"
 #include "v1_host_path_volume_source.h"
+#include "v1_image_volume_source.h"
 #include "v1_iscsi_volume_source.h"
 #include "v1_nfs_volume_source.h"
 #include "v1_persistent_volume_claim_volume_source.h"
@@ -65,6 +66,7 @@ typedef struct v1_volume_t {
     struct v1_git_repo_volume_source_t *git_repo; //model
     struct v1_glusterfs_volume_source_t *glusterfs; //model
     struct v1_host_path_volume_source_t *host_path; //model
+    struct v1_image_volume_source_t *image; //model
     struct v1_iscsi_volume_source_t *iscsi; //model
     char *name; // string
     struct v1_nfs_volume_source_t *nfs; //model
@@ -99,6 +101,7 @@ v1_volume_t *v1_volume_create(
     v1_git_repo_volume_source_t *git_repo,
     v1_glusterfs_volume_source_t *glusterfs,
     v1_host_path_volume_source_t *host_path,
+    v1_image_volume_source_t *image,
     v1_iscsi_volume_source_t *iscsi,
     char *name,
     v1_nfs_volume_source_t *nfs,

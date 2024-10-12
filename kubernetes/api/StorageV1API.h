@@ -114,7 +114,7 @@ StorageV1API_deleteVolumeAttachment(apiClient_t *apiClient, char *name, char *pr
 // get available resources
 //
 v1_api_resource_list_t*
-StorageV1API_getAPIResources(apiClient_t *apiClient);
+StorageV1API_getAPIResources_29(apiClient_t *apiClient);
 
 
 // list or watch objects of kind CSIDriver

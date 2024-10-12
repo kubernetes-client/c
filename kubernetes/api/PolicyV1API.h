@@ -34,7 +34,7 @@ PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *na
 // get available resources
 //
 v1_api_resource_list_t*
-PolicyV1API_getAPIResources(apiClient_t *apiClient);
+PolicyV1API_getAPIResources_25(apiClient_t *apiClient);
 
 
 // list or watch objects of kind PodDisruptionBudget

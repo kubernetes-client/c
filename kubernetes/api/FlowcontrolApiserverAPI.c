@@ -15,7 +15,7 @@
 // get information of a group
 //
 v1_api_group_t*
-FlowcontrolApiserverAPI_getAPIGroup(apiClient_t *apiClient)
+FlowcontrolApiserverAPI_getAPIGroup_11(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;

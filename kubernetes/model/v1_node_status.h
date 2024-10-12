@@ -21,6 +21,7 @@ typedef struct v1_node_status_t v1_node_status_t;
 #include "v1_node_condition.h"
 #include "v1_node_config_status.h"
 #include "v1_node_daemon_endpoints.h"
+#include "v1_node_features.h"
 #include "v1_node_runtime_handler.h"
 #include "v1_node_system_info.h"
 
@@ -33,6 +34,7 @@ typedef struct v1_node_status_t {
     list_t *conditions; //nonprimitive container
     struct v1_node_config_status_t *config; //model
     struct v1_node_daemon_endpoints_t *daemon_endpoints; //model
+    struct v1_node_features_t *features; //model
     list_t *images; //nonprimitive container
     struct v1_node_system_info_t *node_info; //model
     char *phase; // string
@@ -49,6 +51,7 @@ v1_node_status_t *v1_node_status_create(
     list_t *conditions,
     v1_node_config_status_t *config,
     v1_node_daemon_endpoints_t *daemon_endpoints,
+    v1_node_features_t *features,
     list_t *images,
     v1_node_system_info_t *node_info,
     char *phase,

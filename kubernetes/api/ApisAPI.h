@@ -11,6 +11,6 @@
 // get available API versions
 //
 v1_api_group_list_t*
-ApisAPI_getAPIVersions(apiClient_t *apiClient);
+ApisAPI_getAPIVersions_0(apiClient_t *apiClient);
 
 

@@ -34,7 +34,7 @@ AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
 // get available resources
 //
 v1_api_resource_list_t*
-AutoscalingV1API_getAPIResources(apiClient_t *apiClient);
+AutoscalingV1API_getAPIResources_10(apiClient_t *apiClient);
 
 
 // list or watch objects of kind HorizontalPodAutoscaler

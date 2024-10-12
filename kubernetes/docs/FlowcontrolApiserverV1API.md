@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**FlowcontrolApiserverV1API_deleteCollectionPriorityLevelConfiguration**](FlowcontrolApiserverV1API.md#FlowcontrolApiserverV1API_deleteCollectionPriorityLevelConfiguration) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1/prioritylevelconfigurations | 
 [**FlowcontrolApiserverV1API_deleteFlowSchema**](FlowcontrolApiserverV1API.md#FlowcontrolApiserverV1API_deleteFlowSchema) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1/flowschemas/{name} | 
 [**FlowcontrolApiserverV1API_deletePriorityLevelConfiguration**](FlowcontrolApiserverV1API.md#FlowcontrolApiserverV1API_deletePriorityLevelConfiguration) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1/prioritylevelconfigurations/{name} | 
-[**FlowcontrolApiserverV1API_getAPIResources**](FlowcontrolApiserverV1API.md#FlowcontrolApiserverV1API_getAPIResources) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1/ | 
+[**FlowcontrolApiserverV1API_getAPIResources_19**](FlowcontrolApiserverV1API.md#FlowcontrolApiserverV1API_getAPIResources_19) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1/ | 
 [**FlowcontrolApiserverV1API_listFlowSchema**](FlowcontrolApiserverV1API.md#FlowcontrolApiserverV1API_listFlowSchema) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1/flowschemas | 
 [**FlowcontrolApiserverV1API_listPriorityLevelConfiguration**](FlowcontrolApiserverV1API.md#FlowcontrolApiserverV1API_listPriorityLevelConfiguration) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1/prioritylevelconfigurations | 
 [**FlowcontrolApiserverV1API_patchFlowSchema**](FlowcontrolApiserverV1API.md#FlowcontrolApiserverV1API_patchFlowSchema) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1/flowschemas/{name} | 
@@ -247,11 +247,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1API_getAPIResources**
+# **FlowcontrolApiserverV1API_getAPIResources_19**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* FlowcontrolApiserverV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* FlowcontrolApiserverV1API_getAPIResources_19(apiClient_t *apiClient);
 ```
 
 ### Parameters

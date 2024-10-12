@@ -15,7 +15,7 @@
 // get information of a group
 //
 v1_api_group_t*
-DiscoveryAPI_getAPIGroup(apiClient_t *apiClient)
+DiscoveryAPI_getAPIGroup_9(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;

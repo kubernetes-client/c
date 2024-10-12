@@ -18,6 +18,7 @@ v1_node_status_t* instantiate_v1_node_status(int include_optional);
 
 #include "test_v1_node_config_status.c"
 #include "test_v1_node_daemon_endpoints.c"
+#include "test_v1_node_features.c"
 #include "test_v1_node_system_info.c"
 
 
@@ -33,6 +34,8 @@ v1_node_status_t* instantiate_v1_node_status(int include_optional) {
       instantiate_v1_node_config_status(0),
        // false, not to have infinite recursion
       instantiate_v1_node_daemon_endpoints(0),
+       // false, not to have infinite recursion
+      instantiate_v1_node_features(0),
       list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_node_system_info(0),
@@ -47,6 +50,7 @@ v1_node_status_t* instantiate_v1_node_status(int include_optional) {
       list_createList(),
       list_createList(),
       list_createList(),
+      NULL,
       NULL,
       NULL,
       list_createList(),

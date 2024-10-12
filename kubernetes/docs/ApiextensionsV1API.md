@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**ApiextensionsV1API_createCustomResourceDefinition**](ApiextensionsV1API.md#ApiextensionsV1API_createCustomResourceDefinition) | **POST** /apis/apiextensions.k8s.io/v1/customresourcedefinitions | 
 [**ApiextensionsV1API_deleteCollectionCustomResourceDefinition**](ApiextensionsV1API.md#ApiextensionsV1API_deleteCollectionCustomResourceDefinition) | **DELETE** /apis/apiextensions.k8s.io/v1/customresourcedefinitions | 
 [**ApiextensionsV1API_deleteCustomResourceDefinition**](ApiextensionsV1API.md#ApiextensionsV1API_deleteCustomResourceDefinition) | **DELETE** /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name} | 
-[**ApiextensionsV1API_getAPIResources**](ApiextensionsV1API.md#ApiextensionsV1API_getAPIResources) | **GET** /apis/apiextensions.k8s.io/v1/ | 
+[**ApiextensionsV1API_getAPIResources_3**](ApiextensionsV1API.md#ApiextensionsV1API_getAPIResources_3) | **GET** /apis/apiextensions.k8s.io/v1/ | 
 [**ApiextensionsV1API_listCustomResourceDefinition**](ApiextensionsV1API.md#ApiextensionsV1API_listCustomResourceDefinition) | **GET** /apis/apiextensions.k8s.io/v1/customresourcedefinitions | 
 [**ApiextensionsV1API_patchCustomResourceDefinition**](ApiextensionsV1API.md#ApiextensionsV1API_patchCustomResourceDefinition) | **PATCH** /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name} | 
 [**ApiextensionsV1API_patchCustomResourceDefinitionStatus**](ApiextensionsV1API.md#ApiextensionsV1API_patchCustomResourceDefinitionStatus) | **PATCH** /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}/status | 
@@ -127,11 +127,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **ApiextensionsV1API_getAPIResources**
+# **ApiextensionsV1API_getAPIResources_3**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* ApiextensionsV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* ApiextensionsV1API_getAPIResources_3(apiClient_t *apiClient);
 ```
 
 ### Parameters

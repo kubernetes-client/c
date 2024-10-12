@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**SchedulingV1API_createPriorityClass**](SchedulingV1API.md#SchedulingV1API_createPriorityClass) | **POST** /apis/scheduling.k8s.io/v1/priorityclasses | 
 [**SchedulingV1API_deleteCollectionPriorityClass**](SchedulingV1API.md#SchedulingV1API_deleteCollectionPriorityClass) | **DELETE** /apis/scheduling.k8s.io/v1/priorityclasses | 
 [**SchedulingV1API_deletePriorityClass**](SchedulingV1API.md#SchedulingV1API_deletePriorityClass) | **DELETE** /apis/scheduling.k8s.io/v1/priorityclasses/{name} | 
-[**SchedulingV1API_getAPIResources**](SchedulingV1API.md#SchedulingV1API_getAPIResources) | **GET** /apis/scheduling.k8s.io/v1/ | 
+[**SchedulingV1API_getAPIResources_28**](SchedulingV1API.md#SchedulingV1API_getAPIResources_28) | **GET** /apis/scheduling.k8s.io/v1/ | 
 [**SchedulingV1API_listPriorityClass**](SchedulingV1API.md#SchedulingV1API_listPriorityClass) | **GET** /apis/scheduling.k8s.io/v1/priorityclasses | 
 [**SchedulingV1API_patchPriorityClass**](SchedulingV1API.md#SchedulingV1API_patchPriorityClass) | **PATCH** /apis/scheduling.k8s.io/v1/priorityclasses/{name} | 
 [**SchedulingV1API_readPriorityClass**](SchedulingV1API.md#SchedulingV1API_readPriorityClass) | **GET** /apis/scheduling.k8s.io/v1/priorityclasses/{name} | 
@@ -124,11 +124,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **SchedulingV1API_getAPIResources**
+# **SchedulingV1API_getAPIResources_28**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* SchedulingV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* SchedulingV1API_getAPIResources_28(apiClient_t *apiClient);
 ```
 
 ### Parameters

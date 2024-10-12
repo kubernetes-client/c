@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**NodeV1API_createRuntimeClass**](NodeV1API.md#NodeV1API_createRuntimeClass) | **POST** /apis/node.k8s.io/v1/runtimeclasses | 
 [**NodeV1API_deleteCollectionRuntimeClass**](NodeV1API.md#NodeV1API_deleteCollectionRuntimeClass) | **DELETE** /apis/node.k8s.io/v1/runtimeclasses | 
 [**NodeV1API_deleteRuntimeClass**](NodeV1API.md#NodeV1API_deleteRuntimeClass) | **DELETE** /apis/node.k8s.io/v1/runtimeclasses/{name} | 
-[**NodeV1API_getAPIResources**](NodeV1API.md#NodeV1API_getAPIResources) | **GET** /apis/node.k8s.io/v1/ | 
+[**NodeV1API_getAPIResources_24**](NodeV1API.md#NodeV1API_getAPIResources_24) | **GET** /apis/node.k8s.io/v1/ | 
 [**NodeV1API_listRuntimeClass**](NodeV1API.md#NodeV1API_listRuntimeClass) | **GET** /apis/node.k8s.io/v1/runtimeclasses | 
 [**NodeV1API_patchRuntimeClass**](NodeV1API.md#NodeV1API_patchRuntimeClass) | **PATCH** /apis/node.k8s.io/v1/runtimeclasses/{name} | 
 [**NodeV1API_readRuntimeClass**](NodeV1API.md#NodeV1API_readRuntimeClass) | **GET** /apis/node.k8s.io/v1/runtimeclasses/{name} | 
@@ -124,11 +124,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **NodeV1API_getAPIResources**
+# **NodeV1API_getAPIResources_24**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* NodeV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* NodeV1API_getAPIResources_24(apiClient_t *apiClient);
 ```
 
 ### Parameters

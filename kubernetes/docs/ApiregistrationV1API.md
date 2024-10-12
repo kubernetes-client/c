@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**ApiregistrationV1API_createAPIService**](ApiregistrationV1API.md#ApiregistrationV1API_createAPIService) | **POST** /apis/apiregistration.k8s.io/v1/apiservices | 
 [**ApiregistrationV1API_deleteAPIService**](ApiregistrationV1API.md#ApiregistrationV1API_deleteAPIService) | **DELETE** /apis/apiregistration.k8s.io/v1/apiservices/{name} | 
 [**ApiregistrationV1API_deleteCollectionAPIService**](ApiregistrationV1API.md#ApiregistrationV1API_deleteCollectionAPIService) | **DELETE** /apis/apiregistration.k8s.io/v1/apiservices | 
-[**ApiregistrationV1API_getAPIResources**](ApiregistrationV1API.md#ApiregistrationV1API_getAPIResources) | **GET** /apis/apiregistration.k8s.io/v1/ | 
+[**ApiregistrationV1API_getAPIResources_4**](ApiregistrationV1API.md#ApiregistrationV1API_getAPIResources_4) | **GET** /apis/apiregistration.k8s.io/v1/ | 
 [**ApiregistrationV1API_listAPIService**](ApiregistrationV1API.md#ApiregistrationV1API_listAPIService) | **GET** /apis/apiregistration.k8s.io/v1/apiservices | 
 [**ApiregistrationV1API_patchAPIService**](ApiregistrationV1API.md#ApiregistrationV1API_patchAPIService) | **PATCH** /apis/apiregistration.k8s.io/v1/apiservices/{name} | 
 [**ApiregistrationV1API_patchAPIServiceStatus**](ApiregistrationV1API.md#ApiregistrationV1API_patchAPIServiceStatus) | **PATCH** /apis/apiregistration.k8s.io/v1/apiservices/{name}/status | 
@@ -127,11 +127,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **ApiregistrationV1API_getAPIResources**
+# **ApiregistrationV1API_getAPIResources_4**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* ApiregistrationV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* ApiregistrationV1API_getAPIResources_4(apiClient_t *apiClient);
 ```
 
 ### Parameters

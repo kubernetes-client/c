@@ -11,6 +11,6 @@
 // get information of a group
 //
 v1_api_group_t*
-BatchAPI_getAPIGroup(apiClient_t *apiClient);
+BatchAPI_getAPIGroup_6(apiClient_t *apiClient);
 
 

@@ -54,7 +54,7 @@ BatchV1API_deleteNamespacedJob(apiClient_t *apiClient, char *name, char *_namesp
 // get available resources
 //
 v1_api_resource_list_t*
-BatchV1API_getAPIResources(apiClient_t *apiClient);
+BatchV1API_getAPIResources_12(apiClient_t *apiClient);
 
 
 // list or watch objects of kind CronJob

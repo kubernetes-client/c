@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**StoragemigrationV1alpha1API_createStorageVersionMigration**](StoragemigrationV1alpha1API.md#StoragemigrationV1alpha1API_createStorageVersionMigration) | **POST** /apis/storagemigration.k8s.io/v1alpha1/storageversionmigrations | 
 [**StoragemigrationV1alpha1API_deleteCollectionStorageVersionMigration**](StoragemigrationV1alpha1API.md#StoragemigrationV1alpha1API_deleteCollectionStorageVersionMigration) | **DELETE** /apis/storagemigration.k8s.io/v1alpha1/storageversionmigrations | 
 [**StoragemigrationV1alpha1API_deleteStorageVersionMigration**](StoragemigrationV1alpha1API.md#StoragemigrationV1alpha1API_deleteStorageVersionMigration) | **DELETE** /apis/storagemigration.k8s.io/v1alpha1/storageversionmigrations/{name} | 
-[**StoragemigrationV1alpha1API_getAPIResources**](StoragemigrationV1alpha1API.md#StoragemigrationV1alpha1API_getAPIResources) | **GET** /apis/storagemigration.k8s.io/v1alpha1/ | 
+[**StoragemigrationV1alpha1API_getAPIResources_32**](StoragemigrationV1alpha1API.md#StoragemigrationV1alpha1API_getAPIResources_32) | **GET** /apis/storagemigration.k8s.io/v1alpha1/ | 
 [**StoragemigrationV1alpha1API_listStorageVersionMigration**](StoragemigrationV1alpha1API.md#StoragemigrationV1alpha1API_listStorageVersionMigration) | **GET** /apis/storagemigration.k8s.io/v1alpha1/storageversionmigrations | 
 [**StoragemigrationV1alpha1API_patchStorageVersionMigration**](StoragemigrationV1alpha1API.md#StoragemigrationV1alpha1API_patchStorageVersionMigration) | **PATCH** /apis/storagemigration.k8s.io/v1alpha1/storageversionmigrations/{name} | 
 [**StoragemigrationV1alpha1API_patchStorageVersionMigrationStatus**](StoragemigrationV1alpha1API.md#StoragemigrationV1alpha1API_patchStorageVersionMigrationStatus) | **PATCH** /apis/storagemigration.k8s.io/v1alpha1/storageversionmigrations/{name}/status | 
@@ -127,11 +127,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **StoragemigrationV1alpha1API_getAPIResources**
+# **StoragemigrationV1alpha1API_getAPIResources_32**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* StoragemigrationV1alpha1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* StoragemigrationV1alpha1API_getAPIResources_32(apiClient_t *apiClient);
 ```
 
 ### Parameters

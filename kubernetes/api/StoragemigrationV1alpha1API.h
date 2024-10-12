@@ -34,7 +34,7 @@ StoragemigrationV1alpha1API_deleteStorageVersionMigration(apiClient_t *apiClient
 // get available resources
 //
 v1_api_resource_list_t*
-StoragemigrationV1alpha1API_getAPIResources(apiClient_t *apiClient);
+StoragemigrationV1alpha1API_getAPIResources_32(apiClient_t *apiClient);
 
 
 // list or watch objects of kind StorageVersionMigration

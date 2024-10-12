@@ -11,6 +11,6 @@
 // get information of a group
 //
 v1_api_group_t*
-AuthenticationAPI_getAPIGroup(apiClient_t *apiClient);
+AuthenticationAPI_getAPIGroup_3(apiClient_t *apiClient);
 
 

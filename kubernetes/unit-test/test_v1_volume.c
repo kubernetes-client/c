@@ -33,6 +33,7 @@ v1_volume_t* instantiate_v1_volume(int include_optional);
 #include "test_v1_git_repo_volume_source.c"
 #include "test_v1_glusterfs_volume_source.c"
 #include "test_v1_host_path_volume_source.c"
+#include "test_v1_image_volume_source.c"
 #include "test_v1_iscsi_volume_source.c"
 #include "test_v1_nfs_volume_source.c"
 #include "test_v1_persistent_volume_claim_volume_source.c"
@@ -86,6 +87,8 @@ v1_volume_t* instantiate_v1_volume(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_host_path_volume_source(0),
        // false, not to have infinite recursion
+      instantiate_v1_image_volume_source(0),
+       // false, not to have infinite recursion
       instantiate_v1_iscsi_volume_source(0),
       "0",
        // false, not to have infinite recursion
@@ -113,6 +116,7 @@ v1_volume_t* instantiate_v1_volume(int include_optional) {
     );
   } else {
     v1_volume = v1_volume_create(
+      NULL,
       NULL,
       NULL,
       NULL,

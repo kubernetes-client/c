@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**InternalApiserverAPI_getAPIGroup**](InternalApiserverAPI.md#InternalApiserverAPI_getAPIGroup) | **GET** /apis/internal.apiserver.k8s.io/ | 
+[**InternalApiserverAPI_getAPIGroup_12**](InternalApiserverAPI.md#InternalApiserverAPI_getAPIGroup_12) | **GET** /apis/internal.apiserver.k8s.io/ | 
 
 
-# **InternalApiserverAPI_getAPIGroup**
+# **InternalApiserverAPI_getAPIGroup_12**
 ```c
 // get information of a group
 //
-v1_api_group_t* InternalApiserverAPI_getAPIGroup(apiClient_t *apiClient);
+v1_api_group_t* InternalApiserverAPI_getAPIGroup_12(apiClient_t *apiClient);
 ```
 
 ### Parameters

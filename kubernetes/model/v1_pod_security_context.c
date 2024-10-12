@@ -15,6 +15,7 @@ v1_pod_security_context_t *v1_pod_security_context_create(
     v1_se_linux_options_t *se_linux_options,
     v1_seccomp_profile_t *seccomp_profile,
     list_t *supplemental_groups,
+    char *supplemental_groups_policy,
     list_t *sysctls,
     v1_windows_security_context_options_t *windows_options
     ) {
@@ -31,6 +32,7 @@ v1_pod_security_context_t *v1_pod_security_context_create(
     v1_pod_security_context_local_var->se_linux_options = se_linux_options;
     v1_pod_security_context_local_var->seccomp_profile = seccomp_profile;
     v1_pod_security_context_local_var->supplemental_groups = supplemental_groups;
+    v1_pod_security_context_local_var->supplemental_groups_policy = supplemental_groups_policy;
     v1_pod_security_context_local_var->sysctls = sysctls;
     v1_pod_security_context_local_var->windows_options = windows_options;
 
@@ -65,6 +67,10 @@ void v1_pod_security_context_free(v1_pod_security_context_t *v1_pod_security_con
         }
         list_freeList(v1_pod_security_context->supplemental_groups);
         v1_pod_security_context->supplemental_groups = NULL;
+    }
+    if (v1_pod_security_context->supplemental_groups_policy) {
+        free(v1_pod_security_context->supplemental_groups_policy);
+        v1_pod_security_context->supplemental_groups_policy = NULL;
     }
     if (v1_pod_security_context->sysctls) {
         list_ForEach(listEntry, v1_pod_security_context->sysctls) {
@@ -175,6 +181,14 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
     {
         goto fail;
     }
+    }
+    }
+
+
+    // v1_pod_security_context->supplemental_groups_policy
+    if(v1_pod_security_context->supplemental_groups_policy) {
+    if(cJSON_AddStringToObject(item, "supplementalGroupsPolicy", v1_pod_security_context->supplemental_groups_policy) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -329,6 +343,15 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     }
     }
 
+    // v1_pod_security_context->supplemental_groups_policy
+    cJSON *supplemental_groups_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "supplementalGroupsPolicy");
+    if (supplemental_groups_policy) { 
+    if(!cJSON_IsString(supplemental_groups_policy) && !cJSON_IsNull(supplemental_groups_policy))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_pod_security_context->sysctls
     cJSON *sysctls = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "sysctls");
     if (sysctls) { 
@@ -367,6 +390,7 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
         se_linux_options ? se_linux_options_local_nonprim : NULL,
         seccomp_profile ? seccomp_profile_local_nonprim : NULL,
         supplemental_groups ? supplemental_groupsList : NULL,
+        supplemental_groups_policy && !cJSON_IsNull(supplemental_groups_policy) ? strdup(supplemental_groups_policy->valuestring) : NULL,
         sysctls ? sysctlsList : NULL,
         windows_options ? windows_options_local_nonprim : NULL
         );

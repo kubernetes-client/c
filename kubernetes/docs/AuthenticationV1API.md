@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AuthenticationV1API_createSelfSubjectReview**](AuthenticationV1API.md#AuthenticationV1API_createSelfSubjectReview) | **POST** /apis/authentication.k8s.io/v1/selfsubjectreviews | 
 [**AuthenticationV1API_createTokenReview**](AuthenticationV1API.md#AuthenticationV1API_createTokenReview) | **POST** /apis/authentication.k8s.io/v1/tokenreviews | 
-[**AuthenticationV1API_getAPIResources**](AuthenticationV1API.md#AuthenticationV1API_getAPIResources) | **GET** /apis/authentication.k8s.io/v1/ | 
+[**AuthenticationV1API_getAPIResources_6**](AuthenticationV1API.md#AuthenticationV1API_getAPIResources_6) | **GET** /apis/authentication.k8s.io/v1/ | 
 
 
 # **AuthenticationV1API_createSelfSubjectReview**
@@ -75,11 +75,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AuthenticationV1API_getAPIResources**
+# **AuthenticationV1API_getAPIResources_6**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* AuthenticationV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* AuthenticationV1API_getAPIResources_6(apiClient_t *apiClient);
 ```
 
 ### Parameters

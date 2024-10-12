@@ -34,7 +34,7 @@ NodeV1API_deleteRuntimeClass(apiClient_t *apiClient, char *name, char *pretty, c
 // get available resources
 //
 v1_api_resource_list_t*
-NodeV1API_getAPIResources(apiClient_t *apiClient);
+NodeV1API_getAPIResources_24(apiClient_t *apiClient);
 
 
 // list or watch objects of kind RuntimeClass

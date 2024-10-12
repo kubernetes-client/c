@@ -34,10 +34,11 @@ cJSON *v1_pod_ip_convertToJSON(v1_pod_ip_t *v1_pod_ip) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_ip->ip
-    if(v1_pod_ip->ip) {
+    if (!v1_pod_ip->ip) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "ip", v1_pod_ip->ip) == NULL) {
     goto fail; //String
-    }
     }
 
     return item;
@@ -54,16 +55,19 @@ v1_pod_ip_t *v1_pod_ip_parseFromJSON(cJSON *v1_pod_ipJSON){
 
     // v1_pod_ip->ip
     cJSON *ip = cJSON_GetObjectItemCaseSensitive(v1_pod_ipJSON, "ip");
-    if (ip) { 
-    if(!cJSON_IsString(ip) && !cJSON_IsNull(ip))
+    if (!ip) {
+        goto end;
+    }
+
+    
+    if(!cJSON_IsString(ip))
     {
     goto end; //String
-    }
     }
 
 
     v1_pod_ip_local_var = v1_pod_ip_create (
-        ip && !cJSON_IsNull(ip) ? strdup(ip->valuestring) : NULL
+        strdup(ip->valuestring)
         );
 
     return v1_pod_ip_local_var;

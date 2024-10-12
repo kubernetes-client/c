@@ -94,7 +94,7 @@ RbacAuthorizationV1API_deleteNamespacedRoleBinding(apiClient_t *apiClient, char 
 // get available resources
 //
 v1_api_resource_list_t*
-RbacAuthorizationV1API_getAPIResources(apiClient_t *apiClient);
+RbacAuthorizationV1API_getAPIResources_26(apiClient_t *apiClient);
 
 
 // list or watch objects of kind ClusterRole

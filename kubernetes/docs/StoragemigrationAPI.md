@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**StoragemigrationAPI_getAPIGroup**](StoragemigrationAPI.md#StoragemigrationAPI_getAPIGroup) | **GET** /apis/storagemigration.k8s.io/ | 
+[**StoragemigrationAPI_getAPIGroup_20**](StoragemigrationAPI.md#StoragemigrationAPI_getAPIGroup_20) | **GET** /apis/storagemigration.k8s.io/ | 
 
 
-# **StoragemigrationAPI_getAPIGroup**
+# **StoragemigrationAPI_getAPIGroup_20**
 ```c
 // get information of a group
 //
-v1_api_group_t* StoragemigrationAPI_getAPIGroup(apiClient_t *apiClient);
+v1_api_group_t* StoragemigrationAPI_getAPIGroup_20(apiClient_t *apiClient);
 ```
 
 ### Parameters

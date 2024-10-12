@@ -4,15 +4,15 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AuthenticationV1alpha1API_createSelfSubjectReview**](AuthenticationV1alpha1API.md#AuthenticationV1alpha1API_createSelfSubjectReview) | **POST** /apis/authentication.k8s.io/v1alpha1/selfsubjectreviews | 
-[**AuthenticationV1alpha1API_getAPIResources**](AuthenticationV1alpha1API.md#AuthenticationV1alpha1API_getAPIResources) | **GET** /apis/authentication.k8s.io/v1alpha1/ | 
+[**AuthenticationV1alpha1API_createSelfSubjectReview_0**](AuthenticationV1alpha1API.md#AuthenticationV1alpha1API_createSelfSubjectReview_0) | **POST** /apis/authentication.k8s.io/v1alpha1/selfsubjectreviews | 
+[**AuthenticationV1alpha1API_getAPIResources_7**](AuthenticationV1alpha1API.md#AuthenticationV1alpha1API_getAPIResources_7) | **GET** /apis/authentication.k8s.io/v1alpha1/ | 
 
 
-# **AuthenticationV1alpha1API_createSelfSubjectReview**
+# **AuthenticationV1alpha1API_createSelfSubjectReview_0**
 ```c
 // create a SelfSubjectReview
 //
-v1alpha1_self_subject_review_t* AuthenticationV1alpha1API_createSelfSubjectReview(apiClient_t *apiClient, v1alpha1_self_subject_review_t *body, char *dryRun, char *fieldManager, char *fieldValidation, char *pretty);
+v1alpha1_self_subject_review_t* AuthenticationV1alpha1API_createSelfSubjectReview_0(apiClient_t *apiClient, v1alpha1_self_subject_review_t *body, char *dryRun, char *fieldManager, char *fieldValidation, char *pretty);
 ```
 
 ### Parameters
@@ -41,11 +41,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AuthenticationV1alpha1API_getAPIResources**
+# **AuthenticationV1alpha1API_getAPIResources_7**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* AuthenticationV1alpha1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* AuthenticationV1alpha1API_getAPIResources_7(apiClient_t *apiClient);
 ```
 
 ### Parameters

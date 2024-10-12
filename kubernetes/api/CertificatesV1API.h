@@ -34,7 +34,7 @@ CertificatesV1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClie
 // get available resources
 //
 v1_api_resource_list_t*
-CertificatesV1API_getAPIResources(apiClient_t *apiClient);
+CertificatesV1API_getAPIResources_13(apiClient_t *apiClient);
 
 
 // list or watch objects of kind CertificateSigningRequest

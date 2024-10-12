@@ -816,7 +816,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-CertificatesV1API_getAPIResources(apiClient_t *apiClient)
+CertificatesV1API_getAPIResources_13(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;

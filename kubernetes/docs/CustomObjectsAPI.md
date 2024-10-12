@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**CustomObjectsAPI_deleteCollectionClusterCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_deleteCollectionClusterCustomObject) | **DELETE** /apis/{group}/{version}/{plural} | 
 [**CustomObjectsAPI_deleteCollectionNamespacedCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_deleteCollectionNamespacedCustomObject) | **DELETE** /apis/{group}/{version}/namespaces/{namespace}/{plural} | 
 [**CustomObjectsAPI_deleteNamespacedCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_deleteNamespacedCustomObject) | **DELETE** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name} | 
-[**CustomObjectsAPI_getAPIResources**](CustomObjectsAPI.md#CustomObjectsAPI_getAPIResources) | **GET** /apis/{group}/{version} | 
+[**CustomObjectsAPI_getAPIResources_33**](CustomObjectsAPI.md#CustomObjectsAPI_getAPIResources_33) | **GET** /apis/{group}/{version} | 
 [**CustomObjectsAPI_getClusterCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObject) | **GET** /apis/{group}/{version}/{plural}/{name} | 
 [**CustomObjectsAPI_getClusterCustomObjectScale**](CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObjectScale) | **GET** /apis/{group}/{version}/{plural}/{name}/scale | 
 [**CustomObjectsAPI_getClusterCustomObjectStatus**](CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObjectStatus) | **GET** /apis/{group}/{version}/{plural}/{name}/status | 
@@ -18,6 +18,7 @@ Method | HTTP request | Description
 [**CustomObjectsAPI_getNamespacedCustomObjectScale**](CustomObjectsAPI.md#CustomObjectsAPI_getNamespacedCustomObjectScale) | **GET** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale | 
 [**CustomObjectsAPI_getNamespacedCustomObjectStatus**](CustomObjectsAPI.md#CustomObjectsAPI_getNamespacedCustomObjectStatus) | **GET** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status | 
 [**CustomObjectsAPI_listClusterCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_listClusterCustomObject) | **GET** /apis/{group}/{version}/{plural} | 
+[**CustomObjectsAPI_listCustomObjectForAllNamespaces**](CustomObjectsAPI.md#CustomObjectsAPI_listCustomObjectForAllNamespaces) | **GET** /apis/{group}/{version}/{plural}#‎ | 
 [**CustomObjectsAPI_listNamespacedCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_listNamespacedCustomObject) | **GET** /apis/{group}/{version}/namespaces/{namespace}/{plural} | 
 [**CustomObjectsAPI_patchClusterCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_patchClusterCustomObject) | **PATCH** /apis/{group}/{version}/{plural}/{name} | 
 [**CustomObjectsAPI_patchClusterCustomObjectScale**](CustomObjectsAPI.md#CustomObjectsAPI_patchClusterCustomObjectScale) | **PATCH** /apis/{group}/{version}/{plural}/{name}/scale | 
@@ -258,11 +259,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **CustomObjectsAPI_getAPIResources**
+# **CustomObjectsAPI_getAPIResources_33**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* CustomObjectsAPI_getAPIResources(apiClient_t *apiClient, char *group, char *version);
+v1_api_resource_list_t* CustomObjectsAPI_getAPIResources_33(apiClient_t *apiClient, char *group, char *version);
 ```
 
 ### Parameters
@@ -488,6 +489,47 @@ Name | Type | Description  | Notes
 // list or watch cluster scoped custom objects
 //
 object_t* CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *timeoutSeconds, int *watch);
+```
+
+### Parameters
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
+**group** | **char \*** | The custom resource&#39;s group name | 
+**version** | **char \*** | The custom resource&#39;s version | 
+**plural** | **char \*** | The custom resource&#39;s plural name. For TPRs this would be lowercase plural kind. | 
+**pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
+**allowWatchBookmarks** | **int \*** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
+**_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 
+**fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
+**labelSelector** | **char \*** | A selector to restrict the list of returned objects by their labels. Defaults to everything. | [optional] 
+**limit** | **int \*** | limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned. | [optional] 
+**resourceVersion** | **char \*** | When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it&#39;s 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv. | [optional] 
+**resourceVersionMatch** | **char \*** | resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset | [optional] 
+**timeoutSeconds** | **int \*** | Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity. | [optional] 
+**watch** | **int \*** | Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. | [optional] 
+
+### Return type
+
+[object_t](object.md) *
+
+
+### Authorization
+
+[BearerToken](../README.md#BearerToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/json;stream=watch
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **CustomObjectsAPI_listCustomObjectForAllNamespaces**
+```c
+// list or watch namespace scoped custom objects
+//
+object_t* CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters

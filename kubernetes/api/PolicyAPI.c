@@ -15,7 +15,7 @@
 // get information of a group
 //
 v1_api_group_t*
-PolicyAPI_getAPIGroup(apiClient_t *apiClient)
+PolicyAPI_getAPIGroup_15(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;

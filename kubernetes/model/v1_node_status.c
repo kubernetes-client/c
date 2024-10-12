@@ -12,6 +12,7 @@ v1_node_status_t *v1_node_status_create(
     list_t *conditions,
     v1_node_config_status_t *config,
     v1_node_daemon_endpoints_t *daemon_endpoints,
+    v1_node_features_t *features,
     list_t *images,
     v1_node_system_info_t *node_info,
     char *phase,
@@ -29,6 +30,7 @@ v1_node_status_t *v1_node_status_create(
     v1_node_status_local_var->conditions = conditions;
     v1_node_status_local_var->config = config;
     v1_node_status_local_var->daemon_endpoints = daemon_endpoints;
+    v1_node_status_local_var->features = features;
     v1_node_status_local_var->images = images;
     v1_node_status_local_var->node_info = node_info;
     v1_node_status_local_var->phase = phase;
@@ -86,6 +88,10 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
     if (v1_node_status->daemon_endpoints) {
         v1_node_daemon_endpoints_free(v1_node_status->daemon_endpoints);
         v1_node_status->daemon_endpoints = NULL;
+    }
+    if (v1_node_status->features) {
+        v1_node_features_free(v1_node_status->features);
+        v1_node_status->features = NULL;
     }
     if (v1_node_status->images) {
         list_ForEach(listEntry, v1_node_status->images) {
@@ -235,6 +241,19 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     }
 
 
+    // v1_node_status->features
+    if(v1_node_status->features) {
+    cJSON *features_local_JSON = v1_node_features_convertToJSON(v1_node_status->features);
+    if(features_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "features", features_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_node_status->images
     if(v1_node_status->images) {
     cJSON *images = cJSON_AddArrayToObject(item, "images");
@@ -362,6 +381,9 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     // define the local variable for v1_node_status->daemon_endpoints
     v1_node_daemon_endpoints_t *daemon_endpoints_local_nonprim = NULL;
 
+    // define the local variable for v1_node_status->features
+    v1_node_features_t *features_local_nonprim = NULL;
+
     // define the local list for v1_node_status->images
     list_t *imagesList = NULL;
 
@@ -481,6 +503,12 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     daemon_endpoints_local_nonprim = v1_node_daemon_endpoints_parseFromJSON(daemon_endpoints); //nonprimitive
     }
 
+    // v1_node_status->features
+    cJSON *features = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "features");
+    if (features) { 
+    features_local_nonprim = v1_node_features_parseFromJSON(features); //nonprimitive
+    }
+
     // v1_node_status->images
     cJSON *images = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "images");
     if (images) { 
@@ -586,6 +614,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
         conditions ? conditionsList : NULL,
         config ? config_local_nonprim : NULL,
         daemon_endpoints ? daemon_endpoints_local_nonprim : NULL,
+        features ? features_local_nonprim : NULL,
         images ? imagesList : NULL,
         node_info ? node_info_local_nonprim : NULL,
         phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
@@ -649,6 +678,10 @@ end:
     if (daemon_endpoints_local_nonprim) {
         v1_node_daemon_endpoints_free(daemon_endpoints_local_nonprim);
         daemon_endpoints_local_nonprim = NULL;
+    }
+    if (features_local_nonprim) {
+        v1_node_features_free(features_local_nonprim);
+        features_local_nonprim = NULL;
     }
     if (imagesList) {
         listEntry_t *listEntry = NULL;
