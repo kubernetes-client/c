@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**StorageV1alpha1API_createVolumeAttributesClass**](StorageV1alpha1API.md#StorageV1alpha1API_createVolumeAttributesClass) | **POST** /apis/storage.k8s.io/v1alpha1/volumeattributesclasses | 
 [**StorageV1alpha1API_deleteCollectionVolumeAttributesClass**](StorageV1alpha1API.md#StorageV1alpha1API_deleteCollectionVolumeAttributesClass) | **DELETE** /apis/storage.k8s.io/v1alpha1/volumeattributesclasses | 
 [**StorageV1alpha1API_deleteVolumeAttributesClass**](StorageV1alpha1API.md#StorageV1alpha1API_deleteVolumeAttributesClass) | **DELETE** /apis/storage.k8s.io/v1alpha1/volumeattributesclasses/{name} | 
-[**StorageV1alpha1API_getAPIResources**](StorageV1alpha1API.md#StorageV1alpha1API_getAPIResources) | **GET** /apis/storage.k8s.io/v1alpha1/ | 
+[**StorageV1alpha1API_getAPIResources_30**](StorageV1alpha1API.md#StorageV1alpha1API_getAPIResources_30) | **GET** /apis/storage.k8s.io/v1alpha1/ | 
 [**StorageV1alpha1API_listVolumeAttributesClass**](StorageV1alpha1API.md#StorageV1alpha1API_listVolumeAttributesClass) | **GET** /apis/storage.k8s.io/v1alpha1/volumeattributesclasses | 
 [**StorageV1alpha1API_patchVolumeAttributesClass**](StorageV1alpha1API.md#StorageV1alpha1API_patchVolumeAttributesClass) | **PATCH** /apis/storage.k8s.io/v1alpha1/volumeattributesclasses/{name} | 
 [**StorageV1alpha1API_readVolumeAttributesClass**](StorageV1alpha1API.md#StorageV1alpha1API_readVolumeAttributesClass) | **GET** /apis/storage.k8s.io/v1alpha1/volumeattributesclasses/{name} | 
@@ -124,11 +124,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **StorageV1alpha1API_getAPIResources**
+# **StorageV1alpha1API_getAPIResources_30**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* StorageV1alpha1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* StorageV1alpha1API_getAPIResources_30(apiClient_t *apiClient);
 ```
 
 ### Parameters

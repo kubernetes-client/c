@@ -34,7 +34,7 @@ CoordinationV1API_deleteNamespacedLease(apiClient_t *apiClient, char *name, char
 // get available resources
 //
 v1_api_resource_list_t*
-CoordinationV1API_getAPIResources(apiClient_t *apiClient);
+CoordinationV1API_getAPIResources_15(apiClient_t *apiClient);
 
 
 // list or watch objects of kind Lease

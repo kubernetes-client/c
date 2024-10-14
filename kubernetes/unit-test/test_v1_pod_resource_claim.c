@@ -16,7 +16,6 @@
 #include "../model/v1_pod_resource_claim.h"
 v1_pod_resource_claim_t* instantiate_v1_pod_resource_claim(int include_optional);
 
-#include "test_v1_claim_source.c"
 
 
 v1_pod_resource_claim_t* instantiate_v1_pod_resource_claim(int include_optional) {
@@ -24,13 +23,14 @@ v1_pod_resource_claim_t* instantiate_v1_pod_resource_claim(int include_optional)
   if (include_optional) {
     v1_pod_resource_claim = v1_pod_resource_claim_create(
       "0",
-       // false, not to have infinite recursion
-      instantiate_v1_claim_source(0)
+      "0",
+      "0"
     );
   } else {
     v1_pod_resource_claim = v1_pod_resource_claim_create(
       "0",
-      NULL
+      "0",
+      "0"
     );
   }
 

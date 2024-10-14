@@ -1,7 +1,7 @@
 /*
  * v1_volume_projection.h
  *
- * Projection that may be projected along with other supported volume types
+ * Projection that may be projected along with other supported volume types. Exactly one of these fields must be set.
  */
 
 #ifndef _v1_volume_projection_H_

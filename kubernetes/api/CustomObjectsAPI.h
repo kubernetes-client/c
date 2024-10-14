@@ -49,7 +49,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char *grou
 // get available resources
 //
 v1_api_resource_list_t*
-CustomObjectsAPI_getAPIResources(apiClient_t *apiClient, char *group, char *version);
+CustomObjectsAPI_getAPIResources_33(apiClient_t *apiClient, char *group, char *version);
 
 
 // Returns a cluster scoped custom object
@@ -92,6 +92,12 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char *g
 //
 object_t*
 CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *timeoutSeconds, int *watch);
+
+
+// list or watch namespace scoped custom objects
+//
+object_t*
+CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *timeoutSeconds, int *watch);
 
 
 // list or watch namespace scoped custom objects

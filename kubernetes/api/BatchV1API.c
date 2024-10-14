@@ -1683,7 +1683,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-BatchV1API_getAPIResources(apiClient_t *apiClient)
+BatchV1API_getAPIResources_12(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;

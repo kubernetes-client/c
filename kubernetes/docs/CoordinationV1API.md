@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**CoordinationV1API_createNamespacedLease**](CoordinationV1API.md#CoordinationV1API_createNamespacedLease) | **POST** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases | 
 [**CoordinationV1API_deleteCollectionNamespacedLease**](CoordinationV1API.md#CoordinationV1API_deleteCollectionNamespacedLease) | **DELETE** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases | 
 [**CoordinationV1API_deleteNamespacedLease**](CoordinationV1API.md#CoordinationV1API_deleteNamespacedLease) | **DELETE** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases/{name} | 
-[**CoordinationV1API_getAPIResources**](CoordinationV1API.md#CoordinationV1API_getAPIResources) | **GET** /apis/coordination.k8s.io/v1/ | 
+[**CoordinationV1API_getAPIResources_15**](CoordinationV1API.md#CoordinationV1API_getAPIResources_15) | **GET** /apis/coordination.k8s.io/v1/ | 
 [**CoordinationV1API_listLeaseForAllNamespaces**](CoordinationV1API.md#CoordinationV1API_listLeaseForAllNamespaces) | **GET** /apis/coordination.k8s.io/v1/leases | 
 [**CoordinationV1API_listNamespacedLease**](CoordinationV1API.md#CoordinationV1API_listNamespacedLease) | **GET** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases | 
 [**CoordinationV1API_patchNamespacedLease**](CoordinationV1API.md#CoordinationV1API_patchNamespacedLease) | **PATCH** /apis/coordination.k8s.io/v1/namespaces/{namespace}/leases/{name} | 
@@ -128,11 +128,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **CoordinationV1API_getAPIResources**
+# **CoordinationV1API_getAPIResources_15**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* CoordinationV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* CoordinationV1API_getAPIResources_15(apiClient_t *apiClient);
 ```
 
 ### Parameters

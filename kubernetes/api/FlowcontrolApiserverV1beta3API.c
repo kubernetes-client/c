@@ -15,7 +15,7 @@
 // create a FlowSchema
 //
 v1beta3_flow_schema_t*
-FlowcontrolApiserverV1beta3API_createFlowSchema(apiClient_t *apiClient, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+FlowcontrolApiserverV1beta3API_createFlowSchema_0(apiClient_t *apiClient, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -200,7 +200,7 @@ end:
 // create a PriorityLevelConfiguration
 //
 v1beta3_priority_level_configuration_t*
-FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration(apiClient_t *apiClient, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration_0(apiClient_t *apiClient, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -385,7 +385,7 @@ end:
 // delete collection of FlowSchema
 //
 v1_status_t*
-FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema_0(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -783,7 +783,7 @@ end:
 // delete collection of PriorityLevelConfiguration
 //
 v1_status_t*
-FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration_0(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1181,7 +1181,7 @@ end:
 // delete a FlowSchema
 //
 v1_status_t*
-FlowcontrolApiserverV1beta3API_deleteFlowSchema(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+FlowcontrolApiserverV1beta3API_deleteFlowSchema_0(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1399,7 +1399,7 @@ end:
 // delete a PriorityLevelConfiguration
 //
 v1_status_t*
-FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration_0(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1617,7 +1617,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-FlowcontrolApiserverV1beta3API_getAPIResources(apiClient_t *apiClient)
+FlowcontrolApiserverV1beta3API_getAPIResources_20(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1684,7 +1684,7 @@ end:
 // list or watch objects of kind FlowSchema
 //
 v1beta3_flow_schema_list_t*
-FlowcontrolApiserverV1beta3API_listFlowSchema(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+FlowcontrolApiserverV1beta3API_listFlowSchema_0(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2022,7 +2022,7 @@ end:
 // list or watch objects of kind PriorityLevelConfiguration
 //
 v1beta3_priority_level_configuration_list_t*
-FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration_0(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2357,231 +2357,10 @@ end:
 
 }
 
-// partially update the specified FlowSchema
-//
-v1beta3_flow_schema_t*
-FlowcontrolApiserverV1beta3API_patchFlowSchema(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
-{
-    list_t    *localVarQueryParameters = list_createList();
-    list_t    *localVarHeaderParameters = NULL;
-    list_t    *localVarFormParameters = NULL;
-    list_t *localVarHeaderType = list_createList();
-    list_t *localVarContentType = list_createList();
-    char      *localVarBodyParameters = NULL;
-
-    // create the path
-    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}");
-
-
-    // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
-    if(name == NULL) {
-        goto end;
-    }
-    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
-    sprintf(localVarToReplace_name, "{%s}", "name");
-
-    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
-
-
-
-    // query parameters
-    char *keyQuery_pretty = NULL;
-    char * valueQuery_pretty = NULL;
-    keyValuePair_t *keyPairQuery_pretty = 0;
-    if (pretty)
-    {
-        keyQuery_pretty = strdup("pretty");
-        valueQuery_pretty = strdup((pretty));
-        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
-        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_dryRun = NULL;
-    char * valueQuery_dryRun = NULL;
-    keyValuePair_t *keyPairQuery_dryRun = 0;
-    if (dryRun)
-    {
-        keyQuery_dryRun = strdup("dryRun");
-        valueQuery_dryRun = strdup((dryRun));
-        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
-        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
-    }
-
-    // query parameters
-    char *keyQuery_fieldManager = NULL;
-    char * valueQuery_fieldManager = NULL;
-    keyValuePair_t *keyPairQuery_fieldManager = 0;
-    if (fieldManager)
-    {
-        keyQuery_fieldManager = strdup("fieldManager");
-        valueQuery_fieldManager = strdup((fieldManager));
-        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
-        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
-    }
-
-    // query parameters
-    char *keyQuery_fieldValidation = NULL;
-    char * valueQuery_fieldValidation = NULL;
-    keyValuePair_t *keyPairQuery_fieldValidation = 0;
-    if (fieldValidation)
-    {
-        keyQuery_fieldValidation = strdup("fieldValidation");
-        valueQuery_fieldValidation = strdup((fieldValidation));
-        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
-        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
-    }
-
-    // query parameters
-    char *keyQuery_force = NULL;
-    char * valueQuery_force = NULL;
-    keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
-    {
-        keyQuery_force = strdup("force");
-        valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
-        keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
-        list_addElement(localVarQueryParameters,keyPairQuery_force);
-    }
-
-    // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
-    if (body != NULL)
-    {
-        //string
-        localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
-    }
-    list_addElement(localVarHeaderType,"application/json"); //produces
-    list_addElement(localVarHeaderType,"application/yaml"); //produces
-    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
-    list_addElement(localVarContentType,"application/json-patch+json"); //consumes
-    list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
-    list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
-    list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
-    apiClient_invoke(apiClient,
-                    localVarPath,
-                    localVarQueryParameters,
-                    localVarHeaderParameters,
-                    localVarFormParameters,
-                    localVarHeaderType,
-                    localVarContentType,
-                    localVarBodyParameters,
-                    "PATCH");
-
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 200) {
-    //    printf("%s\n","OK");
-    //}
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 201) {
-    //    printf("%s\n","Created");
-    //}
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 401) {
-    //    printf("%s\n","Unauthorized");
-    //}
-    //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
-    }
-
-    //return type
-    if (apiClient->dataReceived) {
-        free(apiClient->dataReceived);
-        apiClient->dataReceived = NULL;
-        apiClient->dataReceivedLen = 0;
-    }
-    list_freeList(localVarQueryParameters);
-    
-    
-    list_freeList(localVarHeaderType);
-    list_freeList(localVarContentType);
-    free(localVarPath);
-    free(localVarToReplace_name);
-    if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
-        localVarSingleItemJSON_body = NULL;
-    }
-    free(localVarBodyParameters);
-    if(keyQuery_pretty){
-        free(keyQuery_pretty);
-        keyQuery_pretty = NULL;
-    }
-    if(valueQuery_pretty){
-        free(valueQuery_pretty);
-        valueQuery_pretty = NULL;
-    }
-    if(keyPairQuery_pretty){
-        keyValuePair_free(keyPairQuery_pretty);
-        keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_dryRun){
-        free(keyQuery_dryRun);
-        keyQuery_dryRun = NULL;
-    }
-    if(valueQuery_dryRun){
-        free(valueQuery_dryRun);
-        valueQuery_dryRun = NULL;
-    }
-    if(keyPairQuery_dryRun){
-        keyValuePair_free(keyPairQuery_dryRun);
-        keyPairQuery_dryRun = NULL;
-    }
-    if(keyQuery_fieldManager){
-        free(keyQuery_fieldManager);
-        keyQuery_fieldManager = NULL;
-    }
-    if(valueQuery_fieldManager){
-        free(valueQuery_fieldManager);
-        valueQuery_fieldManager = NULL;
-    }
-    if(keyPairQuery_fieldManager){
-        keyValuePair_free(keyPairQuery_fieldManager);
-        keyPairQuery_fieldManager = NULL;
-    }
-    if(keyQuery_fieldValidation){
-        free(keyQuery_fieldValidation);
-        keyQuery_fieldValidation = NULL;
-    }
-    if(valueQuery_fieldValidation){
-        free(valueQuery_fieldValidation);
-        valueQuery_fieldValidation = NULL;
-    }
-    if(keyPairQuery_fieldValidation){
-        keyValuePair_free(keyPairQuery_fieldValidation);
-        keyPairQuery_fieldValidation = NULL;
-    }
-    if(keyQuery_force){
-        free(keyQuery_force);
-        keyQuery_force = NULL;
-    }
-    if(valueQuery_force){
-        free(valueQuery_force);
-        valueQuery_force = NULL;
-    }
-    if(keyPairQuery_force){
-        keyValuePair_free(keyPairQuery_force);
-        keyPairQuery_force = NULL;
-    }
-    return elementToReturn;
-end:
-    free(localVarPath);
-    return NULL;
-
-}
-
 // partially update status of the specified FlowSchema
 //
 v1beta3_flow_schema_t*
-FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
+FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2799,10 +2578,10 @@ end:
 
 }
 
-// partially update the specified PriorityLevelConfiguration
+// partially update the specified FlowSchema
 //
-v1beta3_priority_level_configuration_t*
-FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
+v1beta3_flow_schema_t*
+FlowcontrolApiserverV1beta3API_patchFlowSchema_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2812,9 +2591,9 @@ FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration(apiClient_t *apiC
     char      *localVarBodyParameters = NULL;
 
     // create the path
-    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}")+1;
+    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}")+1;
     char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}");
+    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}");
 
 
     // Path Params
@@ -2929,7 +2708,7 @@ FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration(apiClient_t *apiC
     //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta3_priority_level_configuration_t *elementToReturn = v1beta3_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -3023,7 +2802,7 @@ end:
 // partially update status of the specified PriorityLevelConfiguration
 //
 v1beta3_priority_level_configuration_t*
-FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
+FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3241,22 +3020,22 @@ end:
 
 }
 
-// read the specified FlowSchema
+// partially update the specified PriorityLevelConfiguration
 //
-v1beta3_flow_schema_t*
-FlowcontrolApiserverV1beta3API_readFlowSchema(apiClient_t *apiClient, char *name, char *pretty)
+v1beta3_priority_level_configuration_t*
+FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
     list_t    *localVarFormParameters = NULL;
     list_t *localVarHeaderType = list_createList();
-    list_t *localVarContentType = NULL;
+    list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
 
     // create the path
-    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}")+1;
+    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}")+1;
     char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}");
+    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}");
 
 
     // Path Params
@@ -3282,9 +3061,71 @@ FlowcontrolApiserverV1beta3API_readFlowSchema(apiClient_t *apiClient, char *name
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
     }
+
+    // query parameters
+    char *keyQuery_dryRun = NULL;
+    char * valueQuery_dryRun = NULL;
+    keyValuePair_t *keyPairQuery_dryRun = 0;
+    if (dryRun)
+    {
+        keyQuery_dryRun = strdup("dryRun");
+        valueQuery_dryRun = strdup((dryRun));
+        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
+        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
+    }
+
+    // query parameters
+    char *keyQuery_fieldManager = NULL;
+    char * valueQuery_fieldManager = NULL;
+    keyValuePair_t *keyPairQuery_fieldManager = 0;
+    if (fieldManager)
+    {
+        keyQuery_fieldManager = strdup("fieldManager");
+        valueQuery_fieldManager = strdup((fieldManager));
+        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
+    }
+
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
+    char *keyQuery_force = NULL;
+    char * valueQuery_force = NULL;
+    keyValuePair_t *keyPairQuery_force = 0;
+    if (force)
+    {
+        keyQuery_force = strdup("force");
+        valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
+        keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
+        list_addElement(localVarQueryParameters,keyPairQuery_force);
+    }
+
+    // Body Param
+    cJSON *localVarSingleItemJSON_body = NULL;
+    if (body != NULL)
+    {
+        //string
+        localVarSingleItemJSON_body = object_convertToJSON(body);
+        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+    }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarContentType,"application/json-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3293,11 +3134,15 @@ FlowcontrolApiserverV1beta3API_readFlowSchema(apiClient_t *apiClient, char *name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
-                    "GET");
+                    "PATCH");
 
     // uncomment below to debug the error response
     //if (apiClient->response_code == 200) {
     //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
     //}
     // uncomment below to debug the error response
     //if (apiClient->response_code == 401) {
@@ -3305,7 +3150,7 @@ FlowcontrolApiserverV1beta3API_readFlowSchema(apiClient_t *apiClient, char *name
     //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    v1beta3_priority_level_configuration_t *elementToReturn = v1beta3_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -3321,9 +3166,14 @@ FlowcontrolApiserverV1beta3API_readFlowSchema(apiClient_t *apiClient, char *name
     
     
     list_freeList(localVarHeaderType);
-    
+    list_freeList(localVarContentType);
     free(localVarPath);
     free(localVarToReplace_name);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
+    free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -3336,6 +3186,54 @@ FlowcontrolApiserverV1beta3API_readFlowSchema(apiClient_t *apiClient, char *name
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
+    if(keyQuery_dryRun){
+        free(keyQuery_dryRun);
+        keyQuery_dryRun = NULL;
+    }
+    if(valueQuery_dryRun){
+        free(valueQuery_dryRun);
+        valueQuery_dryRun = NULL;
+    }
+    if(keyPairQuery_dryRun){
+        keyValuePair_free(keyPairQuery_dryRun);
+        keyPairQuery_dryRun = NULL;
+    }
+    if(keyQuery_fieldManager){
+        free(keyQuery_fieldManager);
+        keyQuery_fieldManager = NULL;
+    }
+    if(valueQuery_fieldManager){
+        free(valueQuery_fieldManager);
+        valueQuery_fieldManager = NULL;
+    }
+    if(keyPairQuery_fieldManager){
+        keyValuePair_free(keyPairQuery_fieldManager);
+        keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
+    if(keyQuery_force){
+        free(keyQuery_force);
+        keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
+    if(keyPairQuery_force){
+        keyValuePair_free(keyPairQuery_force);
+        keyPairQuery_force = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -3346,7 +3244,7 @@ end:
 // read status of the specified FlowSchema
 //
 v1beta3_flow_schema_t*
-FlowcontrolApiserverV1beta3API_readFlowSchemaStatus(apiClient_t *apiClient, char *name, char *pretty)
+FlowcontrolApiserverV1beta3API_readFlowSchemaStatus_0(apiClient_t *apiClient, char *name, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3445,10 +3343,10 @@ end:
 
 }
 
-// read the specified PriorityLevelConfiguration
+// read the specified FlowSchema
 //
-v1beta3_priority_level_configuration_t*
-FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration(apiClient_t *apiClient, char *name, char *pretty)
+v1beta3_flow_schema_t*
+FlowcontrolApiserverV1beta3API_readFlowSchema_0(apiClient_t *apiClient, char *name, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3458,9 +3356,9 @@ FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration(apiClient_t *apiCl
     char      *localVarBodyParameters = NULL;
 
     // create the path
-    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}")+1;
+    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}")+1;
     char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}");
+    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}");
 
 
     // Path Params
@@ -3509,7 +3407,7 @@ FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration(apiClient_t *apiCl
     //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta3_priority_level_configuration_t *elementToReturn = v1beta3_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -3550,7 +3448,7 @@ end:
 // read status of the specified PriorityLevelConfiguration
 //
 v1beta3_priority_level_configuration_t*
-FlowcontrolApiserverV1beta3API_readPriorityLevelConfigurationStatus(apiClient_t *apiClient, char *name, char *pretty)
+FlowcontrolApiserverV1beta3API_readPriorityLevelConfigurationStatus_0(apiClient_t *apiClient, char *name, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3649,10 +3547,10 @@ end:
 
 }
 
-// replace the specified FlowSchema
+// read the specified PriorityLevelConfiguration
 //
-v1beta3_flow_schema_t*
-FlowcontrolApiserverV1beta3API_replaceFlowSchema(apiClient_t *apiClient, char *name, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+v1beta3_priority_level_configuration_t*
+FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration_0(apiClient_t *apiClient, char *name, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3662,9 +3560,9 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchema(apiClient_t *apiClient, char *n
     char      *localVarBodyParameters = NULL;
 
     // create the path
-    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}")+1;
+    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}")+1;
     char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}");
+    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}");
 
 
     // Path Params
@@ -3690,51 +3588,6 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchema(apiClient_t *apiClient, char *n
         keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
     }
-
-    // query parameters
-    char *keyQuery_dryRun = NULL;
-    char * valueQuery_dryRun = NULL;
-    keyValuePair_t *keyPairQuery_dryRun = 0;
-    if (dryRun)
-    {
-        keyQuery_dryRun = strdup("dryRun");
-        valueQuery_dryRun = strdup((dryRun));
-        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
-        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
-    }
-
-    // query parameters
-    char *keyQuery_fieldManager = NULL;
-    char * valueQuery_fieldManager = NULL;
-    keyValuePair_t *keyPairQuery_fieldManager = 0;
-    if (fieldManager)
-    {
-        keyQuery_fieldManager = strdup("fieldManager");
-        valueQuery_fieldManager = strdup((fieldManager));
-        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
-        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
-    }
-
-    // query parameters
-    char *keyQuery_fieldValidation = NULL;
-    char * valueQuery_fieldValidation = NULL;
-    keyValuePair_t *keyPairQuery_fieldValidation = 0;
-    if (fieldValidation)
-    {
-        keyQuery_fieldValidation = strdup("fieldValidation");
-        valueQuery_fieldValidation = strdup((fieldValidation));
-        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
-        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
-    }
-
-    // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
-    if (body != NULL)
-    {
-        //string
-        localVarSingleItemJSON_body = v1beta3_flow_schema_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
-    }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
@@ -3746,15 +3599,11 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchema(apiClient_t *apiClient, char *n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
-                    "PUT");
+                    "GET");
 
     // uncomment below to debug the error response
     //if (apiClient->response_code == 200) {
     //    printf("%s\n","OK");
-    //}
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 201) {
-    //    printf("%s\n","Created");
     //}
     // uncomment below to debug the error response
     //if (apiClient->response_code == 401) {
@@ -3762,7 +3611,7 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchema(apiClient_t *apiClient, char *n
     //}
     //nonprimitive not container
     cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    v1beta3_priority_level_configuration_t *elementToReturn = v1beta3_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
@@ -3781,11 +3630,6 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchema(apiClient_t *apiClient, char *n
     
     free(localVarPath);
     free(localVarToReplace_name);
-    if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
-        localVarSingleItemJSON_body = NULL;
-    }
-    free(localVarBodyParameters);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
@@ -3798,42 +3642,6 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchema(apiClient_t *apiClient, char *n
         keyValuePair_free(keyPairQuery_pretty);
         keyPairQuery_pretty = NULL;
     }
-    if(keyQuery_dryRun){
-        free(keyQuery_dryRun);
-        keyQuery_dryRun = NULL;
-    }
-    if(valueQuery_dryRun){
-        free(valueQuery_dryRun);
-        valueQuery_dryRun = NULL;
-    }
-    if(keyPairQuery_dryRun){
-        keyValuePair_free(keyPairQuery_dryRun);
-        keyPairQuery_dryRun = NULL;
-    }
-    if(keyQuery_fieldManager){
-        free(keyQuery_fieldManager);
-        keyQuery_fieldManager = NULL;
-    }
-    if(valueQuery_fieldManager){
-        free(valueQuery_fieldManager);
-        valueQuery_fieldManager = NULL;
-    }
-    if(keyPairQuery_fieldManager){
-        keyValuePair_free(keyPairQuery_fieldManager);
-        keyPairQuery_fieldManager = NULL;
-    }
-    if(keyQuery_fieldValidation){
-        free(keyQuery_fieldValidation);
-        keyQuery_fieldValidation = NULL;
-    }
-    if(valueQuery_fieldValidation){
-        free(valueQuery_fieldValidation);
-        valueQuery_fieldValidation = NULL;
-    }
-    if(keyPairQuery_fieldValidation){
-        keyValuePair_free(keyPairQuery_fieldValidation);
-        keyPairQuery_fieldValidation = NULL;
-    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -3844,7 +3652,7 @@ end:
 // replace status of the specified FlowSchema
 //
 v1beta3_flow_schema_t*
-FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus(apiClient_t *apiClient, char *name, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus_0(apiClient_t *apiClient, char *name, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4033,10 +3841,10 @@ end:
 
 }
 
-// replace the specified PriorityLevelConfiguration
+// replace the specified FlowSchema
 //
-v1beta3_priority_level_configuration_t*
-FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration(apiClient_t *apiClient, char *name, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+v1beta3_flow_schema_t*
+FlowcontrolApiserverV1beta3API_replaceFlowSchema_0(apiClient_t *apiClient, char *name, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4046,9 +3854,201 @@ FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration(apiClient_t *ap
     char      *localVarBodyParameters = NULL;
 
     // create the path
-    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}")+1;
+    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}")+1;
     char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}");
+    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}");
+
+
+    // Path Params
+    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    if(name == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
+    sprintf(localVarToReplace_name, "{%s}", "name");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery_dryRun = NULL;
+    char * valueQuery_dryRun = NULL;
+    keyValuePair_t *keyPairQuery_dryRun = 0;
+    if (dryRun)
+    {
+        keyQuery_dryRun = strdup("dryRun");
+        valueQuery_dryRun = strdup((dryRun));
+        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
+        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
+    }
+
+    // query parameters
+    char *keyQuery_fieldManager = NULL;
+    char * valueQuery_fieldManager = NULL;
+    keyValuePair_t *keyPairQuery_fieldManager = 0;
+    if (fieldManager)
+    {
+        keyQuery_fieldManager = strdup("fieldManager");
+        valueQuery_fieldManager = strdup((fieldManager));
+        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
+    }
+
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // Body Param
+    cJSON *localVarSingleItemJSON_body = NULL;
+    if (body != NULL)
+    {
+        //string
+        localVarSingleItemJSON_body = v1beta3_flow_schema_convertToJSON(body);
+        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/yaml"); //produces
+    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    "PUT");
+
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
+    //nonprimitive not container
+    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    if(elementToReturn == NULL) {
+        // return 0;
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_freeList(localVarQueryParameters);
+    
+    
+    list_freeList(localVarHeaderType);
+    
+    free(localVarPath);
+    free(localVarToReplace_name);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
+    free(localVarBodyParameters);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
+    }
+    if(keyQuery_dryRun){
+        free(keyQuery_dryRun);
+        keyQuery_dryRun = NULL;
+    }
+    if(valueQuery_dryRun){
+        free(valueQuery_dryRun);
+        valueQuery_dryRun = NULL;
+    }
+    if(keyPairQuery_dryRun){
+        keyValuePair_free(keyPairQuery_dryRun);
+        keyPairQuery_dryRun = NULL;
+    }
+    if(keyQuery_fieldManager){
+        free(keyQuery_fieldManager);
+        keyQuery_fieldManager = NULL;
+    }
+    if(valueQuery_fieldManager){
+        free(valueQuery_fieldManager);
+        valueQuery_fieldManager = NULL;
+    }
+    if(keyPairQuery_fieldManager){
+        keyValuePair_free(keyPairQuery_fieldManager);
+        keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
+// replace status of the specified PriorityLevelConfiguration
+//
+v1beta3_priority_level_configuration_t*
+FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus_0(apiClient_t *apiClient, char *name, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+{
+    list_t    *localVarQueryParameters = list_createList();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_createList();
+    list_t *localVarContentType = NULL;
+    char      *localVarBodyParameters = NULL;
+
+    // create the path
+    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}/status")+1;
+    char *localVarPath = malloc(sizeOfPath);
+    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}/status");
 
 
     // Path Params
@@ -4225,10 +4225,10 @@ end:
 
 }
 
-// replace status of the specified PriorityLevelConfiguration
+// replace the specified PriorityLevelConfiguration
 //
 v1beta3_priority_level_configuration_t*
-FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus(apiClient_t *apiClient, char *name, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration_0(apiClient_t *apiClient, char *name, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4238,9 +4238,9 @@ FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus(apiClient
     char      *localVarBodyParameters = NULL;
 
     // create the path
-    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}/status")+1;
+    long sizeOfPath = strlen("/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}")+1;
     char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}/status");
+    snprintf(localVarPath, sizeOfPath, "/apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}");
 
 
     // Path Params

@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**CertificatesV1API_createCertificateSigningRequest**](CertificatesV1API.md#CertificatesV1API_createCertificateSigningRequest) | **POST** /apis/certificates.k8s.io/v1/certificatesigningrequests | 
 [**CertificatesV1API_deleteCertificateSigningRequest**](CertificatesV1API.md#CertificatesV1API_deleteCertificateSigningRequest) | **DELETE** /apis/certificates.k8s.io/v1/certificatesigningrequests/{name} | 
 [**CertificatesV1API_deleteCollectionCertificateSigningRequest**](CertificatesV1API.md#CertificatesV1API_deleteCollectionCertificateSigningRequest) | **DELETE** /apis/certificates.k8s.io/v1/certificatesigningrequests | 
-[**CertificatesV1API_getAPIResources**](CertificatesV1API.md#CertificatesV1API_getAPIResources) | **GET** /apis/certificates.k8s.io/v1/ | 
+[**CertificatesV1API_getAPIResources_13**](CertificatesV1API.md#CertificatesV1API_getAPIResources_13) | **GET** /apis/certificates.k8s.io/v1/ | 
 [**CertificatesV1API_listCertificateSigningRequest**](CertificatesV1API.md#CertificatesV1API_listCertificateSigningRequest) | **GET** /apis/certificates.k8s.io/v1/certificatesigningrequests | 
 [**CertificatesV1API_patchCertificateSigningRequest**](CertificatesV1API.md#CertificatesV1API_patchCertificateSigningRequest) | **PATCH** /apis/certificates.k8s.io/v1/certificatesigningrequests/{name} | 
 [**CertificatesV1API_patchCertificateSigningRequestApproval**](CertificatesV1API.md#CertificatesV1API_patchCertificateSigningRequestApproval) | **PATCH** /apis/certificates.k8s.io/v1/certificatesigningrequests/{name}/approval | 
@@ -130,11 +130,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **CertificatesV1API_getAPIResources**
+# **CertificatesV1API_getAPIResources_13**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* CertificatesV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* CertificatesV1API_getAPIResources_13(apiClient_t *apiClient);
 ```
 
 ### Parameters

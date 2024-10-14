@@ -74,7 +74,7 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name
 // get available resources
 //
 v1_api_resource_list_t*
-NetworkingV1API_getAPIResources(apiClient_t *apiClient);
+NetworkingV1API_getAPIResources_22(apiClient_t *apiClient);
 
 
 // list or watch objects of kind IngressClass

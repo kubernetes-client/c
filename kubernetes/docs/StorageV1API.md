@@ -19,7 +19,7 @@ Method | HTTP request | Description
 [**StorageV1API_deleteNamespacedCSIStorageCapacity**](StorageV1API.md#StorageV1API_deleteNamespacedCSIStorageCapacity) | **DELETE** /apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name} | 
 [**StorageV1API_deleteStorageClass**](StorageV1API.md#StorageV1API_deleteStorageClass) | **DELETE** /apis/storage.k8s.io/v1/storageclasses/{name} | 
 [**StorageV1API_deleteVolumeAttachment**](StorageV1API.md#StorageV1API_deleteVolumeAttachment) | **DELETE** /apis/storage.k8s.io/v1/volumeattachments/{name} | 
-[**StorageV1API_getAPIResources**](StorageV1API.md#StorageV1API_getAPIResources) | **GET** /apis/storage.k8s.io/v1/ | 
+[**StorageV1API_getAPIResources_29**](StorageV1API.md#StorageV1API_getAPIResources_29) | **GET** /apis/storage.k8s.io/v1/ | 
 [**StorageV1API_listCSIDriver**](StorageV1API.md#StorageV1API_listCSIDriver) | **GET** /apis/storage.k8s.io/v1/csidrivers | 
 [**StorageV1API_listCSINode**](StorageV1API.md#StorageV1API_listCSINode) | **GET** /apis/storage.k8s.io/v1/csinodes | 
 [**StorageV1API_listCSIStorageCapacityForAllNamespaces**](StorageV1API.md#StorageV1API_listCSIStorageCapacityForAllNamespaces) | **GET** /apis/storage.k8s.io/v1/csistoragecapacities | 
@@ -599,11 +599,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **StorageV1API_getAPIResources**
+# **StorageV1API_getAPIResources_29**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* StorageV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* StorageV1API_getAPIResources_29(apiClient_t *apiClient);
 ```
 
 ### Parameters

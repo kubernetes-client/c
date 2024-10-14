@@ -1,7 +1,7 @@
 /*
  * v1_node_runtime_handler_features.h
  *
- * NodeRuntimeHandlerFeatures is a set of runtime features.
+ * NodeRuntimeHandlerFeatures is a set of features implemented by the runtime handler.
  */
 
 #ifndef _v1_node_runtime_handler_features_H_
@@ -20,11 +20,13 @@ typedef struct v1_node_runtime_handler_features_t v1_node_runtime_handler_featur
 
 typedef struct v1_node_runtime_handler_features_t {
     int recursive_read_only_mounts; //boolean
+    int user_namespaces; //boolean
 
 } v1_node_runtime_handler_features_t;
 
 v1_node_runtime_handler_features_t *v1_node_runtime_handler_features_create(
-    int recursive_read_only_mounts
+    int recursive_read_only_mounts,
+    int user_namespaces
 );
 
 void v1_node_runtime_handler_features_free(v1_node_runtime_handler_features_t *v1_node_runtime_handler_features);

@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**NetworkingV1API_deleteIngressClass**](NetworkingV1API.md#NetworkingV1API_deleteIngressClass) | **DELETE** /apis/networking.k8s.io/v1/ingressclasses/{name} | 
 [**NetworkingV1API_deleteNamespacedIngress**](NetworkingV1API.md#NetworkingV1API_deleteNamespacedIngress) | **DELETE** /apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name} | 
 [**NetworkingV1API_deleteNamespacedNetworkPolicy**](NetworkingV1API.md#NetworkingV1API_deleteNamespacedNetworkPolicy) | **DELETE** /apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name} | 
-[**NetworkingV1API_getAPIResources**](NetworkingV1API.md#NetworkingV1API_getAPIResources) | **GET** /apis/networking.k8s.io/v1/ | 
+[**NetworkingV1API_getAPIResources_22**](NetworkingV1API.md#NetworkingV1API_getAPIResources_22) | **GET** /apis/networking.k8s.io/v1/ | 
 [**NetworkingV1API_listIngressClass**](NetworkingV1API.md#NetworkingV1API_listIngressClass) | **GET** /apis/networking.k8s.io/v1/ingressclasses | 
 [**NetworkingV1API_listIngressForAllNamespaces**](NetworkingV1API.md#NetworkingV1API_listIngressForAllNamespaces) | **GET** /apis/networking.k8s.io/v1/ingresses | 
 [**NetworkingV1API_listNamespacedIngress**](NetworkingV1API.md#NetworkingV1API_listNamespacedIngress) | **GET** /apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses | 
@@ -369,11 +369,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **NetworkingV1API_getAPIResources**
+# **NetworkingV1API_getAPIResources_22**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* NetworkingV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* NetworkingV1API_getAPIResources_22(apiClient_t *apiClient);
 ```
 
 ### Parameters

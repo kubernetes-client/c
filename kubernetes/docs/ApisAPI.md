@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ApisAPI_getAPIVersions**](ApisAPI.md#ApisAPI_getAPIVersions) | **GET** /apis/ | 
+[**ApisAPI_getAPIVersions_0**](ApisAPI.md#ApisAPI_getAPIVersions_0) | **GET** /apis/ | 
 
 
-# **ApisAPI_getAPIVersions**
+# **ApisAPI_getAPIVersions_0**
 ```c
 // get available API versions
 //
-v1_api_group_list_t* ApisAPI_getAPIVersions(apiClient_t *apiClient);
+v1_api_group_list_t* ApisAPI_getAPIVersions_0(apiClient_t *apiClient);
 ```
 
 ### Parameters

@@ -23,6 +23,7 @@ v1_volume_t *v1_volume_create(
     v1_git_repo_volume_source_t *git_repo,
     v1_glusterfs_volume_source_t *glusterfs,
     v1_host_path_volume_source_t *host_path,
+    v1_image_volume_source_t *image,
     v1_iscsi_volume_source_t *iscsi,
     char *name,
     v1_nfs_volume_source_t *nfs,
@@ -58,6 +59,7 @@ v1_volume_t *v1_volume_create(
     v1_volume_local_var->git_repo = git_repo;
     v1_volume_local_var->glusterfs = glusterfs;
     v1_volume_local_var->host_path = host_path;
+    v1_volume_local_var->image = image;
     v1_volume_local_var->iscsi = iscsi;
     v1_volume_local_var->name = name;
     v1_volume_local_var->nfs = nfs;
@@ -148,6 +150,10 @@ void v1_volume_free(v1_volume_t *v1_volume) {
     if (v1_volume->host_path) {
         v1_host_path_volume_source_free(v1_volume->host_path);
         v1_volume->host_path = NULL;
+    }
+    if (v1_volume->image) {
+        v1_image_volume_source_free(v1_volume->image);
+        v1_volume->image = NULL;
     }
     if (v1_volume->iscsi) {
         v1_iscsi_volume_source_free(v1_volume->iscsi);
@@ -428,6 +434,19 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     }
 
 
+    // v1_volume->image
+    if(v1_volume->image) {
+    cJSON *image_local_JSON = v1_image_volume_source_convertToJSON(v1_volume->image);
+    if(image_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "image", image_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_volume->iscsi
     if(v1_volume->iscsi) {
     cJSON *iscsi_local_JSON = v1_iscsi_volume_source_convertToJSON(v1_volume->iscsi);
@@ -655,6 +674,9 @@ v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON){
     // define the local variable for v1_volume->host_path
     v1_host_path_volume_source_t *host_path_local_nonprim = NULL;
 
+    // define the local variable for v1_volume->image
+    v1_image_volume_source_t *image_local_nonprim = NULL;
+
     // define the local variable for v1_volume->iscsi
     v1_iscsi_volume_source_t *iscsi_local_nonprim = NULL;
 
@@ -793,6 +815,12 @@ v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON){
     host_path_local_nonprim = v1_host_path_volume_source_parseFromJSON(host_path); //nonprimitive
     }
 
+    // v1_volume->image
+    cJSON *image = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "image");
+    if (image) { 
+    image_local_nonprim = v1_image_volume_source_parseFromJSON(image); //nonprimitive
+    }
+
     // v1_volume->iscsi
     cJSON *iscsi = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "iscsi");
     if (iscsi) { 
@@ -896,6 +924,7 @@ v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON){
         git_repo ? git_repo_local_nonprim : NULL,
         glusterfs ? glusterfs_local_nonprim : NULL,
         host_path ? host_path_local_nonprim : NULL,
+        image ? image_local_nonprim : NULL,
         iscsi ? iscsi_local_nonprim : NULL,
         strdup(name->valuestring),
         nfs ? nfs_local_nonprim : NULL,
@@ -980,6 +1009,10 @@ end:
     if (host_path_local_nonprim) {
         v1_host_path_volume_source_free(host_path_local_nonprim);
         host_path_local_nonprim = NULL;
+    }
+    if (image_local_nonprim) {
+        v1_image_volume_source_free(image_local_nonprim);
+        image_local_nonprim = NULL;
     }
     if (iscsi_local_nonprim) {
         v1_iscsi_volume_source_free(iscsi_local_nonprim);

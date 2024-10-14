@@ -34,7 +34,7 @@ InternalApiserverV1alpha1API_deleteStorageVersion(apiClient_t *apiClient, char *
 // get available resources
 //
 v1_api_resource_list_t*
-InternalApiserverV1alpha1API_getAPIResources(apiClient_t *apiClient);
+InternalApiserverV1alpha1API_getAPIResources_21(apiClient_t *apiClient);
 
 
 // list or watch objects of kind StorageVersion

@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**NetworkingAPI_getAPIGroup**](NetworkingAPI.md#NetworkingAPI_getAPIGroup) | **GET** /apis/networking.k8s.io/ | 
+[**NetworkingAPI_getAPIGroup_13**](NetworkingAPI.md#NetworkingAPI_getAPIGroup_13) | **GET** /apis/networking.k8s.io/ | 
 
 
-# **NetworkingAPI_getAPIGroup**
+# **NetworkingAPI_getAPIGroup_13**
 ```c
 // get information of a group
 //
-v1_api_group_t* NetworkingAPI_getAPIGroup(apiClient_t *apiClient);
+v1_api_group_t* NetworkingAPI_getAPIGroup_13(apiClient_t *apiClient);
 ```
 
 ### Parameters

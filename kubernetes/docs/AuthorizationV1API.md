@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**AuthorizationV1API_createSelfSubjectAccessReview**](AuthorizationV1API.md#AuthorizationV1API_createSelfSubjectAccessReview) | **POST** /apis/authorization.k8s.io/v1/selfsubjectaccessreviews | 
 [**AuthorizationV1API_createSelfSubjectRulesReview**](AuthorizationV1API.md#AuthorizationV1API_createSelfSubjectRulesReview) | **POST** /apis/authorization.k8s.io/v1/selfsubjectrulesreviews | 
 [**AuthorizationV1API_createSubjectAccessReview**](AuthorizationV1API.md#AuthorizationV1API_createSubjectAccessReview) | **POST** /apis/authorization.k8s.io/v1/subjectaccessreviews | 
-[**AuthorizationV1API_getAPIResources**](AuthorizationV1API.md#AuthorizationV1API_getAPIResources) | **GET** /apis/authorization.k8s.io/v1/ | 
+[**AuthorizationV1API_getAPIResources_9**](AuthorizationV1API.md#AuthorizationV1API_getAPIResources_9) | **GET** /apis/authorization.k8s.io/v1/ | 
 
 
 # **AuthorizationV1API_createNamespacedLocalSubjectAccessReview**
@@ -144,11 +144,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AuthorizationV1API_getAPIResources**
+# **AuthorizationV1API_getAPIResources_9**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* AuthorizationV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* AuthorizationV1API_getAPIResources_9(apiClient_t *apiClient);
 ```
 
 ### Parameters

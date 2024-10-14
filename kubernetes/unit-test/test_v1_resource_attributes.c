@@ -16,13 +16,19 @@
 #include "../model/v1_resource_attributes.h"
 v1_resource_attributes_t* instantiate_v1_resource_attributes(int include_optional);
 
+#include "test_v1_field_selector_attributes.c"
+#include "test_v1_label_selector_attributes.c"
 
 
 v1_resource_attributes_t* instantiate_v1_resource_attributes(int include_optional) {
   v1_resource_attributes_t* v1_resource_attributes = NULL;
   if (include_optional) {
     v1_resource_attributes = v1_resource_attributes_create(
+       // false, not to have infinite recursion
+      instantiate_v1_field_selector_attributes(0),
       "0",
+       // false, not to have infinite recursion
+      instantiate_v1_label_selector_attributes(0),
       "0",
       "0",
       "0",
@@ -32,7 +38,9 @@ v1_resource_attributes_t* instantiate_v1_resource_attributes(int include_optiona
     );
   } else {
     v1_resource_attributes = v1_resource_attributes_create(
+      NULL,
       "0",
+      NULL,
       "0",
       "0",
       "0",

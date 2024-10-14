@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **git_repo** | [**v1_git_repo_volume_source_t**](v1_git_repo_volume_source.md) \* |  | [optional] 
 **glusterfs** | [**v1_glusterfs_volume_source_t**](v1_glusterfs_volume_source.md) \* |  | [optional] 
 **host_path** | [**v1_host_path_volume_source_t**](v1_host_path_volume_source.md) \* |  | [optional] 
+**image** | [**v1_image_volume_source_t**](v1_image_volume_source.md) \* |  | [optional] 
 **iscsi** | [**v1_iscsi_volume_source_t**](v1_iscsi_volume_source.md) \* |  | [optional] 
 **name** | **char \*** | name of the volume. Must be a DNS_LABEL and unique within the pod. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names | 
 **nfs** | [**v1_nfs_volume_source_t**](v1_nfs_volume_source.md) \* |  | [optional] 

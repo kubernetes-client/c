@@ -33,6 +33,7 @@ typedef struct v1_pod_security_context_t {
     struct v1_se_linux_options_t *se_linux_options; //model
     struct v1_seccomp_profile_t *seccomp_profile; //model
     list_t *supplemental_groups; //primitive container
+    char *supplemental_groups_policy; // string
     list_t *sysctls; //nonprimitive container
     struct v1_windows_security_context_options_t *windows_options; //model
 
@@ -48,6 +49,7 @@ v1_pod_security_context_t *v1_pod_security_context_create(
     v1_se_linux_options_t *se_linux_options,
     v1_seccomp_profile_t *seccomp_profile,
     list_t *supplemental_groups,
+    char *supplemental_groups_policy,
     list_t *sysctls,
     v1_windows_security_context_options_t *windows_options
 );

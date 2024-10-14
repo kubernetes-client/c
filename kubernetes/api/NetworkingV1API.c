@@ -2484,7 +2484,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-NetworkingV1API_getAPIResources(apiClient_t *apiClient)
+NetworkingV1API_getAPIResources_22(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;

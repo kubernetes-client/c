@@ -94,7 +94,7 @@ AdmissionregistrationV1API_deleteValidatingWebhookConfiguration(apiClient_t *api
 // get available resources
 //
 v1_api_resource_list_t*
-AdmissionregistrationV1API_getAPIResources(apiClient_t *apiClient);
+AdmissionregistrationV1API_getAPIResources_0(apiClient_t *apiClient);
 
 
 // list or watch objects of kind MutatingWebhookConfiguration

@@ -849,7 +849,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-DiscoveryV1API_getAPIResources(apiClient_t *apiClient)
+DiscoveryV1API_getAPIResources_17(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;

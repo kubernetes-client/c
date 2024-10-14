@@ -4,34 +4,34 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**FlowcontrolApiserverV1beta3API_createFlowSchema**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_createFlowSchema) | **POST** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas | 
-[**FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration) | **POST** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations | 
-[**FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas | 
-[**FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations | 
-[**FlowcontrolApiserverV1beta3API_deleteFlowSchema**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_deleteFlowSchema) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name} | 
-[**FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name} | 
-[**FlowcontrolApiserverV1beta3API_getAPIResources**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_getAPIResources) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/ | 
-[**FlowcontrolApiserverV1beta3API_listFlowSchema**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_listFlowSchema) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas | 
-[**FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations | 
-[**FlowcontrolApiserverV1beta3API_patchFlowSchema**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_patchFlowSchema) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name} | 
-[**FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}/status | 
-[**FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name} | 
-[**FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}/status | 
-[**FlowcontrolApiserverV1beta3API_readFlowSchema**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_readFlowSchema) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name} | 
-[**FlowcontrolApiserverV1beta3API_readFlowSchemaStatus**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_readFlowSchemaStatus) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}/status | 
-[**FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name} | 
-[**FlowcontrolApiserverV1beta3API_readPriorityLevelConfigurationStatus**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_readPriorityLevelConfigurationStatus) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}/status | 
-[**FlowcontrolApiserverV1beta3API_replaceFlowSchema**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_replaceFlowSchema) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name} | 
-[**FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}/status | 
-[**FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name} | 
-[**FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}/status | 
+[**FlowcontrolApiserverV1beta3API_createFlowSchema_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_createFlowSchema_0) | **POST** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas | 
+[**FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration_0) | **POST** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations | 
+[**FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema_0) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas | 
+[**FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration_0) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations | 
+[**FlowcontrolApiserverV1beta3API_deleteFlowSchema_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_deleteFlowSchema_0) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name} | 
+[**FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration_0) | **DELETE** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name} | 
+[**FlowcontrolApiserverV1beta3API_getAPIResources_20**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_getAPIResources_20) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/ | 
+[**FlowcontrolApiserverV1beta3API_listFlowSchema_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_listFlowSchema_0) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas | 
+[**FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration_0) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations | 
+[**FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus_0) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}/status | 
+[**FlowcontrolApiserverV1beta3API_patchFlowSchema_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_patchFlowSchema_0) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name} | 
+[**FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus_0) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}/status | 
+[**FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration_0) | **PATCH** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name} | 
+[**FlowcontrolApiserverV1beta3API_readFlowSchemaStatus_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_readFlowSchemaStatus_0) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}/status | 
+[**FlowcontrolApiserverV1beta3API_readFlowSchema_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_readFlowSchema_0) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name} | 
+[**FlowcontrolApiserverV1beta3API_readPriorityLevelConfigurationStatus_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_readPriorityLevelConfigurationStatus_0) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}/status | 
+[**FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration_0) | **GET** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name} | 
+[**FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus_0) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name}/status | 
+[**FlowcontrolApiserverV1beta3API_replaceFlowSchema_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_replaceFlowSchema_0) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1beta3/flowschemas/{name} | 
+[**FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus_0) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name}/status | 
+[**FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration_0**](FlowcontrolApiserverV1beta3API.md#FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration_0) | **PUT** /apis/flowcontrol.apiserver.k8s.io/v1beta3/prioritylevelconfigurations/{name} | 
 
 
-# **FlowcontrolApiserverV1beta3API_createFlowSchema**
+# **FlowcontrolApiserverV1beta3API_createFlowSchema_0**
 ```c
 // create a FlowSchema
 //
-v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_createFlowSchema(apiClient_t *apiClient, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_createFlowSchema_0(apiClient_t *apiClient, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -60,11 +60,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration**
+# **FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration_0**
 ```c
 // create a PriorityLevelConfiguration
 //
-v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration(apiClient_t *apiClient, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration_0(apiClient_t *apiClient, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -93,11 +93,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema**
+# **FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema_0**
 ```c
 // delete collection of FlowSchema
 //
-v1_status_t* FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+v1_status_t* FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema_0(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -135,11 +135,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration**
+# **FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration_0**
 ```c
 // delete collection of PriorityLevelConfiguration
 //
-v1_status_t* FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+v1_status_t* FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration_0(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -177,11 +177,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_deleteFlowSchema**
+# **FlowcontrolApiserverV1beta3API_deleteFlowSchema_0**
 ```c
 // delete a FlowSchema
 //
-v1_status_t* FlowcontrolApiserverV1beta3API_deleteFlowSchema(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+v1_status_t* FlowcontrolApiserverV1beta3API_deleteFlowSchema_0(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -212,11 +212,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration**
+# **FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration_0**
 ```c
 // delete a PriorityLevelConfiguration
 //
-v1_status_t* FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+v1_status_t* FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration_0(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -247,11 +247,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_getAPIResources**
+# **FlowcontrolApiserverV1beta3API_getAPIResources_20**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* FlowcontrolApiserverV1beta3API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* FlowcontrolApiserverV1beta3API_getAPIResources_20(apiClient_t *apiClient);
 ```
 
 ### Parameters
@@ -275,11 +275,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_listFlowSchema**
+# **FlowcontrolApiserverV1beta3API_listFlowSchema_0**
 ```c
 // list or watch objects of kind FlowSchema
 //
-v1beta3_flow_schema_list_t* FlowcontrolApiserverV1beta3API_listFlowSchema(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+v1beta3_flow_schema_list_t* FlowcontrolApiserverV1beta3API_listFlowSchema_0(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -314,11 +314,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration**
+# **FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration_0**
 ```c
 // list or watch objects of kind PriorityLevelConfiguration
 //
-v1beta3_priority_level_configuration_list_t* FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+v1beta3_priority_level_configuration_list_t* FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration_0(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -353,46 +353,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_patchFlowSchema**
-```c
-// partially update the specified FlowSchema
-//
-v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_patchFlowSchema(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
-```
-
-### Parameters
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the FlowSchema | 
-**body** | **[object_t](object.md) \*** |  | 
-**pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
-**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
-**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
-**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
-**force** | **int \*** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
-
-### Return type
-
-[v1beta3_flow_schema_t](v1beta3_flow_schema.md) *
-
-
-### Authorization
-
-[BearerToken](../README.md#BearerToken)
-
-### HTTP request headers
-
- - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus**
+# **FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus_0**
 ```c
 // partially update status of the specified FlowSchema
 //
-v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -423,18 +388,18 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration**
+# **FlowcontrolApiserverV1beta3API_patchFlowSchema_0**
 ```c
-// partially update the specified PriorityLevelConfiguration
+// partially update the specified FlowSchema
 //
-v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_patchFlowSchema_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the PriorityLevelConfiguration | 
+**name** | **char \*** | name of the FlowSchema | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -444,7 +409,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1beta3_priority_level_configuration_t](v1beta3_priority_level_configuration.md) *
+[v1beta3_flow_schema_t](v1beta3_flow_schema.md) *
 
 
 ### Authorization
@@ -458,11 +423,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus**
+# **FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus_0**
 ```c
 // partially update status of the specified PriorityLevelConfiguration
 //
-v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -493,23 +458,28 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_readFlowSchema**
+# **FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration_0**
 ```c
-// read the specified FlowSchema
+// partially update the specified PriorityLevelConfiguration
 //
-v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_readFlowSchema(apiClient_t *apiClient, char *name, char *pretty);
+v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the FlowSchema | 
+**name** | **char \*** | name of the PriorityLevelConfiguration | 
+**body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
+**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
+**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
+**force** | **int \*** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
 
-[v1beta3_flow_schema_t](v1beta3_flow_schema.md) *
+[v1beta3_priority_level_configuration_t](v1beta3_priority_level_configuration.md) *
 
 
 ### Authorization
@@ -518,16 +488,16 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml
  - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_readFlowSchemaStatus**
+# **FlowcontrolApiserverV1beta3API_readFlowSchemaStatus_0**
 ```c
 // read status of the specified FlowSchema
 //
-v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_readFlowSchemaStatus(apiClient_t *apiClient, char *name, char *pretty);
+v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_readFlowSchemaStatus_0(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -553,23 +523,23 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration**
+# **FlowcontrolApiserverV1beta3API_readFlowSchema_0**
 ```c
-// read the specified PriorityLevelConfiguration
+// read the specified FlowSchema
 //
-v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration(apiClient_t *apiClient, char *name, char *pretty);
+v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_readFlowSchema_0(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the PriorityLevelConfiguration | 
+**name** | **char \*** | name of the FlowSchema | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 
 ### Return type
 
-[v1beta3_priority_level_configuration_t](v1beta3_priority_level_configuration.md) *
+[v1beta3_flow_schema_t](v1beta3_flow_schema.md) *
 
 
 ### Authorization
@@ -583,11 +553,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_readPriorityLevelConfigurationStatus**
+# **FlowcontrolApiserverV1beta3API_readPriorityLevelConfigurationStatus_0**
 ```c
 // read status of the specified PriorityLevelConfiguration
 //
-v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_readPriorityLevelConfigurationStatus(apiClient_t *apiClient, char *name, char *pretty);
+v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_readPriorityLevelConfigurationStatus_0(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
@@ -613,27 +583,23 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_replaceFlowSchema**
+# **FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration_0**
 ```c
-// replace the specified FlowSchema
+// read the specified PriorityLevelConfiguration
 //
-v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_replaceFlowSchema(apiClient_t *apiClient, char *name, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration_0(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the FlowSchema | 
-**body** | **[v1beta3_flow_schema_t](v1beta3_flow_schema.md) \*** |  | 
+**name** | **char \*** | name of the PriorityLevelConfiguration | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
-**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
-**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
-**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
 
 ### Return type
 
-[v1beta3_flow_schema_t](v1beta3_flow_schema.md) *
+[v1beta3_priority_level_configuration_t](v1beta3_priority_level_configuration.md) *
 
 
 ### Authorization
@@ -647,11 +613,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus**
+# **FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus_0**
 ```c
 // replace status of the specified FlowSchema
 //
-v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus(apiClient_t *apiClient, char *name, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus_0(apiClient_t *apiClient, char *name, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -681,11 +647,45 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration**
+# **FlowcontrolApiserverV1beta3API_replaceFlowSchema_0**
 ```c
-// replace the specified PriorityLevelConfiguration
+// replace the specified FlowSchema
 //
-v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration(apiClient_t *apiClient, char *name, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1beta3_flow_schema_t* FlowcontrolApiserverV1beta3API_replaceFlowSchema_0(apiClient_t *apiClient, char *name, v1beta3_flow_schema_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+```
+
+### Parameters
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
+**name** | **char \*** | name of the FlowSchema | 
+**body** | **[v1beta3_flow_schema_t](v1beta3_flow_schema.md) \*** |  | 
+**pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
+**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
+**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
+
+### Return type
+
+[v1beta3_flow_schema_t](v1beta3_flow_schema.md) *
+
+
+### Authorization
+
+[BearerToken](../README.md#BearerToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus_0**
+```c
+// replace status of the specified PriorityLevelConfiguration
+//
+v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus_0(apiClient_t *apiClient, char *name, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -715,11 +715,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus**
+# **FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration_0**
 ```c
-// replace status of the specified PriorityLevelConfiguration
+// replace the specified PriorityLevelConfiguration
 //
-v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus(apiClient_t *apiClient, char *name, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1beta3_priority_level_configuration_t* FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration_0(apiClient_t *apiClient, char *name, v1beta3_priority_level_configuration_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters

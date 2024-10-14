@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**PolicyAPI_getAPIGroup**](PolicyAPI.md#PolicyAPI_getAPIGroup) | **GET** /apis/policy/ | 
+[**PolicyAPI_getAPIGroup_15**](PolicyAPI.md#PolicyAPI_getAPIGroup_15) | **GET** /apis/policy/ | 
 
 
-# **PolicyAPI_getAPIGroup**
+# **PolicyAPI_getAPIGroup_15**
 ```c
 // get information of a group
 //
-v1_api_group_t* PolicyAPI_getAPIGroup(apiClient_t *apiClient);
+v1_api_group_t* PolicyAPI_getAPIGroup_15(apiClient_t *apiClient);
 ```
 
 ### Parameters

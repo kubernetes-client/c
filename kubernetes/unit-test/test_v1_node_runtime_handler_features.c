@@ -22,10 +22,12 @@ v1_node_runtime_handler_features_t* instantiate_v1_node_runtime_handler_features
   v1_node_runtime_handler_features_t* v1_node_runtime_handler_features = NULL;
   if (include_optional) {
     v1_node_runtime_handler_features = v1_node_runtime_handler_features_create(
+      1,
       1
     );
   } else {
     v1_node_runtime_handler_features = v1_node_runtime_handler_features_create(
+      1,
       1
     );
   }

@@ -19,7 +19,7 @@ Method | HTTP request | Description
 [**AppsV1API_deleteNamespacedDeployment**](AppsV1API.md#AppsV1API_deleteNamespacedDeployment) | **DELETE** /apis/apps/v1/namespaces/{namespace}/deployments/{name} | 
 [**AppsV1API_deleteNamespacedReplicaSet**](AppsV1API.md#AppsV1API_deleteNamespacedReplicaSet) | **DELETE** /apis/apps/v1/namespaces/{namespace}/replicasets/{name} | 
 [**AppsV1API_deleteNamespacedStatefulSet**](AppsV1API.md#AppsV1API_deleteNamespacedStatefulSet) | **DELETE** /apis/apps/v1/namespaces/{namespace}/statefulsets/{name} | 
-[**AppsV1API_getAPIResources**](AppsV1API.md#AppsV1API_getAPIResources) | **GET** /apis/apps/v1/ | 
+[**AppsV1API_getAPIResources_5**](AppsV1API.md#AppsV1API_getAPIResources_5) | **GET** /apis/apps/v1/ | 
 [**AppsV1API_listControllerRevisionForAllNamespaces**](AppsV1API.md#AppsV1API_listControllerRevisionForAllNamespaces) | **GET** /apis/apps/v1/controllerrevisions | 
 [**AppsV1API_listDaemonSetForAllNamespaces**](AppsV1API.md#AppsV1API_listDaemonSetForAllNamespaces) | **GET** /apis/apps/v1/daemonsets | 
 [**AppsV1API_listDeploymentForAllNamespaces**](AppsV1API.md#AppsV1API_listDeploymentForAllNamespaces) | **GET** /apis/apps/v1/deployments | 
@@ -633,11 +633,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AppsV1API_getAPIResources**
+# **AppsV1API_getAPIResources_5**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* AppsV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* AppsV1API_getAPIResources_5(apiClient_t *apiClient);
 ```
 
 ### Parameters

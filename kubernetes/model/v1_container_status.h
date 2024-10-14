@@ -16,13 +16,16 @@
 typedef struct v1_container_status_t v1_container_status_t;
 
 #include "v1_container_state.h"
+#include "v1_container_user.h"
 #include "v1_resource_requirements.h"
+#include "v1_resource_status.h"
 #include "v1_volume_mount_status.h"
 
 
 
 typedef struct v1_container_status_t {
     list_t* allocated_resources; //map
+    list_t *allocated_resources_status; //nonprimitive container
     char *container_id; // string
     char *image; // string
     char *image_id; // string
@@ -33,12 +36,14 @@ typedef struct v1_container_status_t {
     int restart_count; //numeric
     int started; //boolean
     struct v1_container_state_t *state; //model
+    struct v1_container_user_t *user; //model
     list_t *volume_mounts; //nonprimitive container
 
 } v1_container_status_t;
 
 v1_container_status_t *v1_container_status_create(
     list_t* allocated_resources,
+    list_t *allocated_resources_status,
     char *container_id,
     char *image,
     char *image_id,
@@ -49,6 +54,7 @@ v1_container_status_t *v1_container_status_create(
     int restart_count,
     int started,
     v1_container_state_t *state,
+    v1_container_user_t *user,
     list_t *volume_mounts
 );
 

@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**SchedulingAPI_getAPIGroup**](SchedulingAPI.md#SchedulingAPI_getAPIGroup) | **GET** /apis/scheduling.k8s.io/ | 
+[**SchedulingAPI_getAPIGroup_18**](SchedulingAPI.md#SchedulingAPI_getAPIGroup_18) | **GET** /apis/scheduling.k8s.io/ | 
 
 
-# **SchedulingAPI_getAPIGroup**
+# **SchedulingAPI_getAPIGroup_18**
 ```c
 // get information of a group
 //
-v1_api_group_t* SchedulingAPI_getAPIGroup(apiClient_t *apiClient);
+v1_api_group_t* SchedulingAPI_getAPIGroup_18(apiClient_t *apiClient);
 ```
 
 ### Parameters

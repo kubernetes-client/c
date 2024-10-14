@@ -16,7 +16,7 @@ Method | HTTP request | Description
 [**AdmissionregistrationV1API_deleteValidatingAdmissionPolicy**](AdmissionregistrationV1API.md#AdmissionregistrationV1API_deleteValidatingAdmissionPolicy) | **DELETE** /apis/admissionregistration.k8s.io/v1/validatingadmissionpolicies/{name} | 
 [**AdmissionregistrationV1API_deleteValidatingAdmissionPolicyBinding**](AdmissionregistrationV1API.md#AdmissionregistrationV1API_deleteValidatingAdmissionPolicyBinding) | **DELETE** /apis/admissionregistration.k8s.io/v1/validatingadmissionpolicybindings/{name} | 
 [**AdmissionregistrationV1API_deleteValidatingWebhookConfiguration**](AdmissionregistrationV1API.md#AdmissionregistrationV1API_deleteValidatingWebhookConfiguration) | **DELETE** /apis/admissionregistration.k8s.io/v1/validatingwebhookconfigurations/{name} | 
-[**AdmissionregistrationV1API_getAPIResources**](AdmissionregistrationV1API.md#AdmissionregistrationV1API_getAPIResources) | **GET** /apis/admissionregistration.k8s.io/v1/ | 
+[**AdmissionregistrationV1API_getAPIResources_0**](AdmissionregistrationV1API.md#AdmissionregistrationV1API_getAPIResources_0) | **GET** /apis/admissionregistration.k8s.io/v1/ | 
 [**AdmissionregistrationV1API_listMutatingWebhookConfiguration**](AdmissionregistrationV1API.md#AdmissionregistrationV1API_listMutatingWebhookConfiguration) | **GET** /apis/admissionregistration.k8s.io/v1/mutatingwebhookconfigurations | 
 [**AdmissionregistrationV1API_listValidatingAdmissionPolicy**](AdmissionregistrationV1API.md#AdmissionregistrationV1API_listValidatingAdmissionPolicy) | **GET** /apis/admissionregistration.k8s.io/v1/validatingadmissionpolicies | 
 [**AdmissionregistrationV1API_listValidatingAdmissionPolicyBinding**](AdmissionregistrationV1API.md#AdmissionregistrationV1API_listValidatingAdmissionPolicyBinding) | **GET** /apis/admissionregistration.k8s.io/v1/validatingadmissionpolicybindings | 
@@ -478,11 +478,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1API_getAPIResources**
+# **AdmissionregistrationV1API_getAPIResources_0**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* AdmissionregistrationV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* AdmissionregistrationV1API_getAPIResources_0(apiClient_t *apiClient);
 ```
 
 ### Parameters

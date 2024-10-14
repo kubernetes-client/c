@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**InternalApiserverV1alpha1API_createStorageVersion**](InternalApiserverV1alpha1API.md#InternalApiserverV1alpha1API_createStorageVersion) | **POST** /apis/internal.apiserver.k8s.io/v1alpha1/storageversions | 
 [**InternalApiserverV1alpha1API_deleteCollectionStorageVersion**](InternalApiserverV1alpha1API.md#InternalApiserverV1alpha1API_deleteCollectionStorageVersion) | **DELETE** /apis/internal.apiserver.k8s.io/v1alpha1/storageversions | 
 [**InternalApiserverV1alpha1API_deleteStorageVersion**](InternalApiserverV1alpha1API.md#InternalApiserverV1alpha1API_deleteStorageVersion) | **DELETE** /apis/internal.apiserver.k8s.io/v1alpha1/storageversions/{name} | 
-[**InternalApiserverV1alpha1API_getAPIResources**](InternalApiserverV1alpha1API.md#InternalApiserverV1alpha1API_getAPIResources) | **GET** /apis/internal.apiserver.k8s.io/v1alpha1/ | 
+[**InternalApiserverV1alpha1API_getAPIResources_21**](InternalApiserverV1alpha1API.md#InternalApiserverV1alpha1API_getAPIResources_21) | **GET** /apis/internal.apiserver.k8s.io/v1alpha1/ | 
 [**InternalApiserverV1alpha1API_listStorageVersion**](InternalApiserverV1alpha1API.md#InternalApiserverV1alpha1API_listStorageVersion) | **GET** /apis/internal.apiserver.k8s.io/v1alpha1/storageversions | 
 [**InternalApiserverV1alpha1API_patchStorageVersion**](InternalApiserverV1alpha1API.md#InternalApiserverV1alpha1API_patchStorageVersion) | **PATCH** /apis/internal.apiserver.k8s.io/v1alpha1/storageversions/{name} | 
 [**InternalApiserverV1alpha1API_patchStorageVersionStatus**](InternalApiserverV1alpha1API.md#InternalApiserverV1alpha1API_patchStorageVersionStatus) | **PATCH** /apis/internal.apiserver.k8s.io/v1alpha1/storageversions/{name}/status | 
@@ -127,11 +127,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **InternalApiserverV1alpha1API_getAPIResources**
+# **InternalApiserverV1alpha1API_getAPIResources_21**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* InternalApiserverV1alpha1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* InternalApiserverV1alpha1API_getAPIResources_21(apiClient_t *apiClient);
 ```
 
 ### Parameters

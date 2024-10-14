@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**BatchAPI_getAPIGroup**](BatchAPI.md#BatchAPI_getAPIGroup) | **GET** /apis/batch/ | 
+[**BatchAPI_getAPIGroup_6**](BatchAPI.md#BatchAPI_getAPIGroup_6) | **GET** /apis/batch/ | 
 
 
-# **BatchAPI_getAPIGroup**
+# **BatchAPI_getAPIGroup_6**
 ```c
 // get information of a group
 //
-v1_api_group_t* BatchAPI_getAPIGroup(apiClient_t *apiClient);
+v1_api_group_t* BatchAPI_getAPIGroup_6(apiClient_t *apiClient);
 ```
 
 ### Parameters

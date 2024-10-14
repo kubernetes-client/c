@@ -15,11 +15,15 @@
 
 typedef struct v1_resource_attributes_t v1_resource_attributes_t;
 
+#include "v1_field_selector_attributes.h"
+#include "v1_label_selector_attributes.h"
 
 
 
 typedef struct v1_resource_attributes_t {
+    struct v1_field_selector_attributes_t *field_selector; //model
     char *group; // string
+    struct v1_label_selector_attributes_t *label_selector; //model
     char *name; // string
     char *_namespace; // string
     char *resource; // string
@@ -30,7 +34,9 @@ typedef struct v1_resource_attributes_t {
 } v1_resource_attributes_t;
 
 v1_resource_attributes_t *v1_resource_attributes_create(
+    v1_field_selector_attributes_t *field_selector,
     char *group,
+    v1_label_selector_attributes_t *label_selector,
     char *name,
     char *_namespace,
     char *resource,

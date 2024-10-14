@@ -10,7 +10,9 @@ v1_lease_spec_t *v1_lease_spec_create(
     char *holder_identity,
     int lease_duration_seconds,
     int lease_transitions,
-    char *renew_time
+    char *preferred_holder,
+    char *renew_time,
+    char *strategy
     ) {
     v1_lease_spec_t *v1_lease_spec_local_var = malloc(sizeof(v1_lease_spec_t));
     if (!v1_lease_spec_local_var) {
@@ -20,7 +22,9 @@ v1_lease_spec_t *v1_lease_spec_create(
     v1_lease_spec_local_var->holder_identity = holder_identity;
     v1_lease_spec_local_var->lease_duration_seconds = lease_duration_seconds;
     v1_lease_spec_local_var->lease_transitions = lease_transitions;
+    v1_lease_spec_local_var->preferred_holder = preferred_holder;
     v1_lease_spec_local_var->renew_time = renew_time;
+    v1_lease_spec_local_var->strategy = strategy;
 
     return v1_lease_spec_local_var;
 }
@@ -39,9 +43,17 @@ void v1_lease_spec_free(v1_lease_spec_t *v1_lease_spec) {
         free(v1_lease_spec->holder_identity);
         v1_lease_spec->holder_identity = NULL;
     }
+    if (v1_lease_spec->preferred_holder) {
+        free(v1_lease_spec->preferred_holder);
+        v1_lease_spec->preferred_holder = NULL;
+    }
     if (v1_lease_spec->renew_time) {
         free(v1_lease_spec->renew_time);
         v1_lease_spec->renew_time = NULL;
+    }
+    if (v1_lease_spec->strategy) {
+        free(v1_lease_spec->strategy);
+        v1_lease_spec->strategy = NULL;
     }
     free(v1_lease_spec);
 }
@@ -81,10 +93,26 @@ cJSON *v1_lease_spec_convertToJSON(v1_lease_spec_t *v1_lease_spec) {
     }
 
 
+    // v1_lease_spec->preferred_holder
+    if(v1_lease_spec->preferred_holder) {
+    if(cJSON_AddStringToObject(item, "preferredHolder", v1_lease_spec->preferred_holder) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
     // v1_lease_spec->renew_time
     if(v1_lease_spec->renew_time) {
     if(cJSON_AddStringToObject(item, "renewTime", v1_lease_spec->renew_time) == NULL) {
     goto fail; //Date-Time
+    }
+    }
+
+
+    // v1_lease_spec->strategy
+    if(v1_lease_spec->strategy) {
+    if(cJSON_AddStringToObject(item, "strategy", v1_lease_spec->strategy) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -136,6 +164,15 @@ v1_lease_spec_t *v1_lease_spec_parseFromJSON(cJSON *v1_lease_specJSON){
     }
     }
 
+    // v1_lease_spec->preferred_holder
+    cJSON *preferred_holder = cJSON_GetObjectItemCaseSensitive(v1_lease_specJSON, "preferredHolder");
+    if (preferred_holder) { 
+    if(!cJSON_IsString(preferred_holder) && !cJSON_IsNull(preferred_holder))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_lease_spec->renew_time
     cJSON *renew_time = cJSON_GetObjectItemCaseSensitive(v1_lease_specJSON, "renewTime");
     if (renew_time) { 
@@ -145,13 +182,24 @@ v1_lease_spec_t *v1_lease_spec_parseFromJSON(cJSON *v1_lease_specJSON){
     }
     }
 
+    // v1_lease_spec->strategy
+    cJSON *strategy = cJSON_GetObjectItemCaseSensitive(v1_lease_specJSON, "strategy");
+    if (strategy) { 
+    if(!cJSON_IsString(strategy) && !cJSON_IsNull(strategy))
+    {
+    goto end; //String
+    }
+    }
+
 
     v1_lease_spec_local_var = v1_lease_spec_create (
         acquire_time && !cJSON_IsNull(acquire_time) ? strdup(acquire_time->valuestring) : NULL,
         holder_identity && !cJSON_IsNull(holder_identity) ? strdup(holder_identity->valuestring) : NULL,
         lease_duration_seconds ? lease_duration_seconds->valuedouble : 0,
         lease_transitions ? lease_transitions->valuedouble : 0,
-        renew_time && !cJSON_IsNull(renew_time) ? strdup(renew_time->valuestring) : NULL
+        preferred_holder && !cJSON_IsNull(preferred_holder) ? strdup(preferred_holder->valuestring) : NULL,
+        renew_time && !cJSON_IsNull(renew_time) ? strdup(renew_time->valuestring) : NULL,
+        strategy && !cJSON_IsNull(strategy) ? strdup(strategy->valuestring) : NULL
         );
 
     return v1_lease_spec_local_var;

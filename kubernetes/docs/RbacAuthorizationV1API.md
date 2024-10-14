@@ -16,7 +16,7 @@ Method | HTTP request | Description
 [**RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding**](RbacAuthorizationV1API.md#RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/rolebindings | 
 [**RbacAuthorizationV1API_deleteNamespacedRole**](RbacAuthorizationV1API.md#RbacAuthorizationV1API_deleteNamespacedRole) | **DELETE** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/roles/{name} | 
 [**RbacAuthorizationV1API_deleteNamespacedRoleBinding**](RbacAuthorizationV1API.md#RbacAuthorizationV1API_deleteNamespacedRoleBinding) | **DELETE** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/rolebindings/{name} | 
-[**RbacAuthorizationV1API_getAPIResources**](RbacAuthorizationV1API.md#RbacAuthorizationV1API_getAPIResources) | **GET** /apis/rbac.authorization.k8s.io/v1/ | 
+[**RbacAuthorizationV1API_getAPIResources_26**](RbacAuthorizationV1API.md#RbacAuthorizationV1API_getAPIResources_26) | **GET** /apis/rbac.authorization.k8s.io/v1/ | 
 [**RbacAuthorizationV1API_listClusterRole**](RbacAuthorizationV1API.md#RbacAuthorizationV1API_listClusterRole) | **GET** /apis/rbac.authorization.k8s.io/v1/clusterroles | 
 [**RbacAuthorizationV1API_listClusterRoleBinding**](RbacAuthorizationV1API.md#RbacAuthorizationV1API_listClusterRoleBinding) | **GET** /apis/rbac.authorization.k8s.io/v1/clusterrolebindings | 
 [**RbacAuthorizationV1API_listNamespacedRole**](RbacAuthorizationV1API.md#RbacAuthorizationV1API_listNamespacedRole) | **GET** /apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/roles | 
@@ -483,11 +483,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **RbacAuthorizationV1API_getAPIResources**
+# **RbacAuthorizationV1API_getAPIResources_26**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* RbacAuthorizationV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* RbacAuthorizationV1API_getAPIResources_26(apiClient_t *apiClient);
 ```
 
 ### Parameters

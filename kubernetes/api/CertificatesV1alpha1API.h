@@ -34,7 +34,7 @@ CertificatesV1alpha1API_deleteCollectionClusterTrustBundle(apiClient_t *apiClien
 // get available resources
 //
 v1_api_resource_list_t*
-CertificatesV1alpha1API_getAPIResources(apiClient_t *apiClient);
+CertificatesV1alpha1API_getAPIResources_14(apiClient_t *apiClient);
 
 
 // list or watch objects of kind ClusterTrustBundle

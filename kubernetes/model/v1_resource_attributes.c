@@ -6,7 +6,9 @@
 
 
 v1_resource_attributes_t *v1_resource_attributes_create(
+    v1_field_selector_attributes_t *field_selector,
     char *group,
+    v1_label_selector_attributes_t *label_selector,
     char *name,
     char *_namespace,
     char *resource,
@@ -18,7 +20,9 @@ v1_resource_attributes_t *v1_resource_attributes_create(
     if (!v1_resource_attributes_local_var) {
         return NULL;
     }
+    v1_resource_attributes_local_var->field_selector = field_selector;
     v1_resource_attributes_local_var->group = group;
+    v1_resource_attributes_local_var->label_selector = label_selector;
     v1_resource_attributes_local_var->name = name;
     v1_resource_attributes_local_var->_namespace = _namespace;
     v1_resource_attributes_local_var->resource = resource;
@@ -35,9 +39,17 @@ void v1_resource_attributes_free(v1_resource_attributes_t *v1_resource_attribute
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_resource_attributes->field_selector) {
+        v1_field_selector_attributes_free(v1_resource_attributes->field_selector);
+        v1_resource_attributes->field_selector = NULL;
+    }
     if (v1_resource_attributes->group) {
         free(v1_resource_attributes->group);
         v1_resource_attributes->group = NULL;
+    }
+    if (v1_resource_attributes->label_selector) {
+        v1_label_selector_attributes_free(v1_resource_attributes->label_selector);
+        v1_resource_attributes->label_selector = NULL;
     }
     if (v1_resource_attributes->name) {
         free(v1_resource_attributes->name);
@@ -69,10 +81,36 @@ void v1_resource_attributes_free(v1_resource_attributes_t *v1_resource_attribute
 cJSON *v1_resource_attributes_convertToJSON(v1_resource_attributes_t *v1_resource_attributes) {
     cJSON *item = cJSON_CreateObject();
 
+    // v1_resource_attributes->field_selector
+    if(v1_resource_attributes->field_selector) {
+    cJSON *field_selector_local_JSON = v1_field_selector_attributes_convertToJSON(v1_resource_attributes->field_selector);
+    if(field_selector_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "fieldSelector", field_selector_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_resource_attributes->group
     if(v1_resource_attributes->group) {
     if(cJSON_AddStringToObject(item, "group", v1_resource_attributes->group) == NULL) {
     goto fail; //String
+    }
+    }
+
+
+    // v1_resource_attributes->label_selector
+    if(v1_resource_attributes->label_selector) {
+    cJSON *label_selector_local_JSON = v1_label_selector_attributes_convertToJSON(v1_resource_attributes->label_selector);
+    if(label_selector_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "labelSelector", label_selector_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
     }
     }
 
@@ -136,6 +174,18 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
 
     v1_resource_attributes_t *v1_resource_attributes_local_var = NULL;
 
+    // define the local variable for v1_resource_attributes->field_selector
+    v1_field_selector_attributes_t *field_selector_local_nonprim = NULL;
+
+    // define the local variable for v1_resource_attributes->label_selector
+    v1_label_selector_attributes_t *label_selector_local_nonprim = NULL;
+
+    // v1_resource_attributes->field_selector
+    cJSON *field_selector = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "fieldSelector");
+    if (field_selector) { 
+    field_selector_local_nonprim = v1_field_selector_attributes_parseFromJSON(field_selector); //nonprimitive
+    }
+
     // v1_resource_attributes->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "group");
     if (group) { 
@@ -143,6 +193,12 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
     {
     goto end; //String
     }
+    }
+
+    // v1_resource_attributes->label_selector
+    cJSON *label_selector = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "labelSelector");
+    if (label_selector) { 
+    label_selector_local_nonprim = v1_label_selector_attributes_parseFromJSON(label_selector); //nonprimitive
     }
 
     // v1_resource_attributes->name
@@ -201,7 +257,9 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
 
 
     v1_resource_attributes_local_var = v1_resource_attributes_create (
+        field_selector ? field_selector_local_nonprim : NULL,
         group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
+        label_selector ? label_selector_local_nonprim : NULL,
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
         resource && !cJSON_IsNull(resource) ? strdup(resource->valuestring) : NULL,
@@ -212,6 +270,14 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
 
     return v1_resource_attributes_local_var;
 end:
+    if (field_selector_local_nonprim) {
+        v1_field_selector_attributes_free(field_selector_local_nonprim);
+        field_selector_local_nonprim = NULL;
+    }
+    if (label_selector_local_nonprim) {
+        v1_label_selector_attributes_free(label_selector_local_nonprim);
+        label_selector_local_nonprim = NULL;
+    }
     return NULL;
 
 }

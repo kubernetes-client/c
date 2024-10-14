@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**AutoscalingV1API_createNamespacedHorizontalPodAutoscaler**](AutoscalingV1API.md#AutoscalingV1API_createNamespacedHorizontalPodAutoscaler) | **POST** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers | 
 [**AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler**](AutoscalingV1API.md#AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler) | **DELETE** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers | 
 [**AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler**](AutoscalingV1API.md#AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler) | **DELETE** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
-[**AutoscalingV1API_getAPIResources**](AutoscalingV1API.md#AutoscalingV1API_getAPIResources) | **GET** /apis/autoscaling/v1/ | 
+[**AutoscalingV1API_getAPIResources_10**](AutoscalingV1API.md#AutoscalingV1API_getAPIResources_10) | **GET** /apis/autoscaling/v1/ | 
 [**AutoscalingV1API_listHorizontalPodAutoscalerForAllNamespaces**](AutoscalingV1API.md#AutoscalingV1API_listHorizontalPodAutoscalerForAllNamespaces) | **GET** /apis/autoscaling/v1/horizontalpodautoscalers | 
 [**AutoscalingV1API_listNamespacedHorizontalPodAutoscaler**](AutoscalingV1API.md#AutoscalingV1API_listNamespacedHorizontalPodAutoscaler) | **GET** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers | 
 [**AutoscalingV1API_patchNamespacedHorizontalPodAutoscaler**](AutoscalingV1API.md#AutoscalingV1API_patchNamespacedHorizontalPodAutoscaler) | **PATCH** /apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
@@ -131,11 +131,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AutoscalingV1API_getAPIResources**
+# **AutoscalingV1API_getAPIResources_10**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* AutoscalingV1API_getAPIResources(apiClient_t *apiClient);
+v1_api_resource_list_t* AutoscalingV1API_getAPIResources_10(apiClient_t *apiClient);
 ```
 
 ### Parameters

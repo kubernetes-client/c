@@ -7,6 +7,7 @@
 
 v1_container_status_t *v1_container_status_create(
     list_t* allocated_resources,
+    list_t *allocated_resources_status,
     char *container_id,
     char *image,
     char *image_id,
@@ -17,6 +18,7 @@ v1_container_status_t *v1_container_status_create(
     int restart_count,
     int started,
     v1_container_state_t *state,
+    v1_container_user_t *user,
     list_t *volume_mounts
     ) {
     v1_container_status_t *v1_container_status_local_var = malloc(sizeof(v1_container_status_t));
@@ -24,6 +26,7 @@ v1_container_status_t *v1_container_status_create(
         return NULL;
     }
     v1_container_status_local_var->allocated_resources = allocated_resources;
+    v1_container_status_local_var->allocated_resources_status = allocated_resources_status;
     v1_container_status_local_var->container_id = container_id;
     v1_container_status_local_var->image = image;
     v1_container_status_local_var->image_id = image_id;
@@ -34,6 +37,7 @@ v1_container_status_t *v1_container_status_create(
     v1_container_status_local_var->restart_count = restart_count;
     v1_container_status_local_var->started = started;
     v1_container_status_local_var->state = state;
+    v1_container_status_local_var->user = user;
     v1_container_status_local_var->volume_mounts = volume_mounts;
 
     return v1_container_status_local_var;
@@ -54,6 +58,13 @@ void v1_container_status_free(v1_container_status_t *v1_container_status) {
         }
         list_freeList(v1_container_status->allocated_resources);
         v1_container_status->allocated_resources = NULL;
+    }
+    if (v1_container_status->allocated_resources_status) {
+        list_ForEach(listEntry, v1_container_status->allocated_resources_status) {
+            v1_resource_status_free(listEntry->data);
+        }
+        list_freeList(v1_container_status->allocated_resources_status);
+        v1_container_status->allocated_resources_status = NULL;
     }
     if (v1_container_status->container_id) {
         free(v1_container_status->container_id);
@@ -83,6 +94,10 @@ void v1_container_status_free(v1_container_status_t *v1_container_status) {
         v1_container_state_free(v1_container_status->state);
         v1_container_status->state = NULL;
     }
+    if (v1_container_status->user) {
+        v1_container_user_free(v1_container_status->user);
+        v1_container_status->user = NULL;
+    }
     if (v1_container_status->volume_mounts) {
         list_ForEach(listEntry, v1_container_status->volume_mounts) {
             v1_volume_mount_status_free(listEntry->data);
@@ -111,6 +126,26 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
         {
             goto fail;
         }
+    }
+    }
+    }
+
+
+    // v1_container_status->allocated_resources_status
+    if(v1_container_status->allocated_resources_status) {
+    cJSON *allocated_resources_status = cJSON_AddArrayToObject(item, "allocatedResourcesStatus");
+    if(allocated_resources_status == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *allocated_resources_statusListEntry;
+    if (v1_container_status->allocated_resources_status) {
+    list_ForEach(allocated_resources_statusListEntry, v1_container_status->allocated_resources_status) {
+    cJSON *itemLocal = v1_resource_status_convertToJSON(allocated_resources_statusListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(allocated_resources_status, itemLocal);
     }
     }
     }
@@ -216,6 +251,19 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     }
 
 
+    // v1_container_status->user
+    if(v1_container_status->user) {
+    cJSON *user_local_JSON = v1_container_user_convertToJSON(v1_container_status->user);
+    if(user_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "user", user_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_container_status->volume_mounts
     if(v1_container_status->volume_mounts) {
     cJSON *volume_mounts = cJSON_AddArrayToObject(item, "volumeMounts");
@@ -250,6 +298,9 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     // define the local map for v1_container_status->allocated_resources
     list_t *allocated_resourcesList = NULL;
 
+    // define the local list for v1_container_status->allocated_resources_status
+    list_t *allocated_resources_statusList = NULL;
+
     // define the local variable for v1_container_status->last_state
     v1_container_state_t *last_state_local_nonprim = NULL;
 
@@ -258,6 +309,9 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // define the local variable for v1_container_status->state
     v1_container_state_t *state_local_nonprim = NULL;
+
+    // define the local variable for v1_container_status->user
+    v1_container_user_t *user_local_nonprim = NULL;
 
     // define the local list for v1_container_status->volume_mounts
     list_t *volume_mountsList = NULL;
@@ -284,6 +338,27 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
             localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
             list_addElement(allocated_resourcesList , localMapKeyPair);
         }
+    }
+    }
+
+    // v1_container_status->allocated_resources_status
+    cJSON *allocated_resources_status = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "allocatedResourcesStatus");
+    if (allocated_resources_status) { 
+    cJSON *allocated_resources_status_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(allocated_resources_status)){
+        goto end; //nonprimitive container
+    }
+
+    allocated_resources_statusList = list_createList();
+
+    cJSON_ArrayForEach(allocated_resources_status_local_nonprimitive,allocated_resources_status )
+    {
+        if(!cJSON_IsObject(allocated_resources_status_local_nonprimitive)){
+            goto end;
+        }
+        v1_resource_status_t *allocated_resources_statusItem = v1_resource_status_parseFromJSON(allocated_resources_status_local_nonprimitive);
+
+        list_addElement(allocated_resources_statusList, allocated_resources_statusItem);
     }
     }
 
@@ -383,6 +458,12 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     state_local_nonprim = v1_container_state_parseFromJSON(state); //nonprimitive
     }
 
+    // v1_container_status->user
+    cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "user");
+    if (user) { 
+    user_local_nonprim = v1_container_user_parseFromJSON(user); //nonprimitive
+    }
+
     // v1_container_status->volume_mounts
     cJSON *volume_mounts = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "volumeMounts");
     if (volume_mounts) { 
@@ -407,6 +488,7 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     v1_container_status_local_var = v1_container_status_create (
         allocated_resources ? allocated_resourcesList : NULL,
+        allocated_resources_status ? allocated_resources_statusList : NULL,
         container_id && !cJSON_IsNull(container_id) ? strdup(container_id->valuestring) : NULL,
         strdup(image->valuestring),
         strdup(image_id->valuestring),
@@ -417,6 +499,7 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
         restart_count->valuedouble,
         started ? started->valueint : 0,
         state ? state_local_nonprim : NULL,
+        user ? user_local_nonprim : NULL,
         volume_mounts ? volume_mountsList : NULL
         );
 
@@ -436,6 +519,15 @@ end:
         list_freeList(allocated_resourcesList);
         allocated_resourcesList = NULL;
     }
+    if (allocated_resources_statusList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, allocated_resources_statusList) {
+            v1_resource_status_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(allocated_resources_statusList);
+        allocated_resources_statusList = NULL;
+    }
     if (last_state_local_nonprim) {
         v1_container_state_free(last_state_local_nonprim);
         last_state_local_nonprim = NULL;
@@ -447,6 +539,10 @@ end:
     if (state_local_nonprim) {
         v1_container_state_free(state_local_nonprim);
         state_local_nonprim = NULL;
+    }
+    if (user_local_nonprim) {
+        v1_container_user_free(user_local_nonprim);
+        user_local_nonprim = NULL;
     }
     if (volume_mountsList) {
         listEntry_t *listEntry = NULL;

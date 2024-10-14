@@ -54,7 +54,7 @@ FlowcontrolApiserverV1API_deletePriorityLevelConfiguration(apiClient_t *apiClien
 // get available resources
 //
 v1_api_resource_list_t*
-FlowcontrolApiserverV1API_getAPIResources(apiClient_t *apiClient);
+FlowcontrolApiserverV1API_getAPIResources_19(apiClient_t *apiClient);
 
 
 // list or watch objects of kind FlowSchema

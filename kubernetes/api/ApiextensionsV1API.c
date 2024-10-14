@@ -816,7 +816,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-ApiextensionsV1API_getAPIResources(apiClient_t *apiClient)
+ApiextensionsV1API_getAPIResources_3(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;

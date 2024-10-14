@@ -15,7 +15,7 @@
 // get information of a group
 //
 v1_api_group_t*
-ResourceAPI_getAPIGroup(apiClient_t *apiClient)
+ResourceAPI_getAPIGroup_17(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;

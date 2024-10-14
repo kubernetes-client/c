@@ -115,7 +115,7 @@ AppsV1API_deleteNamespacedStatefulSet(apiClient_t *apiClient, char *name, char *
 // get available resources
 //
 v1_api_resource_list_t*
-AppsV1API_getAPIResources(apiClient_t *apiClient);
+AppsV1API_getAPIResources_5(apiClient_t *apiClient);
 
 
 // list or watch objects of kind ControllerRevision
