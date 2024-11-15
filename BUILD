@@ -1,5 +1,5 @@
 # Added BUILD file in the kubernetes c client repository helps integrating the library to external Bazel users.
-# Following are the changes needed from the external Bazel users to do.
+# Following are the changes required from the external Bazel users to do.
 
 # WORKSPACE
 
