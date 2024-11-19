@@ -66,6 +66,5 @@ jobs:
         curl -LO "https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-linux-amd64"
         chmod +x bazelisk-linux-amd64
         sudo mv bazelisk-linux-amd64 /usr/local/bin/bazel
-        cd examples/
-        bazel build kube_c
+        bazel build kube_c_library
         
