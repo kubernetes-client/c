@@ -56,7 +56,9 @@
 #     deps = [":kube_c"],
 # )
 
-# Make sure you install the pre-requisites (libyaml,libwebsocket etc.) beforehand. A working example can be found here https://github.com/joyanta55/kubernetes_c_bazel/tree/main
+# Make sure you install the pre-requisites (libyaml,libwebsocket etc.) beforehand. A working example can be found here 
+
+# https://github.com/joyanta55/kubernetes_c_bazel/tree/main
 
 # In summary, the below filegroup allows to import kubernetes C client (i.e. lib_source = "@kubernetes_c_client//:kubernetes"), use cmake or make bazel rule provided by rules_foreign_cc (https://github.com/bazel-contrib/rules_foreign_cc) to build and use.
 filegroup(
