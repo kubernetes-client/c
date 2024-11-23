@@ -1,13 +1,20 @@
+# Example of using bazel rules on the existing examples.
+
 load("@rules_cc//cc:defs.bzl", "cc_binary")
-load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
-load("@rules_foreign_cc//foreign_cc:defs.bzl", "make")
-cmake(
-    name = "kube_c",
-    build_args = [
-        "--verbose",
-        "--",  # <- Pass remaining options to the native tool.
-        "-j 1",
+
+# create and run executable file.
+# Run: bazel run //examples:list_pod
+cc_binary(
+    name = "list_pod",
+    srcs = [
+        "list_pod/main.c",
     ],
-    lib_source = "//:kubernetes",
-    out_shared_libs = ["libkubernetes.so"],
+    deps = ["//:kube_c_library"],  #imported from BUILD file of root directory
+)
+
+# Run: bazel run //examples:list_event
+cc_binary(
+    name = "list_event",
+    srcs = ["list_event/main.c"],
+    deps = ["//:kube_c_library"],  #imported from BUILD file of root directory
 )
