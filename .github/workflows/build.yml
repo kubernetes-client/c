@@ -48,7 +48,7 @@ jobs:
         cd examples/
         make
     - name: Create k8s kind cluster
-      uses: helm/kind-action@v1.10.0
+      uses: helm/kind-action@v1.11.0
     - name: Test examples
       run: |
         kubectl cluster-info --context kind-chart-testing
