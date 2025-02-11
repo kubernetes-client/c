@@ -5,7 +5,7 @@
 
 
 
-v1_service_spec_t *v1_service_spec_create(
+static v1_service_spec_t *v1_service_spec_create_internal(
     int allocate_load_balancer_node_ports,
     char *cluster_ip,
     list_t *cluster_ips,
@@ -52,12 +52,62 @@ v1_service_spec_t *v1_service_spec_create(
     v1_service_spec_local_var->traffic_distribution = traffic_distribution;
     v1_service_spec_local_var->type = type;
 
+    v1_service_spec_local_var->_library_owned = 1;
     return v1_service_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_service_spec_t *v1_service_spec_create(
+    int allocate_load_balancer_node_ports,
+    char *cluster_ip,
+    list_t *cluster_ips,
+    list_t *external_ips,
+    char *external_name,
+    char *external_traffic_policy,
+    int health_check_node_port,
+    char *internal_traffic_policy,
+    list_t *ip_families,
+    char *ip_family_policy,
+    char *load_balancer_class,
+    char *load_balancer_ip,
+    list_t *load_balancer_source_ranges,
+    list_t *ports,
+    int publish_not_ready_addresses,
+    list_t* selector,
+    char *session_affinity,
+    v1_session_affinity_config_t *session_affinity_config,
+    char *traffic_distribution,
+    char *type
+    ) {
+    return v1_service_spec_create_internal (
+        allocate_load_balancer_node_ports,
+        cluster_ip,
+        cluster_ips,
+        external_ips,
+        external_name,
+        external_traffic_policy,
+        health_check_node_port,
+        internal_traffic_policy,
+        ip_families,
+        ip_family_policy,
+        load_balancer_class,
+        load_balancer_ip,
+        load_balancer_source_ranges,
+        ports,
+        publish_not_ready_addresses,
+        selector,
+        session_affinity,
+        session_affinity_config,
+        traffic_distribution,
+        type
+        );
+}
 
 void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
     if(NULL == v1_service_spec){
+        return ;
+    }
+    if(v1_service_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_service_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -126,7 +176,7 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
     }
     if (v1_service_spec->selector) {
         list_ForEach(listEntry, v1_service_spec->selector) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -181,7 +231,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     listEntry_t *cluster_ipsListEntry;
     list_ForEach(cluster_ipsListEntry, v1_service_spec->cluster_ips) {
-    if(cJSON_AddStringToObject(cluster_ips, "", (char*)cluster_ipsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(cluster_ips, "", cluster_ipsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -198,7 +248,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     listEntry_t *external_ipsListEntry;
     list_ForEach(external_ipsListEntry, v1_service_spec->external_ips) {
-    if(cJSON_AddStringToObject(external_ips, "", (char*)external_ipsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(external_ips, "", external_ipsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -247,7 +297,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     listEntry_t *ip_familiesListEntry;
     list_ForEach(ip_familiesListEntry, v1_service_spec->ip_families) {
-    if(cJSON_AddStringToObject(ip_families, "", (char*)ip_familiesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(ip_families, "", ip_familiesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -288,7 +338,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     listEntry_t *load_balancer_source_rangesListEntry;
     list_ForEach(load_balancer_source_rangesListEntry, v1_service_spec->load_balancer_source_ranges) {
-    if(cJSON_AddStringToObject(load_balancer_source_ranges, "", (char*)load_balancer_source_rangesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(load_balancer_source_ranges, "", load_balancer_source_rangesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -334,8 +384,8 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
     listEntry_t *selectorListEntry;
     if (v1_service_spec->selector) {
     list_ForEach(selectorListEntry, v1_service_spec->selector) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)selectorListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = selectorListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -415,6 +465,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->allocate_load_balancer_node_ports
     cJSON *allocate_load_balancer_node_ports = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "allocateLoadBalancerNodePorts");
+    if (cJSON_IsNull(allocate_load_balancer_node_ports)) {
+        allocate_load_balancer_node_ports = NULL;
+    }
     if (allocate_load_balancer_node_ports) { 
     if(!cJSON_IsBool(allocate_load_balancer_node_ports))
     {
@@ -424,6 +477,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->cluster_ip
     cJSON *cluster_ip = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "clusterIP");
+    if (cJSON_IsNull(cluster_ip)) {
+        cluster_ip = NULL;
+    }
     if (cluster_ip) { 
     if(!cJSON_IsString(cluster_ip) && !cJSON_IsNull(cluster_ip))
     {
@@ -433,6 +489,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->cluster_ips
     cJSON *cluster_ips = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "clusterIPs");
+    if (cJSON_IsNull(cluster_ips)) {
+        cluster_ips = NULL;
+    }
     if (cluster_ips) { 
     cJSON *cluster_ips_local = NULL;
     if(!cJSON_IsArray(cluster_ips)) {
@@ -452,6 +511,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->external_ips
     cJSON *external_ips = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalIPs");
+    if (cJSON_IsNull(external_ips)) {
+        external_ips = NULL;
+    }
     if (external_ips) { 
     cJSON *external_ips_local = NULL;
     if(!cJSON_IsArray(external_ips)) {
@@ -471,6 +533,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->external_name
     cJSON *external_name = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalName");
+    if (cJSON_IsNull(external_name)) {
+        external_name = NULL;
+    }
     if (external_name) { 
     if(!cJSON_IsString(external_name) && !cJSON_IsNull(external_name))
     {
@@ -480,6 +545,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->external_traffic_policy
     cJSON *external_traffic_policy = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalTrafficPolicy");
+    if (cJSON_IsNull(external_traffic_policy)) {
+        external_traffic_policy = NULL;
+    }
     if (external_traffic_policy) { 
     if(!cJSON_IsString(external_traffic_policy) && !cJSON_IsNull(external_traffic_policy))
     {
@@ -489,6 +557,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->health_check_node_port
     cJSON *health_check_node_port = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "healthCheckNodePort");
+    if (cJSON_IsNull(health_check_node_port)) {
+        health_check_node_port = NULL;
+    }
     if (health_check_node_port) { 
     if(!cJSON_IsNumber(health_check_node_port))
     {
@@ -498,6 +569,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->internal_traffic_policy
     cJSON *internal_traffic_policy = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "internalTrafficPolicy");
+    if (cJSON_IsNull(internal_traffic_policy)) {
+        internal_traffic_policy = NULL;
+    }
     if (internal_traffic_policy) { 
     if(!cJSON_IsString(internal_traffic_policy) && !cJSON_IsNull(internal_traffic_policy))
     {
@@ -507,6 +581,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->ip_families
     cJSON *ip_families = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "ipFamilies");
+    if (cJSON_IsNull(ip_families)) {
+        ip_families = NULL;
+    }
     if (ip_families) { 
     cJSON *ip_families_local = NULL;
     if(!cJSON_IsArray(ip_families)) {
@@ -526,6 +603,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->ip_family_policy
     cJSON *ip_family_policy = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "ipFamilyPolicy");
+    if (cJSON_IsNull(ip_family_policy)) {
+        ip_family_policy = NULL;
+    }
     if (ip_family_policy) { 
     if(!cJSON_IsString(ip_family_policy) && !cJSON_IsNull(ip_family_policy))
     {
@@ -535,6 +615,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->load_balancer_class
     cJSON *load_balancer_class = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "loadBalancerClass");
+    if (cJSON_IsNull(load_balancer_class)) {
+        load_balancer_class = NULL;
+    }
     if (load_balancer_class) { 
     if(!cJSON_IsString(load_balancer_class) && !cJSON_IsNull(load_balancer_class))
     {
@@ -544,6 +627,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->load_balancer_ip
     cJSON *load_balancer_ip = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "loadBalancerIP");
+    if (cJSON_IsNull(load_balancer_ip)) {
+        load_balancer_ip = NULL;
+    }
     if (load_balancer_ip) { 
     if(!cJSON_IsString(load_balancer_ip) && !cJSON_IsNull(load_balancer_ip))
     {
@@ -553,6 +639,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->load_balancer_source_ranges
     cJSON *load_balancer_source_ranges = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "loadBalancerSourceRanges");
+    if (cJSON_IsNull(load_balancer_source_ranges)) {
+        load_balancer_source_ranges = NULL;
+    }
     if (load_balancer_source_ranges) { 
     cJSON *load_balancer_source_ranges_local = NULL;
     if(!cJSON_IsArray(load_balancer_source_ranges)) {
@@ -572,6 +661,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->ports
     cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "ports");
+    if (cJSON_IsNull(ports)) {
+        ports = NULL;
+    }
     if (ports) { 
     cJSON *ports_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ports)){
@@ -593,6 +685,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->publish_not_ready_addresses
     cJSON *publish_not_ready_addresses = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "publishNotReadyAddresses");
+    if (cJSON_IsNull(publish_not_ready_addresses)) {
+        publish_not_ready_addresses = NULL;
+    }
     if (publish_not_ready_addresses) { 
     if(!cJSON_IsBool(publish_not_ready_addresses))
     {
@@ -602,6 +697,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "selector");
+    if (cJSON_IsNull(selector)) {
+        selector = NULL;
+    }
     if (selector) { 
     cJSON *selector_local_map = NULL;
     if(!cJSON_IsObject(selector) && !cJSON_IsNull(selector))
@@ -627,6 +725,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->session_affinity
     cJSON *session_affinity = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "sessionAffinity");
+    if (cJSON_IsNull(session_affinity)) {
+        session_affinity = NULL;
+    }
     if (session_affinity) { 
     if(!cJSON_IsString(session_affinity) && !cJSON_IsNull(session_affinity))
     {
@@ -636,12 +737,18 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->session_affinity_config
     cJSON *session_affinity_config = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "sessionAffinityConfig");
+    if (cJSON_IsNull(session_affinity_config)) {
+        session_affinity_config = NULL;
+    }
     if (session_affinity_config) { 
     session_affinity_config_local_nonprim = v1_session_affinity_config_parseFromJSON(session_affinity_config); //nonprimitive
     }
 
     // v1_service_spec->traffic_distribution
     cJSON *traffic_distribution = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "trafficDistribution");
+    if (cJSON_IsNull(traffic_distribution)) {
+        traffic_distribution = NULL;
+    }
     if (traffic_distribution) { 
     if(!cJSON_IsString(traffic_distribution) && !cJSON_IsNull(traffic_distribution))
     {
@@ -651,6 +758,9 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     // v1_service_spec->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (type) { 
     if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
@@ -659,7 +769,7 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     }
 
 
-    v1_service_spec_local_var = v1_service_spec_create (
+    v1_service_spec_local_var = v1_service_spec_create_internal (
         allocate_load_balancer_node_ports ? allocate_load_balancer_node_ports->valueint : 0,
         cluster_ip && !cJSON_IsNull(cluster_ip) ? strdup(cluster_ip->valuestring) : NULL,
         cluster_ips ? cluster_ipsList : NULL,
@@ -732,7 +842,7 @@ end:
     if (selectorList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, selectorList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

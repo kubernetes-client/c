@@ -33,9 +33,10 @@ typedef struct v1_job_status_t {
     int terminating; //numeric
     struct v1_uncounted_terminated_pods_t *uncounted_terminated_pods; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_job_status_t;
 
-v1_job_status_t *v1_job_status_create(
+__attribute__((deprecated)) v1_job_status_t *v1_job_status_create(
     int active,
     char *completed_indexes,
     char *completion_time,

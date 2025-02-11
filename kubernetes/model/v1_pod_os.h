@@ -21,9 +21,10 @@ typedef struct v1_pod_os_t v1_pod_os_t;
 typedef struct v1_pod_os_t {
     char *name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_os_t;
 
-v1_pod_os_t *v1_pod_os_create(
+__attribute__((deprecated)) v1_pod_os_t *v1_pod_os_create(
     char *name
 );
 

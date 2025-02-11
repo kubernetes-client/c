@@ -5,7 +5,7 @@
 
 
 
-v1_pod_anti_affinity_t *v1_pod_anti_affinity_create(
+static v1_pod_anti_affinity_t *v1_pod_anti_affinity_create_internal(
     list_t *preferred_during_scheduling_ignored_during_execution,
     list_t *required_during_scheduling_ignored_during_execution
     ) {
@@ -16,12 +16,26 @@ v1_pod_anti_affinity_t *v1_pod_anti_affinity_create(
     v1_pod_anti_affinity_local_var->preferred_during_scheduling_ignored_during_execution = preferred_during_scheduling_ignored_during_execution;
     v1_pod_anti_affinity_local_var->required_during_scheduling_ignored_during_execution = required_during_scheduling_ignored_during_execution;
 
+    v1_pod_anti_affinity_local_var->_library_owned = 1;
     return v1_pod_anti_affinity_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_anti_affinity_t *v1_pod_anti_affinity_create(
+    list_t *preferred_during_scheduling_ignored_during_execution,
+    list_t *required_during_scheduling_ignored_during_execution
+    ) {
+    return v1_pod_anti_affinity_create_internal (
+        preferred_during_scheduling_ignored_during_execution,
+        required_during_scheduling_ignored_during_execution
+        );
+}
 
 void v1_pod_anti_affinity_free(v1_pod_anti_affinity_t *v1_pod_anti_affinity) {
     if(NULL == v1_pod_anti_affinity){
+        return ;
+    }
+    if(v1_pod_anti_affinity->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_anti_affinity_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -104,6 +118,9 @@ v1_pod_anti_affinity_t *v1_pod_anti_affinity_parseFromJSON(cJSON *v1_pod_anti_af
 
     // v1_pod_anti_affinity->preferred_during_scheduling_ignored_during_execution
     cJSON *preferred_during_scheduling_ignored_during_execution = cJSON_GetObjectItemCaseSensitive(v1_pod_anti_affinityJSON, "preferredDuringSchedulingIgnoredDuringExecution");
+    if (cJSON_IsNull(preferred_during_scheduling_ignored_during_execution)) {
+        preferred_during_scheduling_ignored_during_execution = NULL;
+    }
     if (preferred_during_scheduling_ignored_during_execution) { 
     cJSON *preferred_during_scheduling_ignored_during_execution_local_nonprimitive = NULL;
     if(!cJSON_IsArray(preferred_during_scheduling_ignored_during_execution)){
@@ -125,6 +142,9 @@ v1_pod_anti_affinity_t *v1_pod_anti_affinity_parseFromJSON(cJSON *v1_pod_anti_af
 
     // v1_pod_anti_affinity->required_during_scheduling_ignored_during_execution
     cJSON *required_during_scheduling_ignored_during_execution = cJSON_GetObjectItemCaseSensitive(v1_pod_anti_affinityJSON, "requiredDuringSchedulingIgnoredDuringExecution");
+    if (cJSON_IsNull(required_during_scheduling_ignored_during_execution)) {
+        required_during_scheduling_ignored_during_execution = NULL;
+    }
     if (required_during_scheduling_ignored_during_execution) { 
     cJSON *required_during_scheduling_ignored_during_execution_local_nonprimitive = NULL;
     if(!cJSON_IsArray(required_during_scheduling_ignored_during_execution)){
@@ -145,7 +165,7 @@ v1_pod_anti_affinity_t *v1_pod_anti_affinity_parseFromJSON(cJSON *v1_pod_anti_af
     }
 
 
-    v1_pod_anti_affinity_local_var = v1_pod_anti_affinity_create (
+    v1_pod_anti_affinity_local_var = v1_pod_anti_affinity_create_internal (
         preferred_during_scheduling_ignored_during_execution ? preferred_during_scheduling_ignored_during_executionList : NULL,
         required_during_scheduling_ignored_during_execution ? required_during_scheduling_ignored_during_executionList : NULL
         );

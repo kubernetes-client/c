@@ -29,9 +29,10 @@ typedef struct v1alpha3_resource_slice_spec_t {
     struct v1_node_selector_t *node_selector; //model
     struct v1alpha3_resource_pool_t *pool; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_resource_slice_spec_t;
 
-v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_create(
+__attribute__((deprecated)) v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_create(
     int all_nodes,
     list_t *devices,
     char *driver,

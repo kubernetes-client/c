@@ -22,9 +22,10 @@ typedef struct v1_resource_claim_t {
     char *name; // string
     char *request; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_resource_claim_t;
 
-v1_resource_claim_t *v1_resource_claim_create(
+__attribute__((deprecated)) v1_resource_claim_t *v1_resource_claim_create(
     char *name,
     char *request
 );

@@ -27,9 +27,10 @@ typedef struct v1_config_map_t {
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_config_map_t;
 
-v1_config_map_t *v1_config_map_create(
+__attribute__((deprecated)) v1_config_map_t *v1_config_map_create(
     char *api_version,
     list_t* binary_data,
     list_t* data,

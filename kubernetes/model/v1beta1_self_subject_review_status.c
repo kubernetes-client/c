@@ -5,7 +5,7 @@
 
 
 
-v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status_create(
+static v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status_create_internal(
     v1_user_info_t *user_info
     ) {
     v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status_local_var = malloc(sizeof(v1beta1_self_subject_review_status_t));
@@ -14,12 +14,24 @@ v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status_create(
     }
     v1beta1_self_subject_review_status_local_var->user_info = user_info;
 
+    v1beta1_self_subject_review_status_local_var->_library_owned = 1;
     return v1beta1_self_subject_review_status_local_var;
 }
 
+__attribute__((deprecated)) v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status_create(
+    v1_user_info_t *user_info
+    ) {
+    return v1beta1_self_subject_review_status_create_internal (
+        user_info
+        );
+}
 
 void v1beta1_self_subject_review_status_free(v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status) {
     if(NULL == v1beta1_self_subject_review_status){
+        return ;
+    }
+    if(v1beta1_self_subject_review_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1beta1_self_subject_review_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -62,12 +74,15 @@ v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status_parseFr
 
     // v1beta1_self_subject_review_status->user_info
     cJSON *user_info = cJSON_GetObjectItemCaseSensitive(v1beta1_self_subject_review_statusJSON, "userInfo");
+    if (cJSON_IsNull(user_info)) {
+        user_info = NULL;
+    }
     if (user_info) { 
     user_info_local_nonprim = v1_user_info_parseFromJSON(user_info); //nonprimitive
     }
 
 
-    v1beta1_self_subject_review_status_local_var = v1beta1_self_subject_review_status_create (
+    v1beta1_self_subject_review_status_local_var = v1beta1_self_subject_review_status_create_internal (
         user_info ? user_info_local_nonprim : NULL
         );
 

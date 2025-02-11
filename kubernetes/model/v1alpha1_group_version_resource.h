@@ -23,9 +23,10 @@ typedef struct v1alpha1_group_version_resource_t {
     char *resource; // string
     char *version; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha1_group_version_resource_t;
 
-v1alpha1_group_version_resource_t *v1alpha1_group_version_resource_create(
+__attribute__((deprecated)) v1alpha1_group_version_resource_t *v1alpha1_group_version_resource_create(
     char *group,
     char *resource,
     char *version

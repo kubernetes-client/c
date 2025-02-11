@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DiscoveryAPI_getAPIGroup_9**](DiscoveryAPI.md#DiscoveryAPI_getAPIGroup_9) | **GET** /apis/discovery.k8s.io/ | 
+[**DiscoveryAPI_getAPIGroup**](DiscoveryAPI.md#DiscoveryAPI_getAPIGroup) | **GET** /apis/discovery.k8s.io/ | 
 
 
-# **DiscoveryAPI_getAPIGroup_9**
+# **DiscoveryAPI_getAPIGroup**
 ```c
 // get information of a group
 //
-v1_api_group_t* DiscoveryAPI_getAPIGroup_9(apiClient_t *apiClient);
+v1_api_group_t* DiscoveryAPI_getAPIGroup(apiClient_t *apiClient);
 ```
 
 ### Parameters

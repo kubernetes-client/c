@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**EventsAPI_getAPIGroup_10**](EventsAPI.md#EventsAPI_getAPIGroup_10) | **GET** /apis/events.k8s.io/ | 
+[**EventsAPI_getAPIGroup**](EventsAPI.md#EventsAPI_getAPIGroup) | **GET** /apis/events.k8s.io/ | 
 
 
-# **EventsAPI_getAPIGroup_10**
+# **EventsAPI_getAPIGroup**
 ```c
 // get information of a group
 //
-v1_api_group_t* EventsAPI_getAPIGroup_10(apiClient_t *apiClient);
+v1_api_group_t* EventsAPI_getAPIGroup(apiClient_t *apiClient);
 ```
 
 ### Parameters

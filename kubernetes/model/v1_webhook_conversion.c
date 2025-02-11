@@ -5,7 +5,7 @@
 
 
 
-v1_webhook_conversion_t *v1_webhook_conversion_create(
+static v1_webhook_conversion_t *v1_webhook_conversion_create_internal(
     apiextensions_v1_webhook_client_config_t *client_config,
     list_t *conversion_review_versions
     ) {
@@ -16,12 +16,26 @@ v1_webhook_conversion_t *v1_webhook_conversion_create(
     v1_webhook_conversion_local_var->client_config = client_config;
     v1_webhook_conversion_local_var->conversion_review_versions = conversion_review_versions;
 
+    v1_webhook_conversion_local_var->_library_owned = 1;
     return v1_webhook_conversion_local_var;
 }
 
+__attribute__((deprecated)) v1_webhook_conversion_t *v1_webhook_conversion_create(
+    apiextensions_v1_webhook_client_config_t *client_config,
+    list_t *conversion_review_versions
+    ) {
+    return v1_webhook_conversion_create_internal (
+        client_config,
+        conversion_review_versions
+        );
+}
 
 void v1_webhook_conversion_free(v1_webhook_conversion_t *v1_webhook_conversion) {
     if(NULL == v1_webhook_conversion){
+        return ;
+    }
+    if(v1_webhook_conversion->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_webhook_conversion_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -66,7 +80,7 @@ cJSON *v1_webhook_conversion_convertToJSON(v1_webhook_conversion_t *v1_webhook_c
 
     listEntry_t *conversion_review_versionsListEntry;
     list_ForEach(conversion_review_versionsListEntry, v1_webhook_conversion->conversion_review_versions) {
-    if(cJSON_AddStringToObject(conversion_review_versions, "", (char*)conversion_review_versionsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(conversion_review_versions, "", conversion_review_versionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -92,12 +106,18 @@ v1_webhook_conversion_t *v1_webhook_conversion_parseFromJSON(cJSON *v1_webhook_c
 
     // v1_webhook_conversion->client_config
     cJSON *client_config = cJSON_GetObjectItemCaseSensitive(v1_webhook_conversionJSON, "clientConfig");
+    if (cJSON_IsNull(client_config)) {
+        client_config = NULL;
+    }
     if (client_config) { 
     client_config_local_nonprim = apiextensions_v1_webhook_client_config_parseFromJSON(client_config); //nonprimitive
     }
 
     // v1_webhook_conversion->conversion_review_versions
     cJSON *conversion_review_versions = cJSON_GetObjectItemCaseSensitive(v1_webhook_conversionJSON, "conversionReviewVersions");
+    if (cJSON_IsNull(conversion_review_versions)) {
+        conversion_review_versions = NULL;
+    }
     if (!conversion_review_versions) {
         goto end;
     }
@@ -119,7 +139,7 @@ v1_webhook_conversion_t *v1_webhook_conversion_parseFromJSON(cJSON *v1_webhook_c
     }
 
 
-    v1_webhook_conversion_local_var = v1_webhook_conversion_create (
+    v1_webhook_conversion_local_var = v1_webhook_conversion_create_internal (
         client_config ? client_config_local_nonprim : NULL,
         conversion_review_versionsList
         );

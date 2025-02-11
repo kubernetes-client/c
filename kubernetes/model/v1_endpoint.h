@@ -31,9 +31,10 @@ typedef struct v1_endpoint_t {
     struct v1_object_reference_t *target_ref; //model
     char *zone; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_endpoint_t;
 
-v1_endpoint_t *v1_endpoint_create(
+__attribute__((deprecated)) v1_endpoint_t *v1_endpoint_create(
     list_t *addresses,
     v1_endpoint_conditions_t *conditions,
     list_t* deprecated_topology,

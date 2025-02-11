@@ -5,7 +5,7 @@
 
 
 
-v1_resource_claim_t *v1_resource_claim_create(
+static v1_resource_claim_t *v1_resource_claim_create_internal(
     char *name,
     char *request
     ) {
@@ -16,12 +16,26 @@ v1_resource_claim_t *v1_resource_claim_create(
     v1_resource_claim_local_var->name = name;
     v1_resource_claim_local_var->request = request;
 
+    v1_resource_claim_local_var->_library_owned = 1;
     return v1_resource_claim_local_var;
 }
 
+__attribute__((deprecated)) v1_resource_claim_t *v1_resource_claim_create(
+    char *name,
+    char *request
+    ) {
+    return v1_resource_claim_create_internal (
+        name,
+        request
+        );
+}
 
 void v1_resource_claim_free(v1_resource_claim_t *v1_resource_claim) {
     if(NULL == v1_resource_claim){
+        return ;
+    }
+    if(v1_resource_claim->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_resource_claim_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -69,6 +83,9 @@ v1_resource_claim_t *v1_resource_claim_parseFromJSON(cJSON *v1_resource_claimJSO
 
     // v1_resource_claim->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_resource_claimJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -81,6 +98,9 @@ v1_resource_claim_t *v1_resource_claim_parseFromJSON(cJSON *v1_resource_claimJSO
 
     // v1_resource_claim->request
     cJSON *request = cJSON_GetObjectItemCaseSensitive(v1_resource_claimJSON, "request");
+    if (cJSON_IsNull(request)) {
+        request = NULL;
+    }
     if (request) { 
     if(!cJSON_IsString(request) && !cJSON_IsNull(request))
     {
@@ -89,7 +109,7 @@ v1_resource_claim_t *v1_resource_claim_parseFromJSON(cJSON *v1_resource_claimJSO
     }
 
 
-    v1_resource_claim_local_var = v1_resource_claim_create (
+    v1_resource_claim_local_var = v1_resource_claim_create_internal (
         strdup(name->valuestring),
         request && !cJSON_IsNull(request) ? strdup(request->valuestring) : NULL
         );

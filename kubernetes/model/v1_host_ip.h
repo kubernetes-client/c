@@ -21,9 +21,10 @@ typedef struct v1_host_ip_t v1_host_ip_t;
 typedef struct v1_host_ip_t {
     char *ip; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_host_ip_t;
 
-v1_host_ip_t *v1_host_ip_create(
+__attribute__((deprecated)) v1_host_ip_t *v1_host_ip_create(
     char *ip
 );
 

@@ -5,7 +5,7 @@
 
 
 
-v1_container_user_t *v1_container_user_create(
+static v1_container_user_t *v1_container_user_create_internal(
     v1_linux_container_user_t *_linux
     ) {
     v1_container_user_t *v1_container_user_local_var = malloc(sizeof(v1_container_user_t));
@@ -14,12 +14,24 @@ v1_container_user_t *v1_container_user_create(
     }
     v1_container_user_local_var->_linux = _linux;
 
+    v1_container_user_local_var->_library_owned = 1;
     return v1_container_user_local_var;
 }
 
+__attribute__((deprecated)) v1_container_user_t *v1_container_user_create(
+    v1_linux_container_user_t *_linux
+    ) {
+    return v1_container_user_create_internal (
+        _linux
+        );
+}
 
 void v1_container_user_free(v1_container_user_t *v1_container_user) {
     if(NULL == v1_container_user){
+        return ;
+    }
+    if(v1_container_user->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_container_user_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -62,12 +74,15 @@ v1_container_user_t *v1_container_user_parseFromJSON(cJSON *v1_container_userJSO
 
     // v1_container_user->_linux
     cJSON *_linux = cJSON_GetObjectItemCaseSensitive(v1_container_userJSON, "linux");
+    if (cJSON_IsNull(_linux)) {
+        _linux = NULL;
+    }
     if (_linux) { 
     _linux_local_nonprim = v1_linux_container_user_parseFromJSON(_linux); //nonprimitive
     }
 
 
-    v1_container_user_local_var = v1_container_user_create (
+    v1_container_user_local_var = v1_container_user_create_internal (
         _linux ? _linux_local_nonprim : NULL
         );
 

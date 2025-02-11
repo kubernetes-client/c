@@ -5,7 +5,7 @@
 
 
 
-v1_subject_rules_review_status_t *v1_subject_rules_review_status_create(
+static v1_subject_rules_review_status_t *v1_subject_rules_review_status_create_internal(
     char *evaluation_error,
     int incomplete,
     list_t *non_resource_rules,
@@ -20,12 +20,30 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_create(
     v1_subject_rules_review_status_local_var->non_resource_rules = non_resource_rules;
     v1_subject_rules_review_status_local_var->resource_rules = resource_rules;
 
+    v1_subject_rules_review_status_local_var->_library_owned = 1;
     return v1_subject_rules_review_status_local_var;
 }
 
+__attribute__((deprecated)) v1_subject_rules_review_status_t *v1_subject_rules_review_status_create(
+    char *evaluation_error,
+    int incomplete,
+    list_t *non_resource_rules,
+    list_t *resource_rules
+    ) {
+    return v1_subject_rules_review_status_create_internal (
+        evaluation_error,
+        incomplete,
+        non_resource_rules,
+        resource_rules
+        );
+}
 
 void v1_subject_rules_review_status_free(v1_subject_rules_review_status_t *v1_subject_rules_review_status) {
     if(NULL == v1_subject_rules_review_status){
+        return ;
+    }
+    if(v1_subject_rules_review_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_subject_rules_review_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -131,6 +149,9 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
 
     // v1_subject_rules_review_status->evaluation_error
     cJSON *evaluation_error = cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "evaluationError");
+    if (cJSON_IsNull(evaluation_error)) {
+        evaluation_error = NULL;
+    }
     if (evaluation_error) { 
     if(!cJSON_IsString(evaluation_error) && !cJSON_IsNull(evaluation_error))
     {
@@ -140,6 +161,9 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
 
     // v1_subject_rules_review_status->incomplete
     cJSON *incomplete = cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "incomplete");
+    if (cJSON_IsNull(incomplete)) {
+        incomplete = NULL;
+    }
     if (!incomplete) {
         goto end;
     }
@@ -152,6 +176,9 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
 
     // v1_subject_rules_review_status->non_resource_rules
     cJSON *non_resource_rules = cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "nonResourceRules");
+    if (cJSON_IsNull(non_resource_rules)) {
+        non_resource_rules = NULL;
+    }
     if (!non_resource_rules) {
         goto end;
     }
@@ -176,6 +203,9 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
 
     // v1_subject_rules_review_status->resource_rules
     cJSON *resource_rules = cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "resourceRules");
+    if (cJSON_IsNull(resource_rules)) {
+        resource_rules = NULL;
+    }
     if (!resource_rules) {
         goto end;
     }
@@ -199,7 +229,7 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
     }
 
 
-    v1_subject_rules_review_status_local_var = v1_subject_rules_review_status_create (
+    v1_subject_rules_review_status_local_var = v1_subject_rules_review_status_create_internal (
         evaluation_error && !cJSON_IsNull(evaluation_error) ? strdup(evaluation_error->valuestring) : NULL,
         incomplete->valueint,
         non_resource_rulesList,

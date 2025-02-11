@@ -5,7 +5,7 @@
 
 
 
-v1_env_var_t *v1_env_var_create(
+static v1_env_var_t *v1_env_var_create_internal(
     char *name,
     char *value,
     v1_env_var_source_t *value_from
@@ -18,12 +18,28 @@ v1_env_var_t *v1_env_var_create(
     v1_env_var_local_var->value = value;
     v1_env_var_local_var->value_from = value_from;
 
+    v1_env_var_local_var->_library_owned = 1;
     return v1_env_var_local_var;
 }
 
+__attribute__((deprecated)) v1_env_var_t *v1_env_var_create(
+    char *name,
+    char *value,
+    v1_env_var_source_t *value_from
+    ) {
+    return v1_env_var_create_internal (
+        name,
+        value,
+        value_from
+        );
+}
 
 void v1_env_var_free(v1_env_var_t *v1_env_var) {
     if(NULL == v1_env_var){
+        return ;
+    }
+    if(v1_env_var->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_env_var_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -91,6 +107,9 @@ v1_env_var_t *v1_env_var_parseFromJSON(cJSON *v1_env_varJSON){
 
     // v1_env_var->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_env_varJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -103,6 +122,9 @@ v1_env_var_t *v1_env_var_parseFromJSON(cJSON *v1_env_varJSON){
 
     // v1_env_var->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_env_varJSON, "value");
+    if (cJSON_IsNull(value)) {
+        value = NULL;
+    }
     if (value) { 
     if(!cJSON_IsString(value) && !cJSON_IsNull(value))
     {
@@ -112,12 +134,15 @@ v1_env_var_t *v1_env_var_parseFromJSON(cJSON *v1_env_varJSON){
 
     // v1_env_var->value_from
     cJSON *value_from = cJSON_GetObjectItemCaseSensitive(v1_env_varJSON, "valueFrom");
+    if (cJSON_IsNull(value_from)) {
+        value_from = NULL;
+    }
     if (value_from) { 
     value_from_local_nonprim = v1_env_var_source_parseFromJSON(value_from); //nonprimitive
     }
 
 
-    v1_env_var_local_var = v1_env_var_create (
+    v1_env_var_local_var = v1_env_var_create_internal (
         strdup(name->valuestring),
         value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL,
         value_from ? value_from_local_nonprim : NULL

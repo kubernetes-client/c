@@ -5,7 +5,7 @@
 
 
 
-v1_watch_event_t *v1_watch_event_create(
+static v1_watch_event_t *v1_watch_event_create_internal(
     object_t *object,
     char *type
     ) {
@@ -16,12 +16,26 @@ v1_watch_event_t *v1_watch_event_create(
     v1_watch_event_local_var->object = object;
     v1_watch_event_local_var->type = type;
 
+    v1_watch_event_local_var->_library_owned = 1;
     return v1_watch_event_local_var;
 }
 
+__attribute__((deprecated)) v1_watch_event_t *v1_watch_event_create(
+    object_t *object,
+    char *type
+    ) {
+    return v1_watch_event_create_internal (
+        object,
+        type
+        );
+}
 
 void v1_watch_event_free(v1_watch_event_t *v1_watch_event) {
     if(NULL == v1_watch_event){
+        return ;
+    }
+    if(v1_watch_event->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_watch_event_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -75,6 +89,9 @@ v1_watch_event_t *v1_watch_event_parseFromJSON(cJSON *v1_watch_eventJSON){
 
     // v1_watch_event->object
     cJSON *object = cJSON_GetObjectItemCaseSensitive(v1_watch_eventJSON, "object");
+    if (cJSON_IsNull(object)) {
+        object = NULL;
+    }
     if (!object) {
         goto end;
     }
@@ -85,6 +102,9 @@ v1_watch_event_t *v1_watch_event_parseFromJSON(cJSON *v1_watch_eventJSON){
 
     // v1_watch_event->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_watch_eventJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -96,7 +116,7 @@ v1_watch_event_t *v1_watch_event_parseFromJSON(cJSON *v1_watch_eventJSON){
     }
 
 
-    v1_watch_event_local_var = v1_watch_event_create (
+    v1_watch_event_local_var = v1_watch_event_create_internal (
         object_local_object,
         strdup(type->valuestring)
         );

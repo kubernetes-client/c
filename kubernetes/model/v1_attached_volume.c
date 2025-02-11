@@ -5,7 +5,7 @@
 
 
 
-v1_attached_volume_t *v1_attached_volume_create(
+static v1_attached_volume_t *v1_attached_volume_create_internal(
     char *device_path,
     char *name
     ) {
@@ -16,12 +16,26 @@ v1_attached_volume_t *v1_attached_volume_create(
     v1_attached_volume_local_var->device_path = device_path;
     v1_attached_volume_local_var->name = name;
 
+    v1_attached_volume_local_var->_library_owned = 1;
     return v1_attached_volume_local_var;
 }
 
+__attribute__((deprecated)) v1_attached_volume_t *v1_attached_volume_create(
+    char *device_path,
+    char *name
+    ) {
+    return v1_attached_volume_create_internal (
+        device_path,
+        name
+        );
+}
 
 void v1_attached_volume_free(v1_attached_volume_t *v1_attached_volume) {
     if(NULL == v1_attached_volume){
+        return ;
+    }
+    if(v1_attached_volume->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_attached_volume_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -70,6 +84,9 @@ v1_attached_volume_t *v1_attached_volume_parseFromJSON(cJSON *v1_attached_volume
 
     // v1_attached_volume->device_path
     cJSON *device_path = cJSON_GetObjectItemCaseSensitive(v1_attached_volumeJSON, "devicePath");
+    if (cJSON_IsNull(device_path)) {
+        device_path = NULL;
+    }
     if (!device_path) {
         goto end;
     }
@@ -82,6 +99,9 @@ v1_attached_volume_t *v1_attached_volume_parseFromJSON(cJSON *v1_attached_volume
 
     // v1_attached_volume->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_attached_volumeJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -93,7 +113,7 @@ v1_attached_volume_t *v1_attached_volume_parseFromJSON(cJSON *v1_attached_volume
     }
 
 
-    v1_attached_volume_local_var = v1_attached_volume_create (
+    v1_attached_volume_local_var = v1_attached_volume_create_internal (
         strdup(device_path->valuestring),
         strdup(name->valuestring)
         );

@@ -37,9 +37,10 @@ typedef struct v1_security_context_t {
     struct v1_seccomp_profile_t *seccomp_profile; //model
     struct v1_windows_security_context_options_t *windows_options; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_security_context_t;
 
-v1_security_context_t *v1_security_context_create(
+__attribute__((deprecated)) v1_security_context_t *v1_security_context_create(
     int allow_privilege_escalation,
     v1_app_armor_profile_t *app_armor_profile,
     v1_capabilities_t *capabilities,

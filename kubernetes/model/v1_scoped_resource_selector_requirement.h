@@ -23,9 +23,10 @@ typedef struct v1_scoped_resource_selector_requirement_t {
     char *scope_name; // string
     list_t *values; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_scoped_resource_selector_requirement_t;
 
-v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement_create(
+__attribute__((deprecated)) v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement_create(
     char *_operator,
     char *scope_name,
     list_t *values

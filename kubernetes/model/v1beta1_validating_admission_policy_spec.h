@@ -33,9 +33,10 @@ typedef struct v1beta1_validating_admission_policy_spec_t {
     list_t *validations; //nonprimitive container
     list_t *variables; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_validating_admission_policy_spec_t;
 
-v1beta1_validating_admission_policy_spec_t *v1beta1_validating_admission_policy_spec_create(
+__attribute__((deprecated)) v1beta1_validating_admission_policy_spec_t *v1beta1_validating_admission_policy_spec_create(
     list_t *audit_annotations,
     char *failure_policy,
     list_t *match_conditions,

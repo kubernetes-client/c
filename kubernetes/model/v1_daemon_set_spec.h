@@ -28,9 +28,10 @@ typedef struct v1_daemon_set_spec_t {
     struct v1_pod_template_spec_t *_template; //model
     struct v1_daemon_set_update_strategy_t *update_strategy; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_daemon_set_spec_t;
 
-v1_daemon_set_spec_t *v1_daemon_set_spec_create(
+__attribute__((deprecated)) v1_daemon_set_spec_t *v1_daemon_set_spec_create(
     int min_ready_seconds,
     int revision_history_limit,
     v1_label_selector_t *selector,

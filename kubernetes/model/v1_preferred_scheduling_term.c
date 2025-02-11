@@ -5,7 +5,7 @@
 
 
 
-v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_create(
+static v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_create_internal(
     v1_node_selector_term_t *preference,
     int weight
     ) {
@@ -16,12 +16,26 @@ v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_create(
     v1_preferred_scheduling_term_local_var->preference = preference;
     v1_preferred_scheduling_term_local_var->weight = weight;
 
+    v1_preferred_scheduling_term_local_var->_library_owned = 1;
     return v1_preferred_scheduling_term_local_var;
 }
 
+__attribute__((deprecated)) v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_create(
+    v1_node_selector_term_t *preference,
+    int weight
+    ) {
+    return v1_preferred_scheduling_term_create_internal (
+        preference,
+        weight
+        );
+}
 
 void v1_preferred_scheduling_term_free(v1_preferred_scheduling_term_t *v1_preferred_scheduling_term) {
     if(NULL == v1_preferred_scheduling_term){
+        return ;
+    }
+    if(v1_preferred_scheduling_term->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_preferred_scheduling_term_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -74,6 +88,9 @@ v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_parseFromJSON(cJSON
 
     // v1_preferred_scheduling_term->preference
     cJSON *preference = cJSON_GetObjectItemCaseSensitive(v1_preferred_scheduling_termJSON, "preference");
+    if (cJSON_IsNull(preference)) {
+        preference = NULL;
+    }
     if (!preference) {
         goto end;
     }
@@ -83,6 +100,9 @@ v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_parseFromJSON(cJSON
 
     // v1_preferred_scheduling_term->weight
     cJSON *weight = cJSON_GetObjectItemCaseSensitive(v1_preferred_scheduling_termJSON, "weight");
+    if (cJSON_IsNull(weight)) {
+        weight = NULL;
+    }
     if (!weight) {
         goto end;
     }
@@ -94,7 +114,7 @@ v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_parseFromJSON(cJSON
     }
 
 
-    v1_preferred_scheduling_term_local_var = v1_preferred_scheduling_term_create (
+    v1_preferred_scheduling_term_local_var = v1_preferred_scheduling_term_create_internal (
         preference_local_nonprim,
         weight->valuedouble
         );

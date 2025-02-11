@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AuthenticationAPI_getAPIGroup_3**](AuthenticationAPI.md#AuthenticationAPI_getAPIGroup_3) | **GET** /apis/authentication.k8s.io/ | 
+[**AuthenticationAPI_getAPIGroup**](AuthenticationAPI.md#AuthenticationAPI_getAPIGroup) | **GET** /apis/authentication.k8s.io/ | 
 
 
-# **AuthenticationAPI_getAPIGroup_3**
+# **AuthenticationAPI_getAPIGroup**
 ```c
 // get information of a group
 //
-v1_api_group_t* AuthenticationAPI_getAPIGroup_3(apiClient_t *apiClient);
+v1_api_group_t* AuthenticationAPI_getAPIGroup(apiClient_t *apiClient);
 ```
 
 ### Parameters

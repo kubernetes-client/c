@@ -23,9 +23,10 @@ typedef struct v1_resource_field_selector_t {
     char *divisor; // string
     char *resource; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_resource_field_selector_t;
 
-v1_resource_field_selector_t *v1_resource_field_selector_create(
+__attribute__((deprecated)) v1_resource_field_selector_t *v1_resource_field_selector_create(
     char *container_name,
     char *divisor,
     char *resource

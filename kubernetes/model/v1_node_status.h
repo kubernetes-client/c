@@ -42,9 +42,10 @@ typedef struct v1_node_status_t {
     list_t *volumes_attached; //nonprimitive container
     list_t *volumes_in_use; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_status_t;
 
-v1_node_status_t *v1_node_status_create(
+__attribute__((deprecated)) v1_node_status_t *v1_node_status_create(
     list_t *addresses,
     list_t* allocatable,
     list_t* capacity,

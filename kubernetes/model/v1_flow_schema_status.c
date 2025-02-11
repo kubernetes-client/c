@@ -5,7 +5,7 @@
 
 
 
-v1_flow_schema_status_t *v1_flow_schema_status_create(
+static v1_flow_schema_status_t *v1_flow_schema_status_create_internal(
     list_t *conditions
     ) {
     v1_flow_schema_status_t *v1_flow_schema_status_local_var = malloc(sizeof(v1_flow_schema_status_t));
@@ -14,12 +14,24 @@ v1_flow_schema_status_t *v1_flow_schema_status_create(
     }
     v1_flow_schema_status_local_var->conditions = conditions;
 
+    v1_flow_schema_status_local_var->_library_owned = 1;
     return v1_flow_schema_status_local_var;
 }
 
+__attribute__((deprecated)) v1_flow_schema_status_t *v1_flow_schema_status_create(
+    list_t *conditions
+    ) {
+    return v1_flow_schema_status_create_internal (
+        conditions
+        );
+}
 
 void v1_flow_schema_status_free(v1_flow_schema_status_t *v1_flow_schema_status) {
     if(NULL == v1_flow_schema_status){
+        return ;
+    }
+    if(v1_flow_schema_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_flow_schema_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -72,6 +84,9 @@ v1_flow_schema_status_t *v1_flow_schema_status_parseFromJSON(cJSON *v1_flow_sche
 
     // v1_flow_schema_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_flow_schema_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -92,7 +107,7 @@ v1_flow_schema_status_t *v1_flow_schema_status_parseFromJSON(cJSON *v1_flow_sche
     }
 
 
-    v1_flow_schema_status_local_var = v1_flow_schema_status_create (
+    v1_flow_schema_status_local_var = v1_flow_schema_status_create_internal (
         conditions ? conditionsList : NULL
         );
 

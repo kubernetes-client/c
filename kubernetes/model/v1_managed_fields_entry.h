@@ -28,9 +28,10 @@ typedef struct v1_managed_fields_entry_t {
     char *subresource; // string
     char *time; //date time
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_managed_fields_entry_t;
 
-v1_managed_fields_entry_t *v1_managed_fields_entry_create(
+__attribute__((deprecated)) v1_managed_fields_entry_t *v1_managed_fields_entry_create(
     char *api_version,
     char *fields_type,
     object_t *fields_v1,

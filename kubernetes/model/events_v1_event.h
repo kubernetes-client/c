@@ -41,9 +41,10 @@ typedef struct events_v1_event_t {
     struct events_v1_event_series_t *series; //model
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } events_v1_event_t;
 
-events_v1_event_t *events_v1_event_create(
+__attribute__((deprecated)) events_v1_event_t *events_v1_event_create(
     char *action,
     char *api_version,
     int deprecated_count,

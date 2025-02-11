@@ -5,7 +5,7 @@
 
 
 
-v1_node_config_status_t *v1_node_config_status_create(
+static v1_node_config_status_t *v1_node_config_status_create_internal(
     v1_node_config_source_t *active,
     v1_node_config_source_t *assigned,
     char *error,
@@ -20,12 +20,30 @@ v1_node_config_status_t *v1_node_config_status_create(
     v1_node_config_status_local_var->error = error;
     v1_node_config_status_local_var->last_known_good = last_known_good;
 
+    v1_node_config_status_local_var->_library_owned = 1;
     return v1_node_config_status_local_var;
 }
 
+__attribute__((deprecated)) v1_node_config_status_t *v1_node_config_status_create(
+    v1_node_config_source_t *active,
+    v1_node_config_source_t *assigned,
+    char *error,
+    v1_node_config_source_t *last_known_good
+    ) {
+    return v1_node_config_status_create_internal (
+        active,
+        assigned,
+        error,
+        last_known_good
+        );
+}
 
 void v1_node_config_status_free(v1_node_config_status_t *v1_node_config_status) {
     if(NULL == v1_node_config_status){
+        return ;
+    }
+    if(v1_node_config_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_node_config_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -120,18 +138,27 @@ v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_conf
 
     // v1_node_config_status->active
     cJSON *active = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "active");
+    if (cJSON_IsNull(active)) {
+        active = NULL;
+    }
     if (active) { 
     active_local_nonprim = v1_node_config_source_parseFromJSON(active); //nonprimitive
     }
 
     // v1_node_config_status->assigned
     cJSON *assigned = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "assigned");
+    if (cJSON_IsNull(assigned)) {
+        assigned = NULL;
+    }
     if (assigned) { 
     assigned_local_nonprim = v1_node_config_source_parseFromJSON(assigned); //nonprimitive
     }
 
     // v1_node_config_status->error
     cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "error");
+    if (cJSON_IsNull(error)) {
+        error = NULL;
+    }
     if (error) { 
     if(!cJSON_IsString(error) && !cJSON_IsNull(error))
     {
@@ -141,12 +168,15 @@ v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_conf
 
     // v1_node_config_status->last_known_good
     cJSON *last_known_good = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "lastKnownGood");
+    if (cJSON_IsNull(last_known_good)) {
+        last_known_good = NULL;
+    }
     if (last_known_good) { 
     last_known_good_local_nonprim = v1_node_config_source_parseFromJSON(last_known_good); //nonprimitive
     }
 
 
-    v1_node_config_status_local_var = v1_node_config_status_create (
+    v1_node_config_status_local_var = v1_node_config_status_create_internal (
         active ? active_local_nonprim : NULL,
         assigned ? assigned_local_nonprim : NULL,
         error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,

@@ -5,7 +5,7 @@
 
 
 
-v1_local_object_reference_t *v1_local_object_reference_create(
+static v1_local_object_reference_t *v1_local_object_reference_create_internal(
     char *name
     ) {
     v1_local_object_reference_t *v1_local_object_reference_local_var = malloc(sizeof(v1_local_object_reference_t));
@@ -14,12 +14,24 @@ v1_local_object_reference_t *v1_local_object_reference_create(
     }
     v1_local_object_reference_local_var->name = name;
 
+    v1_local_object_reference_local_var->_library_owned = 1;
     return v1_local_object_reference_local_var;
 }
 
+__attribute__((deprecated)) v1_local_object_reference_t *v1_local_object_reference_create(
+    char *name
+    ) {
+    return v1_local_object_reference_create_internal (
+        name
+        );
+}
 
 void v1_local_object_reference_free(v1_local_object_reference_t *v1_local_object_reference) {
     if(NULL == v1_local_object_reference){
+        return ;
+    }
+    if(v1_local_object_reference->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_local_object_reference_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -54,6 +66,9 @@ v1_local_object_reference_t *v1_local_object_reference_parseFromJSON(cJSON *v1_l
 
     // v1_local_object_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_local_object_referenceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -62,7 +77,7 @@ v1_local_object_reference_t *v1_local_object_reference_parseFromJSON(cJSON *v1_l
     }
 
 
-    v1_local_object_reference_local_var = v1_local_object_reference_create (
+    v1_local_object_reference_local_var = v1_local_object_reference_create_internal (
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL
         );
 

@@ -5,7 +5,7 @@
 
 
 
-v1_sleep_action_t *v1_sleep_action_create(
+static v1_sleep_action_t *v1_sleep_action_create_internal(
     long seconds
     ) {
     v1_sleep_action_t *v1_sleep_action_local_var = malloc(sizeof(v1_sleep_action_t));
@@ -14,12 +14,24 @@ v1_sleep_action_t *v1_sleep_action_create(
     }
     v1_sleep_action_local_var->seconds = seconds;
 
+    v1_sleep_action_local_var->_library_owned = 1;
     return v1_sleep_action_local_var;
 }
 
+__attribute__((deprecated)) v1_sleep_action_t *v1_sleep_action_create(
+    long seconds
+    ) {
+    return v1_sleep_action_create_internal (
+        seconds
+        );
+}
 
 void v1_sleep_action_free(v1_sleep_action_t *v1_sleep_action) {
     if(NULL == v1_sleep_action){
+        return ;
+    }
+    if(v1_sleep_action->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_sleep_action_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -51,6 +63,9 @@ v1_sleep_action_t *v1_sleep_action_parseFromJSON(cJSON *v1_sleep_actionJSON){
 
     // v1_sleep_action->seconds
     cJSON *seconds = cJSON_GetObjectItemCaseSensitive(v1_sleep_actionJSON, "seconds");
+    if (cJSON_IsNull(seconds)) {
+        seconds = NULL;
+    }
     if (!seconds) {
         goto end;
     }
@@ -62,7 +77,7 @@ v1_sleep_action_t *v1_sleep_action_parseFromJSON(cJSON *v1_sleep_actionJSON){
     }
 
 
-    v1_sleep_action_local_var = v1_sleep_action_create (
+    v1_sleep_action_local_var = v1_sleep_action_create_internal (
         seconds->valuedouble
         );
 

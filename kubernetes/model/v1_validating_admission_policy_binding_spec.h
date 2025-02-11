@@ -26,9 +26,10 @@ typedef struct v1_validating_admission_policy_binding_spec_t {
     char *policy_name; // string
     list_t *validation_actions; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_validating_admission_policy_binding_spec_t;
 
-v1_validating_admission_policy_binding_spec_t *v1_validating_admission_policy_binding_spec_create(
+__attribute__((deprecated)) v1_validating_admission_policy_binding_spec_t *v1_validating_admission_policy_binding_spec_create(
     v1_match_resources_t *match_resources,
     v1_param_ref_t *param_ref,
     char *policy_name,

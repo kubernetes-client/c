@@ -5,7 +5,7 @@
 
 
 
-v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_create(
+static v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_create_internal(
     int_or_string_t *max_surge,
     int_or_string_t *max_unavailable
     ) {
@@ -16,12 +16,26 @@ v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_create(
     v1_rolling_update_daemon_set_local_var->max_surge = max_surge;
     v1_rolling_update_daemon_set_local_var->max_unavailable = max_unavailable;
 
+    v1_rolling_update_daemon_set_local_var->_library_owned = 1;
     return v1_rolling_update_daemon_set_local_var;
 }
 
+__attribute__((deprecated)) v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_create(
+    int_or_string_t *max_surge,
+    int_or_string_t *max_unavailable
+    ) {
+    return v1_rolling_update_daemon_set_create_internal (
+        max_surge,
+        max_unavailable
+        );
+}
 
 void v1_rolling_update_daemon_set_free(v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set) {
     if(NULL == v1_rolling_update_daemon_set){
+        return ;
+    }
+    if(v1_rolling_update_daemon_set->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_rolling_update_daemon_set_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -84,18 +98,24 @@ v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_parseFromJSON(cJSON
 
     // v1_rolling_update_daemon_set->max_surge
     cJSON *max_surge = cJSON_GetObjectItemCaseSensitive(v1_rolling_update_daemon_setJSON, "maxSurge");
+    if (cJSON_IsNull(max_surge)) {
+        max_surge = NULL;
+    }
     if (max_surge) { 
     max_surge_local_nonprim = int_or_string_parseFromJSON(max_surge); //custom
     }
 
     // v1_rolling_update_daemon_set->max_unavailable
     cJSON *max_unavailable = cJSON_GetObjectItemCaseSensitive(v1_rolling_update_daemon_setJSON, "maxUnavailable");
+    if (cJSON_IsNull(max_unavailable)) {
+        max_unavailable = NULL;
+    }
     if (max_unavailable) { 
     max_unavailable_local_nonprim = int_or_string_parseFromJSON(max_unavailable); //custom
     }
 
 
-    v1_rolling_update_daemon_set_local_var = v1_rolling_update_daemon_set_create (
+    v1_rolling_update_daemon_set_local_var = v1_rolling_update_daemon_set_create_internal (
         max_surge ? max_surge_local_nonprim : NULL,
         max_unavailable ? max_unavailable_local_nonprim : NULL
         );

@@ -23,9 +23,10 @@ typedef struct v2_resource_metric_source_t {
     char *name; // string
     struct v2_metric_target_t *target; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v2_resource_metric_source_t;
 
-v2_resource_metric_source_t *v2_resource_metric_source_create(
+__attribute__((deprecated)) v2_resource_metric_source_t *v2_resource_metric_source_create(
     char *name,
     v2_metric_target_t *target
 );

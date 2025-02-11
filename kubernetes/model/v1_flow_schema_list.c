@@ -5,7 +5,7 @@
 
 
 
-v1_flow_schema_list_t *v1_flow_schema_list_create(
+static v1_flow_schema_list_t *v1_flow_schema_list_create_internal(
     char *api_version,
     list_t *items,
     char *kind,
@@ -20,12 +20,30 @@ v1_flow_schema_list_t *v1_flow_schema_list_create(
     v1_flow_schema_list_local_var->kind = kind;
     v1_flow_schema_list_local_var->metadata = metadata;
 
+    v1_flow_schema_list_local_var->_library_owned = 1;
     return v1_flow_schema_list_local_var;
 }
 
+__attribute__((deprecated)) v1_flow_schema_list_t *v1_flow_schema_list_create(
+    char *api_version,
+    list_t *items,
+    char *kind,
+    v1_list_meta_t *metadata
+    ) {
+    return v1_flow_schema_list_create_internal (
+        api_version,
+        items,
+        kind,
+        metadata
+        );
+}
 
 void v1_flow_schema_list_free(v1_flow_schema_list_t *v1_flow_schema_list) {
     if(NULL == v1_flow_schema_list){
+        return ;
+    }
+    if(v1_flow_schema_list->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_flow_schema_list_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -123,6 +141,9 @@ v1_flow_schema_list_t *v1_flow_schema_list_parseFromJSON(cJSON *v1_flow_schema_l
 
     // v1_flow_schema_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_flow_schema_listJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -132,6 +153,9 @@ v1_flow_schema_list_t *v1_flow_schema_list_parseFromJSON(cJSON *v1_flow_schema_l
 
     // v1_flow_schema_list->items
     cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_flow_schema_listJSON, "items");
+    if (cJSON_IsNull(items)) {
+        items = NULL;
+    }
     if (!items) {
         goto end;
     }
@@ -156,6 +180,9 @@ v1_flow_schema_list_t *v1_flow_schema_list_parseFromJSON(cJSON *v1_flow_schema_l
 
     // v1_flow_schema_list->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_flow_schema_listJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -165,12 +192,15 @@ v1_flow_schema_list_t *v1_flow_schema_list_parseFromJSON(cJSON *v1_flow_schema_l
 
     // v1_flow_schema_list->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_flow_schema_listJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }
 
 
-    v1_flow_schema_list_local_var = v1_flow_schema_list_create (
+    v1_flow_schema_list_local_var = v1_flow_schema_list_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         itemsList,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,

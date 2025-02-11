@@ -23,9 +23,10 @@ typedef struct v1_ingress_port_status_t {
     int port; //numeric
     char *protocol; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ingress_port_status_t;
 
-v1_ingress_port_status_t *v1_ingress_port_status_create(
+__attribute__((deprecated)) v1_ingress_port_status_t *v1_ingress_port_status_create(
     char *error,
     int port,
     char *protocol

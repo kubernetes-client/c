@@ -5,7 +5,7 @@
 
 
 
-v1_token_review_spec_t *v1_token_review_spec_create(
+static v1_token_review_spec_t *v1_token_review_spec_create_internal(
     list_t *audiences,
     char *token
     ) {
@@ -16,12 +16,26 @@ v1_token_review_spec_t *v1_token_review_spec_create(
     v1_token_review_spec_local_var->audiences = audiences;
     v1_token_review_spec_local_var->token = token;
 
+    v1_token_review_spec_local_var->_library_owned = 1;
     return v1_token_review_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_token_review_spec_t *v1_token_review_spec_create(
+    list_t *audiences,
+    char *token
+    ) {
+    return v1_token_review_spec_create_internal (
+        audiences,
+        token
+        );
+}
 
 void v1_token_review_spec_free(v1_token_review_spec_t *v1_token_review_spec) {
     if(NULL == v1_token_review_spec){
+        return ;
+    }
+    if(v1_token_review_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_token_review_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -51,7 +65,7 @@ cJSON *v1_token_review_spec_convertToJSON(v1_token_review_spec_t *v1_token_revie
 
     listEntry_t *audiencesListEntry;
     list_ForEach(audiencesListEntry, v1_token_review_spec->audiences) {
-    if(cJSON_AddStringToObject(audiences, "", (char*)audiencesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(audiences, "", audiencesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -83,6 +97,9 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
 
     // v1_token_review_spec->audiences
     cJSON *audiences = cJSON_GetObjectItemCaseSensitive(v1_token_review_specJSON, "audiences");
+    if (cJSON_IsNull(audiences)) {
+        audiences = NULL;
+    }
     if (audiences) { 
     cJSON *audiences_local = NULL;
     if(!cJSON_IsArray(audiences)) {
@@ -102,6 +119,9 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
 
     // v1_token_review_spec->token
     cJSON *token = cJSON_GetObjectItemCaseSensitive(v1_token_review_specJSON, "token");
+    if (cJSON_IsNull(token)) {
+        token = NULL;
+    }
     if (token) { 
     if(!cJSON_IsString(token) && !cJSON_IsNull(token))
     {
@@ -110,7 +130,7 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
     }
 
 
-    v1_token_review_spec_local_var = v1_token_review_spec_create (
+    v1_token_review_spec_local_var = v1_token_review_spec_create_internal (
         audiences ? audiencesList : NULL,
         token && !cJSON_IsNull(token) ? strdup(token->valuestring) : NULL
         );

@@ -24,9 +24,10 @@ typedef struct v1_windows_security_context_options_t {
     int host_process; //boolean
     char *run_as_user_name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_windows_security_context_options_t;
 
-v1_windows_security_context_options_t *v1_windows_security_context_options_create(
+__attribute__((deprecated)) v1_windows_security_context_options_t *v1_windows_security_context_options_create(
     char *gmsa_credential_spec,
     char *gmsa_credential_spec_name,
     int host_process,

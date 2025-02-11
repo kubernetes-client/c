@@ -24,9 +24,10 @@ typedef struct v1_resource_quota_spec_t {
     struct v1_scope_selector_t *scope_selector; //model
     list_t *scopes; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_resource_quota_spec_t;
 
-v1_resource_quota_spec_t *v1_resource_quota_spec_create(
+__attribute__((deprecated)) v1_resource_quota_spec_t *v1_resource_quota_spec_create(
     list_t* hard,
     v1_scope_selector_t *scope_selector,
     list_t *scopes

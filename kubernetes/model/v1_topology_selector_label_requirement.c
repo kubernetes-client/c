@@ -5,7 +5,7 @@
 
 
 
-v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement_create(
+static v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement_create_internal(
     char *key,
     list_t *values
     ) {
@@ -16,12 +16,26 @@ v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement
     v1_topology_selector_label_requirement_local_var->key = key;
     v1_topology_selector_label_requirement_local_var->values = values;
 
+    v1_topology_selector_label_requirement_local_var->_library_owned = 1;
     return v1_topology_selector_label_requirement_local_var;
 }
 
+__attribute__((deprecated)) v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement_create(
+    char *key,
+    list_t *values
+    ) {
+    return v1_topology_selector_label_requirement_create_internal (
+        key,
+        values
+        );
+}
 
 void v1_topology_selector_label_requirement_free(v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement) {
     if(NULL == v1_topology_selector_label_requirement){
+        return ;
+    }
+    if(v1_topology_selector_label_requirement->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_topology_selector_label_requirement_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -62,7 +76,7 @@ cJSON *v1_topology_selector_label_requirement_convertToJSON(v1_topology_selector
 
     listEntry_t *valuesListEntry;
     list_ForEach(valuesListEntry, v1_topology_selector_label_requirement->values) {
-    if(cJSON_AddStringToObject(values, "", (char*)valuesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(values, "", valuesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -85,6 +99,9 @@ v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement
 
     // v1_topology_selector_label_requirement->key
     cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_topology_selector_label_requirementJSON, "key");
+    if (cJSON_IsNull(key)) {
+        key = NULL;
+    }
     if (!key) {
         goto end;
     }
@@ -97,6 +114,9 @@ v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement
 
     // v1_topology_selector_label_requirement->values
     cJSON *values = cJSON_GetObjectItemCaseSensitive(v1_topology_selector_label_requirementJSON, "values");
+    if (cJSON_IsNull(values)) {
+        values = NULL;
+    }
     if (!values) {
         goto end;
     }
@@ -118,7 +138,7 @@ v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement
     }
 
 
-    v1_topology_selector_label_requirement_local_var = v1_topology_selector_label_requirement_create (
+    v1_topology_selector_label_requirement_local_var = v1_topology_selector_label_requirement_create_internal (
         strdup(key->valuestring),
         valuesList
         );

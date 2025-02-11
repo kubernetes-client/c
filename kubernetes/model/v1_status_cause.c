@@ -5,7 +5,7 @@
 
 
 
-v1_status_cause_t *v1_status_cause_create(
+static v1_status_cause_t *v1_status_cause_create_internal(
     char *field,
     char *message,
     char *reason
@@ -18,12 +18,28 @@ v1_status_cause_t *v1_status_cause_create(
     v1_status_cause_local_var->message = message;
     v1_status_cause_local_var->reason = reason;
 
+    v1_status_cause_local_var->_library_owned = 1;
     return v1_status_cause_local_var;
 }
 
+__attribute__((deprecated)) v1_status_cause_t *v1_status_cause_create(
+    char *field,
+    char *message,
+    char *reason
+    ) {
+    return v1_status_cause_create_internal (
+        field,
+        message,
+        reason
+        );
+}
 
 void v1_status_cause_free(v1_status_cause_t *v1_status_cause) {
     if(NULL == v1_status_cause){
+        return ;
+    }
+    if(v1_status_cause->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_status_cause_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -82,6 +98,9 @@ v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
 
     // v1_status_cause->field
     cJSON *field = cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "field");
+    if (cJSON_IsNull(field)) {
+        field = NULL;
+    }
     if (field) { 
     if(!cJSON_IsString(field) && !cJSON_IsNull(field))
     {
@@ -91,6 +110,9 @@ v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
 
     // v1_status_cause->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "message");
+    if (cJSON_IsNull(message)) {
+        message = NULL;
+    }
     if (message) { 
     if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
@@ -100,6 +122,9 @@ v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
 
     // v1_status_cause->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "reason");
+    if (cJSON_IsNull(reason)) {
+        reason = NULL;
+    }
     if (reason) { 
     if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
@@ -108,7 +133,7 @@ v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
     }
 
 
-    v1_status_cause_local_var = v1_status_cause_create (
+    v1_status_cause_local_var = v1_status_cause_create_internal (
         field && !cJSON_IsNull(field) ? strdup(field->valuestring) : NULL,
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL

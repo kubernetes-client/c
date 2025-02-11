@@ -22,9 +22,10 @@ typedef struct v1_group_version_for_discovery_t {
     char *group_version; // string
     char *version; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_group_version_for_discovery_t;
 
-v1_group_version_for_discovery_t *v1_group_version_for_discovery_create(
+__attribute__((deprecated)) v1_group_version_for_discovery_t *v1_group_version_for_discovery_create(
     char *group_version,
     char *version
 );

@@ -25,9 +25,10 @@ typedef struct v1_fc_volume_source_t {
     list_t *target_wwns; //primitive container
     list_t *wwids; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_fc_volume_source_t;
 
-v1_fc_volume_source_t *v1_fc_volume_source_create(
+__attribute__((deprecated)) v1_fc_volume_source_t *v1_fc_volume_source_create(
     char *fs_type,
     int lun,
     int read_only,

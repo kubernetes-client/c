@@ -22,9 +22,10 @@ typedef struct v1_modify_volume_status_t {
     char *status; // string
     char *target_volume_attributes_class_name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_modify_volume_status_t;
 
-v1_modify_volume_status_t *v1_modify_volume_status_create(
+__attribute__((deprecated)) v1_modify_volume_status_t *v1_modify_volume_status_create(
     char *status,
     char *target_volume_attributes_class_name
 );

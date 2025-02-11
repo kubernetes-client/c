@@ -24,9 +24,10 @@ typedef struct v1_vsphere_virtual_disk_volume_source_t {
     char *storage_policy_name; // string
     char *volume_path; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_vsphere_virtual_disk_volume_source_t;
 
-v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_virtual_disk_volume_source_create(
+__attribute__((deprecated)) v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_virtual_disk_volume_source_create(
     char *fs_type,
     char *storage_policy_id,
     char *storage_policy_name,

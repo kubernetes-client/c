@@ -5,7 +5,7 @@
 
 
 
-v1_pod_spec_t *v1_pod_spec_create(
+static v1_pod_spec_t *v1_pod_spec_create_internal(
     long active_deadline_seconds,
     v1_affinity_t *affinity,
     int automount_service_account_token,
@@ -31,6 +31,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     char *priority_class_name,
     list_t *readiness_gates,
     list_t *resource_claims,
+    v1_resource_requirements_t *resources,
     char *restart_policy,
     char *runtime_class_name,
     char *scheduler_name,
@@ -75,6 +76,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     v1_pod_spec_local_var->priority_class_name = priority_class_name;
     v1_pod_spec_local_var->readiness_gates = readiness_gates;
     v1_pod_spec_local_var->resource_claims = resource_claims;
+    v1_pod_spec_local_var->resources = resources;
     v1_pod_spec_local_var->restart_policy = restart_policy;
     v1_pod_spec_local_var->runtime_class_name = runtime_class_name;
     v1_pod_spec_local_var->scheduler_name = scheduler_name;
@@ -90,12 +92,102 @@ v1_pod_spec_t *v1_pod_spec_create(
     v1_pod_spec_local_var->topology_spread_constraints = topology_spread_constraints;
     v1_pod_spec_local_var->volumes = volumes;
 
+    v1_pod_spec_local_var->_library_owned = 1;
     return v1_pod_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_spec_t *v1_pod_spec_create(
+    long active_deadline_seconds,
+    v1_affinity_t *affinity,
+    int automount_service_account_token,
+    list_t *containers,
+    v1_pod_dns_config_t *dns_config,
+    char *dns_policy,
+    int enable_service_links,
+    list_t *ephemeral_containers,
+    list_t *host_aliases,
+    int host_ipc,
+    int host_network,
+    int host_pid,
+    int host_users,
+    char *hostname,
+    list_t *image_pull_secrets,
+    list_t *init_containers,
+    char *node_name,
+    list_t* node_selector,
+    v1_pod_os_t *os,
+    list_t* overhead,
+    char *preemption_policy,
+    int priority,
+    char *priority_class_name,
+    list_t *readiness_gates,
+    list_t *resource_claims,
+    v1_resource_requirements_t *resources,
+    char *restart_policy,
+    char *runtime_class_name,
+    char *scheduler_name,
+    list_t *scheduling_gates,
+    v1_pod_security_context_t *security_context,
+    char *service_account,
+    char *service_account_name,
+    int set_hostname_as_fqdn,
+    int share_process_namespace,
+    char *subdomain,
+    long termination_grace_period_seconds,
+    list_t *tolerations,
+    list_t *topology_spread_constraints,
+    list_t *volumes
+    ) {
+    return v1_pod_spec_create_internal (
+        active_deadline_seconds,
+        affinity,
+        automount_service_account_token,
+        containers,
+        dns_config,
+        dns_policy,
+        enable_service_links,
+        ephemeral_containers,
+        host_aliases,
+        host_ipc,
+        host_network,
+        host_pid,
+        host_users,
+        hostname,
+        image_pull_secrets,
+        init_containers,
+        node_name,
+        node_selector,
+        os,
+        overhead,
+        preemption_policy,
+        priority,
+        priority_class_name,
+        readiness_gates,
+        resource_claims,
+        resources,
+        restart_policy,
+        runtime_class_name,
+        scheduler_name,
+        scheduling_gates,
+        security_context,
+        service_account,
+        service_account_name,
+        set_hostname_as_fqdn,
+        share_process_namespace,
+        subdomain,
+        termination_grace_period_seconds,
+        tolerations,
+        topology_spread_constraints,
+        volumes
+        );
+}
 
 void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
     if(NULL == v1_pod_spec){
+        return ;
+    }
+    if(v1_pod_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -156,7 +248,7 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
     }
     if (v1_pod_spec->node_selector) {
         list_ForEach(listEntry, v1_pod_spec->node_selector) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -170,7 +262,7 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
     }
     if (v1_pod_spec->overhead) {
         list_ForEach(listEntry, v1_pod_spec->overhead) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -199,6 +291,10 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         }
         list_freeList(v1_pod_spec->resource_claims);
         v1_pod_spec->resource_claims = NULL;
+    }
+    if (v1_pod_spec->resources) {
+        v1_resource_requirements_free(v1_pod_spec->resources);
+        v1_pod_spec->resources = NULL;
     }
     if (v1_pod_spec->restart_policy) {
         free(v1_pod_spec->restart_policy);
@@ -479,8 +575,8 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     listEntry_t *node_selectorListEntry;
     if (v1_pod_spec->node_selector) {
     list_ForEach(node_selectorListEntry, v1_pod_spec->node_selector) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)node_selectorListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = node_selectorListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -512,8 +608,8 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     listEntry_t *overheadListEntry;
     if (v1_pod_spec->overhead) {
     list_ForEach(overheadListEntry, v1_pod_spec->overhead) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)overheadListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = overheadListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -582,6 +678,19 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     }
     cJSON_AddItemToArray(resource_claims, itemLocal);
     }
+    }
+    }
+
+
+    // v1_pod_spec->resources
+    if(v1_pod_spec->resources) {
+    cJSON *resources_local_JSON = v1_resource_requirements_convertToJSON(v1_pod_spec->resources);
+    if(resources_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "resources", resources_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
     }
     }
 
@@ -798,6 +907,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // define the local list for v1_pod_spec->resource_claims
     list_t *resource_claimsList = NULL;
 
+    // define the local variable for v1_pod_spec->resources
+    v1_resource_requirements_t *resources_local_nonprim = NULL;
+
     // define the local list for v1_pod_spec->scheduling_gates
     list_t *scheduling_gatesList = NULL;
 
@@ -815,6 +927,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->active_deadline_seconds
     cJSON *active_deadline_seconds = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "activeDeadlineSeconds");
+    if (cJSON_IsNull(active_deadline_seconds)) {
+        active_deadline_seconds = NULL;
+    }
     if (active_deadline_seconds) { 
     if(!cJSON_IsNumber(active_deadline_seconds))
     {
@@ -824,12 +939,18 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->affinity
     cJSON *affinity = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "affinity");
+    if (cJSON_IsNull(affinity)) {
+        affinity = NULL;
+    }
     if (affinity) { 
     affinity_local_nonprim = v1_affinity_parseFromJSON(affinity); //nonprimitive
     }
 
     // v1_pod_spec->automount_service_account_token
     cJSON *automount_service_account_token = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "automountServiceAccountToken");
+    if (cJSON_IsNull(automount_service_account_token)) {
+        automount_service_account_token = NULL;
+    }
     if (automount_service_account_token) { 
     if(!cJSON_IsBool(automount_service_account_token))
     {
@@ -839,6 +960,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->containers
     cJSON *containers = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "containers");
+    if (cJSON_IsNull(containers)) {
+        containers = NULL;
+    }
     if (!containers) {
         goto end;
     }
@@ -863,12 +987,18 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->dns_config
     cJSON *dns_config = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "dnsConfig");
+    if (cJSON_IsNull(dns_config)) {
+        dns_config = NULL;
+    }
     if (dns_config) { 
     dns_config_local_nonprim = v1_pod_dns_config_parseFromJSON(dns_config); //nonprimitive
     }
 
     // v1_pod_spec->dns_policy
     cJSON *dns_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "dnsPolicy");
+    if (cJSON_IsNull(dns_policy)) {
+        dns_policy = NULL;
+    }
     if (dns_policy) { 
     if(!cJSON_IsString(dns_policy) && !cJSON_IsNull(dns_policy))
     {
@@ -878,6 +1008,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->enable_service_links
     cJSON *enable_service_links = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "enableServiceLinks");
+    if (cJSON_IsNull(enable_service_links)) {
+        enable_service_links = NULL;
+    }
     if (enable_service_links) { 
     if(!cJSON_IsBool(enable_service_links))
     {
@@ -887,6 +1020,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->ephemeral_containers
     cJSON *ephemeral_containers = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "ephemeralContainers");
+    if (cJSON_IsNull(ephemeral_containers)) {
+        ephemeral_containers = NULL;
+    }
     if (ephemeral_containers) { 
     cJSON *ephemeral_containers_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ephemeral_containers)){
@@ -908,6 +1044,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->host_aliases
     cJSON *host_aliases = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "hostAliases");
+    if (cJSON_IsNull(host_aliases)) {
+        host_aliases = NULL;
+    }
     if (host_aliases) { 
     cJSON *host_aliases_local_nonprimitive = NULL;
     if(!cJSON_IsArray(host_aliases)){
@@ -929,6 +1068,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->host_ipc
     cJSON *host_ipc = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "hostIPC");
+    if (cJSON_IsNull(host_ipc)) {
+        host_ipc = NULL;
+    }
     if (host_ipc) { 
     if(!cJSON_IsBool(host_ipc))
     {
@@ -938,6 +1080,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->host_network
     cJSON *host_network = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "hostNetwork");
+    if (cJSON_IsNull(host_network)) {
+        host_network = NULL;
+    }
     if (host_network) { 
     if(!cJSON_IsBool(host_network))
     {
@@ -947,6 +1092,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->host_pid
     cJSON *host_pid = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "hostPID");
+    if (cJSON_IsNull(host_pid)) {
+        host_pid = NULL;
+    }
     if (host_pid) { 
     if(!cJSON_IsBool(host_pid))
     {
@@ -956,6 +1104,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->host_users
     cJSON *host_users = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "hostUsers");
+    if (cJSON_IsNull(host_users)) {
+        host_users = NULL;
+    }
     if (host_users) { 
     if(!cJSON_IsBool(host_users))
     {
@@ -965,6 +1116,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->hostname
     cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "hostname");
+    if (cJSON_IsNull(hostname)) {
+        hostname = NULL;
+    }
     if (hostname) { 
     if(!cJSON_IsString(hostname) && !cJSON_IsNull(hostname))
     {
@@ -974,6 +1128,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->image_pull_secrets
     cJSON *image_pull_secrets = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "imagePullSecrets");
+    if (cJSON_IsNull(image_pull_secrets)) {
+        image_pull_secrets = NULL;
+    }
     if (image_pull_secrets) { 
     cJSON *image_pull_secrets_local_nonprimitive = NULL;
     if(!cJSON_IsArray(image_pull_secrets)){
@@ -995,6 +1152,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->init_containers
     cJSON *init_containers = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "initContainers");
+    if (cJSON_IsNull(init_containers)) {
+        init_containers = NULL;
+    }
     if (init_containers) { 
     cJSON *init_containers_local_nonprimitive = NULL;
     if(!cJSON_IsArray(init_containers)){
@@ -1016,6 +1176,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->node_name
     cJSON *node_name = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "nodeName");
+    if (cJSON_IsNull(node_name)) {
+        node_name = NULL;
+    }
     if (node_name) { 
     if(!cJSON_IsString(node_name) && !cJSON_IsNull(node_name))
     {
@@ -1025,6 +1188,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->node_selector
     cJSON *node_selector = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "nodeSelector");
+    if (cJSON_IsNull(node_selector)) {
+        node_selector = NULL;
+    }
     if (node_selector) { 
     cJSON *node_selector_local_map = NULL;
     if(!cJSON_IsObject(node_selector) && !cJSON_IsNull(node_selector))
@@ -1050,12 +1216,18 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->os
     cJSON *os = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "os");
+    if (cJSON_IsNull(os)) {
+        os = NULL;
+    }
     if (os) { 
     os_local_nonprim = v1_pod_os_parseFromJSON(os); //nonprimitive
     }
 
     // v1_pod_spec->overhead
     cJSON *overhead = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "overhead");
+    if (cJSON_IsNull(overhead)) {
+        overhead = NULL;
+    }
     if (overhead) { 
     cJSON *overhead_local_map = NULL;
     if(!cJSON_IsObject(overhead) && !cJSON_IsNull(overhead))
@@ -1081,6 +1253,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->preemption_policy
     cJSON *preemption_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "preemptionPolicy");
+    if (cJSON_IsNull(preemption_policy)) {
+        preemption_policy = NULL;
+    }
     if (preemption_policy) { 
     if(!cJSON_IsString(preemption_policy) && !cJSON_IsNull(preemption_policy))
     {
@@ -1090,6 +1265,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->priority
     cJSON *priority = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "priority");
+    if (cJSON_IsNull(priority)) {
+        priority = NULL;
+    }
     if (priority) { 
     if(!cJSON_IsNumber(priority))
     {
@@ -1099,6 +1277,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->priority_class_name
     cJSON *priority_class_name = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "priorityClassName");
+    if (cJSON_IsNull(priority_class_name)) {
+        priority_class_name = NULL;
+    }
     if (priority_class_name) { 
     if(!cJSON_IsString(priority_class_name) && !cJSON_IsNull(priority_class_name))
     {
@@ -1108,6 +1289,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->readiness_gates
     cJSON *readiness_gates = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "readinessGates");
+    if (cJSON_IsNull(readiness_gates)) {
+        readiness_gates = NULL;
+    }
     if (readiness_gates) { 
     cJSON *readiness_gates_local_nonprimitive = NULL;
     if(!cJSON_IsArray(readiness_gates)){
@@ -1129,6 +1313,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->resource_claims
     cJSON *resource_claims = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "resourceClaims");
+    if (cJSON_IsNull(resource_claims)) {
+        resource_claims = NULL;
+    }
     if (resource_claims) { 
     cJSON *resource_claims_local_nonprimitive = NULL;
     if(!cJSON_IsArray(resource_claims)){
@@ -1148,8 +1335,20 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     }
     }
 
+    // v1_pod_spec->resources
+    cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "resources");
+    if (cJSON_IsNull(resources)) {
+        resources = NULL;
+    }
+    if (resources) { 
+    resources_local_nonprim = v1_resource_requirements_parseFromJSON(resources); //nonprimitive
+    }
+
     // v1_pod_spec->restart_policy
     cJSON *restart_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "restartPolicy");
+    if (cJSON_IsNull(restart_policy)) {
+        restart_policy = NULL;
+    }
     if (restart_policy) { 
     if(!cJSON_IsString(restart_policy) && !cJSON_IsNull(restart_policy))
     {
@@ -1159,6 +1358,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->runtime_class_name
     cJSON *runtime_class_name = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "runtimeClassName");
+    if (cJSON_IsNull(runtime_class_name)) {
+        runtime_class_name = NULL;
+    }
     if (runtime_class_name) { 
     if(!cJSON_IsString(runtime_class_name) && !cJSON_IsNull(runtime_class_name))
     {
@@ -1168,6 +1370,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->scheduler_name
     cJSON *scheduler_name = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "schedulerName");
+    if (cJSON_IsNull(scheduler_name)) {
+        scheduler_name = NULL;
+    }
     if (scheduler_name) { 
     if(!cJSON_IsString(scheduler_name) && !cJSON_IsNull(scheduler_name))
     {
@@ -1177,6 +1382,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->scheduling_gates
     cJSON *scheduling_gates = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "schedulingGates");
+    if (cJSON_IsNull(scheduling_gates)) {
+        scheduling_gates = NULL;
+    }
     if (scheduling_gates) { 
     cJSON *scheduling_gates_local_nonprimitive = NULL;
     if(!cJSON_IsArray(scheduling_gates)){
@@ -1198,12 +1406,18 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->security_context
     cJSON *security_context = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "securityContext");
+    if (cJSON_IsNull(security_context)) {
+        security_context = NULL;
+    }
     if (security_context) { 
     security_context_local_nonprim = v1_pod_security_context_parseFromJSON(security_context); //nonprimitive
     }
 
     // v1_pod_spec->service_account
     cJSON *service_account = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "serviceAccount");
+    if (cJSON_IsNull(service_account)) {
+        service_account = NULL;
+    }
     if (service_account) { 
     if(!cJSON_IsString(service_account) && !cJSON_IsNull(service_account))
     {
@@ -1213,6 +1427,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->service_account_name
     cJSON *service_account_name = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "serviceAccountName");
+    if (cJSON_IsNull(service_account_name)) {
+        service_account_name = NULL;
+    }
     if (service_account_name) { 
     if(!cJSON_IsString(service_account_name) && !cJSON_IsNull(service_account_name))
     {
@@ -1222,6 +1439,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->set_hostname_as_fqdn
     cJSON *set_hostname_as_fqdn = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "setHostnameAsFQDN");
+    if (cJSON_IsNull(set_hostname_as_fqdn)) {
+        set_hostname_as_fqdn = NULL;
+    }
     if (set_hostname_as_fqdn) { 
     if(!cJSON_IsBool(set_hostname_as_fqdn))
     {
@@ -1231,6 +1451,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->share_process_namespace
     cJSON *share_process_namespace = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "shareProcessNamespace");
+    if (cJSON_IsNull(share_process_namespace)) {
+        share_process_namespace = NULL;
+    }
     if (share_process_namespace) { 
     if(!cJSON_IsBool(share_process_namespace))
     {
@@ -1240,6 +1463,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->subdomain
     cJSON *subdomain = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "subdomain");
+    if (cJSON_IsNull(subdomain)) {
+        subdomain = NULL;
+    }
     if (subdomain) { 
     if(!cJSON_IsString(subdomain) && !cJSON_IsNull(subdomain))
     {
@@ -1249,6 +1475,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->termination_grace_period_seconds
     cJSON *termination_grace_period_seconds = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "terminationGracePeriodSeconds");
+    if (cJSON_IsNull(termination_grace_period_seconds)) {
+        termination_grace_period_seconds = NULL;
+    }
     if (termination_grace_period_seconds) { 
     if(!cJSON_IsNumber(termination_grace_period_seconds))
     {
@@ -1258,6 +1487,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->tolerations
     cJSON *tolerations = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "tolerations");
+    if (cJSON_IsNull(tolerations)) {
+        tolerations = NULL;
+    }
     if (tolerations) { 
     cJSON *tolerations_local_nonprimitive = NULL;
     if(!cJSON_IsArray(tolerations)){
@@ -1279,6 +1511,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->topology_spread_constraints
     cJSON *topology_spread_constraints = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "topologySpreadConstraints");
+    if (cJSON_IsNull(topology_spread_constraints)) {
+        topology_spread_constraints = NULL;
+    }
     if (topology_spread_constraints) { 
     cJSON *topology_spread_constraints_local_nonprimitive = NULL;
     if(!cJSON_IsArray(topology_spread_constraints)){
@@ -1300,6 +1535,9 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     // v1_pod_spec->volumes
     cJSON *volumes = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "volumes");
+    if (cJSON_IsNull(volumes)) {
+        volumes = NULL;
+    }
     if (volumes) { 
     cJSON *volumes_local_nonprimitive = NULL;
     if(!cJSON_IsArray(volumes)){
@@ -1320,7 +1558,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     }
 
 
-    v1_pod_spec_local_var = v1_pod_spec_create (
+    v1_pod_spec_local_var = v1_pod_spec_create_internal (
         active_deadline_seconds ? active_deadline_seconds->valuedouble : 0,
         affinity ? affinity_local_nonprim : NULL,
         automount_service_account_token ? automount_service_account_token->valueint : 0,
@@ -1346,6 +1584,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         priority_class_name && !cJSON_IsNull(priority_class_name) ? strdup(priority_class_name->valuestring) : NULL,
         readiness_gates ? readiness_gatesList : NULL,
         resource_claims ? resource_claimsList : NULL,
+        resources ? resources_local_nonprim : NULL,
         restart_policy && !cJSON_IsNull(restart_policy) ? strdup(restart_policy->valuestring) : NULL,
         runtime_class_name && !cJSON_IsNull(runtime_class_name) ? strdup(runtime_class_name->valuestring) : NULL,
         scheduler_name && !cJSON_IsNull(scheduler_name) ? strdup(scheduler_name->valuestring) : NULL,
@@ -1420,7 +1659,7 @@ end:
     if (node_selectorList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, node_selectorList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);
@@ -1438,7 +1677,7 @@ end:
     if (overheadList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, overheadList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);
@@ -1466,6 +1705,10 @@ end:
         }
         list_freeList(resource_claimsList);
         resource_claimsList = NULL;
+    }
+    if (resources_local_nonprim) {
+        v1_resource_requirements_free(resources_local_nonprim);
+        resources_local_nonprim = NULL;
     }
     if (scheduling_gatesList) {
         listEntry_t *listEntry = NULL;

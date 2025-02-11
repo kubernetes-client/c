@@ -5,7 +5,7 @@
 
 
 
-v1_volume_attachment_spec_t *v1_volume_attachment_spec_create(
+static v1_volume_attachment_spec_t *v1_volume_attachment_spec_create_internal(
     char *attacher,
     char *node_name,
     v1_volume_attachment_source_t *source
@@ -18,12 +18,28 @@ v1_volume_attachment_spec_t *v1_volume_attachment_spec_create(
     v1_volume_attachment_spec_local_var->node_name = node_name;
     v1_volume_attachment_spec_local_var->source = source;
 
+    v1_volume_attachment_spec_local_var->_library_owned = 1;
     return v1_volume_attachment_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_volume_attachment_spec_t *v1_volume_attachment_spec_create(
+    char *attacher,
+    char *node_name,
+    v1_volume_attachment_source_t *source
+    ) {
+    return v1_volume_attachment_spec_create_internal (
+        attacher,
+        node_name,
+        source
+        );
+}
 
 void v1_volume_attachment_spec_free(v1_volume_attachment_spec_t *v1_volume_attachment_spec) {
     if(NULL == v1_volume_attachment_spec){
+        return ;
+    }
+    if(v1_volume_attachment_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_volume_attachment_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -93,6 +109,9 @@ v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(cJSON *v1_v
 
     // v1_volume_attachment_spec->attacher
     cJSON *attacher = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_specJSON, "attacher");
+    if (cJSON_IsNull(attacher)) {
+        attacher = NULL;
+    }
     if (!attacher) {
         goto end;
     }
@@ -105,6 +124,9 @@ v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(cJSON *v1_v
 
     // v1_volume_attachment_spec->node_name
     cJSON *node_name = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_specJSON, "nodeName");
+    if (cJSON_IsNull(node_name)) {
+        node_name = NULL;
+    }
     if (!node_name) {
         goto end;
     }
@@ -117,6 +139,9 @@ v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(cJSON *v1_v
 
     // v1_volume_attachment_spec->source
     cJSON *source = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_specJSON, "source");
+    if (cJSON_IsNull(source)) {
+        source = NULL;
+    }
     if (!source) {
         goto end;
     }
@@ -125,7 +150,7 @@ v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(cJSON *v1_v
     source_local_nonprim = v1_volume_attachment_source_parseFromJSON(source); //nonprimitive
 
 
-    v1_volume_attachment_spec_local_var = v1_volume_attachment_spec_create (
+    v1_volume_attachment_spec_local_var = v1_volume_attachment_spec_create_internal (
         strdup(attacher->valuestring),
         strdup(node_name->valuestring),
         source_local_nonprim

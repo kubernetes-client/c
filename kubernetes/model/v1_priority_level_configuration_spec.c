@@ -5,7 +5,7 @@
 
 
 
-v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec_create(
+static v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec_create_internal(
     v1_exempt_priority_level_configuration_t *exempt,
     v1_limited_priority_level_configuration_t *limited,
     char *type
@@ -18,12 +18,28 @@ v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec_cre
     v1_priority_level_configuration_spec_local_var->limited = limited;
     v1_priority_level_configuration_spec_local_var->type = type;
 
+    v1_priority_level_configuration_spec_local_var->_library_owned = 1;
     return v1_priority_level_configuration_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec_create(
+    v1_exempt_priority_level_configuration_t *exempt,
+    v1_limited_priority_level_configuration_t *limited,
+    char *type
+    ) {
+    return v1_priority_level_configuration_spec_create_internal (
+        exempt,
+        limited,
+        type
+        );
+}
 
 void v1_priority_level_configuration_spec_free(v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec) {
     if(NULL == v1_priority_level_configuration_spec){
+        return ;
+    }
+    if(v1_priority_level_configuration_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_priority_level_configuration_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -99,18 +115,27 @@ v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec_par
 
     // v1_priority_level_configuration_spec->exempt
     cJSON *exempt = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_specJSON, "exempt");
+    if (cJSON_IsNull(exempt)) {
+        exempt = NULL;
+    }
     if (exempt) { 
     exempt_local_nonprim = v1_exempt_priority_level_configuration_parseFromJSON(exempt); //nonprimitive
     }
 
     // v1_priority_level_configuration_spec->limited
     cJSON *limited = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_specJSON, "limited");
+    if (cJSON_IsNull(limited)) {
+        limited = NULL;
+    }
     if (limited) { 
     limited_local_nonprim = v1_limited_priority_level_configuration_parseFromJSON(limited); //nonprimitive
     }
 
     // v1_priority_level_configuration_spec->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_specJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -122,7 +147,7 @@ v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec_par
     }
 
 
-    v1_priority_level_configuration_spec_local_var = v1_priority_level_configuration_spec_create (
+    v1_priority_level_configuration_spec_local_var = v1_priority_level_configuration_spec_create_internal (
         exempt ? exempt_local_nonprim : NULL,
         limited ? limited_local_nonprim : NULL,
         strdup(type->valuestring)

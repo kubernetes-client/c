@@ -5,7 +5,7 @@
 
 
 
-v1_pod_dns_config_t *v1_pod_dns_config_create(
+static v1_pod_dns_config_t *v1_pod_dns_config_create_internal(
     list_t *nameservers,
     list_t *options,
     list_t *searches
@@ -18,12 +18,28 @@ v1_pod_dns_config_t *v1_pod_dns_config_create(
     v1_pod_dns_config_local_var->options = options;
     v1_pod_dns_config_local_var->searches = searches;
 
+    v1_pod_dns_config_local_var->_library_owned = 1;
     return v1_pod_dns_config_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_dns_config_t *v1_pod_dns_config_create(
+    list_t *nameservers,
+    list_t *options,
+    list_t *searches
+    ) {
+    return v1_pod_dns_config_create_internal (
+        nameservers,
+        options,
+        searches
+        );
+}
 
 void v1_pod_dns_config_free(v1_pod_dns_config_t *v1_pod_dns_config) {
     if(NULL == v1_pod_dns_config){
+        return ;
+    }
+    if(v1_pod_dns_config->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_dns_config_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -63,7 +79,7 @@ cJSON *v1_pod_dns_config_convertToJSON(v1_pod_dns_config_t *v1_pod_dns_config) {
 
     listEntry_t *nameserversListEntry;
     list_ForEach(nameserversListEntry, v1_pod_dns_config->nameservers) {
-    if(cJSON_AddStringToObject(nameservers, "", (char*)nameserversListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(nameservers, "", nameserversListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -100,7 +116,7 @@ cJSON *v1_pod_dns_config_convertToJSON(v1_pod_dns_config_t *v1_pod_dns_config) {
 
     listEntry_t *searchesListEntry;
     list_ForEach(searchesListEntry, v1_pod_dns_config->searches) {
-    if(cJSON_AddStringToObject(searches, "", (char*)searchesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(searches, "", searchesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -130,6 +146,9 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
 
     // v1_pod_dns_config->nameservers
     cJSON *nameservers = cJSON_GetObjectItemCaseSensitive(v1_pod_dns_configJSON, "nameservers");
+    if (cJSON_IsNull(nameservers)) {
+        nameservers = NULL;
+    }
     if (nameservers) { 
     cJSON *nameservers_local = NULL;
     if(!cJSON_IsArray(nameservers)) {
@@ -149,6 +168,9 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
 
     // v1_pod_dns_config->options
     cJSON *options = cJSON_GetObjectItemCaseSensitive(v1_pod_dns_configJSON, "options");
+    if (cJSON_IsNull(options)) {
+        options = NULL;
+    }
     if (options) { 
     cJSON *options_local_nonprimitive = NULL;
     if(!cJSON_IsArray(options)){
@@ -170,6 +192,9 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
 
     // v1_pod_dns_config->searches
     cJSON *searches = cJSON_GetObjectItemCaseSensitive(v1_pod_dns_configJSON, "searches");
+    if (cJSON_IsNull(searches)) {
+        searches = NULL;
+    }
     if (searches) { 
     cJSON *searches_local = NULL;
     if(!cJSON_IsArray(searches)) {
@@ -188,7 +213,7 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
     }
 
 
-    v1_pod_dns_config_local_var = v1_pod_dns_config_create (
+    v1_pod_dns_config_local_var = v1_pod_dns_config_create_internal (
         nameservers ? nameserversList : NULL,
         options ? optionsList : NULL,
         searches ? searchesList : NULL

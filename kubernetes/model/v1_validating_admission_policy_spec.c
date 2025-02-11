@@ -5,7 +5,7 @@
 
 
 
-v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_create(
+static v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_create_internal(
     list_t *audit_annotations,
     char *failure_policy,
     list_t *match_conditions,
@@ -26,12 +26,36 @@ v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_creat
     v1_validating_admission_policy_spec_local_var->validations = validations;
     v1_validating_admission_policy_spec_local_var->variables = variables;
 
+    v1_validating_admission_policy_spec_local_var->_library_owned = 1;
     return v1_validating_admission_policy_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_create(
+    list_t *audit_annotations,
+    char *failure_policy,
+    list_t *match_conditions,
+    v1_match_resources_t *match_constraints,
+    v1_param_kind_t *param_kind,
+    list_t *validations,
+    list_t *variables
+    ) {
+    return v1_validating_admission_policy_spec_create_internal (
+        audit_annotations,
+        failure_policy,
+        match_conditions,
+        match_constraints,
+        param_kind,
+        validations,
+        variables
+        );
+}
 
 void v1_validating_admission_policy_spec_free(v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec) {
     if(NULL == v1_validating_admission_policy_spec){
+        return ;
+    }
+    if(v1_validating_admission_policy_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_validating_admission_policy_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -226,6 +250,9 @@ v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_parse
 
     // v1_validating_admission_policy_spec->audit_annotations
     cJSON *audit_annotations = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_specJSON, "auditAnnotations");
+    if (cJSON_IsNull(audit_annotations)) {
+        audit_annotations = NULL;
+    }
     if (audit_annotations) { 
     cJSON *audit_annotations_local_nonprimitive = NULL;
     if(!cJSON_IsArray(audit_annotations)){
@@ -247,6 +274,9 @@ v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_parse
 
     // v1_validating_admission_policy_spec->failure_policy
     cJSON *failure_policy = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_specJSON, "failurePolicy");
+    if (cJSON_IsNull(failure_policy)) {
+        failure_policy = NULL;
+    }
     if (failure_policy) { 
     if(!cJSON_IsString(failure_policy) && !cJSON_IsNull(failure_policy))
     {
@@ -256,6 +286,9 @@ v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_parse
 
     // v1_validating_admission_policy_spec->match_conditions
     cJSON *match_conditions = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_specJSON, "matchConditions");
+    if (cJSON_IsNull(match_conditions)) {
+        match_conditions = NULL;
+    }
     if (match_conditions) { 
     cJSON *match_conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(match_conditions)){
@@ -277,18 +310,27 @@ v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_parse
 
     // v1_validating_admission_policy_spec->match_constraints
     cJSON *match_constraints = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_specJSON, "matchConstraints");
+    if (cJSON_IsNull(match_constraints)) {
+        match_constraints = NULL;
+    }
     if (match_constraints) { 
     match_constraints_local_nonprim = v1_match_resources_parseFromJSON(match_constraints); //nonprimitive
     }
 
     // v1_validating_admission_policy_spec->param_kind
     cJSON *param_kind = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_specJSON, "paramKind");
+    if (cJSON_IsNull(param_kind)) {
+        param_kind = NULL;
+    }
     if (param_kind) { 
     param_kind_local_nonprim = v1_param_kind_parseFromJSON(param_kind); //nonprimitive
     }
 
     // v1_validating_admission_policy_spec->validations
     cJSON *validations = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_specJSON, "validations");
+    if (cJSON_IsNull(validations)) {
+        validations = NULL;
+    }
     if (validations) { 
     cJSON *validations_local_nonprimitive = NULL;
     if(!cJSON_IsArray(validations)){
@@ -310,6 +352,9 @@ v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_parse
 
     // v1_validating_admission_policy_spec->variables
     cJSON *variables = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_specJSON, "variables");
+    if (cJSON_IsNull(variables)) {
+        variables = NULL;
+    }
     if (variables) { 
     cJSON *variables_local_nonprimitive = NULL;
     if(!cJSON_IsArray(variables)){
@@ -330,7 +375,7 @@ v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_parse
     }
 
 
-    v1_validating_admission_policy_spec_local_var = v1_validating_admission_policy_spec_create (
+    v1_validating_admission_policy_spec_local_var = v1_validating_admission_policy_spec_create_internal (
         audit_annotations ? audit_annotationsList : NULL,
         failure_policy && !cJSON_IsNull(failure_policy) ? strdup(failure_policy->valuestring) : NULL,
         match_conditions ? match_conditionsList : NULL,

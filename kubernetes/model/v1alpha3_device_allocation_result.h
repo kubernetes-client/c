@@ -24,9 +24,10 @@ typedef struct v1alpha3_device_allocation_result_t {
     list_t *config; //nonprimitive container
     list_t *results; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_allocation_result_t;
 
-v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_create(
+__attribute__((deprecated)) v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_create(
     list_t *config,
     list_t *results
 );

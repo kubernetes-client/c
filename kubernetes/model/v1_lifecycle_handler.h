@@ -28,9 +28,10 @@ typedef struct v1_lifecycle_handler_t {
     struct v1_sleep_action_t *sleep; //model
     struct v1_tcp_socket_action_t *tcp_socket; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_lifecycle_handler_t;
 
-v1_lifecycle_handler_t *v1_lifecycle_handler_create(
+__attribute__((deprecated)) v1_lifecycle_handler_t *v1_lifecycle_handler_create(
     v1_exec_action_t *exec,
     v1_http_get_action_t *http_get,
     v1_sleep_action_t *sleep,

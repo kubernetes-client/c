@@ -26,9 +26,10 @@ typedef struct v1alpha1_storage_version_condition_t {
     char *status; // string
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha1_storage_version_condition_t;
 
-v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_create(
+__attribute__((deprecated)) v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_create(
     char *last_transition_time,
     char *message,
     long observed_generation,

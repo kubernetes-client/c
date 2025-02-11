@@ -5,7 +5,7 @@
 
 
 
-v1_ingress_service_backend_t *v1_ingress_service_backend_create(
+static v1_ingress_service_backend_t *v1_ingress_service_backend_create_internal(
     char *name,
     v1_service_backend_port_t *port
     ) {
@@ -16,12 +16,26 @@ v1_ingress_service_backend_t *v1_ingress_service_backend_create(
     v1_ingress_service_backend_local_var->name = name;
     v1_ingress_service_backend_local_var->port = port;
 
+    v1_ingress_service_backend_local_var->_library_owned = 1;
     return v1_ingress_service_backend_local_var;
 }
 
+__attribute__((deprecated)) v1_ingress_service_backend_t *v1_ingress_service_backend_create(
+    char *name,
+    v1_service_backend_port_t *port
+    ) {
+    return v1_ingress_service_backend_create_internal (
+        name,
+        port
+        );
+}
 
 void v1_ingress_service_backend_free(v1_ingress_service_backend_t *v1_ingress_service_backend) {
     if(NULL == v1_ingress_service_backend){
+        return ;
+    }
+    if(v1_ingress_service_backend->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_ingress_service_backend_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -77,6 +91,9 @@ v1_ingress_service_backend_t *v1_ingress_service_backend_parseFromJSON(cJSON *v1
 
     // v1_ingress_service_backend->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_ingress_service_backendJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -89,12 +106,15 @@ v1_ingress_service_backend_t *v1_ingress_service_backend_parseFromJSON(cJSON *v1
 
     // v1_ingress_service_backend->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_ingress_service_backendJSON, "port");
+    if (cJSON_IsNull(port)) {
+        port = NULL;
+    }
     if (port) { 
     port_local_nonprim = v1_service_backend_port_parseFromJSON(port); //nonprimitive
     }
 
 
-    v1_ingress_service_backend_local_var = v1_ingress_service_backend_create (
+    v1_ingress_service_backend_local_var = v1_ingress_service_backend_create_internal (
         strdup(name->valuestring),
         port ? port_local_nonprim : NULL
         );

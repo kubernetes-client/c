@@ -5,7 +5,7 @@
 
 
 
-v1_modify_volume_status_t *v1_modify_volume_status_create(
+static v1_modify_volume_status_t *v1_modify_volume_status_create_internal(
     char *status,
     char *target_volume_attributes_class_name
     ) {
@@ -16,12 +16,26 @@ v1_modify_volume_status_t *v1_modify_volume_status_create(
     v1_modify_volume_status_local_var->status = status;
     v1_modify_volume_status_local_var->target_volume_attributes_class_name = target_volume_attributes_class_name;
 
+    v1_modify_volume_status_local_var->_library_owned = 1;
     return v1_modify_volume_status_local_var;
 }
 
+__attribute__((deprecated)) v1_modify_volume_status_t *v1_modify_volume_status_create(
+    char *status,
+    char *target_volume_attributes_class_name
+    ) {
+    return v1_modify_volume_status_create_internal (
+        status,
+        target_volume_attributes_class_name
+        );
+}
 
 void v1_modify_volume_status_free(v1_modify_volume_status_t *v1_modify_volume_status) {
     if(NULL == v1_modify_volume_status){
+        return ;
+    }
+    if(v1_modify_volume_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_modify_volume_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -69,6 +83,9 @@ v1_modify_volume_status_t *v1_modify_volume_status_parseFromJSON(cJSON *v1_modif
 
     // v1_modify_volume_status->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_modify_volume_statusJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
     if (!status) {
         goto end;
     }
@@ -81,6 +98,9 @@ v1_modify_volume_status_t *v1_modify_volume_status_parseFromJSON(cJSON *v1_modif
 
     // v1_modify_volume_status->target_volume_attributes_class_name
     cJSON *target_volume_attributes_class_name = cJSON_GetObjectItemCaseSensitive(v1_modify_volume_statusJSON, "targetVolumeAttributesClassName");
+    if (cJSON_IsNull(target_volume_attributes_class_name)) {
+        target_volume_attributes_class_name = NULL;
+    }
     if (target_volume_attributes_class_name) { 
     if(!cJSON_IsString(target_volume_attributes_class_name) && !cJSON_IsNull(target_volume_attributes_class_name))
     {
@@ -89,7 +109,7 @@ v1_modify_volume_status_t *v1_modify_volume_status_parseFromJSON(cJSON *v1_modif
     }
 
 
-    v1_modify_volume_status_local_var = v1_modify_volume_status_create (
+    v1_modify_volume_status_local_var = v1_modify_volume_status_create_internal (
         strdup(status->valuestring),
         target_volume_attributes_class_name && !cJSON_IsNull(target_volume_attributes_class_name) ? strdup(target_volume_attributes_class_name->valuestring) : NULL
         );

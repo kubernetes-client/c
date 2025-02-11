@@ -28,9 +28,10 @@ typedef struct v1beta1_service_cidr_t {
     struct v1beta1_service_cidr_spec_t *spec; //model
     struct v1beta1_service_cidr_status_t *status; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_service_cidr_t;
 
-v1beta1_service_cidr_t *v1beta1_service_cidr_create(
+__attribute__((deprecated)) v1beta1_service_cidr_t *v1beta1_service_cidr_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

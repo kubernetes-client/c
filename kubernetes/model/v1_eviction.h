@@ -26,9 +26,10 @@ typedef struct v1_eviction_t {
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_eviction_t;
 
-v1_eviction_t *v1_eviction_create(
+__attribute__((deprecated)) v1_eviction_t *v1_eviction_create(
     char *api_version,
     v1_delete_options_t *delete_options,
     char *kind,

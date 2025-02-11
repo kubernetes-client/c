@@ -5,7 +5,7 @@
 
 
 
-v1_service_port_t *v1_service_port_create(
+static v1_service_port_t *v1_service_port_create_internal(
     char *app_protocol,
     char *name,
     int node_port,
@@ -24,12 +24,34 @@ v1_service_port_t *v1_service_port_create(
     v1_service_port_local_var->protocol = protocol;
     v1_service_port_local_var->target_port = target_port;
 
+    v1_service_port_local_var->_library_owned = 1;
     return v1_service_port_local_var;
 }
 
+__attribute__((deprecated)) v1_service_port_t *v1_service_port_create(
+    char *app_protocol,
+    char *name,
+    int node_port,
+    int port,
+    char *protocol,
+    int_or_string_t *target_port
+    ) {
+    return v1_service_port_create_internal (
+        app_protocol,
+        name,
+        node_port,
+        port,
+        protocol,
+        target_port
+        );
+}
 
 void v1_service_port_free(v1_service_port_t *v1_service_port) {
     if(NULL == v1_service_port){
+        return ;
+    }
+    if(v1_service_port->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_service_port_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -125,6 +147,9 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
     // v1_service_port->app_protocol
     cJSON *app_protocol = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "appProtocol");
+    if (cJSON_IsNull(app_protocol)) {
+        app_protocol = NULL;
+    }
     if (app_protocol) { 
     if(!cJSON_IsString(app_protocol) && !cJSON_IsNull(app_protocol))
     {
@@ -134,6 +159,9 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
     // v1_service_port->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -143,6 +171,9 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
     // v1_service_port->node_port
     cJSON *node_port = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "nodePort");
+    if (cJSON_IsNull(node_port)) {
+        node_port = NULL;
+    }
     if (node_port) { 
     if(!cJSON_IsNumber(node_port))
     {
@@ -152,6 +183,9 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
     // v1_service_port->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "port");
+    if (cJSON_IsNull(port)) {
+        port = NULL;
+    }
     if (!port) {
         goto end;
     }
@@ -164,6 +198,9 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
     // v1_service_port->protocol
     cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "protocol");
+    if (cJSON_IsNull(protocol)) {
+        protocol = NULL;
+    }
     if (protocol) { 
     if(!cJSON_IsString(protocol) && !cJSON_IsNull(protocol))
     {
@@ -173,12 +210,15 @@ v1_service_port_t *v1_service_port_parseFromJSON(cJSON *v1_service_portJSON){
 
     // v1_service_port->target_port
     cJSON *target_port = cJSON_GetObjectItemCaseSensitive(v1_service_portJSON, "targetPort");
+    if (cJSON_IsNull(target_port)) {
+        target_port = NULL;
+    }
     if (target_port) { 
     target_port_local_nonprim = int_or_string_parseFromJSON(target_port); //custom
     }
 
 
-    v1_service_port_local_var = v1_service_port_create (
+    v1_service_port_local_var = v1_service_port_create_internal (
         app_protocol && !cJSON_IsNull(app_protocol) ? strdup(app_protocol->valuestring) : NULL,
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         node_port ? node_port->valuedouble : 0,

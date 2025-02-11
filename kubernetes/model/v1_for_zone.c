@@ -5,7 +5,7 @@
 
 
 
-v1_for_zone_t *v1_for_zone_create(
+static v1_for_zone_t *v1_for_zone_create_internal(
     char *name
     ) {
     v1_for_zone_t *v1_for_zone_local_var = malloc(sizeof(v1_for_zone_t));
@@ -14,12 +14,24 @@ v1_for_zone_t *v1_for_zone_create(
     }
     v1_for_zone_local_var->name = name;
 
+    v1_for_zone_local_var->_library_owned = 1;
     return v1_for_zone_local_var;
 }
 
+__attribute__((deprecated)) v1_for_zone_t *v1_for_zone_create(
+    char *name
+    ) {
+    return v1_for_zone_create_internal (
+        name
+        );
+}
 
 void v1_for_zone_free(v1_for_zone_t *v1_for_zone) {
     if(NULL == v1_for_zone){
+        return ;
+    }
+    if(v1_for_zone->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_for_zone_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -55,6 +67,9 @@ v1_for_zone_t *v1_for_zone_parseFromJSON(cJSON *v1_for_zoneJSON){
 
     // v1_for_zone->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_for_zoneJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -66,7 +81,7 @@ v1_for_zone_t *v1_for_zone_parseFromJSON(cJSON *v1_for_zoneJSON){
     }
 
 
-    v1_for_zone_local_var = v1_for_zone_create (
+    v1_for_zone_local_var = v1_for_zone_create_internal (
         strdup(name->valuestring)
         );
 

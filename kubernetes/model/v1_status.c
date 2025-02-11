@@ -5,7 +5,7 @@
 
 
 
-v1_status_t *v1_status_create(
+static v1_status_t *v1_status_create_internal(
     char *api_version,
     int code,
     v1_status_details_t *details,
@@ -28,12 +28,38 @@ v1_status_t *v1_status_create(
     v1_status_local_var->reason = reason;
     v1_status_local_var->status = status;
 
+    v1_status_local_var->_library_owned = 1;
     return v1_status_local_var;
 }
 
+__attribute__((deprecated)) v1_status_t *v1_status_create(
+    char *api_version,
+    int code,
+    v1_status_details_t *details,
+    char *kind,
+    char *message,
+    v1_list_meta_t *metadata,
+    char *reason,
+    char *status
+    ) {
+    return v1_status_create_internal (
+        api_version,
+        code,
+        details,
+        kind,
+        message,
+        metadata,
+        reason,
+        status
+        );
+}
 
 void v1_status_free(v1_status_t *v1_status) {
     if(NULL == v1_status){
+        return ;
+    }
+    if(v1_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -164,6 +190,9 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
     // v1_status->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -173,6 +202,9 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
     // v1_status->code
     cJSON *code = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "code");
+    if (cJSON_IsNull(code)) {
+        code = NULL;
+    }
     if (code) { 
     if(!cJSON_IsNumber(code))
     {
@@ -182,12 +214,18 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
     // v1_status->details
     cJSON *details = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "details");
+    if (cJSON_IsNull(details)) {
+        details = NULL;
+    }
     if (details) { 
     details_local_nonprim = v1_status_details_parseFromJSON(details); //nonprimitive
     }
 
     // v1_status->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -197,6 +235,9 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
     // v1_status->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "message");
+    if (cJSON_IsNull(message)) {
+        message = NULL;
+    }
     if (message) { 
     if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
@@ -206,12 +247,18 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
     // v1_status->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_status->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "reason");
+    if (cJSON_IsNull(reason)) {
+        reason = NULL;
+    }
     if (reason) { 
     if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
@@ -221,6 +268,9 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
     // v1_status->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
     if (status) { 
     if(!cJSON_IsString(status) && !cJSON_IsNull(status))
     {
@@ -229,7 +279,7 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
     }
 
 
-    v1_status_local_var = v1_status_create (
+    v1_status_local_var = v1_status_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         code ? code->valuedouble : 0,
         details ? details_local_nonprim : NULL,

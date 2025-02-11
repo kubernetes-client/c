@@ -24,9 +24,10 @@ typedef struct v2_external_metric_status_t {
     struct v2_metric_value_status_t *current; //model
     struct v2_metric_identifier_t *metric; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v2_external_metric_status_t;
 
-v2_external_metric_status_t *v2_external_metric_status_create(
+__attribute__((deprecated)) v2_external_metric_status_t *v2_external_metric_status_create(
     v2_metric_value_status_t *current,
     v2_metric_identifier_t *metric
 );

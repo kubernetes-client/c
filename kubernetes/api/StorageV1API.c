@@ -5,11 +5,6 @@
 
 #define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
-#define intToStr(dst, src) \
-    do {\
-    char dst[256];\
-    snprintf(dst, 256, "%ld", (long int)(src));\
-}while(0)
 
 
 // create a CSIDriver
@@ -23,11 +18,14 @@ StorageV1API_createCSIDriver(apiClient_t *apiClient, v1_csi_driver_t *body, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csidrivers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csidrivers");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csidrivers");
+
 
 
 
@@ -84,13 +82,15 @@ StorageV1API_createCSIDriver(apiClient_t *apiClient, v1_csi_driver_t *body, char
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_csi_driver_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -99,6 +99,7 @@ StorageV1API_createCSIDriver(apiClient_t *apiClient, v1_csi_driver_t *body, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -118,11 +119,14 @@ StorageV1API_createCSIDriver(apiClient_t *apiClient, v1_csi_driver_t *body, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_driver_t *elementToReturn = v1_csi_driver_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_driver_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_driver_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -208,11 +212,14 @@ StorageV1API_createCSINode(apiClient_t *apiClient, v1_csi_node_t *body, char *pr
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csinodes")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csinodes");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes");
+
 
 
 
@@ -269,13 +276,15 @@ StorageV1API_createCSINode(apiClient_t *apiClient, v1_csi_node_t *body, char *pr
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_csi_node_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -284,6 +293,7 @@ StorageV1API_createCSINode(apiClient_t *apiClient, v1_csi_node_t *body, char *pr
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -303,11 +313,14 @@ StorageV1API_createCSINode(apiClient_t *apiClient, v1_csi_node_t *body, char *pr
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_node_t *elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -393,15 +406,20 @@ StorageV1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -464,13 +482,15 @@ StorageV1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_csi_storage_capacity_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -479,6 +499,7 @@ StorageV1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -498,11 +519,14 @@ StorageV1API_createNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_storage_capacity_t *elementToReturn = v1_csi_storage_capacity_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_storage_capacity_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_storage_capacity_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -589,11 +613,14 @@ StorageV1API_createStorageClass(apiClient_t *apiClient, v1_storage_class_t *body
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/storageclasses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/storageclasses");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/storageclasses");
+
 
 
 
@@ -650,13 +677,15 @@ StorageV1API_createStorageClass(apiClient_t *apiClient, v1_storage_class_t *body
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_storage_class_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -665,6 +694,7 @@ StorageV1API_createStorageClass(apiClient_t *apiClient, v1_storage_class_t *body
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -684,11 +714,14 @@ StorageV1API_createStorageClass(apiClient_t *apiClient, v1_storage_class_t *body
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_storage_class_t *elementToReturn = v1_storage_class_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_storage_class_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_storage_class_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -774,11 +807,14 @@ StorageV1API_createVolumeAttachment(apiClient_t *apiClient, v1_volume_attachment
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/volumeattachments")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/volumeattachments");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/volumeattachments");
+
 
 
 
@@ -835,13 +871,15 @@ StorageV1API_createVolumeAttachment(apiClient_t *apiClient, v1_volume_attachment
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_volume_attachment_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -850,6 +888,7 @@ StorageV1API_createVolumeAttachment(apiClient_t *apiClient, v1_volume_attachment
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -869,11 +908,14 @@ StorageV1API_createVolumeAttachment(apiClient_t *apiClient, v1_volume_attachment
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_volume_attachment_t *elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_volume_attachment_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -951,7 +993,7 @@ end:
 // delete a CSIDriver
 //
 v1_csi_driver_t*
-StorageV1API_deleteCSIDriver(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+StorageV1API_deleteCSIDriver(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -959,15 +1001,20 @@ StorageV1API_deleteCSIDriver(apiClient_t *apiClient, char *name, char *pretty, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csidrivers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csidrivers/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csidrivers/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1016,6 +1063,19 @@ StorageV1API_deleteCSIDriver(apiClient_t *apiClient, char *name, char *pretty, c
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -1044,13 +1104,15 @@ StorageV1API_deleteCSIDriver(apiClient_t *apiClient, char *name, char *pretty, c
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1059,6 +1121,7 @@ StorageV1API_deleteCSIDriver(apiClient_t *apiClient, char *name, char *pretty, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1074,11 +1137,14 @@ StorageV1API_deleteCSIDriver(apiClient_t *apiClient, char *name, char *pretty, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_driver_t *elementToReturn = v1_csi_driver_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_driver_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_driver_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1134,6 +1200,18 @@ StorageV1API_deleteCSIDriver(apiClient_t *apiClient, char *name, char *pretty, c
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -1169,7 +1247,7 @@ end:
 // delete a CSINode
 //
 v1_csi_node_t*
-StorageV1API_deleteCSINode(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+StorageV1API_deleteCSINode(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1177,15 +1255,20 @@ StorageV1API_deleteCSINode(apiClient_t *apiClient, char *name, char *pretty, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csinodes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csinodes/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1234,6 +1317,19 @@ StorageV1API_deleteCSINode(apiClient_t *apiClient, char *name, char *pretty, cha
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -1262,13 +1358,15 @@ StorageV1API_deleteCSINode(apiClient_t *apiClient, char *name, char *pretty, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1277,6 +1375,7 @@ StorageV1API_deleteCSINode(apiClient_t *apiClient, char *name, char *pretty, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1292,11 +1391,14 @@ StorageV1API_deleteCSINode(apiClient_t *apiClient, char *name, char *pretty, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_node_t *elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1353,6 +1455,18 @@ StorageV1API_deleteCSINode(apiClient_t *apiClient, char *name, char *pretty, cha
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
     }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
@@ -1387,7 +1501,7 @@ end:
 // delete collection of CSIDriver
 //
 v1_status_t*
-StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1395,11 +1509,14 @@ StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csidrivers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csidrivers");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csidrivers");
+
 
 
 
@@ -1463,6 +1580,19 @@ StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, cha
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -1569,13 +1699,15 @@ StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1584,6 +1716,7 @@ StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1595,11 +1728,14 @@ StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1678,6 +1814,18 @@ StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, cha
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -1785,7 +1933,7 @@ end:
 // delete collection of CSINode
 //
 v1_status_t*
-StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1793,11 +1941,14 @@ StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csinodes")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csinodes");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes");
+
 
 
 
@@ -1861,6 +2012,19 @@ StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char 
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -1967,13 +2131,15 @@ StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1982,6 +2148,7 @@ StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1993,11 +2160,14 @@ StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2076,6 +2246,18 @@ StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char 
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -2183,7 +2365,7 @@ end:
 // delete collection of CSIStorageCapacity
 //
 v1_status_t*
-StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2191,15 +2373,20 @@ StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2269,6 +2456,19 @@ StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -2375,13 +2575,15 @@ StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2390,6 +2592,7 @@ StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -2401,11 +2604,14 @@ StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2485,6 +2691,18 @@ StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -2592,7 +2810,7 @@ end:
 // delete collection of StorageClass
 //
 v1_status_t*
-StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2600,11 +2818,14 @@ StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/storageclasses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/storageclasses");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/storageclasses");
+
 
 
 
@@ -2668,6 +2889,19 @@ StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, 
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -2774,13 +3008,15 @@ StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2789,6 +3025,7 @@ StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -2800,11 +3037,14 @@ StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2883,6 +3123,18 @@ StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, 
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -2990,7 +3242,7 @@ end:
 // delete collection of VolumeAttachment
 //
 v1_status_t*
-StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2998,11 +3250,14 @@ StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pret
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/volumeattachments")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/volumeattachments");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/volumeattachments");
+
 
 
 
@@ -3066,6 +3321,19 @@ StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pret
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -3172,13 +3440,15 @@ StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pret
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3187,6 +3457,7 @@ StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pret
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -3198,11 +3469,14 @@ StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pret
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3281,6 +3555,18 @@ StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pret
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -3388,7 +3674,7 @@ end:
 // delete a CSIStorageCapacity
 //
 v1_status_t*
-StorageV1API_deleteNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+StorageV1API_deleteNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3396,15 +3682,22 @@ StorageV1API_deleteNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3414,7 +3707,7 @@ StorageV1API_deleteNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -3463,6 +3756,19 @@ StorageV1API_deleteNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *na
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -3491,13 +3797,15 @@ StorageV1API_deleteNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *na
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3506,6 +3814,7 @@ StorageV1API_deleteNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -3521,11 +3830,14 @@ StorageV1API_deleteNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3583,6 +3895,18 @@ StorageV1API_deleteNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *na
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
     }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
@@ -3617,7 +3941,7 @@ end:
 // delete a StorageClass
 //
 v1_storage_class_t*
-StorageV1API_deleteStorageClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+StorageV1API_deleteStorageClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3625,15 +3949,20 @@ StorageV1API_deleteStorageClass(apiClient_t *apiClient, char *name, char *pretty
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/storageclasses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/storageclasses/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/storageclasses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3682,6 +4011,19 @@ StorageV1API_deleteStorageClass(apiClient_t *apiClient, char *name, char *pretty
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -3710,13 +4052,15 @@ StorageV1API_deleteStorageClass(apiClient_t *apiClient, char *name, char *pretty
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3725,6 +4069,7 @@ StorageV1API_deleteStorageClass(apiClient_t *apiClient, char *name, char *pretty
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -3740,11 +4085,14 @@ StorageV1API_deleteStorageClass(apiClient_t *apiClient, char *name, char *pretty
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_storage_class_t *elementToReturn = v1_storage_class_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_storage_class_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_storage_class_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3800,6 +4148,18 @@ StorageV1API_deleteStorageClass(apiClient_t *apiClient, char *name, char *pretty
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -3835,7 +4195,7 @@ end:
 // delete a VolumeAttachment
 //
 v1_volume_attachment_t*
-StorageV1API_deleteVolumeAttachment(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+StorageV1API_deleteVolumeAttachment(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3843,15 +4203,20 @@ StorageV1API_deleteVolumeAttachment(apiClient_t *apiClient, char *name, char *pr
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/volumeattachments/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/volumeattachments/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/volumeattachments/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3900,6 +4265,19 @@ StorageV1API_deleteVolumeAttachment(apiClient_t *apiClient, char *name, char *pr
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -3928,13 +4306,15 @@ StorageV1API_deleteVolumeAttachment(apiClient_t *apiClient, char *name, char *pr
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3943,6 +4323,7 @@ StorageV1API_deleteVolumeAttachment(apiClient_t *apiClient, char *name, char *pr
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -3958,11 +4339,14 @@ StorageV1API_deleteVolumeAttachment(apiClient_t *apiClient, char *name, char *pr
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_volume_attachment_t *elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_volume_attachment_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4019,6 +4403,18 @@ StorageV1API_deleteVolumeAttachment(apiClient_t *apiClient, char *name, char *pr
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
     }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
@@ -4053,7 +4449,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-StorageV1API_getAPIResources_29(apiClient_t *apiClient)
+StorageV1API_getAPIResources(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -4061,17 +4457,21 @@ StorageV1API_getAPIResources_29(apiClient_t *apiClient)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/");
+
 
 
 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -4080,6 +4480,7 @@ StorageV1API_getAPIResources_29(apiClient_t *apiClient)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -4091,11 +4492,14 @@ StorageV1API_getAPIResources_29(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_api_resource_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_api_resource_list_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4128,11 +4532,14 @@ StorageV1API_listCSIDriver(apiClient_t *apiClient, char *pretty, int *allowWatch
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csidrivers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csidrivers");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csidrivers");
+
 
 
 
@@ -4276,8 +4683,10 @@ StorageV1API_listCSIDriver(apiClient_t *apiClient, char *pretty, int *allowWatch
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -4286,6 +4695,7 @@ StorageV1API_listCSIDriver(apiClient_t *apiClient, char *pretty, int *allowWatch
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -4297,11 +4707,14 @@ StorageV1API_listCSIDriver(apiClient_t *apiClient, char *pretty, int *allowWatch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_driver_list_t *elementToReturn = v1_csi_driver_list_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_driver_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_driver_list_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4466,11 +4879,14 @@ StorageV1API_listCSINode(apiClient_t *apiClient, char *pretty, int *allowWatchBo
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csinodes")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csinodes");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes");
+
 
 
 
@@ -4614,8 +5030,10 @@ StorageV1API_listCSINode(apiClient_t *apiClient, char *pretty, int *allowWatchBo
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -4624,6 +5042,7 @@ StorageV1API_listCSINode(apiClient_t *apiClient, char *pretty, int *allowWatchBo
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -4635,11 +5054,14 @@ StorageV1API_listCSINode(apiClient_t *apiClient, char *pretty, int *allowWatchBo
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_node_list_t *elementToReturn = v1_csi_node_list_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_node_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_node_list_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4804,11 +5226,14 @@ StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csistoragecapacities")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csistoragecapacities");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csistoragecapacities");
+
 
 
 
@@ -4952,8 +5377,10 @@ StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -4962,6 +5389,7 @@ StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -4973,11 +5401,14 @@ StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_storage_capacity_list_t *elementToReturn = v1_csi_storage_capacity_list_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_storage_capacity_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_storage_capacity_list_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5142,15 +5573,20 @@ StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5300,8 +5736,10 @@ StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_nam
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5310,6 +5748,7 @@ StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -5321,11 +5760,14 @@ StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_storage_capacity_list_t *elementToReturn = v1_csi_storage_capacity_list_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_storage_capacity_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_storage_capacity_list_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5491,11 +5933,14 @@ StorageV1API_listStorageClass(apiClient_t *apiClient, char *pretty, int *allowWa
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/storageclasses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/storageclasses");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/storageclasses");
+
 
 
 
@@ -5639,8 +6084,10 @@ StorageV1API_listStorageClass(apiClient_t *apiClient, char *pretty, int *allowWa
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5649,6 +6096,7 @@ StorageV1API_listStorageClass(apiClient_t *apiClient, char *pretty, int *allowWa
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -5660,11 +6108,14 @@ StorageV1API_listStorageClass(apiClient_t *apiClient, char *pretty, int *allowWa
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_storage_class_list_t *elementToReturn = v1_storage_class_list_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_storage_class_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_storage_class_list_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5829,11 +6280,14 @@ StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char *pretty, int *all
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/volumeattachments")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/volumeattachments");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/volumeattachments");
+
 
 
 
@@ -5977,8 +6431,10 @@ StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char *pretty, int *all
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5987,6 +6443,7 @@ StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char *pretty, int *all
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -5998,11 +6455,14 @@ StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char *pretty, int *all
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_volume_attachment_list_t *elementToReturn = v1_volume_attachment_list_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_volume_attachment_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_volume_attachment_list_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -6167,15 +6627,20 @@ StorageV1API_patchCSIDriver(apiClient_t *apiClient, char *name, object_t *body, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csidrivers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csidrivers/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csidrivers/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -6251,17 +6716,20 @@ StorageV1API_patchCSIDriver(apiClient_t *apiClient, char *name, object_t *body, 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -6270,6 +6738,7 @@ StorageV1API_patchCSIDriver(apiClient_t *apiClient, char *name, object_t *body, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -6285,11 +6754,14 @@ StorageV1API_patchCSIDriver(apiClient_t *apiClient, char *name, object_t *body, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_driver_t *elementToReturn = v1_csi_driver_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_driver_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_driver_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -6388,15 +6860,20 @@ StorageV1API_patchCSINode(apiClient_t *apiClient, char *name, object_t *body, ch
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csinodes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csinodes/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -6472,17 +6949,20 @@ StorageV1API_patchCSINode(apiClient_t *apiClient, char *name, object_t *body, ch
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -6491,6 +6971,7 @@ StorageV1API_patchCSINode(apiClient_t *apiClient, char *name, object_t *body, ch
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -6506,11 +6987,14 @@ StorageV1API_patchCSINode(apiClient_t *apiClient, char *name, object_t *body, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_node_t *elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -6609,15 +7093,22 @@ StorageV1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -6627,7 +7118,7 @@ StorageV1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -6703,17 +7194,20 @@ StorageV1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -6722,6 +7216,7 @@ StorageV1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -6737,11 +7232,14 @@ StorageV1API_patchNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_storage_capacity_t *elementToReturn = v1_csi_storage_capacity_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_storage_capacity_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_storage_capacity_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -6841,15 +7339,20 @@ StorageV1API_patchStorageClass(apiClient_t *apiClient, char *name, object_t *bod
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/storageclasses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/storageclasses/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/storageclasses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -6925,17 +7428,20 @@ StorageV1API_patchStorageClass(apiClient_t *apiClient, char *name, object_t *bod
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -6944,6 +7450,7 @@ StorageV1API_patchStorageClass(apiClient_t *apiClient, char *name, object_t *bod
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -6959,11 +7466,14 @@ StorageV1API_patchStorageClass(apiClient_t *apiClient, char *name, object_t *bod
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_storage_class_t *elementToReturn = v1_storage_class_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_storage_class_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_storage_class_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7062,15 +7572,20 @@ StorageV1API_patchVolumeAttachment(apiClient_t *apiClient, char *name, object_t 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/volumeattachments/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/volumeattachments/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/volumeattachments/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -7146,17 +7661,20 @@ StorageV1API_patchVolumeAttachment(apiClient_t *apiClient, char *name, object_t 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7165,6 +7683,7 @@ StorageV1API_patchVolumeAttachment(apiClient_t *apiClient, char *name, object_t 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -7180,11 +7699,14 @@ StorageV1API_patchVolumeAttachment(apiClient_t *apiClient, char *name, object_t 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_volume_attachment_t *elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_volume_attachment_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7283,15 +7805,20 @@ StorageV1API_patchVolumeAttachmentStatus(apiClient_t *apiClient, char *name, obj
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/volumeattachments/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/volumeattachments/{name}/status");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/volumeattachments/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -7367,17 +7894,20 @@ StorageV1API_patchVolumeAttachmentStatus(apiClient_t *apiClient, char *name, obj
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7386,6 +7916,7 @@ StorageV1API_patchVolumeAttachmentStatus(apiClient_t *apiClient, char *name, obj
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -7401,11 +7932,14 @@ StorageV1API_patchVolumeAttachmentStatus(apiClient_t *apiClient, char *name, obj
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_volume_attachment_t *elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_volume_attachment_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7504,15 +8038,20 @@ StorageV1API_readCSIDriver(apiClient_t *apiClient, char *name, char *pretty)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csidrivers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csidrivers/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csidrivers/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -7537,6 +8076,7 @@ StorageV1API_readCSIDriver(apiClient_t *apiClient, char *name, char *pretty)
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7545,6 +8085,7 @@ StorageV1API_readCSIDriver(apiClient_t *apiClient, char *name, char *pretty)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -7556,11 +8097,14 @@ StorageV1API_readCSIDriver(apiClient_t *apiClient, char *name, char *pretty)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_driver_t *elementToReturn = v1_csi_driver_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_driver_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_driver_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7606,15 +8150,20 @@ StorageV1API_readCSINode(apiClient_t *apiClient, char *name, char *pretty)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csinodes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csinodes/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -7639,6 +8188,7 @@ StorageV1API_readCSINode(apiClient_t *apiClient, char *name, char *pretty)
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7647,6 +8197,7 @@ StorageV1API_readCSINode(apiClient_t *apiClient, char *name, char *pretty)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -7658,11 +8209,14 @@ StorageV1API_readCSINode(apiClient_t *apiClient, char *name, char *pretty)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_node_t *elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7708,15 +8262,22 @@ StorageV1API_readNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -7726,7 +8287,7 @@ StorageV1API_readNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -7751,6 +8312,7 @@ StorageV1API_readNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *name
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7759,6 +8321,7 @@ StorageV1API_readNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -7770,11 +8333,14 @@ StorageV1API_readNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_storage_capacity_t *elementToReturn = v1_csi_storage_capacity_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_storage_capacity_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_storage_capacity_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7821,15 +8387,20 @@ StorageV1API_readStorageClass(apiClient_t *apiClient, char *name, char *pretty)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/storageclasses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/storageclasses/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/storageclasses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -7854,6 +8425,7 @@ StorageV1API_readStorageClass(apiClient_t *apiClient, char *name, char *pretty)
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7862,6 +8434,7 @@ StorageV1API_readStorageClass(apiClient_t *apiClient, char *name, char *pretty)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -7873,11 +8446,14 @@ StorageV1API_readStorageClass(apiClient_t *apiClient, char *name, char *pretty)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_storage_class_t *elementToReturn = v1_storage_class_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_storage_class_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_storage_class_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7923,15 +8499,20 @@ StorageV1API_readVolumeAttachment(apiClient_t *apiClient, char *name, char *pret
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/volumeattachments/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/volumeattachments/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/volumeattachments/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -7956,6 +8537,7 @@ StorageV1API_readVolumeAttachment(apiClient_t *apiClient, char *name, char *pret
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7964,6 +8546,7 @@ StorageV1API_readVolumeAttachment(apiClient_t *apiClient, char *name, char *pret
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -7975,11 +8558,14 @@ StorageV1API_readVolumeAttachment(apiClient_t *apiClient, char *name, char *pret
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_volume_attachment_t *elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_volume_attachment_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -8025,15 +8611,20 @@ StorageV1API_readVolumeAttachmentStatus(apiClient_t *apiClient, char *name, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/volumeattachments/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/volumeattachments/{name}/status");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/volumeattachments/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -8058,6 +8649,7 @@ StorageV1API_readVolumeAttachmentStatus(apiClient_t *apiClient, char *name, char
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -8066,6 +8658,7 @@ StorageV1API_readVolumeAttachmentStatus(apiClient_t *apiClient, char *name, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -8077,11 +8670,14 @@ StorageV1API_readVolumeAttachmentStatus(apiClient_t *apiClient, char *name, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_volume_attachment_t *elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_volume_attachment_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -8127,15 +8723,20 @@ StorageV1API_replaceCSIDriver(apiClient_t *apiClient, char *name, v1_csi_driver_
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csidrivers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csidrivers/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csidrivers/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -8198,13 +8799,15 @@ StorageV1API_replaceCSIDriver(apiClient_t *apiClient, char *name, v1_csi_driver_
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_csi_driver_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -8213,6 +8816,7 @@ StorageV1API_replaceCSIDriver(apiClient_t *apiClient, char *name, v1_csi_driver_
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -8228,11 +8832,14 @@ StorageV1API_replaceCSIDriver(apiClient_t *apiClient, char *name, v1_csi_driver_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_driver_t *elementToReturn = v1_csi_driver_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_driver_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_driver_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -8319,15 +8926,20 @@ StorageV1API_replaceCSINode(apiClient_t *apiClient, char *name, v1_csi_node_t *b
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/csinodes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/csinodes/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -8390,13 +9002,15 @@ StorageV1API_replaceCSINode(apiClient_t *apiClient, char *name, v1_csi_node_t *b
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_csi_node_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -8405,6 +9019,7 @@ StorageV1API_replaceCSINode(apiClient_t *apiClient, char *name, v1_csi_node_t *b
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -8420,11 +9035,14 @@ StorageV1API_replaceCSINode(apiClient_t *apiClient, char *name, v1_csi_node_t *b
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_node_t *elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -8511,15 +9129,22 @@ StorageV1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/namespaces/{namespace}/csistoragecapacities/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -8529,7 +9154,7 @@ StorageV1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *n
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -8592,13 +9217,15 @@ StorageV1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_csi_storage_capacity_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -8607,6 +9234,7 @@ StorageV1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -8622,11 +9250,14 @@ StorageV1API_replaceNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_csi_storage_capacity_t *elementToReturn = v1_csi_storage_capacity_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_csi_storage_capacity_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_storage_capacity_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -8714,15 +9345,20 @@ StorageV1API_replaceStorageClass(apiClient_t *apiClient, char *name, v1_storage_
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/storageclasses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/storageclasses/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/storageclasses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -8785,13 +9421,15 @@ StorageV1API_replaceStorageClass(apiClient_t *apiClient, char *name, v1_storage_
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_storage_class_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -8800,6 +9438,7 @@ StorageV1API_replaceStorageClass(apiClient_t *apiClient, char *name, v1_storage_
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -8815,11 +9454,14 @@ StorageV1API_replaceStorageClass(apiClient_t *apiClient, char *name, v1_storage_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_storage_class_t *elementToReturn = v1_storage_class_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_storage_class_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_storage_class_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -8906,15 +9548,20 @@ StorageV1API_replaceVolumeAttachment(apiClient_t *apiClient, char *name, v1_volu
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/volumeattachments/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/volumeattachments/{name}");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/volumeattachments/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -8977,13 +9624,15 @@ StorageV1API_replaceVolumeAttachment(apiClient_t *apiClient, char *name, v1_volu
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_volume_attachment_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -8992,6 +9641,7 @@ StorageV1API_replaceVolumeAttachment(apiClient_t *apiClient, char *name, v1_volu
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -9007,11 +9657,14 @@ StorageV1API_replaceVolumeAttachment(apiClient_t *apiClient, char *name, v1_volu
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_volume_attachment_t *elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_volume_attachment_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -9098,15 +9751,20 @@ StorageV1API_replaceVolumeAttachmentStatus(apiClient_t *apiClient, char *name, v
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/v1/volumeattachments/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/v1/volumeattachments/{name}/status");
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/volumeattachments/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -9169,13 +9827,15 @@ StorageV1API_replaceVolumeAttachmentStatus(apiClient_t *apiClient, char *name, v
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_volume_attachment_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -9184,6 +9844,7 @@ StorageV1API_replaceVolumeAttachmentStatus(apiClient_t *apiClient, char *name, v
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -9199,11 +9860,14 @@ StorageV1API_replaceVolumeAttachmentStatus(apiClient_t *apiClient, char *name, v
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_volume_attachment_t *elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
-    cJSON_Delete(StorageV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_volume_attachment_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_volume_attachment_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type

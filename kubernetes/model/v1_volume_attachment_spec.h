@@ -24,9 +24,10 @@ typedef struct v1_volume_attachment_spec_t {
     char *node_name; // string
     struct v1_volume_attachment_source_t *source; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_attachment_spec_t;
 
-v1_volume_attachment_spec_t *v1_volume_attachment_spec_create(
+__attribute__((deprecated)) v1_volume_attachment_spec_t *v1_volume_attachment_spec_create(
     char *attacher,
     char *node_name,
     v1_volume_attachment_source_t *source

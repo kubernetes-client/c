@@ -22,9 +22,10 @@ typedef struct v1_secret_reference_t {
     char *name; // string
     char *_namespace; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_secret_reference_t;
 
-v1_secret_reference_t *v1_secret_reference_create(
+__attribute__((deprecated)) v1_secret_reference_t *v1_secret_reference_create(
     char *name,
     char *_namespace
 );

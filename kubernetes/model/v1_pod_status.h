@@ -41,9 +41,10 @@ typedef struct v1_pod_status_t {
     list_t *resource_claim_statuses; //nonprimitive container
     char *start_time; //date time
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_status_t;
 
-v1_pod_status_t *v1_pod_status_create(
+__attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
     list_t *conditions,
     list_t *container_statuses,
     list_t *ephemeral_container_statuses,

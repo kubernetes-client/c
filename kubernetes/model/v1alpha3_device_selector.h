@@ -22,9 +22,10 @@ typedef struct v1alpha3_device_selector_t v1alpha3_device_selector_t;
 typedef struct v1alpha3_device_selector_t {
     struct v1alpha3_cel_device_selector_t *cel; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_selector_t;
 
-v1alpha3_device_selector_t *v1alpha3_device_selector_create(
+__attribute__((deprecated)) v1alpha3_device_selector_t *v1alpha3_device_selector_create(
     v1alpha3_cel_device_selector_t *cel
 );
 

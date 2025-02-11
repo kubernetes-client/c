@@ -37,9 +37,10 @@ typedef struct v1_stateful_set_spec_t {
     struct v1_stateful_set_update_strategy_t *update_strategy; //model
     list_t *volume_claim_templates; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_stateful_set_spec_t;
 
-v1_stateful_set_spec_t *v1_stateful_set_spec_create(
+__attribute__((deprecated)) v1_stateful_set_spec_t *v1_stateful_set_spec_create(
     int min_ready_seconds,
     v1_stateful_set_ordinals_t *ordinals,
     v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy,

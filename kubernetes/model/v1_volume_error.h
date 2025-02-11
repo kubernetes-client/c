@@ -22,9 +22,10 @@ typedef struct v1_volume_error_t {
     char *message; // string
     char *time; //date time
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_error_t;
 
-v1_volume_error_t *v1_volume_error_create(
+__attribute__((deprecated)) v1_volume_error_t *v1_volume_error_create(
     char *message,
     char *time
 );

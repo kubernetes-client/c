@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_device_t *v1alpha3_device_create(
+static v1alpha3_device_t *v1alpha3_device_create_internal(
     v1alpha3_basic_device_t *basic,
     char *name
     ) {
@@ -16,12 +16,26 @@ v1alpha3_device_t *v1alpha3_device_create(
     v1alpha3_device_local_var->basic = basic;
     v1alpha3_device_local_var->name = name;
 
+    v1alpha3_device_local_var->_library_owned = 1;
     return v1alpha3_device_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_device_t *v1alpha3_device_create(
+    v1alpha3_basic_device_t *basic,
+    char *name
+    ) {
+    return v1alpha3_device_create_internal (
+        basic,
+        name
+        );
+}
 
 void v1alpha3_device_free(v1alpha3_device_t *v1alpha3_device) {
     if(NULL == v1alpha3_device){
+        return ;
+    }
+    if(v1alpha3_device->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_device_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -77,12 +91,18 @@ v1alpha3_device_t *v1alpha3_device_parseFromJSON(cJSON *v1alpha3_deviceJSON){
 
     // v1alpha3_device->basic
     cJSON *basic = cJSON_GetObjectItemCaseSensitive(v1alpha3_deviceJSON, "basic");
+    if (cJSON_IsNull(basic)) {
+        basic = NULL;
+    }
     if (basic) { 
     basic_local_nonprim = v1alpha3_basic_device_parseFromJSON(basic); //nonprimitive
     }
 
     // v1alpha3_device->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha3_deviceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -94,7 +114,7 @@ v1alpha3_device_t *v1alpha3_device_parseFromJSON(cJSON *v1alpha3_deviceJSON){
     }
 
 
-    v1alpha3_device_local_var = v1alpha3_device_create (
+    v1alpha3_device_local_var = v1alpha3_device_create_internal (
         basic ? basic_local_nonprim : NULL,
         strdup(name->valuestring)
         );

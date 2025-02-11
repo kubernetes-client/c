@@ -26,6 +26,7 @@ v1_delete_options_t* instantiate_v1_delete_options(int include_optional) {
       "0",
       list_createList(),
       56,
+      1,
       "0",
       1,
        // false, not to have infinite recursion
@@ -37,6 +38,7 @@ v1_delete_options_t* instantiate_v1_delete_options(int include_optional) {
       "0",
       list_createList(),
       56,
+      1,
       "0",
       1,
       NULL,

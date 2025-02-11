@@ -27,9 +27,10 @@ typedef struct v1_ingress_spec_t {
     list_t *rules; //nonprimitive container
     list_t *tls; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ingress_spec_t;
 
-v1_ingress_spec_t *v1_ingress_spec_create(
+__attribute__((deprecated)) v1_ingress_spec_t *v1_ingress_spec_create(
     v1_ingress_backend_t *default_backend,
     char *ingress_class_name,
     list_t *rules,

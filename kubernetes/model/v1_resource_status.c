@@ -5,7 +5,7 @@
 
 
 
-v1_resource_status_t *v1_resource_status_create(
+static v1_resource_status_t *v1_resource_status_create_internal(
     char *name,
     list_t *resources
     ) {
@@ -16,12 +16,26 @@ v1_resource_status_t *v1_resource_status_create(
     v1_resource_status_local_var->name = name;
     v1_resource_status_local_var->resources = resources;
 
+    v1_resource_status_local_var->_library_owned = 1;
     return v1_resource_status_local_var;
 }
 
+__attribute__((deprecated)) v1_resource_status_t *v1_resource_status_create(
+    char *name,
+    list_t *resources
+    ) {
+    return v1_resource_status_create_internal (
+        name,
+        resources
+        );
+}
 
 void v1_resource_status_free(v1_resource_status_t *v1_resource_status) {
     if(NULL == v1_resource_status){
+        return ;
+    }
+    if(v1_resource_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_resource_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -87,6 +101,9 @@ v1_resource_status_t *v1_resource_status_parseFromJSON(cJSON *v1_resource_status
 
     // v1_resource_status->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_resource_statusJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -99,6 +116,9 @@ v1_resource_status_t *v1_resource_status_parseFromJSON(cJSON *v1_resource_status
 
     // v1_resource_status->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_resource_statusJSON, "resources");
+    if (cJSON_IsNull(resources)) {
+        resources = NULL;
+    }
     if (resources) { 
     cJSON *resources_local_nonprimitive = NULL;
     if(!cJSON_IsArray(resources)){
@@ -119,7 +139,7 @@ v1_resource_status_t *v1_resource_status_parseFromJSON(cJSON *v1_resource_status
     }
 
 
-    v1_resource_status_local_var = v1_resource_status_create (
+    v1_resource_status_local_var = v1_resource_status_create_internal (
         strdup(name->valuestring),
         resources ? resourcesList : NULL
         );

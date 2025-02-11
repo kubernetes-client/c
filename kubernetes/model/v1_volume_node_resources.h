@@ -21,9 +21,10 @@ typedef struct v1_volume_node_resources_t v1_volume_node_resources_t;
 typedef struct v1_volume_node_resources_t {
     int count; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_node_resources_t;
 
-v1_volume_node_resources_t *v1_volume_node_resources_create(
+__attribute__((deprecated)) v1_volume_node_resources_t *v1_volume_node_resources_create(
     int count
 );
 

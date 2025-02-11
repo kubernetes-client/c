@@ -24,9 +24,10 @@ typedef struct rbac_v1_subject_t {
     char *name; // string
     char *_namespace; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } rbac_v1_subject_t;
 
-rbac_v1_subject_t *rbac_v1_subject_create(
+__attribute__((deprecated)) rbac_v1_subject_t *rbac_v1_subject_create(
     char *api_group,
     char *kind,
     char *name,

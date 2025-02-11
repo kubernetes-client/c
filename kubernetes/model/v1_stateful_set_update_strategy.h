@@ -23,9 +23,10 @@ typedef struct v1_stateful_set_update_strategy_t {
     struct v1_rolling_update_stateful_set_strategy_t *rolling_update; //model
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_stateful_set_update_strategy_t;
 
-v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_create(
+__attribute__((deprecated)) v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_create(
     v1_rolling_update_stateful_set_strategy_t *rolling_update,
     char *type
 );

@@ -5,7 +5,7 @@
 
 
 
-v1_non_resource_rule_t *v1_non_resource_rule_create(
+static v1_non_resource_rule_t *v1_non_resource_rule_create_internal(
     list_t *non_resource_urls,
     list_t *verbs
     ) {
@@ -16,12 +16,26 @@ v1_non_resource_rule_t *v1_non_resource_rule_create(
     v1_non_resource_rule_local_var->non_resource_urls = non_resource_urls;
     v1_non_resource_rule_local_var->verbs = verbs;
 
+    v1_non_resource_rule_local_var->_library_owned = 1;
     return v1_non_resource_rule_local_var;
 }
 
+__attribute__((deprecated)) v1_non_resource_rule_t *v1_non_resource_rule_create(
+    list_t *non_resource_urls,
+    list_t *verbs
+    ) {
+    return v1_non_resource_rule_create_internal (
+        non_resource_urls,
+        verbs
+        );
+}
 
 void v1_non_resource_rule_free(v1_non_resource_rule_t *v1_non_resource_rule) {
     if(NULL == v1_non_resource_rule){
+        return ;
+    }
+    if(v1_non_resource_rule->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_non_resource_rule_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -54,7 +68,7 @@ cJSON *v1_non_resource_rule_convertToJSON(v1_non_resource_rule_t *v1_non_resourc
 
     listEntry_t *non_resource_urlsListEntry;
     list_ForEach(non_resource_urlsListEntry, v1_non_resource_rule->non_resource_urls) {
-    if(cJSON_AddStringToObject(non_resource_urls, "", (char*)non_resource_urlsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(non_resource_urls, "", non_resource_urlsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -73,7 +87,7 @@ cJSON *v1_non_resource_rule_convertToJSON(v1_non_resource_rule_t *v1_non_resourc
 
     listEntry_t *verbsListEntry;
     list_ForEach(verbsListEntry, v1_non_resource_rule->verbs) {
-    if(cJSON_AddStringToObject(verbs, "", (char*)verbsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(verbs, "", verbsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -99,6 +113,9 @@ v1_non_resource_rule_t *v1_non_resource_rule_parseFromJSON(cJSON *v1_non_resourc
 
     // v1_non_resource_rule->non_resource_urls
     cJSON *non_resource_urls = cJSON_GetObjectItemCaseSensitive(v1_non_resource_ruleJSON, "nonResourceURLs");
+    if (cJSON_IsNull(non_resource_urls)) {
+        non_resource_urls = NULL;
+    }
     if (non_resource_urls) { 
     cJSON *non_resource_urls_local = NULL;
     if(!cJSON_IsArray(non_resource_urls)) {
@@ -118,6 +135,9 @@ v1_non_resource_rule_t *v1_non_resource_rule_parseFromJSON(cJSON *v1_non_resourc
 
     // v1_non_resource_rule->verbs
     cJSON *verbs = cJSON_GetObjectItemCaseSensitive(v1_non_resource_ruleJSON, "verbs");
+    if (cJSON_IsNull(verbs)) {
+        verbs = NULL;
+    }
     if (!verbs) {
         goto end;
     }
@@ -139,7 +159,7 @@ v1_non_resource_rule_t *v1_non_resource_rule_parseFromJSON(cJSON *v1_non_resourc
     }
 
 
-    v1_non_resource_rule_local_var = v1_non_resource_rule_create (
+    v1_non_resource_rule_local_var = v1_non_resource_rule_create_internal (
         non_resource_urls ? non_resource_urlsList : NULL,
         verbsList
         );

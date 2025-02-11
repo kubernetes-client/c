@@ -5,7 +5,7 @@
 
 
 
-v1_service_account_subject_t *v1_service_account_subject_create(
+static v1_service_account_subject_t *v1_service_account_subject_create_internal(
     char *name,
     char *_namespace
     ) {
@@ -16,12 +16,26 @@ v1_service_account_subject_t *v1_service_account_subject_create(
     v1_service_account_subject_local_var->name = name;
     v1_service_account_subject_local_var->_namespace = _namespace;
 
+    v1_service_account_subject_local_var->_library_owned = 1;
     return v1_service_account_subject_local_var;
 }
 
+__attribute__((deprecated)) v1_service_account_subject_t *v1_service_account_subject_create(
+    char *name,
+    char *_namespace
+    ) {
+    return v1_service_account_subject_create_internal (
+        name,
+        _namespace
+        );
+}
 
 void v1_service_account_subject_free(v1_service_account_subject_t *v1_service_account_subject) {
     if(NULL == v1_service_account_subject){
+        return ;
+    }
+    if(v1_service_account_subject->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_service_account_subject_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -70,6 +84,9 @@ v1_service_account_subject_t *v1_service_account_subject_parseFromJSON(cJSON *v1
 
     // v1_service_account_subject->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_service_account_subjectJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -82,6 +99,9 @@ v1_service_account_subject_t *v1_service_account_subject_parseFromJSON(cJSON *v1
 
     // v1_service_account_subject->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_service_account_subjectJSON, "namespace");
+    if (cJSON_IsNull(_namespace)) {
+        _namespace = NULL;
+    }
     if (!_namespace) {
         goto end;
     }
@@ -93,7 +113,7 @@ v1_service_account_subject_t *v1_service_account_subject_parseFromJSON(cJSON *v1
     }
 
 
-    v1_service_account_subject_local_var = v1_service_account_subject_create (
+    v1_service_account_subject_local_var = v1_service_account_subject_create_internal (
         strdup(name->valuestring),
         strdup(_namespace->valuestring)
         );

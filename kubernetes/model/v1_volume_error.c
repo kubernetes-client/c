@@ -5,7 +5,7 @@
 
 
 
-v1_volume_error_t *v1_volume_error_create(
+static v1_volume_error_t *v1_volume_error_create_internal(
     char *message,
     char *time
     ) {
@@ -16,12 +16,26 @@ v1_volume_error_t *v1_volume_error_create(
     v1_volume_error_local_var->message = message;
     v1_volume_error_local_var->time = time;
 
+    v1_volume_error_local_var->_library_owned = 1;
     return v1_volume_error_local_var;
 }
 
+__attribute__((deprecated)) v1_volume_error_t *v1_volume_error_create(
+    char *message,
+    char *time
+    ) {
+    return v1_volume_error_create_internal (
+        message,
+        time
+        );
+}
 
 void v1_volume_error_free(v1_volume_error_t *v1_volume_error) {
     if(NULL == v1_volume_error){
+        return ;
+    }
+    if(v1_volume_error->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_volume_error_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -68,6 +82,9 @@ v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
 
     // v1_volume_error->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_volume_errorJSON, "message");
+    if (cJSON_IsNull(message)) {
+        message = NULL;
+    }
     if (message) { 
     if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
@@ -77,6 +94,9 @@ v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
 
     // v1_volume_error->time
     cJSON *time = cJSON_GetObjectItemCaseSensitive(v1_volume_errorJSON, "time");
+    if (cJSON_IsNull(time)) {
+        time = NULL;
+    }
     if (time) { 
     if(!cJSON_IsString(time) && !cJSON_IsNull(time))
     {
@@ -85,7 +105,7 @@ v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
     }
 
 
-    v1_volume_error_local_var = v1_volume_error_create (
+    v1_volume_error_local_var = v1_volume_error_create_internal (
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         time && !cJSON_IsNull(time) ? strdup(time->valuestring) : NULL
         );

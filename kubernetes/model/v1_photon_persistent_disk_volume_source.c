@@ -5,7 +5,7 @@
 
 
 
-v1_photon_persistent_disk_volume_source_t *v1_photon_persistent_disk_volume_source_create(
+static v1_photon_persistent_disk_volume_source_t *v1_photon_persistent_disk_volume_source_create_internal(
     char *fs_type,
     char *pd_id
     ) {
@@ -16,12 +16,26 @@ v1_photon_persistent_disk_volume_source_t *v1_photon_persistent_disk_volume_sour
     v1_photon_persistent_disk_volume_source_local_var->fs_type = fs_type;
     v1_photon_persistent_disk_volume_source_local_var->pd_id = pd_id;
 
+    v1_photon_persistent_disk_volume_source_local_var->_library_owned = 1;
     return v1_photon_persistent_disk_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_photon_persistent_disk_volume_source_t *v1_photon_persistent_disk_volume_source_create(
+    char *fs_type,
+    char *pd_id
+    ) {
+    return v1_photon_persistent_disk_volume_source_create_internal (
+        fs_type,
+        pd_id
+        );
+}
 
 void v1_photon_persistent_disk_volume_source_free(v1_photon_persistent_disk_volume_source_t *v1_photon_persistent_disk_volume_source) {
     if(NULL == v1_photon_persistent_disk_volume_source){
+        return ;
+    }
+    if(v1_photon_persistent_disk_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_photon_persistent_disk_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -69,6 +83,9 @@ v1_photon_persistent_disk_volume_source_t *v1_photon_persistent_disk_volume_sour
 
     // v1_photon_persistent_disk_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_photon_persistent_disk_volume_sourceJSON, "fsType");
+    if (cJSON_IsNull(fs_type)) {
+        fs_type = NULL;
+    }
     if (fs_type) { 
     if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
@@ -78,6 +95,9 @@ v1_photon_persistent_disk_volume_source_t *v1_photon_persistent_disk_volume_sour
 
     // v1_photon_persistent_disk_volume_source->pd_id
     cJSON *pd_id = cJSON_GetObjectItemCaseSensitive(v1_photon_persistent_disk_volume_sourceJSON, "pdID");
+    if (cJSON_IsNull(pd_id)) {
+        pd_id = NULL;
+    }
     if (!pd_id) {
         goto end;
     }
@@ -89,7 +109,7 @@ v1_photon_persistent_disk_volume_source_t *v1_photon_persistent_disk_volume_sour
     }
 
 
-    v1_photon_persistent_disk_volume_source_local_var = v1_photon_persistent_disk_volume_source_create (
+    v1_photon_persistent_disk_volume_source_local_var = v1_photon_persistent_disk_volume_source_create_internal (
         fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         strdup(pd_id->valuestring)
         );

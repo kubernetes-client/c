@@ -27,9 +27,10 @@ typedef struct v1alpha3_device_request_t {
     char *name; // string
     list_t *selectors; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_request_t;
 
-v1alpha3_device_request_t *v1alpha3_device_request_create(
+__attribute__((deprecated)) v1alpha3_device_request_t *v1alpha3_device_request_create(
     int admin_access,
     char *allocation_mode,
     long count,

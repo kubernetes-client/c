@@ -5,7 +5,7 @@
 
 
 
-v1_aggregation_rule_t *v1_aggregation_rule_create(
+static v1_aggregation_rule_t *v1_aggregation_rule_create_internal(
     list_t *cluster_role_selectors
     ) {
     v1_aggregation_rule_t *v1_aggregation_rule_local_var = malloc(sizeof(v1_aggregation_rule_t));
@@ -14,12 +14,24 @@ v1_aggregation_rule_t *v1_aggregation_rule_create(
     }
     v1_aggregation_rule_local_var->cluster_role_selectors = cluster_role_selectors;
 
+    v1_aggregation_rule_local_var->_library_owned = 1;
     return v1_aggregation_rule_local_var;
 }
 
+__attribute__((deprecated)) v1_aggregation_rule_t *v1_aggregation_rule_create(
+    list_t *cluster_role_selectors
+    ) {
+    return v1_aggregation_rule_create_internal (
+        cluster_role_selectors
+        );
+}
 
 void v1_aggregation_rule_free(v1_aggregation_rule_t *v1_aggregation_rule) {
     if(NULL == v1_aggregation_rule){
+        return ;
+    }
+    if(v1_aggregation_rule->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_aggregation_rule_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -72,6 +84,9 @@ v1_aggregation_rule_t *v1_aggregation_rule_parseFromJSON(cJSON *v1_aggregation_r
 
     // v1_aggregation_rule->cluster_role_selectors
     cJSON *cluster_role_selectors = cJSON_GetObjectItemCaseSensitive(v1_aggregation_ruleJSON, "clusterRoleSelectors");
+    if (cJSON_IsNull(cluster_role_selectors)) {
+        cluster_role_selectors = NULL;
+    }
     if (cluster_role_selectors) { 
     cJSON *cluster_role_selectors_local_nonprimitive = NULL;
     if(!cJSON_IsArray(cluster_role_selectors)){
@@ -92,7 +107,7 @@ v1_aggregation_rule_t *v1_aggregation_rule_parseFromJSON(cJSON *v1_aggregation_r
     }
 
 
-    v1_aggregation_rule_local_var = v1_aggregation_rule_create (
+    v1_aggregation_rule_local_var = v1_aggregation_rule_create_internal (
         cluster_role_selectors ? cluster_role_selectorsList : NULL
         );
 

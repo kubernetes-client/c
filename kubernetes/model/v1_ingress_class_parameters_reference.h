@@ -25,9 +25,10 @@ typedef struct v1_ingress_class_parameters_reference_t {
     char *_namespace; // string
     char *scope; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ingress_class_parameters_reference_t;
 
-v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_create(
+__attribute__((deprecated)) v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_create(
     char *api_group,
     char *kind,
     char *name,

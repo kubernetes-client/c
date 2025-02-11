@@ -5,7 +5,7 @@
 
 
 
-v2_metric_identifier_t *v2_metric_identifier_create(
+static v2_metric_identifier_t *v2_metric_identifier_create_internal(
     char *name,
     v1_label_selector_t *selector
     ) {
@@ -16,12 +16,26 @@ v2_metric_identifier_t *v2_metric_identifier_create(
     v2_metric_identifier_local_var->name = name;
     v2_metric_identifier_local_var->selector = selector;
 
+    v2_metric_identifier_local_var->_library_owned = 1;
     return v2_metric_identifier_local_var;
 }
 
+__attribute__((deprecated)) v2_metric_identifier_t *v2_metric_identifier_create(
+    char *name,
+    v1_label_selector_t *selector
+    ) {
+    return v2_metric_identifier_create_internal (
+        name,
+        selector
+        );
+}
 
 void v2_metric_identifier_free(v2_metric_identifier_t *v2_metric_identifier) {
     if(NULL == v2_metric_identifier){
+        return ;
+    }
+    if(v2_metric_identifier->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v2_metric_identifier_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -77,6 +91,9 @@ v2_metric_identifier_t *v2_metric_identifier_parseFromJSON(cJSON *v2_metric_iden
 
     // v2_metric_identifier->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v2_metric_identifierJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -89,12 +106,15 @@ v2_metric_identifier_t *v2_metric_identifier_parseFromJSON(cJSON *v2_metric_iden
 
     // v2_metric_identifier->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v2_metric_identifierJSON, "selector");
+    if (cJSON_IsNull(selector)) {
+        selector = NULL;
+    }
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
 
-    v2_metric_identifier_local_var = v2_metric_identifier_create (
+    v2_metric_identifier_local_var = v2_metric_identifier_create_internal (
         strdup(name->valuestring),
         selector ? selector_local_nonprim : NULL
         );

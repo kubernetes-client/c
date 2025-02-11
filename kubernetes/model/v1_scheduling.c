@@ -5,7 +5,7 @@
 
 
 
-v1_scheduling_t *v1_scheduling_create(
+static v1_scheduling_t *v1_scheduling_create_internal(
     list_t* node_selector,
     list_t *tolerations
     ) {
@@ -16,18 +16,32 @@ v1_scheduling_t *v1_scheduling_create(
     v1_scheduling_local_var->node_selector = node_selector;
     v1_scheduling_local_var->tolerations = tolerations;
 
+    v1_scheduling_local_var->_library_owned = 1;
     return v1_scheduling_local_var;
 }
 
+__attribute__((deprecated)) v1_scheduling_t *v1_scheduling_create(
+    list_t* node_selector,
+    list_t *tolerations
+    ) {
+    return v1_scheduling_create_internal (
+        node_selector,
+        tolerations
+        );
+}
 
 void v1_scheduling_free(v1_scheduling_t *v1_scheduling) {
     if(NULL == v1_scheduling){
         return ;
     }
+    if(v1_scheduling->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_scheduling_free");
+        return ;
+    }
     listEntry_t *listEntry;
     if (v1_scheduling->node_selector) {
         list_ForEach(listEntry, v1_scheduling->node_selector) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -58,8 +72,8 @@ cJSON *v1_scheduling_convertToJSON(v1_scheduling_t *v1_scheduling) {
     listEntry_t *node_selectorListEntry;
     if (v1_scheduling->node_selector) {
     list_ForEach(node_selectorListEntry, v1_scheduling->node_selector) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)node_selectorListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = node_selectorListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -107,6 +121,9 @@ v1_scheduling_t *v1_scheduling_parseFromJSON(cJSON *v1_schedulingJSON){
 
     // v1_scheduling->node_selector
     cJSON *node_selector = cJSON_GetObjectItemCaseSensitive(v1_schedulingJSON, "nodeSelector");
+    if (cJSON_IsNull(node_selector)) {
+        node_selector = NULL;
+    }
     if (node_selector) { 
     cJSON *node_selector_local_map = NULL;
     if(!cJSON_IsObject(node_selector) && !cJSON_IsNull(node_selector))
@@ -132,6 +149,9 @@ v1_scheduling_t *v1_scheduling_parseFromJSON(cJSON *v1_schedulingJSON){
 
     // v1_scheduling->tolerations
     cJSON *tolerations = cJSON_GetObjectItemCaseSensitive(v1_schedulingJSON, "tolerations");
+    if (cJSON_IsNull(tolerations)) {
+        tolerations = NULL;
+    }
     if (tolerations) { 
     cJSON *tolerations_local_nonprimitive = NULL;
     if(!cJSON_IsArray(tolerations)){
@@ -152,7 +172,7 @@ v1_scheduling_t *v1_scheduling_parseFromJSON(cJSON *v1_schedulingJSON){
     }
 
 
-    v1_scheduling_local_var = v1_scheduling_create (
+    v1_scheduling_local_var = v1_scheduling_create_internal (
         node_selector ? node_selectorList : NULL,
         tolerations ? tolerationsList : NULL
         );
@@ -162,7 +182,7 @@ end:
     if (node_selectorList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, node_selectorList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

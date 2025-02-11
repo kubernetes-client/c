@@ -23,9 +23,10 @@ typedef struct v1alpha3_resource_pool_t {
     char *name; // string
     long resource_slice_count; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_resource_pool_t;
 
-v1alpha3_resource_pool_t *v1alpha3_resource_pool_create(
+__attribute__((deprecated)) v1alpha3_resource_pool_t *v1alpha3_resource_pool_create(
     long generation,
     char *name,
     long resource_slice_count

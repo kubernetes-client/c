@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ResourceAPI_getAPIGroup_17**](ResourceAPI.md#ResourceAPI_getAPIGroup_17) | **GET** /apis/resource.k8s.io/ | 
+[**ResourceAPI_getAPIGroup**](ResourceAPI.md#ResourceAPI_getAPIGroup) | **GET** /apis/resource.k8s.io/ | 
 
 
-# **ResourceAPI_getAPIGroup_17**
+# **ResourceAPI_getAPIGroup**
 ```c
 // get information of a group
 //
-v1_api_group_t* ResourceAPI_getAPIGroup_17(apiClient_t *apiClient);
+v1_api_group_t* ResourceAPI_getAPIGroup(apiClient_t *apiClient);
 ```
 
 ### Parameters

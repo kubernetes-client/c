@@ -23,9 +23,10 @@ typedef struct v1_status_cause_t {
     char *message; // string
     char *reason; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_status_cause_t;
 
-v1_status_cause_t *v1_status_cause_create(
+__attribute__((deprecated)) v1_status_cause_t *v1_status_cause_create(
     char *field,
     char *message,
     char *reason

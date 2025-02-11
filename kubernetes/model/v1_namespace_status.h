@@ -23,9 +23,10 @@ typedef struct v1_namespace_status_t {
     list_t *conditions; //nonprimitive container
     char *phase; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_namespace_status_t;
 
-v1_namespace_status_t *v1_namespace_status_create(
+__attribute__((deprecated)) v1_namespace_status_t *v1_namespace_status_create(
     list_t *conditions,
     char *phase
 );

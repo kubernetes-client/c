@@ -5,7 +5,7 @@
 
 
 
-v1_self_subject_review_t *v1_self_subject_review_create(
+static v1_self_subject_review_t *v1_self_subject_review_create_internal(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
@@ -20,12 +20,30 @@ v1_self_subject_review_t *v1_self_subject_review_create(
     v1_self_subject_review_local_var->metadata = metadata;
     v1_self_subject_review_local_var->status = status;
 
+    v1_self_subject_review_local_var->_library_owned = 1;
     return v1_self_subject_review_local_var;
 }
 
+__attribute__((deprecated)) v1_self_subject_review_t *v1_self_subject_review_create(
+    char *api_version,
+    char *kind,
+    v1_object_meta_t *metadata,
+    v1_self_subject_review_status_t *status
+    ) {
+    return v1_self_subject_review_create_internal (
+        api_version,
+        kind,
+        metadata,
+        status
+        );
+}
 
 void v1_self_subject_review_free(v1_self_subject_review_t *v1_self_subject_review) {
     if(NULL == v1_self_subject_review){
+        return ;
+    }
+    if(v1_self_subject_review->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_self_subject_review_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -112,6 +130,9 @@ v1_self_subject_review_t *v1_self_subject_review_parseFromJSON(cJSON *v1_self_su
 
     // v1_self_subject_review->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -121,6 +142,9 @@ v1_self_subject_review_t *v1_self_subject_review_parseFromJSON(cJSON *v1_self_su
 
     // v1_self_subject_review->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -130,18 +154,24 @@ v1_self_subject_review_t *v1_self_subject_review_parseFromJSON(cJSON *v1_self_su
 
     // v1_self_subject_review->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_self_subject_review->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
     if (status) { 
     status_local_nonprim = v1_self_subject_review_status_parseFromJSON(status); //nonprimitive
     }
 
 
-    v1_self_subject_review_local_var = v1_self_subject_review_create (
+    v1_self_subject_review_local_var = v1_self_subject_review_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,

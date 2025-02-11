@@ -5,7 +5,7 @@
 
 
 
-v1_pod_ip_t *v1_pod_ip_create(
+static v1_pod_ip_t *v1_pod_ip_create_internal(
     char *ip
     ) {
     v1_pod_ip_t *v1_pod_ip_local_var = malloc(sizeof(v1_pod_ip_t));
@@ -14,12 +14,24 @@ v1_pod_ip_t *v1_pod_ip_create(
     }
     v1_pod_ip_local_var->ip = ip;
 
+    v1_pod_ip_local_var->_library_owned = 1;
     return v1_pod_ip_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_ip_t *v1_pod_ip_create(
+    char *ip
+    ) {
+    return v1_pod_ip_create_internal (
+        ip
+        );
+}
 
 void v1_pod_ip_free(v1_pod_ip_t *v1_pod_ip) {
     if(NULL == v1_pod_ip){
+        return ;
+    }
+    if(v1_pod_ip->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_ip_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -55,6 +67,9 @@ v1_pod_ip_t *v1_pod_ip_parseFromJSON(cJSON *v1_pod_ipJSON){
 
     // v1_pod_ip->ip
     cJSON *ip = cJSON_GetObjectItemCaseSensitive(v1_pod_ipJSON, "ip");
+    if (cJSON_IsNull(ip)) {
+        ip = NULL;
+    }
     if (!ip) {
         goto end;
     }
@@ -66,7 +81,7 @@ v1_pod_ip_t *v1_pod_ip_parseFromJSON(cJSON *v1_pod_ipJSON){
     }
 
 
-    v1_pod_ip_local_var = v1_pod_ip_create (
+    v1_pod_ip_local_var = v1_pod_ip_create_internal (
         strdup(ip->valuestring)
         );
 

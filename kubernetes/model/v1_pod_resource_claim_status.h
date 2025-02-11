@@ -22,9 +22,10 @@ typedef struct v1_pod_resource_claim_status_t {
     char *name; // string
     char *resource_claim_name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_resource_claim_status_t;
 
-v1_pod_resource_claim_status_t *v1_pod_resource_claim_status_create(
+__attribute__((deprecated)) v1_pod_resource_claim_status_t *v1_pod_resource_claim_status_create(
     char *name,
     char *resource_claim_name
 );

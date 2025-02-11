@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**FlowcontrolApiserverAPI_getAPIGroup_11**](FlowcontrolApiserverAPI.md#FlowcontrolApiserverAPI_getAPIGroup_11) | **GET** /apis/flowcontrol.apiserver.k8s.io/ | 
+[**FlowcontrolApiserverAPI_getAPIGroup**](FlowcontrolApiserverAPI.md#FlowcontrolApiserverAPI_getAPIGroup) | **GET** /apis/flowcontrol.apiserver.k8s.io/ | 
 
 
-# **FlowcontrolApiserverAPI_getAPIGroup_11**
+# **FlowcontrolApiserverAPI_getAPIGroup**
 ```c
 // get information of a group
 //
-v1_api_group_t* FlowcontrolApiserverAPI_getAPIGroup_11(apiClient_t *apiClient);
+v1_api_group_t* FlowcontrolApiserverAPI_getAPIGroup(apiClient_t *apiClient);
 ```
 
 ### Parameters

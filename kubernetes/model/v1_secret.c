@@ -5,7 +5,7 @@
 
 
 
-v1_secret_t *v1_secret_create(
+static v1_secret_t *v1_secret_create_internal(
     char *api_version,
     list_t* data,
     int immutable,
@@ -26,12 +26,36 @@ v1_secret_t *v1_secret_create(
     v1_secret_local_var->string_data = string_data;
     v1_secret_local_var->type = type;
 
+    v1_secret_local_var->_library_owned = 1;
     return v1_secret_local_var;
 }
 
+__attribute__((deprecated)) v1_secret_t *v1_secret_create(
+    char *api_version,
+    list_t* data,
+    int immutable,
+    char *kind,
+    v1_object_meta_t *metadata,
+    list_t* string_data,
+    char *type
+    ) {
+    return v1_secret_create_internal (
+        api_version,
+        data,
+        immutable,
+        kind,
+        metadata,
+        string_data,
+        type
+        );
+}
 
 void v1_secret_free(v1_secret_t *v1_secret) {
     if(NULL == v1_secret){
+        return ;
+    }
+    if(v1_secret->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_secret_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -41,7 +65,7 @@ void v1_secret_free(v1_secret_t *v1_secret) {
     }
     if (v1_secret->data) {
         list_ForEach(listEntry, v1_secret->data) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -59,7 +83,7 @@ void v1_secret_free(v1_secret_t *v1_secret) {
     }
     if (v1_secret->string_data) {
         list_ForEach(listEntry, v1_secret->string_data) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -95,8 +119,8 @@ cJSON *v1_secret_convertToJSON(v1_secret_t *v1_secret) {
     listEntry_t *dataListEntry;
     if (v1_secret->data) {
     list_ForEach(dataListEntry, v1_secret->data) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)dataListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = dataListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -144,8 +168,8 @@ cJSON *v1_secret_convertToJSON(v1_secret_t *v1_secret) {
     listEntry_t *string_dataListEntry;
     if (v1_secret->string_data) {
     list_ForEach(string_dataListEntry, v1_secret->string_data) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)string_dataListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = string_dataListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -184,6 +208,9 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     // v1_secret->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -193,6 +220,9 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     // v1_secret->data
     cJSON *data = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "data");
+    if (cJSON_IsNull(data)) {
+        data = NULL;
+    }
     if (data) { 
     cJSON *data_local_map = NULL;
     if(!cJSON_IsObject(data) && !cJSON_IsNull(data))
@@ -218,6 +248,9 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     // v1_secret->immutable
     cJSON *immutable = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "immutable");
+    if (cJSON_IsNull(immutable)) {
+        immutable = NULL;
+    }
     if (immutable) { 
     if(!cJSON_IsBool(immutable))
     {
@@ -227,6 +260,9 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     // v1_secret->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -236,12 +272,18 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     // v1_secret->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_secret->string_data
     cJSON *string_data = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "stringData");
+    if (cJSON_IsNull(string_data)) {
+        string_data = NULL;
+    }
     if (string_data) { 
     cJSON *string_data_local_map = NULL;
     if(!cJSON_IsObject(string_data) && !cJSON_IsNull(string_data))
@@ -267,6 +309,9 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     // v1_secret->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (type) { 
     if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
@@ -275,7 +320,7 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
     }
 
 
-    v1_secret_local_var = v1_secret_create (
+    v1_secret_local_var = v1_secret_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         data ? dataList : NULL,
         immutable ? immutable->valueint : 0,
@@ -290,7 +335,7 @@ end:
     if (dataList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, dataList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);
@@ -308,7 +353,7 @@ end:
     if (string_dataList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, string_dataList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

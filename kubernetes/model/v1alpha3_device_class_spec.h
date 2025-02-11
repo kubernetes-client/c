@@ -15,7 +15,6 @@
 
 typedef struct v1alpha3_device_class_spec_t v1alpha3_device_class_spec_t;
 
-#include "v1_node_selector.h"
 #include "v1alpha3_device_class_configuration.h"
 #include "v1alpha3_device_selector.h"
 
@@ -24,14 +23,13 @@ typedef struct v1alpha3_device_class_spec_t v1alpha3_device_class_spec_t;
 typedef struct v1alpha3_device_class_spec_t {
     list_t *config; //nonprimitive container
     list_t *selectors; //nonprimitive container
-    struct v1_node_selector_t *suitable_nodes; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_class_spec_t;
 
-v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_create(
+__attribute__((deprecated)) v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_create(
     list_t *config,
-    list_t *selectors,
-    v1_node_selector_t *suitable_nodes
+    list_t *selectors
 );
 
 void v1alpha3_device_class_spec_free(v1alpha3_device_class_spec_t *v1alpha3_device_class_spec);

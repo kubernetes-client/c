@@ -21,9 +21,10 @@ typedef struct v1_sleep_action_t v1_sleep_action_t;
 typedef struct v1_sleep_action_t {
     long seconds; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_sleep_action_t;
 
-v1_sleep_action_t *v1_sleep_action_create(
+__attribute__((deprecated)) v1_sleep_action_t *v1_sleep_action_create(
     long seconds
 );
 

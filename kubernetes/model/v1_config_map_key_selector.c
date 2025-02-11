@@ -5,7 +5,7 @@
 
 
 
-v1_config_map_key_selector_t *v1_config_map_key_selector_create(
+static v1_config_map_key_selector_t *v1_config_map_key_selector_create_internal(
     char *key,
     char *name,
     int optional
@@ -18,12 +18,28 @@ v1_config_map_key_selector_t *v1_config_map_key_selector_create(
     v1_config_map_key_selector_local_var->name = name;
     v1_config_map_key_selector_local_var->optional = optional;
 
+    v1_config_map_key_selector_local_var->_library_owned = 1;
     return v1_config_map_key_selector_local_var;
 }
 
+__attribute__((deprecated)) v1_config_map_key_selector_t *v1_config_map_key_selector_create(
+    char *key,
+    char *name,
+    int optional
+    ) {
+    return v1_config_map_key_selector_create_internal (
+        key,
+        name,
+        optional
+        );
+}
 
 void v1_config_map_key_selector_free(v1_config_map_key_selector_t *v1_config_map_key_selector) {
     if(NULL == v1_config_map_key_selector){
+        return ;
+    }
+    if(v1_config_map_key_selector->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_config_map_key_selector_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -79,6 +95,9 @@ v1_config_map_key_selector_t *v1_config_map_key_selector_parseFromJSON(cJSON *v1
 
     // v1_config_map_key_selector->key
     cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_config_map_key_selectorJSON, "key");
+    if (cJSON_IsNull(key)) {
+        key = NULL;
+    }
     if (!key) {
         goto end;
     }
@@ -91,6 +110,9 @@ v1_config_map_key_selector_t *v1_config_map_key_selector_parseFromJSON(cJSON *v1
 
     // v1_config_map_key_selector->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_config_map_key_selectorJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -100,6 +122,9 @@ v1_config_map_key_selector_t *v1_config_map_key_selector_parseFromJSON(cJSON *v1
 
     // v1_config_map_key_selector->optional
     cJSON *optional = cJSON_GetObjectItemCaseSensitive(v1_config_map_key_selectorJSON, "optional");
+    if (cJSON_IsNull(optional)) {
+        optional = NULL;
+    }
     if (optional) { 
     if(!cJSON_IsBool(optional))
     {
@@ -108,7 +133,7 @@ v1_config_map_key_selector_t *v1_config_map_key_selector_parseFromJSON(cJSON *v1
     }
 
 
-    v1_config_map_key_selector_local_var = v1_config_map_key_selector_create (
+    v1_config_map_key_selector_local_var = v1_config_map_key_selector_create_internal (
         strdup(key->valuestring),
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         optional ? optional->valueint : 0

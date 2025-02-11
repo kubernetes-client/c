@@ -24,9 +24,10 @@ typedef struct v1_http_ingress_path_t {
     char *path; // string
     char *path_type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_http_ingress_path_t;
 
-v1_http_ingress_path_t *v1_http_ingress_path_create(
+__attribute__((deprecated)) v1_http_ingress_path_t *v1_http_ingress_path_create(
     v1_ingress_backend_t *backend,
     char *path,
     char *path_type

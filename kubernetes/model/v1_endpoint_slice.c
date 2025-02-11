@@ -5,7 +5,7 @@
 
 
 
-v1_endpoint_slice_t *v1_endpoint_slice_create(
+static v1_endpoint_slice_t *v1_endpoint_slice_create_internal(
     char *address_type,
     char *api_version,
     list_t *endpoints,
@@ -24,12 +24,34 @@ v1_endpoint_slice_t *v1_endpoint_slice_create(
     v1_endpoint_slice_local_var->metadata = metadata;
     v1_endpoint_slice_local_var->ports = ports;
 
+    v1_endpoint_slice_local_var->_library_owned = 1;
     return v1_endpoint_slice_local_var;
 }
 
+__attribute__((deprecated)) v1_endpoint_slice_t *v1_endpoint_slice_create(
+    char *address_type,
+    char *api_version,
+    list_t *endpoints,
+    char *kind,
+    v1_object_meta_t *metadata,
+    list_t *ports
+    ) {
+    return v1_endpoint_slice_create_internal (
+        address_type,
+        api_version,
+        endpoints,
+        kind,
+        metadata,
+        ports
+        );
+}
 
 void v1_endpoint_slice_free(v1_endpoint_slice_t *v1_endpoint_slice) {
     if(NULL == v1_endpoint_slice){
+        return ;
+    }
+    if(v1_endpoint_slice->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_endpoint_slice_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -170,6 +192,9 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
 
     // v1_endpoint_slice->address_type
     cJSON *address_type = cJSON_GetObjectItemCaseSensitive(v1_endpoint_sliceJSON, "addressType");
+    if (cJSON_IsNull(address_type)) {
+        address_type = NULL;
+    }
     if (!address_type) {
         goto end;
     }
@@ -182,6 +207,9 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
 
     // v1_endpoint_slice->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_endpoint_sliceJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -191,6 +219,9 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
 
     // v1_endpoint_slice->endpoints
     cJSON *endpoints = cJSON_GetObjectItemCaseSensitive(v1_endpoint_sliceJSON, "endpoints");
+    if (cJSON_IsNull(endpoints)) {
+        endpoints = NULL;
+    }
     if (!endpoints) {
         goto end;
     }
@@ -215,6 +246,9 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
 
     // v1_endpoint_slice->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_endpoint_sliceJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -224,12 +258,18 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
 
     // v1_endpoint_slice->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_endpoint_sliceJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_endpoint_slice->ports
     cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_endpoint_sliceJSON, "ports");
+    if (cJSON_IsNull(ports)) {
+        ports = NULL;
+    }
     if (ports) { 
     cJSON *ports_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ports)){
@@ -250,7 +290,7 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
     }
 
 
-    v1_endpoint_slice_local_var = v1_endpoint_slice_create (
+    v1_endpoint_slice_local_var = v1_endpoint_slice_create_internal (
         strdup(address_type->valuestring),
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         endpointsList,

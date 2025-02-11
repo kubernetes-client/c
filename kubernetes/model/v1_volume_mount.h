@@ -27,9 +27,10 @@ typedef struct v1_volume_mount_t {
     char *sub_path; // string
     char *sub_path_expr; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_mount_t;
 
-v1_volume_mount_t *v1_volume_mount_create(
+__attribute__((deprecated)) v1_volume_mount_t *v1_volume_mount_create(
     char *mount_path,
     char *mount_propagation,
     char *name,

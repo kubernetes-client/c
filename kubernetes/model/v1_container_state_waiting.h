@@ -22,9 +22,10 @@ typedef struct v1_container_state_waiting_t {
     char *message; // string
     char *reason; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_container_state_waiting_t;
 
-v1_container_state_waiting_t *v1_container_state_waiting_create(
+__attribute__((deprecated)) v1_container_state_waiting_t *v1_container_state_waiting_create(
     char *message,
     char *reason
 );

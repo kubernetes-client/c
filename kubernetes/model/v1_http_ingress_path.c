@@ -5,7 +5,7 @@
 
 
 
-v1_http_ingress_path_t *v1_http_ingress_path_create(
+static v1_http_ingress_path_t *v1_http_ingress_path_create_internal(
     v1_ingress_backend_t *backend,
     char *path,
     char *path_type
@@ -18,12 +18,28 @@ v1_http_ingress_path_t *v1_http_ingress_path_create(
     v1_http_ingress_path_local_var->path = path;
     v1_http_ingress_path_local_var->path_type = path_type;
 
+    v1_http_ingress_path_local_var->_library_owned = 1;
     return v1_http_ingress_path_local_var;
 }
 
+__attribute__((deprecated)) v1_http_ingress_path_t *v1_http_ingress_path_create(
+    v1_ingress_backend_t *backend,
+    char *path,
+    char *path_type
+    ) {
+    return v1_http_ingress_path_create_internal (
+        backend,
+        path,
+        path_type
+        );
+}
 
 void v1_http_ingress_path_free(v1_http_ingress_path_t *v1_http_ingress_path) {
     if(NULL == v1_http_ingress_path){
+        return ;
+    }
+    if(v1_http_ingress_path->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_http_ingress_path_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -92,6 +108,9 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
 
     // v1_http_ingress_path->backend
     cJSON *backend = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "backend");
+    if (cJSON_IsNull(backend)) {
+        backend = NULL;
+    }
     if (!backend) {
         goto end;
     }
@@ -101,6 +120,9 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
 
     // v1_http_ingress_path->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "path");
+    if (cJSON_IsNull(path)) {
+        path = NULL;
+    }
     if (path) { 
     if(!cJSON_IsString(path) && !cJSON_IsNull(path))
     {
@@ -110,6 +132,9 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
 
     // v1_http_ingress_path->path_type
     cJSON *path_type = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "pathType");
+    if (cJSON_IsNull(path_type)) {
+        path_type = NULL;
+    }
     if (!path_type) {
         goto end;
     }
@@ -121,7 +146,7 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
     }
 
 
-    v1_http_ingress_path_local_var = v1_http_ingress_path_create (
+    v1_http_ingress_path_local_var = v1_http_ingress_path_create_internal (
         backend_local_nonprim,
         path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
         strdup(path_type->valuestring)

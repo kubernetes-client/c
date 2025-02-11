@@ -5,7 +5,7 @@
 
 
 
-v1_downward_api_volume_source_t *v1_downward_api_volume_source_create(
+static v1_downward_api_volume_source_t *v1_downward_api_volume_source_create_internal(
     int default_mode,
     list_t *items
     ) {
@@ -16,12 +16,26 @@ v1_downward_api_volume_source_t *v1_downward_api_volume_source_create(
     v1_downward_api_volume_source_local_var->default_mode = default_mode;
     v1_downward_api_volume_source_local_var->items = items;
 
+    v1_downward_api_volume_source_local_var->_library_owned = 1;
     return v1_downward_api_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_downward_api_volume_source_t *v1_downward_api_volume_source_create(
+    int default_mode,
+    list_t *items
+    ) {
+    return v1_downward_api_volume_source_create_internal (
+        default_mode,
+        items
+        );
+}
 
 void v1_downward_api_volume_source_free(v1_downward_api_volume_source_t *v1_downward_api_volume_source) {
     if(NULL == v1_downward_api_volume_source){
+        return ;
+    }
+    if(v1_downward_api_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_downward_api_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -82,6 +96,9 @@ v1_downward_api_volume_source_t *v1_downward_api_volume_source_parseFromJSON(cJS
 
     // v1_downward_api_volume_source->default_mode
     cJSON *default_mode = cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_sourceJSON, "defaultMode");
+    if (cJSON_IsNull(default_mode)) {
+        default_mode = NULL;
+    }
     if (default_mode) { 
     if(!cJSON_IsNumber(default_mode))
     {
@@ -91,6 +108,9 @@ v1_downward_api_volume_source_t *v1_downward_api_volume_source_parseFromJSON(cJS
 
     // v1_downward_api_volume_source->items
     cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_sourceJSON, "items");
+    if (cJSON_IsNull(items)) {
+        items = NULL;
+    }
     if (items) { 
     cJSON *items_local_nonprimitive = NULL;
     if(!cJSON_IsArray(items)){
@@ -111,7 +131,7 @@ v1_downward_api_volume_source_t *v1_downward_api_volume_source_parseFromJSON(cJS
     }
 
 
-    v1_downward_api_volume_source_local_var = v1_downward_api_volume_source_create (
+    v1_downward_api_volume_source_local_var = v1_downward_api_volume_source_create_internal (
         default_mode ? default_mode->valuedouble : 0,
         items ? itemsList : NULL
         );

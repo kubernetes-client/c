@@ -5,7 +5,7 @@
 
 
 
-v1_resource_health_t *v1_resource_health_create(
+static v1_resource_health_t *v1_resource_health_create_internal(
     char *health,
     char *resource_id
     ) {
@@ -16,12 +16,26 @@ v1_resource_health_t *v1_resource_health_create(
     v1_resource_health_local_var->health = health;
     v1_resource_health_local_var->resource_id = resource_id;
 
+    v1_resource_health_local_var->_library_owned = 1;
     return v1_resource_health_local_var;
 }
 
+__attribute__((deprecated)) v1_resource_health_t *v1_resource_health_create(
+    char *health,
+    char *resource_id
+    ) {
+    return v1_resource_health_create_internal (
+        health,
+        resource_id
+        );
+}
 
 void v1_resource_health_free(v1_resource_health_t *v1_resource_health) {
     if(NULL == v1_resource_health){
+        return ;
+    }
+    if(v1_resource_health->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_resource_health_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -69,6 +83,9 @@ v1_resource_health_t *v1_resource_health_parseFromJSON(cJSON *v1_resource_health
 
     // v1_resource_health->health
     cJSON *health = cJSON_GetObjectItemCaseSensitive(v1_resource_healthJSON, "health");
+    if (cJSON_IsNull(health)) {
+        health = NULL;
+    }
     if (health) { 
     if(!cJSON_IsString(health) && !cJSON_IsNull(health))
     {
@@ -78,6 +95,9 @@ v1_resource_health_t *v1_resource_health_parseFromJSON(cJSON *v1_resource_health
 
     // v1_resource_health->resource_id
     cJSON *resource_id = cJSON_GetObjectItemCaseSensitive(v1_resource_healthJSON, "resourceID");
+    if (cJSON_IsNull(resource_id)) {
+        resource_id = NULL;
+    }
     if (!resource_id) {
         goto end;
     }
@@ -89,7 +109,7 @@ v1_resource_health_t *v1_resource_health_parseFromJSON(cJSON *v1_resource_health
     }
 
 
-    v1_resource_health_local_var = v1_resource_health_create (
+    v1_resource_health_local_var = v1_resource_health_create_internal (
         health && !cJSON_IsNull(health) ? strdup(health->valuestring) : NULL,
         strdup(resource_id->valuestring)
         );

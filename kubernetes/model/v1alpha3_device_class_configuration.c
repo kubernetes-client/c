@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_device_class_configuration_t *v1alpha3_device_class_configuration_create(
+static v1alpha3_device_class_configuration_t *v1alpha3_device_class_configuration_create_internal(
     v1alpha3_opaque_device_configuration_t *opaque
     ) {
     v1alpha3_device_class_configuration_t *v1alpha3_device_class_configuration_local_var = malloc(sizeof(v1alpha3_device_class_configuration_t));
@@ -14,12 +14,24 @@ v1alpha3_device_class_configuration_t *v1alpha3_device_class_configuration_creat
     }
     v1alpha3_device_class_configuration_local_var->opaque = opaque;
 
+    v1alpha3_device_class_configuration_local_var->_library_owned = 1;
     return v1alpha3_device_class_configuration_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_device_class_configuration_t *v1alpha3_device_class_configuration_create(
+    v1alpha3_opaque_device_configuration_t *opaque
+    ) {
+    return v1alpha3_device_class_configuration_create_internal (
+        opaque
+        );
+}
 
 void v1alpha3_device_class_configuration_free(v1alpha3_device_class_configuration_t *v1alpha3_device_class_configuration) {
     if(NULL == v1alpha3_device_class_configuration){
+        return ;
+    }
+    if(v1alpha3_device_class_configuration->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_device_class_configuration_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -62,12 +74,15 @@ v1alpha3_device_class_configuration_t *v1alpha3_device_class_configuration_parse
 
     // v1alpha3_device_class_configuration->opaque
     cJSON *opaque = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_class_configurationJSON, "opaque");
+    if (cJSON_IsNull(opaque)) {
+        opaque = NULL;
+    }
     if (opaque) { 
     opaque_local_nonprim = v1alpha3_opaque_device_configuration_parseFromJSON(opaque); //nonprimitive
     }
 
 
-    v1alpha3_device_class_configuration_local_var = v1alpha3_device_class_configuration_create (
+    v1alpha3_device_class_configuration_local_var = v1alpha3_device_class_configuration_create_internal (
         opaque ? opaque_local_nonprim : NULL
         );
 

@@ -24,9 +24,10 @@ typedef struct v1_subject_access_review_status_t {
     char *evaluation_error; // string
     char *reason; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_subject_access_review_status_t;
 
-v1_subject_access_review_status_t *v1_subject_access_review_status_create(
+__attribute__((deprecated)) v1_subject_access_review_status_t *v1_subject_access_review_status_create(
     int allowed,
     int denied,
     char *evaluation_error,

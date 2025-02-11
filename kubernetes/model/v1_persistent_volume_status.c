@@ -5,7 +5,7 @@
 
 
 
-v1_persistent_volume_status_t *v1_persistent_volume_status_create(
+static v1_persistent_volume_status_t *v1_persistent_volume_status_create_internal(
     char *last_phase_transition_time,
     char *message,
     char *phase,
@@ -20,12 +20,30 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_create(
     v1_persistent_volume_status_local_var->phase = phase;
     v1_persistent_volume_status_local_var->reason = reason;
 
+    v1_persistent_volume_status_local_var->_library_owned = 1;
     return v1_persistent_volume_status_local_var;
 }
 
+__attribute__((deprecated)) v1_persistent_volume_status_t *v1_persistent_volume_status_create(
+    char *last_phase_transition_time,
+    char *message,
+    char *phase,
+    char *reason
+    ) {
+    return v1_persistent_volume_status_create_internal (
+        last_phase_transition_time,
+        message,
+        phase,
+        reason
+        );
+}
 
 void v1_persistent_volume_status_free(v1_persistent_volume_status_t *v1_persistent_volume_status) {
     if(NULL == v1_persistent_volume_status){
+        return ;
+    }
+    if(v1_persistent_volume_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_persistent_volume_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -96,6 +114,9 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
 
     // v1_persistent_volume_status->last_phase_transition_time
     cJSON *last_phase_transition_time = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_statusJSON, "lastPhaseTransitionTime");
+    if (cJSON_IsNull(last_phase_transition_time)) {
+        last_phase_transition_time = NULL;
+    }
     if (last_phase_transition_time) { 
     if(!cJSON_IsString(last_phase_transition_time) && !cJSON_IsNull(last_phase_transition_time))
     {
@@ -105,6 +126,9 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
 
     // v1_persistent_volume_status->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_statusJSON, "message");
+    if (cJSON_IsNull(message)) {
+        message = NULL;
+    }
     if (message) { 
     if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
@@ -114,6 +138,9 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
 
     // v1_persistent_volume_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_statusJSON, "phase");
+    if (cJSON_IsNull(phase)) {
+        phase = NULL;
+    }
     if (phase) { 
     if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
     {
@@ -123,6 +150,9 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
 
     // v1_persistent_volume_status->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_statusJSON, "reason");
+    if (cJSON_IsNull(reason)) {
+        reason = NULL;
+    }
     if (reason) { 
     if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
@@ -131,7 +161,7 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
     }
 
 
-    v1_persistent_volume_status_local_var = v1_persistent_volume_status_create (
+    v1_persistent_volume_status_local_var = v1_persistent_volume_status_create_internal (
         last_phase_transition_time && !cJSON_IsNull(last_phase_transition_time) ? strdup(last_phase_transition_time->valuestring) : NULL,
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,

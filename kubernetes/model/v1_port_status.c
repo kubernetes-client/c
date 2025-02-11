@@ -5,7 +5,7 @@
 
 
 
-v1_port_status_t *v1_port_status_create(
+static v1_port_status_t *v1_port_status_create_internal(
     char *error,
     int port,
     char *protocol
@@ -18,12 +18,28 @@ v1_port_status_t *v1_port_status_create(
     v1_port_status_local_var->port = port;
     v1_port_status_local_var->protocol = protocol;
 
+    v1_port_status_local_var->_library_owned = 1;
     return v1_port_status_local_var;
 }
 
+__attribute__((deprecated)) v1_port_status_t *v1_port_status_create(
+    char *error,
+    int port,
+    char *protocol
+    ) {
+    return v1_port_status_create_internal (
+        error,
+        port,
+        protocol
+        );
+}
 
 void v1_port_status_free(v1_port_status_t *v1_port_status) {
     if(NULL == v1_port_status){
+        return ;
+    }
+    if(v1_port_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_port_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -80,6 +96,9 @@ v1_port_status_t *v1_port_status_parseFromJSON(cJSON *v1_port_statusJSON){
 
     // v1_port_status->error
     cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_port_statusJSON, "error");
+    if (cJSON_IsNull(error)) {
+        error = NULL;
+    }
     if (error) { 
     if(!cJSON_IsString(error) && !cJSON_IsNull(error))
     {
@@ -89,6 +108,9 @@ v1_port_status_t *v1_port_status_parseFromJSON(cJSON *v1_port_statusJSON){
 
     // v1_port_status->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_port_statusJSON, "port");
+    if (cJSON_IsNull(port)) {
+        port = NULL;
+    }
     if (!port) {
         goto end;
     }
@@ -101,6 +123,9 @@ v1_port_status_t *v1_port_status_parseFromJSON(cJSON *v1_port_statusJSON){
 
     // v1_port_status->protocol
     cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_port_statusJSON, "protocol");
+    if (cJSON_IsNull(protocol)) {
+        protocol = NULL;
+    }
     if (!protocol) {
         goto end;
     }
@@ -112,7 +137,7 @@ v1_port_status_t *v1_port_status_parseFromJSON(cJSON *v1_port_statusJSON){
     }
 
 
-    v1_port_status_local_var = v1_port_status_create (
+    v1_port_status_local_var = v1_port_status_create_internal (
         error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
         port->valuedouble,
         strdup(protocol->valuestring)

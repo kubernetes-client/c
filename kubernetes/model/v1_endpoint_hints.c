@@ -5,7 +5,7 @@
 
 
 
-v1_endpoint_hints_t *v1_endpoint_hints_create(
+static v1_endpoint_hints_t *v1_endpoint_hints_create_internal(
     list_t *for_zones
     ) {
     v1_endpoint_hints_t *v1_endpoint_hints_local_var = malloc(sizeof(v1_endpoint_hints_t));
@@ -14,12 +14,24 @@ v1_endpoint_hints_t *v1_endpoint_hints_create(
     }
     v1_endpoint_hints_local_var->for_zones = for_zones;
 
+    v1_endpoint_hints_local_var->_library_owned = 1;
     return v1_endpoint_hints_local_var;
 }
 
+__attribute__((deprecated)) v1_endpoint_hints_t *v1_endpoint_hints_create(
+    list_t *for_zones
+    ) {
+    return v1_endpoint_hints_create_internal (
+        for_zones
+        );
+}
 
 void v1_endpoint_hints_free(v1_endpoint_hints_t *v1_endpoint_hints) {
     if(NULL == v1_endpoint_hints){
+        return ;
+    }
+    if(v1_endpoint_hints->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_endpoint_hints_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -72,6 +84,9 @@ v1_endpoint_hints_t *v1_endpoint_hints_parseFromJSON(cJSON *v1_endpoint_hintsJSO
 
     // v1_endpoint_hints->for_zones
     cJSON *for_zones = cJSON_GetObjectItemCaseSensitive(v1_endpoint_hintsJSON, "forZones");
+    if (cJSON_IsNull(for_zones)) {
+        for_zones = NULL;
+    }
     if (for_zones) { 
     cJSON *for_zones_local_nonprimitive = NULL;
     if(!cJSON_IsArray(for_zones)){
@@ -92,7 +107,7 @@ v1_endpoint_hints_t *v1_endpoint_hints_parseFromJSON(cJSON *v1_endpoint_hintsJSO
     }
 
 
-    v1_endpoint_hints_local_var = v1_endpoint_hints_create (
+    v1_endpoint_hints_local_var = v1_endpoint_hints_create_internal (
         for_zones ? for_zonesList : NULL
         );
 

@@ -5,7 +5,7 @@
 
 
 
-v1_container_resize_policy_t *v1_container_resize_policy_create(
+static v1_container_resize_policy_t *v1_container_resize_policy_create_internal(
     char *resource_name,
     char *restart_policy
     ) {
@@ -16,12 +16,26 @@ v1_container_resize_policy_t *v1_container_resize_policy_create(
     v1_container_resize_policy_local_var->resource_name = resource_name;
     v1_container_resize_policy_local_var->restart_policy = restart_policy;
 
+    v1_container_resize_policy_local_var->_library_owned = 1;
     return v1_container_resize_policy_local_var;
 }
 
+__attribute__((deprecated)) v1_container_resize_policy_t *v1_container_resize_policy_create(
+    char *resource_name,
+    char *restart_policy
+    ) {
+    return v1_container_resize_policy_create_internal (
+        resource_name,
+        restart_policy
+        );
+}
 
 void v1_container_resize_policy_free(v1_container_resize_policy_t *v1_container_resize_policy) {
     if(NULL == v1_container_resize_policy){
+        return ;
+    }
+    if(v1_container_resize_policy->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_container_resize_policy_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -70,6 +84,9 @@ v1_container_resize_policy_t *v1_container_resize_policy_parseFromJSON(cJSON *v1
 
     // v1_container_resize_policy->resource_name
     cJSON *resource_name = cJSON_GetObjectItemCaseSensitive(v1_container_resize_policyJSON, "resourceName");
+    if (cJSON_IsNull(resource_name)) {
+        resource_name = NULL;
+    }
     if (!resource_name) {
         goto end;
     }
@@ -82,6 +99,9 @@ v1_container_resize_policy_t *v1_container_resize_policy_parseFromJSON(cJSON *v1
 
     // v1_container_resize_policy->restart_policy
     cJSON *restart_policy = cJSON_GetObjectItemCaseSensitive(v1_container_resize_policyJSON, "restartPolicy");
+    if (cJSON_IsNull(restart_policy)) {
+        restart_policy = NULL;
+    }
     if (!restart_policy) {
         goto end;
     }
@@ -93,7 +113,7 @@ v1_container_resize_policy_t *v1_container_resize_policy_parseFromJSON(cJSON *v1
     }
 
 
-    v1_container_resize_policy_local_var = v1_container_resize_policy_create (
+    v1_container_resize_policy_local_var = v1_container_resize_policy_create_internal (
         strdup(resource_name->valuestring),
         strdup(restart_policy->valuestring)
         );

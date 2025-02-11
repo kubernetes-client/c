@@ -5,7 +5,7 @@
 
 
 
-v1_downward_api_volume_file_t *v1_downward_api_volume_file_create(
+static v1_downward_api_volume_file_t *v1_downward_api_volume_file_create_internal(
     v1_object_field_selector_t *field_ref,
     int mode,
     char *path,
@@ -20,12 +20,30 @@ v1_downward_api_volume_file_t *v1_downward_api_volume_file_create(
     v1_downward_api_volume_file_local_var->path = path;
     v1_downward_api_volume_file_local_var->resource_field_ref = resource_field_ref;
 
+    v1_downward_api_volume_file_local_var->_library_owned = 1;
     return v1_downward_api_volume_file_local_var;
 }
 
+__attribute__((deprecated)) v1_downward_api_volume_file_t *v1_downward_api_volume_file_create(
+    v1_object_field_selector_t *field_ref,
+    int mode,
+    char *path,
+    v1_resource_field_selector_t *resource_field_ref
+    ) {
+    return v1_downward_api_volume_file_create_internal (
+        field_ref,
+        mode,
+        path,
+        resource_field_ref
+        );
+}
 
 void v1_downward_api_volume_file_free(v1_downward_api_volume_file_t *v1_downward_api_volume_file) {
     if(NULL == v1_downward_api_volume_file){
+        return ;
+    }
+    if(v1_downward_api_volume_file->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_downward_api_volume_file_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -109,12 +127,18 @@ v1_downward_api_volume_file_t *v1_downward_api_volume_file_parseFromJSON(cJSON *
 
     // v1_downward_api_volume_file->field_ref
     cJSON *field_ref = cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_fileJSON, "fieldRef");
+    if (cJSON_IsNull(field_ref)) {
+        field_ref = NULL;
+    }
     if (field_ref) { 
     field_ref_local_nonprim = v1_object_field_selector_parseFromJSON(field_ref); //nonprimitive
     }
 
     // v1_downward_api_volume_file->mode
     cJSON *mode = cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_fileJSON, "mode");
+    if (cJSON_IsNull(mode)) {
+        mode = NULL;
+    }
     if (mode) { 
     if(!cJSON_IsNumber(mode))
     {
@@ -124,6 +148,9 @@ v1_downward_api_volume_file_t *v1_downward_api_volume_file_parseFromJSON(cJSON *
 
     // v1_downward_api_volume_file->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_fileJSON, "path");
+    if (cJSON_IsNull(path)) {
+        path = NULL;
+    }
     if (!path) {
         goto end;
     }
@@ -136,12 +163,15 @@ v1_downward_api_volume_file_t *v1_downward_api_volume_file_parseFromJSON(cJSON *
 
     // v1_downward_api_volume_file->resource_field_ref
     cJSON *resource_field_ref = cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_fileJSON, "resourceFieldRef");
+    if (cJSON_IsNull(resource_field_ref)) {
+        resource_field_ref = NULL;
+    }
     if (resource_field_ref) { 
     resource_field_ref_local_nonprim = v1_resource_field_selector_parseFromJSON(resource_field_ref); //nonprimitive
     }
 
 
-    v1_downward_api_volume_file_local_var = v1_downward_api_volume_file_create (
+    v1_downward_api_volume_file_local_var = v1_downward_api_volume_file_create_internal (
         field_ref ? field_ref_local_nonprim : NULL,
         mode ? mode->valuedouble : 0,
         strdup(path->valuestring),

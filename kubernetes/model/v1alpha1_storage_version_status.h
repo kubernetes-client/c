@@ -25,9 +25,10 @@ typedef struct v1alpha1_storage_version_status_t {
     list_t *conditions; //nonprimitive container
     list_t *storage_versions; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha1_storage_version_status_t;
 
-v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_create(
+__attribute__((deprecated)) v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_create(
     char *common_encoding_version,
     list_t *conditions,
     list_t *storage_versions

@@ -23,9 +23,10 @@ typedef struct v1_pod_failure_policy_on_exit_codes_requirement_t {
     char *_operator; // string
     list_t *values; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_failure_policy_on_exit_codes_requirement_t;
 
-v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement_create(
+__attribute__((deprecated)) v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement_create(
     char *container_name,
     char *_operator,
     list_t *values

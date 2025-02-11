@@ -25,9 +25,10 @@ typedef struct v1_priority_level_configuration_spec_t {
     struct v1_limited_priority_level_configuration_t *limited; //model
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_priority_level_configuration_spec_t;
 
-v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec_create(
+__attribute__((deprecated)) v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec_create(
     v1_exempt_priority_level_configuration_t *exempt,
     v1_limited_priority_level_configuration_t *limited,
     char *type

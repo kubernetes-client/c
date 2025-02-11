@@ -26,9 +26,10 @@ typedef struct v1beta1_volume_attributes_class_t {
     struct v1_object_meta_t *metadata; //model
     list_t* parameters; //map
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_volume_attributes_class_t;
 
-v1beta1_volume_attributes_class_t *v1beta1_volume_attributes_class_create(
+__attribute__((deprecated)) v1beta1_volume_attributes_class_t *v1beta1_volume_attributes_class_create(
     char *api_version,
     char *driver_name,
     char *kind,

@@ -5,7 +5,7 @@
 
 
 
-v1_token_request_spec_t *v1_token_request_spec_create(
+static v1_token_request_spec_t *v1_token_request_spec_create_internal(
     list_t *audiences,
     v1_bound_object_reference_t *bound_object_ref,
     long expiration_seconds
@@ -18,12 +18,28 @@ v1_token_request_spec_t *v1_token_request_spec_create(
     v1_token_request_spec_local_var->bound_object_ref = bound_object_ref;
     v1_token_request_spec_local_var->expiration_seconds = expiration_seconds;
 
+    v1_token_request_spec_local_var->_library_owned = 1;
     return v1_token_request_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_token_request_spec_t *v1_token_request_spec_create(
+    list_t *audiences,
+    v1_bound_object_reference_t *bound_object_ref,
+    long expiration_seconds
+    ) {
+    return v1_token_request_spec_create_internal (
+        audiences,
+        bound_object_ref,
+        expiration_seconds
+        );
+}
 
 void v1_token_request_spec_free(v1_token_request_spec_t *v1_token_request_spec) {
     if(NULL == v1_token_request_spec){
+        return ;
+    }
+    if(v1_token_request_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_token_request_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -55,7 +71,7 @@ cJSON *v1_token_request_spec_convertToJSON(v1_token_request_spec_t *v1_token_req
 
     listEntry_t *audiencesListEntry;
     list_ForEach(audiencesListEntry, v1_token_request_spec->audiences) {
-    if(cJSON_AddStringToObject(audiences, "", (char*)audiencesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(audiences, "", audiencesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -102,6 +118,9 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
 
     // v1_token_request_spec->audiences
     cJSON *audiences = cJSON_GetObjectItemCaseSensitive(v1_token_request_specJSON, "audiences");
+    if (cJSON_IsNull(audiences)) {
+        audiences = NULL;
+    }
     if (!audiences) {
         goto end;
     }
@@ -124,12 +143,18 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
 
     // v1_token_request_spec->bound_object_ref
     cJSON *bound_object_ref = cJSON_GetObjectItemCaseSensitive(v1_token_request_specJSON, "boundObjectRef");
+    if (cJSON_IsNull(bound_object_ref)) {
+        bound_object_ref = NULL;
+    }
     if (bound_object_ref) { 
     bound_object_ref_local_nonprim = v1_bound_object_reference_parseFromJSON(bound_object_ref); //nonprimitive
     }
 
     // v1_token_request_spec->expiration_seconds
     cJSON *expiration_seconds = cJSON_GetObjectItemCaseSensitive(v1_token_request_specJSON, "expirationSeconds");
+    if (cJSON_IsNull(expiration_seconds)) {
+        expiration_seconds = NULL;
+    }
     if (expiration_seconds) { 
     if(!cJSON_IsNumber(expiration_seconds))
     {
@@ -138,7 +163,7 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
     }
 
 
-    v1_token_request_spec_local_var = v1_token_request_spec_create (
+    v1_token_request_spec_local_var = v1_token_request_spec_create_internal (
         audiencesList,
         bound_object_ref ? bound_object_ref_local_nonprim : NULL,
         expiration_seconds ? expiration_seconds->valuedouble : 0

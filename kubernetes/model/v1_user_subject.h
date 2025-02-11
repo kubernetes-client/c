@@ -21,9 +21,10 @@ typedef struct v1_user_subject_t v1_user_subject_t;
 typedef struct v1_user_subject_t {
     char *name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_user_subject_t;
 
-v1_user_subject_t *v1_user_subject_create(
+__attribute__((deprecated)) v1_user_subject_t *v1_user_subject_create(
     char *name
 );
 

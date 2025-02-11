@@ -27,9 +27,10 @@ typedef struct v1_controller_revision_t {
     struct v1_object_meta_t *metadata; //model
     long revision; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_controller_revision_t;
 
-v1_controller_revision_t *v1_controller_revision_create(
+__attribute__((deprecated)) v1_controller_revision_t *v1_controller_revision_create(
     char *api_version,
     object_t *data,
     char *kind,

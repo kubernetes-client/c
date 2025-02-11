@@ -4,25 +4,25 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AutoscalingV2API_createNamespacedHorizontalPodAutoscaler_0**](AutoscalingV2API.md#AutoscalingV2API_createNamespacedHorizontalPodAutoscaler_0) | **POST** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers | 
-[**AutoscalingV2API_deleteCollectionNamespacedHorizontalPodAutoscaler_0**](AutoscalingV2API.md#AutoscalingV2API_deleteCollectionNamespacedHorizontalPodAutoscaler_0) | **DELETE** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers | 
-[**AutoscalingV2API_deleteNamespacedHorizontalPodAutoscaler_0**](AutoscalingV2API.md#AutoscalingV2API_deleteNamespacedHorizontalPodAutoscaler_0) | **DELETE** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
-[**AutoscalingV2API_getAPIResources_11**](AutoscalingV2API.md#AutoscalingV2API_getAPIResources_11) | **GET** /apis/autoscaling/v2/ | 
-[**AutoscalingV2API_listHorizontalPodAutoscalerForAllNamespaces_0**](AutoscalingV2API.md#AutoscalingV2API_listHorizontalPodAutoscalerForAllNamespaces_0) | **GET** /apis/autoscaling/v2/horizontalpodautoscalers | 
-[**AutoscalingV2API_listNamespacedHorizontalPodAutoscaler_0**](AutoscalingV2API.md#AutoscalingV2API_listNamespacedHorizontalPodAutoscaler_0) | **GET** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers | 
-[**AutoscalingV2API_patchNamespacedHorizontalPodAutoscalerStatus_0**](AutoscalingV2API.md#AutoscalingV2API_patchNamespacedHorizontalPodAutoscalerStatus_0) | **PATCH** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
-[**AutoscalingV2API_patchNamespacedHorizontalPodAutoscaler_0**](AutoscalingV2API.md#AutoscalingV2API_patchNamespacedHorizontalPodAutoscaler_0) | **PATCH** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
-[**AutoscalingV2API_readNamespacedHorizontalPodAutoscalerStatus_0**](AutoscalingV2API.md#AutoscalingV2API_readNamespacedHorizontalPodAutoscalerStatus_0) | **GET** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
-[**AutoscalingV2API_readNamespacedHorizontalPodAutoscaler_0**](AutoscalingV2API.md#AutoscalingV2API_readNamespacedHorizontalPodAutoscaler_0) | **GET** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
-[**AutoscalingV2API_replaceNamespacedHorizontalPodAutoscalerStatus_0**](AutoscalingV2API.md#AutoscalingV2API_replaceNamespacedHorizontalPodAutoscalerStatus_0) | **PUT** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
-[**AutoscalingV2API_replaceNamespacedHorizontalPodAutoscaler_0**](AutoscalingV2API.md#AutoscalingV2API_replaceNamespacedHorizontalPodAutoscaler_0) | **PUT** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+[**AutoscalingV2API_createNamespacedHorizontalPodAutoscaler**](AutoscalingV2API.md#AutoscalingV2API_createNamespacedHorizontalPodAutoscaler) | **POST** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers | 
+[**AutoscalingV2API_deleteCollectionNamespacedHorizontalPodAutoscaler**](AutoscalingV2API.md#AutoscalingV2API_deleteCollectionNamespacedHorizontalPodAutoscaler) | **DELETE** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers | 
+[**AutoscalingV2API_deleteNamespacedHorizontalPodAutoscaler**](AutoscalingV2API.md#AutoscalingV2API_deleteNamespacedHorizontalPodAutoscaler) | **DELETE** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+[**AutoscalingV2API_getAPIResources**](AutoscalingV2API.md#AutoscalingV2API_getAPIResources) | **GET** /apis/autoscaling/v2/ | 
+[**AutoscalingV2API_listHorizontalPodAutoscalerForAllNamespaces**](AutoscalingV2API.md#AutoscalingV2API_listHorizontalPodAutoscalerForAllNamespaces) | **GET** /apis/autoscaling/v2/horizontalpodautoscalers | 
+[**AutoscalingV2API_listNamespacedHorizontalPodAutoscaler**](AutoscalingV2API.md#AutoscalingV2API_listNamespacedHorizontalPodAutoscaler) | **GET** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers | 
+[**AutoscalingV2API_patchNamespacedHorizontalPodAutoscaler**](AutoscalingV2API.md#AutoscalingV2API_patchNamespacedHorizontalPodAutoscaler) | **PATCH** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+[**AutoscalingV2API_patchNamespacedHorizontalPodAutoscalerStatus**](AutoscalingV2API.md#AutoscalingV2API_patchNamespacedHorizontalPodAutoscalerStatus) | **PATCH** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
+[**AutoscalingV2API_readNamespacedHorizontalPodAutoscaler**](AutoscalingV2API.md#AutoscalingV2API_readNamespacedHorizontalPodAutoscaler) | **GET** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+[**AutoscalingV2API_readNamespacedHorizontalPodAutoscalerStatus**](AutoscalingV2API.md#AutoscalingV2API_readNamespacedHorizontalPodAutoscalerStatus) | **GET** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
+[**AutoscalingV2API_replaceNamespacedHorizontalPodAutoscaler**](AutoscalingV2API.md#AutoscalingV2API_replaceNamespacedHorizontalPodAutoscaler) | **PUT** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name} | 
+[**AutoscalingV2API_replaceNamespacedHorizontalPodAutoscalerStatus**](AutoscalingV2API.md#AutoscalingV2API_replaceNamespacedHorizontalPodAutoscalerStatus) | **PUT** /apis/autoscaling/v2/namespaces/{namespace}/horizontalpodautoscalers/{name}/status | 
 
 
-# **AutoscalingV2API_createNamespacedHorizontalPodAutoscaler_0**
+# **AutoscalingV2API_createNamespacedHorizontalPodAutoscaler**
 ```c
 // create a HorizontalPodAutoscaler
 //
-v2_horizontal_pod_autoscaler_t* AutoscalingV2API_createNamespacedHorizontalPodAutoscaler_0(apiClient_t *apiClient, char *_namespace, v2_horizontal_pod_autoscaler_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v2_horizontal_pod_autoscaler_t* AutoscalingV2API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char *_namespace, v2_horizontal_pod_autoscaler_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -48,15 +48,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AutoscalingV2API_deleteCollectionNamespacedHorizontalPodAutoscaler_0**
+# **AutoscalingV2API_deleteCollectionNamespacedHorizontalPodAutoscaler**
 ```c
 // delete collection of HorizontalPodAutoscaler
 //
-v1_status_t* AutoscalingV2API_deleteCollectionNamespacedHorizontalPodAutoscaler_0(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+v1_status_t* AutoscalingV2API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -69,6 +69,7 @@ Name | Type | Description  | Notes
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
 **gracePeriodSeconds** | **int \*** | The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. | [optional] 
+**ignoreStoreReadErrorWithClusterBreakingPotential** | **int \*** | if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it | [optional] 
 **labelSelector** | **char \*** | A selector to restrict the list of returned objects by their labels. Defaults to everything. | [optional] 
 **limit** | **int \*** | limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned. | [optional] 
 **orphanDependents** | **int \*** | Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both. | [optional] 
@@ -91,15 +92,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AutoscalingV2API_deleteNamespacedHorizontalPodAutoscaler_0**
+# **AutoscalingV2API_deleteNamespacedHorizontalPodAutoscaler**
 ```c
 // delete a HorizontalPodAutoscaler
 //
-v1_status_t* AutoscalingV2API_deleteNamespacedHorizontalPodAutoscaler_0(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+v1_status_t* AutoscalingV2API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -111,6 +112,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **gracePeriodSeconds** | **int \*** | The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. | [optional] 
+**ignoreStoreReadErrorWithClusterBreakingPotential** | **int \*** | if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it | [optional] 
 **orphanDependents** | **int \*** | Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both. | [optional] 
 **propagationPolicy** | **char \*** | Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground. | [optional] 
 **body** | **[v1_delete_options_t](v1_delete_options.md) \*** |  | [optional] 
@@ -127,15 +129,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AutoscalingV2API_getAPIResources_11**
+# **AutoscalingV2API_getAPIResources**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* AutoscalingV2API_getAPIResources_11(apiClient_t *apiClient);
+v1_api_resource_list_t* AutoscalingV2API_getAPIResources(apiClient_t *apiClient);
 ```
 
 ### Parameters
@@ -155,15 +157,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AutoscalingV2API_listHorizontalPodAutoscalerForAllNamespaces_0**
+# **AutoscalingV2API_listHorizontalPodAutoscalerForAllNamespaces**
 ```c
 // list or watch objects of kind HorizontalPodAutoscaler
 //
-v2_horizontal_pod_autoscaler_list_t* AutoscalingV2API_listHorizontalPodAutoscalerForAllNamespaces_0(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+v2_horizontal_pod_autoscaler_list_t* AutoscalingV2API_listHorizontalPodAutoscalerForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -194,15 +196,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch, application/cbor-seq
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AutoscalingV2API_listNamespacedHorizontalPodAutoscaler_0**
+# **AutoscalingV2API_listNamespacedHorizontalPodAutoscaler**
 ```c
 // list or watch objects of kind HorizontalPodAutoscaler
 //
-v2_horizontal_pod_autoscaler_list_t* AutoscalingV2API_listNamespacedHorizontalPodAutoscaler_0(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+v2_horizontal_pod_autoscaler_list_t* AutoscalingV2API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -234,51 +236,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch, application/cbor-seq
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AutoscalingV2API_patchNamespacedHorizontalPodAutoscalerStatus_0**
-```c
-// partially update status of the specified HorizontalPodAutoscaler
-//
-v2_horizontal_pod_autoscaler_t* AutoscalingV2API_patchNamespacedHorizontalPodAutoscalerStatus_0(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
-```
-
-### Parameters
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the HorizontalPodAutoscaler | 
-**_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
-**body** | **[object_t](object.md) \*** |  | 
-**pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
-**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
-**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
-**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
-**force** | **int \*** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
-
-### Return type
-
-[v2_horizontal_pod_autoscaler_t](v2_horizontal_pod_autoscaler.md) *
-
-
-### Authorization
-
-[BearerToken](../README.md#BearerToken)
-
-### HTTP request headers
-
- - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **AutoscalingV2API_patchNamespacedHorizontalPodAutoscaler_0**
+# **AutoscalingV2API_patchNamespacedHorizontalPodAutoscaler**
 ```c
 // partially update the specified HorizontalPodAutoscaler
 //
-v2_horizontal_pod_autoscaler_t* AutoscalingV2API_patchNamespacedHorizontalPodAutoscaler_0(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v2_horizontal_pod_autoscaler_t* AutoscalingV2API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -305,16 +271,16 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml, application/apply-patch+cbor
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AutoscalingV2API_readNamespacedHorizontalPodAutoscalerStatus_0**
+# **AutoscalingV2API_patchNamespacedHorizontalPodAutoscalerStatus**
 ```c
-// read status of the specified HorizontalPodAutoscaler
+// partially update status of the specified HorizontalPodAutoscaler
 //
-v2_horizontal_pod_autoscaler_t* AutoscalingV2API_readNamespacedHorizontalPodAutoscalerStatus_0(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
+v2_horizontal_pod_autoscaler_t* AutoscalingV2API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -323,7 +289,12 @@ Name | Type | Description  | Notes
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the HorizontalPodAutoscaler | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
+**body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
+**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
+**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
+**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
+**force** | **int \*** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
 
 ### Return type
 
@@ -336,16 +307,16 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml, application/apply-patch+cbor
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AutoscalingV2API_readNamespacedHorizontalPodAutoscaler_0**
+# **AutoscalingV2API_readNamespacedHorizontalPodAutoscaler**
 ```c
 // read the specified HorizontalPodAutoscaler
 //
-v2_horizontal_pod_autoscaler_t* AutoscalingV2API_readNamespacedHorizontalPodAutoscaler_0(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
+v2_horizontal_pod_autoscaler_t* AutoscalingV2API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -368,15 +339,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AutoscalingV2API_replaceNamespacedHorizontalPodAutoscalerStatus_0**
+# **AutoscalingV2API_readNamespacedHorizontalPodAutoscalerStatus**
 ```c
-// replace status of the specified HorizontalPodAutoscaler
+// read status of the specified HorizontalPodAutoscaler
 //
-v2_horizontal_pod_autoscaler_t* AutoscalingV2API_replaceNamespacedHorizontalPodAutoscalerStatus_0(apiClient_t *apiClient, char *name, char *_namespace, v2_horizontal_pod_autoscaler_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v2_horizontal_pod_autoscaler_t* AutoscalingV2API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -385,11 +356,7 @@ Name | Type | Description  | Notes
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
 **name** | **char \*** | name of the HorizontalPodAutoscaler | 
 **_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
-**body** | **[v2_horizontal_pod_autoscaler_t](v2_horizontal_pod_autoscaler.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
-**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
-**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
-**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
 
 ### Return type
 
@@ -403,15 +370,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AutoscalingV2API_replaceNamespacedHorizontalPodAutoscaler_0**
+# **AutoscalingV2API_replaceNamespacedHorizontalPodAutoscaler**
 ```c
 // replace the specified HorizontalPodAutoscaler
 //
-v2_horizontal_pod_autoscaler_t* AutoscalingV2API_replaceNamespacedHorizontalPodAutoscaler_0(apiClient_t *apiClient, char *name, char *_namespace, v2_horizontal_pod_autoscaler_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v2_horizontal_pod_autoscaler_t* AutoscalingV2API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char *name, char *_namespace, v2_horizontal_pod_autoscaler_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -438,7 +405,42 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **AutoscalingV2API_replaceNamespacedHorizontalPodAutoscalerStatus**
+```c
+// replace status of the specified HorizontalPodAutoscaler
+//
+v2_horizontal_pod_autoscaler_t* AutoscalingV2API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiClient, char *name, char *_namespace, v2_horizontal_pod_autoscaler_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+```
+
+### Parameters
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**apiClient** | **apiClient_t \*** | context containing the client configuration |
+**name** | **char \*** | name of the HorizontalPodAutoscaler | 
+**_namespace** | **char \*** | object name and auth scope, such as for teams and projects | 
+**body** | **[v2_horizontal_pod_autoscaler_t](v2_horizontal_pod_autoscaler.md) \*** |  | 
+**pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
+**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
+**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
+**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
+
+### Return type
+
+[v2_horizontal_pod_autoscaler_t](v2_horizontal_pod_autoscaler.md) *
+
+
+### Authorization
+
+[BearerToken](../README.md#BearerToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

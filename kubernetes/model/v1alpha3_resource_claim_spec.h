@@ -20,13 +20,12 @@ typedef struct v1alpha3_resource_claim_spec_t v1alpha3_resource_claim_spec_t;
 
 
 typedef struct v1alpha3_resource_claim_spec_t {
-    char *controller; // string
     struct v1alpha3_device_claim_t *devices; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_resource_claim_spec_t;
 
-v1alpha3_resource_claim_spec_t *v1alpha3_resource_claim_spec_create(
-    char *controller,
+__attribute__((deprecated)) v1alpha3_resource_claim_spec_t *v1alpha3_resource_claim_spec_create(
     v1alpha3_device_claim_t *devices
 );
 

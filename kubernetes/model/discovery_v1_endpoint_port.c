@@ -5,7 +5,7 @@
 
 
 
-discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_create(
+static discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_create_internal(
     char *app_protocol,
     char *name,
     int port,
@@ -20,12 +20,30 @@ discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_create(
     discovery_v1_endpoint_port_local_var->port = port;
     discovery_v1_endpoint_port_local_var->protocol = protocol;
 
+    discovery_v1_endpoint_port_local_var->_library_owned = 1;
     return discovery_v1_endpoint_port_local_var;
 }
 
+__attribute__((deprecated)) discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_create(
+    char *app_protocol,
+    char *name,
+    int port,
+    char *protocol
+    ) {
+    return discovery_v1_endpoint_port_create_internal (
+        app_protocol,
+        name,
+        port,
+        protocol
+        );
+}
 
 void discovery_v1_endpoint_port_free(discovery_v1_endpoint_port_t *discovery_v1_endpoint_port) {
     if(NULL == discovery_v1_endpoint_port){
+        return ;
+    }
+    if(discovery_v1_endpoint_port->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "discovery_v1_endpoint_port_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -92,6 +110,9 @@ discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_parseFromJSON(cJSON *di
 
     // discovery_v1_endpoint_port->app_protocol
     cJSON *app_protocol = cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "appProtocol");
+    if (cJSON_IsNull(app_protocol)) {
+        app_protocol = NULL;
+    }
     if (app_protocol) { 
     if(!cJSON_IsString(app_protocol) && !cJSON_IsNull(app_protocol))
     {
@@ -101,6 +122,9 @@ discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_parseFromJSON(cJSON *di
 
     // discovery_v1_endpoint_port->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -110,6 +134,9 @@ discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_parseFromJSON(cJSON *di
 
     // discovery_v1_endpoint_port->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "port");
+    if (cJSON_IsNull(port)) {
+        port = NULL;
+    }
     if (port) { 
     if(!cJSON_IsNumber(port))
     {
@@ -119,6 +146,9 @@ discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_parseFromJSON(cJSON *di
 
     // discovery_v1_endpoint_port->protocol
     cJSON *protocol = cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "protocol");
+    if (cJSON_IsNull(protocol)) {
+        protocol = NULL;
+    }
     if (protocol) { 
     if(!cJSON_IsString(protocol) && !cJSON_IsNull(protocol))
     {
@@ -127,7 +157,7 @@ discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_parseFromJSON(cJSON *di
     }
 
 
-    discovery_v1_endpoint_port_local_var = discovery_v1_endpoint_port_create (
+    discovery_v1_endpoint_port_local_var = discovery_v1_endpoint_port_create_internal (
         app_protocol && !cJSON_IsNull(app_protocol) ? strdup(app_protocol->valuestring) : NULL,
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         port ? port->valuedouble : 0,

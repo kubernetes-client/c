@@ -24,9 +24,10 @@ typedef struct v1_self_subject_access_review_spec_t {
     struct v1_non_resource_attributes_t *non_resource_attributes; //model
     struct v1_resource_attributes_t *resource_attributes; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_self_subject_access_review_spec_t;
 
-v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_create(
+__attribute__((deprecated)) v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_create(
     v1_non_resource_attributes_t *non_resource_attributes,
     v1_resource_attributes_t *resource_attributes
 );

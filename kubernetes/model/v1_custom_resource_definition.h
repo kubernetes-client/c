@@ -28,9 +28,10 @@ typedef struct v1_custom_resource_definition_t {
     struct v1_custom_resource_definition_spec_t *spec; //model
     struct v1_custom_resource_definition_status_t *status; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_custom_resource_definition_t;
 
-v1_custom_resource_definition_t *v1_custom_resource_definition_create(
+__attribute__((deprecated)) v1_custom_resource_definition_t *v1_custom_resource_definition_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

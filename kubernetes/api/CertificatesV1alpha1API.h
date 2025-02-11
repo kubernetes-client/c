@@ -22,19 +22,19 @@ CertificatesV1alpha1API_createClusterTrustBundle(apiClient_t *apiClient, v1alpha
 // delete a ClusterTrustBundle
 //
 v1_status_t*
-CertificatesV1alpha1API_deleteClusterTrustBundle(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+CertificatesV1alpha1API_deleteClusterTrustBundle(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // delete collection of ClusterTrustBundle
 //
 v1_status_t*
-CertificatesV1alpha1API_deleteCollectionClusterTrustBundle(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+CertificatesV1alpha1API_deleteCollectionClusterTrustBundle(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-CertificatesV1alpha1API_getAPIResources_14(apiClient_t *apiClient);
+CertificatesV1alpha1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind ClusterTrustBundle

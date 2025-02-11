@@ -1,7 +1,7 @@
 /*
  * v1_local_volume_source.h
  *
- * Local represents directly-attached storage with node affinity (Beta feature)
+ * Local represents directly-attached storage with node affinity
  */
 
 #ifndef _v1_local_volume_source_H_
@@ -22,9 +22,10 @@ typedef struct v1_local_volume_source_t {
     char *fs_type; // string
     char *path; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_local_volume_source_t;
 
-v1_local_volume_source_t *v1_local_volume_source_create(
+__attribute__((deprecated)) v1_local_volume_source_t *v1_local_volume_source_create(
     char *fs_type,
     char *path
 );

@@ -5,7 +5,7 @@
 
 
 
-v1_config_map_t *v1_config_map_create(
+static v1_config_map_t *v1_config_map_create_internal(
     char *api_version,
     list_t* binary_data,
     list_t* data,
@@ -24,12 +24,34 @@ v1_config_map_t *v1_config_map_create(
     v1_config_map_local_var->kind = kind;
     v1_config_map_local_var->metadata = metadata;
 
+    v1_config_map_local_var->_library_owned = 1;
     return v1_config_map_local_var;
 }
 
+__attribute__((deprecated)) v1_config_map_t *v1_config_map_create(
+    char *api_version,
+    list_t* binary_data,
+    list_t* data,
+    int immutable,
+    char *kind,
+    v1_object_meta_t *metadata
+    ) {
+    return v1_config_map_create_internal (
+        api_version,
+        binary_data,
+        data,
+        immutable,
+        kind,
+        metadata
+        );
+}
 
 void v1_config_map_free(v1_config_map_t *v1_config_map) {
     if(NULL == v1_config_map){
+        return ;
+    }
+    if(v1_config_map->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_config_map_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -39,7 +61,7 @@ void v1_config_map_free(v1_config_map_t *v1_config_map) {
     }
     if (v1_config_map->binary_data) {
         list_ForEach(listEntry, v1_config_map->binary_data) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -49,7 +71,7 @@ void v1_config_map_free(v1_config_map_t *v1_config_map) {
     }
     if (v1_config_map->data) {
         list_ForEach(listEntry, v1_config_map->data) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -89,8 +111,8 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
     listEntry_t *binary_dataListEntry;
     if (v1_config_map->binary_data) {
     list_ForEach(binary_dataListEntry, v1_config_map->binary_data) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)binary_dataListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = binary_dataListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -109,8 +131,8 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
     listEntry_t *dataListEntry;
     if (v1_config_map->data) {
     list_ForEach(dataListEntry, v1_config_map->data) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)dataListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = dataListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -170,6 +192,9 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     // v1_config_map->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -179,6 +204,9 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     // v1_config_map->binary_data
     cJSON *binary_data = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "binaryData");
+    if (cJSON_IsNull(binary_data)) {
+        binary_data = NULL;
+    }
     if (binary_data) { 
     cJSON *binary_data_local_map = NULL;
     if(!cJSON_IsObject(binary_data) && !cJSON_IsNull(binary_data))
@@ -204,6 +232,9 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     // v1_config_map->data
     cJSON *data = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "data");
+    if (cJSON_IsNull(data)) {
+        data = NULL;
+    }
     if (data) { 
     cJSON *data_local_map = NULL;
     if(!cJSON_IsObject(data) && !cJSON_IsNull(data))
@@ -229,6 +260,9 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     // v1_config_map->immutable
     cJSON *immutable = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "immutable");
+    if (cJSON_IsNull(immutable)) {
+        immutable = NULL;
+    }
     if (immutable) { 
     if(!cJSON_IsBool(immutable))
     {
@@ -238,6 +272,9 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     // v1_config_map->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -247,12 +284,15 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     // v1_config_map->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
 
-    v1_config_map_local_var = v1_config_map_create (
+    v1_config_map_local_var = v1_config_map_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         binary_data ? binary_dataList : NULL,
         data ? dataList : NULL,
@@ -266,7 +306,7 @@ end:
     if (binary_dataList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, binary_dataList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);
@@ -280,7 +320,7 @@ end:
     if (dataList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, dataList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

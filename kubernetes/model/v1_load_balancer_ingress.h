@@ -25,9 +25,10 @@ typedef struct v1_load_balancer_ingress_t {
     char *ip_mode; // string
     list_t *ports; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_load_balancer_ingress_t;
 
-v1_load_balancer_ingress_t *v1_load_balancer_ingress_create(
+__attribute__((deprecated)) v1_load_balancer_ingress_t *v1_load_balancer_ingress_create(
     char *hostname,
     char *ip,
     char *ip_mode,

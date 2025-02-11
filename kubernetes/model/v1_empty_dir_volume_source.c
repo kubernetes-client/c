@@ -5,7 +5,7 @@
 
 
 
-v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_create(
+static v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_create_internal(
     char *medium,
     char *size_limit
     ) {
@@ -16,12 +16,26 @@ v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_create(
     v1_empty_dir_volume_source_local_var->medium = medium;
     v1_empty_dir_volume_source_local_var->size_limit = size_limit;
 
+    v1_empty_dir_volume_source_local_var->_library_owned = 1;
     return v1_empty_dir_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_create(
+    char *medium,
+    char *size_limit
+    ) {
+    return v1_empty_dir_volume_source_create_internal (
+        medium,
+        size_limit
+        );
+}
 
 void v1_empty_dir_volume_source_free(v1_empty_dir_volume_source_t *v1_empty_dir_volume_source) {
     if(NULL == v1_empty_dir_volume_source){
+        return ;
+    }
+    if(v1_empty_dir_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_empty_dir_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -68,6 +82,9 @@ v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_parseFromJSON(cJSON *v1
 
     // v1_empty_dir_volume_source->medium
     cJSON *medium = cJSON_GetObjectItemCaseSensitive(v1_empty_dir_volume_sourceJSON, "medium");
+    if (cJSON_IsNull(medium)) {
+        medium = NULL;
+    }
     if (medium) { 
     if(!cJSON_IsString(medium) && !cJSON_IsNull(medium))
     {
@@ -77,6 +94,9 @@ v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_parseFromJSON(cJSON *v1
 
     // v1_empty_dir_volume_source->size_limit
     cJSON *size_limit = cJSON_GetObjectItemCaseSensitive(v1_empty_dir_volume_sourceJSON, "sizeLimit");
+    if (cJSON_IsNull(size_limit)) {
+        size_limit = NULL;
+    }
     if (size_limit) { 
     if(!cJSON_IsString(size_limit) && !cJSON_IsNull(size_limit))
     {
@@ -85,7 +105,7 @@ v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_parseFromJSON(cJSON *v1
     }
 
 
-    v1_empty_dir_volume_source_local_var = v1_empty_dir_volume_source_create (
+    v1_empty_dir_volume_source_local_var = v1_empty_dir_volume_source_create_internal (
         medium && !cJSON_IsNull(medium) ? strdup(medium->valuestring) : NULL,
         size_limit && !cJSON_IsNull(size_limit) ? strdup(size_limit->valuestring) : NULL
         );

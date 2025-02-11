@@ -24,9 +24,10 @@ typedef struct v2_hpa_scaling_rules_t {
     char *select_policy; // string
     int stabilization_window_seconds; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v2_hpa_scaling_rules_t;
 
-v2_hpa_scaling_rules_t *v2_hpa_scaling_rules_create(
+__attribute__((deprecated)) v2_hpa_scaling_rules_t *v2_hpa_scaling_rules_create(
     list_t *policies,
     char *select_policy,
     int stabilization_window_seconds

@@ -22,9 +22,10 @@ typedef struct v1_audit_annotation_t {
     char *key; // string
     char *value_expression; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_audit_annotation_t;
 
-v1_audit_annotation_t *v1_audit_annotation_create(
+__attribute__((deprecated)) v1_audit_annotation_t *v1_audit_annotation_create(
     char *key,
     char *value_expression
 );

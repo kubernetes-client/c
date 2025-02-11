@@ -11,8 +11,6 @@
 #include "../model/v1_status.h"
 #include "../model/v1alpha3_device_class.h"
 #include "../model/v1alpha3_device_class_list.h"
-#include "../model/v1alpha3_pod_scheduling_context.h"
-#include "../model/v1alpha3_pod_scheduling_context_list.h"
 #include "../model/v1alpha3_resource_claim.h"
 #include "../model/v1alpha3_resource_claim_list.h"
 #include "../model/v1alpha3_resource_claim_template.h"
@@ -25,12 +23,6 @@
 //
 v1alpha3_device_class_t*
 ResourceV1alpha3API_createDeviceClass(apiClient_t *apiClient, v1alpha3_device_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
-
-
-// create a PodSchedulingContext
-//
-v1alpha3_pod_scheduling_context_t*
-ResourceV1alpha3API_createNamespacedPodSchedulingContext(apiClient_t *apiClient, char *_namespace, v1alpha3_pod_scheduling_context_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // create a ResourceClaim
@@ -54,79 +46,61 @@ ResourceV1alpha3API_createResourceSlice(apiClient_t *apiClient, v1alpha3_resourc
 // delete collection of DeviceClass
 //
 v1_status_t*
-ResourceV1alpha3API_deleteCollectionDeviceClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
-
-
-// delete collection of PodSchedulingContext
-//
-v1_status_t*
-ResourceV1alpha3API_deleteCollectionNamespacedPodSchedulingContext(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+ResourceV1alpha3API_deleteCollectionDeviceClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete collection of ResourceClaim
 //
 v1_status_t*
-ResourceV1alpha3API_deleteCollectionNamespacedResourceClaim(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+ResourceV1alpha3API_deleteCollectionNamespacedResourceClaim(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete collection of ResourceClaimTemplate
 //
 v1_status_t*
-ResourceV1alpha3API_deleteCollectionNamespacedResourceClaimTemplate(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+ResourceV1alpha3API_deleteCollectionNamespacedResourceClaimTemplate(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete collection of ResourceSlice
 //
 v1_status_t*
-ResourceV1alpha3API_deleteCollectionResourceSlice(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+ResourceV1alpha3API_deleteCollectionResourceSlice(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a DeviceClass
 //
 v1alpha3_device_class_t*
-ResourceV1alpha3API_deleteDeviceClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
-
-
-// delete a PodSchedulingContext
-//
-v1alpha3_pod_scheduling_context_t*
-ResourceV1alpha3API_deleteNamespacedPodSchedulingContext(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+ResourceV1alpha3API_deleteDeviceClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // delete a ResourceClaim
 //
 v1alpha3_resource_claim_t*
-ResourceV1alpha3API_deleteNamespacedResourceClaim(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+ResourceV1alpha3API_deleteNamespacedResourceClaim(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // delete a ResourceClaimTemplate
 //
 v1alpha3_resource_claim_template_t*
-ResourceV1alpha3API_deleteNamespacedResourceClaimTemplate(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+ResourceV1alpha3API_deleteNamespacedResourceClaimTemplate(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // delete a ResourceSlice
 //
 v1alpha3_resource_slice_t*
-ResourceV1alpha3API_deleteResourceSlice(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+ResourceV1alpha3API_deleteResourceSlice(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-ResourceV1alpha3API_getAPIResources_27(apiClient_t *apiClient);
+ResourceV1alpha3API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind DeviceClass
 //
 v1alpha3_device_class_list_t*
 ResourceV1alpha3API_listDeviceClass(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
-
-
-// list or watch objects of kind PodSchedulingContext
-//
-v1alpha3_pod_scheduling_context_list_t*
-ResourceV1alpha3API_listNamespacedPodSchedulingContext(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 
 
 // list or watch objects of kind ResourceClaim
@@ -139,12 +113,6 @@ ResourceV1alpha3API_listNamespacedResourceClaim(apiClient_t *apiClient, char *_n
 //
 v1alpha3_resource_claim_template_list_t*
 ResourceV1alpha3API_listNamespacedResourceClaimTemplate(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
-
-
-// list or watch objects of kind PodSchedulingContext
-//
-v1alpha3_pod_scheduling_context_list_t*
-ResourceV1alpha3API_listPodSchedulingContextForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 
 
 // list or watch objects of kind ResourceClaim
@@ -169,18 +137,6 @@ ResourceV1alpha3API_listResourceSlice(apiClient_t *apiClient, char *pretty, int 
 //
 v1alpha3_device_class_t*
 ResourceV1alpha3API_patchDeviceClass(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
-
-
-// partially update the specified PodSchedulingContext
-//
-v1alpha3_pod_scheduling_context_t*
-ResourceV1alpha3API_patchNamespacedPodSchedulingContext(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
-
-
-// partially update status of the specified PodSchedulingContext
-//
-v1alpha3_pod_scheduling_context_t*
-ResourceV1alpha3API_patchNamespacedPodSchedulingContextStatus(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // partially update the specified ResourceClaim
@@ -213,18 +169,6 @@ v1alpha3_device_class_t*
 ResourceV1alpha3API_readDeviceClass(apiClient_t *apiClient, char *name, char *pretty);
 
 
-// read the specified PodSchedulingContext
-//
-v1alpha3_pod_scheduling_context_t*
-ResourceV1alpha3API_readNamespacedPodSchedulingContext(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
-
-
-// read status of the specified PodSchedulingContext
-//
-v1alpha3_pod_scheduling_context_t*
-ResourceV1alpha3API_readNamespacedPodSchedulingContextStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
-
-
 // read the specified ResourceClaim
 //
 v1alpha3_resource_claim_t*
@@ -253,18 +197,6 @@ ResourceV1alpha3API_readResourceSlice(apiClient_t *apiClient, char *name, char *
 //
 v1alpha3_device_class_t*
 ResourceV1alpha3API_replaceDeviceClass(apiClient_t *apiClient, char *name, v1alpha3_device_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
-
-
-// replace the specified PodSchedulingContext
-//
-v1alpha3_pod_scheduling_context_t*
-ResourceV1alpha3API_replaceNamespacedPodSchedulingContext(apiClient_t *apiClient, char *name, char *_namespace, v1alpha3_pod_scheduling_context_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
-
-
-// replace status of the specified PodSchedulingContext
-//
-v1alpha3_pod_scheduling_context_t*
-ResourceV1alpha3API_replaceNamespacedPodSchedulingContextStatus(apiClient_t *apiClient, char *name, char *_namespace, v1alpha3_pod_scheduling_context_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // replace the specified ResourceClaim

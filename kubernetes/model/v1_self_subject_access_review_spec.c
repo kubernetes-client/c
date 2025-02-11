@@ -5,7 +5,7 @@
 
 
 
-v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_create(
+static v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_create_internal(
     v1_non_resource_attributes_t *non_resource_attributes,
     v1_resource_attributes_t *resource_attributes
     ) {
@@ -16,12 +16,26 @@ v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_create(
     v1_self_subject_access_review_spec_local_var->non_resource_attributes = non_resource_attributes;
     v1_self_subject_access_review_spec_local_var->resource_attributes = resource_attributes;
 
+    v1_self_subject_access_review_spec_local_var->_library_owned = 1;
     return v1_self_subject_access_review_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_create(
+    v1_non_resource_attributes_t *non_resource_attributes,
+    v1_resource_attributes_t *resource_attributes
+    ) {
+    return v1_self_subject_access_review_spec_create_internal (
+        non_resource_attributes,
+        resource_attributes
+        );
+}
 
 void v1_self_subject_access_review_spec_free(v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec) {
     if(NULL == v1_self_subject_access_review_spec){
+        return ;
+    }
+    if(v1_self_subject_access_review_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_self_subject_access_review_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -84,18 +98,24 @@ v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_parseFr
 
     // v1_self_subject_access_review_spec->non_resource_attributes
     cJSON *non_resource_attributes = cJSON_GetObjectItemCaseSensitive(v1_self_subject_access_review_specJSON, "nonResourceAttributes");
+    if (cJSON_IsNull(non_resource_attributes)) {
+        non_resource_attributes = NULL;
+    }
     if (non_resource_attributes) { 
     non_resource_attributes_local_nonprim = v1_non_resource_attributes_parseFromJSON(non_resource_attributes); //nonprimitive
     }
 
     // v1_self_subject_access_review_spec->resource_attributes
     cJSON *resource_attributes = cJSON_GetObjectItemCaseSensitive(v1_self_subject_access_review_specJSON, "resourceAttributes");
+    if (cJSON_IsNull(resource_attributes)) {
+        resource_attributes = NULL;
+    }
     if (resource_attributes) { 
     resource_attributes_local_nonprim = v1_resource_attributes_parseFromJSON(resource_attributes); //nonprimitive
     }
 
 
-    v1_self_subject_access_review_spec_local_var = v1_self_subject_access_review_spec_create (
+    v1_self_subject_access_review_spec_local_var = v1_self_subject_access_review_spec_create_internal (
         non_resource_attributes ? non_resource_attributes_local_nonprim : NULL,
         resource_attributes ? resource_attributes_local_nonprim : NULL
         );

@@ -29,9 +29,10 @@ typedef struct v1_endpoint_slice_t {
     struct v1_object_meta_t *metadata; //model
     list_t *ports; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_endpoint_slice_t;
 
-v1_endpoint_slice_t *v1_endpoint_slice_create(
+__attribute__((deprecated)) v1_endpoint_slice_t *v1_endpoint_slice_create(
     char *address_type,
     char *api_version,
     list_t *endpoints,

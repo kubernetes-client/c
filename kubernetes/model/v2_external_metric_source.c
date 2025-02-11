@@ -5,7 +5,7 @@
 
 
 
-v2_external_metric_source_t *v2_external_metric_source_create(
+static v2_external_metric_source_t *v2_external_metric_source_create_internal(
     v2_metric_identifier_t *metric,
     v2_metric_target_t *target
     ) {
@@ -16,12 +16,26 @@ v2_external_metric_source_t *v2_external_metric_source_create(
     v2_external_metric_source_local_var->metric = metric;
     v2_external_metric_source_local_var->target = target;
 
+    v2_external_metric_source_local_var->_library_owned = 1;
     return v2_external_metric_source_local_var;
 }
 
+__attribute__((deprecated)) v2_external_metric_source_t *v2_external_metric_source_create(
+    v2_metric_identifier_t *metric,
+    v2_metric_target_t *target
+    ) {
+    return v2_external_metric_source_create_internal (
+        metric,
+        target
+        );
+}
 
 void v2_external_metric_source_free(v2_external_metric_source_t *v2_external_metric_source) {
     if(NULL == v2_external_metric_source){
+        return ;
+    }
+    if(v2_external_metric_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v2_external_metric_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -86,6 +100,9 @@ v2_external_metric_source_t *v2_external_metric_source_parseFromJSON(cJSON *v2_e
 
     // v2_external_metric_source->metric
     cJSON *metric = cJSON_GetObjectItemCaseSensitive(v2_external_metric_sourceJSON, "metric");
+    if (cJSON_IsNull(metric)) {
+        metric = NULL;
+    }
     if (!metric) {
         goto end;
     }
@@ -95,6 +112,9 @@ v2_external_metric_source_t *v2_external_metric_source_parseFromJSON(cJSON *v2_e
 
     // v2_external_metric_source->target
     cJSON *target = cJSON_GetObjectItemCaseSensitive(v2_external_metric_sourceJSON, "target");
+    if (cJSON_IsNull(target)) {
+        target = NULL;
+    }
     if (!target) {
         goto end;
     }
@@ -103,7 +123,7 @@ v2_external_metric_source_t *v2_external_metric_source_parseFromJSON(cJSON *v2_e
     target_local_nonprim = v2_metric_target_parseFromJSON(target); //nonprimitive
 
 
-    v2_external_metric_source_local_var = v2_external_metric_source_create (
+    v2_external_metric_source_local_var = v2_external_metric_source_create_internal (
         metric_local_nonprim,
         target_local_nonprim
         );

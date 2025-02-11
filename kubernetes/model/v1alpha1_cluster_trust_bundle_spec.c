@@ -5,7 +5,7 @@
 
 
 
-v1alpha1_cluster_trust_bundle_spec_t *v1alpha1_cluster_trust_bundle_spec_create(
+static v1alpha1_cluster_trust_bundle_spec_t *v1alpha1_cluster_trust_bundle_spec_create_internal(
     char *signer_name,
     char *trust_bundle
     ) {
@@ -16,12 +16,26 @@ v1alpha1_cluster_trust_bundle_spec_t *v1alpha1_cluster_trust_bundle_spec_create(
     v1alpha1_cluster_trust_bundle_spec_local_var->signer_name = signer_name;
     v1alpha1_cluster_trust_bundle_spec_local_var->trust_bundle = trust_bundle;
 
+    v1alpha1_cluster_trust_bundle_spec_local_var->_library_owned = 1;
     return v1alpha1_cluster_trust_bundle_spec_local_var;
 }
 
+__attribute__((deprecated)) v1alpha1_cluster_trust_bundle_spec_t *v1alpha1_cluster_trust_bundle_spec_create(
+    char *signer_name,
+    char *trust_bundle
+    ) {
+    return v1alpha1_cluster_trust_bundle_spec_create_internal (
+        signer_name,
+        trust_bundle
+        );
+}
 
 void v1alpha1_cluster_trust_bundle_spec_free(v1alpha1_cluster_trust_bundle_spec_t *v1alpha1_cluster_trust_bundle_spec) {
     if(NULL == v1alpha1_cluster_trust_bundle_spec){
+        return ;
+    }
+    if(v1alpha1_cluster_trust_bundle_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha1_cluster_trust_bundle_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -69,6 +83,9 @@ v1alpha1_cluster_trust_bundle_spec_t *v1alpha1_cluster_trust_bundle_spec_parseFr
 
     // v1alpha1_cluster_trust_bundle_spec->signer_name
     cJSON *signer_name = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_trust_bundle_specJSON, "signerName");
+    if (cJSON_IsNull(signer_name)) {
+        signer_name = NULL;
+    }
     if (signer_name) { 
     if(!cJSON_IsString(signer_name) && !cJSON_IsNull(signer_name))
     {
@@ -78,6 +95,9 @@ v1alpha1_cluster_trust_bundle_spec_t *v1alpha1_cluster_trust_bundle_spec_parseFr
 
     // v1alpha1_cluster_trust_bundle_spec->trust_bundle
     cJSON *trust_bundle = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_trust_bundle_specJSON, "trustBundle");
+    if (cJSON_IsNull(trust_bundle)) {
+        trust_bundle = NULL;
+    }
     if (!trust_bundle) {
         goto end;
     }
@@ -89,7 +109,7 @@ v1alpha1_cluster_trust_bundle_spec_t *v1alpha1_cluster_trust_bundle_spec_parseFr
     }
 
 
-    v1alpha1_cluster_trust_bundle_spec_local_var = v1alpha1_cluster_trust_bundle_spec_create (
+    v1alpha1_cluster_trust_bundle_spec_local_var = v1alpha1_cluster_trust_bundle_spec_create_internal (
         signer_name && !cJSON_IsNull(signer_name) ? strdup(signer_name->valuestring) : NULL,
         strdup(trust_bundle->valuestring)
         );

@@ -5,7 +5,7 @@
 
 
 
-v1_env_from_source_t *v1_env_from_source_create(
+static v1_env_from_source_t *v1_env_from_source_create_internal(
     v1_config_map_env_source_t *config_map_ref,
     char *prefix,
     v1_secret_env_source_t *secret_ref
@@ -18,12 +18,28 @@ v1_env_from_source_t *v1_env_from_source_create(
     v1_env_from_source_local_var->prefix = prefix;
     v1_env_from_source_local_var->secret_ref = secret_ref;
 
+    v1_env_from_source_local_var->_library_owned = 1;
     return v1_env_from_source_local_var;
 }
 
+__attribute__((deprecated)) v1_env_from_source_t *v1_env_from_source_create(
+    v1_config_map_env_source_t *config_map_ref,
+    char *prefix,
+    v1_secret_env_source_t *secret_ref
+    ) {
+    return v1_env_from_source_create_internal (
+        config_map_ref,
+        prefix,
+        secret_ref
+        );
+}
 
 void v1_env_from_source_free(v1_env_from_source_t *v1_env_from_source) {
     if(NULL == v1_env_from_source){
+        return ;
+    }
+    if(v1_env_from_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_env_from_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -98,12 +114,18 @@ v1_env_from_source_t *v1_env_from_source_parseFromJSON(cJSON *v1_env_from_source
 
     // v1_env_from_source->config_map_ref
     cJSON *config_map_ref = cJSON_GetObjectItemCaseSensitive(v1_env_from_sourceJSON, "configMapRef");
+    if (cJSON_IsNull(config_map_ref)) {
+        config_map_ref = NULL;
+    }
     if (config_map_ref) { 
     config_map_ref_local_nonprim = v1_config_map_env_source_parseFromJSON(config_map_ref); //nonprimitive
     }
 
     // v1_env_from_source->prefix
     cJSON *prefix = cJSON_GetObjectItemCaseSensitive(v1_env_from_sourceJSON, "prefix");
+    if (cJSON_IsNull(prefix)) {
+        prefix = NULL;
+    }
     if (prefix) { 
     if(!cJSON_IsString(prefix) && !cJSON_IsNull(prefix))
     {
@@ -113,12 +135,15 @@ v1_env_from_source_t *v1_env_from_source_parseFromJSON(cJSON *v1_env_from_source
 
     // v1_env_from_source->secret_ref
     cJSON *secret_ref = cJSON_GetObjectItemCaseSensitive(v1_env_from_sourceJSON, "secretRef");
+    if (cJSON_IsNull(secret_ref)) {
+        secret_ref = NULL;
+    }
     if (secret_ref) { 
     secret_ref_local_nonprim = v1_secret_env_source_parseFromJSON(secret_ref); //nonprimitive
     }
 
 
-    v1_env_from_source_local_var = v1_env_from_source_create (
+    v1_env_from_source_local_var = v1_env_from_source_create_internal (
         config_map_ref ? config_map_ref_local_nonprim : NULL,
         prefix && !cJSON_IsNull(prefix) ? strdup(prefix->valuestring) : NULL,
         secret_ref ? secret_ref_local_nonprim : NULL

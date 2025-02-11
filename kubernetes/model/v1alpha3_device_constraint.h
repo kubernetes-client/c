@@ -22,9 +22,10 @@ typedef struct v1alpha3_device_constraint_t {
     char *match_attribute; // string
     list_t *requests; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_constraint_t;
 
-v1alpha3_device_constraint_t *v1alpha3_device_constraint_create(
+__attribute__((deprecated)) v1alpha3_device_constraint_t *v1alpha3_device_constraint_create(
     char *match_attribute,
     list_t *requests
 );

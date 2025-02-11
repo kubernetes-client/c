@@ -27,9 +27,10 @@ typedef struct flowcontrol_v1_subject_t {
     struct v1_service_account_subject_t *service_account; //model
     struct v1_user_subject_t *user; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } flowcontrol_v1_subject_t;
 
-flowcontrol_v1_subject_t *flowcontrol_v1_subject_create(
+__attribute__((deprecated)) flowcontrol_v1_subject_t *flowcontrol_v1_subject_create(
     v1_group_subject_t *group,
     char *kind,
     v1_service_account_subject_t *service_account,

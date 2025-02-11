@@ -5,7 +5,7 @@
 
 
 
-v1_runtime_class_t *v1_runtime_class_create(
+static v1_runtime_class_t *v1_runtime_class_create_internal(
     char *api_version,
     char *handler,
     char *kind,
@@ -24,12 +24,34 @@ v1_runtime_class_t *v1_runtime_class_create(
     v1_runtime_class_local_var->overhead = overhead;
     v1_runtime_class_local_var->scheduling = scheduling;
 
+    v1_runtime_class_local_var->_library_owned = 1;
     return v1_runtime_class_local_var;
 }
 
+__attribute__((deprecated)) v1_runtime_class_t *v1_runtime_class_create(
+    char *api_version,
+    char *handler,
+    char *kind,
+    v1_object_meta_t *metadata,
+    v1_overhead_t *overhead,
+    v1_scheduling_t *scheduling
+    ) {
+    return v1_runtime_class_create_internal (
+        api_version,
+        handler,
+        kind,
+        metadata,
+        overhead,
+        scheduling
+        );
+}
 
 void v1_runtime_class_free(v1_runtime_class_t *v1_runtime_class) {
     if(NULL == v1_runtime_class){
+        return ;
+    }
+    if(v1_runtime_class->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_runtime_class_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -149,6 +171,9 @@ v1_runtime_class_t *v1_runtime_class_parseFromJSON(cJSON *v1_runtime_classJSON){
 
     // v1_runtime_class->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -158,6 +183,9 @@ v1_runtime_class_t *v1_runtime_class_parseFromJSON(cJSON *v1_runtime_classJSON){
 
     // v1_runtime_class->handler
     cJSON *handler = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "handler");
+    if (cJSON_IsNull(handler)) {
+        handler = NULL;
+    }
     if (!handler) {
         goto end;
     }
@@ -170,6 +198,9 @@ v1_runtime_class_t *v1_runtime_class_parseFromJSON(cJSON *v1_runtime_classJSON){
 
     // v1_runtime_class->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -179,24 +210,33 @@ v1_runtime_class_t *v1_runtime_class_parseFromJSON(cJSON *v1_runtime_classJSON){
 
     // v1_runtime_class->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_runtime_class->overhead
     cJSON *overhead = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "overhead");
+    if (cJSON_IsNull(overhead)) {
+        overhead = NULL;
+    }
     if (overhead) { 
     overhead_local_nonprim = v1_overhead_parseFromJSON(overhead); //nonprimitive
     }
 
     // v1_runtime_class->scheduling
     cJSON *scheduling = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "scheduling");
+    if (cJSON_IsNull(scheduling)) {
+        scheduling = NULL;
+    }
     if (scheduling) { 
     scheduling_local_nonprim = v1_scheduling_parseFromJSON(scheduling); //nonprimitive
     }
 
 
-    v1_runtime_class_local_var = v1_runtime_class_create (
+    v1_runtime_class_local_var = v1_runtime_class_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         strdup(handler->valuestring),
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,

@@ -5,7 +5,7 @@
 
 
 
-v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status_create(
+static v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status_create_internal(
     list_t *ingress
     ) {
     v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status_local_var = malloc(sizeof(v1_ingress_load_balancer_status_t));
@@ -14,12 +14,24 @@ v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status_create(
     }
     v1_ingress_load_balancer_status_local_var->ingress = ingress;
 
+    v1_ingress_load_balancer_status_local_var->_library_owned = 1;
     return v1_ingress_load_balancer_status_local_var;
 }
 
+__attribute__((deprecated)) v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status_create(
+    list_t *ingress
+    ) {
+    return v1_ingress_load_balancer_status_create_internal (
+        ingress
+        );
+}
 
 void v1_ingress_load_balancer_status_free(v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status) {
     if(NULL == v1_ingress_load_balancer_status){
+        return ;
+    }
+    if(v1_ingress_load_balancer_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_ingress_load_balancer_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -72,6 +84,9 @@ v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status_parseFromJSON
 
     // v1_ingress_load_balancer_status->ingress
     cJSON *ingress = cJSON_GetObjectItemCaseSensitive(v1_ingress_load_balancer_statusJSON, "ingress");
+    if (cJSON_IsNull(ingress)) {
+        ingress = NULL;
+    }
     if (ingress) { 
     cJSON *ingress_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ingress)){
@@ -92,7 +107,7 @@ v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status_parseFromJSON
     }
 
 
-    v1_ingress_load_balancer_status_local_var = v1_ingress_load_balancer_status_create (
+    v1_ingress_load_balancer_status_local_var = v1_ingress_load_balancer_status_create_internal (
         ingress ? ingressList : NULL
         );
 

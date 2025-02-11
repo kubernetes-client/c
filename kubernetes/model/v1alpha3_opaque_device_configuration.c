@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration_create(
+static v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration_create_internal(
     char *driver,
     object_t *parameters
     ) {
@@ -16,12 +16,26 @@ v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration_cre
     v1alpha3_opaque_device_configuration_local_var->driver = driver;
     v1alpha3_opaque_device_configuration_local_var->parameters = parameters;
 
+    v1alpha3_opaque_device_configuration_local_var->_library_owned = 1;
     return v1alpha3_opaque_device_configuration_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration_create(
+    char *driver,
+    object_t *parameters
+    ) {
+    return v1alpha3_opaque_device_configuration_create_internal (
+        driver,
+        parameters
+        );
+}
 
 void v1alpha3_opaque_device_configuration_free(v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration) {
     if(NULL == v1alpha3_opaque_device_configuration){
+        return ;
+    }
+    if(v1alpha3_opaque_device_configuration->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_opaque_device_configuration_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -75,6 +89,9 @@ v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration_par
 
     // v1alpha3_opaque_device_configuration->driver
     cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1alpha3_opaque_device_configurationJSON, "driver");
+    if (cJSON_IsNull(driver)) {
+        driver = NULL;
+    }
     if (!driver) {
         goto end;
     }
@@ -87,6 +104,9 @@ v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration_par
 
     // v1alpha3_opaque_device_configuration->parameters
     cJSON *parameters = cJSON_GetObjectItemCaseSensitive(v1alpha3_opaque_device_configurationJSON, "parameters");
+    if (cJSON_IsNull(parameters)) {
+        parameters = NULL;
+    }
     if (!parameters) {
         goto end;
     }
@@ -96,7 +116,7 @@ v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration_par
     parameters_local_object = object_parseFromJSON(parameters); //object
 
 
-    v1alpha3_opaque_device_configuration_local_var = v1alpha3_opaque_device_configuration_create (
+    v1alpha3_opaque_device_configuration_local_var = v1alpha3_opaque_device_configuration_create_internal (
         strdup(driver->valuestring),
         parameters_local_object
         );

@@ -23,9 +23,10 @@ typedef struct v1_node_selector_term_t {
     list_t *match_expressions; //nonprimitive container
     list_t *match_fields; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_selector_term_t;
 
-v1_node_selector_term_t *v1_node_selector_term_create(
+__attribute__((deprecated)) v1_node_selector_term_t *v1_node_selector_term_create(
     list_t *match_expressions,
     list_t *match_fields
 );

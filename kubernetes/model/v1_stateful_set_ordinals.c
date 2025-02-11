@@ -5,7 +5,7 @@
 
 
 
-v1_stateful_set_ordinals_t *v1_stateful_set_ordinals_create(
+static v1_stateful_set_ordinals_t *v1_stateful_set_ordinals_create_internal(
     int start
     ) {
     v1_stateful_set_ordinals_t *v1_stateful_set_ordinals_local_var = malloc(sizeof(v1_stateful_set_ordinals_t));
@@ -14,12 +14,24 @@ v1_stateful_set_ordinals_t *v1_stateful_set_ordinals_create(
     }
     v1_stateful_set_ordinals_local_var->start = start;
 
+    v1_stateful_set_ordinals_local_var->_library_owned = 1;
     return v1_stateful_set_ordinals_local_var;
 }
 
+__attribute__((deprecated)) v1_stateful_set_ordinals_t *v1_stateful_set_ordinals_create(
+    int start
+    ) {
+    return v1_stateful_set_ordinals_create_internal (
+        start
+        );
+}
 
 void v1_stateful_set_ordinals_free(v1_stateful_set_ordinals_t *v1_stateful_set_ordinals) {
     if(NULL == v1_stateful_set_ordinals){
+        return ;
+    }
+    if(v1_stateful_set_ordinals->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_stateful_set_ordinals_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -50,6 +62,9 @@ v1_stateful_set_ordinals_t *v1_stateful_set_ordinals_parseFromJSON(cJSON *v1_sta
 
     // v1_stateful_set_ordinals->start
     cJSON *start = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_ordinalsJSON, "start");
+    if (cJSON_IsNull(start)) {
+        start = NULL;
+    }
     if (start) { 
     if(!cJSON_IsNumber(start))
     {
@@ -58,7 +73,7 @@ v1_stateful_set_ordinals_t *v1_stateful_set_ordinals_parseFromJSON(cJSON *v1_sta
     }
 
 
-    v1_stateful_set_ordinals_local_var = v1_stateful_set_ordinals_create (
+    v1_stateful_set_ordinals_local_var = v1_stateful_set_ordinals_create_internal (
         start ? start->valuedouble : 0
         );
 

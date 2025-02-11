@@ -23,9 +23,10 @@ typedef struct v1_portworx_volume_source_t {
     int read_only; //boolean
     char *volume_id; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_portworx_volume_source_t;
 
-v1_portworx_volume_source_t *v1_portworx_volume_source_create(
+__attribute__((deprecated)) v1_portworx_volume_source_t *v1_portworx_volume_source_create(
     char *fs_type,
     int read_only,
     char *volume_id

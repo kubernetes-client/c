@@ -22,9 +22,10 @@ typedef struct v1_volume_resource_requirements_t {
     list_t* limits; //map
     list_t* requests; //map
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_resource_requirements_t;
 
-v1_volume_resource_requirements_t *v1_volume_resource_requirements_create(
+__attribute__((deprecated)) v1_volume_resource_requirements_t *v1_volume_resource_requirements_create(
     list_t* limits,
     list_t* requests
 );

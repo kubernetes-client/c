@@ -24,9 +24,10 @@ typedef struct v1_list_meta_t {
     char *resource_version; // string
     char *self_link; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_list_meta_t;
 
-v1_list_meta_t *v1_list_meta_create(
+__attribute__((deprecated)) v1_list_meta_t *v1_list_meta_create(
     char *_continue,
     long remaining_item_count,
     char *resource_version,

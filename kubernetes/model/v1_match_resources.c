@@ -5,7 +5,7 @@
 
 
 
-v1_match_resources_t *v1_match_resources_create(
+static v1_match_resources_t *v1_match_resources_create_internal(
     list_t *exclude_resource_rules,
     char *match_policy,
     v1_label_selector_t *namespace_selector,
@@ -22,12 +22,32 @@ v1_match_resources_t *v1_match_resources_create(
     v1_match_resources_local_var->object_selector = object_selector;
     v1_match_resources_local_var->resource_rules = resource_rules;
 
+    v1_match_resources_local_var->_library_owned = 1;
     return v1_match_resources_local_var;
 }
 
+__attribute__((deprecated)) v1_match_resources_t *v1_match_resources_create(
+    list_t *exclude_resource_rules,
+    char *match_policy,
+    v1_label_selector_t *namespace_selector,
+    v1_label_selector_t *object_selector,
+    list_t *resource_rules
+    ) {
+    return v1_match_resources_create_internal (
+        exclude_resource_rules,
+        match_policy,
+        namespace_selector,
+        object_selector,
+        resource_rules
+        );
+}
 
 void v1_match_resources_free(v1_match_resources_t *v1_match_resources) {
     if(NULL == v1_match_resources){
+        return ;
+    }
+    if(v1_match_resources->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_match_resources_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -162,6 +182,9 @@ v1_match_resources_t *v1_match_resources_parseFromJSON(cJSON *v1_match_resources
 
     // v1_match_resources->exclude_resource_rules
     cJSON *exclude_resource_rules = cJSON_GetObjectItemCaseSensitive(v1_match_resourcesJSON, "excludeResourceRules");
+    if (cJSON_IsNull(exclude_resource_rules)) {
+        exclude_resource_rules = NULL;
+    }
     if (exclude_resource_rules) { 
     cJSON *exclude_resource_rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(exclude_resource_rules)){
@@ -183,6 +206,9 @@ v1_match_resources_t *v1_match_resources_parseFromJSON(cJSON *v1_match_resources
 
     // v1_match_resources->match_policy
     cJSON *match_policy = cJSON_GetObjectItemCaseSensitive(v1_match_resourcesJSON, "matchPolicy");
+    if (cJSON_IsNull(match_policy)) {
+        match_policy = NULL;
+    }
     if (match_policy) { 
     if(!cJSON_IsString(match_policy) && !cJSON_IsNull(match_policy))
     {
@@ -192,18 +218,27 @@ v1_match_resources_t *v1_match_resources_parseFromJSON(cJSON *v1_match_resources
 
     // v1_match_resources->namespace_selector
     cJSON *namespace_selector = cJSON_GetObjectItemCaseSensitive(v1_match_resourcesJSON, "namespaceSelector");
+    if (cJSON_IsNull(namespace_selector)) {
+        namespace_selector = NULL;
+    }
     if (namespace_selector) { 
     namespace_selector_local_nonprim = v1_label_selector_parseFromJSON(namespace_selector); //nonprimitive
     }
 
     // v1_match_resources->object_selector
     cJSON *object_selector = cJSON_GetObjectItemCaseSensitive(v1_match_resourcesJSON, "objectSelector");
+    if (cJSON_IsNull(object_selector)) {
+        object_selector = NULL;
+    }
     if (object_selector) { 
     object_selector_local_nonprim = v1_label_selector_parseFromJSON(object_selector); //nonprimitive
     }
 
     // v1_match_resources->resource_rules
     cJSON *resource_rules = cJSON_GetObjectItemCaseSensitive(v1_match_resourcesJSON, "resourceRules");
+    if (cJSON_IsNull(resource_rules)) {
+        resource_rules = NULL;
+    }
     if (resource_rules) { 
     cJSON *resource_rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(resource_rules)){
@@ -224,7 +259,7 @@ v1_match_resources_t *v1_match_resources_parseFromJSON(cJSON *v1_match_resources
     }
 
 
-    v1_match_resources_local_var = v1_match_resources_create (
+    v1_match_resources_local_var = v1_match_resources_create_internal (
         exclude_resource_rules ? exclude_resource_rulesList : NULL,
         match_policy && !cJSON_IsNull(match_policy) ? strdup(match_policy->valuestring) : NULL,
         namespace_selector ? namespace_selector_local_nonprim : NULL,

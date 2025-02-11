@@ -23,9 +23,10 @@ typedef struct v1_role_ref_t {
     char *kind; // string
     char *name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_role_ref_t;
 
-v1_role_ref_t *v1_role_ref_create(
+__attribute__((deprecated)) v1_role_ref_t *v1_role_ref_create(
     char *api_group,
     char *kind,
     char *name

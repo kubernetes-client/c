@@ -29,9 +29,10 @@ typedef struct v1_topology_spread_constraint_t {
     char *topology_key; // string
     char *when_unsatisfiable; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_topology_spread_constraint_t;
 
-v1_topology_spread_constraint_t *v1_topology_spread_constraint_create(
+__attribute__((deprecated)) v1_topology_spread_constraint_t *v1_topology_spread_constraint_create(
     v1_label_selector_t *label_selector,
     list_t *match_label_keys,
     int max_skew,

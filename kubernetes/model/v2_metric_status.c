@@ -5,7 +5,7 @@
 
 
 
-v2_metric_status_t *v2_metric_status_create(
+static v2_metric_status_t *v2_metric_status_create_internal(
     v2_container_resource_metric_status_t *container_resource,
     v2_external_metric_status_t *external,
     v2_object_metric_status_t *object,
@@ -24,12 +24,34 @@ v2_metric_status_t *v2_metric_status_create(
     v2_metric_status_local_var->resource = resource;
     v2_metric_status_local_var->type = type;
 
+    v2_metric_status_local_var->_library_owned = 1;
     return v2_metric_status_local_var;
 }
 
+__attribute__((deprecated)) v2_metric_status_t *v2_metric_status_create(
+    v2_container_resource_metric_status_t *container_resource,
+    v2_external_metric_status_t *external,
+    v2_object_metric_status_t *object,
+    v2_pods_metric_status_t *pods,
+    v2_resource_metric_status_t *resource,
+    char *type
+    ) {
+    return v2_metric_status_create_internal (
+        container_resource,
+        external,
+        object,
+        pods,
+        resource,
+        type
+        );
+}
 
 void v2_metric_status_free(v2_metric_status_t *v2_metric_status) {
     if(NULL == v2_metric_status){
+        return ;
+    }
+    if(v2_metric_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v2_metric_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -165,36 +187,54 @@ v2_metric_status_t *v2_metric_status_parseFromJSON(cJSON *v2_metric_statusJSON){
 
     // v2_metric_status->container_resource
     cJSON *container_resource = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "containerResource");
+    if (cJSON_IsNull(container_resource)) {
+        container_resource = NULL;
+    }
     if (container_resource) { 
     container_resource_local_nonprim = v2_container_resource_metric_status_parseFromJSON(container_resource); //nonprimitive
     }
 
     // v2_metric_status->external
     cJSON *external = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "external");
+    if (cJSON_IsNull(external)) {
+        external = NULL;
+    }
     if (external) { 
     external_local_nonprim = v2_external_metric_status_parseFromJSON(external); //nonprimitive
     }
 
     // v2_metric_status->object
     cJSON *object = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "object");
+    if (cJSON_IsNull(object)) {
+        object = NULL;
+    }
     if (object) { 
     object_local_nonprim = v2_object_metric_status_parseFromJSON(object); //nonprimitive
     }
 
     // v2_metric_status->pods
     cJSON *pods = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "pods");
+    if (cJSON_IsNull(pods)) {
+        pods = NULL;
+    }
     if (pods) { 
     pods_local_nonprim = v2_pods_metric_status_parseFromJSON(pods); //nonprimitive
     }
 
     // v2_metric_status->resource
     cJSON *resource = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "resource");
+    if (cJSON_IsNull(resource)) {
+        resource = NULL;
+    }
     if (resource) { 
     resource_local_nonprim = v2_resource_metric_status_parseFromJSON(resource); //nonprimitive
     }
 
     // v2_metric_status->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -206,7 +246,7 @@ v2_metric_status_t *v2_metric_status_parseFromJSON(cJSON *v2_metric_statusJSON){
     }
 
 
-    v2_metric_status_local_var = v2_metric_status_create (
+    v2_metric_status_local_var = v2_metric_status_create_internal (
         container_resource ? container_resource_local_nonprim : NULL,
         external ? external_local_nonprim : NULL,
         object ? object_local_nonprim : NULL,

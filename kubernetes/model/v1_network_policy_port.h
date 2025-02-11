@@ -24,9 +24,10 @@ typedef struct v1_network_policy_port_t {
     int_or_string_t *port; // custom
     char *protocol; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_network_policy_port_t;
 
-v1_network_policy_port_t *v1_network_policy_port_create(
+__attribute__((deprecated)) v1_network_policy_port_t *v1_network_policy_port_create(
     int end_port,
     int_or_string_t *port,
     char *protocol

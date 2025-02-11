@@ -5,7 +5,7 @@
 
 
 
-v1_owner_reference_t *v1_owner_reference_create(
+static v1_owner_reference_t *v1_owner_reference_create_internal(
     char *api_version,
     int block_owner_deletion,
     int controller,
@@ -24,12 +24,34 @@ v1_owner_reference_t *v1_owner_reference_create(
     v1_owner_reference_local_var->name = name;
     v1_owner_reference_local_var->uid = uid;
 
+    v1_owner_reference_local_var->_library_owned = 1;
     return v1_owner_reference_local_var;
 }
 
+__attribute__((deprecated)) v1_owner_reference_t *v1_owner_reference_create(
+    char *api_version,
+    int block_owner_deletion,
+    int controller,
+    char *kind,
+    char *name,
+    char *uid
+    ) {
+    return v1_owner_reference_create_internal (
+        api_version,
+        block_owner_deletion,
+        controller,
+        kind,
+        name,
+        uid
+        );
+}
 
 void v1_owner_reference_free(v1_owner_reference_t *v1_owner_reference) {
     if(NULL == v1_owner_reference){
+        return ;
+    }
+    if(v1_owner_reference->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_owner_reference_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -120,6 +142,9 @@ v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_reference
 
     // v1_owner_reference->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_owner_referenceJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (!api_version) {
         goto end;
     }
@@ -132,6 +157,9 @@ v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_reference
 
     // v1_owner_reference->block_owner_deletion
     cJSON *block_owner_deletion = cJSON_GetObjectItemCaseSensitive(v1_owner_referenceJSON, "blockOwnerDeletion");
+    if (cJSON_IsNull(block_owner_deletion)) {
+        block_owner_deletion = NULL;
+    }
     if (block_owner_deletion) { 
     if(!cJSON_IsBool(block_owner_deletion))
     {
@@ -141,6 +169,9 @@ v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_reference
 
     // v1_owner_reference->controller
     cJSON *controller = cJSON_GetObjectItemCaseSensitive(v1_owner_referenceJSON, "controller");
+    if (cJSON_IsNull(controller)) {
+        controller = NULL;
+    }
     if (controller) { 
     if(!cJSON_IsBool(controller))
     {
@@ -150,6 +181,9 @@ v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_reference
 
     // v1_owner_reference->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_owner_referenceJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (!kind) {
         goto end;
     }
@@ -162,6 +196,9 @@ v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_reference
 
     // v1_owner_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_owner_referenceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -174,6 +211,9 @@ v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_reference
 
     // v1_owner_reference->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_owner_referenceJSON, "uid");
+    if (cJSON_IsNull(uid)) {
+        uid = NULL;
+    }
     if (!uid) {
         goto end;
     }
@@ -185,7 +225,7 @@ v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_reference
     }
 
 
-    v1_owner_reference_local_var = v1_owner_reference_create (
+    v1_owner_reference_local_var = v1_owner_reference_create_internal (
         strdup(api_version->valuestring),
         block_owner_deletion ? block_owner_deletion->valueint : 0,
         controller ? controller->valueint : 0,

@@ -5,7 +5,7 @@
 
 
 
-version_info_t *version_info_create(
+static version_info_t *version_info_create_internal(
     char *build_date,
     char *compiler,
     char *git_commit,
@@ -30,12 +30,40 @@ version_info_t *version_info_create(
     version_info_local_var->minor = minor;
     version_info_local_var->platform = platform;
 
+    version_info_local_var->_library_owned = 1;
     return version_info_local_var;
 }
 
+__attribute__((deprecated)) version_info_t *version_info_create(
+    char *build_date,
+    char *compiler,
+    char *git_commit,
+    char *git_tree_state,
+    char *git_version,
+    char *go_version,
+    char *major,
+    char *minor,
+    char *platform
+    ) {
+    return version_info_create_internal (
+        build_date,
+        compiler,
+        git_commit,
+        git_tree_state,
+        git_version,
+        go_version,
+        major,
+        minor,
+        platform
+        );
+}
 
 void version_info_free(version_info_t *version_info) {
     if(NULL == version_info){
+        return ;
+    }
+    if(version_info->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "version_info_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -175,6 +203,9 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
 
     // version_info->build_date
     cJSON *build_date = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "buildDate");
+    if (cJSON_IsNull(build_date)) {
+        build_date = NULL;
+    }
     if (!build_date) {
         goto end;
     }
@@ -187,6 +218,9 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
 
     // version_info->compiler
     cJSON *compiler = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "compiler");
+    if (cJSON_IsNull(compiler)) {
+        compiler = NULL;
+    }
     if (!compiler) {
         goto end;
     }
@@ -199,6 +233,9 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
 
     // version_info->git_commit
     cJSON *git_commit = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "gitCommit");
+    if (cJSON_IsNull(git_commit)) {
+        git_commit = NULL;
+    }
     if (!git_commit) {
         goto end;
     }
@@ -211,6 +248,9 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
 
     // version_info->git_tree_state
     cJSON *git_tree_state = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "gitTreeState");
+    if (cJSON_IsNull(git_tree_state)) {
+        git_tree_state = NULL;
+    }
     if (!git_tree_state) {
         goto end;
     }
@@ -223,6 +263,9 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
 
     // version_info->git_version
     cJSON *git_version = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "gitVersion");
+    if (cJSON_IsNull(git_version)) {
+        git_version = NULL;
+    }
     if (!git_version) {
         goto end;
     }
@@ -235,6 +278,9 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
 
     // version_info->go_version
     cJSON *go_version = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "goVersion");
+    if (cJSON_IsNull(go_version)) {
+        go_version = NULL;
+    }
     if (!go_version) {
         goto end;
     }
@@ -247,6 +293,9 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
 
     // version_info->major
     cJSON *major = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "major");
+    if (cJSON_IsNull(major)) {
+        major = NULL;
+    }
     if (!major) {
         goto end;
     }
@@ -259,6 +308,9 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
 
     // version_info->minor
     cJSON *minor = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "minor");
+    if (cJSON_IsNull(minor)) {
+        minor = NULL;
+    }
     if (!minor) {
         goto end;
     }
@@ -271,6 +323,9 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
 
     // version_info->platform
     cJSON *platform = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "platform");
+    if (cJSON_IsNull(platform)) {
+        platform = NULL;
+    }
     if (!platform) {
         goto end;
     }
@@ -282,7 +337,7 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
     }
 
 
-    version_info_local_var = version_info_create (
+    version_info_local_var = version_info_create_internal (
         strdup(build_date->valuestring),
         strdup(compiler->valuestring),
         strdup(git_commit->valuestring),

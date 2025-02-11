@@ -24,9 +24,10 @@ typedef struct v1alpha1_server_storage_version_t {
     char *encoding_version; // string
     list_t *served_versions; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha1_server_storage_version_t;
 
-v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_create(
+__attribute__((deprecated)) v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_create(
     char *api_server_id,
     list_t *decodable_versions,
     char *encoding_version,

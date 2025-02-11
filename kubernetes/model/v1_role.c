@@ -5,7 +5,7 @@
 
 
 
-v1_role_t *v1_role_create(
+static v1_role_t *v1_role_create_internal(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
@@ -20,12 +20,30 @@ v1_role_t *v1_role_create(
     v1_role_local_var->metadata = metadata;
     v1_role_local_var->rules = rules;
 
+    v1_role_local_var->_library_owned = 1;
     return v1_role_local_var;
 }
 
+__attribute__((deprecated)) v1_role_t *v1_role_create(
+    char *api_version,
+    char *kind,
+    v1_object_meta_t *metadata,
+    list_t *rules
+    ) {
+    return v1_role_create_internal (
+        api_version,
+        kind,
+        metadata,
+        rules
+        );
+}
 
 void v1_role_free(v1_role_t *v1_role) {
     if(NULL == v1_role){
+        return ;
+    }
+    if(v1_role->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_role_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -122,6 +140,9 @@ v1_role_t *v1_role_parseFromJSON(cJSON *v1_roleJSON){
 
     // v1_role->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_roleJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -131,6 +152,9 @@ v1_role_t *v1_role_parseFromJSON(cJSON *v1_roleJSON){
 
     // v1_role->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_roleJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -140,12 +164,18 @@ v1_role_t *v1_role_parseFromJSON(cJSON *v1_roleJSON){
 
     // v1_role->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_roleJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_role->rules
     cJSON *rules = cJSON_GetObjectItemCaseSensitive(v1_roleJSON, "rules");
+    if (cJSON_IsNull(rules)) {
+        rules = NULL;
+    }
     if (rules) { 
     cJSON *rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(rules)){
@@ -166,7 +196,7 @@ v1_role_t *v1_role_parseFromJSON(cJSON *v1_roleJSON){
     }
 
 
-    v1_role_local_var = v1_role_create (
+    v1_role_local_var = v1_role_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,

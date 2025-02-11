@@ -5,7 +5,7 @@
 
 
 
-v1_api_resource_t *v1_api_resource_create(
+static v1_api_resource_t *v1_api_resource_create_internal(
     list_t *categories,
     char *group,
     char *kind,
@@ -32,12 +32,42 @@ v1_api_resource_t *v1_api_resource_create(
     v1_api_resource_local_var->verbs = verbs;
     v1_api_resource_local_var->version = version;
 
+    v1_api_resource_local_var->_library_owned = 1;
     return v1_api_resource_local_var;
 }
 
+__attribute__((deprecated)) v1_api_resource_t *v1_api_resource_create(
+    list_t *categories,
+    char *group,
+    char *kind,
+    char *name,
+    int namespaced,
+    list_t *short_names,
+    char *singular_name,
+    char *storage_version_hash,
+    list_t *verbs,
+    char *version
+    ) {
+    return v1_api_resource_create_internal (
+        categories,
+        group,
+        kind,
+        name,
+        namespaced,
+        short_names,
+        singular_name,
+        storage_version_hash,
+        verbs,
+        version
+        );
+}
 
 void v1_api_resource_free(v1_api_resource_t *v1_api_resource) {
     if(NULL == v1_api_resource){
+        return ;
+    }
+    if(v1_api_resource->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_api_resource_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -101,7 +131,7 @@ cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource) {
 
     listEntry_t *categoriesListEntry;
     list_ForEach(categoriesListEntry, v1_api_resource->categories) {
-    if(cJSON_AddStringToObject(categories, "", (char*)categoriesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(categories, "", categoriesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -153,7 +183,7 @@ cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource) {
 
     listEntry_t *short_namesListEntry;
     list_ForEach(short_namesListEntry, v1_api_resource->short_names) {
-    if(cJSON_AddStringToObject(short_names, "", (char*)short_namesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(short_names, "", short_namesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -189,7 +219,7 @@ cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource) {
 
     listEntry_t *verbsListEntry;
     list_ForEach(verbsListEntry, v1_api_resource->verbs) {
-    if(cJSON_AddStringToObject(verbs, "", (char*)verbsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(verbs, "", verbsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -226,6 +256,9 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     // v1_api_resource->categories
     cJSON *categories = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "categories");
+    if (cJSON_IsNull(categories)) {
+        categories = NULL;
+    }
     if (categories) { 
     cJSON *categories_local = NULL;
     if(!cJSON_IsArray(categories)) {
@@ -245,6 +278,9 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     // v1_api_resource->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "group");
+    if (cJSON_IsNull(group)) {
+        group = NULL;
+    }
     if (group) { 
     if(!cJSON_IsString(group) && !cJSON_IsNull(group))
     {
@@ -254,6 +290,9 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     // v1_api_resource->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (!kind) {
         goto end;
     }
@@ -266,6 +305,9 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     // v1_api_resource->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -278,6 +320,9 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     // v1_api_resource->namespaced
     cJSON *namespaced = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "namespaced");
+    if (cJSON_IsNull(namespaced)) {
+        namespaced = NULL;
+    }
     if (!namespaced) {
         goto end;
     }
@@ -290,6 +335,9 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     // v1_api_resource->short_names
     cJSON *short_names = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "shortNames");
+    if (cJSON_IsNull(short_names)) {
+        short_names = NULL;
+    }
     if (short_names) { 
     cJSON *short_names_local = NULL;
     if(!cJSON_IsArray(short_names)) {
@@ -309,6 +357,9 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     // v1_api_resource->singular_name
     cJSON *singular_name = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "singularName");
+    if (cJSON_IsNull(singular_name)) {
+        singular_name = NULL;
+    }
     if (!singular_name) {
         goto end;
     }
@@ -321,6 +372,9 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     // v1_api_resource->storage_version_hash
     cJSON *storage_version_hash = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "storageVersionHash");
+    if (cJSON_IsNull(storage_version_hash)) {
+        storage_version_hash = NULL;
+    }
     if (storage_version_hash) { 
     if(!cJSON_IsString(storage_version_hash) && !cJSON_IsNull(storage_version_hash))
     {
@@ -330,6 +384,9 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     // v1_api_resource->verbs
     cJSON *verbs = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "verbs");
+    if (cJSON_IsNull(verbs)) {
+        verbs = NULL;
+    }
     if (!verbs) {
         goto end;
     }
@@ -352,6 +409,9 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
 
     // v1_api_resource->version
     cJSON *version = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "version");
+    if (cJSON_IsNull(version)) {
+        version = NULL;
+    }
     if (version) { 
     if(!cJSON_IsString(version) && !cJSON_IsNull(version))
     {
@@ -360,7 +420,7 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
     }
 
 
-    v1_api_resource_local_var = v1_api_resource_create (
+    v1_api_resource_local_var = v1_api_resource_create_internal (
         categories ? categoriesList : NULL,
         group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         strdup(kind->valuestring),

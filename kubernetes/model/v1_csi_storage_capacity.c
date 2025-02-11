@@ -5,7 +5,7 @@
 
 
 
-v1_csi_storage_capacity_t *v1_csi_storage_capacity_create(
+static v1_csi_storage_capacity_t *v1_csi_storage_capacity_create_internal(
     char *api_version,
     char *capacity,
     char *kind,
@@ -26,12 +26,36 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_create(
     v1_csi_storage_capacity_local_var->node_topology = node_topology;
     v1_csi_storage_capacity_local_var->storage_class_name = storage_class_name;
 
+    v1_csi_storage_capacity_local_var->_library_owned = 1;
     return v1_csi_storage_capacity_local_var;
 }
 
+__attribute__((deprecated)) v1_csi_storage_capacity_t *v1_csi_storage_capacity_create(
+    char *api_version,
+    char *capacity,
+    char *kind,
+    char *maximum_volume_size,
+    v1_object_meta_t *metadata,
+    v1_label_selector_t *node_topology,
+    char *storage_class_name
+    ) {
+    return v1_csi_storage_capacity_create_internal (
+        api_version,
+        capacity,
+        kind,
+        maximum_volume_size,
+        metadata,
+        node_topology,
+        storage_class_name
+        );
+}
 
 void v1_csi_storage_capacity_free(v1_csi_storage_capacity_t *v1_csi_storage_capacity) {
     if(NULL == v1_csi_storage_capacity){
+        return ;
+    }
+    if(v1_csi_storage_capacity->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_csi_storage_capacity_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -155,6 +179,9 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
 
     // v1_csi_storage_capacity->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -164,6 +191,9 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
 
     // v1_csi_storage_capacity->capacity
     cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "capacity");
+    if (cJSON_IsNull(capacity)) {
+        capacity = NULL;
+    }
     if (capacity) { 
     if(!cJSON_IsString(capacity) && !cJSON_IsNull(capacity))
     {
@@ -173,6 +203,9 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
 
     // v1_csi_storage_capacity->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -182,6 +215,9 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
 
     // v1_csi_storage_capacity->maximum_volume_size
     cJSON *maximum_volume_size = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "maximumVolumeSize");
+    if (cJSON_IsNull(maximum_volume_size)) {
+        maximum_volume_size = NULL;
+    }
     if (maximum_volume_size) { 
     if(!cJSON_IsString(maximum_volume_size) && !cJSON_IsNull(maximum_volume_size))
     {
@@ -191,18 +227,27 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
 
     // v1_csi_storage_capacity->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_csi_storage_capacity->node_topology
     cJSON *node_topology = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "nodeTopology");
+    if (cJSON_IsNull(node_topology)) {
+        node_topology = NULL;
+    }
     if (node_topology) { 
     node_topology_local_nonprim = v1_label_selector_parseFromJSON(node_topology); //nonprimitive
     }
 
     // v1_csi_storage_capacity->storage_class_name
     cJSON *storage_class_name = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "storageClassName");
+    if (cJSON_IsNull(storage_class_name)) {
+        storage_class_name = NULL;
+    }
     if (!storage_class_name) {
         goto end;
     }
@@ -214,7 +259,7 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
     }
 
 
-    v1_csi_storage_capacity_local_var = v1_csi_storage_capacity_create (
+    v1_csi_storage_capacity_local_var = v1_csi_storage_capacity_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         capacity && !cJSON_IsNull(capacity) ? strdup(capacity->valuestring) : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,

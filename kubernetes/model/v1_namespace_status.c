@@ -5,7 +5,7 @@
 
 
 
-v1_namespace_status_t *v1_namespace_status_create(
+static v1_namespace_status_t *v1_namespace_status_create_internal(
     list_t *conditions,
     char *phase
     ) {
@@ -16,12 +16,26 @@ v1_namespace_status_t *v1_namespace_status_create(
     v1_namespace_status_local_var->conditions = conditions;
     v1_namespace_status_local_var->phase = phase;
 
+    v1_namespace_status_local_var->_library_owned = 1;
     return v1_namespace_status_local_var;
 }
 
+__attribute__((deprecated)) v1_namespace_status_t *v1_namespace_status_create(
+    list_t *conditions,
+    char *phase
+    ) {
+    return v1_namespace_status_create_internal (
+        conditions,
+        phase
+        );
+}
 
 void v1_namespace_status_free(v1_namespace_status_t *v1_namespace_status) {
     if(NULL == v1_namespace_status){
+        return ;
+    }
+    if(v1_namespace_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_namespace_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -86,6 +100,9 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
 
     // v1_namespace_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_namespace_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -107,6 +124,9 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
 
     // v1_namespace_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_namespace_statusJSON, "phase");
+    if (cJSON_IsNull(phase)) {
+        phase = NULL;
+    }
     if (phase) { 
     if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
     {
@@ -115,7 +135,7 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
     }
 
 
-    v1_namespace_status_local_var = v1_namespace_status_create (
+    v1_namespace_status_local_var = v1_namespace_status_create_internal (
         conditions ? conditionsList : NULL,
         phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL
         );

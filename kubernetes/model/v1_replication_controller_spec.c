@@ -5,7 +5,7 @@
 
 
 
-v1_replication_controller_spec_t *v1_replication_controller_spec_create(
+static v1_replication_controller_spec_t *v1_replication_controller_spec_create_internal(
     int min_ready_seconds,
     int replicas,
     list_t* selector,
@@ -20,18 +20,36 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_create(
     v1_replication_controller_spec_local_var->selector = selector;
     v1_replication_controller_spec_local_var->_template = _template;
 
+    v1_replication_controller_spec_local_var->_library_owned = 1;
     return v1_replication_controller_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_replication_controller_spec_t *v1_replication_controller_spec_create(
+    int min_ready_seconds,
+    int replicas,
+    list_t* selector,
+    v1_pod_template_spec_t *_template
+    ) {
+    return v1_replication_controller_spec_create_internal (
+        min_ready_seconds,
+        replicas,
+        selector,
+        _template
+        );
+}
 
 void v1_replication_controller_spec_free(v1_replication_controller_spec_t *v1_replication_controller_spec) {
     if(NULL == v1_replication_controller_spec){
         return ;
     }
+    if(v1_replication_controller_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_replication_controller_spec_free");
+        return ;
+    }
     listEntry_t *listEntry;
     if (v1_replication_controller_spec->selector) {
         list_ForEach(listEntry, v1_replication_controller_spec->selector) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -75,8 +93,8 @@ cJSON *v1_replication_controller_spec_convertToJSON(v1_replication_controller_sp
     listEntry_t *selectorListEntry;
     if (v1_replication_controller_spec->selector) {
     list_ForEach(selectorListEntry, v1_replication_controller_spec->selector) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)selectorListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = selectorListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -117,6 +135,9 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
 
     // v1_replication_controller_spec->min_ready_seconds
     cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_specJSON, "minReadySeconds");
+    if (cJSON_IsNull(min_ready_seconds)) {
+        min_ready_seconds = NULL;
+    }
     if (min_ready_seconds) { 
     if(!cJSON_IsNumber(min_ready_seconds))
     {
@@ -126,6 +147,9 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
 
     // v1_replication_controller_spec->replicas
     cJSON *replicas = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_specJSON, "replicas");
+    if (cJSON_IsNull(replicas)) {
+        replicas = NULL;
+    }
     if (replicas) { 
     if(!cJSON_IsNumber(replicas))
     {
@@ -135,6 +159,9 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
 
     // v1_replication_controller_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_specJSON, "selector");
+    if (cJSON_IsNull(selector)) {
+        selector = NULL;
+    }
     if (selector) { 
     cJSON *selector_local_map = NULL;
     if(!cJSON_IsObject(selector) && !cJSON_IsNull(selector))
@@ -160,12 +187,15 @@ v1_replication_controller_spec_t *v1_replication_controller_spec_parseFromJSON(c
 
     // v1_replication_controller_spec->_template
     cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_specJSON, "template");
+    if (cJSON_IsNull(_template)) {
+        _template = NULL;
+    }
     if (_template) { 
     _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
     }
 
 
-    v1_replication_controller_spec_local_var = v1_replication_controller_spec_create (
+    v1_replication_controller_spec_local_var = v1_replication_controller_spec_create_internal (
         min_ready_seconds ? min_ready_seconds->valuedouble : 0,
         replicas ? replicas->valuedouble : 0,
         selector ? selectorList : NULL,
@@ -177,7 +207,7 @@ end:
     if (selectorList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, selectorList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

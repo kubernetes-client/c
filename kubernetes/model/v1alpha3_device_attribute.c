@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_device_attribute_t *v1alpha3_device_attribute_create(
+static v1alpha3_device_attribute_t *v1alpha3_device_attribute_create_internal(
     int _bool,
     long _int,
     char *string,
@@ -20,12 +20,30 @@ v1alpha3_device_attribute_t *v1alpha3_device_attribute_create(
     v1alpha3_device_attribute_local_var->string = string;
     v1alpha3_device_attribute_local_var->version = version;
 
+    v1alpha3_device_attribute_local_var->_library_owned = 1;
     return v1alpha3_device_attribute_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_device_attribute_t *v1alpha3_device_attribute_create(
+    int _bool,
+    long _int,
+    char *string,
+    char *version
+    ) {
+    return v1alpha3_device_attribute_create_internal (
+        _bool,
+        _int,
+        string,
+        version
+        );
+}
 
 void v1alpha3_device_attribute_free(v1alpha3_device_attribute_t *v1alpha3_device_attribute) {
     if(NULL == v1alpha3_device_attribute){
+        return ;
+    }
+    if(v1alpha3_device_attribute->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_device_attribute_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -88,6 +106,9 @@ v1alpha3_device_attribute_t *v1alpha3_device_attribute_parseFromJSON(cJSON *v1al
 
     // v1alpha3_device_attribute->_bool
     cJSON *_bool = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_attributeJSON, "bool");
+    if (cJSON_IsNull(_bool)) {
+        _bool = NULL;
+    }
     if (_bool) { 
     if(!cJSON_IsBool(_bool))
     {
@@ -97,6 +118,9 @@ v1alpha3_device_attribute_t *v1alpha3_device_attribute_parseFromJSON(cJSON *v1al
 
     // v1alpha3_device_attribute->_int
     cJSON *_int = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_attributeJSON, "int");
+    if (cJSON_IsNull(_int)) {
+        _int = NULL;
+    }
     if (_int) { 
     if(!cJSON_IsNumber(_int))
     {
@@ -106,6 +130,9 @@ v1alpha3_device_attribute_t *v1alpha3_device_attribute_parseFromJSON(cJSON *v1al
 
     // v1alpha3_device_attribute->string
     cJSON *string = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_attributeJSON, "string");
+    if (cJSON_IsNull(string)) {
+        string = NULL;
+    }
     if (string) { 
     if(!cJSON_IsString(string) && !cJSON_IsNull(string))
     {
@@ -115,6 +142,9 @@ v1alpha3_device_attribute_t *v1alpha3_device_attribute_parseFromJSON(cJSON *v1al
 
     // v1alpha3_device_attribute->version
     cJSON *version = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_attributeJSON, "version");
+    if (cJSON_IsNull(version)) {
+        version = NULL;
+    }
     if (version) { 
     if(!cJSON_IsString(version) && !cJSON_IsNull(version))
     {
@@ -123,7 +153,7 @@ v1alpha3_device_attribute_t *v1alpha3_device_attribute_parseFromJSON(cJSON *v1al
     }
 
 
-    v1alpha3_device_attribute_local_var = v1alpha3_device_attribute_create (
+    v1alpha3_device_attribute_local_var = v1alpha3_device_attribute_create_internal (
         _bool ? _bool->valueint : 0,
         _int ? _int->valuedouble : 0,
         string && !cJSON_IsNull(string) ? strdup(string->valuestring) : NULL,

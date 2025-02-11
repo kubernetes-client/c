@@ -22,9 +22,10 @@ typedef struct v1_preconditions_t {
     char *resource_version; // string
     char *uid; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_preconditions_t;
 
-v1_preconditions_t *v1_preconditions_create(
+__attribute__((deprecated)) v1_preconditions_t *v1_preconditions_create(
     char *resource_version,
     char *uid
 );

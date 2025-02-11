@@ -5,7 +5,7 @@
 
 
 
-v1alpha1_migration_condition_t *v1alpha1_migration_condition_create(
+static v1alpha1_migration_condition_t *v1alpha1_migration_condition_create_internal(
     char *last_update_time,
     char *message,
     char *reason,
@@ -22,12 +22,32 @@ v1alpha1_migration_condition_t *v1alpha1_migration_condition_create(
     v1alpha1_migration_condition_local_var->status = status;
     v1alpha1_migration_condition_local_var->type = type;
 
+    v1alpha1_migration_condition_local_var->_library_owned = 1;
     return v1alpha1_migration_condition_local_var;
 }
 
+__attribute__((deprecated)) v1alpha1_migration_condition_t *v1alpha1_migration_condition_create(
+    char *last_update_time,
+    char *message,
+    char *reason,
+    char *status,
+    char *type
+    ) {
+    return v1alpha1_migration_condition_create_internal (
+        last_update_time,
+        message,
+        reason,
+        status,
+        type
+        );
+}
 
 void v1alpha1_migration_condition_free(v1alpha1_migration_condition_t *v1alpha1_migration_condition) {
     if(NULL == v1alpha1_migration_condition){
+        return ;
+    }
+    if(v1alpha1_migration_condition->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha1_migration_condition_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -112,6 +132,9 @@ v1alpha1_migration_condition_t *v1alpha1_migration_condition_parseFromJSON(cJSON
 
     // v1alpha1_migration_condition->last_update_time
     cJSON *last_update_time = cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "lastUpdateTime");
+    if (cJSON_IsNull(last_update_time)) {
+        last_update_time = NULL;
+    }
     if (last_update_time) { 
     if(!cJSON_IsString(last_update_time) && !cJSON_IsNull(last_update_time))
     {
@@ -121,6 +144,9 @@ v1alpha1_migration_condition_t *v1alpha1_migration_condition_parseFromJSON(cJSON
 
     // v1alpha1_migration_condition->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "message");
+    if (cJSON_IsNull(message)) {
+        message = NULL;
+    }
     if (message) { 
     if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
@@ -130,6 +156,9 @@ v1alpha1_migration_condition_t *v1alpha1_migration_condition_parseFromJSON(cJSON
 
     // v1alpha1_migration_condition->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "reason");
+    if (cJSON_IsNull(reason)) {
+        reason = NULL;
+    }
     if (reason) { 
     if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
@@ -139,6 +168,9 @@ v1alpha1_migration_condition_t *v1alpha1_migration_condition_parseFromJSON(cJSON
 
     // v1alpha1_migration_condition->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
     if (!status) {
         goto end;
     }
@@ -151,6 +183,9 @@ v1alpha1_migration_condition_t *v1alpha1_migration_condition_parseFromJSON(cJSON
 
     // v1alpha1_migration_condition->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -162,7 +197,7 @@ v1alpha1_migration_condition_t *v1alpha1_migration_condition_parseFromJSON(cJSON
     }
 
 
-    v1alpha1_migration_condition_local_var = v1alpha1_migration_condition_create (
+    v1alpha1_migration_condition_local_var = v1alpha1_migration_condition_create_internal (
         last_update_time && !cJSON_IsNull(last_update_time) ? strdup(last_update_time->valuestring) : NULL,
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,

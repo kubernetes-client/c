@@ -25,9 +25,10 @@ typedef struct v1_replication_controller_spec_t {
     list_t* selector; //map
     struct v1_pod_template_spec_t *_template; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_replication_controller_spec_t;
 
-v1_replication_controller_spec_t *v1_replication_controller_spec_create(
+__attribute__((deprecated)) v1_replication_controller_spec_t *v1_replication_controller_spec_create(
     int min_ready_seconds,
     int replicas,
     list_t* selector,

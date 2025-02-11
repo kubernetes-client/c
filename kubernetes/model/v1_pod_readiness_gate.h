@@ -21,9 +21,10 @@ typedef struct v1_pod_readiness_gate_t v1_pod_readiness_gate_t;
 typedef struct v1_pod_readiness_gate_t {
     char *condition_type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_readiness_gate_t;
 
-v1_pod_readiness_gate_t *v1_pod_readiness_gate_create(
+__attribute__((deprecated)) v1_pod_readiness_gate_t *v1_pod_readiness_gate_create(
     char *condition_type
 );
 

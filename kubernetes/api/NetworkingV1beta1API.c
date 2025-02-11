@@ -5,11 +5,6 @@
 
 #define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
-#define intToStr(dst, src) \
-    do {\
-    char dst[256];\
-    snprintf(dst, 256, "%ld", (long int)(src));\
-}while(0)
 
 
 // create an IPAddress
@@ -23,11 +18,14 @@ NetworkingV1beta1API_createIPAddress(apiClient_t *apiClient, v1beta1_ip_address_
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/ipaddresses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/ipaddresses");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/ipaddresses");
+
 
 
 
@@ -84,13 +82,15 @@ NetworkingV1beta1API_createIPAddress(apiClient_t *apiClient, v1beta1_ip_address_
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1beta1_ip_address_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -99,6 +99,7 @@ NetworkingV1beta1API_createIPAddress(apiClient_t *apiClient, v1beta1_ip_address_
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -118,11 +119,14 @@ NetworkingV1beta1API_createIPAddress(apiClient_t *apiClient, v1beta1_ip_address_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_ip_address_t *elementToReturn = v1beta1_ip_address_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_ip_address_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_ip_address_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -208,11 +212,14 @@ NetworkingV1beta1API_createServiceCIDR(apiClient_t *apiClient, v1beta1_service_c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/servicecidrs")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/servicecidrs");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/servicecidrs");
+
 
 
 
@@ -269,13 +276,15 @@ NetworkingV1beta1API_createServiceCIDR(apiClient_t *apiClient, v1beta1_service_c
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1beta1_service_cidr_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -284,6 +293,7 @@ NetworkingV1beta1API_createServiceCIDR(apiClient_t *apiClient, v1beta1_service_c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -303,11 +313,14 @@ NetworkingV1beta1API_createServiceCIDR(apiClient_t *apiClient, v1beta1_service_c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_service_cidr_t *elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_service_cidr_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -385,7 +398,7 @@ end:
 // delete collection of IPAddress
 //
 v1_status_t*
-NetworkingV1beta1API_deleteCollectionIPAddress(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+NetworkingV1beta1API_deleteCollectionIPAddress(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -393,11 +406,14 @@ NetworkingV1beta1API_deleteCollectionIPAddress(apiClient_t *apiClient, char *pre
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/ipaddresses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/ipaddresses");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/ipaddresses");
+
 
 
 
@@ -461,6 +477,19 @@ NetworkingV1beta1API_deleteCollectionIPAddress(apiClient_t *apiClient, char *pre
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -567,13 +596,15 @@ NetworkingV1beta1API_deleteCollectionIPAddress(apiClient_t *apiClient, char *pre
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -582,6 +613,7 @@ NetworkingV1beta1API_deleteCollectionIPAddress(apiClient_t *apiClient, char *pre
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -593,11 +625,14 @@ NetworkingV1beta1API_deleteCollectionIPAddress(apiClient_t *apiClient, char *pre
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -676,6 +711,18 @@ NetworkingV1beta1API_deleteCollectionIPAddress(apiClient_t *apiClient, char *pre
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -783,7 +830,7 @@ end:
 // delete collection of ServiceCIDR
 //
 v1_status_t*
-NetworkingV1beta1API_deleteCollectionServiceCIDR(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+NetworkingV1beta1API_deleteCollectionServiceCIDR(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -791,11 +838,14 @@ NetworkingV1beta1API_deleteCollectionServiceCIDR(apiClient_t *apiClient, char *p
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/servicecidrs")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/servicecidrs");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/servicecidrs");
+
 
 
 
@@ -859,6 +909,19 @@ NetworkingV1beta1API_deleteCollectionServiceCIDR(apiClient_t *apiClient, char *p
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -965,13 +1028,15 @@ NetworkingV1beta1API_deleteCollectionServiceCIDR(apiClient_t *apiClient, char *p
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -980,6 +1045,7 @@ NetworkingV1beta1API_deleteCollectionServiceCIDR(apiClient_t *apiClient, char *p
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -991,11 +1057,14 @@ NetworkingV1beta1API_deleteCollectionServiceCIDR(apiClient_t *apiClient, char *p
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1074,6 +1143,18 @@ NetworkingV1beta1API_deleteCollectionServiceCIDR(apiClient_t *apiClient, char *p
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -1181,7 +1262,7 @@ end:
 // delete an IPAddress
 //
 v1_status_t*
-NetworkingV1beta1API_deleteIPAddress(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+NetworkingV1beta1API_deleteIPAddress(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1189,15 +1270,20 @@ NetworkingV1beta1API_deleteIPAddress(apiClient_t *apiClient, char *name, char *p
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/ipaddresses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/ipaddresses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/ipaddresses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1246,6 +1332,19 @@ NetworkingV1beta1API_deleteIPAddress(apiClient_t *apiClient, char *name, char *p
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -1274,13 +1373,15 @@ NetworkingV1beta1API_deleteIPAddress(apiClient_t *apiClient, char *name, char *p
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1289,6 +1390,7 @@ NetworkingV1beta1API_deleteIPAddress(apiClient_t *apiClient, char *name, char *p
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1304,11 +1406,14 @@ NetworkingV1beta1API_deleteIPAddress(apiClient_t *apiClient, char *name, char *p
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1364,6 +1469,18 @@ NetworkingV1beta1API_deleteIPAddress(apiClient_t *apiClient, char *name, char *p
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -1399,7 +1516,7 @@ end:
 // delete a ServiceCIDR
 //
 v1_status_t*
-NetworkingV1beta1API_deleteServiceCIDR(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+NetworkingV1beta1API_deleteServiceCIDR(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1407,15 +1524,20 @@ NetworkingV1beta1API_deleteServiceCIDR(apiClient_t *apiClient, char *name, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/servicecidrs/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1464,6 +1586,19 @@ NetworkingV1beta1API_deleteServiceCIDR(apiClient_t *apiClient, char *name, char 
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -1492,13 +1627,15 @@ NetworkingV1beta1API_deleteServiceCIDR(apiClient_t *apiClient, char *name, char 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1507,6 +1644,7 @@ NetworkingV1beta1API_deleteServiceCIDR(apiClient_t *apiClient, char *name, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1522,11 +1660,14 @@ NetworkingV1beta1API_deleteServiceCIDR(apiClient_t *apiClient, char *name, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1583,6 +1724,18 @@ NetworkingV1beta1API_deleteServiceCIDR(apiClient_t *apiClient, char *name, char 
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
     }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
@@ -1617,7 +1770,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-NetworkingV1beta1API_getAPIResources_23(apiClient_t *apiClient)
+NetworkingV1beta1API_getAPIResources(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1625,17 +1778,21 @@ NetworkingV1beta1API_getAPIResources_23(apiClient_t *apiClient)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/");
+
 
 
 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1644,6 +1801,7 @@ NetworkingV1beta1API_getAPIResources_23(apiClient_t *apiClient)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1655,11 +1813,14 @@ NetworkingV1beta1API_getAPIResources_23(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_api_resource_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_api_resource_list_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1692,11 +1853,14 @@ NetworkingV1beta1API_listIPAddress(apiClient_t *apiClient, char *pretty, int *al
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/ipaddresses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/ipaddresses");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/ipaddresses");
+
 
 
 
@@ -1840,8 +2004,10 @@ NetworkingV1beta1API_listIPAddress(apiClient_t *apiClient, char *pretty, int *al
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1850,6 +2016,7 @@ NetworkingV1beta1API_listIPAddress(apiClient_t *apiClient, char *pretty, int *al
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1861,11 +2028,14 @@ NetworkingV1beta1API_listIPAddress(apiClient_t *apiClient, char *pretty, int *al
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_ip_address_list_t *elementToReturn = v1beta1_ip_address_list_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_ip_address_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_ip_address_list_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2030,11 +2200,14 @@ NetworkingV1beta1API_listServiceCIDR(apiClient_t *apiClient, char *pretty, int *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/servicecidrs")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/servicecidrs");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/servicecidrs");
+
 
 
 
@@ -2178,8 +2351,10 @@ NetworkingV1beta1API_listServiceCIDR(apiClient_t *apiClient, char *pretty, int *
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2188,6 +2363,7 @@ NetworkingV1beta1API_listServiceCIDR(apiClient_t *apiClient, char *pretty, int *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2199,11 +2375,14 @@ NetworkingV1beta1API_listServiceCIDR(apiClient_t *apiClient, char *pretty, int *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_service_cidr_list_t *elementToReturn = v1beta1_service_cidr_list_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_service_cidr_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_service_cidr_list_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2368,15 +2547,20 @@ NetworkingV1beta1API_patchIPAddress(apiClient_t *apiClient, char *name, object_t
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/ipaddresses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/ipaddresses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/ipaddresses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2452,17 +2636,20 @@ NetworkingV1beta1API_patchIPAddress(apiClient_t *apiClient, char *name, object_t
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2471,6 +2658,7 @@ NetworkingV1beta1API_patchIPAddress(apiClient_t *apiClient, char *name, object_t
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -2486,11 +2674,14 @@ NetworkingV1beta1API_patchIPAddress(apiClient_t *apiClient, char *name, object_t
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_ip_address_t *elementToReturn = v1beta1_ip_address_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_ip_address_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_ip_address_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2589,15 +2780,20 @@ NetworkingV1beta1API_patchServiceCIDR(apiClient_t *apiClient, char *name, object
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/servicecidrs/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2673,17 +2869,20 @@ NetworkingV1beta1API_patchServiceCIDR(apiClient_t *apiClient, char *name, object
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2692,6 +2891,7 @@ NetworkingV1beta1API_patchServiceCIDR(apiClient_t *apiClient, char *name, object
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -2707,11 +2907,14 @@ NetworkingV1beta1API_patchServiceCIDR(apiClient_t *apiClient, char *name, object
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_service_cidr_t *elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_service_cidr_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2810,15 +3013,20 @@ NetworkingV1beta1API_patchServiceCIDRStatus(apiClient_t *apiClient, char *name, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/servicecidrs/{name}/status");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2894,17 +3102,20 @@ NetworkingV1beta1API_patchServiceCIDRStatus(apiClient_t *apiClient, char *name, 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2913,6 +3124,7 @@ NetworkingV1beta1API_patchServiceCIDRStatus(apiClient_t *apiClient, char *name, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -2928,11 +3140,14 @@ NetworkingV1beta1API_patchServiceCIDRStatus(apiClient_t *apiClient, char *name, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_service_cidr_t *elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_service_cidr_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3031,15 +3246,20 @@ NetworkingV1beta1API_readIPAddress(apiClient_t *apiClient, char *name, char *pre
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/ipaddresses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/ipaddresses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/ipaddresses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3064,6 +3284,7 @@ NetworkingV1beta1API_readIPAddress(apiClient_t *apiClient, char *name, char *pre
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3072,6 +3293,7 @@ NetworkingV1beta1API_readIPAddress(apiClient_t *apiClient, char *name, char *pre
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -3083,11 +3305,14 @@ NetworkingV1beta1API_readIPAddress(apiClient_t *apiClient, char *name, char *pre
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_ip_address_t *elementToReturn = v1beta1_ip_address_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_ip_address_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_ip_address_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3133,15 +3358,20 @@ NetworkingV1beta1API_readServiceCIDR(apiClient_t *apiClient, char *name, char *p
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/servicecidrs/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3166,6 +3396,7 @@ NetworkingV1beta1API_readServiceCIDR(apiClient_t *apiClient, char *name, char *p
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3174,6 +3405,7 @@ NetworkingV1beta1API_readServiceCIDR(apiClient_t *apiClient, char *name, char *p
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -3185,11 +3417,14 @@ NetworkingV1beta1API_readServiceCIDR(apiClient_t *apiClient, char *name, char *p
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_service_cidr_t *elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_service_cidr_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3235,15 +3470,20 @@ NetworkingV1beta1API_readServiceCIDRStatus(apiClient_t *apiClient, char *name, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/servicecidrs/{name}/status");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3268,6 +3508,7 @@ NetworkingV1beta1API_readServiceCIDRStatus(apiClient_t *apiClient, char *name, c
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3276,6 +3517,7 @@ NetworkingV1beta1API_readServiceCIDRStatus(apiClient_t *apiClient, char *name, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -3287,11 +3529,14 @@ NetworkingV1beta1API_readServiceCIDRStatus(apiClient_t *apiClient, char *name, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_service_cidr_t *elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_service_cidr_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3337,15 +3582,20 @@ NetworkingV1beta1API_replaceIPAddress(apiClient_t *apiClient, char *name, v1beta
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/ipaddresses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/ipaddresses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/ipaddresses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3408,13 +3658,15 @@ NetworkingV1beta1API_replaceIPAddress(apiClient_t *apiClient, char *name, v1beta
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1beta1_ip_address_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3423,6 +3675,7 @@ NetworkingV1beta1API_replaceIPAddress(apiClient_t *apiClient, char *name, v1beta
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -3438,11 +3691,14 @@ NetworkingV1beta1API_replaceIPAddress(apiClient_t *apiClient, char *name, v1beta
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_ip_address_t *elementToReturn = v1beta1_ip_address_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_ip_address_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_ip_address_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3529,15 +3785,20 @@ NetworkingV1beta1API_replaceServiceCIDR(apiClient_t *apiClient, char *name, v1be
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/servicecidrs/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3600,13 +3861,15 @@ NetworkingV1beta1API_replaceServiceCIDR(apiClient_t *apiClient, char *name, v1be
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1beta1_service_cidr_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3615,6 +3878,7 @@ NetworkingV1beta1API_replaceServiceCIDR(apiClient_t *apiClient, char *name, v1be
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -3630,11 +3894,14 @@ NetworkingV1beta1API_replaceServiceCIDR(apiClient_t *apiClient, char *name, v1be
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_service_cidr_t *elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_service_cidr_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3721,15 +3988,20 @@ NetworkingV1beta1API_replaceServiceCIDRStatus(apiClient_t *apiClient, char *name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1beta1/servicecidrs/{name}/status");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1beta1/servicecidrs/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3792,13 +4064,15 @@ NetworkingV1beta1API_replaceServiceCIDRStatus(apiClient_t *apiClient, char *name
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1beta1_service_cidr_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3807,6 +4081,7 @@ NetworkingV1beta1API_replaceServiceCIDRStatus(apiClient_t *apiClient, char *name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -3822,11 +4097,14 @@ NetworkingV1beta1API_replaceServiceCIDRStatus(apiClient_t *apiClient, char *name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1beta1_service_cidr_t *elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1beta1_service_cidr_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1beta1_service_cidr_parseFromJSON(NetworkingV1beta1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1beta1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type

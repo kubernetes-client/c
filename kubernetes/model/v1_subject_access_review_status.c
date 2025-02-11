@@ -5,7 +5,7 @@
 
 
 
-v1_subject_access_review_status_t *v1_subject_access_review_status_create(
+static v1_subject_access_review_status_t *v1_subject_access_review_status_create_internal(
     int allowed,
     int denied,
     char *evaluation_error,
@@ -20,12 +20,30 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_create(
     v1_subject_access_review_status_local_var->evaluation_error = evaluation_error;
     v1_subject_access_review_status_local_var->reason = reason;
 
+    v1_subject_access_review_status_local_var->_library_owned = 1;
     return v1_subject_access_review_status_local_var;
 }
 
+__attribute__((deprecated)) v1_subject_access_review_status_t *v1_subject_access_review_status_create(
+    int allowed,
+    int denied,
+    char *evaluation_error,
+    char *reason
+    ) {
+    return v1_subject_access_review_status_create_internal (
+        allowed,
+        denied,
+        evaluation_error,
+        reason
+        );
+}
 
 void v1_subject_access_review_status_free(v1_subject_access_review_status_t *v1_subject_access_review_status) {
     if(NULL == v1_subject_access_review_status){
+        return ;
+    }
+    if(v1_subject_access_review_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_subject_access_review_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -89,6 +107,9 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
 
     // v1_subject_access_review_status->allowed
     cJSON *allowed = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_statusJSON, "allowed");
+    if (cJSON_IsNull(allowed)) {
+        allowed = NULL;
+    }
     if (!allowed) {
         goto end;
     }
@@ -101,6 +122,9 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
 
     // v1_subject_access_review_status->denied
     cJSON *denied = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_statusJSON, "denied");
+    if (cJSON_IsNull(denied)) {
+        denied = NULL;
+    }
     if (denied) { 
     if(!cJSON_IsBool(denied))
     {
@@ -110,6 +134,9 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
 
     // v1_subject_access_review_status->evaluation_error
     cJSON *evaluation_error = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_statusJSON, "evaluationError");
+    if (cJSON_IsNull(evaluation_error)) {
+        evaluation_error = NULL;
+    }
     if (evaluation_error) { 
     if(!cJSON_IsString(evaluation_error) && !cJSON_IsNull(evaluation_error))
     {
@@ -119,6 +146,9 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
 
     // v1_subject_access_review_status->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_statusJSON, "reason");
+    if (cJSON_IsNull(reason)) {
+        reason = NULL;
+    }
     if (reason) { 
     if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
@@ -127,7 +157,7 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
     }
 
 
-    v1_subject_access_review_status_local_var = v1_subject_access_review_status_create (
+    v1_subject_access_review_status_local_var = v1_subject_access_review_status_create_internal (
         allowed->valueint,
         denied ? denied->valueint : 0,
         evaluation_error && !cJSON_IsNull(evaluation_error) ? strdup(evaluation_error->valuestring) : NULL,

@@ -22,9 +22,10 @@ typedef struct v1_node_config_source_t v1_node_config_source_t;
 typedef struct v1_node_config_source_t {
     struct v1_config_map_node_config_source_t *config_map; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_config_source_t;
 
-v1_node_config_source_t *v1_node_config_source_create(
+__attribute__((deprecated)) v1_node_config_source_t *v1_node_config_source_create(
     v1_config_map_node_config_source_t *config_map
 );
 

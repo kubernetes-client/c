@@ -22,9 +22,10 @@ typedef struct v1_host_path_volume_source_t {
     char *path; // string
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_host_path_volume_source_t;
 
-v1_host_path_volume_source_t *v1_host_path_volume_source_create(
+__attribute__((deprecated)) v1_host_path_volume_source_t *v1_host_path_volume_source_create(
     char *path,
     char *type
 );

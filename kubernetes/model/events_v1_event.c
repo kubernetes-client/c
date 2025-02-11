@@ -5,7 +5,7 @@
 
 
 
-events_v1_event_t *events_v1_event_create(
+static events_v1_event_t *events_v1_event_create_internal(
     char *action,
     char *api_version,
     int deprecated_count,
@@ -46,12 +46,56 @@ events_v1_event_t *events_v1_event_create(
     events_v1_event_local_var->series = series;
     events_v1_event_local_var->type = type;
 
+    events_v1_event_local_var->_library_owned = 1;
     return events_v1_event_local_var;
 }
 
+__attribute__((deprecated)) events_v1_event_t *events_v1_event_create(
+    char *action,
+    char *api_version,
+    int deprecated_count,
+    char *deprecated_first_timestamp,
+    char *deprecated_last_timestamp,
+    v1_event_source_t *deprecated_source,
+    char *event_time,
+    char *kind,
+    v1_object_meta_t *metadata,
+    char *note,
+    char *reason,
+    v1_object_reference_t *regarding,
+    v1_object_reference_t *related,
+    char *reporting_controller,
+    char *reporting_instance,
+    events_v1_event_series_t *series,
+    char *type
+    ) {
+    return events_v1_event_create_internal (
+        action,
+        api_version,
+        deprecated_count,
+        deprecated_first_timestamp,
+        deprecated_last_timestamp,
+        deprecated_source,
+        event_time,
+        kind,
+        metadata,
+        note,
+        reason,
+        regarding,
+        related,
+        reporting_controller,
+        reporting_instance,
+        series,
+        type
+        );
+}
 
 void events_v1_event_free(events_v1_event_t *events_v1_event) {
     if(NULL == events_v1_event){
+        return ;
+    }
+    if(events_v1_event->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "events_v1_event_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -315,6 +359,9 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->action
     cJSON *action = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "action");
+    if (cJSON_IsNull(action)) {
+        action = NULL;
+    }
     if (action) { 
     if(!cJSON_IsString(action) && !cJSON_IsNull(action))
     {
@@ -324,6 +371,9 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -333,6 +383,9 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->deprecated_count
     cJSON *deprecated_count = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "deprecatedCount");
+    if (cJSON_IsNull(deprecated_count)) {
+        deprecated_count = NULL;
+    }
     if (deprecated_count) { 
     if(!cJSON_IsNumber(deprecated_count))
     {
@@ -342,6 +395,9 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->deprecated_first_timestamp
     cJSON *deprecated_first_timestamp = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "deprecatedFirstTimestamp");
+    if (cJSON_IsNull(deprecated_first_timestamp)) {
+        deprecated_first_timestamp = NULL;
+    }
     if (deprecated_first_timestamp) { 
     if(!cJSON_IsString(deprecated_first_timestamp) && !cJSON_IsNull(deprecated_first_timestamp))
     {
@@ -351,6 +407,9 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->deprecated_last_timestamp
     cJSON *deprecated_last_timestamp = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "deprecatedLastTimestamp");
+    if (cJSON_IsNull(deprecated_last_timestamp)) {
+        deprecated_last_timestamp = NULL;
+    }
     if (deprecated_last_timestamp) { 
     if(!cJSON_IsString(deprecated_last_timestamp) && !cJSON_IsNull(deprecated_last_timestamp))
     {
@@ -360,12 +419,18 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->deprecated_source
     cJSON *deprecated_source = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "deprecatedSource");
+    if (cJSON_IsNull(deprecated_source)) {
+        deprecated_source = NULL;
+    }
     if (deprecated_source) { 
     deprecated_source_local_nonprim = v1_event_source_parseFromJSON(deprecated_source); //nonprimitive
     }
 
     // events_v1_event->event_time
     cJSON *event_time = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "eventTime");
+    if (cJSON_IsNull(event_time)) {
+        event_time = NULL;
+    }
     if (!event_time) {
         goto end;
     }
@@ -378,6 +443,9 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -387,12 +455,18 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // events_v1_event->note
     cJSON *note = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "note");
+    if (cJSON_IsNull(note)) {
+        note = NULL;
+    }
     if (note) { 
     if(!cJSON_IsString(note) && !cJSON_IsNull(note))
     {
@@ -402,6 +476,9 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "reason");
+    if (cJSON_IsNull(reason)) {
+        reason = NULL;
+    }
     if (reason) { 
     if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
@@ -411,18 +488,27 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->regarding
     cJSON *regarding = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "regarding");
+    if (cJSON_IsNull(regarding)) {
+        regarding = NULL;
+    }
     if (regarding) { 
     regarding_local_nonprim = v1_object_reference_parseFromJSON(regarding); //nonprimitive
     }
 
     // events_v1_event->related
     cJSON *related = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "related");
+    if (cJSON_IsNull(related)) {
+        related = NULL;
+    }
     if (related) { 
     related_local_nonprim = v1_object_reference_parseFromJSON(related); //nonprimitive
     }
 
     // events_v1_event->reporting_controller
     cJSON *reporting_controller = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "reportingController");
+    if (cJSON_IsNull(reporting_controller)) {
+        reporting_controller = NULL;
+    }
     if (reporting_controller) { 
     if(!cJSON_IsString(reporting_controller) && !cJSON_IsNull(reporting_controller))
     {
@@ -432,6 +518,9 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->reporting_instance
     cJSON *reporting_instance = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "reportingInstance");
+    if (cJSON_IsNull(reporting_instance)) {
+        reporting_instance = NULL;
+    }
     if (reporting_instance) { 
     if(!cJSON_IsString(reporting_instance) && !cJSON_IsNull(reporting_instance))
     {
@@ -441,12 +530,18 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
 
     // events_v1_event->series
     cJSON *series = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "series");
+    if (cJSON_IsNull(series)) {
+        series = NULL;
+    }
     if (series) { 
     series_local_nonprim = events_v1_event_series_parseFromJSON(series); //nonprimitive
     }
 
     // events_v1_event->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(events_v1_eventJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (type) { 
     if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
@@ -455,7 +550,7 @@ events_v1_event_t *events_v1_event_parseFromJSON(cJSON *events_v1_eventJSON){
     }
 
 
-    events_v1_event_local_var = events_v1_event_create (
+    events_v1_event_local_var = events_v1_event_create_internal (
         action && !cJSON_IsNull(action) ? strdup(action->valuestring) : NULL,
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         deprecated_count ? deprecated_count->valuedouble : 0,

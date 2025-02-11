@@ -23,9 +23,10 @@ typedef struct v1_limit_response_t {
     struct v1_queuing_configuration_t *queuing; //model
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_limit_response_t;
 
-v1_limit_response_t *v1_limit_response_create(
+__attribute__((deprecated)) v1_limit_response_t *v1_limit_response_create(
     v1_queuing_configuration_t *queuing,
     char *type
 );

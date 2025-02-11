@@ -5,7 +5,7 @@
 
 
 
-v1_affinity_t *v1_affinity_create(
+static v1_affinity_t *v1_affinity_create_internal(
     v1_node_affinity_t *node_affinity,
     v1_pod_affinity_t *pod_affinity,
     v1_pod_anti_affinity_t *pod_anti_affinity
@@ -18,12 +18,28 @@ v1_affinity_t *v1_affinity_create(
     v1_affinity_local_var->pod_affinity = pod_affinity;
     v1_affinity_local_var->pod_anti_affinity = pod_anti_affinity;
 
+    v1_affinity_local_var->_library_owned = 1;
     return v1_affinity_local_var;
 }
 
+__attribute__((deprecated)) v1_affinity_t *v1_affinity_create(
+    v1_node_affinity_t *node_affinity,
+    v1_pod_affinity_t *pod_affinity,
+    v1_pod_anti_affinity_t *pod_anti_affinity
+    ) {
+    return v1_affinity_create_internal (
+        node_affinity,
+        pod_affinity,
+        pod_anti_affinity
+        );
+}
 
 void v1_affinity_free(v1_affinity_t *v1_affinity) {
     if(NULL == v1_affinity){
+        return ;
+    }
+    if(v1_affinity->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_affinity_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -106,24 +122,33 @@ v1_affinity_t *v1_affinity_parseFromJSON(cJSON *v1_affinityJSON){
 
     // v1_affinity->node_affinity
     cJSON *node_affinity = cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "nodeAffinity");
+    if (cJSON_IsNull(node_affinity)) {
+        node_affinity = NULL;
+    }
     if (node_affinity) { 
     node_affinity_local_nonprim = v1_node_affinity_parseFromJSON(node_affinity); //nonprimitive
     }
 
     // v1_affinity->pod_affinity
     cJSON *pod_affinity = cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "podAffinity");
+    if (cJSON_IsNull(pod_affinity)) {
+        pod_affinity = NULL;
+    }
     if (pod_affinity) { 
     pod_affinity_local_nonprim = v1_pod_affinity_parseFromJSON(pod_affinity); //nonprimitive
     }
 
     // v1_affinity->pod_anti_affinity
     cJSON *pod_anti_affinity = cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "podAntiAffinity");
+    if (cJSON_IsNull(pod_anti_affinity)) {
+        pod_anti_affinity = NULL;
+    }
     if (pod_anti_affinity) { 
     pod_anti_affinity_local_nonprim = v1_pod_anti_affinity_parseFromJSON(pod_anti_affinity); //nonprimitive
     }
 
 
-    v1_affinity_local_var = v1_affinity_create (
+    v1_affinity_local_var = v1_affinity_create_internal (
         node_affinity ? node_affinity_local_nonprim : NULL,
         pod_affinity ? pod_affinity_local_nonprim : NULL,
         pod_anti_affinity ? pod_anti_affinity_local_nonprim : NULL

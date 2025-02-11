@@ -22,9 +22,10 @@ typedef struct v1beta1_param_kind_t {
     char *api_version; // string
     char *kind; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_param_kind_t;
 
-v1beta1_param_kind_t *v1beta1_param_kind_create(
+__attribute__((deprecated)) v1beta1_param_kind_t *v1beta1_param_kind_create(
     char *api_version,
     char *kind
 );

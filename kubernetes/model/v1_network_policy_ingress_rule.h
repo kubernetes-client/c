@@ -24,9 +24,10 @@ typedef struct v1_network_policy_ingress_rule_t {
     list_t *from; //nonprimitive container
     list_t *ports; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_network_policy_ingress_rule_t;
 
-v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_create(
+__attribute__((deprecated)) v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_create(
     list_t *from,
     list_t *ports
 );

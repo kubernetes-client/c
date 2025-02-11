@@ -23,9 +23,10 @@ typedef struct v1_field_selector_attributes_t {
     char *raw_selector; // string
     list_t *requirements; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_field_selector_attributes_t;
 
-v1_field_selector_attributes_t *v1_field_selector_attributes_create(
+__attribute__((deprecated)) v1_field_selector_attributes_t *v1_field_selector_attributes_create(
     char *raw_selector,
     list_t *requirements
 );

@@ -5,7 +5,7 @@
 
 
 
-v1_resource_field_selector_t *v1_resource_field_selector_create(
+static v1_resource_field_selector_t *v1_resource_field_selector_create_internal(
     char *container_name,
     char *divisor,
     char *resource
@@ -18,12 +18,28 @@ v1_resource_field_selector_t *v1_resource_field_selector_create(
     v1_resource_field_selector_local_var->divisor = divisor;
     v1_resource_field_selector_local_var->resource = resource;
 
+    v1_resource_field_selector_local_var->_library_owned = 1;
     return v1_resource_field_selector_local_var;
 }
 
+__attribute__((deprecated)) v1_resource_field_selector_t *v1_resource_field_selector_create(
+    char *container_name,
+    char *divisor,
+    char *resource
+    ) {
+    return v1_resource_field_selector_create_internal (
+        container_name,
+        divisor,
+        resource
+        );
+}
 
 void v1_resource_field_selector_free(v1_resource_field_selector_t *v1_resource_field_selector) {
     if(NULL == v1_resource_field_selector){
+        return ;
+    }
+    if(v1_resource_field_selector->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_resource_field_selector_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -83,6 +99,9 @@ v1_resource_field_selector_t *v1_resource_field_selector_parseFromJSON(cJSON *v1
 
     // v1_resource_field_selector->container_name
     cJSON *container_name = cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "containerName");
+    if (cJSON_IsNull(container_name)) {
+        container_name = NULL;
+    }
     if (container_name) { 
     if(!cJSON_IsString(container_name) && !cJSON_IsNull(container_name))
     {
@@ -92,6 +111,9 @@ v1_resource_field_selector_t *v1_resource_field_selector_parseFromJSON(cJSON *v1
 
     // v1_resource_field_selector->divisor
     cJSON *divisor = cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "divisor");
+    if (cJSON_IsNull(divisor)) {
+        divisor = NULL;
+    }
     if (divisor) { 
     if(!cJSON_IsString(divisor) && !cJSON_IsNull(divisor))
     {
@@ -101,6 +123,9 @@ v1_resource_field_selector_t *v1_resource_field_selector_parseFromJSON(cJSON *v1
 
     // v1_resource_field_selector->resource
     cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "resource");
+    if (cJSON_IsNull(resource)) {
+        resource = NULL;
+    }
     if (!resource) {
         goto end;
     }
@@ -112,7 +137,7 @@ v1_resource_field_selector_t *v1_resource_field_selector_parseFromJSON(cJSON *v1
     }
 
 
-    v1_resource_field_selector_local_var = v1_resource_field_selector_create (
+    v1_resource_field_selector_local_var = v1_resource_field_selector_create_internal (
         container_name && !cJSON_IsNull(container_name) ? strdup(container_name->valuestring) : NULL,
         divisor && !cJSON_IsNull(divisor) ? strdup(divisor->valuestring) : NULL,
         strdup(resource->valuestring)

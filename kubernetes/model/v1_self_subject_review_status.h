@@ -22,9 +22,10 @@ typedef struct v1_self_subject_review_status_t v1_self_subject_review_status_t;
 typedef struct v1_self_subject_review_status_t {
     struct v1_user_info_t *user_info; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_self_subject_review_status_t;
 
-v1_self_subject_review_status_t *v1_self_subject_review_status_create(
+__attribute__((deprecated)) v1_self_subject_review_status_t *v1_self_subject_review_status_create(
     v1_user_info_t *user_info
 );
 

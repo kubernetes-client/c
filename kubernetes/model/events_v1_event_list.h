@@ -26,9 +26,10 @@ typedef struct events_v1_event_list_t {
     char *kind; // string
     struct v1_list_meta_t *metadata; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } events_v1_event_list_t;
 
-events_v1_event_list_t *events_v1_event_list_create(
+__attribute__((deprecated)) events_v1_event_list_t *events_v1_event_list_create(
     char *api_version,
     list_t *items,
     char *kind,

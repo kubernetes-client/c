@@ -5,7 +5,7 @@
 
 
 
-v1_component_status_t *v1_component_status_create(
+static v1_component_status_t *v1_component_status_create_internal(
     char *api_version,
     list_t *conditions,
     char *kind,
@@ -20,12 +20,30 @@ v1_component_status_t *v1_component_status_create(
     v1_component_status_local_var->kind = kind;
     v1_component_status_local_var->metadata = metadata;
 
+    v1_component_status_local_var->_library_owned = 1;
     return v1_component_status_local_var;
 }
 
+__attribute__((deprecated)) v1_component_status_t *v1_component_status_create(
+    char *api_version,
+    list_t *conditions,
+    char *kind,
+    v1_object_meta_t *metadata
+    ) {
+    return v1_component_status_create_internal (
+        api_version,
+        conditions,
+        kind,
+        metadata
+        );
+}
 
 void v1_component_status_free(v1_component_status_t *v1_component_status) {
     if(NULL == v1_component_status){
+        return ;
+    }
+    if(v1_component_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_component_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -122,6 +140,9 @@ v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_sta
 
     // v1_component_status->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -131,6 +152,9 @@ v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_sta
 
     // v1_component_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -152,6 +176,9 @@ v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_sta
 
     // v1_component_status->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -161,12 +188,15 @@ v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_sta
 
     // v1_component_status->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
 
-    v1_component_status_local_var = v1_component_status_create (
+    v1_component_status_local_var = v1_component_status_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         conditions ? conditionsList : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,

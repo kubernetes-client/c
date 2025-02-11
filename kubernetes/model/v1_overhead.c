@@ -5,7 +5,7 @@
 
 
 
-v1_overhead_t *v1_overhead_create(
+static v1_overhead_t *v1_overhead_create_internal(
     list_t* pod_fixed
     ) {
     v1_overhead_t *v1_overhead_local_var = malloc(sizeof(v1_overhead_t));
@@ -14,18 +14,30 @@ v1_overhead_t *v1_overhead_create(
     }
     v1_overhead_local_var->pod_fixed = pod_fixed;
 
+    v1_overhead_local_var->_library_owned = 1;
     return v1_overhead_local_var;
 }
 
+__attribute__((deprecated)) v1_overhead_t *v1_overhead_create(
+    list_t* pod_fixed
+    ) {
+    return v1_overhead_create_internal (
+        pod_fixed
+        );
+}
 
 void v1_overhead_free(v1_overhead_t *v1_overhead) {
     if(NULL == v1_overhead){
         return ;
     }
+    if(v1_overhead->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_overhead_free");
+        return ;
+    }
     listEntry_t *listEntry;
     if (v1_overhead->pod_fixed) {
         list_ForEach(listEntry, v1_overhead->pod_fixed) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -49,8 +61,8 @@ cJSON *v1_overhead_convertToJSON(v1_overhead_t *v1_overhead) {
     listEntry_t *pod_fixedListEntry;
     if (v1_overhead->pod_fixed) {
     list_ForEach(pod_fixedListEntry, v1_overhead->pod_fixed) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)pod_fixedListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = pod_fixedListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -75,6 +87,9 @@ v1_overhead_t *v1_overhead_parseFromJSON(cJSON *v1_overheadJSON){
 
     // v1_overhead->pod_fixed
     cJSON *pod_fixed = cJSON_GetObjectItemCaseSensitive(v1_overheadJSON, "podFixed");
+    if (cJSON_IsNull(pod_fixed)) {
+        pod_fixed = NULL;
+    }
     if (pod_fixed) { 
     cJSON *pod_fixed_local_map = NULL;
     if(!cJSON_IsObject(pod_fixed) && !cJSON_IsNull(pod_fixed))
@@ -99,7 +114,7 @@ v1_overhead_t *v1_overhead_parseFromJSON(cJSON *v1_overheadJSON){
     }
 
 
-    v1_overhead_local_var = v1_overhead_create (
+    v1_overhead_local_var = v1_overhead_create_internal (
         pod_fixed ? pod_fixedList : NULL
         );
 
@@ -108,7 +123,7 @@ end:
     if (pod_fixedList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, pod_fixedList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

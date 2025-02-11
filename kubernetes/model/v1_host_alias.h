@@ -22,9 +22,10 @@ typedef struct v1_host_alias_t {
     list_t *hostnames; //primitive container
     char *ip; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_host_alias_t;
 
-v1_host_alias_t *v1_host_alias_create(
+__attribute__((deprecated)) v1_host_alias_t *v1_host_alias_create(
     list_t *hostnames,
     char *ip
 );

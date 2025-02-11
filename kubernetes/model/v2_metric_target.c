@@ -5,7 +5,7 @@
 
 
 
-v2_metric_target_t *v2_metric_target_create(
+static v2_metric_target_t *v2_metric_target_create_internal(
     int average_utilization,
     char *average_value,
     char *type,
@@ -20,12 +20,30 @@ v2_metric_target_t *v2_metric_target_create(
     v2_metric_target_local_var->type = type;
     v2_metric_target_local_var->value = value;
 
+    v2_metric_target_local_var->_library_owned = 1;
     return v2_metric_target_local_var;
 }
 
+__attribute__((deprecated)) v2_metric_target_t *v2_metric_target_create(
+    int average_utilization,
+    char *average_value,
+    char *type,
+    char *value
+    ) {
+    return v2_metric_target_create_internal (
+        average_utilization,
+        average_value,
+        type,
+        value
+        );
+}
 
 void v2_metric_target_free(v2_metric_target_t *v2_metric_target) {
     if(NULL == v2_metric_target){
+        return ;
+    }
+    if(v2_metric_target->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v2_metric_target_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -93,6 +111,9 @@ v2_metric_target_t *v2_metric_target_parseFromJSON(cJSON *v2_metric_targetJSON){
 
     // v2_metric_target->average_utilization
     cJSON *average_utilization = cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "averageUtilization");
+    if (cJSON_IsNull(average_utilization)) {
+        average_utilization = NULL;
+    }
     if (average_utilization) { 
     if(!cJSON_IsNumber(average_utilization))
     {
@@ -102,6 +123,9 @@ v2_metric_target_t *v2_metric_target_parseFromJSON(cJSON *v2_metric_targetJSON){
 
     // v2_metric_target->average_value
     cJSON *average_value = cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "averageValue");
+    if (cJSON_IsNull(average_value)) {
+        average_value = NULL;
+    }
     if (average_value) { 
     if(!cJSON_IsString(average_value) && !cJSON_IsNull(average_value))
     {
@@ -111,6 +135,9 @@ v2_metric_target_t *v2_metric_target_parseFromJSON(cJSON *v2_metric_targetJSON){
 
     // v2_metric_target->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -123,6 +150,9 @@ v2_metric_target_t *v2_metric_target_parseFromJSON(cJSON *v2_metric_targetJSON){
 
     // v2_metric_target->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "value");
+    if (cJSON_IsNull(value)) {
+        value = NULL;
+    }
     if (value) { 
     if(!cJSON_IsString(value) && !cJSON_IsNull(value))
     {
@@ -131,7 +161,7 @@ v2_metric_target_t *v2_metric_target_parseFromJSON(cJSON *v2_metric_targetJSON){
     }
 
 
-    v2_metric_target_local_var = v2_metric_target_create (
+    v2_metric_target_local_var = v2_metric_target_create_internal (
         average_utilization ? average_utilization->valuedouble : 0,
         average_value && !cJSON_IsNull(average_value) ? strdup(average_value->valuestring) : NULL,
         strdup(type->valuestring),

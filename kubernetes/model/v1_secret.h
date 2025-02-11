@@ -28,9 +28,10 @@ typedef struct v1_secret_t {
     list_t* string_data; //map
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_secret_t;
 
-v1_secret_t *v1_secret_create(
+__attribute__((deprecated)) v1_secret_t *v1_secret_create(
     char *api_version,
     list_t* data,
     int immutable,

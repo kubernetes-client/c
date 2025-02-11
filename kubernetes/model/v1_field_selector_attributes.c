@@ -5,7 +5,7 @@
 
 
 
-v1_field_selector_attributes_t *v1_field_selector_attributes_create(
+static v1_field_selector_attributes_t *v1_field_selector_attributes_create_internal(
     char *raw_selector,
     list_t *requirements
     ) {
@@ -16,12 +16,26 @@ v1_field_selector_attributes_t *v1_field_selector_attributes_create(
     v1_field_selector_attributes_local_var->raw_selector = raw_selector;
     v1_field_selector_attributes_local_var->requirements = requirements;
 
+    v1_field_selector_attributes_local_var->_library_owned = 1;
     return v1_field_selector_attributes_local_var;
 }
 
+__attribute__((deprecated)) v1_field_selector_attributes_t *v1_field_selector_attributes_create(
+    char *raw_selector,
+    list_t *requirements
+    ) {
+    return v1_field_selector_attributes_create_internal (
+        raw_selector,
+        requirements
+        );
+}
 
 void v1_field_selector_attributes_free(v1_field_selector_attributes_t *v1_field_selector_attributes) {
     if(NULL == v1_field_selector_attributes){
+        return ;
+    }
+    if(v1_field_selector_attributes->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_field_selector_attributes_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -86,6 +100,9 @@ v1_field_selector_attributes_t *v1_field_selector_attributes_parseFromJSON(cJSON
 
     // v1_field_selector_attributes->raw_selector
     cJSON *raw_selector = cJSON_GetObjectItemCaseSensitive(v1_field_selector_attributesJSON, "rawSelector");
+    if (cJSON_IsNull(raw_selector)) {
+        raw_selector = NULL;
+    }
     if (raw_selector) { 
     if(!cJSON_IsString(raw_selector) && !cJSON_IsNull(raw_selector))
     {
@@ -95,6 +112,9 @@ v1_field_selector_attributes_t *v1_field_selector_attributes_parseFromJSON(cJSON
 
     // v1_field_selector_attributes->requirements
     cJSON *requirements = cJSON_GetObjectItemCaseSensitive(v1_field_selector_attributesJSON, "requirements");
+    if (cJSON_IsNull(requirements)) {
+        requirements = NULL;
+    }
     if (requirements) { 
     cJSON *requirements_local_nonprimitive = NULL;
     if(!cJSON_IsArray(requirements)){
@@ -115,7 +135,7 @@ v1_field_selector_attributes_t *v1_field_selector_attributes_parseFromJSON(cJSON
     }
 
 
-    v1_field_selector_attributes_local_var = v1_field_selector_attributes_create (
+    v1_field_selector_attributes_local_var = v1_field_selector_attributes_create_internal (
         raw_selector && !cJSON_IsNull(raw_selector) ? strdup(raw_selector->valuestring) : NULL,
         requirements ? requirementsList : NULL
         );

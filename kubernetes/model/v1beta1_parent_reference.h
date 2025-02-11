@@ -24,9 +24,10 @@ typedef struct v1beta1_parent_reference_t {
     char *_namespace; // string
     char *resource; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_parent_reference_t;
 
-v1beta1_parent_reference_t *v1beta1_parent_reference_create(
+__attribute__((deprecated)) v1beta1_parent_reference_t *v1beta1_parent_reference_create(
     char *group,
     char *name,
     char *_namespace,

@@ -29,9 +29,10 @@ typedef struct v1_csi_storage_capacity_t {
     struct v1_label_selector_t *node_topology; //model
     char *storage_class_name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_csi_storage_capacity_t;
 
-v1_csi_storage_capacity_t *v1_csi_storage_capacity_create(
+__attribute__((deprecated)) v1_csi_storage_capacity_t *v1_csi_storage_capacity_create(
     char *api_version,
     char *capacity,
     char *kind,

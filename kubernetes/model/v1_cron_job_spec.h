@@ -29,9 +29,10 @@ typedef struct v1_cron_job_spec_t {
     int suspend; //boolean
     char *time_zone; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_cron_job_spec_t;
 
-v1_cron_job_spec_t *v1_cron_job_spec_create(
+__attribute__((deprecated)) v1_cron_job_spec_t *v1_cron_job_spec_create(
     char *concurrency_policy,
     int failed_jobs_history_limit,
     v1_job_template_spec_t *job_template,

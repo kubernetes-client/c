@@ -26,9 +26,10 @@ typedef struct v1beta1_ip_address_t {
     struct v1_object_meta_t *metadata; //model
     struct v1beta1_ip_address_spec_t *spec; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_ip_address_t;
 
-v1beta1_ip_address_t *v1beta1_ip_address_create(
+__attribute__((deprecated)) v1beta1_ip_address_t *v1beta1_ip_address_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

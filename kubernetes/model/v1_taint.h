@@ -24,9 +24,10 @@ typedef struct v1_taint_t {
     char *time_added; //date time
     char *value; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_taint_t;
 
-v1_taint_t *v1_taint_create(
+__attribute__((deprecated)) v1_taint_t *v1_taint_create(
     char *effect,
     char *key,
     char *time_added,

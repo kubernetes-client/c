@@ -30,31 +30,31 @@ NetworkingV1beta1API_createServiceCIDR(apiClient_t *apiClient, v1beta1_service_c
 // delete collection of IPAddress
 //
 v1_status_t*
-NetworkingV1beta1API_deleteCollectionIPAddress(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+NetworkingV1beta1API_deleteCollectionIPAddress(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete collection of ServiceCIDR
 //
 v1_status_t*
-NetworkingV1beta1API_deleteCollectionServiceCIDR(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+NetworkingV1beta1API_deleteCollectionServiceCIDR(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete an IPAddress
 //
 v1_status_t*
-NetworkingV1beta1API_deleteIPAddress(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+NetworkingV1beta1API_deleteIPAddress(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // delete a ServiceCIDR
 //
 v1_status_t*
-NetworkingV1beta1API_deleteServiceCIDR(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+NetworkingV1beta1API_deleteServiceCIDR(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-NetworkingV1beta1API_getAPIResources_23(apiClient_t *apiClient);
+NetworkingV1beta1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind IPAddress

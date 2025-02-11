@@ -22,9 +22,10 @@ typedef struct v1_token_review_spec_t {
     list_t *audiences; //primitive container
     char *token; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_token_review_spec_t;
 
-v1_token_review_spec_t *v1_token_review_spec_create(
+__attribute__((deprecated)) v1_token_review_spec_t *v1_token_review_spec_create(
     list_t *audiences,
     char *token
 );

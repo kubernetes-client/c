@@ -5,7 +5,7 @@
 
 
 
-storage_v1_token_request_t *storage_v1_token_request_create(
+static storage_v1_token_request_t *storage_v1_token_request_create_internal(
     char *audience,
     long expiration_seconds
     ) {
@@ -16,12 +16,26 @@ storage_v1_token_request_t *storage_v1_token_request_create(
     storage_v1_token_request_local_var->audience = audience;
     storage_v1_token_request_local_var->expiration_seconds = expiration_seconds;
 
+    storage_v1_token_request_local_var->_library_owned = 1;
     return storage_v1_token_request_local_var;
 }
 
+__attribute__((deprecated)) storage_v1_token_request_t *storage_v1_token_request_create(
+    char *audience,
+    long expiration_seconds
+    ) {
+    return storage_v1_token_request_create_internal (
+        audience,
+        expiration_seconds
+        );
+}
 
 void storage_v1_token_request_free(storage_v1_token_request_t *storage_v1_token_request) {
     if(NULL == storage_v1_token_request){
+        return ;
+    }
+    if(storage_v1_token_request->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "storage_v1_token_request_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -65,6 +79,9 @@ storage_v1_token_request_t *storage_v1_token_request_parseFromJSON(cJSON *storag
 
     // storage_v1_token_request->audience
     cJSON *audience = cJSON_GetObjectItemCaseSensitive(storage_v1_token_requestJSON, "audience");
+    if (cJSON_IsNull(audience)) {
+        audience = NULL;
+    }
     if (!audience) {
         goto end;
     }
@@ -77,6 +94,9 @@ storage_v1_token_request_t *storage_v1_token_request_parseFromJSON(cJSON *storag
 
     // storage_v1_token_request->expiration_seconds
     cJSON *expiration_seconds = cJSON_GetObjectItemCaseSensitive(storage_v1_token_requestJSON, "expirationSeconds");
+    if (cJSON_IsNull(expiration_seconds)) {
+        expiration_seconds = NULL;
+    }
     if (expiration_seconds) { 
     if(!cJSON_IsNumber(expiration_seconds))
     {
@@ -85,7 +105,7 @@ storage_v1_token_request_t *storage_v1_token_request_parseFromJSON(cJSON *storag
     }
 
 
-    storage_v1_token_request_local_var = storage_v1_token_request_create (
+    storage_v1_token_request_local_var = storage_v1_token_request_create_internal (
         strdup(audience->valuestring),
         expiration_seconds ? expiration_seconds->valuedouble : 0
         );

@@ -30,9 +30,10 @@ typedef struct v1_status_t {
     char *reason; // string
     char *status; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_status_t;
 
-v1_status_t *v1_status_create(
+__attribute__((deprecated)) v1_status_t *v1_status_create(
     char *api_version,
     int code,
     v1_status_details_t *details,

@@ -5,7 +5,7 @@
 
 
 
-events_v1_event_list_t *events_v1_event_list_create(
+static events_v1_event_list_t *events_v1_event_list_create_internal(
     char *api_version,
     list_t *items,
     char *kind,
@@ -20,12 +20,30 @@ events_v1_event_list_t *events_v1_event_list_create(
     events_v1_event_list_local_var->kind = kind;
     events_v1_event_list_local_var->metadata = metadata;
 
+    events_v1_event_list_local_var->_library_owned = 1;
     return events_v1_event_list_local_var;
 }
 
+__attribute__((deprecated)) events_v1_event_list_t *events_v1_event_list_create(
+    char *api_version,
+    list_t *items,
+    char *kind,
+    v1_list_meta_t *metadata
+    ) {
+    return events_v1_event_list_create_internal (
+        api_version,
+        items,
+        kind,
+        metadata
+        );
+}
 
 void events_v1_event_list_free(events_v1_event_list_t *events_v1_event_list) {
     if(NULL == events_v1_event_list){
+        return ;
+    }
+    if(events_v1_event_list->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "events_v1_event_list_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -123,6 +141,9 @@ events_v1_event_list_t *events_v1_event_list_parseFromJSON(cJSON *events_v1_even
 
     // events_v1_event_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(events_v1_event_listJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -132,6 +153,9 @@ events_v1_event_list_t *events_v1_event_list_parseFromJSON(cJSON *events_v1_even
 
     // events_v1_event_list->items
     cJSON *items = cJSON_GetObjectItemCaseSensitive(events_v1_event_listJSON, "items");
+    if (cJSON_IsNull(items)) {
+        items = NULL;
+    }
     if (!items) {
         goto end;
     }
@@ -156,6 +180,9 @@ events_v1_event_list_t *events_v1_event_list_parseFromJSON(cJSON *events_v1_even
 
     // events_v1_event_list->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(events_v1_event_listJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -165,12 +192,15 @@ events_v1_event_list_t *events_v1_event_list_parseFromJSON(cJSON *events_v1_even
 
     // events_v1_event_list->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(events_v1_event_listJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }
 
 
-    events_v1_event_list_local_var = events_v1_event_list_create (
+    events_v1_event_list_local_var = events_v1_event_list_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         itemsList,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,

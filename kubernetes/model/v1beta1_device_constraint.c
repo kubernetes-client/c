@@ -1,0 +1,151 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "v1beta1_device_constraint.h"
+
+
+
+static v1beta1_device_constraint_t *v1beta1_device_constraint_create_internal(
+    char *match_attribute,
+    list_t *requests
+    ) {
+    v1beta1_device_constraint_t *v1beta1_device_constraint_local_var = malloc(sizeof(v1beta1_device_constraint_t));
+    if (!v1beta1_device_constraint_local_var) {
+        return NULL;
+    }
+    v1beta1_device_constraint_local_var->match_attribute = match_attribute;
+    v1beta1_device_constraint_local_var->requests = requests;
+
+    v1beta1_device_constraint_local_var->_library_owned = 1;
+    return v1beta1_device_constraint_local_var;
+}
+
+__attribute__((deprecated)) v1beta1_device_constraint_t *v1beta1_device_constraint_create(
+    char *match_attribute,
+    list_t *requests
+    ) {
+    return v1beta1_device_constraint_create_internal (
+        match_attribute,
+        requests
+        );
+}
+
+void v1beta1_device_constraint_free(v1beta1_device_constraint_t *v1beta1_device_constraint) {
+    if(NULL == v1beta1_device_constraint){
+        return ;
+    }
+    if(v1beta1_device_constraint->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1beta1_device_constraint_free");
+        return ;
+    }
+    listEntry_t *listEntry;
+    if (v1beta1_device_constraint->match_attribute) {
+        free(v1beta1_device_constraint->match_attribute);
+        v1beta1_device_constraint->match_attribute = NULL;
+    }
+    if (v1beta1_device_constraint->requests) {
+        list_ForEach(listEntry, v1beta1_device_constraint->requests) {
+            free(listEntry->data);
+        }
+        list_freeList(v1beta1_device_constraint->requests);
+        v1beta1_device_constraint->requests = NULL;
+    }
+    free(v1beta1_device_constraint);
+}
+
+cJSON *v1beta1_device_constraint_convertToJSON(v1beta1_device_constraint_t *v1beta1_device_constraint) {
+    cJSON *item = cJSON_CreateObject();
+
+    // v1beta1_device_constraint->match_attribute
+    if(v1beta1_device_constraint->match_attribute) {
+    if(cJSON_AddStringToObject(item, "matchAttribute", v1beta1_device_constraint->match_attribute) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // v1beta1_device_constraint->requests
+    if(v1beta1_device_constraint->requests) {
+    cJSON *requests = cJSON_AddArrayToObject(item, "requests");
+    if(requests == NULL) {
+        goto fail; //primitive container
+    }
+
+    listEntry_t *requestsListEntry;
+    list_ForEach(requestsListEntry, v1beta1_device_constraint->requests) {
+    if(cJSON_AddStringToObject(requests, "", requestsListEntry->data) == NULL)
+    {
+        goto fail;
+    }
+    }
+    }
+
+    return item;
+fail:
+    if (item) {
+        cJSON_Delete(item);
+    }
+    return NULL;
+}
+
+v1beta1_device_constraint_t *v1beta1_device_constraint_parseFromJSON(cJSON *v1beta1_device_constraintJSON){
+
+    v1beta1_device_constraint_t *v1beta1_device_constraint_local_var = NULL;
+
+    // define the local list for v1beta1_device_constraint->requests
+    list_t *requestsList = NULL;
+
+    // v1beta1_device_constraint->match_attribute
+    cJSON *match_attribute = cJSON_GetObjectItemCaseSensitive(v1beta1_device_constraintJSON, "matchAttribute");
+    if (cJSON_IsNull(match_attribute)) {
+        match_attribute = NULL;
+    }
+    if (match_attribute) { 
+    if(!cJSON_IsString(match_attribute) && !cJSON_IsNull(match_attribute))
+    {
+    goto end; //String
+    }
+    }
+
+    // v1beta1_device_constraint->requests
+    cJSON *requests = cJSON_GetObjectItemCaseSensitive(v1beta1_device_constraintJSON, "requests");
+    if (cJSON_IsNull(requests)) {
+        requests = NULL;
+    }
+    if (requests) { 
+    cJSON *requests_local = NULL;
+    if(!cJSON_IsArray(requests)) {
+        goto end;//primitive container
+    }
+    requestsList = list_createList();
+
+    cJSON_ArrayForEach(requests_local, requests)
+    {
+        if(!cJSON_IsString(requests_local))
+        {
+            goto end;
+        }
+        list_addElement(requestsList , strdup(requests_local->valuestring));
+    }
+    }
+
+
+    v1beta1_device_constraint_local_var = v1beta1_device_constraint_create_internal (
+        match_attribute && !cJSON_IsNull(match_attribute) ? strdup(match_attribute->valuestring) : NULL,
+        requests ? requestsList : NULL
+        );
+
+    return v1beta1_device_constraint_local_var;
+end:
+    if (requestsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, requestsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(requestsList);
+        requestsList = NULL;
+    }
+    return NULL;
+
+}

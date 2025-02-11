@@ -5,7 +5,7 @@
 
 
 
-v1_nfs_volume_source_t *v1_nfs_volume_source_create(
+static v1_nfs_volume_source_t *v1_nfs_volume_source_create_internal(
     char *path,
     int read_only,
     char *server
@@ -18,12 +18,28 @@ v1_nfs_volume_source_t *v1_nfs_volume_source_create(
     v1_nfs_volume_source_local_var->read_only = read_only;
     v1_nfs_volume_source_local_var->server = server;
 
+    v1_nfs_volume_source_local_var->_library_owned = 1;
     return v1_nfs_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_nfs_volume_source_t *v1_nfs_volume_source_create(
+    char *path,
+    int read_only,
+    char *server
+    ) {
+    return v1_nfs_volume_source_create_internal (
+        path,
+        read_only,
+        server
+        );
+}
 
 void v1_nfs_volume_source_free(v1_nfs_volume_source_t *v1_nfs_volume_source) {
     if(NULL == v1_nfs_volume_source){
+        return ;
+    }
+    if(v1_nfs_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_nfs_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -80,6 +96,9 @@ v1_nfs_volume_source_t *v1_nfs_volume_source_parseFromJSON(cJSON *v1_nfs_volume_
 
     // v1_nfs_volume_source->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_nfs_volume_sourceJSON, "path");
+    if (cJSON_IsNull(path)) {
+        path = NULL;
+    }
     if (!path) {
         goto end;
     }
@@ -92,6 +111,9 @@ v1_nfs_volume_source_t *v1_nfs_volume_source_parseFromJSON(cJSON *v1_nfs_volume_
 
     // v1_nfs_volume_source->read_only
     cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_nfs_volume_sourceJSON, "readOnly");
+    if (cJSON_IsNull(read_only)) {
+        read_only = NULL;
+    }
     if (read_only) { 
     if(!cJSON_IsBool(read_only))
     {
@@ -101,6 +123,9 @@ v1_nfs_volume_source_t *v1_nfs_volume_source_parseFromJSON(cJSON *v1_nfs_volume_
 
     // v1_nfs_volume_source->server
     cJSON *server = cJSON_GetObjectItemCaseSensitive(v1_nfs_volume_sourceJSON, "server");
+    if (cJSON_IsNull(server)) {
+        server = NULL;
+    }
     if (!server) {
         goto end;
     }
@@ -112,7 +137,7 @@ v1_nfs_volume_source_t *v1_nfs_volume_source_parseFromJSON(cJSON *v1_nfs_volume_
     }
 
 
-    v1_nfs_volume_source_local_var = v1_nfs_volume_source_create (
+    v1_nfs_volume_source_local_var = v1_nfs_volume_source_create_internal (
         strdup(path->valuestring),
         read_only ? read_only->valueint : 0,
         strdup(server->valuestring)

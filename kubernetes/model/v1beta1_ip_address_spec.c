@@ -5,7 +5,7 @@
 
 
 
-v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_create(
+static v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_create_internal(
     v1beta1_parent_reference_t *parent_ref
     ) {
     v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_local_var = malloc(sizeof(v1beta1_ip_address_spec_t));
@@ -14,12 +14,24 @@ v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_create(
     }
     v1beta1_ip_address_spec_local_var->parent_ref = parent_ref;
 
+    v1beta1_ip_address_spec_local_var->_library_owned = 1;
     return v1beta1_ip_address_spec_local_var;
 }
 
+__attribute__((deprecated)) v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_create(
+    v1beta1_parent_reference_t *parent_ref
+    ) {
+    return v1beta1_ip_address_spec_create_internal (
+        parent_ref
+        );
+}
 
 void v1beta1_ip_address_spec_free(v1beta1_ip_address_spec_t *v1beta1_ip_address_spec) {
     if(NULL == v1beta1_ip_address_spec){
+        return ;
+    }
+    if(v1beta1_ip_address_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1beta1_ip_address_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -63,6 +75,9 @@ v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_parseFromJSON(cJSON *v1beta1_
 
     // v1beta1_ip_address_spec->parent_ref
     cJSON *parent_ref = cJSON_GetObjectItemCaseSensitive(v1beta1_ip_address_specJSON, "parentRef");
+    if (cJSON_IsNull(parent_ref)) {
+        parent_ref = NULL;
+    }
     if (!parent_ref) {
         goto end;
     }
@@ -71,7 +86,7 @@ v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_parseFromJSON(cJSON *v1beta1_
     parent_ref_local_nonprim = v1beta1_parent_reference_parseFromJSON(parent_ref); //nonprimitive
 
 
-    v1beta1_ip_address_spec_local_var = v1beta1_ip_address_spec_create (
+    v1beta1_ip_address_spec_local_var = v1beta1_ip_address_spec_create_internal (
         parent_ref_local_nonprim
         );
 

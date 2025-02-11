@@ -22,9 +22,10 @@ typedef struct v1_node_address_t {
     char *address; // string
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_address_t;
 
-v1_node_address_t *v1_node_address_create(
+__attribute__((deprecated)) v1_node_address_t *v1_node_address_create(
     char *address,
     char *type
 );

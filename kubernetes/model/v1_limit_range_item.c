@@ -5,7 +5,7 @@
 
 
 
-v1_limit_range_item_t *v1_limit_range_item_create(
+static v1_limit_range_item_t *v1_limit_range_item_create_internal(
     list_t* _default,
     list_t* default_request,
     list_t* max,
@@ -24,18 +24,40 @@ v1_limit_range_item_t *v1_limit_range_item_create(
     v1_limit_range_item_local_var->min = min;
     v1_limit_range_item_local_var->type = type;
 
+    v1_limit_range_item_local_var->_library_owned = 1;
     return v1_limit_range_item_local_var;
 }
 
+__attribute__((deprecated)) v1_limit_range_item_t *v1_limit_range_item_create(
+    list_t* _default,
+    list_t* default_request,
+    list_t* max,
+    list_t* max_limit_request_ratio,
+    list_t* min,
+    char *type
+    ) {
+    return v1_limit_range_item_create_internal (
+        _default,
+        default_request,
+        max,
+        max_limit_request_ratio,
+        min,
+        type
+        );
+}
 
 void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
     if(NULL == v1_limit_range_item){
         return ;
     }
+    if(v1_limit_range_item->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_limit_range_item_free");
+        return ;
+    }
     listEntry_t *listEntry;
     if (v1_limit_range_item->_default) {
         list_ForEach(listEntry, v1_limit_range_item->_default) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -45,7 +67,7 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
     }
     if (v1_limit_range_item->default_request) {
         list_ForEach(listEntry, v1_limit_range_item->default_request) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -55,7 +77,7 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
     }
     if (v1_limit_range_item->max) {
         list_ForEach(listEntry, v1_limit_range_item->max) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -65,7 +87,7 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
     }
     if (v1_limit_range_item->max_limit_request_ratio) {
         list_ForEach(listEntry, v1_limit_range_item->max_limit_request_ratio) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -75,7 +97,7 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
     }
     if (v1_limit_range_item->min) {
         list_ForEach(listEntry, v1_limit_range_item->min) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -103,8 +125,8 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
     listEntry_t *_defaultListEntry;
     if (v1_limit_range_item->_default) {
     list_ForEach(_defaultListEntry, v1_limit_range_item->_default) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)_defaultListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = _defaultListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -123,8 +145,8 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
     listEntry_t *default_requestListEntry;
     if (v1_limit_range_item->default_request) {
     list_ForEach(default_requestListEntry, v1_limit_range_item->default_request) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)default_requestListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = default_requestListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -143,8 +165,8 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
     listEntry_t *maxListEntry;
     if (v1_limit_range_item->max) {
     list_ForEach(maxListEntry, v1_limit_range_item->max) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)maxListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = maxListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -163,8 +185,8 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
     listEntry_t *max_limit_request_ratioListEntry;
     if (v1_limit_range_item->max_limit_request_ratio) {
     list_ForEach(max_limit_request_ratioListEntry, v1_limit_range_item->max_limit_request_ratio) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)max_limit_request_ratioListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = max_limit_request_ratioListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -183,8 +205,8 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
     listEntry_t *minListEntry;
     if (v1_limit_range_item->min) {
     list_ForEach(minListEntry, v1_limit_range_item->min) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)minListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = minListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -230,6 +252,9 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
 
     // v1_limit_range_item->_default
     cJSON *_default = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "default");
+    if (cJSON_IsNull(_default)) {
+        _default = NULL;
+    }
     if (_default) { 
     cJSON *_default_local_map = NULL;
     if(!cJSON_IsObject(_default) && !cJSON_IsNull(_default))
@@ -255,6 +280,9 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
 
     // v1_limit_range_item->default_request
     cJSON *default_request = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "defaultRequest");
+    if (cJSON_IsNull(default_request)) {
+        default_request = NULL;
+    }
     if (default_request) { 
     cJSON *default_request_local_map = NULL;
     if(!cJSON_IsObject(default_request) && !cJSON_IsNull(default_request))
@@ -280,6 +308,9 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
 
     // v1_limit_range_item->max
     cJSON *max = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "max");
+    if (cJSON_IsNull(max)) {
+        max = NULL;
+    }
     if (max) { 
     cJSON *max_local_map = NULL;
     if(!cJSON_IsObject(max) && !cJSON_IsNull(max))
@@ -305,6 +336,9 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
 
     // v1_limit_range_item->max_limit_request_ratio
     cJSON *max_limit_request_ratio = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "maxLimitRequestRatio");
+    if (cJSON_IsNull(max_limit_request_ratio)) {
+        max_limit_request_ratio = NULL;
+    }
     if (max_limit_request_ratio) { 
     cJSON *max_limit_request_ratio_local_map = NULL;
     if(!cJSON_IsObject(max_limit_request_ratio) && !cJSON_IsNull(max_limit_request_ratio))
@@ -330,6 +364,9 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
 
     // v1_limit_range_item->min
     cJSON *min = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "min");
+    if (cJSON_IsNull(min)) {
+        min = NULL;
+    }
     if (min) { 
     cJSON *min_local_map = NULL;
     if(!cJSON_IsObject(min) && !cJSON_IsNull(min))
@@ -355,6 +392,9 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
 
     // v1_limit_range_item->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -366,7 +406,7 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     }
 
 
-    v1_limit_range_item_local_var = v1_limit_range_item_create (
+    v1_limit_range_item_local_var = v1_limit_range_item_create_internal (
         _default ? _defaultList : NULL,
         default_request ? default_requestList : NULL,
         max ? maxList : NULL,
@@ -380,7 +420,7 @@ end:
     if (_defaultList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, _defaultList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);
@@ -394,7 +434,7 @@ end:
     if (default_requestList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, default_requestList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);
@@ -408,7 +448,7 @@ end:
     if (maxList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, maxList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);
@@ -422,7 +462,7 @@ end:
     if (max_limit_request_ratioList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, max_limit_request_ratioList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);
@@ -436,7 +476,7 @@ end:
     if (minList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, minList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

@@ -28,9 +28,10 @@ typedef struct v1_cluster_role_t {
     struct v1_object_meta_t *metadata; //model
     list_t *rules; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_cluster_role_t;
 
-v1_cluster_role_t *v1_cluster_role_create(
+__attribute__((deprecated)) v1_cluster_role_t *v1_cluster_role_create(
     v1_aggregation_rule_t *aggregation_rule,
     char *api_version,
     char *kind,

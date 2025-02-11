@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_device_request_t *v1alpha3_device_request_create(
+static v1alpha3_device_request_t *v1alpha3_device_request_create_internal(
     int admin_access,
     char *allocation_mode,
     long count,
@@ -24,12 +24,34 @@ v1alpha3_device_request_t *v1alpha3_device_request_create(
     v1alpha3_device_request_local_var->name = name;
     v1alpha3_device_request_local_var->selectors = selectors;
 
+    v1alpha3_device_request_local_var->_library_owned = 1;
     return v1alpha3_device_request_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_device_request_t *v1alpha3_device_request_create(
+    int admin_access,
+    char *allocation_mode,
+    long count,
+    char *device_class_name,
+    char *name,
+    list_t *selectors
+    ) {
+    return v1alpha3_device_request_create_internal (
+        admin_access,
+        allocation_mode,
+        count,
+        device_class_name,
+        name,
+        selectors
+        );
+}
 
 void v1alpha3_device_request_free(v1alpha3_device_request_t *v1alpha3_device_request) {
     if(NULL == v1alpha3_device_request){
+        return ;
+    }
+    if(v1alpha3_device_request->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_device_request_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -136,6 +158,9 @@ v1alpha3_device_request_t *v1alpha3_device_request_parseFromJSON(cJSON *v1alpha3
 
     // v1alpha3_device_request->admin_access
     cJSON *admin_access = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "adminAccess");
+    if (cJSON_IsNull(admin_access)) {
+        admin_access = NULL;
+    }
     if (admin_access) { 
     if(!cJSON_IsBool(admin_access))
     {
@@ -145,6 +170,9 @@ v1alpha3_device_request_t *v1alpha3_device_request_parseFromJSON(cJSON *v1alpha3
 
     // v1alpha3_device_request->allocation_mode
     cJSON *allocation_mode = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "allocationMode");
+    if (cJSON_IsNull(allocation_mode)) {
+        allocation_mode = NULL;
+    }
     if (allocation_mode) { 
     if(!cJSON_IsString(allocation_mode) && !cJSON_IsNull(allocation_mode))
     {
@@ -154,6 +182,9 @@ v1alpha3_device_request_t *v1alpha3_device_request_parseFromJSON(cJSON *v1alpha3
 
     // v1alpha3_device_request->count
     cJSON *count = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "count");
+    if (cJSON_IsNull(count)) {
+        count = NULL;
+    }
     if (count) { 
     if(!cJSON_IsNumber(count))
     {
@@ -163,6 +194,9 @@ v1alpha3_device_request_t *v1alpha3_device_request_parseFromJSON(cJSON *v1alpha3
 
     // v1alpha3_device_request->device_class_name
     cJSON *device_class_name = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "deviceClassName");
+    if (cJSON_IsNull(device_class_name)) {
+        device_class_name = NULL;
+    }
     if (!device_class_name) {
         goto end;
     }
@@ -175,6 +209,9 @@ v1alpha3_device_request_t *v1alpha3_device_request_parseFromJSON(cJSON *v1alpha3
 
     // v1alpha3_device_request->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -187,6 +224,9 @@ v1alpha3_device_request_t *v1alpha3_device_request_parseFromJSON(cJSON *v1alpha3
 
     // v1alpha3_device_request->selectors
     cJSON *selectors = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "selectors");
+    if (cJSON_IsNull(selectors)) {
+        selectors = NULL;
+    }
     if (selectors) { 
     cJSON *selectors_local_nonprimitive = NULL;
     if(!cJSON_IsArray(selectors)){
@@ -207,7 +247,7 @@ v1alpha3_device_request_t *v1alpha3_device_request_parseFromJSON(cJSON *v1alpha3
     }
 
 
-    v1alpha3_device_request_local_var = v1alpha3_device_request_create (
+    v1alpha3_device_request_local_var = v1alpha3_device_request_create_internal (
         admin_access ? admin_access->valueint : 0,
         allocation_mode && !cJSON_IsNull(allocation_mode) ? strdup(allocation_mode->valuestring) : NULL,
         count ? count->valuedouble : 0,

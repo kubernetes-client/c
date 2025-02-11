@@ -22,9 +22,10 @@ typedef struct v1_token_request_status_t {
     char *expiration_timestamp; //date time
     char *token; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_token_request_status_t;
 
-v1_token_request_status_t *v1_token_request_status_create(
+__attribute__((deprecated)) v1_token_request_status_t *v1_token_request_status_create(
     char *expiration_timestamp,
     char *token
 );

@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_resource_pool_t *v1alpha3_resource_pool_create(
+static v1alpha3_resource_pool_t *v1alpha3_resource_pool_create_internal(
     long generation,
     char *name,
     long resource_slice_count
@@ -18,12 +18,28 @@ v1alpha3_resource_pool_t *v1alpha3_resource_pool_create(
     v1alpha3_resource_pool_local_var->name = name;
     v1alpha3_resource_pool_local_var->resource_slice_count = resource_slice_count;
 
+    v1alpha3_resource_pool_local_var->_library_owned = 1;
     return v1alpha3_resource_pool_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_resource_pool_t *v1alpha3_resource_pool_create(
+    long generation,
+    char *name,
+    long resource_slice_count
+    ) {
+    return v1alpha3_resource_pool_create_internal (
+        generation,
+        name,
+        resource_slice_count
+        );
+}
 
 void v1alpha3_resource_pool_free(v1alpha3_resource_pool_t *v1alpha3_resource_pool) {
     if(NULL == v1alpha3_resource_pool){
+        return ;
+    }
+    if(v1alpha3_resource_pool->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_resource_pool_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -77,6 +93,9 @@ v1alpha3_resource_pool_t *v1alpha3_resource_pool_parseFromJSON(cJSON *v1alpha3_r
 
     // v1alpha3_resource_pool->generation
     cJSON *generation = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_poolJSON, "generation");
+    if (cJSON_IsNull(generation)) {
+        generation = NULL;
+    }
     if (!generation) {
         goto end;
     }
@@ -89,6 +108,9 @@ v1alpha3_resource_pool_t *v1alpha3_resource_pool_parseFromJSON(cJSON *v1alpha3_r
 
     // v1alpha3_resource_pool->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_poolJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -101,6 +123,9 @@ v1alpha3_resource_pool_t *v1alpha3_resource_pool_parseFromJSON(cJSON *v1alpha3_r
 
     // v1alpha3_resource_pool->resource_slice_count
     cJSON *resource_slice_count = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_poolJSON, "resourceSliceCount");
+    if (cJSON_IsNull(resource_slice_count)) {
+        resource_slice_count = NULL;
+    }
     if (!resource_slice_count) {
         goto end;
     }
@@ -112,7 +137,7 @@ v1alpha3_resource_pool_t *v1alpha3_resource_pool_parseFromJSON(cJSON *v1alpha3_r
     }
 
 
-    v1alpha3_resource_pool_local_var = v1alpha3_resource_pool_create (
+    v1alpha3_resource_pool_local_var = v1alpha3_resource_pool_create_internal (
         generation->valuedouble,
         strdup(name->valuestring),
         resource_slice_count->valuedouble

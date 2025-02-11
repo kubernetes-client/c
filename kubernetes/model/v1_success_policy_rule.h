@@ -22,9 +22,10 @@ typedef struct v1_success_policy_rule_t {
     int succeeded_count; //numeric
     char *succeeded_indexes; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_success_policy_rule_t;
 
-v1_success_policy_rule_t *v1_success_policy_rule_create(
+__attribute__((deprecated)) v1_success_policy_rule_t *v1_success_policy_rule_create(
     int succeeded_count,
     char *succeeded_indexes
 );

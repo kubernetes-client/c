@@ -24,9 +24,10 @@ typedef struct v1_se_linux_options_t {
     char *type; // string
     char *user; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_se_linux_options_t;
 
-v1_se_linux_options_t *v1_se_linux_options_create(
+__attribute__((deprecated)) v1_se_linux_options_t *v1_se_linux_options_create(
     char *level,
     char *role,
     char *type,

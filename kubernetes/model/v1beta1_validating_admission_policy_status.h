@@ -25,9 +25,10 @@ typedef struct v1beta1_validating_admission_policy_status_t {
     long observed_generation; //numeric
     struct v1beta1_type_checking_t *type_checking; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_validating_admission_policy_status_t;
 
-v1beta1_validating_admission_policy_status_t *v1beta1_validating_admission_policy_status_create(
+__attribute__((deprecated)) v1beta1_validating_admission_policy_status_t *v1beta1_validating_admission_policy_status_create(
     list_t *conditions,
     long observed_generation,
     v1beta1_type_checking_t *type_checking

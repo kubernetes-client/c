@@ -5,7 +5,7 @@
 
 
 
-v1beta1_variable_t *v1beta1_variable_create(
+static v1beta1_variable_t *v1beta1_variable_create_internal(
     char *expression,
     char *name
     ) {
@@ -16,12 +16,26 @@ v1beta1_variable_t *v1beta1_variable_create(
     v1beta1_variable_local_var->expression = expression;
     v1beta1_variable_local_var->name = name;
 
+    v1beta1_variable_local_var->_library_owned = 1;
     return v1beta1_variable_local_var;
 }
 
+__attribute__((deprecated)) v1beta1_variable_t *v1beta1_variable_create(
+    char *expression,
+    char *name
+    ) {
+    return v1beta1_variable_create_internal (
+        expression,
+        name
+        );
+}
 
 void v1beta1_variable_free(v1beta1_variable_t *v1beta1_variable) {
     if(NULL == v1beta1_variable){
+        return ;
+    }
+    if(v1beta1_variable->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1beta1_variable_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -70,6 +84,9 @@ v1beta1_variable_t *v1beta1_variable_parseFromJSON(cJSON *v1beta1_variableJSON){
 
     // v1beta1_variable->expression
     cJSON *expression = cJSON_GetObjectItemCaseSensitive(v1beta1_variableJSON, "expression");
+    if (cJSON_IsNull(expression)) {
+        expression = NULL;
+    }
     if (!expression) {
         goto end;
     }
@@ -82,6 +99,9 @@ v1beta1_variable_t *v1beta1_variable_parseFromJSON(cJSON *v1beta1_variableJSON){
 
     // v1beta1_variable->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1beta1_variableJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -93,7 +113,7 @@ v1beta1_variable_t *v1beta1_variable_parseFromJSON(cJSON *v1beta1_variableJSON){
     }
 
 
-    v1beta1_variable_local_var = v1beta1_variable_create (
+    v1beta1_variable_local_var = v1beta1_variable_create_internal (
         strdup(expression->valuestring),
         strdup(name->valuestring)
         );

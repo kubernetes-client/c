@@ -22,9 +22,10 @@ typedef struct v1_node_selector_t v1_node_selector_t;
 typedef struct v1_node_selector_t {
     list_t *node_selector_terms; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_selector_t;
 
-v1_node_selector_t *v1_node_selector_create(
+__attribute__((deprecated)) v1_node_selector_t *v1_node_selector_create(
     list_t *node_selector_terms
 );
 

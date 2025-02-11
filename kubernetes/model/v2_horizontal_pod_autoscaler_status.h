@@ -28,9 +28,10 @@ typedef struct v2_horizontal_pod_autoscaler_status_t {
     char *last_scale_time; //date time
     long observed_generation; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v2_horizontal_pod_autoscaler_status_t;
 
-v2_horizontal_pod_autoscaler_status_t *v2_horizontal_pod_autoscaler_status_create(
+__attribute__((deprecated)) v2_horizontal_pod_autoscaler_status_t *v2_horizontal_pod_autoscaler_status_create(
     list_t *conditions,
     list_t *current_metrics,
     int current_replicas,

@@ -30,31 +30,31 @@ FlowcontrolApiserverV1API_createPriorityLevelConfiguration(apiClient_t *apiClien
 // delete collection of FlowSchema
 //
 v1_status_t*
-FlowcontrolApiserverV1API_deleteCollectionFlowSchema(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+FlowcontrolApiserverV1API_deleteCollectionFlowSchema(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete collection of PriorityLevelConfiguration
 //
 v1_status_t*
-FlowcontrolApiserverV1API_deleteCollectionPriorityLevelConfiguration(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+FlowcontrolApiserverV1API_deleteCollectionPriorityLevelConfiguration(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a FlowSchema
 //
 v1_status_t*
-FlowcontrolApiserverV1API_deleteFlowSchema(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+FlowcontrolApiserverV1API_deleteFlowSchema(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // delete a PriorityLevelConfiguration
 //
 v1_status_t*
-FlowcontrolApiserverV1API_deletePriorityLevelConfiguration(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+FlowcontrolApiserverV1API_deletePriorityLevelConfiguration(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-FlowcontrolApiserverV1API_getAPIResources_19(apiClient_t *apiClient);
+FlowcontrolApiserverV1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind FlowSchema

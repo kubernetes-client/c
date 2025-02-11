@@ -26,9 +26,10 @@ typedef struct v1_named_rule_with_operations_t {
     list_t *resources; //primitive container
     char *scope; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_named_rule_with_operations_t;
 
-v1_named_rule_with_operations_t *v1_named_rule_with_operations_create(
+__attribute__((deprecated)) v1_named_rule_with_operations_t *v1_named_rule_with_operations_create(
     list_t *api_groups,
     list_t *api_versions,
     list_t *operations,

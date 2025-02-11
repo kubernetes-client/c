@@ -11,6 +11,6 @@
 // get information of a group
 //
 v1_api_group_t*
-StorageAPI_getAPIGroup_19(apiClient_t *apiClient);
+StorageAPI_getAPIGroup(apiClient_t *apiClient);
 
 

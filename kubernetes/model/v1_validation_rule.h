@@ -26,9 +26,10 @@ typedef struct v1_validation_rule_t {
     char *reason; // string
     char *rule; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_validation_rule_t;
 
-v1_validation_rule_t *v1_validation_rule_create(
+__attribute__((deprecated)) v1_validation_rule_t *v1_validation_rule_create(
     char *field_path,
     char *message,
     char *message_expression,

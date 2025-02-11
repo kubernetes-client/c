@@ -5,7 +5,7 @@
 
 
 
-v1_external_documentation_t *v1_external_documentation_create(
+static v1_external_documentation_t *v1_external_documentation_create_internal(
     char *description,
     char *url
     ) {
@@ -16,12 +16,26 @@ v1_external_documentation_t *v1_external_documentation_create(
     v1_external_documentation_local_var->description = description;
     v1_external_documentation_local_var->url = url;
 
+    v1_external_documentation_local_var->_library_owned = 1;
     return v1_external_documentation_local_var;
 }
 
+__attribute__((deprecated)) v1_external_documentation_t *v1_external_documentation_create(
+    char *description,
+    char *url
+    ) {
+    return v1_external_documentation_create_internal (
+        description,
+        url
+        );
+}
 
 void v1_external_documentation_free(v1_external_documentation_t *v1_external_documentation) {
     if(NULL == v1_external_documentation){
+        return ;
+    }
+    if(v1_external_documentation->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_external_documentation_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -68,6 +82,9 @@ v1_external_documentation_t *v1_external_documentation_parseFromJSON(cJSON *v1_e
 
     // v1_external_documentation->description
     cJSON *description = cJSON_GetObjectItemCaseSensitive(v1_external_documentationJSON, "description");
+    if (cJSON_IsNull(description)) {
+        description = NULL;
+    }
     if (description) { 
     if(!cJSON_IsString(description) && !cJSON_IsNull(description))
     {
@@ -77,6 +94,9 @@ v1_external_documentation_t *v1_external_documentation_parseFromJSON(cJSON *v1_e
 
     // v1_external_documentation->url
     cJSON *url = cJSON_GetObjectItemCaseSensitive(v1_external_documentationJSON, "url");
+    if (cJSON_IsNull(url)) {
+        url = NULL;
+    }
     if (url) { 
     if(!cJSON_IsString(url) && !cJSON_IsNull(url))
     {
@@ -85,7 +105,7 @@ v1_external_documentation_t *v1_external_documentation_parseFromJSON(cJSON *v1_e
     }
 
 
-    v1_external_documentation_local_var = v1_external_documentation_create (
+    v1_external_documentation_local_var = v1_external_documentation_create_internal (
         description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
         url && !cJSON_IsNull(url) ? strdup(url->valuestring) : NULL
         );

@@ -29,9 +29,10 @@ typedef struct version_info_t {
     char *minor; // string
     char *platform; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } version_info_t;
 
-version_info_t *version_info_create(
+__attribute__((deprecated)) version_info_t *version_info_create(
     char *build_date,
     char *compiler,
     char *git_commit,

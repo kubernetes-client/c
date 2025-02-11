@@ -31,9 +31,10 @@ typedef struct v1_resource_attributes_t {
     char *verb; // string
     char *version; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_resource_attributes_t;
 
-v1_resource_attributes_t *v1_resource_attributes_create(
+__attribute__((deprecated)) v1_resource_attributes_t *v1_resource_attributes_create(
     v1_field_selector_attributes_t *field_selector,
     char *group,
     v1_label_selector_attributes_t *label_selector,

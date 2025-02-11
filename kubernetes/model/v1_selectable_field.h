@@ -21,9 +21,10 @@ typedef struct v1_selectable_field_t v1_selectable_field_t;
 typedef struct v1_selectable_field_t {
     char *json_path; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_selectable_field_t;
 
-v1_selectable_field_t *v1_selectable_field_create(
+__attribute__((deprecated)) v1_selectable_field_t *v1_selectable_field_create(
     char *json_path
 );
 

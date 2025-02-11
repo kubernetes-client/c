@@ -5,7 +5,7 @@
 
 
 
-v1_linux_container_user_t *v1_linux_container_user_create(
+static v1_linux_container_user_t *v1_linux_container_user_create_internal(
     long gid,
     list_t *supplemental_groups,
     long uid
@@ -18,12 +18,28 @@ v1_linux_container_user_t *v1_linux_container_user_create(
     v1_linux_container_user_local_var->supplemental_groups = supplemental_groups;
     v1_linux_container_user_local_var->uid = uid;
 
+    v1_linux_container_user_local_var->_library_owned = 1;
     return v1_linux_container_user_local_var;
 }
 
+__attribute__((deprecated)) v1_linux_container_user_t *v1_linux_container_user_create(
+    long gid,
+    list_t *supplemental_groups,
+    long uid
+    ) {
+    return v1_linux_container_user_create_internal (
+        gid,
+        supplemental_groups,
+        uid
+        );
+}
 
 void v1_linux_container_user_free(v1_linux_container_user_t *v1_linux_container_user) {
     if(NULL == v1_linux_container_user){
+        return ;
+    }
+    if(v1_linux_container_user->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_linux_container_user_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -91,6 +107,9 @@ v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux
 
     // v1_linux_container_user->gid
     cJSON *gid = cJSON_GetObjectItemCaseSensitive(v1_linux_container_userJSON, "gid");
+    if (cJSON_IsNull(gid)) {
+        gid = NULL;
+    }
     if (!gid) {
         goto end;
     }
@@ -103,6 +122,9 @@ v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux
 
     // v1_linux_container_user->supplemental_groups
     cJSON *supplemental_groups = cJSON_GetObjectItemCaseSensitive(v1_linux_container_userJSON, "supplementalGroups");
+    if (cJSON_IsNull(supplemental_groups)) {
+        supplemental_groups = NULL;
+    }
     if (supplemental_groups) { 
     cJSON *supplemental_groups_local = NULL;
     if(!cJSON_IsArray(supplemental_groups)) {
@@ -116,7 +138,7 @@ v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux
         {
             goto end;
         }
-        double *supplemental_groups_local_value = (double *)calloc(1, sizeof(double));
+        double *supplemental_groups_local_value = calloc(1, sizeof(double));
         if(!supplemental_groups_local_value)
         {
             goto end;
@@ -128,6 +150,9 @@ v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux
 
     // v1_linux_container_user->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_linux_container_userJSON, "uid");
+    if (cJSON_IsNull(uid)) {
+        uid = NULL;
+    }
     if (!uid) {
         goto end;
     }
@@ -139,7 +164,7 @@ v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux
     }
 
 
-    v1_linux_container_user_local_var = v1_linux_container_user_create (
+    v1_linux_container_user_local_var = v1_linux_container_user_create_internal (
         gid->valuedouble,
         supplemental_groups ? supplemental_groupsList : NULL,
         uid->valuedouble

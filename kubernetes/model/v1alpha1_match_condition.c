@@ -5,7 +5,7 @@
 
 
 
-v1alpha1_match_condition_t *v1alpha1_match_condition_create(
+static v1alpha1_match_condition_t *v1alpha1_match_condition_create_internal(
     char *expression,
     char *name
     ) {
@@ -16,12 +16,26 @@ v1alpha1_match_condition_t *v1alpha1_match_condition_create(
     v1alpha1_match_condition_local_var->expression = expression;
     v1alpha1_match_condition_local_var->name = name;
 
+    v1alpha1_match_condition_local_var->_library_owned = 1;
     return v1alpha1_match_condition_local_var;
 }
 
+__attribute__((deprecated)) v1alpha1_match_condition_t *v1alpha1_match_condition_create(
+    char *expression,
+    char *name
+    ) {
+    return v1alpha1_match_condition_create_internal (
+        expression,
+        name
+        );
+}
 
 void v1alpha1_match_condition_free(v1alpha1_match_condition_t *v1alpha1_match_condition) {
     if(NULL == v1alpha1_match_condition){
+        return ;
+    }
+    if(v1alpha1_match_condition->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha1_match_condition_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -70,6 +84,9 @@ v1alpha1_match_condition_t *v1alpha1_match_condition_parseFromJSON(cJSON *v1alph
 
     // v1alpha1_match_condition->expression
     cJSON *expression = cJSON_GetObjectItemCaseSensitive(v1alpha1_match_conditionJSON, "expression");
+    if (cJSON_IsNull(expression)) {
+        expression = NULL;
+    }
     if (!expression) {
         goto end;
     }
@@ -82,6 +99,9 @@ v1alpha1_match_condition_t *v1alpha1_match_condition_parseFromJSON(cJSON *v1alph
 
     // v1alpha1_match_condition->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha1_match_conditionJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -93,7 +113,7 @@ v1alpha1_match_condition_t *v1alpha1_match_condition_parseFromJSON(cJSON *v1alph
     }
 
 
-    v1alpha1_match_condition_local_var = v1alpha1_match_condition_create (
+    v1alpha1_match_condition_local_var = v1alpha1_match_condition_create_internal (
         strdup(expression->valuestring),
         strdup(name->valuestring)
         );

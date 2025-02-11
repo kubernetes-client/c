@@ -22,19 +22,19 @@ CoordinationV1API_createNamespacedLease(apiClient_t *apiClient, char *_namespace
 // delete collection of Lease
 //
 v1_status_t*
-CoordinationV1API_deleteCollectionNamespacedLease(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+CoordinationV1API_deleteCollectionNamespacedLease(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a Lease
 //
 v1_status_t*
-CoordinationV1API_deleteNamespacedLease(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+CoordinationV1API_deleteNamespacedLease(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-CoordinationV1API_getAPIResources_15(apiClient_t *apiClient);
+CoordinationV1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind Lease

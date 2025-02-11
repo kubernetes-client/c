@@ -5,11 +5,6 @@
 
 #define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
-#define intToStr(dst, src) \
-    do {\
-    char dst[256];\
-    snprintf(dst, 256, "%ld", (long int)(src));\
-}while(0)
 
 
 // create a PodDisruptionBudget
@@ -23,15 +18,20 @@ PolicyV1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets");
+    char *localVarPath = strdup("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -94,13 +94,15 @@ PolicyV1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_pod_disruption_budget_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -109,6 +111,7 @@ PolicyV1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -128,11 +131,14 @@ PolicyV1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_disruption_budget_t *elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_disruption_budget_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -211,7 +217,7 @@ end:
 // delete collection of PodDisruptionBudget
 //
 v1_status_t*
-PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -219,15 +225,20 @@ PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets");
+    char *localVarPath = strdup("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -297,6 +308,19 @@ PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -403,13 +427,15 @@ PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -418,6 +444,7 @@ PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -429,11 +456,14 @@ PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -513,6 +543,18 @@ PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -620,7 +662,7 @@ end:
 // delete a PodDisruptionBudget
 //
 v1_status_t*
-PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -628,15 +670,22 @@ PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}");
+    char *localVarPath = strdup("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -646,7 +695,7 @@ PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -695,6 +744,19 @@ PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *na
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -723,13 +785,15 @@ PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *na
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -738,6 +802,7 @@ PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -753,11 +818,14 @@ PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -815,6 +883,18 @@ PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *na
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
     }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
@@ -849,7 +929,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-PolicyV1API_getAPIResources_25(apiClient_t *apiClient)
+PolicyV1API_getAPIResources(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -857,17 +937,21 @@ PolicyV1API_getAPIResources_25(apiClient_t *apiClient)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/");
+    char *localVarPath = strdup("/apis/policy/v1/");
+
 
 
 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -876,6 +960,7 @@ PolicyV1API_getAPIResources_25(apiClient_t *apiClient)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -887,11 +972,14 @@ PolicyV1API_getAPIResources_25(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_api_resource_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_api_resource_list_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -924,15 +1012,20 @@ PolicyV1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets");
+    char *localVarPath = strdup("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1082,8 +1175,10 @@ PolicyV1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_nam
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1092,6 +1187,7 @@ PolicyV1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1103,11 +1199,14 @@ PolicyV1API_listNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_disruption_budget_list_t *elementToReturn = v1_pod_disruption_budget_list_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_disruption_budget_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_disruption_budget_list_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1273,11 +1372,14 @@ PolicyV1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient, int 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/poddisruptionbudgets")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/poddisruptionbudgets");
+    char *localVarPath = strdup("/apis/policy/v1/poddisruptionbudgets");
+
 
 
 
@@ -1421,8 +1523,10 @@ PolicyV1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient, int 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1431,6 +1535,7 @@ PolicyV1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient, int 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1442,11 +1547,14 @@ PolicyV1API_listPodDisruptionBudgetForAllNamespaces(apiClient_t *apiClient, int 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_disruption_budget_list_t *elementToReturn = v1_pod_disruption_budget_list_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_disruption_budget_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_disruption_budget_list_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1611,15 +1719,22 @@ PolicyV1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}");
+    char *localVarPath = strdup("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1629,7 +1744,7 @@ PolicyV1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1705,17 +1820,20 @@ PolicyV1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1724,6 +1842,7 @@ PolicyV1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -1739,11 +1858,14 @@ PolicyV1API_patchNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_disruption_budget_t *elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_disruption_budget_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1843,15 +1965,22 @@ PolicyV1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}/status");
+    char *localVarPath = strdup("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1861,7 +1990,7 @@ PolicyV1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1937,17 +2066,20 @@ PolicyV1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1956,6 +2088,7 @@ PolicyV1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -1971,11 +2104,14 @@ PolicyV1API_patchNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_disruption_budget_t *elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_disruption_budget_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2075,15 +2211,22 @@ PolicyV1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}");
+    char *localVarPath = strdup("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2093,7 +2236,7 @@ PolicyV1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2118,6 +2261,7 @@ PolicyV1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2126,6 +2270,7 @@ PolicyV1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2137,11 +2282,14 @@ PolicyV1API_readNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_disruption_budget_t *elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_disruption_budget_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2188,15 +2336,22 @@ PolicyV1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}/status");
+    char *localVarPath = strdup("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2206,7 +2361,7 @@ PolicyV1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2231,6 +2386,7 @@ PolicyV1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2239,6 +2395,7 @@ PolicyV1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2250,11 +2407,14 @@ PolicyV1API_readNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_disruption_budget_t *elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_disruption_budget_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2301,15 +2461,22 @@ PolicyV1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}");
+    char *localVarPath = strdup("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2319,7 +2486,7 @@ PolicyV1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *n
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2382,13 +2549,15 @@ PolicyV1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_pod_disruption_budget_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2397,6 +2566,7 @@ PolicyV1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -2412,11 +2582,14 @@ PolicyV1API_replaceNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_disruption_budget_t *elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_disruption_budget_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2504,15 +2677,22 @@ PolicyV1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}/status");
+    char *localVarPath = strdup("/apis/policy/v1/namespaces/{namespace}/poddisruptionbudgets/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2522,7 +2702,7 @@ PolicyV1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2585,13 +2765,15 @@ PolicyV1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, c
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_pod_disruption_budget_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2600,6 +2782,7 @@ PolicyV1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -2615,11 +2798,14 @@ PolicyV1API_replaceNamespacedPodDisruptionBudgetStatus(apiClient_t *apiClient, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_disruption_budget_t *elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
-    cJSON_Delete(PolicyV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_disruption_budget_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *PolicyV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_disruption_budget_parseFromJSON(PolicyV1APIlocalVarJSON);
+        cJSON_Delete(PolicyV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type

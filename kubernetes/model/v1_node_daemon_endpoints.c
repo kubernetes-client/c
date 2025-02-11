@@ -5,7 +5,7 @@
 
 
 
-v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_create(
+static v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_create_internal(
     v1_daemon_endpoint_t *kubelet_endpoint
     ) {
     v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_local_var = malloc(sizeof(v1_node_daemon_endpoints_t));
@@ -14,12 +14,24 @@ v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_create(
     }
     v1_node_daemon_endpoints_local_var->kubelet_endpoint = kubelet_endpoint;
 
+    v1_node_daemon_endpoints_local_var->_library_owned = 1;
     return v1_node_daemon_endpoints_local_var;
 }
 
+__attribute__((deprecated)) v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_create(
+    v1_daemon_endpoint_t *kubelet_endpoint
+    ) {
+    return v1_node_daemon_endpoints_create_internal (
+        kubelet_endpoint
+        );
+}
 
 void v1_node_daemon_endpoints_free(v1_node_daemon_endpoints_t *v1_node_daemon_endpoints) {
     if(NULL == v1_node_daemon_endpoints){
+        return ;
+    }
+    if(v1_node_daemon_endpoints->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_node_daemon_endpoints_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -62,12 +74,15 @@ v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_parseFromJSON(cJSON *v1_nod
 
     // v1_node_daemon_endpoints->kubelet_endpoint
     cJSON *kubelet_endpoint = cJSON_GetObjectItemCaseSensitive(v1_node_daemon_endpointsJSON, "kubeletEndpoint");
+    if (cJSON_IsNull(kubelet_endpoint)) {
+        kubelet_endpoint = NULL;
+    }
     if (kubelet_endpoint) { 
     kubelet_endpoint_local_nonprim = v1_daemon_endpoint_parseFromJSON(kubelet_endpoint); //nonprimitive
     }
 
 
-    v1_node_daemon_endpoints_local_var = v1_node_daemon_endpoints_create (
+    v1_node_daemon_endpoints_local_var = v1_node_daemon_endpoints_create_internal (
         kubelet_endpoint ? kubelet_endpoint_local_nonprim : NULL
         );
 

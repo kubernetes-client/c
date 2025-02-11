@@ -5,7 +5,7 @@
 
 
 
-v1_fc_volume_source_t *v1_fc_volume_source_create(
+static v1_fc_volume_source_t *v1_fc_volume_source_create_internal(
     char *fs_type,
     int lun,
     int read_only,
@@ -22,12 +22,32 @@ v1_fc_volume_source_t *v1_fc_volume_source_create(
     v1_fc_volume_source_local_var->target_wwns = target_wwns;
     v1_fc_volume_source_local_var->wwids = wwids;
 
+    v1_fc_volume_source_local_var->_library_owned = 1;
     return v1_fc_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_fc_volume_source_t *v1_fc_volume_source_create(
+    char *fs_type,
+    int lun,
+    int read_only,
+    list_t *target_wwns,
+    list_t *wwids
+    ) {
+    return v1_fc_volume_source_create_internal (
+        fs_type,
+        lun,
+        read_only,
+        target_wwns,
+        wwids
+        );
+}
 
 void v1_fc_volume_source_free(v1_fc_volume_source_t *v1_fc_volume_source) {
     if(NULL == v1_fc_volume_source){
+        return ;
+    }
+    if(v1_fc_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_fc_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -88,7 +108,7 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
 
     listEntry_t *target_wwnsListEntry;
     list_ForEach(target_wwnsListEntry, v1_fc_volume_source->target_wwns) {
-    if(cJSON_AddStringToObject(target_wwns, "", (char*)target_wwnsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(target_wwns, "", target_wwnsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -105,7 +125,7 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
 
     listEntry_t *wwidsListEntry;
     list_ForEach(wwidsListEntry, v1_fc_volume_source->wwids) {
-    if(cJSON_AddStringToObject(wwids, "", (char*)wwidsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(wwids, "", wwidsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -132,6 +152,9 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
 
     // v1_fc_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "fsType");
+    if (cJSON_IsNull(fs_type)) {
+        fs_type = NULL;
+    }
     if (fs_type) { 
     if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
@@ -141,6 +164,9 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
 
     // v1_fc_volume_source->lun
     cJSON *lun = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "lun");
+    if (cJSON_IsNull(lun)) {
+        lun = NULL;
+    }
     if (lun) { 
     if(!cJSON_IsNumber(lun))
     {
@@ -150,6 +176,9 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
 
     // v1_fc_volume_source->read_only
     cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "readOnly");
+    if (cJSON_IsNull(read_only)) {
+        read_only = NULL;
+    }
     if (read_only) { 
     if(!cJSON_IsBool(read_only))
     {
@@ -159,6 +188,9 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
 
     // v1_fc_volume_source->target_wwns
     cJSON *target_wwns = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "targetWWNs");
+    if (cJSON_IsNull(target_wwns)) {
+        target_wwns = NULL;
+    }
     if (target_wwns) { 
     cJSON *target_wwns_local = NULL;
     if(!cJSON_IsArray(target_wwns)) {
@@ -178,6 +210,9 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
 
     // v1_fc_volume_source->wwids
     cJSON *wwids = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "wwids");
+    if (cJSON_IsNull(wwids)) {
+        wwids = NULL;
+    }
     if (wwids) { 
     cJSON *wwids_local = NULL;
     if(!cJSON_IsArray(wwids)) {
@@ -196,7 +231,7 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
     }
 
 
-    v1_fc_volume_source_local_var = v1_fc_volume_source_create (
+    v1_fc_volume_source_local_var = v1_fc_volume_source_create_internal (
         fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         lun ? lun->valuedouble : 0,
         read_only ? read_only->valueint : 0,

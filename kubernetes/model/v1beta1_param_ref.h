@@ -25,9 +25,10 @@ typedef struct v1beta1_param_ref_t {
     char *parameter_not_found_action; // string
     struct v1_label_selector_t *selector; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_param_ref_t;
 
-v1beta1_param_ref_t *v1beta1_param_ref_create(
+__attribute__((deprecated)) v1beta1_param_ref_t *v1beta1_param_ref_create(
     char *name,
     char *_namespace,
     char *parameter_not_found_action,

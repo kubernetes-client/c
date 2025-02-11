@@ -5,7 +5,7 @@
 
 
 
-v1_role_ref_t *v1_role_ref_create(
+static v1_role_ref_t *v1_role_ref_create_internal(
     char *api_group,
     char *kind,
     char *name
@@ -18,12 +18,28 @@ v1_role_ref_t *v1_role_ref_create(
     v1_role_ref_local_var->kind = kind;
     v1_role_ref_local_var->name = name;
 
+    v1_role_ref_local_var->_library_owned = 1;
     return v1_role_ref_local_var;
 }
 
+__attribute__((deprecated)) v1_role_ref_t *v1_role_ref_create(
+    char *api_group,
+    char *kind,
+    char *name
+    ) {
+    return v1_role_ref_create_internal (
+        api_group,
+        kind,
+        name
+        );
+}
 
 void v1_role_ref_free(v1_role_ref_t *v1_role_ref) {
     if(NULL == v1_role_ref){
+        return ;
+    }
+    if(v1_role_ref->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_role_ref_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -85,6 +101,9 @@ v1_role_ref_t *v1_role_ref_parseFromJSON(cJSON *v1_role_refJSON){
 
     // v1_role_ref->api_group
     cJSON *api_group = cJSON_GetObjectItemCaseSensitive(v1_role_refJSON, "apiGroup");
+    if (cJSON_IsNull(api_group)) {
+        api_group = NULL;
+    }
     if (!api_group) {
         goto end;
     }
@@ -97,6 +116,9 @@ v1_role_ref_t *v1_role_ref_parseFromJSON(cJSON *v1_role_refJSON){
 
     // v1_role_ref->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_role_refJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (!kind) {
         goto end;
     }
@@ -109,6 +131,9 @@ v1_role_ref_t *v1_role_ref_parseFromJSON(cJSON *v1_role_refJSON){
 
     // v1_role_ref->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_role_refJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -120,7 +145,7 @@ v1_role_ref_t *v1_role_ref_parseFromJSON(cJSON *v1_role_refJSON){
     }
 
 
-    v1_role_ref_local_var = v1_role_ref_create (
+    v1_role_ref_local_var = v1_role_ref_create_internal (
         strdup(api_group->valuestring),
         strdup(kind->valuestring),
         strdup(name->valuestring)

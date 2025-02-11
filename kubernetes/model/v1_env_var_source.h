@@ -28,9 +28,10 @@ typedef struct v1_env_var_source_t {
     struct v1_resource_field_selector_t *resource_field_ref; //model
     struct v1_secret_key_selector_t *secret_key_ref; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_env_var_source_t;
 
-v1_env_var_source_t *v1_env_var_source_create(
+__attribute__((deprecated)) v1_env_var_source_t *v1_env_var_source_create(
     v1_config_map_key_selector_t *config_map_key_ref,
     v1_object_field_selector_t *field_ref,
     v1_resource_field_selector_t *resource_field_ref,

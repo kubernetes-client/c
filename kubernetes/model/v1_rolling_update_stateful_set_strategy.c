@@ -5,7 +5,7 @@
 
 
 
-v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_create(
+static v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_create_internal(
     int_or_string_t *max_unavailable,
     int partition
     ) {
@@ -16,12 +16,26 @@ v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strate
     v1_rolling_update_stateful_set_strategy_local_var->max_unavailable = max_unavailable;
     v1_rolling_update_stateful_set_strategy_local_var->partition = partition;
 
+    v1_rolling_update_stateful_set_strategy_local_var->_library_owned = 1;
     return v1_rolling_update_stateful_set_strategy_local_var;
 }
 
+__attribute__((deprecated)) v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_create(
+    int_or_string_t *max_unavailable,
+    int partition
+    ) {
+    return v1_rolling_update_stateful_set_strategy_create_internal (
+        max_unavailable,
+        partition
+        );
+}
 
 void v1_rolling_update_stateful_set_strategy_free(v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy) {
     if(NULL == v1_rolling_update_stateful_set_strategy){
+        return ;
+    }
+    if(v1_rolling_update_stateful_set_strategy->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_rolling_update_stateful_set_strategy_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -72,12 +86,18 @@ v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strate
 
     // v1_rolling_update_stateful_set_strategy->max_unavailable
     cJSON *max_unavailable = cJSON_GetObjectItemCaseSensitive(v1_rolling_update_stateful_set_strategyJSON, "maxUnavailable");
+    if (cJSON_IsNull(max_unavailable)) {
+        max_unavailable = NULL;
+    }
     if (max_unavailable) { 
     max_unavailable_local_nonprim = int_or_string_parseFromJSON(max_unavailable); //custom
     }
 
     // v1_rolling_update_stateful_set_strategy->partition
     cJSON *partition = cJSON_GetObjectItemCaseSensitive(v1_rolling_update_stateful_set_strategyJSON, "partition");
+    if (cJSON_IsNull(partition)) {
+        partition = NULL;
+    }
     if (partition) { 
     if(!cJSON_IsNumber(partition))
     {
@@ -86,7 +106,7 @@ v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strate
     }
 
 
-    v1_rolling_update_stateful_set_strategy_local_var = v1_rolling_update_stateful_set_strategy_create (
+    v1_rolling_update_stateful_set_strategy_local_var = v1_rolling_update_stateful_set_strategy_create_internal (
         max_unavailable ? max_unavailable_local_nonprim : NULL,
         partition ? partition->valuedouble : 0
         );

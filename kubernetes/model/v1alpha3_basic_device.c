@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_basic_device_t *v1alpha3_basic_device_create(
+static v1alpha3_basic_device_t *v1alpha3_basic_device_create_internal(
     list_t* attributes,
     list_t* capacity
     ) {
@@ -16,18 +16,32 @@ v1alpha3_basic_device_t *v1alpha3_basic_device_create(
     v1alpha3_basic_device_local_var->attributes = attributes;
     v1alpha3_basic_device_local_var->capacity = capacity;
 
+    v1alpha3_basic_device_local_var->_library_owned = 1;
     return v1alpha3_basic_device_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_basic_device_t *v1alpha3_basic_device_create(
+    list_t* attributes,
+    list_t* capacity
+    ) {
+    return v1alpha3_basic_device_create_internal (
+        attributes,
+        capacity
+        );
+}
 
 void v1alpha3_basic_device_free(v1alpha3_basic_device_t *v1alpha3_basic_device) {
     if(NULL == v1alpha3_basic_device){
         return ;
     }
+    if(v1alpha3_basic_device->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_basic_device_free");
+        return ;
+    }
     listEntry_t *listEntry;
     if (v1alpha3_basic_device->attributes) {
         list_ForEach(listEntry, v1alpha3_basic_device->attributes) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -37,7 +51,7 @@ void v1alpha3_basic_device_free(v1alpha3_basic_device_t *v1alpha3_basic_device) 
     }
     if (v1alpha3_basic_device->capacity) {
         list_ForEach(listEntry, v1alpha3_basic_device->capacity) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -61,7 +75,7 @@ cJSON *v1alpha3_basic_device_convertToJSON(v1alpha3_basic_device_t *v1alpha3_bas
     listEntry_t *attributesListEntry;
     if (v1alpha3_basic_device->attributes) {
     list_ForEach(attributesListEntry, v1alpha3_basic_device->attributes) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)attributesListEntry->data;
+        keyValuePair_t *localKeyValue = attributesListEntry->data;
     }
     }
     }
@@ -77,8 +91,8 @@ cJSON *v1alpha3_basic_device_convertToJSON(v1alpha3_basic_device_t *v1alpha3_bas
     listEntry_t *capacityListEntry;
     if (v1alpha3_basic_device->capacity) {
     list_ForEach(capacityListEntry, v1alpha3_basic_device->capacity) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)capacityListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = capacityListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -106,6 +120,9 @@ v1alpha3_basic_device_t *v1alpha3_basic_device_parseFromJSON(cJSON *v1alpha3_bas
 
     // v1alpha3_basic_device->attributes
     cJSON *attributes = cJSON_GetObjectItemCaseSensitive(v1alpha3_basic_deviceJSON, "attributes");
+    if (cJSON_IsNull(attributes)) {
+        attributes = NULL;
+    }
     if (attributes) { 
 
     // The data type of the elements in v1alpha3_basic_device->attributes is currently not supported.
@@ -114,6 +131,9 @@ v1alpha3_basic_device_t *v1alpha3_basic_device_parseFromJSON(cJSON *v1alpha3_bas
 
     // v1alpha3_basic_device->capacity
     cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1alpha3_basic_deviceJSON, "capacity");
+    if (cJSON_IsNull(capacity)) {
+        capacity = NULL;
+    }
     if (capacity) { 
     cJSON *capacity_local_map = NULL;
     if(!cJSON_IsObject(capacity) && !cJSON_IsNull(capacity))
@@ -138,7 +158,7 @@ v1alpha3_basic_device_t *v1alpha3_basic_device_parseFromJSON(cJSON *v1alpha3_bas
     }
 
 
-    v1alpha3_basic_device_local_var = v1alpha3_basic_device_create (
+    v1alpha3_basic_device_local_var = v1alpha3_basic_device_create_internal (
         attributes ? attributesList : NULL,
         capacity ? capacityList : NULL
         );
@@ -151,7 +171,7 @@ end:
     if (capacityList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, capacityList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

@@ -5,7 +5,7 @@
 
 
 
-v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_create(
+static v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_create_internal(
     v1_custom_resource_conversion_t *conversion,
     char *group,
     v1_custom_resource_definition_names_t *names,
@@ -24,12 +24,34 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_create(
     v1_custom_resource_definition_spec_local_var->scope = scope;
     v1_custom_resource_definition_spec_local_var->versions = versions;
 
+    v1_custom_resource_definition_spec_local_var->_library_owned = 1;
     return v1_custom_resource_definition_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_create(
+    v1_custom_resource_conversion_t *conversion,
+    char *group,
+    v1_custom_resource_definition_names_t *names,
+    int preserve_unknown_fields,
+    char *scope,
+    list_t *versions
+    ) {
+    return v1_custom_resource_definition_spec_create_internal (
+        conversion,
+        group,
+        names,
+        preserve_unknown_fields,
+        scope,
+        versions
+        );
+}
 
 void v1_custom_resource_definition_spec_free(v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec) {
     if(NULL == v1_custom_resource_definition_spec){
+        return ;
+    }
+    if(v1_custom_resource_definition_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_custom_resource_definition_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -158,12 +180,18 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
 
     // v1_custom_resource_definition_spec->conversion
     cJSON *conversion = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "conversion");
+    if (cJSON_IsNull(conversion)) {
+        conversion = NULL;
+    }
     if (conversion) { 
     conversion_local_nonprim = v1_custom_resource_conversion_parseFromJSON(conversion); //nonprimitive
     }
 
     // v1_custom_resource_definition_spec->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "group");
+    if (cJSON_IsNull(group)) {
+        group = NULL;
+    }
     if (!group) {
         goto end;
     }
@@ -176,6 +204,9 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
 
     // v1_custom_resource_definition_spec->names
     cJSON *names = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "names");
+    if (cJSON_IsNull(names)) {
+        names = NULL;
+    }
     if (!names) {
         goto end;
     }
@@ -185,6 +216,9 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
 
     // v1_custom_resource_definition_spec->preserve_unknown_fields
     cJSON *preserve_unknown_fields = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "preserveUnknownFields");
+    if (cJSON_IsNull(preserve_unknown_fields)) {
+        preserve_unknown_fields = NULL;
+    }
     if (preserve_unknown_fields) { 
     if(!cJSON_IsBool(preserve_unknown_fields))
     {
@@ -194,6 +228,9 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
 
     // v1_custom_resource_definition_spec->scope
     cJSON *scope = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "scope");
+    if (cJSON_IsNull(scope)) {
+        scope = NULL;
+    }
     if (!scope) {
         goto end;
     }
@@ -206,6 +243,9 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
 
     // v1_custom_resource_definition_spec->versions
     cJSON *versions = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "versions");
+    if (cJSON_IsNull(versions)) {
+        versions = NULL;
+    }
     if (!versions) {
         goto end;
     }
@@ -229,7 +269,7 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
     }
 
 
-    v1_custom_resource_definition_spec_local_var = v1_custom_resource_definition_spec_create (
+    v1_custom_resource_definition_spec_local_var = v1_custom_resource_definition_spec_create_internal (
         conversion ? conversion_local_nonprim : NULL,
         strdup(group->valuestring),
         names_local_nonprim,

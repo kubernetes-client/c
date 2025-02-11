@@ -22,9 +22,10 @@ typedef struct v1beta1_ip_address_spec_t v1beta1_ip_address_spec_t;
 typedef struct v1beta1_ip_address_spec_t {
     struct v1beta1_parent_reference_t *parent_ref; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_ip_address_spec_t;
 
-v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_create(
+__attribute__((deprecated)) v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_create(
     v1beta1_parent_reference_t *parent_ref
 );
 

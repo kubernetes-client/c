@@ -25,9 +25,10 @@ typedef struct v1_config_map_node_config_source_t {
     char *resource_version; // string
     char *uid; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_config_map_node_config_source_t;
 
-v1_config_map_node_config_source_t *v1_config_map_node_config_source_create(
+__attribute__((deprecated)) v1_config_map_node_config_source_t *v1_config_map_node_config_source_create(
     char *kubelet_config_key,
     char *name,
     char *_namespace,

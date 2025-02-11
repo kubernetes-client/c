@@ -5,7 +5,7 @@
 
 
 
-v1_container_state_terminated_t *v1_container_state_terminated_create(
+static v1_container_state_terminated_t *v1_container_state_terminated_create_internal(
     char *container_id,
     int exit_code,
     char *finished_at,
@@ -26,12 +26,36 @@ v1_container_state_terminated_t *v1_container_state_terminated_create(
     v1_container_state_terminated_local_var->signal = signal;
     v1_container_state_terminated_local_var->started_at = started_at;
 
+    v1_container_state_terminated_local_var->_library_owned = 1;
     return v1_container_state_terminated_local_var;
 }
 
+__attribute__((deprecated)) v1_container_state_terminated_t *v1_container_state_terminated_create(
+    char *container_id,
+    int exit_code,
+    char *finished_at,
+    char *message,
+    char *reason,
+    int signal,
+    char *started_at
+    ) {
+    return v1_container_state_terminated_create_internal (
+        container_id,
+        exit_code,
+        finished_at,
+        message,
+        reason,
+        signal,
+        started_at
+        );
+}
 
 void v1_container_state_terminated_free(v1_container_state_terminated_t *v1_container_state_terminated) {
     if(NULL == v1_container_state_terminated){
+        return ;
+    }
+    if(v1_container_state_terminated->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_container_state_terminated_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -131,6 +155,9 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
 
     // v1_container_state_terminated->container_id
     cJSON *container_id = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "containerID");
+    if (cJSON_IsNull(container_id)) {
+        container_id = NULL;
+    }
     if (container_id) { 
     if(!cJSON_IsString(container_id) && !cJSON_IsNull(container_id))
     {
@@ -140,6 +167,9 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
 
     // v1_container_state_terminated->exit_code
     cJSON *exit_code = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "exitCode");
+    if (cJSON_IsNull(exit_code)) {
+        exit_code = NULL;
+    }
     if (!exit_code) {
         goto end;
     }
@@ -152,6 +182,9 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
 
     // v1_container_state_terminated->finished_at
     cJSON *finished_at = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "finishedAt");
+    if (cJSON_IsNull(finished_at)) {
+        finished_at = NULL;
+    }
     if (finished_at) { 
     if(!cJSON_IsString(finished_at) && !cJSON_IsNull(finished_at))
     {
@@ -161,6 +194,9 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
 
     // v1_container_state_terminated->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "message");
+    if (cJSON_IsNull(message)) {
+        message = NULL;
+    }
     if (message) { 
     if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
@@ -170,6 +206,9 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
 
     // v1_container_state_terminated->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "reason");
+    if (cJSON_IsNull(reason)) {
+        reason = NULL;
+    }
     if (reason) { 
     if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
@@ -179,6 +218,9 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
 
     // v1_container_state_terminated->signal
     cJSON *signal = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "signal");
+    if (cJSON_IsNull(signal)) {
+        signal = NULL;
+    }
     if (signal) { 
     if(!cJSON_IsNumber(signal))
     {
@@ -188,6 +230,9 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
 
     // v1_container_state_terminated->started_at
     cJSON *started_at = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "startedAt");
+    if (cJSON_IsNull(started_at)) {
+        started_at = NULL;
+    }
     if (started_at) { 
     if(!cJSON_IsString(started_at) && !cJSON_IsNull(started_at))
     {
@@ -196,7 +241,7 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
     }
 
 
-    v1_container_state_terminated_local_var = v1_container_state_terminated_create (
+    v1_container_state_terminated_local_var = v1_container_state_terminated_create_internal (
         container_id && !cJSON_IsNull(container_id) ? strdup(container_id->valuestring) : NULL,
         exit_code->valuedouble,
         finished_at && !cJSON_IsNull(finished_at) ? strdup(finished_at->valuestring) : NULL,

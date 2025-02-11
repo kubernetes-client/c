@@ -24,9 +24,10 @@ typedef struct v1_persistent_volume_status_t {
     char *phase; // string
     char *reason; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_persistent_volume_status_t;
 
-v1_persistent_volume_status_t *v1_persistent_volume_status_create(
+__attribute__((deprecated)) v1_persistent_volume_status_t *v1_persistent_volume_status_create(
     char *last_phase_transition_time,
     char *message,
     char *phase,

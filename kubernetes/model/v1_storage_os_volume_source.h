@@ -26,9 +26,10 @@ typedef struct v1_storage_os_volume_source_t {
     char *volume_name; // string
     char *volume_namespace; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_storage_os_volume_source_t;
 
-v1_storage_os_volume_source_t *v1_storage_os_volume_source_create(
+__attribute__((deprecated)) v1_storage_os_volume_source_t *v1_storage_os_volume_source_create(
     char *fs_type,
     int read_only,
     v1_local_object_reference_t *secret_ref,

@@ -26,9 +26,10 @@ typedef struct v1_affinity_t {
     struct v1_pod_affinity_t *pod_affinity; //model
     struct v1_pod_anti_affinity_t *pod_anti_affinity; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_affinity_t;
 
-v1_affinity_t *v1_affinity_create(
+__attribute__((deprecated)) v1_affinity_t *v1_affinity_create(
     v1_node_affinity_t *node_affinity,
     v1_pod_affinity_t *pod_affinity,
     v1_pod_anti_affinity_t *pod_anti_affinity

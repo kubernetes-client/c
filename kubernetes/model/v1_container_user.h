@@ -22,9 +22,10 @@ typedef struct v1_container_user_t v1_container_user_t;
 typedef struct v1_container_user_t {
     struct v1_linux_container_user_t *_linux; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_container_user_t;
 
-v1_container_user_t *v1_container_user_create(
+__attribute__((deprecated)) v1_container_user_t *v1_container_user_create(
     v1_linux_container_user_t *_linux
 );
 

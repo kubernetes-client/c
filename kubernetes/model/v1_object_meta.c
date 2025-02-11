@@ -5,7 +5,7 @@
 
 
 
-v1_object_meta_t *v1_object_meta_create(
+static v1_object_meta_t *v1_object_meta_create_internal(
     list_t* annotations,
     char *creation_timestamp,
     long deletion_grace_period_seconds,
@@ -42,18 +42,58 @@ v1_object_meta_t *v1_object_meta_create(
     v1_object_meta_local_var->self_link = self_link;
     v1_object_meta_local_var->uid = uid;
 
+    v1_object_meta_local_var->_library_owned = 1;
     return v1_object_meta_local_var;
 }
 
+__attribute__((deprecated)) v1_object_meta_t *v1_object_meta_create(
+    list_t* annotations,
+    char *creation_timestamp,
+    long deletion_grace_period_seconds,
+    char *deletion_timestamp,
+    list_t *finalizers,
+    char *generate_name,
+    long generation,
+    list_t* labels,
+    list_t *managed_fields,
+    char *name,
+    char *_namespace,
+    list_t *owner_references,
+    char *resource_version,
+    char *self_link,
+    char *uid
+    ) {
+    return v1_object_meta_create_internal (
+        annotations,
+        creation_timestamp,
+        deletion_grace_period_seconds,
+        deletion_timestamp,
+        finalizers,
+        generate_name,
+        generation,
+        labels,
+        managed_fields,
+        name,
+        _namespace,
+        owner_references,
+        resource_version,
+        self_link,
+        uid
+        );
+}
 
 void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
     if(NULL == v1_object_meta){
         return ;
     }
+    if(v1_object_meta->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_object_meta_free");
+        return ;
+    }
     listEntry_t *listEntry;
     if (v1_object_meta->annotations) {
         list_ForEach(listEntry, v1_object_meta->annotations) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -82,7 +122,7 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
     }
     if (v1_object_meta->labels) {
         list_ForEach(listEntry, v1_object_meta->labels) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -140,8 +180,8 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
     listEntry_t *annotationsListEntry;
     if (v1_object_meta->annotations) {
     list_ForEach(annotationsListEntry, v1_object_meta->annotations) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)annotationsListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = annotationsListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -183,7 +223,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     listEntry_t *finalizersListEntry;
     list_ForEach(finalizersListEntry, v1_object_meta->finalizers) {
-    if(cJSON_AddStringToObject(finalizers, "", (char*)finalizersListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(finalizers, "", finalizersListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -217,8 +257,8 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
     listEntry_t *labelsListEntry;
     if (v1_object_meta->labels) {
     list_ForEach(labelsListEntry, v1_object_meta->labels) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)labelsListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = labelsListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -335,6 +375,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->annotations
     cJSON *annotations = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "annotations");
+    if (cJSON_IsNull(annotations)) {
+        annotations = NULL;
+    }
     if (annotations) { 
     cJSON *annotations_local_map = NULL;
     if(!cJSON_IsObject(annotations) && !cJSON_IsNull(annotations))
@@ -360,6 +403,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->creation_timestamp
     cJSON *creation_timestamp = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "creationTimestamp");
+    if (cJSON_IsNull(creation_timestamp)) {
+        creation_timestamp = NULL;
+    }
     if (creation_timestamp) { 
     if(!cJSON_IsString(creation_timestamp) && !cJSON_IsNull(creation_timestamp))
     {
@@ -369,6 +415,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->deletion_grace_period_seconds
     cJSON *deletion_grace_period_seconds = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "deletionGracePeriodSeconds");
+    if (cJSON_IsNull(deletion_grace_period_seconds)) {
+        deletion_grace_period_seconds = NULL;
+    }
     if (deletion_grace_period_seconds) { 
     if(!cJSON_IsNumber(deletion_grace_period_seconds))
     {
@@ -378,6 +427,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->deletion_timestamp
     cJSON *deletion_timestamp = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "deletionTimestamp");
+    if (cJSON_IsNull(deletion_timestamp)) {
+        deletion_timestamp = NULL;
+    }
     if (deletion_timestamp) { 
     if(!cJSON_IsString(deletion_timestamp) && !cJSON_IsNull(deletion_timestamp))
     {
@@ -387,6 +439,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->finalizers
     cJSON *finalizers = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "finalizers");
+    if (cJSON_IsNull(finalizers)) {
+        finalizers = NULL;
+    }
     if (finalizers) { 
     cJSON *finalizers_local = NULL;
     if(!cJSON_IsArray(finalizers)) {
@@ -406,6 +461,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->generate_name
     cJSON *generate_name = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "generateName");
+    if (cJSON_IsNull(generate_name)) {
+        generate_name = NULL;
+    }
     if (generate_name) { 
     if(!cJSON_IsString(generate_name) && !cJSON_IsNull(generate_name))
     {
@@ -415,6 +473,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->generation
     cJSON *generation = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "generation");
+    if (cJSON_IsNull(generation)) {
+        generation = NULL;
+    }
     if (generation) { 
     if(!cJSON_IsNumber(generation))
     {
@@ -424,6 +485,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->labels
     cJSON *labels = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "labels");
+    if (cJSON_IsNull(labels)) {
+        labels = NULL;
+    }
     if (labels) { 
     cJSON *labels_local_map = NULL;
     if(!cJSON_IsObject(labels) && !cJSON_IsNull(labels))
@@ -449,6 +513,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->managed_fields
     cJSON *managed_fields = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "managedFields");
+    if (cJSON_IsNull(managed_fields)) {
+        managed_fields = NULL;
+    }
     if (managed_fields) { 
     cJSON *managed_fields_local_nonprimitive = NULL;
     if(!cJSON_IsArray(managed_fields)){
@@ -470,6 +537,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -479,6 +549,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "namespace");
+    if (cJSON_IsNull(_namespace)) {
+        _namespace = NULL;
+    }
     if (_namespace) { 
     if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
@@ -488,6 +561,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->owner_references
     cJSON *owner_references = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "ownerReferences");
+    if (cJSON_IsNull(owner_references)) {
+        owner_references = NULL;
+    }
     if (owner_references) { 
     cJSON *owner_references_local_nonprimitive = NULL;
     if(!cJSON_IsArray(owner_references)){
@@ -509,6 +585,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->resource_version
     cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "resourceVersion");
+    if (cJSON_IsNull(resource_version)) {
+        resource_version = NULL;
+    }
     if (resource_version) { 
     if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
     {
@@ -518,6 +597,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->self_link
     cJSON *self_link = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "selfLink");
+    if (cJSON_IsNull(self_link)) {
+        self_link = NULL;
+    }
     if (self_link) { 
     if(!cJSON_IsString(self_link) && !cJSON_IsNull(self_link))
     {
@@ -527,6 +609,9 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     // v1_object_meta->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "uid");
+    if (cJSON_IsNull(uid)) {
+        uid = NULL;
+    }
     if (uid) { 
     if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
@@ -535,7 +620,7 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     }
 
 
-    v1_object_meta_local_var = v1_object_meta_create (
+    v1_object_meta_local_var = v1_object_meta_create_internal (
         annotations ? annotationsList : NULL,
         creation_timestamp && !cJSON_IsNull(creation_timestamp) ? strdup(creation_timestamp->valuestring) : NULL,
         deletion_grace_period_seconds ? deletion_grace_period_seconds->valuedouble : 0,
@@ -558,7 +643,7 @@ end:
     if (annotationsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, annotationsList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);
@@ -581,7 +666,7 @@ end:
     if (labelsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, labelsList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

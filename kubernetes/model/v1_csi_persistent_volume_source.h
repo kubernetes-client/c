@@ -1,7 +1,7 @@
 /*
  * v1_csi_persistent_volume_source.h
  *
- * Represents storage that is managed by an external CSI volume driver (Beta feature)
+ * Represents storage that is managed by an external CSI volume driver
  */
 
 #ifndef _v1_csi_persistent_volume_source_H_
@@ -31,9 +31,10 @@ typedef struct v1_csi_persistent_volume_source_t {
     list_t* volume_attributes; //map
     char *volume_handle; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_csi_persistent_volume_source_t;
 
-v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create(
+__attribute__((deprecated)) v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create(
     v1_secret_reference_t *controller_expand_secret_ref,
     v1_secret_reference_t *controller_publish_secret_ref,
     char *driver,

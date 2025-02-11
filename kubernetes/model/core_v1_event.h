@@ -41,9 +41,10 @@ typedef struct core_v1_event_t {
     struct v1_event_source_t *source; //model
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } core_v1_event_t;
 
-core_v1_event_t *core_v1_event_create(
+__attribute__((deprecated)) core_v1_event_t *core_v1_event_create(
     char *action,
     char *api_version,
     int count,

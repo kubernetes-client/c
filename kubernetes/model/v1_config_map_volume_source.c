@@ -5,7 +5,7 @@
 
 
 
-v1_config_map_volume_source_t *v1_config_map_volume_source_create(
+static v1_config_map_volume_source_t *v1_config_map_volume_source_create_internal(
     int default_mode,
     list_t *items,
     char *name,
@@ -20,12 +20,30 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_create(
     v1_config_map_volume_source_local_var->name = name;
     v1_config_map_volume_source_local_var->optional = optional;
 
+    v1_config_map_volume_source_local_var->_library_owned = 1;
     return v1_config_map_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_config_map_volume_source_t *v1_config_map_volume_source_create(
+    int default_mode,
+    list_t *items,
+    char *name,
+    int optional
+    ) {
+    return v1_config_map_volume_source_create_internal (
+        default_mode,
+        items,
+        name,
+        optional
+        );
+}
 
 void v1_config_map_volume_source_free(v1_config_map_volume_source_t *v1_config_map_volume_source) {
     if(NULL == v1_config_map_volume_source){
+        return ;
+    }
+    if(v1_config_map_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_config_map_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -106,6 +124,9 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
 
     // v1_config_map_volume_source->default_mode
     cJSON *default_mode = cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "defaultMode");
+    if (cJSON_IsNull(default_mode)) {
+        default_mode = NULL;
+    }
     if (default_mode) { 
     if(!cJSON_IsNumber(default_mode))
     {
@@ -115,6 +136,9 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
 
     // v1_config_map_volume_source->items
     cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "items");
+    if (cJSON_IsNull(items)) {
+        items = NULL;
+    }
     if (items) { 
     cJSON *items_local_nonprimitive = NULL;
     if(!cJSON_IsArray(items)){
@@ -136,6 +160,9 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
 
     // v1_config_map_volume_source->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -145,6 +172,9 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
 
     // v1_config_map_volume_source->optional
     cJSON *optional = cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "optional");
+    if (cJSON_IsNull(optional)) {
+        optional = NULL;
+    }
     if (optional) { 
     if(!cJSON_IsBool(optional))
     {
@@ -153,7 +183,7 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
     }
 
 
-    v1_config_map_volume_source_local_var = v1_config_map_volume_source_create (
+    v1_config_map_volume_source_local_var = v1_config_map_volume_source_create_internal (
         default_mode ? default_mode->valuedouble : 0,
         items ? itemsList : NULL,
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,

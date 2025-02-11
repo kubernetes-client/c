@@ -27,9 +27,10 @@ typedef struct v1_pod_affinity_term_t {
     list_t *namespaces; //primitive container
     char *topology_key; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_affinity_term_t;
 
-v1_pod_affinity_term_t *v1_pod_affinity_term_create(
+__attribute__((deprecated)) v1_pod_affinity_term_t *v1_pod_affinity_term_create(
     v1_label_selector_t *label_selector,
     list_t *match_label_keys,
     list_t *mismatch_label_keys,

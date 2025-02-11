@@ -5,11 +5,6 @@
 
 #define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
-#define intToStr(dst, src) \
-    do {\
-    char dst[256];\
-    snprintf(dst, 256, "%ld", (long int)(src));\
-}while(0)
 
 
 // create a LocalSubjectAccessReview
@@ -23,15 +18,20 @@ AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClie
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/authorization.k8s.io/v1/namespaces/{namespace}/localsubjectaccessreviews")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/authorization.k8s.io/v1/namespaces/{namespace}/localsubjectaccessreviews");
+    char *localVarPath = strdup("/apis/authorization.k8s.io/v1/namespaces/{namespace}/localsubjectaccessreviews");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -94,13 +94,15 @@ AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClie
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_local_subject_access_review_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -109,6 +111,7 @@ AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClie
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -128,11 +131,14 @@ AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClie
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_local_subject_access_review_t *elementToReturn = v1_local_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(AuthorizationV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_local_subject_access_review_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_local_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
+        cJSON_Delete(AuthorizationV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -219,11 +225,14 @@ AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/authorization.k8s.io/v1/selfsubjectaccessreviews")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/authorization.k8s.io/v1/selfsubjectaccessreviews");
+    char *localVarPath = strdup("/apis/authorization.k8s.io/v1/selfsubjectaccessreviews");
+
 
 
 
@@ -280,13 +289,15 @@ AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_self_subject_access_review_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -295,6 +306,7 @@ AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -314,11 +326,14 @@ AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_self_subject_access_review_t *elementToReturn = v1_self_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(AuthorizationV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_self_subject_access_review_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_self_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
+        cJSON_Delete(AuthorizationV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -404,11 +419,14 @@ AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/authorization.k8s.io/v1/selfsubjectrulesreviews")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/authorization.k8s.io/v1/selfsubjectrulesreviews");
+    char *localVarPath = strdup("/apis/authorization.k8s.io/v1/selfsubjectrulesreviews");
+
 
 
 
@@ -465,13 +483,15 @@ AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_self_subject_rules_review_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -480,6 +500,7 @@ AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -499,11 +520,14 @@ AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_self_subject_rules_review_t *elementToReturn = v1_self_subject_rules_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(AuthorizationV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_self_subject_rules_review_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_self_subject_rules_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
+        cJSON_Delete(AuthorizationV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -589,11 +613,14 @@ AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/authorization.k8s.io/v1/subjectaccessreviews")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/authorization.k8s.io/v1/subjectaccessreviews");
+    char *localVarPath = strdup("/apis/authorization.k8s.io/v1/subjectaccessreviews");
+
 
 
 
@@ -650,13 +677,15 @@ AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_subject_access_review_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -665,6 +694,7 @@ AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -684,11 +714,14 @@ AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_subject_access_review_t *elementToReturn = v1_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(AuthorizationV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_subject_access_review_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
+        cJSON_Delete(AuthorizationV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -766,7 +799,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-AuthorizationV1API_getAPIResources_9(apiClient_t *apiClient)
+AuthorizationV1API_getAPIResources(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -774,17 +807,21 @@ AuthorizationV1API_getAPIResources_9(apiClient_t *apiClient)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/authorization.k8s.io/v1/")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/authorization.k8s.io/v1/");
+    char *localVarPath = strdup("/apis/authorization.k8s.io/v1/");
+
 
 
 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -793,6 +830,7 @@ AuthorizationV1API_getAPIResources_9(apiClient_t *apiClient)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -804,11 +842,14 @@ AuthorizationV1API_getAPIResources_9(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(AuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(AuthorizationV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_api_resource_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_api_resource_list_parseFromJSON(AuthorizationV1APIlocalVarJSON);
+        cJSON_Delete(AuthorizationV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type

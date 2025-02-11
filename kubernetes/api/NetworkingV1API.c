@@ -5,11 +5,6 @@
 
 #define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
-#define intToStr(dst, src) \
-    do {\
-    char dst[256];\
-    snprintf(dst, 256, "%ld", (long int)(src));\
-}while(0)
 
 
 // create an IngressClass
@@ -23,11 +18,14 @@ NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t *b
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/ingressclasses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/ingressclasses");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/ingressclasses");
+
 
 
 
@@ -84,13 +82,15 @@ NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t *b
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_ingress_class_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -99,6 +99,7 @@ NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t *b
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -118,11 +119,14 @@ NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t *b
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_class_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -208,15 +212,20 @@ NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char *_namespace
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -279,13 +288,15 @@ NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char *_namespace
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_ingress_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -294,6 +305,7 @@ NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char *_namespace
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -313,11 +325,14 @@ NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char *_namespace
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -404,15 +419,20 @@ NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -475,13 +495,15 @@ NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char *_nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_network_policy_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -490,6 +512,7 @@ NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -509,11 +532,14 @@ NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_network_policy_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -592,7 +618,7 @@ end:
 // delete collection of IngressClass
 //
 v1_status_t*
-NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -600,11 +626,14 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *prett
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/ingressclasses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/ingressclasses");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/ingressclasses");
+
 
 
 
@@ -668,6 +697,19 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *prett
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -774,13 +816,15 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *prett
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -789,6 +833,7 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *prett
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -800,11 +845,14 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *prett
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -883,6 +931,18 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *prett
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -990,7 +1050,7 @@ end:
 // delete collection of Ingress
 //
 v1_status_t*
-NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -998,15 +1058,20 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1076,6 +1141,19 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -1182,13 +1260,15 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1197,6 +1277,7 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1208,11 +1289,14 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1292,6 +1376,18 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -1399,7 +1495,7 @@ end:
 // delete collection of NetworkPolicy
 //
 v1_status_t*
-NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1407,15 +1503,20 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1485,6 +1586,19 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -1591,13 +1705,15 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1606,6 +1722,7 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1617,11 +1734,14 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1701,6 +1821,18 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -1808,7 +1940,7 @@ end:
 // delete an IngressClass
 //
 v1_status_t*
-NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1816,15 +1948,20 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pre
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/ingressclasses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/ingressclasses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/ingressclasses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1873,6 +2010,19 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pre
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -1901,13 +2051,15 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pre
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1916,6 +2068,7 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pre
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1931,11 +2084,14 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pre
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1991,6 +2147,18 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pre
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -2026,7 +2194,7 @@ end:
 // delete an Ingress
 //
 v1_status_t*
-NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2034,15 +2202,22 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2052,7 +2227,7 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2101,6 +2276,19 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -2129,13 +2317,15 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2144,6 +2334,7 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -2159,11 +2350,14 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2220,6 +2414,18 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -2255,7 +2461,7 @@ end:
 // delete a NetworkPolicy
 //
 v1_status_t*
-NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2263,15 +2469,22 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2281,7 +2494,7 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2330,6 +2543,19 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -2358,13 +2584,15 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2373,6 +2601,7 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -2388,11 +2617,14 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2450,6 +2682,18 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
     }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
@@ -2484,7 +2728,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-NetworkingV1API_getAPIResources_22(apiClient_t *apiClient)
+NetworkingV1API_getAPIResources(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -2492,17 +2736,21 @@ NetworkingV1API_getAPIResources_22(apiClient_t *apiClient)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/");
+
 
 
 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2511,6 +2759,7 @@ NetworkingV1API_getAPIResources_22(apiClient_t *apiClient)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2522,11 +2771,14 @@ NetworkingV1API_getAPIResources_22(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_api_resource_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_api_resource_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2559,11 +2811,14 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char *pretty, int *allo
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/ingressclasses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/ingressclasses");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/ingressclasses");
+
 
 
 
@@ -2707,8 +2962,10 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char *pretty, int *allo
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2717,6 +2974,7 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char *pretty, int *allo
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2728,11 +2986,14 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char *pretty, int *allo
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_class_list_t *elementToReturn = v1_ingress_class_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_class_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_class_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2897,11 +3158,14 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int *allowWa
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/ingresses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/ingresses");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/ingresses");
+
 
 
 
@@ -3045,8 +3309,10 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int *allowWa
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3055,6 +3321,7 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int *allowWa
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -3066,11 +3333,14 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int *allowWa
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_list_t *elementToReturn = v1_ingress_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3235,15 +3505,20 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char *_namespace, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -3393,8 +3668,10 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char *_namespace, 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3403,6 +3680,7 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char *_namespace, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -3414,11 +3692,14 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char *_namespace, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_list_t *elementToReturn = v1_ingress_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3584,15 +3865,20 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char *_names
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -3742,8 +4028,10 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char *_names
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3752,6 +4040,7 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char *_names
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -3763,11 +4052,14 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char *_names
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_network_policy_list_t *elementToReturn = v1_network_policy_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_network_policy_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_network_policy_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3933,11 +4225,14 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int *a
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/networkpolicies")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/networkpolicies");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/networkpolicies");
+
 
 
 
@@ -4081,8 +4376,10 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int *a
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -4091,6 +4388,7 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int *a
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -4102,11 +4400,14 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int *a
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_network_policy_list_t *elementToReturn = v1_network_policy_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_network_policy_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_network_policy_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4271,15 +4572,20 @@ NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char *name, object_t *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/ingressclasses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/ingressclasses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/ingressclasses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4355,17 +4661,20 @@ NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char *name, object_t *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -4374,6 +4683,7 @@ NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char *name, object_t *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -4389,11 +4699,14 @@ NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char *name, object_t *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_class_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4492,15 +4805,22 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char *name, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4510,7 +4830,7 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char *name, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -4586,17 +4906,20 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char *name, char 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -4605,6 +4928,7 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char *name, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -4620,11 +4944,14 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char *name, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4724,15 +5051,22 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *name,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}/status");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4742,7 +5076,7 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *name,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -4818,17 +5152,20 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *name,
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -4837,6 +5174,7 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *name,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -4852,11 +5190,14 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *name,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4956,15 +5297,22 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *name,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4974,7 +5322,7 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *name,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5050,17 +5398,20 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *name,
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5069,6 +5420,7 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *name,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -5084,11 +5436,14 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *name,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_network_policy_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5188,15 +5543,20 @@ NetworkingV1API_readIngressClass(apiClient_t *apiClient, char *name, char *prett
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/ingressclasses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/ingressclasses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/ingressclasses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5221,6 +5581,7 @@ NetworkingV1API_readIngressClass(apiClient_t *apiClient, char *name, char *prett
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5229,6 +5590,7 @@ NetworkingV1API_readIngressClass(apiClient_t *apiClient, char *name, char *prett
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -5240,11 +5602,14 @@ NetworkingV1API_readIngressClass(apiClient_t *apiClient, char *name, char *prett
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_class_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5290,15 +5655,22 @@ NetworkingV1API_readNamespacedIngress(apiClient_t *apiClient, char *name, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5308,7 +5680,7 @@ NetworkingV1API_readNamespacedIngress(apiClient_t *apiClient, char *name, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5333,6 +5705,7 @@ NetworkingV1API_readNamespacedIngress(apiClient_t *apiClient, char *name, char *
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5341,6 +5714,7 @@ NetworkingV1API_readNamespacedIngress(apiClient_t *apiClient, char *name, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -5352,11 +5726,14 @@ NetworkingV1API_readNamespacedIngress(apiClient_t *apiClient, char *name, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5403,15 +5780,22 @@ NetworkingV1API_readNamespacedIngressStatus(apiClient_t *apiClient, char *name, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}/status");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5421,7 +5805,7 @@ NetworkingV1API_readNamespacedIngressStatus(apiClient_t *apiClient, char *name, 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5446,6 +5830,7 @@ NetworkingV1API_readNamespacedIngressStatus(apiClient_t *apiClient, char *name, 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5454,6 +5839,7 @@ NetworkingV1API_readNamespacedIngressStatus(apiClient_t *apiClient, char *name, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -5465,11 +5851,14 @@ NetworkingV1API_readNamespacedIngressStatus(apiClient_t *apiClient, char *name, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5516,15 +5905,22 @@ NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5534,7 +5930,7 @@ NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5559,6 +5955,7 @@ NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5567,6 +5964,7 @@ NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -5578,11 +5976,14 @@ NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_network_policy_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5629,15 +6030,20 @@ NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char *name, v1_ingre
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/ingressclasses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/ingressclasses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/ingressclasses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5700,13 +6106,15 @@ NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char *name, v1_ingre
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_ingress_class_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5715,6 +6123,7 @@ NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char *name, v1_ingre
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5730,11 +6139,14 @@ NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char *name, v1_ingre
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_class_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5821,15 +6233,22 @@ NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char *name, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5839,7 +6258,7 @@ NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char *name, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5902,13 +6321,15 @@ NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char *name, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_ingress_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5917,6 +6338,7 @@ NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char *name, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5932,11 +6354,14 @@ NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char *name, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -6024,15 +6449,22 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char *nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}/status");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -6042,7 +6474,7 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -6105,13 +6537,15 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char *nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_ingress_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -6120,6 +6554,7 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char *nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -6135,11 +6570,14 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char *nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_ingress_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -6227,15 +6665,22 @@ NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char *nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}");
+    char *localVarPath = strdup("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -6245,7 +6690,7 @@ NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -6308,13 +6753,15 @@ NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char *nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_network_policy_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -6323,6 +6770,7 @@ NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char *nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -6338,11 +6786,14 @@ NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char *nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_network_policy_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
+        cJSON_Delete(NetworkingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type

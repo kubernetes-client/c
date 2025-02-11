@@ -23,9 +23,10 @@ typedef struct v2_metric_value_status_t {
     char *average_value; // string
     char *value; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v2_metric_value_status_t;
 
-v2_metric_value_status_t *v2_metric_value_status_create(
+__attribute__((deprecated)) v2_metric_value_status_t *v2_metric_value_status_create(
     int average_utilization,
     char *average_value,
     char *value

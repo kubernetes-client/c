@@ -5,7 +5,7 @@
 
 
 
-v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_create(
+static v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_create_internal(
     list_t *from,
     list_t *ports
     ) {
@@ -16,12 +16,26 @@ v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_create(
     v1_network_policy_ingress_rule_local_var->from = from;
     v1_network_policy_ingress_rule_local_var->ports = ports;
 
+    v1_network_policy_ingress_rule_local_var->_library_owned = 1;
     return v1_network_policy_ingress_rule_local_var;
 }
 
+__attribute__((deprecated)) v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_create(
+    list_t *from,
+    list_t *ports
+    ) {
+    return v1_network_policy_ingress_rule_create_internal (
+        from,
+        ports
+        );
+}
 
 void v1_network_policy_ingress_rule_free(v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule) {
     if(NULL == v1_network_policy_ingress_rule){
+        return ;
+    }
+    if(v1_network_policy_ingress_rule->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_network_policy_ingress_rule_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -104,6 +118,9 @@ v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(c
 
     // v1_network_policy_ingress_rule->from
     cJSON *from = cJSON_GetObjectItemCaseSensitive(v1_network_policy_ingress_ruleJSON, "from");
+    if (cJSON_IsNull(from)) {
+        from = NULL;
+    }
     if (from) { 
     cJSON *from_local_nonprimitive = NULL;
     if(!cJSON_IsArray(from)){
@@ -125,6 +142,9 @@ v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(c
 
     // v1_network_policy_ingress_rule->ports
     cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_network_policy_ingress_ruleJSON, "ports");
+    if (cJSON_IsNull(ports)) {
+        ports = NULL;
+    }
     if (ports) { 
     cJSON *ports_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ports)){
@@ -145,7 +165,7 @@ v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(c
     }
 
 
-    v1_network_policy_ingress_rule_local_var = v1_network_policy_ingress_rule_create (
+    v1_network_policy_ingress_rule_local_var = v1_network_policy_ingress_rule_create_internal (
         from ? fromList : NULL,
         ports ? portsList : NULL
         );

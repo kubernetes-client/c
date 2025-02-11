@@ -29,9 +29,10 @@ typedef struct v1_csi_driver_spec_t {
     list_t *token_requests; //nonprimitive container
     list_t *volume_lifecycle_modes; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_csi_driver_spec_t;
 
-v1_csi_driver_spec_t *v1_csi_driver_spec_create(
+__attribute__((deprecated)) v1_csi_driver_spec_t *v1_csi_driver_spec_create(
     int attach_required,
     char *fs_group_policy,
     int pod_info_on_mount,

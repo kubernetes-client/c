@@ -5,7 +5,7 @@
 
 
 
-v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_create(
+static v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_create_internal(
     char *client_cidr,
     char *server_address
     ) {
@@ -16,12 +16,26 @@ v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_create(
     v1_server_address_by_client_cidr_local_var->client_cidr = client_cidr;
     v1_server_address_by_client_cidr_local_var->server_address = server_address;
 
+    v1_server_address_by_client_cidr_local_var->_library_owned = 1;
     return v1_server_address_by_client_cidr_local_var;
 }
 
+__attribute__((deprecated)) v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_create(
+    char *client_cidr,
+    char *server_address
+    ) {
+    return v1_server_address_by_client_cidr_create_internal (
+        client_cidr,
+        server_address
+        );
+}
 
 void v1_server_address_by_client_cidr_free(v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr) {
     if(NULL == v1_server_address_by_client_cidr){
+        return ;
+    }
+    if(v1_server_address_by_client_cidr->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_server_address_by_client_cidr_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -70,6 +84,9 @@ v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_parseFromJS
 
     // v1_server_address_by_client_cidr->client_cidr
     cJSON *client_cidr = cJSON_GetObjectItemCaseSensitive(v1_server_address_by_client_cidrJSON, "clientCIDR");
+    if (cJSON_IsNull(client_cidr)) {
+        client_cidr = NULL;
+    }
     if (!client_cidr) {
         goto end;
     }
@@ -82,6 +99,9 @@ v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_parseFromJS
 
     // v1_server_address_by_client_cidr->server_address
     cJSON *server_address = cJSON_GetObjectItemCaseSensitive(v1_server_address_by_client_cidrJSON, "serverAddress");
+    if (cJSON_IsNull(server_address)) {
+        server_address = NULL;
+    }
     if (!server_address) {
         goto end;
     }
@@ -93,7 +113,7 @@ v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_parseFromJS
     }
 
 
-    v1_server_address_by_client_cidr_local_var = v1_server_address_by_client_cidr_create (
+    v1_server_address_by_client_cidr_local_var = v1_server_address_by_client_cidr_create_internal (
         strdup(client_cidr->valuestring),
         strdup(server_address->valuestring)
         );

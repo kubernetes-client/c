@@ -22,9 +22,10 @@ typedef struct v1alpha3_device_class_configuration_t v1alpha3_device_class_confi
 typedef struct v1alpha3_device_class_configuration_t {
     struct v1alpha3_opaque_device_configuration_t *opaque; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_class_configuration_t;
 
-v1alpha3_device_class_configuration_t *v1alpha3_device_class_configuration_create(
+__attribute__((deprecated)) v1alpha3_device_class_configuration_t *v1alpha3_device_class_configuration_create(
     v1alpha3_opaque_device_configuration_t *opaque
 );
 

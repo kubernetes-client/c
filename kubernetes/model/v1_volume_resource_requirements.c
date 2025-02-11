@@ -5,7 +5,7 @@
 
 
 
-v1_volume_resource_requirements_t *v1_volume_resource_requirements_create(
+static v1_volume_resource_requirements_t *v1_volume_resource_requirements_create_internal(
     list_t* limits,
     list_t* requests
     ) {
@@ -16,18 +16,32 @@ v1_volume_resource_requirements_t *v1_volume_resource_requirements_create(
     v1_volume_resource_requirements_local_var->limits = limits;
     v1_volume_resource_requirements_local_var->requests = requests;
 
+    v1_volume_resource_requirements_local_var->_library_owned = 1;
     return v1_volume_resource_requirements_local_var;
 }
 
+__attribute__((deprecated)) v1_volume_resource_requirements_t *v1_volume_resource_requirements_create(
+    list_t* limits,
+    list_t* requests
+    ) {
+    return v1_volume_resource_requirements_create_internal (
+        limits,
+        requests
+        );
+}
 
 void v1_volume_resource_requirements_free(v1_volume_resource_requirements_t *v1_volume_resource_requirements) {
     if(NULL == v1_volume_resource_requirements){
         return ;
     }
+    if(v1_volume_resource_requirements->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_volume_resource_requirements_free");
+        return ;
+    }
     listEntry_t *listEntry;
     if (v1_volume_resource_requirements->limits) {
         list_ForEach(listEntry, v1_volume_resource_requirements->limits) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -37,7 +51,7 @@ void v1_volume_resource_requirements_free(v1_volume_resource_requirements_t *v1_
     }
     if (v1_volume_resource_requirements->requests) {
         list_ForEach(listEntry, v1_volume_resource_requirements->requests) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -61,8 +75,8 @@ cJSON *v1_volume_resource_requirements_convertToJSON(v1_volume_resource_requirem
     listEntry_t *limitsListEntry;
     if (v1_volume_resource_requirements->limits) {
     list_ForEach(limitsListEntry, v1_volume_resource_requirements->limits) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)limitsListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = limitsListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -81,8 +95,8 @@ cJSON *v1_volume_resource_requirements_convertToJSON(v1_volume_resource_requirem
     listEntry_t *requestsListEntry;
     if (v1_volume_resource_requirements->requests) {
     list_ForEach(requestsListEntry, v1_volume_resource_requirements->requests) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)requestsListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = requestsListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -110,6 +124,9 @@ v1_volume_resource_requirements_t *v1_volume_resource_requirements_parseFromJSON
 
     // v1_volume_resource_requirements->limits
     cJSON *limits = cJSON_GetObjectItemCaseSensitive(v1_volume_resource_requirementsJSON, "limits");
+    if (cJSON_IsNull(limits)) {
+        limits = NULL;
+    }
     if (limits) { 
     cJSON *limits_local_map = NULL;
     if(!cJSON_IsObject(limits) && !cJSON_IsNull(limits))
@@ -135,6 +152,9 @@ v1_volume_resource_requirements_t *v1_volume_resource_requirements_parseFromJSON
 
     // v1_volume_resource_requirements->requests
     cJSON *requests = cJSON_GetObjectItemCaseSensitive(v1_volume_resource_requirementsJSON, "requests");
+    if (cJSON_IsNull(requests)) {
+        requests = NULL;
+    }
     if (requests) { 
     cJSON *requests_local_map = NULL;
     if(!cJSON_IsObject(requests) && !cJSON_IsNull(requests))
@@ -159,7 +179,7 @@ v1_volume_resource_requirements_t *v1_volume_resource_requirements_parseFromJSON
     }
 
 
-    v1_volume_resource_requirements_local_var = v1_volume_resource_requirements_create (
+    v1_volume_resource_requirements_local_var = v1_volume_resource_requirements_create_internal (
         limits ? limitsList : NULL,
         requests ? requestsList : NULL
         );
@@ -169,7 +189,7 @@ end:
     if (limitsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, limitsList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);
@@ -183,7 +203,7 @@ end:
     if (requestsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, requestsList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

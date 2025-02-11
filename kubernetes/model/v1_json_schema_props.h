@@ -67,9 +67,10 @@ typedef struct v1_json_schema_props_t {
     int x_kubernetes_preserve_unknown_fields; //boolean
     list_t *x_kubernetes_validations; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_json_schema_props_t;
 
-v1_json_schema_props_t *v1_json_schema_props_create(
+__attribute__((deprecated)) v1_json_schema_props_t *v1_json_schema_props_create(
     char *ref,
     char *schema,
     object_t *additional_items,

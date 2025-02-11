@@ -5,7 +5,7 @@
 
 
 
-v1_job_status_t *v1_job_status_create(
+static v1_job_status_t *v1_job_status_create_internal(
     int active,
     char *completed_indexes,
     char *completion_time,
@@ -34,12 +34,44 @@ v1_job_status_t *v1_job_status_create(
     v1_job_status_local_var->terminating = terminating;
     v1_job_status_local_var->uncounted_terminated_pods = uncounted_terminated_pods;
 
+    v1_job_status_local_var->_library_owned = 1;
     return v1_job_status_local_var;
 }
 
+__attribute__((deprecated)) v1_job_status_t *v1_job_status_create(
+    int active,
+    char *completed_indexes,
+    char *completion_time,
+    list_t *conditions,
+    int failed,
+    char *failed_indexes,
+    int ready,
+    char *start_time,
+    int succeeded,
+    int terminating,
+    v1_uncounted_terminated_pods_t *uncounted_terminated_pods
+    ) {
+    return v1_job_status_create_internal (
+        active,
+        completed_indexes,
+        completion_time,
+        conditions,
+        failed,
+        failed_indexes,
+        ready,
+        start_time,
+        succeeded,
+        terminating,
+        uncounted_terminated_pods
+        );
+}
 
 void v1_job_status_free(v1_job_status_t *v1_job_status) {
     if(NULL == v1_job_status){
+        return ;
+    }
+    if(v1_job_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_job_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -200,6 +232,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->active
     cJSON *active = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "active");
+    if (cJSON_IsNull(active)) {
+        active = NULL;
+    }
     if (active) { 
     if(!cJSON_IsNumber(active))
     {
@@ -209,6 +244,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->completed_indexes
     cJSON *completed_indexes = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "completedIndexes");
+    if (cJSON_IsNull(completed_indexes)) {
+        completed_indexes = NULL;
+    }
     if (completed_indexes) { 
     if(!cJSON_IsString(completed_indexes) && !cJSON_IsNull(completed_indexes))
     {
@@ -218,6 +256,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->completion_time
     cJSON *completion_time = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "completionTime");
+    if (cJSON_IsNull(completion_time)) {
+        completion_time = NULL;
+    }
     if (completion_time) { 
     if(!cJSON_IsString(completion_time) && !cJSON_IsNull(completion_time))
     {
@@ -227,6 +268,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -248,6 +292,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->failed
     cJSON *failed = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "failed");
+    if (cJSON_IsNull(failed)) {
+        failed = NULL;
+    }
     if (failed) { 
     if(!cJSON_IsNumber(failed))
     {
@@ -257,6 +304,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->failed_indexes
     cJSON *failed_indexes = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "failedIndexes");
+    if (cJSON_IsNull(failed_indexes)) {
+        failed_indexes = NULL;
+    }
     if (failed_indexes) { 
     if(!cJSON_IsString(failed_indexes) && !cJSON_IsNull(failed_indexes))
     {
@@ -266,6 +316,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->ready
     cJSON *ready = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "ready");
+    if (cJSON_IsNull(ready)) {
+        ready = NULL;
+    }
     if (ready) { 
     if(!cJSON_IsNumber(ready))
     {
@@ -275,6 +328,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->start_time
     cJSON *start_time = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "startTime");
+    if (cJSON_IsNull(start_time)) {
+        start_time = NULL;
+    }
     if (start_time) { 
     if(!cJSON_IsString(start_time) && !cJSON_IsNull(start_time))
     {
@@ -284,6 +340,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->succeeded
     cJSON *succeeded = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "succeeded");
+    if (cJSON_IsNull(succeeded)) {
+        succeeded = NULL;
+    }
     if (succeeded) { 
     if(!cJSON_IsNumber(succeeded))
     {
@@ -293,6 +352,9 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->terminating
     cJSON *terminating = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "terminating");
+    if (cJSON_IsNull(terminating)) {
+        terminating = NULL;
+    }
     if (terminating) { 
     if(!cJSON_IsNumber(terminating))
     {
@@ -302,12 +364,15 @@ v1_job_status_t *v1_job_status_parseFromJSON(cJSON *v1_job_statusJSON){
 
     // v1_job_status->uncounted_terminated_pods
     cJSON *uncounted_terminated_pods = cJSON_GetObjectItemCaseSensitive(v1_job_statusJSON, "uncountedTerminatedPods");
+    if (cJSON_IsNull(uncounted_terminated_pods)) {
+        uncounted_terminated_pods = NULL;
+    }
     if (uncounted_terminated_pods) { 
     uncounted_terminated_pods_local_nonprim = v1_uncounted_terminated_pods_parseFromJSON(uncounted_terminated_pods); //nonprimitive
     }
 
 
-    v1_job_status_local_var = v1_job_status_create (
+    v1_job_status_local_var = v1_job_status_create_internal (
         active ? active->valuedouble : 0,
         completed_indexes && !cJSON_IsNull(completed_indexes) ? strdup(completed_indexes->valuestring) : NULL,
         completion_time && !cJSON_IsNull(completion_time) ? strdup(completion_time->valuestring) : NULL,

@@ -5,7 +5,7 @@
 
 
 
-v1_http_get_action_t *v1_http_get_action_create(
+static v1_http_get_action_t *v1_http_get_action_create_internal(
     char *host,
     list_t *http_headers,
     char *path,
@@ -22,12 +22,32 @@ v1_http_get_action_t *v1_http_get_action_create(
     v1_http_get_action_local_var->port = port;
     v1_http_get_action_local_var->scheme = scheme;
 
+    v1_http_get_action_local_var->_library_owned = 1;
     return v1_http_get_action_local_var;
 }
 
+__attribute__((deprecated)) v1_http_get_action_t *v1_http_get_action_create(
+    char *host,
+    list_t *http_headers,
+    char *path,
+    int_or_string_t *port,
+    char *scheme
+    ) {
+    return v1_http_get_action_create_internal (
+        host,
+        http_headers,
+        path,
+        port,
+        scheme
+        );
+}
 
 void v1_http_get_action_free(v1_http_get_action_t *v1_http_get_action) {
     if(NULL == v1_http_get_action){
+        return ;
+    }
+    if(v1_http_get_action->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_http_get_action_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -137,6 +157,9 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
     // v1_http_get_action->host
     cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "host");
+    if (cJSON_IsNull(host)) {
+        host = NULL;
+    }
     if (host) { 
     if(!cJSON_IsString(host) && !cJSON_IsNull(host))
     {
@@ -146,6 +169,9 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
     // v1_http_get_action->http_headers
     cJSON *http_headers = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "httpHeaders");
+    if (cJSON_IsNull(http_headers)) {
+        http_headers = NULL;
+    }
     if (http_headers) { 
     cJSON *http_headers_local_nonprimitive = NULL;
     if(!cJSON_IsArray(http_headers)){
@@ -167,6 +193,9 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
     // v1_http_get_action->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "path");
+    if (cJSON_IsNull(path)) {
+        path = NULL;
+    }
     if (path) { 
     if(!cJSON_IsString(path) && !cJSON_IsNull(path))
     {
@@ -176,6 +205,9 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
     // v1_http_get_action->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "port");
+    if (cJSON_IsNull(port)) {
+        port = NULL;
+    }
     if (!port) {
         goto end;
     }
@@ -185,6 +217,9 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
     // v1_http_get_action->scheme
     cJSON *scheme = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "scheme");
+    if (cJSON_IsNull(scheme)) {
+        scheme = NULL;
+    }
     if (scheme) { 
     if(!cJSON_IsString(scheme) && !cJSON_IsNull(scheme))
     {
@@ -193,7 +228,7 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
     }
 
 
-    v1_http_get_action_local_var = v1_http_get_action_create (
+    v1_http_get_action_local_var = v1_http_get_action_create_internal (
         host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
         http_headers ? http_headersList : NULL,
         path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,

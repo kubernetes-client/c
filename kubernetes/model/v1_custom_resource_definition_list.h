@@ -26,9 +26,10 @@ typedef struct v1_custom_resource_definition_list_t {
     char *kind; // string
     struct v1_list_meta_t *metadata; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_custom_resource_definition_list_t;
 
-v1_custom_resource_definition_list_t *v1_custom_resource_definition_list_create(
+__attribute__((deprecated)) v1_custom_resource_definition_list_t *v1_custom_resource_definition_list_create(
     char *api_version,
     list_t *items,
     char *kind,

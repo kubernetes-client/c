@@ -23,9 +23,10 @@ typedef struct v2_hpa_scaling_policy_t {
     char *type; // string
     int value; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v2_hpa_scaling_policy_t;
 
-v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_create(
+__attribute__((deprecated)) v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_create(
     int period_seconds,
     char *type,
     int value

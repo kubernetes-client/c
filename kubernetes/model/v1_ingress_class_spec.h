@@ -23,9 +23,10 @@ typedef struct v1_ingress_class_spec_t {
     char *controller; // string
     struct v1_ingress_class_parameters_reference_t *parameters; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ingress_class_spec_t;
 
-v1_ingress_class_spec_t *v1_ingress_class_spec_create(
+__attribute__((deprecated)) v1_ingress_class_spec_t *v1_ingress_class_spec_create(
     char *controller,
     v1_ingress_class_parameters_reference_t *parameters
 );

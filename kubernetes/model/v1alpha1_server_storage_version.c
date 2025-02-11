@@ -5,7 +5,7 @@
 
 
 
-v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_create(
+static v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_create_internal(
     char *api_server_id,
     list_t *decodable_versions,
     char *encoding_version,
@@ -20,12 +20,30 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_create(
     v1alpha1_server_storage_version_local_var->encoding_version = encoding_version;
     v1alpha1_server_storage_version_local_var->served_versions = served_versions;
 
+    v1alpha1_server_storage_version_local_var->_library_owned = 1;
     return v1alpha1_server_storage_version_local_var;
 }
 
+__attribute__((deprecated)) v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_create(
+    char *api_server_id,
+    list_t *decodable_versions,
+    char *encoding_version,
+    list_t *served_versions
+    ) {
+    return v1alpha1_server_storage_version_create_internal (
+        api_server_id,
+        decodable_versions,
+        encoding_version,
+        served_versions
+        );
+}
 
 void v1alpha1_server_storage_version_free(v1alpha1_server_storage_version_t *v1alpha1_server_storage_version) {
     if(NULL == v1alpha1_server_storage_version){
+        return ;
+    }
+    if(v1alpha1_server_storage_version->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha1_server_storage_version_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -74,7 +92,7 @@ cJSON *v1alpha1_server_storage_version_convertToJSON(v1alpha1_server_storage_ver
 
     listEntry_t *decodable_versionsListEntry;
     list_ForEach(decodable_versionsListEntry, v1alpha1_server_storage_version->decodable_versions) {
-    if(cJSON_AddStringToObject(decodable_versions, "", (char*)decodable_versionsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(decodable_versions, "", decodable_versionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -99,7 +117,7 @@ cJSON *v1alpha1_server_storage_version_convertToJSON(v1alpha1_server_storage_ver
 
     listEntry_t *served_versionsListEntry;
     list_ForEach(served_versionsListEntry, v1alpha1_server_storage_version->served_versions) {
-    if(cJSON_AddStringToObject(served_versions, "", (char*)served_versionsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(served_versions, "", served_versionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -126,6 +144,9 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
 
     // v1alpha1_server_storage_version->api_server_id
     cJSON *api_server_id = cJSON_GetObjectItemCaseSensitive(v1alpha1_server_storage_versionJSON, "apiServerID");
+    if (cJSON_IsNull(api_server_id)) {
+        api_server_id = NULL;
+    }
     if (api_server_id) { 
     if(!cJSON_IsString(api_server_id) && !cJSON_IsNull(api_server_id))
     {
@@ -135,6 +156,9 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
 
     // v1alpha1_server_storage_version->decodable_versions
     cJSON *decodable_versions = cJSON_GetObjectItemCaseSensitive(v1alpha1_server_storage_versionJSON, "decodableVersions");
+    if (cJSON_IsNull(decodable_versions)) {
+        decodable_versions = NULL;
+    }
     if (decodable_versions) { 
     cJSON *decodable_versions_local = NULL;
     if(!cJSON_IsArray(decodable_versions)) {
@@ -154,6 +178,9 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
 
     // v1alpha1_server_storage_version->encoding_version
     cJSON *encoding_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_server_storage_versionJSON, "encodingVersion");
+    if (cJSON_IsNull(encoding_version)) {
+        encoding_version = NULL;
+    }
     if (encoding_version) { 
     if(!cJSON_IsString(encoding_version) && !cJSON_IsNull(encoding_version))
     {
@@ -163,6 +190,9 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
 
     // v1alpha1_server_storage_version->served_versions
     cJSON *served_versions = cJSON_GetObjectItemCaseSensitive(v1alpha1_server_storage_versionJSON, "servedVersions");
+    if (cJSON_IsNull(served_versions)) {
+        served_versions = NULL;
+    }
     if (served_versions) { 
     cJSON *served_versions_local = NULL;
     if(!cJSON_IsArray(served_versions)) {
@@ -181,7 +211,7 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
     }
 
 
-    v1alpha1_server_storage_version_local_var = v1alpha1_server_storage_version_create (
+    v1alpha1_server_storage_version_local_var = v1alpha1_server_storage_version_create_internal (
         api_server_id && !cJSON_IsNull(api_server_id) ? strdup(api_server_id->valuestring) : NULL,
         decodable_versions ? decodable_versionsList : NULL,
         encoding_version && !cJSON_IsNull(encoding_version) ? strdup(encoding_version->valuestring) : NULL,

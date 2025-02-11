@@ -27,9 +27,10 @@ typedef struct v1_lease_spec_t {
     char *renew_time; //date time
     char *strategy; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_lease_spec_t;
 
-v1_lease_spec_t *v1_lease_spec_create(
+__attribute__((deprecated)) v1_lease_spec_t *v1_lease_spec_create(
     char *acquire_time,
     char *holder_identity,
     int lease_duration_seconds,

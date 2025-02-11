@@ -5,7 +5,7 @@
 
 
 
-v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_create(
+static v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_create_internal(
     list_t *categories,
     char *kind,
     char *list_kind,
@@ -24,12 +24,34 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_creat
     v1_custom_resource_definition_names_local_var->short_names = short_names;
     v1_custom_resource_definition_names_local_var->singular = singular;
 
+    v1_custom_resource_definition_names_local_var->_library_owned = 1;
     return v1_custom_resource_definition_names_local_var;
 }
 
+__attribute__((deprecated)) v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_create(
+    list_t *categories,
+    char *kind,
+    char *list_kind,
+    char *plural,
+    list_t *short_names,
+    char *singular
+    ) {
+    return v1_custom_resource_definition_names_create_internal (
+        categories,
+        kind,
+        list_kind,
+        plural,
+        short_names,
+        singular
+        );
+}
 
 void v1_custom_resource_definition_names_free(v1_custom_resource_definition_names_t *v1_custom_resource_definition_names) {
     if(NULL == v1_custom_resource_definition_names){
+        return ;
+    }
+    if(v1_custom_resource_definition_names->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_custom_resource_definition_names_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -78,7 +100,7 @@ cJSON *v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_defi
 
     listEntry_t *categoriesListEntry;
     list_ForEach(categoriesListEntry, v1_custom_resource_definition_names->categories) {
-    if(cJSON_AddStringToObject(categories, "", (char*)categoriesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(categories, "", categoriesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -121,7 +143,7 @@ cJSON *v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_defi
 
     listEntry_t *short_namesListEntry;
     list_ForEach(short_namesListEntry, v1_custom_resource_definition_names->short_names) {
-    if(cJSON_AddStringToObject(short_names, "", (char*)short_namesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(short_names, "", short_namesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -156,6 +178,9 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
 
     // v1_custom_resource_definition_names->categories
     cJSON *categories = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_namesJSON, "categories");
+    if (cJSON_IsNull(categories)) {
+        categories = NULL;
+    }
     if (categories) { 
     cJSON *categories_local = NULL;
     if(!cJSON_IsArray(categories)) {
@@ -175,6 +200,9 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
 
     // v1_custom_resource_definition_names->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_namesJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (!kind) {
         goto end;
     }
@@ -187,6 +215,9 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
 
     // v1_custom_resource_definition_names->list_kind
     cJSON *list_kind = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_namesJSON, "listKind");
+    if (cJSON_IsNull(list_kind)) {
+        list_kind = NULL;
+    }
     if (list_kind) { 
     if(!cJSON_IsString(list_kind) && !cJSON_IsNull(list_kind))
     {
@@ -196,6 +227,9 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
 
     // v1_custom_resource_definition_names->plural
     cJSON *plural = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_namesJSON, "plural");
+    if (cJSON_IsNull(plural)) {
+        plural = NULL;
+    }
     if (!plural) {
         goto end;
     }
@@ -208,6 +242,9 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
 
     // v1_custom_resource_definition_names->short_names
     cJSON *short_names = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_namesJSON, "shortNames");
+    if (cJSON_IsNull(short_names)) {
+        short_names = NULL;
+    }
     if (short_names) { 
     cJSON *short_names_local = NULL;
     if(!cJSON_IsArray(short_names)) {
@@ -227,6 +264,9 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
 
     // v1_custom_resource_definition_names->singular
     cJSON *singular = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_namesJSON, "singular");
+    if (cJSON_IsNull(singular)) {
+        singular = NULL;
+    }
     if (singular) { 
     if(!cJSON_IsString(singular) && !cJSON_IsNull(singular))
     {
@@ -235,7 +275,7 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
     }
 
 
-    v1_custom_resource_definition_names_local_var = v1_custom_resource_definition_names_create (
+    v1_custom_resource_definition_names_local_var = v1_custom_resource_definition_names_create_internal (
         categories ? categoriesList : NULL,
         strdup(kind->valuestring),
         list_kind && !cJSON_IsNull(list_kind) ? strdup(list_kind->valuestring) : NULL,

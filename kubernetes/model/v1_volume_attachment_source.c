@@ -5,7 +5,7 @@
 
 
 
-v1_volume_attachment_source_t *v1_volume_attachment_source_create(
+static v1_volume_attachment_source_t *v1_volume_attachment_source_create_internal(
     v1_persistent_volume_spec_t *inline_volume_spec,
     char *persistent_volume_name
     ) {
@@ -16,12 +16,26 @@ v1_volume_attachment_source_t *v1_volume_attachment_source_create(
     v1_volume_attachment_source_local_var->inline_volume_spec = inline_volume_spec;
     v1_volume_attachment_source_local_var->persistent_volume_name = persistent_volume_name;
 
+    v1_volume_attachment_source_local_var->_library_owned = 1;
     return v1_volume_attachment_source_local_var;
 }
 
+__attribute__((deprecated)) v1_volume_attachment_source_t *v1_volume_attachment_source_create(
+    v1_persistent_volume_spec_t *inline_volume_spec,
+    char *persistent_volume_name
+    ) {
+    return v1_volume_attachment_source_create_internal (
+        inline_volume_spec,
+        persistent_volume_name
+        );
+}
 
 void v1_volume_attachment_source_free(v1_volume_attachment_source_t *v1_volume_attachment_source) {
     if(NULL == v1_volume_attachment_source){
+        return ;
+    }
+    if(v1_volume_attachment_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_volume_attachment_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -76,12 +90,18 @@ v1_volume_attachment_source_t *v1_volume_attachment_source_parseFromJSON(cJSON *
 
     // v1_volume_attachment_source->inline_volume_spec
     cJSON *inline_volume_spec = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_sourceJSON, "inlineVolumeSpec");
+    if (cJSON_IsNull(inline_volume_spec)) {
+        inline_volume_spec = NULL;
+    }
     if (inline_volume_spec) { 
     inline_volume_spec_local_nonprim = v1_persistent_volume_spec_parseFromJSON(inline_volume_spec); //nonprimitive
     }
 
     // v1_volume_attachment_source->persistent_volume_name
     cJSON *persistent_volume_name = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_sourceJSON, "persistentVolumeName");
+    if (cJSON_IsNull(persistent_volume_name)) {
+        persistent_volume_name = NULL;
+    }
     if (persistent_volume_name) { 
     if(!cJSON_IsString(persistent_volume_name) && !cJSON_IsNull(persistent_volume_name))
     {
@@ -90,7 +110,7 @@ v1_volume_attachment_source_t *v1_volume_attachment_source_parseFromJSON(cJSON *
     }
 
 
-    v1_volume_attachment_source_local_var = v1_volume_attachment_source_create (
+    v1_volume_attachment_source_local_var = v1_volume_attachment_source_create_internal (
         inline_volume_spec ? inline_volume_spec_local_nonprim : NULL,
         persistent_volume_name && !cJSON_IsNull(persistent_volume_name) ? strdup(persistent_volume_name->valuestring) : NULL
         );

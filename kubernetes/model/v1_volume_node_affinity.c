@@ -5,7 +5,7 @@
 
 
 
-v1_volume_node_affinity_t *v1_volume_node_affinity_create(
+static v1_volume_node_affinity_t *v1_volume_node_affinity_create_internal(
     v1_node_selector_t *required
     ) {
     v1_volume_node_affinity_t *v1_volume_node_affinity_local_var = malloc(sizeof(v1_volume_node_affinity_t));
@@ -14,12 +14,24 @@ v1_volume_node_affinity_t *v1_volume_node_affinity_create(
     }
     v1_volume_node_affinity_local_var->required = required;
 
+    v1_volume_node_affinity_local_var->_library_owned = 1;
     return v1_volume_node_affinity_local_var;
 }
 
+__attribute__((deprecated)) v1_volume_node_affinity_t *v1_volume_node_affinity_create(
+    v1_node_selector_t *required
+    ) {
+    return v1_volume_node_affinity_create_internal (
+        required
+        );
+}
 
 void v1_volume_node_affinity_free(v1_volume_node_affinity_t *v1_volume_node_affinity) {
     if(NULL == v1_volume_node_affinity){
+        return ;
+    }
+    if(v1_volume_node_affinity->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_volume_node_affinity_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -62,12 +74,15 @@ v1_volume_node_affinity_t *v1_volume_node_affinity_parseFromJSON(cJSON *v1_volum
 
     // v1_volume_node_affinity->required
     cJSON *required = cJSON_GetObjectItemCaseSensitive(v1_volume_node_affinityJSON, "required");
+    if (cJSON_IsNull(required)) {
+        required = NULL;
+    }
     if (required) { 
     required_local_nonprim = v1_node_selector_parseFromJSON(required); //nonprimitive
     }
 
 
-    v1_volume_node_affinity_local_var = v1_volume_node_affinity_create (
+    v1_volume_node_affinity_local_var = v1_volume_node_affinity_create_internal (
         required ? required_local_nonprim : NULL
         );
 

@@ -26,9 +26,10 @@ typedef struct v1_downward_api_volume_file_t {
     char *path; // string
     struct v1_resource_field_selector_t *resource_field_ref; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_downward_api_volume_file_t;
 
-v1_downward_api_volume_file_t *v1_downward_api_volume_file_create(
+__attribute__((deprecated)) v1_downward_api_volume_file_t *v1_downward_api_volume_file_create(
     v1_object_field_selector_t *field_ref,
     int mode,
     char *path,

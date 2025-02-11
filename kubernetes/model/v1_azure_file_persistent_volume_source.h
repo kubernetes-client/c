@@ -24,9 +24,10 @@ typedef struct v1_azure_file_persistent_volume_source_t {
     char *secret_namespace; // string
     char *share_name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_azure_file_persistent_volume_source_t;
 
-v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source_create(
+__attribute__((deprecated)) v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source_create(
     int read_only,
     char *secret_name,
     char *secret_namespace,

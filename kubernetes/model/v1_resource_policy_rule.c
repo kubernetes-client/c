@@ -5,7 +5,7 @@
 
 
 
-v1_resource_policy_rule_t *v1_resource_policy_rule_create(
+static v1_resource_policy_rule_t *v1_resource_policy_rule_create_internal(
     list_t *api_groups,
     int cluster_scope,
     list_t *namespaces,
@@ -22,12 +22,32 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_create(
     v1_resource_policy_rule_local_var->resources = resources;
     v1_resource_policy_rule_local_var->verbs = verbs;
 
+    v1_resource_policy_rule_local_var->_library_owned = 1;
     return v1_resource_policy_rule_local_var;
 }
 
+__attribute__((deprecated)) v1_resource_policy_rule_t *v1_resource_policy_rule_create(
+    list_t *api_groups,
+    int cluster_scope,
+    list_t *namespaces,
+    list_t *resources,
+    list_t *verbs
+    ) {
+    return v1_resource_policy_rule_create_internal (
+        api_groups,
+        cluster_scope,
+        namespaces,
+        resources,
+        verbs
+        );
+}
 
 void v1_resource_policy_rule_free(v1_resource_policy_rule_t *v1_resource_policy_rule) {
     if(NULL == v1_resource_policy_rule){
+        return ;
+    }
+    if(v1_resource_policy_rule->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_resource_policy_rule_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -76,7 +96,7 @@ cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resou
 
     listEntry_t *api_groupsListEntry;
     list_ForEach(api_groupsListEntry, v1_resource_policy_rule->api_groups) {
-    if(cJSON_AddStringToObject(api_groups, "", (char*)api_groupsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(api_groups, "", api_groupsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -100,7 +120,7 @@ cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resou
 
     listEntry_t *namespacesListEntry;
     list_ForEach(namespacesListEntry, v1_resource_policy_rule->namespaces) {
-    if(cJSON_AddStringToObject(namespaces, "", (char*)namespacesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(namespaces, "", namespacesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -119,7 +139,7 @@ cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resou
 
     listEntry_t *resourcesListEntry;
     list_ForEach(resourcesListEntry, v1_resource_policy_rule->resources) {
-    if(cJSON_AddStringToObject(resources, "", (char*)resourcesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(resources, "", resourcesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -137,7 +157,7 @@ cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resou
 
     listEntry_t *verbsListEntry;
     list_ForEach(verbsListEntry, v1_resource_policy_rule->verbs) {
-    if(cJSON_AddStringToObject(verbs, "", (char*)verbsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(verbs, "", verbsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -169,6 +189,9 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
 
     // v1_resource_policy_rule->api_groups
     cJSON *api_groups = cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "apiGroups");
+    if (cJSON_IsNull(api_groups)) {
+        api_groups = NULL;
+    }
     if (!api_groups) {
         goto end;
     }
@@ -191,6 +214,9 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
 
     // v1_resource_policy_rule->cluster_scope
     cJSON *cluster_scope = cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "clusterScope");
+    if (cJSON_IsNull(cluster_scope)) {
+        cluster_scope = NULL;
+    }
     if (cluster_scope) { 
     if(!cJSON_IsBool(cluster_scope))
     {
@@ -200,6 +226,9 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
 
     // v1_resource_policy_rule->namespaces
     cJSON *namespaces = cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "namespaces");
+    if (cJSON_IsNull(namespaces)) {
+        namespaces = NULL;
+    }
     if (namespaces) { 
     cJSON *namespaces_local = NULL;
     if(!cJSON_IsArray(namespaces)) {
@@ -219,6 +248,9 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
 
     // v1_resource_policy_rule->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "resources");
+    if (cJSON_IsNull(resources)) {
+        resources = NULL;
+    }
     if (!resources) {
         goto end;
     }
@@ -241,6 +273,9 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
 
     // v1_resource_policy_rule->verbs
     cJSON *verbs = cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "verbs");
+    if (cJSON_IsNull(verbs)) {
+        verbs = NULL;
+    }
     if (!verbs) {
         goto end;
     }
@@ -262,7 +297,7 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
     }
 
 
-    v1_resource_policy_rule_local_var = v1_resource_policy_rule_create (
+    v1_resource_policy_rule_local_var = v1_resource_policy_rule_create_internal (
         api_groupsList,
         cluster_scope ? cluster_scope->valueint : 0,
         namespaces ? namespacesList : NULL,

@@ -5,7 +5,7 @@
 
 
 
-v1_custom_resource_validation_t *v1_custom_resource_validation_create(
+static v1_custom_resource_validation_t *v1_custom_resource_validation_create_internal(
     v1_json_schema_props_t *open_apiv3_schema
     ) {
     v1_custom_resource_validation_t *v1_custom_resource_validation_local_var = malloc(sizeof(v1_custom_resource_validation_t));
@@ -14,12 +14,24 @@ v1_custom_resource_validation_t *v1_custom_resource_validation_create(
     }
     v1_custom_resource_validation_local_var->open_apiv3_schema = open_apiv3_schema;
 
+    v1_custom_resource_validation_local_var->_library_owned = 1;
     return v1_custom_resource_validation_local_var;
 }
 
+__attribute__((deprecated)) v1_custom_resource_validation_t *v1_custom_resource_validation_create(
+    v1_json_schema_props_t *open_apiv3_schema
+    ) {
+    return v1_custom_resource_validation_create_internal (
+        open_apiv3_schema
+        );
+}
 
 void v1_custom_resource_validation_free(v1_custom_resource_validation_t *v1_custom_resource_validation) {
     if(NULL == v1_custom_resource_validation){
+        return ;
+    }
+    if(v1_custom_resource_validation->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_custom_resource_validation_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -62,12 +74,15 @@ v1_custom_resource_validation_t *v1_custom_resource_validation_parseFromJSON(cJS
 
     // v1_custom_resource_validation->open_apiv3_schema
     cJSON *open_apiv3_schema = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_validationJSON, "openAPIV3Schema");
+    if (cJSON_IsNull(open_apiv3_schema)) {
+        open_apiv3_schema = NULL;
+    }
     if (open_apiv3_schema) { 
     open_apiv3_schema_local_nonprim = v1_json_schema_props_parseFromJSON(open_apiv3_schema); //nonprimitive
     }
 
 
-    v1_custom_resource_validation_local_var = v1_custom_resource_validation_create (
+    v1_custom_resource_validation_local_var = v1_custom_resource_validation_create_internal (
         open_apiv3_schema ? open_apiv3_schema_local_nonprim : NULL
         );
 

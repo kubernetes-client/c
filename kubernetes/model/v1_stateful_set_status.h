@@ -31,9 +31,10 @@ typedef struct v1_stateful_set_status_t {
     char *update_revision; // string
     int updated_replicas; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_stateful_set_status_t;
 
-v1_stateful_set_status_t *v1_stateful_set_status_create(
+__attribute__((deprecated)) v1_stateful_set_status_t *v1_stateful_set_status_create(
     int available_replicas,
     int collision_count,
     list_t *conditions,

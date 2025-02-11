@@ -5,11 +5,6 @@
 
 #define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
-#define intToStr(dst, src) \
-    do {\
-    char dst[256];\
-    snprintf(dst, 256, "%ld", (long int)(src));\
-}while(0)
 
 
 // connect DELETE requests to proxy of Pod
@@ -23,15 +18,22 @@ CoreV1API_connectDeleteNamespacedPodProxy(apiClient_t *apiClient, char *name, ch
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -41,7 +43,7 @@ CoreV1API_connectDeleteNamespacedPodProxy(apiClient_t *apiClient, char *name, ch
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -72,6 +74,7 @@ CoreV1API_connectDeleteNamespacedPodProxy(apiClient_t *apiClient, char *name, ch
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -82,8 +85,10 @@ CoreV1API_connectDeleteNamespacedPodProxy(apiClient_t *apiClient, char *name, ch
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -128,15 +133,24 @@ CoreV1API_connectDeleteNamespacedPodProxyWithPath(apiClient_t *apiClient, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -146,7 +160,7 @@ CoreV1API_connectDeleteNamespacedPodProxyWithPath(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -156,7 +170,7 @@ CoreV1API_connectDeleteNamespacedPodProxyWithPath(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -187,6 +201,7 @@ CoreV1API_connectDeleteNamespacedPodProxyWithPath(apiClient_t *apiClient, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -197,8 +212,10 @@ CoreV1API_connectDeleteNamespacedPodProxyWithPath(apiClient_t *apiClient, char *
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -244,15 +261,22 @@ CoreV1API_connectDeleteNamespacedServiceProxy(apiClient_t *apiClient, char *name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -262,7 +286,7 @@ CoreV1API_connectDeleteNamespacedServiceProxy(apiClient_t *apiClient, char *name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -293,6 +317,7 @@ CoreV1API_connectDeleteNamespacedServiceProxy(apiClient_t *apiClient, char *name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -303,8 +328,10 @@ CoreV1API_connectDeleteNamespacedServiceProxy(apiClient_t *apiClient, char *name
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -349,15 +376,24 @@ CoreV1API_connectDeleteNamespacedServiceProxyWithPath(apiClient_t *apiClient, ch
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -367,7 +403,7 @@ CoreV1API_connectDeleteNamespacedServiceProxyWithPath(apiClient_t *apiClient, ch
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -377,7 +413,7 @@ CoreV1API_connectDeleteNamespacedServiceProxyWithPath(apiClient_t *apiClient, ch
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -408,6 +444,7 @@ CoreV1API_connectDeleteNamespacedServiceProxyWithPath(apiClient_t *apiClient, ch
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -418,8 +455,10 @@ CoreV1API_connectDeleteNamespacedServiceProxyWithPath(apiClient_t *apiClient, ch
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -465,15 +504,20 @@ CoreV1API_connectDeleteNodeProxy(apiClient_t *apiClient, char *name, char *path)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -504,6 +548,7 @@ CoreV1API_connectDeleteNodeProxy(apiClient_t *apiClient, char *name, char *path)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -514,8 +559,10 @@ CoreV1API_connectDeleteNodeProxy(apiClient_t *apiClient, char *name, char *path)
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -559,15 +606,22 @@ CoreV1API_connectDeleteNodeProxyWithPath(apiClient_t *apiClient, char *name, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -577,7 +631,7 @@ CoreV1API_connectDeleteNodeProxyWithPath(apiClient_t *apiClient, char *name, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -608,6 +662,7 @@ CoreV1API_connectDeleteNodeProxyWithPath(apiClient_t *apiClient, char *name, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -618,8 +673,10 @@ CoreV1API_connectDeleteNodeProxyWithPath(apiClient_t *apiClient, char *name, cha
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -664,15 +721,22 @@ CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char *name, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/attach")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/attach");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/attach");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -682,7 +746,7 @@ CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char *name, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -765,6 +829,7 @@ CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char *name, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -775,8 +840,10 @@ CoreV1API_connectGetNamespacedPodAttach(apiClient_t *apiClient, char *name, char
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -869,15 +936,22 @@ CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char *name, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/exec")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/exec");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/exec");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -887,7 +961,7 @@ CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char *name, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -982,6 +1056,7 @@ CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char *name, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -992,8 +1067,10 @@ CoreV1API_connectGetNamespacedPodExec(apiClient_t *apiClient, char *name, char *
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -1098,15 +1175,22 @@ CoreV1API_connectGetNamespacedPodPortforward(apiClient_t *apiClient, char *name,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/portforward")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/portforward");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/portforward");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1116,7 +1200,7 @@ CoreV1API_connectGetNamespacedPodPortforward(apiClient_t *apiClient, char *name,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1148,6 +1232,7 @@ CoreV1API_connectGetNamespacedPodPortforward(apiClient_t *apiClient, char *name,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1158,8 +1243,10 @@ CoreV1API_connectGetNamespacedPodPortforward(apiClient_t *apiClient, char *name,
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -1204,15 +1291,22 @@ CoreV1API_connectGetNamespacedPodProxy(apiClient_t *apiClient, char *name, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1222,7 +1316,7 @@ CoreV1API_connectGetNamespacedPodProxy(apiClient_t *apiClient, char *name, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1253,6 +1347,7 @@ CoreV1API_connectGetNamespacedPodProxy(apiClient_t *apiClient, char *name, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1263,8 +1358,10 @@ CoreV1API_connectGetNamespacedPodProxy(apiClient_t *apiClient, char *name, char 
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -1309,15 +1406,24 @@ CoreV1API_connectGetNamespacedPodProxyWithPath(apiClient_t *apiClient, char *nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1327,7 +1433,7 @@ CoreV1API_connectGetNamespacedPodProxyWithPath(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1337,7 +1443,7 @@ CoreV1API_connectGetNamespacedPodProxyWithPath(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -1368,6 +1474,7 @@ CoreV1API_connectGetNamespacedPodProxyWithPath(apiClient_t *apiClient, char *nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1378,8 +1485,10 @@ CoreV1API_connectGetNamespacedPodProxyWithPath(apiClient_t *apiClient, char *nam
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -1425,15 +1534,22 @@ CoreV1API_connectGetNamespacedServiceProxy(apiClient_t *apiClient, char *name, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1443,7 +1559,7 @@ CoreV1API_connectGetNamespacedServiceProxy(apiClient_t *apiClient, char *name, c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1474,6 +1590,7 @@ CoreV1API_connectGetNamespacedServiceProxy(apiClient_t *apiClient, char *name, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1484,8 +1601,10 @@ CoreV1API_connectGetNamespacedServiceProxy(apiClient_t *apiClient, char *name, c
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -1530,15 +1649,24 @@ CoreV1API_connectGetNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1548,7 +1676,7 @@ CoreV1API_connectGetNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1558,7 +1686,7 @@ CoreV1API_connectGetNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -1589,6 +1717,7 @@ CoreV1API_connectGetNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1599,8 +1728,10 @@ CoreV1API_connectGetNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -1646,15 +1777,20 @@ CoreV1API_connectGetNodeProxy(apiClient_t *apiClient, char *name, char *path)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1685,6 +1821,7 @@ CoreV1API_connectGetNodeProxy(apiClient_t *apiClient, char *name, char *path)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1695,8 +1832,10 @@ CoreV1API_connectGetNodeProxy(apiClient_t *apiClient, char *name, char *path)
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -1740,15 +1879,22 @@ CoreV1API_connectGetNodeProxyWithPath(apiClient_t *apiClient, char *name, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1758,7 +1904,7 @@ CoreV1API_connectGetNodeProxyWithPath(apiClient_t *apiClient, char *name, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -1789,6 +1935,7 @@ CoreV1API_connectGetNodeProxyWithPath(apiClient_t *apiClient, char *name, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1799,8 +1946,10 @@ CoreV1API_connectGetNodeProxyWithPath(apiClient_t *apiClient, char *name, char *
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -1845,15 +1994,22 @@ CoreV1API_connectHeadNamespacedPodProxy(apiClient_t *apiClient, char *name, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1863,7 +2019,7 @@ CoreV1API_connectHeadNamespacedPodProxy(apiClient_t *apiClient, char *name, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1894,6 +2050,7 @@ CoreV1API_connectHeadNamespacedPodProxy(apiClient_t *apiClient, char *name, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "HEAD");
 
     // uncomment below to debug the error response
@@ -1904,8 +2061,10 @@ CoreV1API_connectHeadNamespacedPodProxy(apiClient_t *apiClient, char *name, char
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -1950,15 +2109,24 @@ CoreV1API_connectHeadNamespacedPodProxyWithPath(apiClient_t *apiClient, char *na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1968,7 +2136,7 @@ CoreV1API_connectHeadNamespacedPodProxyWithPath(apiClient_t *apiClient, char *na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1978,7 +2146,7 @@ CoreV1API_connectHeadNamespacedPodProxyWithPath(apiClient_t *apiClient, char *na
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -2009,6 +2177,7 @@ CoreV1API_connectHeadNamespacedPodProxyWithPath(apiClient_t *apiClient, char *na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "HEAD");
 
     // uncomment below to debug the error response
@@ -2019,8 +2188,10 @@ CoreV1API_connectHeadNamespacedPodProxyWithPath(apiClient_t *apiClient, char *na
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -2066,15 +2237,22 @@ CoreV1API_connectHeadNamespacedServiceProxy(apiClient_t *apiClient, char *name, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2084,7 +2262,7 @@ CoreV1API_connectHeadNamespacedServiceProxy(apiClient_t *apiClient, char *name, 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2115,6 +2293,7 @@ CoreV1API_connectHeadNamespacedServiceProxy(apiClient_t *apiClient, char *name, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "HEAD");
 
     // uncomment below to debug the error response
@@ -2125,8 +2304,10 @@ CoreV1API_connectHeadNamespacedServiceProxy(apiClient_t *apiClient, char *name, 
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -2171,15 +2352,24 @@ CoreV1API_connectHeadNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2189,7 +2379,7 @@ CoreV1API_connectHeadNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2199,7 +2389,7 @@ CoreV1API_connectHeadNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -2230,6 +2420,7 @@ CoreV1API_connectHeadNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "HEAD");
 
     // uncomment below to debug the error response
@@ -2240,8 +2431,10 @@ CoreV1API_connectHeadNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -2287,15 +2480,20 @@ CoreV1API_connectHeadNodeProxy(apiClient_t *apiClient, char *name, char *path)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2326,6 +2524,7 @@ CoreV1API_connectHeadNodeProxy(apiClient_t *apiClient, char *name, char *path)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "HEAD");
 
     // uncomment below to debug the error response
@@ -2336,8 +2535,10 @@ CoreV1API_connectHeadNodeProxy(apiClient_t *apiClient, char *name, char *path)
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -2381,15 +2582,22 @@ CoreV1API_connectHeadNodeProxyWithPath(apiClient_t *apiClient, char *name, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2399,7 +2607,7 @@ CoreV1API_connectHeadNodeProxyWithPath(apiClient_t *apiClient, char *name, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -2430,6 +2638,7 @@ CoreV1API_connectHeadNodeProxyWithPath(apiClient_t *apiClient, char *name, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "HEAD");
 
     // uncomment below to debug the error response
@@ -2440,8 +2649,10 @@ CoreV1API_connectHeadNodeProxyWithPath(apiClient_t *apiClient, char *name, char 
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -2486,15 +2697,22 @@ CoreV1API_connectOptionsNamespacedPodProxy(apiClient_t *apiClient, char *name, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2504,7 +2722,7 @@ CoreV1API_connectOptionsNamespacedPodProxy(apiClient_t *apiClient, char *name, c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2535,6 +2753,7 @@ CoreV1API_connectOptionsNamespacedPodProxy(apiClient_t *apiClient, char *name, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "OPTIONS");
 
     // uncomment below to debug the error response
@@ -2545,8 +2764,10 @@ CoreV1API_connectOptionsNamespacedPodProxy(apiClient_t *apiClient, char *name, c
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -2591,15 +2812,24 @@ CoreV1API_connectOptionsNamespacedPodProxyWithPath(apiClient_t *apiClient, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2609,7 +2839,7 @@ CoreV1API_connectOptionsNamespacedPodProxyWithPath(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2619,7 +2849,7 @@ CoreV1API_connectOptionsNamespacedPodProxyWithPath(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -2650,6 +2880,7 @@ CoreV1API_connectOptionsNamespacedPodProxyWithPath(apiClient_t *apiClient, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "OPTIONS");
 
     // uncomment below to debug the error response
@@ -2660,8 +2891,10 @@ CoreV1API_connectOptionsNamespacedPodProxyWithPath(apiClient_t *apiClient, char 
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -2707,15 +2940,22 @@ CoreV1API_connectOptionsNamespacedServiceProxy(apiClient_t *apiClient, char *nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2725,7 +2965,7 @@ CoreV1API_connectOptionsNamespacedServiceProxy(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2756,6 +2996,7 @@ CoreV1API_connectOptionsNamespacedServiceProxy(apiClient_t *apiClient, char *nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "OPTIONS");
 
     // uncomment below to debug the error response
@@ -2766,8 +3007,10 @@ CoreV1API_connectOptionsNamespacedServiceProxy(apiClient_t *apiClient, char *nam
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -2812,15 +3055,24 @@ CoreV1API_connectOptionsNamespacedServiceProxyWithPath(apiClient_t *apiClient, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2830,7 +3082,7 @@ CoreV1API_connectOptionsNamespacedServiceProxyWithPath(apiClient_t *apiClient, c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2840,7 +3092,7 @@ CoreV1API_connectOptionsNamespacedServiceProxyWithPath(apiClient_t *apiClient, c
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -2871,6 +3123,7 @@ CoreV1API_connectOptionsNamespacedServiceProxyWithPath(apiClient_t *apiClient, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "OPTIONS");
 
     // uncomment below to debug the error response
@@ -2881,8 +3134,10 @@ CoreV1API_connectOptionsNamespacedServiceProxyWithPath(apiClient_t *apiClient, c
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -2928,15 +3183,20 @@ CoreV1API_connectOptionsNodeProxy(apiClient_t *apiClient, char *name, char *path
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2967,6 +3227,7 @@ CoreV1API_connectOptionsNodeProxy(apiClient_t *apiClient, char *name, char *path
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "OPTIONS");
 
     // uncomment below to debug the error response
@@ -2977,8 +3238,10 @@ CoreV1API_connectOptionsNodeProxy(apiClient_t *apiClient, char *name, char *path
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -3022,15 +3285,22 @@ CoreV1API_connectOptionsNodeProxyWithPath(apiClient_t *apiClient, char *name, ch
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3040,7 +3310,7 @@ CoreV1API_connectOptionsNodeProxyWithPath(apiClient_t *apiClient, char *name, ch
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -3071,6 +3341,7 @@ CoreV1API_connectOptionsNodeProxyWithPath(apiClient_t *apiClient, char *name, ch
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "OPTIONS");
 
     // uncomment below to debug the error response
@@ -3081,8 +3352,10 @@ CoreV1API_connectOptionsNodeProxyWithPath(apiClient_t *apiClient, char *name, ch
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -3127,15 +3400,22 @@ CoreV1API_connectPatchNamespacedPodProxy(apiClient_t *apiClient, char *name, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3145,7 +3425,7 @@ CoreV1API_connectPatchNamespacedPodProxy(apiClient_t *apiClient, char *name, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -3176,6 +3456,7 @@ CoreV1API_connectPatchNamespacedPodProxy(apiClient_t *apiClient, char *name, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -3186,8 +3467,10 @@ CoreV1API_connectPatchNamespacedPodProxy(apiClient_t *apiClient, char *name, cha
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -3232,15 +3515,24 @@ CoreV1API_connectPatchNamespacedPodProxyWithPath(apiClient_t *apiClient, char *n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3250,7 +3542,7 @@ CoreV1API_connectPatchNamespacedPodProxyWithPath(apiClient_t *apiClient, char *n
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -3260,7 +3552,7 @@ CoreV1API_connectPatchNamespacedPodProxyWithPath(apiClient_t *apiClient, char *n
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -3291,6 +3583,7 @@ CoreV1API_connectPatchNamespacedPodProxyWithPath(apiClient_t *apiClient, char *n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -3301,8 +3594,10 @@ CoreV1API_connectPatchNamespacedPodProxyWithPath(apiClient_t *apiClient, char *n
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -3348,15 +3643,22 @@ CoreV1API_connectPatchNamespacedServiceProxy(apiClient_t *apiClient, char *name,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3366,7 +3668,7 @@ CoreV1API_connectPatchNamespacedServiceProxy(apiClient_t *apiClient, char *name,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -3397,6 +3699,7 @@ CoreV1API_connectPatchNamespacedServiceProxy(apiClient_t *apiClient, char *name,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -3407,8 +3710,10 @@ CoreV1API_connectPatchNamespacedServiceProxy(apiClient_t *apiClient, char *name,
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -3453,15 +3758,24 @@ CoreV1API_connectPatchNamespacedServiceProxyWithPath(apiClient_t *apiClient, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3471,7 +3785,7 @@ CoreV1API_connectPatchNamespacedServiceProxyWithPath(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -3481,7 +3795,7 @@ CoreV1API_connectPatchNamespacedServiceProxyWithPath(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -3512,6 +3826,7 @@ CoreV1API_connectPatchNamespacedServiceProxyWithPath(apiClient_t *apiClient, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -3522,8 +3837,10 @@ CoreV1API_connectPatchNamespacedServiceProxyWithPath(apiClient_t *apiClient, cha
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -3569,15 +3886,20 @@ CoreV1API_connectPatchNodeProxy(apiClient_t *apiClient, char *name, char *path)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3608,6 +3930,7 @@ CoreV1API_connectPatchNodeProxy(apiClient_t *apiClient, char *name, char *path)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -3618,8 +3941,10 @@ CoreV1API_connectPatchNodeProxy(apiClient_t *apiClient, char *name, char *path)
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -3663,15 +3988,22 @@ CoreV1API_connectPatchNodeProxyWithPath(apiClient_t *apiClient, char *name, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3681,7 +4013,7 @@ CoreV1API_connectPatchNodeProxyWithPath(apiClient_t *apiClient, char *name, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -3712,6 +4044,7 @@ CoreV1API_connectPatchNodeProxyWithPath(apiClient_t *apiClient, char *name, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -3722,8 +4055,10 @@ CoreV1API_connectPatchNodeProxyWithPath(apiClient_t *apiClient, char *name, char
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -3768,15 +4103,22 @@ CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char *name, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/attach")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/attach");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/attach");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3786,7 +4128,7 @@ CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char *name, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -3869,6 +4211,7 @@ CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char *name, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -3879,8 +4222,10 @@ CoreV1API_connectPostNamespacedPodAttach(apiClient_t *apiClient, char *name, cha
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -3973,15 +4318,22 @@ CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char *name, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/exec")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/exec");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/exec");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3991,7 +4343,7 @@ CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char *name, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -4086,6 +4438,7 @@ CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char *name, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -4096,8 +4449,10 @@ CoreV1API_connectPostNamespacedPodExec(apiClient_t *apiClient, char *name, char 
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -4202,15 +4557,22 @@ CoreV1API_connectPostNamespacedPodPortforward(apiClient_t *apiClient, char *name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/portforward")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/portforward");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/portforward");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4220,7 +4582,7 @@ CoreV1API_connectPostNamespacedPodPortforward(apiClient_t *apiClient, char *name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -4252,6 +4614,7 @@ CoreV1API_connectPostNamespacedPodPortforward(apiClient_t *apiClient, char *name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -4262,8 +4625,10 @@ CoreV1API_connectPostNamespacedPodPortforward(apiClient_t *apiClient, char *name
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -4308,15 +4673,22 @@ CoreV1API_connectPostNamespacedPodProxy(apiClient_t *apiClient, char *name, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4326,7 +4698,7 @@ CoreV1API_connectPostNamespacedPodProxy(apiClient_t *apiClient, char *name, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -4357,6 +4729,7 @@ CoreV1API_connectPostNamespacedPodProxy(apiClient_t *apiClient, char *name, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -4367,8 +4740,10 @@ CoreV1API_connectPostNamespacedPodProxy(apiClient_t *apiClient, char *name, char
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -4413,15 +4788,24 @@ CoreV1API_connectPostNamespacedPodProxyWithPath(apiClient_t *apiClient, char *na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4431,7 +4815,7 @@ CoreV1API_connectPostNamespacedPodProxyWithPath(apiClient_t *apiClient, char *na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -4441,7 +4825,7 @@ CoreV1API_connectPostNamespacedPodProxyWithPath(apiClient_t *apiClient, char *na
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -4472,6 +4856,7 @@ CoreV1API_connectPostNamespacedPodProxyWithPath(apiClient_t *apiClient, char *na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -4482,8 +4867,10 @@ CoreV1API_connectPostNamespacedPodProxyWithPath(apiClient_t *apiClient, char *na
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -4529,15 +4916,22 @@ CoreV1API_connectPostNamespacedServiceProxy(apiClient_t *apiClient, char *name, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4547,7 +4941,7 @@ CoreV1API_connectPostNamespacedServiceProxy(apiClient_t *apiClient, char *name, 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -4578,6 +4972,7 @@ CoreV1API_connectPostNamespacedServiceProxy(apiClient_t *apiClient, char *name, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -4588,8 +4983,10 @@ CoreV1API_connectPostNamespacedServiceProxy(apiClient_t *apiClient, char *name, 
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -4634,15 +5031,24 @@ CoreV1API_connectPostNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4652,7 +5058,7 @@ CoreV1API_connectPostNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -4662,7 +5068,7 @@ CoreV1API_connectPostNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -4693,6 +5099,7 @@ CoreV1API_connectPostNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -4703,8 +5110,10 @@ CoreV1API_connectPostNamespacedServiceProxyWithPath(apiClient_t *apiClient, char
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -4750,15 +5159,20 @@ CoreV1API_connectPostNodeProxy(apiClient_t *apiClient, char *name, char *path)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4789,6 +5203,7 @@ CoreV1API_connectPostNodeProxy(apiClient_t *apiClient, char *name, char *path)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -4799,8 +5214,10 @@ CoreV1API_connectPostNodeProxy(apiClient_t *apiClient, char *name, char *path)
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -4844,15 +5261,22 @@ CoreV1API_connectPostNodeProxyWithPath(apiClient_t *apiClient, char *name, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4862,7 +5286,7 @@ CoreV1API_connectPostNodeProxyWithPath(apiClient_t *apiClient, char *name, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -4893,6 +5317,7 @@ CoreV1API_connectPostNodeProxyWithPath(apiClient_t *apiClient, char *name, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -4903,8 +5328,10 @@ CoreV1API_connectPostNodeProxyWithPath(apiClient_t *apiClient, char *name, char 
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -4949,15 +5376,22 @@ CoreV1API_connectPutNamespacedPodProxy(apiClient_t *apiClient, char *name, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4967,7 +5401,7 @@ CoreV1API_connectPutNamespacedPodProxy(apiClient_t *apiClient, char *name, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -4998,6 +5432,7 @@ CoreV1API_connectPutNamespacedPodProxy(apiClient_t *apiClient, char *name, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5008,8 +5443,10 @@ CoreV1API_connectPutNamespacedPodProxy(apiClient_t *apiClient, char *name, char 
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -5054,15 +5491,24 @@ CoreV1API_connectPutNamespacedPodProxyWithPath(apiClient_t *apiClient, char *nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5072,7 +5518,7 @@ CoreV1API_connectPutNamespacedPodProxyWithPath(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5082,7 +5528,7 @@ CoreV1API_connectPutNamespacedPodProxyWithPath(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -5113,6 +5559,7 @@ CoreV1API_connectPutNamespacedPodProxyWithPath(apiClient_t *apiClient, char *nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5123,8 +5570,10 @@ CoreV1API_connectPutNamespacedPodProxyWithPath(apiClient_t *apiClient, char *nam
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -5170,15 +5619,22 @@ CoreV1API_connectPutNamespacedServiceProxy(apiClient_t *apiClient, char *name, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5188,7 +5644,7 @@ CoreV1API_connectPutNamespacedServiceProxy(apiClient_t *apiClient, char *name, c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5219,6 +5675,7 @@ CoreV1API_connectPutNamespacedServiceProxy(apiClient_t *apiClient, char *name, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5229,8 +5686,10 @@ CoreV1API_connectPutNamespacedServiceProxy(apiClient_t *apiClient, char *name, c
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -5275,15 +5734,24 @@ CoreV1API_connectPutNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5293,7 +5761,7 @@ CoreV1API_connectPutNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5303,7 +5771,7 @@ CoreV1API_connectPutNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(_namespace)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -5334,6 +5802,7 @@ CoreV1API_connectPutNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5344,8 +5813,10 @@ CoreV1API_connectPutNamespacedServiceProxyWithPath(apiClient_t *apiClient, char 
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -5391,15 +5862,20 @@ CoreV1API_connectPutNodeProxy(apiClient_t *apiClient, char *name, char *path)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5430,6 +5906,7 @@ CoreV1API_connectPutNodeProxy(apiClient_t *apiClient, char *name, char *path)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5440,8 +5917,10 @@ CoreV1API_connectPutNodeProxy(apiClient_t *apiClient, char *name, char *path)
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -5485,15 +5964,22 @@ CoreV1API_connectPutNodeProxyWithPath(apiClient_t *apiClient, char *name, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/proxy/{path}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/proxy/{path}");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/proxy/{path}");
+
+    if(!name)
+        goto end;
+    if(!path)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(path)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5503,7 +5989,7 @@ CoreV1API_connectPutNodeProxyWithPath(apiClient_t *apiClient, char *name, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + strlen("{ path }");
+    long sizeOfPathParams_path = strlen(name)+3 + strlen(path)+3 + sizeof("{ path }") - 1;
     if(path == NULL) {
         goto end;
     }
@@ -5534,6 +6020,7 @@ CoreV1API_connectPutNodeProxyWithPath(apiClient_t *apiClient, char *name, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5544,8 +6031,10 @@ CoreV1API_connectPutNodeProxyWithPath(apiClient_t *apiClient, char *name, char *
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -5590,11 +6079,14 @@ CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t *body, char *pr
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces");
+    char *localVarPath = strdup("/api/v1/namespaces");
+
 
 
 
@@ -5651,13 +6143,15 @@ CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t *body, char *pr
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_namespace_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5666,6 +6160,7 @@ CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t *body, char *pr
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -5685,11 +6180,14 @@ CoreV1API_createNamespace(apiClient_t *apiClient, v1_namespace_t *body, char *pr
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_namespace_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5775,15 +6273,20 @@ CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char *_namespace, v1_b
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/bindings")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/bindings");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/bindings");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5846,13 +6349,15 @@ CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char *_namespace, v1_b
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_binding_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -5861,6 +6366,7 @@ CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char *_namespace, v1_b
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -5880,11 +6386,14 @@ CoreV1API_createNamespacedBinding(apiClient_t *apiClient, char *_namespace, v1_b
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_binding_t *elementToReturn = v1_binding_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_binding_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_binding_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5971,15 +6480,20 @@ CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, char *_namespace, v1
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/configmaps")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/configmaps");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/configmaps");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -6042,13 +6556,15 @@ CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, char *_namespace, v1
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_config_map_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -6057,6 +6573,7 @@ CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, char *_namespace, v1
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -6076,11 +6593,14 @@ CoreV1API_createNamespacedConfigMap(apiClient_t *apiClient, char *_namespace, v1
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_config_map_t *elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_config_map_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -6167,15 +6687,20 @@ CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char *_namespace, v1
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/endpoints")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/endpoints");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/endpoints");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -6238,13 +6763,15 @@ CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char *_namespace, v1
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_endpoints_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -6253,6 +6780,7 @@ CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char *_namespace, v1
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -6272,11 +6800,14 @@ CoreV1API_createNamespacedEndpoints(apiClient_t *apiClient, char *_namespace, v1
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_endpoints_t *elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_endpoints_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -6363,15 +6894,20 @@ CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char *_namespace, core_v
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/events")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/events");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/events");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -6434,13 +6970,15 @@ CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char *_namespace, core_v
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = core_v1_event_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -6449,6 +6987,7 @@ CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char *_namespace, core_v
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -6468,11 +7007,14 @@ CoreV1API_createNamespacedEvent(apiClient_t *apiClient, char *_namespace, core_v
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    core_v1_event_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -6559,15 +7101,20 @@ CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, char *_namespace, v
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/limitranges")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/limitranges");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/limitranges");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -6630,13 +7177,15 @@ CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, char *_namespace, v
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_limit_range_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -6645,6 +7194,7 @@ CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, char *_namespace, v
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -6664,11 +7214,14 @@ CoreV1API_createNamespacedLimitRange(apiClient_t *apiClient, char *_namespace, v
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_limit_range_t *elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_limit_range_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -6755,15 +7308,20 @@ CoreV1API_createNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *_n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/persistentvolumeclaims")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/persistentvolumeclaims");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/persistentvolumeclaims");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -6826,13 +7384,15 @@ CoreV1API_createNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *_n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_persistent_volume_claim_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -6841,6 +7401,7 @@ CoreV1API_createNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *_n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -6860,11 +7421,14 @@ CoreV1API_createNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *_n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_claim_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -6951,15 +7515,20 @@ CoreV1API_createNamespacedPod(apiClient_t *apiClient, char *_namespace, v1_pod_t
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -7022,13 +7591,15 @@ CoreV1API_createNamespacedPod(apiClient_t *apiClient, char *_namespace, v1_pod_t
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_pod_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7037,6 +7608,7 @@ CoreV1API_createNamespacedPod(apiClient_t *apiClient, char *_namespace, v1_pod_t
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -7056,11 +7628,14 @@ CoreV1API_createNamespacedPod(apiClient_t *apiClient, char *_namespace, v1_pod_t
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7147,15 +7722,22 @@ CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char *name, char *_
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/binding")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/binding");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/binding");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -7165,7 +7747,7 @@ CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char *name, char *_
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -7228,13 +7810,15 @@ CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char *name, char *_
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_binding_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7243,6 +7827,7 @@ CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char *name, char *_
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -7262,11 +7847,14 @@ CoreV1API_createNamespacedPodBinding(apiClient_t *apiClient, char *name, char *_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_binding_t *elementToReturn = v1_binding_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_binding_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_binding_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7354,15 +7942,22 @@ CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char *name, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/eviction")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/eviction");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/eviction");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -7372,7 +7967,7 @@ CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char *name, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -7435,13 +8030,15 @@ CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char *name, char *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_eviction_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7450,6 +8047,7 @@ CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char *name, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -7469,11 +8067,14 @@ CoreV1API_createNamespacedPodEviction(apiClient_t *apiClient, char *name, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_eviction_t *elementToReturn = v1_eviction_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_eviction_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_eviction_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7561,15 +8162,20 @@ CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient, char *_namespace, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/podtemplates")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/podtemplates");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/podtemplates");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -7632,13 +8238,15 @@ CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient, char *_namespace, 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_pod_template_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7647,6 +8255,7 @@ CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient, char *_namespace, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -7666,11 +8275,14 @@ CoreV1API_createNamespacedPodTemplate(apiClient_t *apiClient, char *_namespace, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_template_t *elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_template_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7757,15 +8369,20 @@ CoreV1API_createNamespacedReplicationController(apiClient_t *apiClient, char *_n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -7828,13 +8445,15 @@ CoreV1API_createNamespacedReplicationController(apiClient_t *apiClient, char *_n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_replication_controller_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -7843,6 +8462,7 @@ CoreV1API_createNamespacedReplicationController(apiClient_t *apiClient, char *_n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -7862,11 +8482,14 @@ CoreV1API_createNamespacedReplicationController(apiClient_t *apiClient, char *_n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_replication_controller_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -7953,15 +8576,20 @@ CoreV1API_createNamespacedResourceQuota(apiClient_t *apiClient, char *_namespace
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/resourcequotas")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/resourcequotas");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/resourcequotas");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -8024,13 +8652,15 @@ CoreV1API_createNamespacedResourceQuota(apiClient_t *apiClient, char *_namespace
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_resource_quota_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -8039,6 +8669,7 @@ CoreV1API_createNamespacedResourceQuota(apiClient_t *apiClient, char *_namespace
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -8058,11 +8689,14 @@ CoreV1API_createNamespacedResourceQuota(apiClient_t *apiClient, char *_namespace
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_resource_quota_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -8149,15 +8783,20 @@ CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char *_namespace, v1_se
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/secrets")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/secrets");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/secrets");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -8220,13 +8859,15 @@ CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char *_namespace, v1_se
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_secret_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -8235,6 +8876,7 @@ CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char *_namespace, v1_se
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -8254,11 +8896,14 @@ CoreV1API_createNamespacedSecret(apiClient_t *apiClient, char *_namespace, v1_se
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_secret_t *elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_secret_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -8345,15 +8990,20 @@ CoreV1API_createNamespacedService(apiClient_t *apiClient, char *_namespace, v1_s
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -8416,13 +9066,15 @@ CoreV1API_createNamespacedService(apiClient_t *apiClient, char *_namespace, v1_s
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_service_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -8431,6 +9083,7 @@ CoreV1API_createNamespacedService(apiClient_t *apiClient, char *_namespace, v1_s
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -8450,11 +9103,14 @@ CoreV1API_createNamespacedService(apiClient_t *apiClient, char *_namespace, v1_s
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -8541,15 +9197,20 @@ CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char *_namespac
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/serviceaccounts")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/serviceaccounts");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/serviceaccounts");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -8612,13 +9273,15 @@ CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char *_namespac
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_service_account_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -8627,6 +9290,7 @@ CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char *_namespac
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -8646,11 +9310,14 @@ CoreV1API_createNamespacedServiceAccount(apiClient_t *apiClient, char *_namespac
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_account_t *elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_account_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -8737,15 +9404,22 @@ CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char *name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/serviceaccounts/{name}/token")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/serviceaccounts/{name}/token");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/serviceaccounts/{name}/token");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -8755,7 +9429,7 @@ CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char *name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -8818,13 +9492,15 @@ CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char *name
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = authentication_v1_token_request_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -8833,6 +9509,7 @@ CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char *name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -8852,11 +9529,14 @@ CoreV1API_createNamespacedServiceAccountToken(apiClient_t *apiClient, char *name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    authentication_v1_token_request_t *elementToReturn = authentication_v1_token_request_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    authentication_v1_token_request_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = authentication_v1_token_request_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -8944,11 +9624,14 @@ CoreV1API_createNode(apiClient_t *apiClient, v1_node_t *body, char *pretty, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes");
+    char *localVarPath = strdup("/api/v1/nodes");
+
 
 
 
@@ -9005,13 +9688,15 @@ CoreV1API_createNode(apiClient_t *apiClient, v1_node_t *body, char *pretty, char
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_node_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -9020,6 +9705,7 @@ CoreV1API_createNode(apiClient_t *apiClient, v1_node_t *body, char *pretty, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -9039,11 +9725,14 @@ CoreV1API_createNode(apiClient_t *apiClient, v1_node_t *body, char *pretty, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -9129,11 +9818,14 @@ CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/persistentvolumes")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/persistentvolumes");
+    char *localVarPath = strdup("/api/v1/persistentvolumes");
+
 
 
 
@@ -9190,13 +9882,15 @@ CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_persistent_volume_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -9205,6 +9899,7 @@ CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -9224,11 +9919,14 @@ CoreV1API_createPersistentVolume(apiClient_t *apiClient, v1_persistent_volume_t 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -9306,7 +10004,7 @@ end:
 // delete collection of ConfigMap
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -9314,15 +10012,20 @@ CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/configmaps")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/configmaps");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/configmaps");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -9392,6 +10095,19 @@ CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char *_nam
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -9498,13 +10214,15 @@ CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char *_nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -9513,6 +10231,7 @@ CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -9524,11 +10243,14 @@ CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -9608,6 +10330,18 @@ CoreV1API_deleteCollectionNamespacedConfigMap(apiClient_t *apiClient, char *_nam
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -9715,7 +10449,7 @@ end:
 // delete collection of Endpoints
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -9723,15 +10457,20 @@ CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/endpoints")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/endpoints");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/endpoints");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -9801,6 +10540,19 @@ CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char *_nam
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -9907,13 +10659,15 @@ CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char *_nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -9922,6 +10676,7 @@ CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -9933,11 +10688,14 @@ CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -10017,6 +10775,18 @@ CoreV1API_deleteCollectionNamespacedEndpoints(apiClient_t *apiClient, char *_nam
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -10124,7 +10894,7 @@ end:
 // delete collection of Event
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -10132,15 +10902,20 @@ CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char *_namespa
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/events")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/events");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/events");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -10210,6 +10985,19 @@ CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char *_namespa
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -10316,13 +11104,15 @@ CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char *_namespa
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -10331,6 +11121,7 @@ CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char *_namespa
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -10342,11 +11133,14 @@ CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char *_namespa
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -10426,6 +11220,18 @@ CoreV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char *_namespa
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -10533,7 +11339,7 @@ end:
 // delete collection of LimitRange
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -10541,15 +11347,20 @@ CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char *_na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/limitranges")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/limitranges");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/limitranges");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -10619,6 +11430,19 @@ CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char *_na
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -10725,13 +11549,15 @@ CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char *_na
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -10740,6 +11566,7 @@ CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char *_na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -10751,11 +11578,14 @@ CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char *_na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -10835,6 +11665,18 @@ CoreV1API_deleteCollectionNamespacedLimitRange(apiClient_t *apiClient, char *_na
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -10942,7 +11784,7 @@ end:
 // delete collection of PersistentVolumeClaim
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -10950,15 +11792,20 @@ CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/persistentvolumeclaims")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/persistentvolumeclaims");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/persistentvolumeclaims");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -11028,6 +11875,19 @@ CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -11134,13 +11994,15 @@ CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -11149,6 +12011,7 @@ CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -11160,11 +12023,14 @@ CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -11244,6 +12110,18 @@ CoreV1API_deleteCollectionNamespacedPersistentVolumeClaim(apiClient_t *apiClient
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -11351,7 +12229,7 @@ end:
 // delete collection of Pod
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -11359,15 +12237,20 @@ CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char *_namespace
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -11437,6 +12320,19 @@ CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char *_namespace
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -11543,13 +12439,15 @@ CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char *_namespace
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -11558,6 +12456,7 @@ CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char *_namespace
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -11569,11 +12468,14 @@ CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char *_namespace
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -11653,6 +12555,18 @@ CoreV1API_deleteCollectionNamespacedPod(apiClient_t *apiClient, char *_namespace
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -11760,7 +12674,7 @@ end:
 // delete collection of PodTemplate
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -11768,15 +12682,20 @@ CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char *_n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/podtemplates")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/podtemplates");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/podtemplates");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -11846,6 +12765,19 @@ CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char *_n
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -11952,13 +12884,15 @@ CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char *_n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -11967,6 +12901,7 @@ CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char *_n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -11978,11 +12913,14 @@ CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char *_n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -12062,6 +13000,18 @@ CoreV1API_deleteCollectionNamespacedPodTemplate(apiClient_t *apiClient, char *_n
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -12169,7 +13119,7 @@ end:
 // delete collection of ReplicationController
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -12177,15 +13127,20 @@ CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -12255,6 +13210,19 @@ CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -12361,13 +13329,15 @@ CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -12376,6 +13346,7 @@ CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -12387,11 +13358,14 @@ CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -12471,6 +13445,18 @@ CoreV1API_deleteCollectionNamespacedReplicationController(apiClient_t *apiClient
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -12578,7 +13564,7 @@ end:
 // delete collection of ResourceQuota
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -12586,15 +13572,20 @@ CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/resourcequotas")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/resourcequotas");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/resourcequotas");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -12664,6 +13655,19 @@ CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -12770,13 +13774,15 @@ CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -12785,6 +13791,7 @@ CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -12796,11 +13803,14 @@ CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -12880,6 +13890,18 @@ CoreV1API_deleteCollectionNamespacedResourceQuota(apiClient_t *apiClient, char *
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -12987,7 +14009,7 @@ end:
 // delete collection of Secret
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -12995,15 +14017,20 @@ CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char *_namesp
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/secrets")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/secrets");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/secrets");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -13073,6 +14100,19 @@ CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char *_namesp
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -13179,13 +14219,15 @@ CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char *_namesp
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -13194,6 +14236,7 @@ CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char *_namesp
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -13205,11 +14248,14 @@ CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char *_namesp
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -13289,6 +14335,18 @@ CoreV1API_deleteCollectionNamespacedSecret(apiClient_t *apiClient, char *_namesp
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -13396,7 +14454,7 @@ end:
 // delete collection of Service
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedService(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedService(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -13404,15 +14462,20 @@ CoreV1API_deleteCollectionNamespacedService(apiClient_t *apiClient, char *_names
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -13482,6 +14545,19 @@ CoreV1API_deleteCollectionNamespacedService(apiClient_t *apiClient, char *_names
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -13588,13 +14664,15 @@ CoreV1API_deleteCollectionNamespacedService(apiClient_t *apiClient, char *_names
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -13603,6 +14681,7 @@ CoreV1API_deleteCollectionNamespacedService(apiClient_t *apiClient, char *_names
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -13614,11 +14693,14 @@ CoreV1API_deleteCollectionNamespacedService(apiClient_t *apiClient, char *_names
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -13698,6 +14780,18 @@ CoreV1API_deleteCollectionNamespacedService(apiClient_t *apiClient, char *_names
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -13805,7 +14899,7 @@ end:
 // delete collection of ServiceAccount
 //
 v1_status_t*
-CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -13813,15 +14907,20 @@ CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/serviceaccounts")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/serviceaccounts");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/serviceaccounts");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -13891,6 +14990,19 @@ CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char 
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -13997,13 +15109,15 @@ CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -14012,6 +15126,7 @@ CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -14023,11 +15138,14 @@ CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -14107,6 +15225,18 @@ CoreV1API_deleteCollectionNamespacedServiceAccount(apiClient_t *apiClient, char 
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -14214,7 +15344,7 @@ end:
 // delete collection of Node
 //
 v1_status_t*
-CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -14222,11 +15352,14 @@ CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char *pretty, char *_cont
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes");
+    char *localVarPath = strdup("/api/v1/nodes");
+
 
 
 
@@ -14290,6 +15423,19 @@ CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char *pretty, char *_cont
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -14396,13 +15542,15 @@ CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char *pretty, char *_cont
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -14411,6 +15559,7 @@ CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char *pretty, char *_cont
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -14422,11 +15571,14 @@ CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char *pretty, char *_cont
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -14505,6 +15657,18 @@ CoreV1API_deleteCollectionNode(apiClient_t *apiClient, char *pretty, char *_cont
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -14612,7 +15776,7 @@ end:
 // delete collection of PersistentVolume
 //
 v1_status_t*
-CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -14620,11 +15784,14 @@ CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char *pretty,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/persistentvolumes")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/persistentvolumes");
+    char *localVarPath = strdup("/api/v1/persistentvolumes");
+
 
 
 
@@ -14688,6 +15855,19 @@ CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char *pretty,
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -14794,13 +15974,15 @@ CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char *pretty,
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -14809,6 +15991,7 @@ CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char *pretty,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -14820,11 +16003,14 @@ CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char *pretty,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -14903,6 +16089,18 @@ CoreV1API_deleteCollectionPersistentVolume(apiClient_t *apiClient, char *pretty,
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -15010,7 +16208,7 @@ end:
 // delete a Namespace
 //
 v1_status_t*
-CoreV1API_deleteNamespace(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespace(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -15018,15 +16216,20 @@ CoreV1API_deleteNamespace(apiClient_t *apiClient, char *name, char *pretty, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -15075,6 +16278,19 @@ CoreV1API_deleteNamespace(apiClient_t *apiClient, char *name, char *pretty, char
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -15103,13 +16319,15 @@ CoreV1API_deleteNamespace(apiClient_t *apiClient, char *name, char *pretty, char
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -15118,6 +16336,7 @@ CoreV1API_deleteNamespace(apiClient_t *apiClient, char *name, char *pretty, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -15133,11 +16352,14 @@ CoreV1API_deleteNamespace(apiClient_t *apiClient, char *name, char *pretty, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -15193,6 +16415,18 @@ CoreV1API_deleteNamespace(apiClient_t *apiClient, char *name, char *pretty, char
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -15228,7 +16462,7 @@ end:
 // delete a ConfigMap
 //
 v1_status_t*
-CoreV1API_deleteNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -15236,15 +16470,22 @@ CoreV1API_deleteNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/configmaps/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/configmaps/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/configmaps/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -15254,7 +16495,7 @@ CoreV1API_deleteNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_n
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -15303,6 +16544,19 @@ CoreV1API_deleteNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_n
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -15331,13 +16585,15 @@ CoreV1API_deleteNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -15346,6 +16602,7 @@ CoreV1API_deleteNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -15361,11 +16618,14 @@ CoreV1API_deleteNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -15422,6 +16682,18 @@ CoreV1API_deleteNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_n
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -15457,7 +16729,7 @@ end:
 // delete Endpoints
 //
 v1_status_t*
-CoreV1API_deleteNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -15465,15 +16737,22 @@ CoreV1API_deleteNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/endpoints/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/endpoints/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/endpoints/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -15483,7 +16762,7 @@ CoreV1API_deleteNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_n
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -15532,6 +16811,19 @@ CoreV1API_deleteNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_n
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -15560,13 +16852,15 @@ CoreV1API_deleteNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -15575,6 +16869,7 @@ CoreV1API_deleteNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -15590,11 +16885,14 @@ CoreV1API_deleteNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -15651,6 +16949,18 @@ CoreV1API_deleteNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_n
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -15686,7 +16996,7 @@ end:
 // delete an Event
 //
 v1_status_t*
-CoreV1API_deleteNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -15694,15 +17004,22 @@ CoreV1API_deleteNamespacedEvent(apiClient_t *apiClient, char *name, char *_names
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/events/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/events/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/events/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -15712,7 +17029,7 @@ CoreV1API_deleteNamespacedEvent(apiClient_t *apiClient, char *name, char *_names
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -15761,6 +17078,19 @@ CoreV1API_deleteNamespacedEvent(apiClient_t *apiClient, char *name, char *_names
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -15789,13 +17119,15 @@ CoreV1API_deleteNamespacedEvent(apiClient_t *apiClient, char *name, char *_names
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -15804,6 +17136,7 @@ CoreV1API_deleteNamespacedEvent(apiClient_t *apiClient, char *name, char *_names
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -15819,11 +17152,14 @@ CoreV1API_deleteNamespacedEvent(apiClient_t *apiClient, char *name, char *_names
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -15880,6 +17216,18 @@ CoreV1API_deleteNamespacedEvent(apiClient_t *apiClient, char *name, char *_names
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -15915,7 +17263,7 @@ end:
 // delete a LimitRange
 //
 v1_status_t*
-CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -15923,15 +17271,22 @@ CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/limitranges/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/limitranges/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/limitranges/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -15941,7 +17296,7 @@ CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -15990,6 +17345,19 @@ CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -16018,13 +17386,15 @@ CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -16033,6 +17403,7 @@ CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -16048,11 +17419,14 @@ CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -16109,6 +17483,18 @@ CoreV1API_deleteNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -16144,7 +17530,7 @@ end:
 // delete a PersistentVolumeClaim
 //
 v1_persistent_volume_claim_t*
-CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -16152,15 +17538,22 @@ CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -16170,7 +17563,7 @@ CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -16219,6 +17612,19 @@ CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *na
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -16247,13 +17653,15 @@ CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *na
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -16262,6 +17670,7 @@ CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -16277,11 +17686,14 @@ CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_claim_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -16338,6 +17750,18 @@ CoreV1API_deleteNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *na
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -16373,7 +17797,7 @@ end:
 // delete a Pod
 //
 v1_pod_t*
-CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -16381,15 +17805,22 @@ CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char *name, char *_namespa
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -16399,7 +17830,7 @@ CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char *name, char *_namespa
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -16448,6 +17879,19 @@ CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char *name, char *_namespa
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -16476,13 +17920,15 @@ CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char *name, char *_namespa
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -16491,6 +17937,7 @@ CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char *name, char *_namespa
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -16506,11 +17953,14 @@ CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char *name, char *_namespa
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -16567,6 +18017,18 @@ CoreV1API_deleteNamespacedPod(apiClient_t *apiClient, char *name, char *_namespa
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -16602,7 +18064,7 @@ end:
 // delete a PodTemplate
 //
 v1_pod_template_t*
-CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -16610,15 +18072,22 @@ CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/podtemplates/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/podtemplates/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/podtemplates/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -16628,7 +18097,7 @@ CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -16677,6 +18146,19 @@ CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -16705,13 +18187,15 @@ CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -16720,6 +18204,7 @@ CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -16735,11 +18220,14 @@ CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_template_t *elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_template_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -16796,6 +18284,18 @@ CoreV1API_deleteNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -16831,7 +18331,7 @@ end:
 // delete a ReplicationController
 //
 v1_status_t*
-CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -16839,15 +18339,22 @@ CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiClient, char *na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -16857,7 +18364,7 @@ CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiClient, char *na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -16906,6 +18413,19 @@ CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiClient, char *na
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -16934,13 +18454,15 @@ CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiClient, char *na
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -16949,6 +18471,7 @@ CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiClient, char *na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -16964,11 +18487,14 @@ CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiClient, char *na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -17025,6 +18551,18 @@ CoreV1API_deleteNamespacedReplicationController(apiClient_t *apiClient, char *na
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -17060,7 +18598,7 @@ end:
 // delete a ResourceQuota
 //
 v1_resource_quota_t*
-CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -17068,15 +18606,22 @@ CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char *name, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/resourcequotas/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/resourcequotas/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/resourcequotas/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -17086,7 +18631,7 @@ CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char *name, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -17135,6 +18680,19 @@ CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char *name, char
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -17163,13 +18721,15 @@ CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char *name, char
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -17178,6 +18738,7 @@ CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char *name, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -17193,11 +18754,14 @@ CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char *name, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_resource_quota_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -17254,6 +18818,18 @@ CoreV1API_deleteNamespacedResourceQuota(apiClient_t *apiClient, char *name, char
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -17289,7 +18865,7 @@ end:
 // delete a Secret
 //
 v1_status_t*
-CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -17297,15 +18873,22 @@ CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char *name, char *_name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/secrets/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/secrets/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/secrets/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -17315,7 +18898,7 @@ CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char *name, char *_name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -17364,6 +18947,19 @@ CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char *name, char *_name
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -17392,13 +18988,15 @@ CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char *name, char *_name
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -17407,6 +19005,7 @@ CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char *name, char *_name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -17422,11 +19021,14 @@ CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char *name, char *_name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -17483,6 +19085,18 @@ CoreV1API_deleteNamespacedSecret(apiClient_t *apiClient, char *name, char *_name
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -17518,7 +19132,7 @@ end:
 // delete a Service
 //
 v1_service_t*
-CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -17526,15 +19140,22 @@ CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char *name, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -17544,7 +19165,7 @@ CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char *name, char *_nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -17593,6 +19214,19 @@ CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char *name, char *_nam
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -17621,13 +19255,15 @@ CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char *name, char *_nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -17636,6 +19272,7 @@ CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char *name, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -17651,11 +19288,14 @@ CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char *name, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -17712,6 +19352,18 @@ CoreV1API_deleteNamespacedService(apiClient_t *apiClient, char *name, char *_nam
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -17747,7 +19399,7 @@ end:
 // delete a ServiceAccount
 //
 v1_service_account_t*
-CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -17755,15 +19407,22 @@ CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char *name, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/serviceaccounts/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/serviceaccounts/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/serviceaccounts/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -17773,7 +19432,7 @@ CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char *name, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -17822,6 +19481,19 @@ CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char *name, cha
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -17850,13 +19522,15 @@ CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char *name, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -17865,6 +19539,7 @@ CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char *name, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -17880,11 +19555,14 @@ CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char *name, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_account_t *elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_account_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -17942,6 +19620,18 @@ CoreV1API_deleteNamespacedServiceAccount(apiClient_t *apiClient, char *name, cha
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
     }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
@@ -17976,7 +19666,7 @@ end:
 // delete a Node
 //
 v1_status_t*
-CoreV1API_deleteNode(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deleteNode(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -17984,15 +19674,20 @@ CoreV1API_deleteNode(apiClient_t *apiClient, char *name, char *pretty, char *dry
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}");
+    char *localVarPath = strdup("/api/v1/nodes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -18041,6 +19736,19 @@ CoreV1API_deleteNode(apiClient_t *apiClient, char *name, char *pretty, char *dry
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -18069,13 +19777,15 @@ CoreV1API_deleteNode(apiClient_t *apiClient, char *name, char *pretty, char *dry
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -18084,6 +19794,7 @@ CoreV1API_deleteNode(apiClient_t *apiClient, char *name, char *pretty, char *dry
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -18099,11 +19810,14 @@ CoreV1API_deleteNode(apiClient_t *apiClient, char *name, char *pretty, char *dry
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -18159,6 +19873,18 @@ CoreV1API_deleteNode(apiClient_t *apiClient, char *name, char *pretty, char *dry
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -18194,7 +19920,7 @@ end:
 // delete a PersistentVolume
 //
 v1_persistent_volume_t*
-CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -18202,15 +19928,20 @@ CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char *name, char *prett
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/persistentvolumes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/persistentvolumes/{name}");
+    char *localVarPath = strdup("/api/v1/persistentvolumes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -18259,6 +19990,19 @@ CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char *name, char *prett
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -18287,13 +20031,15 @@ CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char *name, char *prett
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -18302,6 +20048,7 @@ CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char *name, char *prett
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -18317,11 +20064,14 @@ CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char *name, char *prett
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -18377,6 +20127,18 @@ CoreV1API_deletePersistentVolume(apiClient_t *apiClient, char *name, char *prett
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -18420,17 +20182,21 @@ CoreV1API_getAPIResources(apiClient_t *apiClient)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/");
+    char *localVarPath = strdup("/api/v1/");
+
 
 
 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -18439,6 +20205,7 @@ CoreV1API_getAPIResources(apiClient_t *apiClient)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -18450,11 +20217,14 @@ CoreV1API_getAPIResources(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_api_resource_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_api_resource_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -18487,11 +20257,14 @@ CoreV1API_listComponentStatus(apiClient_t *apiClient, int *allowWatchBookmarks, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/componentstatuses")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/componentstatuses");
+    char *localVarPath = strdup("/api/v1/componentstatuses");
+
 
 
 
@@ -18635,8 +20408,10 @@ CoreV1API_listComponentStatus(apiClient_t *apiClient, int *allowWatchBookmarks, 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -18645,6 +20420,7 @@ CoreV1API_listComponentStatus(apiClient_t *apiClient, int *allowWatchBookmarks, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -18656,11 +20432,14 @@ CoreV1API_listComponentStatus(apiClient_t *apiClient, int *allowWatchBookmarks, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_component_status_list_t *elementToReturn = v1_component_status_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_component_status_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_component_status_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -18825,11 +20604,14 @@ CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiClient, int *allowWatchB
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/configmaps")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/configmaps");
+    char *localVarPath = strdup("/api/v1/configmaps");
+
 
 
 
@@ -18973,8 +20755,10 @@ CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiClient, int *allowWatchB
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -18983,6 +20767,7 @@ CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiClient, int *allowWatchB
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -18994,11 +20779,14 @@ CoreV1API_listConfigMapForAllNamespaces(apiClient_t *apiClient, int *allowWatchB
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_config_map_list_t *elementToReturn = v1_config_map_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_config_map_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_config_map_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -19163,11 +20951,14 @@ CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiClient, int *allowWatchB
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/endpoints")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/endpoints");
+    char *localVarPath = strdup("/api/v1/endpoints");
+
 
 
 
@@ -19311,8 +21102,10 @@ CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiClient, int *allowWatchB
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -19321,6 +21114,7 @@ CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiClient, int *allowWatchB
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -19332,11 +21126,14 @@ CoreV1API_listEndpointsForAllNamespaces(apiClient_t *apiClient, int *allowWatchB
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_endpoints_list_t *elementToReturn = v1_endpoints_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_endpoints_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_endpoints_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -19501,11 +21298,14 @@ CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookm
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/events")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/events");
+    char *localVarPath = strdup("/api/v1/events");
+
 
 
 
@@ -19649,8 +21449,10 @@ CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookm
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -19659,6 +21461,7 @@ CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookm
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -19670,11 +21473,14 @@ CoreV1API_listEventForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookm
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    core_v1_event_list_t *elementToReturn = core_v1_event_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    core_v1_event_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = core_v1_event_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -19839,11 +21645,14 @@ CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int *allowWatch
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/limitranges")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/limitranges");
+    char *localVarPath = strdup("/api/v1/limitranges");
+
 
 
 
@@ -19987,8 +21796,10 @@ CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int *allowWatch
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -19997,6 +21808,7 @@ CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int *allowWatch
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -20008,11 +21820,14 @@ CoreV1API_listLimitRangeForAllNamespaces(apiClient_t *apiClient, int *allowWatch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_limit_range_list_t *elementToReturn = v1_limit_range_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_limit_range_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_limit_range_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -20177,11 +21992,14 @@ CoreV1API_listNamespace(apiClient_t *apiClient, char *pretty, int *allowWatchBoo
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces");
+    char *localVarPath = strdup("/api/v1/namespaces");
+
 
 
 
@@ -20325,8 +22143,10 @@ CoreV1API_listNamespace(apiClient_t *apiClient, char *pretty, int *allowWatchBoo
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -20335,6 +22155,7 @@ CoreV1API_listNamespace(apiClient_t *apiClient, char *pretty, int *allowWatchBoo
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -20346,11 +22167,14 @@ CoreV1API_listNamespace(apiClient_t *apiClient, char *pretty, int *allowWatchBoo
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_namespace_list_t *elementToReturn = v1_namespace_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_namespace_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_namespace_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -20515,15 +22339,20 @@ CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char *_namespace, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/configmaps")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/configmaps");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/configmaps");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -20673,8 +22502,10 @@ CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char *_namespace, char
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -20683,6 +22514,7 @@ CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char *_namespace, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -20694,11 +22526,14 @@ CoreV1API_listNamespacedConfigMap(apiClient_t *apiClient, char *_namespace, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_config_map_list_t *elementToReturn = v1_config_map_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_config_map_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_config_map_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -20864,15 +22699,20 @@ CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, char *_namespace, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/endpoints")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/endpoints");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/endpoints");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -21022,8 +22862,10 @@ CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, char *_namespace, char
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -21032,6 +22874,7 @@ CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, char *_namespace, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -21043,11 +22886,14 @@ CoreV1API_listNamespacedEndpoints(apiClient_t *apiClient, char *_namespace, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_endpoints_list_t *elementToReturn = v1_endpoints_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_endpoints_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_endpoints_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -21213,15 +23059,20 @@ CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char *_namespace, char *pr
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/events")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/events");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/events");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -21371,8 +23222,10 @@ CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char *_namespace, char *pr
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -21381,6 +23234,7 @@ CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char *_namespace, char *pr
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -21392,11 +23246,14 @@ CoreV1API_listNamespacedEvent(apiClient_t *apiClient, char *_namespace, char *pr
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    core_v1_event_list_t *elementToReturn = core_v1_event_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    core_v1_event_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = core_v1_event_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -21562,15 +23419,20 @@ CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char *_namespace, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/limitranges")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/limitranges");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/limitranges");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -21720,8 +23582,10 @@ CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char *_namespace, cha
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -21730,6 +23594,7 @@ CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char *_namespace, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -21741,11 +23606,14 @@ CoreV1API_listNamespacedLimitRange(apiClient_t *apiClient, char *_namespace, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_limit_range_list_t *elementToReturn = v1_limit_range_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_limit_range_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_limit_range_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -21911,15 +23779,20 @@ CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/persistentvolumeclaims")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/persistentvolumeclaims");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/persistentvolumeclaims");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -22069,8 +23942,10 @@ CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *_nam
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -22079,6 +23954,7 @@ CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -22090,11 +23966,14 @@ CoreV1API_listNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_claim_list_t *elementToReturn = v1_persistent_volume_claim_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_claim_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_claim_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -22260,15 +24139,20 @@ CoreV1API_listNamespacedPod(apiClient_t *apiClient, char *_namespace, char *pret
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -22418,8 +24302,10 @@ CoreV1API_listNamespacedPod(apiClient_t *apiClient, char *_namespace, char *pret
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -22428,6 +24314,7 @@ CoreV1API_listNamespacedPod(apiClient_t *apiClient, char *_namespace, char *pret
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -22439,11 +24326,14 @@ CoreV1API_listNamespacedPod(apiClient_t *apiClient, char *_namespace, char *pret
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_list_t *elementToReturn = v1_pod_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -22609,15 +24499,20 @@ CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClient, char *_namespace, ch
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/podtemplates")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/podtemplates");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/podtemplates");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -22767,8 +24662,10 @@ CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClient, char *_namespace, ch
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -22777,6 +24674,7 @@ CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClient, char *_namespace, ch
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -22788,11 +24686,14 @@ CoreV1API_listNamespacedPodTemplate(apiClient_t *apiClient, char *_namespace, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_template_list_t *elementToReturn = v1_pod_template_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_template_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_template_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -22958,15 +24859,20 @@ CoreV1API_listNamespacedReplicationController(apiClient_t *apiClient, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -23116,8 +25022,10 @@ CoreV1API_listNamespacedReplicationController(apiClient_t *apiClient, char *_nam
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -23126,6 +25034,7 @@ CoreV1API_listNamespacedReplicationController(apiClient_t *apiClient, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -23137,11 +25046,14 @@ CoreV1API_listNamespacedReplicationController(apiClient_t *apiClient, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_replication_controller_list_t *elementToReturn = v1_replication_controller_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_replication_controller_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_replication_controller_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -23307,15 +25219,20 @@ CoreV1API_listNamespacedResourceQuota(apiClient_t *apiClient, char *_namespace, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/resourcequotas")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/resourcequotas");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/resourcequotas");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -23465,8 +25382,10 @@ CoreV1API_listNamespacedResourceQuota(apiClient_t *apiClient, char *_namespace, 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -23475,6 +25394,7 @@ CoreV1API_listNamespacedResourceQuota(apiClient_t *apiClient, char *_namespace, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -23486,11 +25406,14 @@ CoreV1API_listNamespacedResourceQuota(apiClient_t *apiClient, char *_namespace, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_resource_quota_list_t *elementToReturn = v1_resource_quota_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_resource_quota_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_resource_quota_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -23656,15 +25579,20 @@ CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char *_namespace, char *p
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/secrets")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/secrets");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/secrets");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -23814,8 +25742,10 @@ CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char *_namespace, char *p
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -23824,6 +25754,7 @@ CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char *_namespace, char *p
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -23835,11 +25766,14 @@ CoreV1API_listNamespacedSecret(apiClient_t *apiClient, char *_namespace, char *p
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_secret_list_t *elementToReturn = v1_secret_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_secret_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_secret_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -24005,15 +25939,20 @@ CoreV1API_listNamespacedService(apiClient_t *apiClient, char *_namespace, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -24163,8 +26102,10 @@ CoreV1API_listNamespacedService(apiClient_t *apiClient, char *_namespace, char *
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -24173,6 +26114,7 @@ CoreV1API_listNamespacedService(apiClient_t *apiClient, char *_namespace, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -24184,11 +26126,14 @@ CoreV1API_listNamespacedService(apiClient_t *apiClient, char *_namespace, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_list_t *elementToReturn = v1_service_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -24354,15 +26299,20 @@ CoreV1API_listNamespacedServiceAccount(apiClient_t *apiClient, char *_namespace,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/serviceaccounts")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/serviceaccounts");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/serviceaccounts");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -24512,8 +26462,10 @@ CoreV1API_listNamespacedServiceAccount(apiClient_t *apiClient, char *_namespace,
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -24522,6 +26474,7 @@ CoreV1API_listNamespacedServiceAccount(apiClient_t *apiClient, char *_namespace,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -24533,11 +26486,14 @@ CoreV1API_listNamespacedServiceAccount(apiClient_t *apiClient, char *_namespace,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_account_list_t *elementToReturn = v1_service_account_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_account_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_account_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -24703,11 +26659,14 @@ CoreV1API_listNode(apiClient_t *apiClient, char *pretty, int *allowWatchBookmark
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes");
+    char *localVarPath = strdup("/api/v1/nodes");
+
 
 
 
@@ -24851,8 +26810,10 @@ CoreV1API_listNode(apiClient_t *apiClient, char *pretty, int *allowWatchBookmark
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -24861,6 +26822,7 @@ CoreV1API_listNode(apiClient_t *apiClient, char *pretty, int *allowWatchBookmark
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -24872,11 +26834,14 @@ CoreV1API_listNode(apiClient_t *apiClient, char *pretty, int *allowWatchBookmark
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_node_list_t *elementToReturn = v1_node_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_node_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_node_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -25041,11 +27006,14 @@ CoreV1API_listPersistentVolume(apiClient_t *apiClient, char *pretty, int *allowW
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/persistentvolumes")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/persistentvolumes");
+    char *localVarPath = strdup("/api/v1/persistentvolumes");
+
 
 
 
@@ -25189,8 +27157,10 @@ CoreV1API_listPersistentVolume(apiClient_t *apiClient, char *pretty, int *allowW
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -25199,6 +27169,7 @@ CoreV1API_listPersistentVolume(apiClient_t *apiClient, char *pretty, int *allowW
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -25210,11 +27181,14 @@ CoreV1API_listPersistentVolume(apiClient_t *apiClient, char *pretty, int *allowW
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_list_t *elementToReturn = v1_persistent_volume_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -25379,11 +27353,14 @@ CoreV1API_listPersistentVolumeClaimForAllNamespaces(apiClient_t *apiClient, int 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/persistentvolumeclaims")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/persistentvolumeclaims");
+    char *localVarPath = strdup("/api/v1/persistentvolumeclaims");
+
 
 
 
@@ -25527,8 +27504,10 @@ CoreV1API_listPersistentVolumeClaimForAllNamespaces(apiClient_t *apiClient, int 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -25537,6 +27516,7 @@ CoreV1API_listPersistentVolumeClaimForAllNamespaces(apiClient_t *apiClient, int 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -25548,11 +27528,14 @@ CoreV1API_listPersistentVolumeClaimForAllNamespaces(apiClient_t *apiClient, int 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_claim_list_t *elementToReturn = v1_persistent_volume_claim_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_claim_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_claim_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -25717,11 +27700,14 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmar
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/pods")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/pods");
+    char *localVarPath = strdup("/api/v1/pods");
+
 
 
 
@@ -25865,8 +27851,10 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmar
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -25875,6 +27863,7 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmar
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -25886,11 +27875,14 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmar
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_list_t *elementToReturn = v1_pod_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -26055,11 +28047,14 @@ CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *apiClient, int *allowWatc
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/podtemplates")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/podtemplates");
+    char *localVarPath = strdup("/api/v1/podtemplates");
+
 
 
 
@@ -26203,8 +28198,10 @@ CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *apiClient, int *allowWatc
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -26213,6 +28210,7 @@ CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *apiClient, int *allowWatc
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -26224,11 +28222,14 @@ CoreV1API_listPodTemplateForAllNamespaces(apiClient_t *apiClient, int *allowWatc
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_template_list_t *elementToReturn = v1_pod_template_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_template_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_template_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -26393,11 +28394,14 @@ CoreV1API_listReplicationControllerForAllNamespaces(apiClient_t *apiClient, int 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/replicationcontrollers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/replicationcontrollers");
+    char *localVarPath = strdup("/api/v1/replicationcontrollers");
+
 
 
 
@@ -26541,8 +28545,10 @@ CoreV1API_listReplicationControllerForAllNamespaces(apiClient_t *apiClient, int 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -26551,6 +28557,7 @@ CoreV1API_listReplicationControllerForAllNamespaces(apiClient_t *apiClient, int 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -26562,11 +28569,14 @@ CoreV1API_listReplicationControllerForAllNamespaces(apiClient_t *apiClient, int 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_replication_controller_list_t *elementToReturn = v1_replication_controller_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_replication_controller_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_replication_controller_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -26731,11 +28741,14 @@ CoreV1API_listResourceQuotaForAllNamespaces(apiClient_t *apiClient, int *allowWa
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/resourcequotas")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/resourcequotas");
+    char *localVarPath = strdup("/api/v1/resourcequotas");
+
 
 
 
@@ -26879,8 +28892,10 @@ CoreV1API_listResourceQuotaForAllNamespaces(apiClient_t *apiClient, int *allowWa
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -26889,6 +28904,7 @@ CoreV1API_listResourceQuotaForAllNamespaces(apiClient_t *apiClient, int *allowWa
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -26900,11 +28916,14 @@ CoreV1API_listResourceQuotaForAllNamespaces(apiClient_t *apiClient, int *allowWa
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_resource_quota_list_t *elementToReturn = v1_resource_quota_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_resource_quota_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_resource_quota_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -27069,11 +29088,14 @@ CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, int *allowWatchBook
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/secrets")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/secrets");
+    char *localVarPath = strdup("/api/v1/secrets");
+
 
 
 
@@ -27217,8 +29239,10 @@ CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, int *allowWatchBook
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -27227,6 +29251,7 @@ CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, int *allowWatchBook
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -27238,11 +29263,14 @@ CoreV1API_listSecretForAllNamespaces(apiClient_t *apiClient, int *allowWatchBook
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_secret_list_t *elementToReturn = v1_secret_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_secret_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_secret_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -27407,11 +29435,14 @@ CoreV1API_listServiceAccountForAllNamespaces(apiClient_t *apiClient, int *allowW
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/serviceaccounts")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/serviceaccounts");
+    char *localVarPath = strdup("/api/v1/serviceaccounts");
+
 
 
 
@@ -27555,8 +29586,10 @@ CoreV1API_listServiceAccountForAllNamespaces(apiClient_t *apiClient, int *allowW
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -27565,6 +29598,7 @@ CoreV1API_listServiceAccountForAllNamespaces(apiClient_t *apiClient, int *allowW
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -27576,11 +29610,14 @@ CoreV1API_listServiceAccountForAllNamespaces(apiClient_t *apiClient, int *allowW
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_account_list_t *elementToReturn = v1_service_account_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_account_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_account_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -27745,11 +29782,14 @@ CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int *allowWatchBoo
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/services")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/services");
+    char *localVarPath = strdup("/api/v1/services");
+
 
 
 
@@ -27893,8 +29933,10 @@ CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int *allowWatchBoo
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -27903,6 +29945,7 @@ CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int *allowWatchBoo
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -27914,11 +29957,14 @@ CoreV1API_listServiceForAllNamespaces(apiClient_t *apiClient, int *allowWatchBoo
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_list_t *elementToReturn = v1_service_list_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_list_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -28083,15 +30129,20 @@ CoreV1API_patchNamespace(apiClient_t *apiClient, char *name, object_t *body, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -28167,17 +30218,20 @@ CoreV1API_patchNamespace(apiClient_t *apiClient, char *name, object_t *body, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -28186,6 +30240,7 @@ CoreV1API_patchNamespace(apiClient_t *apiClient, char *name, object_t *body, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -28201,11 +30256,14 @@ CoreV1API_patchNamespace(apiClient_t *apiClient, char *name, object_t *body, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_namespace_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -28304,15 +30362,20 @@ CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char *name, object_t *bod
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -28388,17 +30451,20 @@ CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char *name, object_t *bod
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -28407,6 +30473,7 @@ CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char *name, object_t *bod
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -28422,11 +30489,14 @@ CoreV1API_patchNamespaceStatus(apiClient_t *apiClient, char *name, object_t *bod
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_namespace_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -28525,15 +30595,22 @@ CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/configmaps/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/configmaps/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/configmaps/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -28543,7 +30620,7 @@ CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -28619,17 +30696,20 @@ CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_na
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -28638,6 +30718,7 @@ CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -28653,11 +30734,14 @@ CoreV1API_patchNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_config_map_t *elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_config_map_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -28757,15 +30841,22 @@ CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/endpoints/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/endpoints/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/endpoints/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -28775,7 +30866,7 @@ CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -28851,17 +30942,20 @@ CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_na
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -28870,6 +30964,7 @@ CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -28885,11 +30980,14 @@ CoreV1API_patchNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_endpoints_t *elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_endpoints_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -28989,15 +31087,22 @@ CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char *name, char *_namesp
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/events/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/events/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/events/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -29007,7 +31112,7 @@ CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char *name, char *_namesp
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -29083,17 +31188,20 @@ CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char *name, char *_namesp
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -29102,6 +31210,7 @@ CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char *name, char *_namesp
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -29117,11 +31226,14 @@ CoreV1API_patchNamespacedEvent(apiClient_t *apiClient, char *name, char *_namesp
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    core_v1_event_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -29221,15 +31333,22 @@ CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/limitranges/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/limitranges/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/limitranges/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -29239,7 +31358,7 @@ CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_n
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -29315,17 +31434,20 @@ CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -29334,6 +31456,7 @@ CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -29349,11 +31472,14 @@ CoreV1API_patchNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_limit_range_t *elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_limit_range_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -29453,15 +31579,22 @@ CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -29471,7 +31604,7 @@ CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -29547,17 +31680,20 @@ CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -29566,6 +31702,7 @@ CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -29581,11 +31718,14 @@ CoreV1API_patchNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_claim_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -29685,15 +31825,22 @@ CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -29703,7 +31850,7 @@ CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -29779,17 +31926,20 @@ CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -29798,6 +31948,7 @@ CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -29813,11 +31964,14 @@ CoreV1API_patchNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_claim_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -29917,15 +32071,22 @@ CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char *name, char *_namespac
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -29935,7 +32096,7 @@ CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char *name, char *_namespac
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -30011,17 +32172,20 @@ CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char *name, char *_namespac
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -30030,6 +32194,7 @@ CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char *name, char *_namespac
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -30045,11 +32210,14 @@ CoreV1API_patchNamespacedPod(apiClient_t *apiClient, char *name, char *_namespac
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -30149,15 +32317,22 @@ CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -30167,7 +32342,7 @@ CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -30243,17 +32418,20 @@ CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *na
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -30262,6 +32440,7 @@ CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -30277,11 +32456,260 @@ CoreV1API_patchNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_freeList(localVarQueryParameters);
+    
+    
+    list_freeList(localVarHeaderType);
+    list_freeList(localVarContentType);
+    free(localVarPath);
+    free(localVarToReplace_name);
+    free(localVarToReplace__namespace);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
+    free(localVarBodyParameters);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
+    }
+    if(keyQuery_dryRun){
+        free(keyQuery_dryRun);
+        keyQuery_dryRun = NULL;
+    }
+    if(valueQuery_dryRun){
+        free(valueQuery_dryRun);
+        valueQuery_dryRun = NULL;
+    }
+    if(keyPairQuery_dryRun){
+        keyValuePair_free(keyPairQuery_dryRun);
+        keyPairQuery_dryRun = NULL;
+    }
+    if(keyQuery_fieldManager){
+        free(keyQuery_fieldManager);
+        keyQuery_fieldManager = NULL;
+    }
+    if(valueQuery_fieldManager){
+        free(valueQuery_fieldManager);
+        valueQuery_fieldManager = NULL;
+    }
+    if(keyPairQuery_fieldManager){
+        keyValuePair_free(keyPairQuery_fieldManager);
+        keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
+    if(keyQuery_force){
+        free(keyQuery_force);
+        keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
+    if(keyPairQuery_force){
+        keyValuePair_free(keyPairQuery_force);
+        keyPairQuery_force = NULL;
+    }
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
+// partially update resize of the specified Pod
+//
+v1_pod_t*
+CoreV1API_patchNamespacedPodResize(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
+{
+    list_t    *localVarQueryParameters = list_createList();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_createList();
+    list_t *localVarContentType = list_createList();
+    char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
+
+    // create the path
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/resize");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+
+
+    // Path Params
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
+    if(name == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
+    sprintf(localVarToReplace_name, "{%s}", "name");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
+
+    // Path Params
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
+    if(_namespace == NULL) {
+        goto end;
+    }
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery_dryRun = NULL;
+    char * valueQuery_dryRun = NULL;
+    keyValuePair_t *keyPairQuery_dryRun = 0;
+    if (dryRun)
+    {
+        keyQuery_dryRun = strdup("dryRun");
+        valueQuery_dryRun = strdup((dryRun));
+        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
+        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
+    }
+
+    // query parameters
+    char *keyQuery_fieldManager = NULL;
+    char * valueQuery_fieldManager = NULL;
+    keyValuePair_t *keyPairQuery_fieldManager = 0;
+    if (fieldManager)
+    {
+        keyQuery_fieldManager = strdup("fieldManager");
+        valueQuery_fieldManager = strdup((fieldManager));
+        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
+    }
+
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
+    char *keyQuery_force = NULL;
+    char * valueQuery_force = NULL;
+    keyValuePair_t *keyPairQuery_force = 0;
+    if (force)
+    {
+        keyQuery_force = strdup("force");
+        valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
+        keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
+        list_addElement(localVarQueryParameters,keyPairQuery_force);
+    }
+
+    // Body Param
+    cJSON *localVarSingleItemJSON_body = NULL;
+    if (body != NULL)
+    {
+        //not string, not binary
+        localVarSingleItemJSON_body = object_convertToJSON(body);
+        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/yaml"); //produces
+    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
+    list_addElement(localVarContentType,"application/json-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    localVarBodyLength,
+                    "PATCH");
+
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
+    //nonprimitive not container
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -30381,15 +32809,22 @@ CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -30399,7 +32834,7 @@ CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -30475,17 +32910,20 @@ CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_na
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -30494,6 +32932,7 @@ CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -30509,11 +32948,14 @@ CoreV1API_patchNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -30613,15 +33055,22 @@ CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/podtemplates/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/podtemplates/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/podtemplates/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -30631,7 +33080,7 @@ CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -30707,17 +33156,20 @@ CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -30726,6 +33178,7 @@ CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -30741,11 +33194,14 @@ CoreV1API_patchNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_template_t *elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_template_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -30845,15 +33301,22 @@ CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char *nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -30863,7 +33326,7 @@ CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -30939,17 +33402,20 @@ CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char *nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -30958,6 +33424,7 @@ CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char *nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -30973,11 +33440,14 @@ CoreV1API_patchNamespacedReplicationController(apiClient_t *apiClient, char *nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_replication_controller_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -31077,15 +33547,22 @@ CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -31095,7 +33572,7 @@ CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -31171,17 +33648,20 @@ CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -31190,6 +33670,7 @@ CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -31205,11 +33686,14 @@ CoreV1API_patchNamespacedReplicationControllerScale(apiClient_t *apiClient, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_scale_t *elementToReturn = v1_scale_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_scale_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_scale_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -31309,15 +33793,22 @@ CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -31327,7 +33818,7 @@ CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -31403,17 +33894,20 @@ CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -31422,6 +33916,7 @@ CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -31437,11 +33932,14 @@ CoreV1API_patchNamespacedReplicationControllerStatus(apiClient_t *apiClient, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_replication_controller_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -31541,15 +34039,22 @@ CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char *name, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/resourcequotas/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/resourcequotas/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/resourcequotas/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -31559,7 +34064,7 @@ CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char *name, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -31635,17 +34140,20 @@ CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char *name, char 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -31654,6 +34162,7 @@ CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char *name, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -31669,11 +34178,14 @@ CoreV1API_patchNamespacedResourceQuota(apiClient_t *apiClient, char *name, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_resource_quota_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -31773,15 +34285,22 @@ CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *name,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/resourcequotas/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/resourcequotas/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/resourcequotas/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -31791,7 +34310,7 @@ CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *name,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -31867,17 +34386,20 @@ CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *name,
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -31886,6 +34408,7 @@ CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *name,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -31901,11 +34424,14 @@ CoreV1API_patchNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *name,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_resource_quota_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -32005,15 +34531,22 @@ CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char *name, char *_names
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/secrets/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/secrets/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/secrets/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -32023,7 +34556,7 @@ CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char *name, char *_names
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -32099,17 +34632,20 @@ CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char *name, char *_names
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -32118,6 +34654,7 @@ CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char *name, char *_names
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -32133,11 +34670,14 @@ CoreV1API_patchNamespacedSecret(apiClient_t *apiClient, char *name, char *_names
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_secret_t *elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_secret_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -32237,15 +34777,22 @@ CoreV1API_patchNamespacedService(apiClient_t *apiClient, char *name, char *_name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -32255,7 +34802,7 @@ CoreV1API_patchNamespacedService(apiClient_t *apiClient, char *name, char *_name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -32331,17 +34878,20 @@ CoreV1API_patchNamespacedService(apiClient_t *apiClient, char *name, char *_name
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -32350,6 +34900,7 @@ CoreV1API_patchNamespacedService(apiClient_t *apiClient, char *name, char *_name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -32365,11 +34916,14 @@ CoreV1API_patchNamespacedService(apiClient_t *apiClient, char *name, char *_name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -32469,15 +35023,22 @@ CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char *name, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/serviceaccounts/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/serviceaccounts/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/serviceaccounts/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -32487,7 +35048,7 @@ CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char *name, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -32563,17 +35124,20 @@ CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char *name, char
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -32582,6 +35146,7 @@ CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char *name, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -32597,11 +35162,14 @@ CoreV1API_patchNamespacedServiceAccount(apiClient_t *apiClient, char *name, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_account_t *elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_account_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -32701,15 +35269,22 @@ CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char *name, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -32719,7 +35294,7 @@ CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char *name, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -32795,17 +35370,20 @@ CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char *name, char 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -32814,6 +35392,7 @@ CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char *name, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -32829,11 +35408,14 @@ CoreV1API_patchNamespacedServiceStatus(apiClient_t *apiClient, char *name, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -32933,15 +35515,20 @@ CoreV1API_patchNode(apiClient_t *apiClient, char *name, object_t *body, char *pr
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}");
+    char *localVarPath = strdup("/api/v1/nodes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -33017,17 +35604,20 @@ CoreV1API_patchNode(apiClient_t *apiClient, char *name, object_t *body, char *pr
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -33036,6 +35626,7 @@ CoreV1API_patchNode(apiClient_t *apiClient, char *name, object_t *body, char *pr
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -33051,11 +35642,14 @@ CoreV1API_patchNode(apiClient_t *apiClient, char *name, object_t *body, char *pr
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -33154,15 +35748,20 @@ CoreV1API_patchNodeStatus(apiClient_t *apiClient, char *name, object_t *body, ch
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/status");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -33238,17 +35837,20 @@ CoreV1API_patchNodeStatus(apiClient_t *apiClient, char *name, object_t *body, ch
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -33257,6 +35859,7 @@ CoreV1API_patchNodeStatus(apiClient_t *apiClient, char *name, object_t *body, ch
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -33272,11 +35875,14 @@ CoreV1API_patchNodeStatus(apiClient_t *apiClient, char *name, object_t *body, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -33375,15 +35981,20 @@ CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char *name, object_t *bo
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/persistentvolumes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/persistentvolumes/{name}");
+    char *localVarPath = strdup("/api/v1/persistentvolumes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -33459,17 +36070,20 @@ CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char *name, object_t *bo
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -33478,6 +36092,7 @@ CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char *name, object_t *bo
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -33493,11 +36108,14 @@ CoreV1API_patchPersistentVolume(apiClient_t *apiClient, char *name, object_t *bo
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -33596,15 +36214,20 @@ CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char *name, object
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/persistentvolumes/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/persistentvolumes/{name}/status");
+    char *localVarPath = strdup("/api/v1/persistentvolumes/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -33680,17 +36303,20 @@ CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char *name, object
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -33699,6 +36325,7 @@ CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char *name, object
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -33714,11 +36341,14 @@ CoreV1API_patchPersistentVolumeStatus(apiClient_t *apiClient, char *name, object
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -33817,15 +36447,20 @@ CoreV1API_readComponentStatus(apiClient_t *apiClient, char *name, char *pretty)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/componentstatuses/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/componentstatuses/{name}");
+    char *localVarPath = strdup("/api/v1/componentstatuses/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -33850,6 +36485,7 @@ CoreV1API_readComponentStatus(apiClient_t *apiClient, char *name, char *pretty)
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -33858,6 +36494,7 @@ CoreV1API_readComponentStatus(apiClient_t *apiClient, char *name, char *pretty)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -33869,11 +36506,14 @@ CoreV1API_readComponentStatus(apiClient_t *apiClient, char *name, char *pretty)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_component_status_t *elementToReturn = v1_component_status_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_component_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_component_status_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -33919,15 +36559,20 @@ CoreV1API_readNamespace(apiClient_t *apiClient, char *name, char *pretty)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -33952,6 +36597,7 @@ CoreV1API_readNamespace(apiClient_t *apiClient, char *name, char *pretty)
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -33960,6 +36606,7 @@ CoreV1API_readNamespace(apiClient_t *apiClient, char *name, char *pretty)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -33971,11 +36618,14 @@ CoreV1API_readNamespace(apiClient_t *apiClient, char *name, char *pretty)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_namespace_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -34021,15 +36671,20 @@ CoreV1API_readNamespaceStatus(apiClient_t *apiClient, char *name, char *pretty)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -34054,6 +36709,7 @@ CoreV1API_readNamespaceStatus(apiClient_t *apiClient, char *name, char *pretty)
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -34062,6 +36718,7 @@ CoreV1API_readNamespaceStatus(apiClient_t *apiClient, char *name, char *pretty)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -34073,11 +36730,14 @@ CoreV1API_readNamespaceStatus(apiClient_t *apiClient, char *name, char *pretty)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_namespace_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -34123,15 +36783,22 @@ CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/configmaps/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/configmaps/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/configmaps/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -34141,7 +36808,7 @@ CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -34166,6 +36833,7 @@ CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_nam
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -34174,6 +36842,7 @@ CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -34185,11 +36854,14 @@ CoreV1API_readNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_config_map_t *elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_config_map_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -34236,15 +36908,22 @@ CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/endpoints/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/endpoints/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/endpoints/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -34254,7 +36933,7 @@ CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -34279,6 +36958,7 @@ CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_nam
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -34287,6 +36967,7 @@ CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -34298,11 +36979,14 @@ CoreV1API_readNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_endpoints_t *elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_endpoints_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -34349,15 +37033,22 @@ CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespa
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/events/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/events/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/events/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -34367,7 +37058,7 @@ CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespa
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -34392,6 +37083,7 @@ CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespa
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -34400,6 +37092,7 @@ CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespa
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -34411,11 +37104,14 @@ CoreV1API_readNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespa
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    core_v1_event_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -34462,15 +37158,22 @@ CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/limitranges/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/limitranges/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/limitranges/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -34480,7 +37183,7 @@ CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -34505,6 +37208,7 @@ CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_na
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -34513,6 +37217,7 @@ CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -34524,11 +37229,14 @@ CoreV1API_readNamespacedLimitRange(apiClient_t *apiClient, char *name, char *_na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_limit_range_t *elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_limit_range_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -34575,15 +37283,22 @@ CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -34593,7 +37308,7 @@ CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -34618,6 +37333,7 @@ CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *name
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -34626,6 +37342,7 @@ CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -34637,11 +37354,14 @@ CoreV1API_readNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_claim_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -34688,15 +37408,22 @@ CoreV1API_readNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -34706,7 +37433,7 @@ CoreV1API_readNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -34731,6 +37458,7 @@ CoreV1API_readNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -34739,6 +37467,7 @@ CoreV1API_readNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -34750,11 +37479,14 @@ CoreV1API_readNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_claim_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -34801,15 +37533,22 @@ CoreV1API_readNamespacedPod(apiClient_t *apiClient, char *name, char *_namespace
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -34819,7 +37558,7 @@ CoreV1API_readNamespacedPod(apiClient_t *apiClient, char *name, char *_namespace
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -34844,6 +37583,7 @@ CoreV1API_readNamespacedPod(apiClient_t *apiClient, char *name, char *_namespace
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -34852,6 +37592,7 @@ CoreV1API_readNamespacedPod(apiClient_t *apiClient, char *name, char *_namespace
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -34863,11 +37604,14 @@ CoreV1API_readNamespacedPod(apiClient_t *apiClient, char *name, char *_namespace
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -34914,15 +37658,22 @@ CoreV1API_readNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -34932,7 +37683,7 @@ CoreV1API_readNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -34957,6 +37708,7 @@ CoreV1API_readNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *nam
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -34965,6 +37717,7 @@ CoreV1API_readNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -34976,11 +37729,14 @@ CoreV1API_readNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -35019,7 +37775,7 @@ end:
 // read log of the specified Pod
 //
 char*
-CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char *name, char *_namespace, char *container, int *follow, int *insecureSkipTLSVerifyBackend, int *limitBytes, char *pretty, int *previous, int *sinceSeconds, int *tailLines, int *timestamps)
+CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char *name, char *_namespace, char *container, int *follow, int *insecureSkipTLSVerifyBackend, int *limitBytes, char *pretty, int *previous, int *sinceSeconds, char *stream, int *tailLines, int *timestamps)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -35027,15 +37783,22 @@ CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char *name, char *_namesp
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/log")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/log");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/log");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -35045,7 +37808,7 @@ CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char *name, char *_namesp
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -35146,6 +37909,18 @@ CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char *name, char *_namesp
     }
 
     // query parameters
+    char *keyQuery_stream = NULL;
+    char * valueQuery_stream = NULL;
+    keyValuePair_t *keyPairQuery_stream = 0;
+    if (stream)
+    {
+        keyQuery_stream = strdup("stream");
+        valueQuery_stream = strdup((stream));
+        keyPairQuery_stream = keyValuePair_create(keyQuery_stream, valueQuery_stream);
+        list_addElement(localVarQueryParameters,keyPairQuery_stream);
+    }
+
+    // query parameters
     char *keyQuery_tailLines = NULL;
     char * valueQuery_tailLines = NULL;
     keyValuePair_t *keyPairQuery_tailLines = 0;
@@ -35174,6 +37949,7 @@ CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char *name, char *_namesp
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -35182,6 +37958,7 @@ CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char *name, char *_namesp
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -35192,8 +37969,10 @@ CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char *name, char *_namesp
     //if (apiClient->response_code == 401) {
     //    printf("%s\n","Unauthorized");
     //}
-    //primitive return type simple
-    char* elementToReturn =  strdup((char*)apiClient->dataReceived);
+    //primitive return type simple string
+    char* elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300)
+        elementToReturn = strdup((char*)apiClient->dataReceived);
 
     if (apiClient->dataReceived) {
         free(apiClient->dataReceived);
@@ -35292,6 +38071,18 @@ CoreV1API_readNamespacedPodLog(apiClient_t *apiClient, char *name, char *_namesp
         keyValuePair_free(keyPairQuery_sinceSeconds);
         keyPairQuery_sinceSeconds = NULL;
     }
+    if(keyQuery_stream){
+        free(keyQuery_stream);
+        keyQuery_stream = NULL;
+    }
+    if(valueQuery_stream){
+        free(valueQuery_stream);
+        valueQuery_stream = NULL;
+    }
+    if(keyPairQuery_stream){
+        keyValuePair_free(keyPairQuery_stream);
+        keyPairQuery_stream = NULL;
+    }
     if(keyQuery_tailLines){
         free(keyQuery_tailLines);
         keyQuery_tailLines = NULL;
@@ -35323,10 +38114,10 @@ end:
 
 }
 
-// read status of the specified Pod
+// read resize of the specified Pod
 //
 v1_pod_t*
-CoreV1API_readNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
+CoreV1API_readNamespacedPodResize(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -35334,15 +38125,22 @@ CoreV1API_readNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/resize");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -35352,7 +38150,7 @@ CoreV1API_readNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -35377,6 +38175,7 @@ CoreV1API_readNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_nam
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -35385,6 +38184,7 @@ CoreV1API_readNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -35396,11 +38196,139 @@ CoreV1API_readNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_freeList(localVarQueryParameters);
+    
+    
+    list_freeList(localVarHeaderType);
+    
+    free(localVarPath);
+    free(localVarToReplace_name);
+    free(localVarToReplace__namespace);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
+    }
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
+// read status of the specified Pod
+//
+v1_pod_t*
+CoreV1API_readNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_namespace, char *pretty)
+{
+    list_t    *localVarQueryParameters = list_createList();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_createList();
+    list_t *localVarContentType = NULL;
+    char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
+
+    // create the path
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+
+
+    // Path Params
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
+    if(name == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
+    sprintf(localVarToReplace_name, "{%s}", "name");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
+
+    // Path Params
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
+    if(_namespace == NULL) {
+        goto end;
+    }
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/yaml"); //produces
+    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    localVarBodyLength,
+                    "GET");
+
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
+    //nonprimitive not container
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -35447,15 +38375,22 @@ CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/podtemplates/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/podtemplates/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/podtemplates/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -35465,7 +38400,7 @@ CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_n
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -35490,6 +38425,7 @@ CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_n
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -35498,6 +38434,7 @@ CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -35509,11 +38446,14 @@ CoreV1API_readNamespacedPodTemplate(apiClient_t *apiClient, char *name, char *_n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_template_t *elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_template_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -35560,15 +38500,22 @@ CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char *name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -35578,7 +38525,7 @@ CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char *name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -35603,6 +38550,7 @@ CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char *name
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -35611,6 +38559,7 @@ CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char *name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -35622,11 +38571,14 @@ CoreV1API_readNamespacedReplicationController(apiClient_t *apiClient, char *name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_replication_controller_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -35673,15 +38625,22 @@ CoreV1API_readNamespacedReplicationControllerScale(apiClient_t *apiClient, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -35691,7 +38650,7 @@ CoreV1API_readNamespacedReplicationControllerScale(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -35716,6 +38675,7 @@ CoreV1API_readNamespacedReplicationControllerScale(apiClient_t *apiClient, char 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -35724,6 +38684,7 @@ CoreV1API_readNamespacedReplicationControllerScale(apiClient_t *apiClient, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -35735,11 +38696,14 @@ CoreV1API_readNamespacedReplicationControllerScale(apiClient_t *apiClient, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_scale_t *elementToReturn = v1_scale_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_scale_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_scale_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -35786,15 +38750,22 @@ CoreV1API_readNamespacedReplicationControllerStatus(apiClient_t *apiClient, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -35804,7 +38775,7 @@ CoreV1API_readNamespacedReplicationControllerStatus(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -35829,6 +38800,7 @@ CoreV1API_readNamespacedReplicationControllerStatus(apiClient_t *apiClient, char
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -35837,6 +38809,7 @@ CoreV1API_readNamespacedReplicationControllerStatus(apiClient_t *apiClient, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -35848,11 +38821,14 @@ CoreV1API_readNamespacedReplicationControllerStatus(apiClient_t *apiClient, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_replication_controller_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -35899,15 +38875,22 @@ CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char *name, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/resourcequotas/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/resourcequotas/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/resourcequotas/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -35917,7 +38900,7 @@ CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char *name, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -35942,6 +38925,7 @@ CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char *name, char *
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -35950,6 +38934,7 @@ CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char *name, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -35961,11 +38946,14 @@ CoreV1API_readNamespacedResourceQuota(apiClient_t *apiClient, char *name, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_resource_quota_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -36012,15 +39000,22 @@ CoreV1API_readNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *name, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/resourcequotas/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/resourcequotas/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/resourcequotas/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -36030,7 +39025,7 @@ CoreV1API_readNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *name, 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -36055,6 +39050,7 @@ CoreV1API_readNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *name, 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -36063,6 +39059,7 @@ CoreV1API_readNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *name, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -36074,11 +39071,14 @@ CoreV1API_readNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *name, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_resource_quota_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -36125,15 +39125,22 @@ CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char *name, char *_namesp
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/secrets/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/secrets/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/secrets/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -36143,7 +39150,7 @@ CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char *name, char *_namesp
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -36168,6 +39175,7 @@ CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char *name, char *_namesp
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -36176,6 +39184,7 @@ CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char *name, char *_namesp
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -36187,11 +39196,14 @@ CoreV1API_readNamespacedSecret(apiClient_t *apiClient, char *name, char *_namesp
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_secret_t *elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_secret_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -36238,15 +39250,22 @@ CoreV1API_readNamespacedService(apiClient_t *apiClient, char *name, char *_names
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -36256,7 +39275,7 @@ CoreV1API_readNamespacedService(apiClient_t *apiClient, char *name, char *_names
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -36281,6 +39300,7 @@ CoreV1API_readNamespacedService(apiClient_t *apiClient, char *name, char *_names
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -36289,6 +39309,7 @@ CoreV1API_readNamespacedService(apiClient_t *apiClient, char *name, char *_names
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -36300,11 +39321,14 @@ CoreV1API_readNamespacedService(apiClient_t *apiClient, char *name, char *_names
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -36351,15 +39375,22 @@ CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char *name, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/serviceaccounts/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/serviceaccounts/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/serviceaccounts/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -36369,7 +39400,7 @@ CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char *name, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -36394,6 +39425,7 @@ CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char *name, char 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -36402,6 +39434,7 @@ CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char *name, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -36413,11 +39446,14 @@ CoreV1API_readNamespacedServiceAccount(apiClient_t *apiClient, char *name, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_account_t *elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_account_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -36464,15 +39500,22 @@ CoreV1API_readNamespacedServiceStatus(apiClient_t *apiClient, char *name, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -36482,7 +39525,7 @@ CoreV1API_readNamespacedServiceStatus(apiClient_t *apiClient, char *name, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -36507,6 +39550,7 @@ CoreV1API_readNamespacedServiceStatus(apiClient_t *apiClient, char *name, char *
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -36515,6 +39559,7 @@ CoreV1API_readNamespacedServiceStatus(apiClient_t *apiClient, char *name, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -36526,11 +39571,14 @@ CoreV1API_readNamespacedServiceStatus(apiClient_t *apiClient, char *name, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -36577,15 +39625,20 @@ CoreV1API_readNode(apiClient_t *apiClient, char *name, char *pretty)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}");
+    char *localVarPath = strdup("/api/v1/nodes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -36610,6 +39663,7 @@ CoreV1API_readNode(apiClient_t *apiClient, char *name, char *pretty)
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -36618,6 +39672,7 @@ CoreV1API_readNode(apiClient_t *apiClient, char *name, char *pretty)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -36629,11 +39684,14 @@ CoreV1API_readNode(apiClient_t *apiClient, char *name, char *pretty)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -36679,15 +39737,20 @@ CoreV1API_readNodeStatus(apiClient_t *apiClient, char *name, char *pretty)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/status");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -36712,6 +39775,7 @@ CoreV1API_readNodeStatus(apiClient_t *apiClient, char *name, char *pretty)
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -36720,6 +39784,7 @@ CoreV1API_readNodeStatus(apiClient_t *apiClient, char *name, char *pretty)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -36731,11 +39796,14 @@ CoreV1API_readNodeStatus(apiClient_t *apiClient, char *name, char *pretty)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -36781,15 +39849,20 @@ CoreV1API_readPersistentVolume(apiClient_t *apiClient, char *name, char *pretty)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/persistentvolumes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/persistentvolumes/{name}");
+    char *localVarPath = strdup("/api/v1/persistentvolumes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -36814,6 +39887,7 @@ CoreV1API_readPersistentVolume(apiClient_t *apiClient, char *name, char *pretty)
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -36822,6 +39896,7 @@ CoreV1API_readPersistentVolume(apiClient_t *apiClient, char *name, char *pretty)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -36833,11 +39908,14 @@ CoreV1API_readPersistentVolume(apiClient_t *apiClient, char *name, char *pretty)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -36883,15 +39961,20 @@ CoreV1API_readPersistentVolumeStatus(apiClient_t *apiClient, char *name, char *p
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/persistentvolumes/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/persistentvolumes/{name}/status");
+    char *localVarPath = strdup("/api/v1/persistentvolumes/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -36916,6 +39999,7 @@ CoreV1API_readPersistentVolumeStatus(apiClient_t *apiClient, char *name, char *p
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -36924,6 +40008,7 @@ CoreV1API_readPersistentVolumeStatus(apiClient_t *apiClient, char *name, char *p
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -36935,11 +40020,14 @@ CoreV1API_readPersistentVolumeStatus(apiClient_t *apiClient, char *name, char *p
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -36985,15 +40073,20 @@ CoreV1API_replaceNamespace(apiClient_t *apiClient, char *name, v1_namespace_t *b
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -37056,13 +40149,15 @@ CoreV1API_replaceNamespace(apiClient_t *apiClient, char *name, v1_namespace_t *b
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_namespace_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -37071,6 +40166,7 @@ CoreV1API_replaceNamespace(apiClient_t *apiClient, char *name, v1_namespace_t *b
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -37086,11 +40182,14 @@ CoreV1API_replaceNamespace(apiClient_t *apiClient, char *name, v1_namespace_t *b
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_namespace_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -37177,15 +40276,20 @@ CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char *name, v1_namesp
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{name}/finalize")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{name}/finalize");
+    char *localVarPath = strdup("/api/v1/namespaces/{name}/finalize");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -37248,13 +40352,15 @@ CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char *name, v1_namesp
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_namespace_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -37263,6 +40369,7 @@ CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char *name, v1_namesp
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -37278,11 +40385,14 @@ CoreV1API_replaceNamespaceFinalize(apiClient_t *apiClient, char *name, v1_namesp
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_namespace_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -37369,15 +40479,20 @@ CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char *name, v1_namespac
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -37440,13 +40555,15 @@ CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char *name, v1_namespac
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_namespace_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -37455,6 +40572,7 @@ CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char *name, v1_namespac
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -37470,11 +40588,14 @@ CoreV1API_replaceNamespaceStatus(apiClient_t *apiClient, char *name, v1_namespac
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_namespace_t *elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_namespace_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_namespace_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -37561,15 +40682,22 @@ CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/configmaps/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/configmaps/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/configmaps/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -37579,7 +40707,7 @@ CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -37642,13 +40770,15 @@ CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_config_map_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -37657,6 +40787,7 @@ CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -37672,11 +40803,14 @@ CoreV1API_replaceNamespacedConfigMap(apiClient_t *apiClient, char *name, char *_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_config_map_t *elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_config_map_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_config_map_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -37764,15 +40898,22 @@ CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/endpoints/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/endpoints/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/endpoints/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -37782,7 +40923,7 @@ CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -37845,13 +40986,15 @@ CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_endpoints_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -37860,6 +41003,7 @@ CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -37875,11 +41019,14 @@ CoreV1API_replaceNamespacedEndpoints(apiClient_t *apiClient, char *name, char *_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_endpoints_t *elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_endpoints_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_endpoints_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -37967,15 +41114,22 @@ CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char *name, char *_name
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/events/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/events/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/events/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -37985,7 +41139,7 @@ CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char *name, char *_name
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -38048,13 +41202,15 @@ CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char *name, char *_name
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = core_v1_event_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -38063,6 +41219,7 @@ CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char *name, char *_name
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -38078,11 +41235,14 @@ CoreV1API_replaceNamespacedEvent(apiClient_t *apiClient, char *name, char *_name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    core_v1_event_t *elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    core_v1_event_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = core_v1_event_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -38170,15 +41330,22 @@ CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char *name, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/limitranges/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/limitranges/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/limitranges/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -38188,7 +41355,7 @@ CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char *name, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -38251,13 +41418,15 @@ CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char *name, char *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_limit_range_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -38266,6 +41435,7 @@ CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char *name, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -38281,11 +41451,14 @@ CoreV1API_replaceNamespacedLimitRange(apiClient_t *apiClient, char *name, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_limit_range_t *elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_limit_range_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_limit_range_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -38373,15 +41546,22 @@ CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -38391,7 +41571,7 @@ CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *n
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -38454,13 +41634,15 @@ CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_persistent_volume_claim_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -38469,6 +41651,7 @@ CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -38484,11 +41667,14 @@ CoreV1API_replaceNamespacedPersistentVolumeClaim(apiClient_t *apiClient, char *n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_claim_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -38576,15 +41762,22 @@ CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -38594,7 +41787,7 @@ CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -38657,13 +41850,15 @@ CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, c
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_persistent_volume_claim_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -38672,6 +41867,7 @@ CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -38687,11 +41883,14 @@ CoreV1API_replaceNamespacedPersistentVolumeClaimStatus(apiClient_t *apiClient, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_claim_t *elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_claim_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_claim_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -38779,15 +41978,22 @@ CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char *name, char *_namesp
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -38797,7 +42003,7 @@ CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char *name, char *_namesp
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -38860,13 +42066,15 @@ CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char *name, char *_namesp
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_pod_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -38875,6 +42083,7 @@ CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char *name, char *_namesp
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -38890,11 +42099,14 @@ CoreV1API_replaceNamespacedPod(apiClient_t *apiClient, char *name, char *_namesp
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -38982,15 +42194,22 @@ CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/ephemeralcontainers");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -39000,7 +42219,7 @@ CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -39063,13 +42282,15 @@ CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_pod_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -39078,6 +42299,7 @@ CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -39093,11 +42315,230 @@ CoreV1API_replaceNamespacedPodEphemeralcontainers(apiClient_t *apiClient, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_freeList(localVarQueryParameters);
+    
+    
+    list_freeList(localVarHeaderType);
+    
+    free(localVarPath);
+    free(localVarToReplace_name);
+    free(localVarToReplace__namespace);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
+    free(localVarBodyParameters);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
+    }
+    if(keyQuery_dryRun){
+        free(keyQuery_dryRun);
+        keyQuery_dryRun = NULL;
+    }
+    if(valueQuery_dryRun){
+        free(valueQuery_dryRun);
+        valueQuery_dryRun = NULL;
+    }
+    if(keyPairQuery_dryRun){
+        keyValuePair_free(keyPairQuery_dryRun);
+        keyPairQuery_dryRun = NULL;
+    }
+    if(keyQuery_fieldManager){
+        free(keyQuery_fieldManager);
+        keyQuery_fieldManager = NULL;
+    }
+    if(valueQuery_fieldManager){
+        free(valueQuery_fieldManager);
+        valueQuery_fieldManager = NULL;
+    }
+    if(keyPairQuery_fieldManager){
+        keyValuePair_free(keyPairQuery_fieldManager);
+        keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
+// replace resize of the specified Pod
+//
+v1_pod_t*
+CoreV1API_replaceNamespacedPodResize(apiClient_t *apiClient, char *name, char *_namespace, v1_pod_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+{
+    list_t    *localVarQueryParameters = list_createList();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_createList();
+    list_t *localVarContentType = NULL;
+    char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
+
+    // create the path
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/resize");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
+
+
+    // Path Params
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
+    if(name == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
+    sprintf(localVarToReplace_name, "{%s}", "name");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
+
+    // Path Params
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
+    if(_namespace == NULL) {
+        goto end;
+    }
+    char* localVarToReplace__namespace = malloc(sizeOfPathParams__namespace);
+    sprintf(localVarToReplace__namespace, "{%s}", "namespace");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery_dryRun = NULL;
+    char * valueQuery_dryRun = NULL;
+    keyValuePair_t *keyPairQuery_dryRun = 0;
+    if (dryRun)
+    {
+        keyQuery_dryRun = strdup("dryRun");
+        valueQuery_dryRun = strdup((dryRun));
+        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
+        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
+    }
+
+    // query parameters
+    char *keyQuery_fieldManager = NULL;
+    char * valueQuery_fieldManager = NULL;
+    keyValuePair_t *keyPairQuery_fieldManager = 0;
+    if (fieldManager)
+    {
+        keyQuery_fieldManager = strdup("fieldManager");
+        valueQuery_fieldManager = strdup((fieldManager));
+        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
+    }
+
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // Body Param
+    cJSON *localVarSingleItemJSON_body = NULL;
+    if (body != NULL)
+    {
+        //not string, not binary
+        localVarSingleItemJSON_body = v1_pod_convertToJSON(body);
+        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/yaml"); //produces
+    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    localVarBodyLength,
+                    "PUT");
+
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
+    //nonprimitive not container
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -39185,15 +42626,22 @@ CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/pods/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/pods/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/pods/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -39203,7 +42651,7 @@ CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -39266,13 +42714,15 @@ CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_pod_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -39281,6 +42731,7 @@ CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -39296,11 +42747,14 @@ CoreV1API_replaceNamespacedPodStatus(apiClient_t *apiClient, char *name, char *_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_t *elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -39388,15 +42842,22 @@ CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char *name, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/podtemplates/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/podtemplates/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/podtemplates/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -39406,7 +42867,7 @@ CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char *name, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -39469,13 +42930,15 @@ CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char *name, char 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_pod_template_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -39484,6 +42947,7 @@ CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char *name, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -39499,11 +42963,14 @@ CoreV1API_replaceNamespacedPodTemplate(apiClient_t *apiClient, char *name, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_pod_template_t *elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_pod_template_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_pod_template_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -39591,15 +43058,22 @@ CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char *n
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -39609,7 +43083,7 @@ CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char *n
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -39672,13 +43146,15 @@ CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char *n
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_replication_controller_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -39687,6 +43163,7 @@ CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char *n
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -39702,11 +43179,14 @@ CoreV1API_replaceNamespacedReplicationController(apiClient_t *apiClient, char *n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_replication_controller_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -39794,15 +43274,22 @@ CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, ch
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -39812,7 +43299,7 @@ CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, ch
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -39875,13 +43362,15 @@ CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, ch
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_scale_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -39890,6 +43379,7 @@ CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, ch
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -39905,11 +43395,14 @@ CoreV1API_replaceNamespacedReplicationControllerScale(apiClient_t *apiClient, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_scale_t *elementToReturn = v1_scale_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_scale_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_scale_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -39997,15 +43490,22 @@ CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -40015,7 +43515,7 @@ CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -40078,13 +43578,15 @@ CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, c
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_replication_controller_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -40093,6 +43595,7 @@ CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -40108,11 +43611,14 @@ CoreV1API_replaceNamespacedReplicationControllerStatus(apiClient_t *apiClient, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_replication_controller_t *elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_replication_controller_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_replication_controller_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -40200,15 +43706,22 @@ CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char *name, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/resourcequotas/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/resourcequotas/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/resourcequotas/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -40218,7 +43731,7 @@ CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char *name, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -40281,13 +43794,15 @@ CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char *name, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_resource_quota_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -40296,6 +43811,7 @@ CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char *name, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -40311,11 +43827,14 @@ CoreV1API_replaceNamespacedResourceQuota(apiClient_t *apiClient, char *name, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_resource_quota_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -40403,15 +43922,22 @@ CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/resourcequotas/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/resourcequotas/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/resourcequotas/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -40421,7 +43947,7 @@ CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -40484,13 +44010,15 @@ CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_resource_quota_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -40499,6 +44027,7 @@ CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -40514,11 +44043,14 @@ CoreV1API_replaceNamespacedResourceQuotaStatus(apiClient_t *apiClient, char *nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_resource_quota_t *elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_resource_quota_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_resource_quota_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -40606,15 +44138,22 @@ CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char *name, char *_nam
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/secrets/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/secrets/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/secrets/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -40624,7 +44163,7 @@ CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char *name, char *_nam
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -40687,13 +44226,15 @@ CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char *name, char *_nam
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_secret_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -40702,6 +44243,7 @@ CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char *name, char *_nam
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -40717,11 +44259,14 @@ CoreV1API_replaceNamespacedSecret(apiClient_t *apiClient, char *name, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_secret_t *elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_secret_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_secret_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -40809,15 +44354,22 @@ CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char *name, char *_na
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -40827,7 +44379,7 @@ CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char *name, char *_na
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -40890,13 +44442,15 @@ CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char *name, char *_na
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_service_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -40905,6 +44459,7 @@ CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char *name, char *_na
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -40920,11 +44475,14 @@ CoreV1API_replaceNamespacedService(apiClient_t *apiClient, char *name, char *_na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -41012,15 +44570,22 @@ CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char *name, ch
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/serviceaccounts/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/serviceaccounts/{name}");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/serviceaccounts/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -41030,7 +44595,7 @@ CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char *name, ch
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -41093,13 +44658,15 @@ CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char *name, ch
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_service_account_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -41108,6 +44675,7 @@ CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char *name, ch
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -41123,11 +44691,14 @@ CoreV1API_replaceNamespacedServiceAccount(apiClient_t *apiClient, char *name, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_account_t *elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_account_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_account_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -41215,15 +44786,22 @@ CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char *name, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/namespaces/{namespace}/services/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/namespaces/{namespace}/services/{name}/status");
+    char *localVarPath = strdup("/api/v1/namespaces/{namespace}/services/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -41233,7 +44811,7 @@ CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char *name, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -41296,13 +44874,15 @@ CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char *name, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_service_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -41311,6 +44891,7 @@ CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char *name, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -41326,11 +44907,14 @@ CoreV1API_replaceNamespacedServiceStatus(apiClient_t *apiClient, char *name, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_service_t *elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_service_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_service_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -41418,15 +45002,20 @@ CoreV1API_replaceNode(apiClient_t *apiClient, char *name, v1_node_t *body, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}");
+    char *localVarPath = strdup("/api/v1/nodes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -41489,13 +45078,15 @@ CoreV1API_replaceNode(apiClient_t *apiClient, char *name, v1_node_t *body, char 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_node_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -41504,6 +45095,7 @@ CoreV1API_replaceNode(apiClient_t *apiClient, char *name, v1_node_t *body, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -41519,11 +45111,14 @@ CoreV1API_replaceNode(apiClient_t *apiClient, char *name, v1_node_t *body, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -41610,15 +45205,20 @@ CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char *name, v1_node_t *body,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/nodes/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/nodes/{name}/status");
+    char *localVarPath = strdup("/api/v1/nodes/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -41681,13 +45281,15 @@ CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char *name, v1_node_t *body,
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_node_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -41696,6 +45298,7 @@ CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char *name, v1_node_t *body,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -41711,11 +45314,14 @@ CoreV1API_replaceNodeStatus(apiClient_t *apiClient, char *name, v1_node_t *body,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_node_t *elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_node_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -41802,15 +45408,20 @@ CoreV1API_replacePersistentVolume(apiClient_t *apiClient, char *name, v1_persist
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/persistentvolumes/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/persistentvolumes/{name}");
+    char *localVarPath = strdup("/api/v1/persistentvolumes/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -41873,13 +45484,15 @@ CoreV1API_replacePersistentVolume(apiClient_t *apiClient, char *name, v1_persist
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_persistent_volume_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -41888,6 +45501,7 @@ CoreV1API_replacePersistentVolume(apiClient_t *apiClient, char *name, v1_persist
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -41903,11 +45517,14 @@ CoreV1API_replacePersistentVolume(apiClient_t *apiClient, char *name, v1_persist
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -41994,15 +45611,20 @@ CoreV1API_replacePersistentVolumeStatus(apiClient_t *apiClient, char *name, v1_p
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/api/v1/persistentvolumes/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/api/v1/persistentvolumes/{name}/status");
+    char *localVarPath = strdup("/api/v1/persistentvolumes/{name}/status");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -42065,13 +45687,15 @@ CoreV1API_replacePersistentVolumeStatus(apiClient_t *apiClient, char *name, v1_p
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_persistent_volume_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -42080,6 +45704,7 @@ CoreV1API_replacePersistentVolumeStatus(apiClient_t *apiClient, char *name, v1_p
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -42095,11 +45720,14 @@ CoreV1API_replacePersistentVolumeStatus(apiClient_t *apiClient, char *name, v1_p
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_persistent_volume_t *elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
-    cJSON_Delete(CoreV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_persistent_volume_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CoreV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_persistent_volume_parseFromJSON(CoreV1APIlocalVarJSON);
+        cJSON_Delete(CoreV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type

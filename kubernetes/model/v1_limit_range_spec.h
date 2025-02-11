@@ -22,9 +22,10 @@ typedef struct v1_limit_range_spec_t v1_limit_range_spec_t;
 typedef struct v1_limit_range_spec_t {
     list_t *limits; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_limit_range_spec_t;
 
-v1_limit_range_spec_t *v1_limit_range_spec_create(
+__attribute__((deprecated)) v1_limit_range_spec_t *v1_limit_range_spec_create(
     list_t *limits
 );
 

@@ -24,9 +24,10 @@ typedef struct v1_cron_job_status_t {
     char *last_schedule_time; //date time
     char *last_successful_time; //date time
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_cron_job_status_t;
 
-v1_cron_job_status_t *v1_cron_job_status_create(
+__attribute__((deprecated)) v1_cron_job_status_t *v1_cron_job_status_create(
     list_t *active,
     char *last_schedule_time,
     char *last_successful_time

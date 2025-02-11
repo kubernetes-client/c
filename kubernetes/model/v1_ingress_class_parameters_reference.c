@@ -5,7 +5,7 @@
 
 
 
-v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_create(
+static v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_create_internal(
     char *api_group,
     char *kind,
     char *name,
@@ -22,12 +22,32 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_c
     v1_ingress_class_parameters_reference_local_var->_namespace = _namespace;
     v1_ingress_class_parameters_reference_local_var->scope = scope;
 
+    v1_ingress_class_parameters_reference_local_var->_library_owned = 1;
     return v1_ingress_class_parameters_reference_local_var;
 }
 
+__attribute__((deprecated)) v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_create(
+    char *api_group,
+    char *kind,
+    char *name,
+    char *_namespace,
+    char *scope
+    ) {
+    return v1_ingress_class_parameters_reference_create_internal (
+        api_group,
+        kind,
+        name,
+        _namespace,
+        scope
+        );
+}
 
 void v1_ingress_class_parameters_reference_free(v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference) {
     if(NULL == v1_ingress_class_parameters_reference){
+        return ;
+    }
+    if(v1_ingress_class_parameters_reference->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_ingress_class_parameters_reference_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -112,6 +132,9 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
 
     // v1_ingress_class_parameters_reference->api_group
     cJSON *api_group = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "apiGroup");
+    if (cJSON_IsNull(api_group)) {
+        api_group = NULL;
+    }
     if (api_group) { 
     if(!cJSON_IsString(api_group) && !cJSON_IsNull(api_group))
     {
@@ -121,6 +144,9 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
 
     // v1_ingress_class_parameters_reference->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (!kind) {
         goto end;
     }
@@ -133,6 +159,9 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
 
     // v1_ingress_class_parameters_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -145,6 +174,9 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
 
     // v1_ingress_class_parameters_reference->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "namespace");
+    if (cJSON_IsNull(_namespace)) {
+        _namespace = NULL;
+    }
     if (_namespace) { 
     if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
@@ -154,6 +186,9 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
 
     // v1_ingress_class_parameters_reference->scope
     cJSON *scope = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "scope");
+    if (cJSON_IsNull(scope)) {
+        scope = NULL;
+    }
     if (scope) { 
     if(!cJSON_IsString(scope) && !cJSON_IsNull(scope))
     {
@@ -162,7 +197,7 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
     }
 
 
-    v1_ingress_class_parameters_reference_local_var = v1_ingress_class_parameters_reference_create (
+    v1_ingress_class_parameters_reference_local_var = v1_ingress_class_parameters_reference_create_internal (
         api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
         strdup(kind->valuestring),
         strdup(name->valuestring),

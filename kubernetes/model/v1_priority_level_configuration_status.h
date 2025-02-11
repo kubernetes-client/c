@@ -22,9 +22,10 @@ typedef struct v1_priority_level_configuration_status_t v1_priority_level_config
 typedef struct v1_priority_level_configuration_status_t {
     list_t *conditions; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_priority_level_configuration_status_t;
 
-v1_priority_level_configuration_status_t *v1_priority_level_configuration_status_create(
+__attribute__((deprecated)) v1_priority_level_configuration_status_t *v1_priority_level_configuration_status_create(
     list_t *conditions
 );
 

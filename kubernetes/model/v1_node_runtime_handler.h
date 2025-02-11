@@ -23,9 +23,10 @@ typedef struct v1_node_runtime_handler_t {
     struct v1_node_runtime_handler_features_t *features; //model
     char *name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_runtime_handler_t;
 
-v1_node_runtime_handler_t *v1_node_runtime_handler_create(
+__attribute__((deprecated)) v1_node_runtime_handler_t *v1_node_runtime_handler_create(
     v1_node_runtime_handler_features_t *features,
     char *name
 );

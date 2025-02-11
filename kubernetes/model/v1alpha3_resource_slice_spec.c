@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_create(
+static v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_create_internal(
     int all_nodes,
     list_t *devices,
     char *driver,
@@ -24,12 +24,34 @@ v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_create(
     v1alpha3_resource_slice_spec_local_var->node_selector = node_selector;
     v1alpha3_resource_slice_spec_local_var->pool = pool;
 
+    v1alpha3_resource_slice_spec_local_var->_library_owned = 1;
     return v1alpha3_resource_slice_spec_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_create(
+    int all_nodes,
+    list_t *devices,
+    char *driver,
+    char *node_name,
+    v1_node_selector_t *node_selector,
+    v1alpha3_resource_pool_t *pool
+    ) {
+    return v1alpha3_resource_slice_spec_create_internal (
+        all_nodes,
+        devices,
+        driver,
+        node_name,
+        node_selector,
+        pool
+        );
+}
 
 void v1alpha3_resource_slice_spec_free(v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec) {
     if(NULL == v1alpha3_resource_slice_spec){
+        return ;
+    }
+    if(v1alpha3_resource_slice_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_resource_slice_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -156,6 +178,9 @@ v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(cJSON
 
     // v1alpha3_resource_slice_spec->all_nodes
     cJSON *all_nodes = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "allNodes");
+    if (cJSON_IsNull(all_nodes)) {
+        all_nodes = NULL;
+    }
     if (all_nodes) { 
     if(!cJSON_IsBool(all_nodes))
     {
@@ -165,6 +190,9 @@ v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(cJSON
 
     // v1alpha3_resource_slice_spec->devices
     cJSON *devices = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "devices");
+    if (cJSON_IsNull(devices)) {
+        devices = NULL;
+    }
     if (devices) { 
     cJSON *devices_local_nonprimitive = NULL;
     if(!cJSON_IsArray(devices)){
@@ -186,6 +214,9 @@ v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(cJSON
 
     // v1alpha3_resource_slice_spec->driver
     cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "driver");
+    if (cJSON_IsNull(driver)) {
+        driver = NULL;
+    }
     if (!driver) {
         goto end;
     }
@@ -198,6 +229,9 @@ v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(cJSON
 
     // v1alpha3_resource_slice_spec->node_name
     cJSON *node_name = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "nodeName");
+    if (cJSON_IsNull(node_name)) {
+        node_name = NULL;
+    }
     if (node_name) { 
     if(!cJSON_IsString(node_name) && !cJSON_IsNull(node_name))
     {
@@ -207,12 +241,18 @@ v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(cJSON
 
     // v1alpha3_resource_slice_spec->node_selector
     cJSON *node_selector = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "nodeSelector");
+    if (cJSON_IsNull(node_selector)) {
+        node_selector = NULL;
+    }
     if (node_selector) { 
     node_selector_local_nonprim = v1_node_selector_parseFromJSON(node_selector); //nonprimitive
     }
 
     // v1alpha3_resource_slice_spec->pool
     cJSON *pool = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "pool");
+    if (cJSON_IsNull(pool)) {
+        pool = NULL;
+    }
     if (!pool) {
         goto end;
     }
@@ -221,7 +261,7 @@ v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(cJSON
     pool_local_nonprim = v1alpha3_resource_pool_parseFromJSON(pool); //nonprimitive
 
 
-    v1alpha3_resource_slice_spec_local_var = v1alpha3_resource_slice_spec_create (
+    v1alpha3_resource_slice_spec_local_var = v1alpha3_resource_slice_spec_create_internal (
         all_nodes ? all_nodes->valueint : 0,
         devices ? devicesList : NULL,
         strdup(driver->valuestring),

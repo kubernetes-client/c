@@ -26,9 +26,10 @@ typedef struct v1_flex_volume_source_t {
     int read_only; //boolean
     struct v1_local_object_reference_t *secret_ref; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_flex_volume_source_t;
 
-v1_flex_volume_source_t *v1_flex_volume_source_create(
+__attribute__((deprecated)) v1_flex_volume_source_t *v1_flex_volume_source_create(
     char *driver,
     char *fs_type,
     list_t* options,

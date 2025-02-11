@@ -22,9 +22,10 @@ typedef struct v1_pod_dns_config_option_t {
     char *name; // string
     char *value; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_dns_config_option_t;
 
-v1_pod_dns_config_option_t *v1_pod_dns_config_option_create(
+__attribute__((deprecated)) v1_pod_dns_config_option_t *v1_pod_dns_config_option_create(
     char *name,
     char *value
 );

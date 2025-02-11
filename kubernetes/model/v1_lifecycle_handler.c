@@ -5,7 +5,7 @@
 
 
 
-v1_lifecycle_handler_t *v1_lifecycle_handler_create(
+static v1_lifecycle_handler_t *v1_lifecycle_handler_create_internal(
     v1_exec_action_t *exec,
     v1_http_get_action_t *http_get,
     v1_sleep_action_t *sleep,
@@ -20,12 +20,30 @@ v1_lifecycle_handler_t *v1_lifecycle_handler_create(
     v1_lifecycle_handler_local_var->sleep = sleep;
     v1_lifecycle_handler_local_var->tcp_socket = tcp_socket;
 
+    v1_lifecycle_handler_local_var->_library_owned = 1;
     return v1_lifecycle_handler_local_var;
 }
 
+__attribute__((deprecated)) v1_lifecycle_handler_t *v1_lifecycle_handler_create(
+    v1_exec_action_t *exec,
+    v1_http_get_action_t *http_get,
+    v1_sleep_action_t *sleep,
+    v1_tcp_socket_action_t *tcp_socket
+    ) {
+    return v1_lifecycle_handler_create_internal (
+        exec,
+        http_get,
+        sleep,
+        tcp_socket
+        );
+}
 
 void v1_lifecycle_handler_free(v1_lifecycle_handler_t *v1_lifecycle_handler) {
     if(NULL == v1_lifecycle_handler){
+        return ;
+    }
+    if(v1_lifecycle_handler->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_lifecycle_handler_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -128,30 +146,42 @@ v1_lifecycle_handler_t *v1_lifecycle_handler_parseFromJSON(cJSON *v1_lifecycle_h
 
     // v1_lifecycle_handler->exec
     cJSON *exec = cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "exec");
+    if (cJSON_IsNull(exec)) {
+        exec = NULL;
+    }
     if (exec) { 
     exec_local_nonprim = v1_exec_action_parseFromJSON(exec); //nonprimitive
     }
 
     // v1_lifecycle_handler->http_get
     cJSON *http_get = cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "httpGet");
+    if (cJSON_IsNull(http_get)) {
+        http_get = NULL;
+    }
     if (http_get) { 
     http_get_local_nonprim = v1_http_get_action_parseFromJSON(http_get); //nonprimitive
     }
 
     // v1_lifecycle_handler->sleep
     cJSON *sleep = cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "sleep");
+    if (cJSON_IsNull(sleep)) {
+        sleep = NULL;
+    }
     if (sleep) { 
     sleep_local_nonprim = v1_sleep_action_parseFromJSON(sleep); //nonprimitive
     }
 
     // v1_lifecycle_handler->tcp_socket
     cJSON *tcp_socket = cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "tcpSocket");
+    if (cJSON_IsNull(tcp_socket)) {
+        tcp_socket = NULL;
+    }
     if (tcp_socket) { 
     tcp_socket_local_nonprim = v1_tcp_socket_action_parseFromJSON(tcp_socket); //nonprimitive
     }
 
 
-    v1_lifecycle_handler_local_var = v1_lifecycle_handler_create (
+    v1_lifecycle_handler_local_var = v1_lifecycle_handler_create_internal (
         exec ? exec_local_nonprim : NULL,
         http_get ? http_get_local_nonprim : NULL,
         sleep ? sleep_local_nonprim : NULL,

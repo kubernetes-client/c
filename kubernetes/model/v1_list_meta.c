@@ -5,7 +5,7 @@
 
 
 
-v1_list_meta_t *v1_list_meta_create(
+static v1_list_meta_t *v1_list_meta_create_internal(
     char *_continue,
     long remaining_item_count,
     char *resource_version,
@@ -20,12 +20,30 @@ v1_list_meta_t *v1_list_meta_create(
     v1_list_meta_local_var->resource_version = resource_version;
     v1_list_meta_local_var->self_link = self_link;
 
+    v1_list_meta_local_var->_library_owned = 1;
     return v1_list_meta_local_var;
 }
 
+__attribute__((deprecated)) v1_list_meta_t *v1_list_meta_create(
+    char *_continue,
+    long remaining_item_count,
+    char *resource_version,
+    char *self_link
+    ) {
+    return v1_list_meta_create_internal (
+        _continue,
+        remaining_item_count,
+        resource_version,
+        self_link
+        );
+}
 
 void v1_list_meta_free(v1_list_meta_t *v1_list_meta) {
     if(NULL == v1_list_meta){
+        return ;
+    }
+    if(v1_list_meta->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_list_meta_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -92,6 +110,9 @@ v1_list_meta_t *v1_list_meta_parseFromJSON(cJSON *v1_list_metaJSON){
 
     // v1_list_meta->_continue
     cJSON *_continue = cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "continue");
+    if (cJSON_IsNull(_continue)) {
+        _continue = NULL;
+    }
     if (_continue) { 
     if(!cJSON_IsString(_continue) && !cJSON_IsNull(_continue))
     {
@@ -101,6 +122,9 @@ v1_list_meta_t *v1_list_meta_parseFromJSON(cJSON *v1_list_metaJSON){
 
     // v1_list_meta->remaining_item_count
     cJSON *remaining_item_count = cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "remainingItemCount");
+    if (cJSON_IsNull(remaining_item_count)) {
+        remaining_item_count = NULL;
+    }
     if (remaining_item_count) { 
     if(!cJSON_IsNumber(remaining_item_count))
     {
@@ -110,6 +134,9 @@ v1_list_meta_t *v1_list_meta_parseFromJSON(cJSON *v1_list_metaJSON){
 
     // v1_list_meta->resource_version
     cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "resourceVersion");
+    if (cJSON_IsNull(resource_version)) {
+        resource_version = NULL;
+    }
     if (resource_version) { 
     if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
     {
@@ -119,6 +146,9 @@ v1_list_meta_t *v1_list_meta_parseFromJSON(cJSON *v1_list_metaJSON){
 
     // v1_list_meta->self_link
     cJSON *self_link = cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "selfLink");
+    if (cJSON_IsNull(self_link)) {
+        self_link = NULL;
+    }
     if (self_link) { 
     if(!cJSON_IsString(self_link) && !cJSON_IsNull(self_link))
     {
@@ -127,7 +157,7 @@ v1_list_meta_t *v1_list_meta_parseFromJSON(cJSON *v1_list_metaJSON){
     }
 
 
-    v1_list_meta_local_var = v1_list_meta_create (
+    v1_list_meta_local_var = v1_list_meta_create_internal (
         _continue && !cJSON_IsNull(_continue) ? strdup(_continue->valuestring) : NULL,
         remaining_item_count ? remaining_item_count->valuedouble : 0,
         resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,

@@ -5,7 +5,7 @@
 
 
 
-v1_container_image_t *v1_container_image_create(
+static v1_container_image_t *v1_container_image_create_internal(
     list_t *names,
     long size_bytes
     ) {
@@ -16,12 +16,26 @@ v1_container_image_t *v1_container_image_create(
     v1_container_image_local_var->names = names;
     v1_container_image_local_var->size_bytes = size_bytes;
 
+    v1_container_image_local_var->_library_owned = 1;
     return v1_container_image_local_var;
 }
 
+__attribute__((deprecated)) v1_container_image_t *v1_container_image_create(
+    list_t *names,
+    long size_bytes
+    ) {
+    return v1_container_image_create_internal (
+        names,
+        size_bytes
+        );
+}
 
 void v1_container_image_free(v1_container_image_t *v1_container_image) {
     if(NULL == v1_container_image){
+        return ;
+    }
+    if(v1_container_image->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_container_image_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -47,7 +61,7 @@ cJSON *v1_container_image_convertToJSON(v1_container_image_t *v1_container_image
 
     listEntry_t *namesListEntry;
     list_ForEach(namesListEntry, v1_container_image->names) {
-    if(cJSON_AddStringToObject(names, "", (char*)namesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(names, "", namesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -79,6 +93,9 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
 
     // v1_container_image->names
     cJSON *names = cJSON_GetObjectItemCaseSensitive(v1_container_imageJSON, "names");
+    if (cJSON_IsNull(names)) {
+        names = NULL;
+    }
     if (names) { 
     cJSON *names_local = NULL;
     if(!cJSON_IsArray(names)) {
@@ -98,6 +115,9 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
 
     // v1_container_image->size_bytes
     cJSON *size_bytes = cJSON_GetObjectItemCaseSensitive(v1_container_imageJSON, "sizeBytes");
+    if (cJSON_IsNull(size_bytes)) {
+        size_bytes = NULL;
+    }
     if (size_bytes) { 
     if(!cJSON_IsNumber(size_bytes))
     {
@@ -106,7 +126,7 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
     }
 
 
-    v1_container_image_local_var = v1_container_image_create (
+    v1_container_image_local_var = v1_container_image_create_internal (
         names ? namesList : NULL,
         size_bytes ? size_bytes->valuedouble : 0
         );

@@ -5,7 +5,7 @@
 
 
 
-v1_taint_t *v1_taint_create(
+static v1_taint_t *v1_taint_create_internal(
     char *effect,
     char *key,
     char *time_added,
@@ -20,12 +20,30 @@ v1_taint_t *v1_taint_create(
     v1_taint_local_var->time_added = time_added;
     v1_taint_local_var->value = value;
 
+    v1_taint_local_var->_library_owned = 1;
     return v1_taint_local_var;
 }
 
+__attribute__((deprecated)) v1_taint_t *v1_taint_create(
+    char *effect,
+    char *key,
+    char *time_added,
+    char *value
+    ) {
+    return v1_taint_create_internal (
+        effect,
+        key,
+        time_added,
+        value
+        );
+}
 
 void v1_taint_free(v1_taint_t *v1_taint) {
     if(NULL == v1_taint){
+        return ;
+    }
+    if(v1_taint->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_taint_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -98,6 +116,9 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
 
     // v1_taint->effect
     cJSON *effect = cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "effect");
+    if (cJSON_IsNull(effect)) {
+        effect = NULL;
+    }
     if (!effect) {
         goto end;
     }
@@ -110,6 +131,9 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
 
     // v1_taint->key
     cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "key");
+    if (cJSON_IsNull(key)) {
+        key = NULL;
+    }
     if (!key) {
         goto end;
     }
@@ -122,6 +146,9 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
 
     // v1_taint->time_added
     cJSON *time_added = cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "timeAdded");
+    if (cJSON_IsNull(time_added)) {
+        time_added = NULL;
+    }
     if (time_added) { 
     if(!cJSON_IsString(time_added) && !cJSON_IsNull(time_added))
     {
@@ -131,6 +158,9 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
 
     // v1_taint->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "value");
+    if (cJSON_IsNull(value)) {
+        value = NULL;
+    }
     if (value) { 
     if(!cJSON_IsString(value) && !cJSON_IsNull(value))
     {
@@ -139,7 +169,7 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
     }
 
 
-    v1_taint_local_var = v1_taint_create (
+    v1_taint_local_var = v1_taint_create_internal (
         strdup(effect->valuestring),
         strdup(key->valuestring),
         time_added && !cJSON_IsNull(time_added) ? strdup(time_added->valuestring) : NULL,

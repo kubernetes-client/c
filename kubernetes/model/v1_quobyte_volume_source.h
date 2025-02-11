@@ -26,9 +26,10 @@ typedef struct v1_quobyte_volume_source_t {
     char *user; // string
     char *volume; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_quobyte_volume_source_t;
 
-v1_quobyte_volume_source_t *v1_quobyte_volume_source_create(
+__attribute__((deprecated)) v1_quobyte_volume_source_t *v1_quobyte_volume_source_create(
     char *group,
     int read_only,
     char *registry,

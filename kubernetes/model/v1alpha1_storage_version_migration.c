@@ -5,7 +5,7 @@
 
 
 
-v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration_create(
+static v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration_create_internal(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
@@ -22,12 +22,32 @@ v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration_create(
     v1alpha1_storage_version_migration_local_var->spec = spec;
     v1alpha1_storage_version_migration_local_var->status = status;
 
+    v1alpha1_storage_version_migration_local_var->_library_owned = 1;
     return v1alpha1_storage_version_migration_local_var;
 }
 
+__attribute__((deprecated)) v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration_create(
+    char *api_version,
+    char *kind,
+    v1_object_meta_t *metadata,
+    v1alpha1_storage_version_migration_spec_t *spec,
+    v1alpha1_storage_version_migration_status_t *status
+    ) {
+    return v1alpha1_storage_version_migration_create_internal (
+        api_version,
+        kind,
+        metadata,
+        spec,
+        status
+        );
+}
 
 void v1alpha1_storage_version_migration_free(v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration) {
     if(NULL == v1alpha1_storage_version_migration){
+        return ;
+    }
+    if(v1alpha1_storage_version_migration->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha1_storage_version_migration_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -134,6 +154,9 @@ v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration_parseFr
 
     // v1alpha1_storage_version_migration->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -143,6 +166,9 @@ v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration_parseFr
 
     // v1alpha1_storage_version_migration->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -152,24 +178,33 @@ v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration_parseFr
 
     // v1alpha1_storage_version_migration->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1alpha1_storage_version_migration->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "spec");
+    if (cJSON_IsNull(spec)) {
+        spec = NULL;
+    }
     if (spec) { 
     spec_local_nonprim = v1alpha1_storage_version_migration_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1alpha1_storage_version_migration->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
     if (status) { 
     status_local_nonprim = v1alpha1_storage_version_migration_status_parseFromJSON(status); //nonprimitive
     }
 
 
-    v1alpha1_storage_version_migration_local_var = v1alpha1_storage_version_migration_create (
+    v1alpha1_storage_version_migration_local_var = v1alpha1_storage_version_migration_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,

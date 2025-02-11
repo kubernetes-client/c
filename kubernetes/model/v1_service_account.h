@@ -29,9 +29,10 @@ typedef struct v1_service_account_t {
     struct v1_object_meta_t *metadata; //model
     list_t *secrets; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_service_account_t;
 
-v1_service_account_t *v1_service_account_create(
+__attribute__((deprecated)) v1_service_account_t *v1_service_account_create(
     char *api_version,
     int automount_service_account_token,
     list_t *image_pull_secrets,

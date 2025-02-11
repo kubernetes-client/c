@@ -24,9 +24,10 @@ typedef struct v1_service_status_t {
     list_t *conditions; //nonprimitive container
     struct v1_load_balancer_status_t *load_balancer; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_service_status_t;
 
-v1_service_status_t *v1_service_status_create(
+__attribute__((deprecated)) v1_service_status_t *v1_service_status_create(
     list_t *conditions,
     v1_load_balancer_status_t *load_balancer
 );

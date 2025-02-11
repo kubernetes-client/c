@@ -22,19 +22,19 @@ ApiextensionsV1API_createCustomResourceDefinition(apiClient_t *apiClient, v1_cus
 // delete collection of CustomResourceDefinition
 //
 v1_status_t*
-ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+ApiextensionsV1API_deleteCollectionCustomResourceDefinition(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a CustomResourceDefinition
 //
 v1_status_t*
-ApiextensionsV1API_deleteCustomResourceDefinition(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+ApiextensionsV1API_deleteCustomResourceDefinition(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-ApiextensionsV1API_getAPIResources_3(apiClient_t *apiClient);
+ApiextensionsV1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind CustomResourceDefinition

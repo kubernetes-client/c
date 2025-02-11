@@ -5,7 +5,7 @@
 
 
 
-v1_service_account_t *v1_service_account_create(
+static v1_service_account_t *v1_service_account_create_internal(
     char *api_version,
     int automount_service_account_token,
     list_t *image_pull_secrets,
@@ -24,12 +24,34 @@ v1_service_account_t *v1_service_account_create(
     v1_service_account_local_var->metadata = metadata;
     v1_service_account_local_var->secrets = secrets;
 
+    v1_service_account_local_var->_library_owned = 1;
     return v1_service_account_local_var;
 }
 
+__attribute__((deprecated)) v1_service_account_t *v1_service_account_create(
+    char *api_version,
+    int automount_service_account_token,
+    list_t *image_pull_secrets,
+    char *kind,
+    v1_object_meta_t *metadata,
+    list_t *secrets
+    ) {
+    return v1_service_account_create_internal (
+        api_version,
+        automount_service_account_token,
+        image_pull_secrets,
+        kind,
+        metadata,
+        secrets
+        );
+}
 
 void v1_service_account_free(v1_service_account_t *v1_service_account) {
     if(NULL == v1_service_account){
+        return ;
+    }
+    if(v1_service_account->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_service_account_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -164,6 +186,9 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     // v1_service_account->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -173,6 +198,9 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     // v1_service_account->automount_service_account_token
     cJSON *automount_service_account_token = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "automountServiceAccountToken");
+    if (cJSON_IsNull(automount_service_account_token)) {
+        automount_service_account_token = NULL;
+    }
     if (automount_service_account_token) { 
     if(!cJSON_IsBool(automount_service_account_token))
     {
@@ -182,6 +210,9 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     // v1_service_account->image_pull_secrets
     cJSON *image_pull_secrets = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "imagePullSecrets");
+    if (cJSON_IsNull(image_pull_secrets)) {
+        image_pull_secrets = NULL;
+    }
     if (image_pull_secrets) { 
     cJSON *image_pull_secrets_local_nonprimitive = NULL;
     if(!cJSON_IsArray(image_pull_secrets)){
@@ -203,6 +234,9 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     // v1_service_account->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -212,12 +246,18 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     // v1_service_account->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_service_account->secrets
     cJSON *secrets = cJSON_GetObjectItemCaseSensitive(v1_service_accountJSON, "secrets");
+    if (cJSON_IsNull(secrets)) {
+        secrets = NULL;
+    }
     if (secrets) { 
     cJSON *secrets_local_nonprimitive = NULL;
     if(!cJSON_IsArray(secrets)){
@@ -238,7 +278,7 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
     }
 
 
-    v1_service_account_local_var = v1_service_account_create (
+    v1_service_account_local_var = v1_service_account_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         automount_service_account_token ? automount_service_account_token->valueint : 0,
         image_pull_secrets ? image_pull_secretsList : NULL,

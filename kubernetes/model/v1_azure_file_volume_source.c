@@ -5,7 +5,7 @@
 
 
 
-v1_azure_file_volume_source_t *v1_azure_file_volume_source_create(
+static v1_azure_file_volume_source_t *v1_azure_file_volume_source_create_internal(
     int read_only,
     char *secret_name,
     char *share_name
@@ -18,12 +18,28 @@ v1_azure_file_volume_source_t *v1_azure_file_volume_source_create(
     v1_azure_file_volume_source_local_var->secret_name = secret_name;
     v1_azure_file_volume_source_local_var->share_name = share_name;
 
+    v1_azure_file_volume_source_local_var->_library_owned = 1;
     return v1_azure_file_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_azure_file_volume_source_t *v1_azure_file_volume_source_create(
+    int read_only,
+    char *secret_name,
+    char *share_name
+    ) {
+    return v1_azure_file_volume_source_create_internal (
+        read_only,
+        secret_name,
+        share_name
+        );
+}
 
 void v1_azure_file_volume_source_free(v1_azure_file_volume_source_t *v1_azure_file_volume_source) {
     if(NULL == v1_azure_file_volume_source){
+        return ;
+    }
+    if(v1_azure_file_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_azure_file_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -80,6 +96,9 @@ v1_azure_file_volume_source_t *v1_azure_file_volume_source_parseFromJSON(cJSON *
 
     // v1_azure_file_volume_source->read_only
     cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_azure_file_volume_sourceJSON, "readOnly");
+    if (cJSON_IsNull(read_only)) {
+        read_only = NULL;
+    }
     if (read_only) { 
     if(!cJSON_IsBool(read_only))
     {
@@ -89,6 +108,9 @@ v1_azure_file_volume_source_t *v1_azure_file_volume_source_parseFromJSON(cJSON *
 
     // v1_azure_file_volume_source->secret_name
     cJSON *secret_name = cJSON_GetObjectItemCaseSensitive(v1_azure_file_volume_sourceJSON, "secretName");
+    if (cJSON_IsNull(secret_name)) {
+        secret_name = NULL;
+    }
     if (!secret_name) {
         goto end;
     }
@@ -101,6 +123,9 @@ v1_azure_file_volume_source_t *v1_azure_file_volume_source_parseFromJSON(cJSON *
 
     // v1_azure_file_volume_source->share_name
     cJSON *share_name = cJSON_GetObjectItemCaseSensitive(v1_azure_file_volume_sourceJSON, "shareName");
+    if (cJSON_IsNull(share_name)) {
+        share_name = NULL;
+    }
     if (!share_name) {
         goto end;
     }
@@ -112,7 +137,7 @@ v1_azure_file_volume_source_t *v1_azure_file_volume_source_parseFromJSON(cJSON *
     }
 
 
-    v1_azure_file_volume_source_local_var = v1_azure_file_volume_source_create (
+    v1_azure_file_volume_source_local_var = v1_azure_file_volume_source_create_internal (
         read_only ? read_only->valueint : 0,
         strdup(secret_name->valuestring),
         strdup(share_name->valuestring)

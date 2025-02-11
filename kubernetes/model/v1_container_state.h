@@ -26,9 +26,10 @@ typedef struct v1_container_state_t {
     struct v1_container_state_terminated_t *terminated; //model
     struct v1_container_state_waiting_t *waiting; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_container_state_t;
 
-v1_container_state_t *v1_container_state_create(
+__attribute__((deprecated)) v1_container_state_t *v1_container_state_create(
     v1_container_state_running_t *running,
     v1_container_state_terminated_t *terminated,
     v1_container_state_waiting_t *waiting

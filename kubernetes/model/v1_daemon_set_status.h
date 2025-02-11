@@ -31,9 +31,10 @@ typedef struct v1_daemon_set_status_t {
     long observed_generation; //numeric
     int updated_number_scheduled; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_daemon_set_status_t;
 
-v1_daemon_set_status_t *v1_daemon_set_status_create(
+__attribute__((deprecated)) v1_daemon_set_status_t *v1_daemon_set_status_create(
     int collision_count,
     list_t *conditions,
     int current_number_scheduled,

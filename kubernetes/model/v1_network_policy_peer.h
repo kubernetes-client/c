@@ -25,9 +25,10 @@ typedef struct v1_network_policy_peer_t {
     struct v1_label_selector_t *namespace_selector; //model
     struct v1_label_selector_t *pod_selector; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_network_policy_peer_t;
 
-v1_network_policy_peer_t *v1_network_policy_peer_create(
+__attribute__((deprecated)) v1_network_policy_peer_t *v1_network_policy_peer_create(
     v1_ip_block_t *ip_block,
     v1_label_selector_t *namespace_selector,
     v1_label_selector_t *pod_selector

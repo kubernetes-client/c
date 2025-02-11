@@ -5,7 +5,7 @@
 
 
 
-v1_csi_node_t *v1_csi_node_create(
+static v1_csi_node_t *v1_csi_node_create_internal(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
@@ -20,12 +20,30 @@ v1_csi_node_t *v1_csi_node_create(
     v1_csi_node_local_var->metadata = metadata;
     v1_csi_node_local_var->spec = spec;
 
+    v1_csi_node_local_var->_library_owned = 1;
     return v1_csi_node_local_var;
 }
 
+__attribute__((deprecated)) v1_csi_node_t *v1_csi_node_create(
+    char *api_version,
+    char *kind,
+    v1_object_meta_t *metadata,
+    v1_csi_node_spec_t *spec
+    ) {
+    return v1_csi_node_create_internal (
+        api_version,
+        kind,
+        metadata,
+        spec
+        );
+}
 
 void v1_csi_node_free(v1_csi_node_t *v1_csi_node) {
     if(NULL == v1_csi_node){
+        return ;
+    }
+    if(v1_csi_node->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_csi_node_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -113,6 +131,9 @@ v1_csi_node_t *v1_csi_node_parseFromJSON(cJSON *v1_csi_nodeJSON){
 
     // v1_csi_node->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_csi_nodeJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -122,6 +143,9 @@ v1_csi_node_t *v1_csi_node_parseFromJSON(cJSON *v1_csi_nodeJSON){
 
     // v1_csi_node->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_csi_nodeJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -131,12 +155,18 @@ v1_csi_node_t *v1_csi_node_parseFromJSON(cJSON *v1_csi_nodeJSON){
 
     // v1_csi_node->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_csi_nodeJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_csi_node->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_csi_nodeJSON, "spec");
+    if (cJSON_IsNull(spec)) {
+        spec = NULL;
+    }
     if (!spec) {
         goto end;
     }
@@ -145,7 +175,7 @@ v1_csi_node_t *v1_csi_node_parseFromJSON(cJSON *v1_csi_nodeJSON){
     spec_local_nonprim = v1_csi_node_spec_parseFromJSON(spec); //nonprimitive
 
 
-    v1_csi_node_local_var = v1_csi_node_create (
+    v1_csi_node_local_var = v1_csi_node_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,

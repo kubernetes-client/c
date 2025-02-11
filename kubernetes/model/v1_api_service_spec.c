@@ -5,7 +5,7 @@
 
 
 
-v1_api_service_spec_t *v1_api_service_spec_create(
+static v1_api_service_spec_t *v1_api_service_spec_create_internal(
     char *ca_bundle,
     char *group,
     int group_priority_minimum,
@@ -26,12 +26,36 @@ v1_api_service_spec_t *v1_api_service_spec_create(
     v1_api_service_spec_local_var->version = version;
     v1_api_service_spec_local_var->version_priority = version_priority;
 
+    v1_api_service_spec_local_var->_library_owned = 1;
     return v1_api_service_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_api_service_spec_t *v1_api_service_spec_create(
+    char *ca_bundle,
+    char *group,
+    int group_priority_minimum,
+    int insecure_skip_tls_verify,
+    apiregistration_v1_service_reference_t *service,
+    char *version,
+    int version_priority
+    ) {
+    return v1_api_service_spec_create_internal (
+        ca_bundle,
+        group,
+        group_priority_minimum,
+        insecure_skip_tls_verify,
+        service,
+        version,
+        version_priority
+        );
+}
 
 void v1_api_service_spec_free(v1_api_service_spec_t *v1_api_service_spec) {
     if(NULL == v1_api_service_spec){
+        return ;
+    }
+    if(v1_api_service_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_api_service_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -136,6 +160,9 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     // v1_api_service_spec->ca_bundle
     cJSON *ca_bundle = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "caBundle");
+    if (cJSON_IsNull(ca_bundle)) {
+        ca_bundle = NULL;
+    }
     if (ca_bundle) { 
     if(!cJSON_IsString(ca_bundle))
     {
@@ -145,6 +172,9 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     // v1_api_service_spec->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "group");
+    if (cJSON_IsNull(group)) {
+        group = NULL;
+    }
     if (group) { 
     if(!cJSON_IsString(group) && !cJSON_IsNull(group))
     {
@@ -154,6 +184,9 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     // v1_api_service_spec->group_priority_minimum
     cJSON *group_priority_minimum = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "groupPriorityMinimum");
+    if (cJSON_IsNull(group_priority_minimum)) {
+        group_priority_minimum = NULL;
+    }
     if (!group_priority_minimum) {
         goto end;
     }
@@ -166,6 +199,9 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     // v1_api_service_spec->insecure_skip_tls_verify
     cJSON *insecure_skip_tls_verify = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "insecureSkipTLSVerify");
+    if (cJSON_IsNull(insecure_skip_tls_verify)) {
+        insecure_skip_tls_verify = NULL;
+    }
     if (insecure_skip_tls_verify) { 
     if(!cJSON_IsBool(insecure_skip_tls_verify))
     {
@@ -175,12 +211,18 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     // v1_api_service_spec->service
     cJSON *service = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "service");
+    if (cJSON_IsNull(service)) {
+        service = NULL;
+    }
     if (service) { 
     service_local_nonprim = apiregistration_v1_service_reference_parseFromJSON(service); //nonprimitive
     }
 
     // v1_api_service_spec->version
     cJSON *version = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "version");
+    if (cJSON_IsNull(version)) {
+        version = NULL;
+    }
     if (version) { 
     if(!cJSON_IsString(version) && !cJSON_IsNull(version))
     {
@@ -190,6 +232,9 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     // v1_api_service_spec->version_priority
     cJSON *version_priority = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "versionPriority");
+    if (cJSON_IsNull(version_priority)) {
+        version_priority = NULL;
+    }
     if (!version_priority) {
         goto end;
     }
@@ -201,7 +246,7 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
     }
 
 
-    v1_api_service_spec_local_var = v1_api_service_spec_create (
+    v1_api_service_spec_local_var = v1_api_service_spec_create_internal (
         ca_bundle ? strdup(ca_bundle->valuestring) : NULL,
         group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         group_priority_minimum->valuedouble,

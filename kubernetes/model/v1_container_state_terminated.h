@@ -27,9 +27,10 @@ typedef struct v1_container_state_terminated_t {
     int signal; //numeric
     char *started_at; //date time
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_container_state_terminated_t;
 
-v1_container_state_terminated_t *v1_container_state_terminated_create(
+__attribute__((deprecated)) v1_container_state_terminated_t *v1_container_state_terminated_create(
     char *container_id,
     int exit_code,
     char *finished_at,

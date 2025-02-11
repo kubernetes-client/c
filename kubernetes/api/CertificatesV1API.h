@@ -22,19 +22,19 @@ CertificatesV1API_createCertificateSigningRequest(apiClient_t *apiClient, v1_cer
 // delete a CertificateSigningRequest
 //
 v1_status_t*
-CertificatesV1API_deleteCertificateSigningRequest(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+CertificatesV1API_deleteCertificateSigningRequest(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // delete collection of CertificateSigningRequest
 //
 v1_status_t*
-CertificatesV1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+CertificatesV1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-CertificatesV1API_getAPIResources_13(apiClient_t *apiClient);
+CertificatesV1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind CertificateSigningRequest

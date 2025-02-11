@@ -23,9 +23,10 @@ typedef struct v1alpha3_device_t {
     struct v1alpha3_basic_device_t *basic; //model
     char *name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_t;
 
-v1alpha3_device_t *v1alpha3_device_create(
+__attribute__((deprecated)) v1alpha3_device_t *v1alpha3_device_create(
     v1alpha3_basic_device_t *basic,
     char *name
 );

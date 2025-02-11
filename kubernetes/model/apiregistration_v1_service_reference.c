@@ -5,7 +5,7 @@
 
 
 
-apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_create(
+static apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_create_internal(
     char *name,
     char *_namespace,
     int port
@@ -18,12 +18,28 @@ apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_cre
     apiregistration_v1_service_reference_local_var->_namespace = _namespace;
     apiregistration_v1_service_reference_local_var->port = port;
 
+    apiregistration_v1_service_reference_local_var->_library_owned = 1;
     return apiregistration_v1_service_reference_local_var;
 }
 
+__attribute__((deprecated)) apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_create(
+    char *name,
+    char *_namespace,
+    int port
+    ) {
+    return apiregistration_v1_service_reference_create_internal (
+        name,
+        _namespace,
+        port
+        );
+}
 
 void apiregistration_v1_service_reference_free(apiregistration_v1_service_reference_t *apiregistration_v1_service_reference) {
     if(NULL == apiregistration_v1_service_reference){
+        return ;
+    }
+    if(apiregistration_v1_service_reference->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "apiregistration_v1_service_reference_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -78,6 +94,9 @@ apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_par
 
     // apiregistration_v1_service_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(apiregistration_v1_service_referenceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -87,6 +106,9 @@ apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_par
 
     // apiregistration_v1_service_reference->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(apiregistration_v1_service_referenceJSON, "namespace");
+    if (cJSON_IsNull(_namespace)) {
+        _namespace = NULL;
+    }
     if (_namespace) { 
     if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
@@ -96,6 +118,9 @@ apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_par
 
     // apiregistration_v1_service_reference->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(apiregistration_v1_service_referenceJSON, "port");
+    if (cJSON_IsNull(port)) {
+        port = NULL;
+    }
     if (port) { 
     if(!cJSON_IsNumber(port))
     {
@@ -104,7 +129,7 @@ apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_par
     }
 
 
-    apiregistration_v1_service_reference_local_var = apiregistration_v1_service_reference_create (
+    apiregistration_v1_service_reference_local_var = apiregistration_v1_service_reference_create_internal (
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
         port ? port->valuedouble : 0

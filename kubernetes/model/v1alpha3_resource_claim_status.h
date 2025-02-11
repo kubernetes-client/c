@@ -15,6 +15,7 @@
 
 typedef struct v1alpha3_resource_claim_status_t v1alpha3_resource_claim_status_t;
 
+#include "v1alpha3_allocated_device_status.h"
 #include "v1alpha3_allocation_result.h"
 #include "v1alpha3_resource_claim_consumer_reference.h"
 
@@ -22,14 +23,15 @@ typedef struct v1alpha3_resource_claim_status_t v1alpha3_resource_claim_status_t
 
 typedef struct v1alpha3_resource_claim_status_t {
     struct v1alpha3_allocation_result_t *allocation; //model
-    int deallocation_requested; //boolean
+    list_t *devices; //nonprimitive container
     list_t *reserved_for; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_resource_claim_status_t;
 
-v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_create(
+__attribute__((deprecated)) v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_create(
     v1alpha3_allocation_result_t *allocation,
-    int deallocation_requested,
+    list_t *devices,
     list_t *reserved_for
 );
 

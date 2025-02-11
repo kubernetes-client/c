@@ -23,9 +23,10 @@ typedef struct v1_endpoint_conditions_t {
     int serving; //boolean
     int terminating; //boolean
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_endpoint_conditions_t;
 
-v1_endpoint_conditions_t *v1_endpoint_conditions_create(
+__attribute__((deprecated)) v1_endpoint_conditions_t *v1_endpoint_conditions_create(
     int ready,
     int serving,
     int terminating

@@ -5,7 +5,7 @@
 
 
 
-authentication_v1_token_request_t *authentication_v1_token_request_create(
+static authentication_v1_token_request_t *authentication_v1_token_request_create_internal(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
@@ -22,12 +22,32 @@ authentication_v1_token_request_t *authentication_v1_token_request_create(
     authentication_v1_token_request_local_var->spec = spec;
     authentication_v1_token_request_local_var->status = status;
 
+    authentication_v1_token_request_local_var->_library_owned = 1;
     return authentication_v1_token_request_local_var;
 }
 
+__attribute__((deprecated)) authentication_v1_token_request_t *authentication_v1_token_request_create(
+    char *api_version,
+    char *kind,
+    v1_object_meta_t *metadata,
+    v1_token_request_spec_t *spec,
+    v1_token_request_status_t *status
+    ) {
+    return authentication_v1_token_request_create_internal (
+        api_version,
+        kind,
+        metadata,
+        spec,
+        status
+        );
+}
 
 void authentication_v1_token_request_free(authentication_v1_token_request_t *authentication_v1_token_request) {
     if(NULL == authentication_v1_token_request){
+        return ;
+    }
+    if(authentication_v1_token_request->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "authentication_v1_token_request_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -135,6 +155,9 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
 
     // authentication_v1_token_request->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -144,6 +167,9 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
 
     // authentication_v1_token_request->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -153,12 +179,18 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
 
     // authentication_v1_token_request->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // authentication_v1_token_request->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "spec");
+    if (cJSON_IsNull(spec)) {
+        spec = NULL;
+    }
     if (!spec) {
         goto end;
     }
@@ -168,12 +200,15 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
 
     // authentication_v1_token_request->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
     if (status) { 
     status_local_nonprim = v1_token_request_status_parseFromJSON(status); //nonprimitive
     }
 
 
-    authentication_v1_token_request_local_var = authentication_v1_token_request_create (
+    authentication_v1_token_request_local_var = authentication_v1_token_request_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,

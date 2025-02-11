@@ -29,9 +29,10 @@ typedef struct v1_runtime_class_t {
     struct v1_overhead_t *overhead; //model
     struct v1_scheduling_t *scheduling; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_runtime_class_t;
 
-v1_runtime_class_t *v1_runtime_class_create(
+__attribute__((deprecated)) v1_runtime_class_t *v1_runtime_class_create(
     char *api_version,
     char *handler,
     char *kind,

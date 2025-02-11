@@ -5,7 +5,7 @@
 
 
 
-v1beta1_param_ref_t *v1beta1_param_ref_create(
+static v1beta1_param_ref_t *v1beta1_param_ref_create_internal(
     char *name,
     char *_namespace,
     char *parameter_not_found_action,
@@ -20,12 +20,30 @@ v1beta1_param_ref_t *v1beta1_param_ref_create(
     v1beta1_param_ref_local_var->parameter_not_found_action = parameter_not_found_action;
     v1beta1_param_ref_local_var->selector = selector;
 
+    v1beta1_param_ref_local_var->_library_owned = 1;
     return v1beta1_param_ref_local_var;
 }
 
+__attribute__((deprecated)) v1beta1_param_ref_t *v1beta1_param_ref_create(
+    char *name,
+    char *_namespace,
+    char *parameter_not_found_action,
+    v1_label_selector_t *selector
+    ) {
+    return v1beta1_param_ref_create_internal (
+        name,
+        _namespace,
+        parameter_not_found_action,
+        selector
+        );
+}
 
 void v1beta1_param_ref_free(v1beta1_param_ref_t *v1beta1_param_ref) {
     if(NULL == v1beta1_param_ref){
+        return ;
+    }
+    if(v1beta1_param_ref->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1beta1_param_ref_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -104,6 +122,9 @@ v1beta1_param_ref_t *v1beta1_param_ref_parseFromJSON(cJSON *v1beta1_param_refJSO
 
     // v1beta1_param_ref->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1beta1_param_refJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -113,6 +134,9 @@ v1beta1_param_ref_t *v1beta1_param_ref_parseFromJSON(cJSON *v1beta1_param_refJSO
 
     // v1beta1_param_ref->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1beta1_param_refJSON, "namespace");
+    if (cJSON_IsNull(_namespace)) {
+        _namespace = NULL;
+    }
     if (_namespace) { 
     if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
@@ -122,6 +146,9 @@ v1beta1_param_ref_t *v1beta1_param_ref_parseFromJSON(cJSON *v1beta1_param_refJSO
 
     // v1beta1_param_ref->parameter_not_found_action
     cJSON *parameter_not_found_action = cJSON_GetObjectItemCaseSensitive(v1beta1_param_refJSON, "parameterNotFoundAction");
+    if (cJSON_IsNull(parameter_not_found_action)) {
+        parameter_not_found_action = NULL;
+    }
     if (parameter_not_found_action) { 
     if(!cJSON_IsString(parameter_not_found_action) && !cJSON_IsNull(parameter_not_found_action))
     {
@@ -131,12 +158,15 @@ v1beta1_param_ref_t *v1beta1_param_ref_parseFromJSON(cJSON *v1beta1_param_refJSO
 
     // v1beta1_param_ref->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1beta1_param_refJSON, "selector");
+    if (cJSON_IsNull(selector)) {
+        selector = NULL;
+    }
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
 
-    v1beta1_param_ref_local_var = v1beta1_param_ref_create (
+    v1beta1_param_ref_local_var = v1beta1_param_ref_create_internal (
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
         parameter_not_found_action && !cJSON_IsNull(parameter_not_found_action) ? strdup(parameter_not_found_action->valuestring) : NULL,

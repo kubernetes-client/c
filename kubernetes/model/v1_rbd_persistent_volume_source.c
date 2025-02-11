@@ -5,7 +5,7 @@
 
 
 
-v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_create(
+static v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_create_internal(
     char *fs_type,
     char *image,
     char *keyring,
@@ -28,12 +28,38 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_create(
     v1_rbd_persistent_volume_source_local_var->secret_ref = secret_ref;
     v1_rbd_persistent_volume_source_local_var->user = user;
 
+    v1_rbd_persistent_volume_source_local_var->_library_owned = 1;
     return v1_rbd_persistent_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_create(
+    char *fs_type,
+    char *image,
+    char *keyring,
+    list_t *monitors,
+    char *pool,
+    int read_only,
+    v1_secret_reference_t *secret_ref,
+    char *user
+    ) {
+    return v1_rbd_persistent_volume_source_create_internal (
+        fs_type,
+        image,
+        keyring,
+        monitors,
+        pool,
+        read_only,
+        secret_ref,
+        user
+        );
+}
 
 void v1_rbd_persistent_volume_source_free(v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source) {
     if(NULL == v1_rbd_persistent_volume_source){
+        return ;
+    }
+    if(v1_rbd_persistent_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_rbd_persistent_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -110,7 +136,7 @@ cJSON *v1_rbd_persistent_volume_source_convertToJSON(v1_rbd_persistent_volume_so
 
     listEntry_t *monitorsListEntry;
     list_ForEach(monitorsListEntry, v1_rbd_persistent_volume_source->monitors) {
-    if(cJSON_AddStringToObject(monitors, "", (char*)monitorsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(monitors, "", monitorsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -173,6 +199,9 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
 
     // v1_rbd_persistent_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "fsType");
+    if (cJSON_IsNull(fs_type)) {
+        fs_type = NULL;
+    }
     if (fs_type) { 
     if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
@@ -182,6 +211,9 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
 
     // v1_rbd_persistent_volume_source->image
     cJSON *image = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "image");
+    if (cJSON_IsNull(image)) {
+        image = NULL;
+    }
     if (!image) {
         goto end;
     }
@@ -194,6 +226,9 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
 
     // v1_rbd_persistent_volume_source->keyring
     cJSON *keyring = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "keyring");
+    if (cJSON_IsNull(keyring)) {
+        keyring = NULL;
+    }
     if (keyring) { 
     if(!cJSON_IsString(keyring) && !cJSON_IsNull(keyring))
     {
@@ -203,6 +238,9 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
 
     // v1_rbd_persistent_volume_source->monitors
     cJSON *monitors = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "monitors");
+    if (cJSON_IsNull(monitors)) {
+        monitors = NULL;
+    }
     if (!monitors) {
         goto end;
     }
@@ -225,6 +263,9 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
 
     // v1_rbd_persistent_volume_source->pool
     cJSON *pool = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "pool");
+    if (cJSON_IsNull(pool)) {
+        pool = NULL;
+    }
     if (pool) { 
     if(!cJSON_IsString(pool) && !cJSON_IsNull(pool))
     {
@@ -234,6 +275,9 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
 
     // v1_rbd_persistent_volume_source->read_only
     cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "readOnly");
+    if (cJSON_IsNull(read_only)) {
+        read_only = NULL;
+    }
     if (read_only) { 
     if(!cJSON_IsBool(read_only))
     {
@@ -243,12 +287,18 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
 
     // v1_rbd_persistent_volume_source->secret_ref
     cJSON *secret_ref = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "secretRef");
+    if (cJSON_IsNull(secret_ref)) {
+        secret_ref = NULL;
+    }
     if (secret_ref) { 
     secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(secret_ref); //nonprimitive
     }
 
     // v1_rbd_persistent_volume_source->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "user");
+    if (cJSON_IsNull(user)) {
+        user = NULL;
+    }
     if (user) { 
     if(!cJSON_IsString(user) && !cJSON_IsNull(user))
     {
@@ -257,7 +307,7 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
     }
 
 
-    v1_rbd_persistent_volume_source_local_var = v1_rbd_persistent_volume_source_create (
+    v1_rbd_persistent_volume_source_local_var = v1_rbd_persistent_volume_source_create_internal (
         fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         strdup(image->valuestring),
         keyring && !cJSON_IsNull(keyring) ? strdup(keyring->valuestring) : NULL,

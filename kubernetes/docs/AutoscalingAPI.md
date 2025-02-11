@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AutoscalingAPI_getAPIGroup_5**](AutoscalingAPI.md#AutoscalingAPI_getAPIGroup_5) | **GET** /apis/autoscaling/ | 
+[**AutoscalingAPI_getAPIGroup**](AutoscalingAPI.md#AutoscalingAPI_getAPIGroup) | **GET** /apis/autoscaling/ | 
 
 
-# **AutoscalingAPI_getAPIGroup_5**
+# **AutoscalingAPI_getAPIGroup**
 ```c
 // get information of a group
 //
-v1_api_group_t* AutoscalingAPI_getAPIGroup_5(apiClient_t *apiClient);
+v1_api_group_t* AutoscalingAPI_getAPIGroup(apiClient_t *apiClient);
 ```
 
 ### Parameters

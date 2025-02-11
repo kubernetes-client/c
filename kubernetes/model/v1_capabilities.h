@@ -22,9 +22,10 @@ typedef struct v1_capabilities_t {
     list_t *add; //primitive container
     list_t *drop; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_capabilities_t;
 
-v1_capabilities_t *v1_capabilities_create(
+__attribute__((deprecated)) v1_capabilities_t *v1_capabilities_create(
     list_t *add,
     list_t *drop
 );

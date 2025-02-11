@@ -5,7 +5,7 @@
 
 
 
-v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create(
+static v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create_internal(
     list_t *access_modes,
     v1_typed_local_object_reference_t *data_source,
     v1_typed_object_reference_t *data_source_ref,
@@ -30,12 +30,40 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create(
     v1_persistent_volume_claim_spec_local_var->volume_mode = volume_mode;
     v1_persistent_volume_claim_spec_local_var->volume_name = volume_name;
 
+    v1_persistent_volume_claim_spec_local_var->_library_owned = 1;
     return v1_persistent_volume_claim_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create(
+    list_t *access_modes,
+    v1_typed_local_object_reference_t *data_source,
+    v1_typed_object_reference_t *data_source_ref,
+    v1_volume_resource_requirements_t *resources,
+    v1_label_selector_t *selector,
+    char *storage_class_name,
+    char *volume_attributes_class_name,
+    char *volume_mode,
+    char *volume_name
+    ) {
+    return v1_persistent_volume_claim_spec_create_internal (
+        access_modes,
+        data_source,
+        data_source_ref,
+        resources,
+        selector,
+        storage_class_name,
+        volume_attributes_class_name,
+        volume_mode,
+        volume_name
+        );
+}
 
 void v1_persistent_volume_claim_spec_free(v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec) {
     if(NULL == v1_persistent_volume_claim_spec){
+        return ;
+    }
+    if(v1_persistent_volume_claim_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_persistent_volume_claim_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -93,7 +121,7 @@ cJSON *v1_persistent_volume_claim_spec_convertToJSON(v1_persistent_volume_claim_
 
     listEntry_t *access_modesListEntry;
     list_ForEach(access_modesListEntry, v1_persistent_volume_claim_spec->access_modes) {
-    if(cJSON_AddStringToObject(access_modes, "", (char*)access_modesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(access_modes, "", access_modesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -213,6 +241,9 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
 
     // v1_persistent_volume_claim_spec->access_modes
     cJSON *access_modes = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "accessModes");
+    if (cJSON_IsNull(access_modes)) {
+        access_modes = NULL;
+    }
     if (access_modes) { 
     cJSON *access_modes_local = NULL;
     if(!cJSON_IsArray(access_modes)) {
@@ -232,30 +263,45 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
 
     // v1_persistent_volume_claim_spec->data_source
     cJSON *data_source = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "dataSource");
+    if (cJSON_IsNull(data_source)) {
+        data_source = NULL;
+    }
     if (data_source) { 
     data_source_local_nonprim = v1_typed_local_object_reference_parseFromJSON(data_source); //nonprimitive
     }
 
     // v1_persistent_volume_claim_spec->data_source_ref
     cJSON *data_source_ref = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "dataSourceRef");
+    if (cJSON_IsNull(data_source_ref)) {
+        data_source_ref = NULL;
+    }
     if (data_source_ref) { 
     data_source_ref_local_nonprim = v1_typed_object_reference_parseFromJSON(data_source_ref); //nonprimitive
     }
 
     // v1_persistent_volume_claim_spec->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "resources");
+    if (cJSON_IsNull(resources)) {
+        resources = NULL;
+    }
     if (resources) { 
     resources_local_nonprim = v1_volume_resource_requirements_parseFromJSON(resources); //nonprimitive
     }
 
     // v1_persistent_volume_claim_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "selector");
+    if (cJSON_IsNull(selector)) {
+        selector = NULL;
+    }
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
     // v1_persistent_volume_claim_spec->storage_class_name
     cJSON *storage_class_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "storageClassName");
+    if (cJSON_IsNull(storage_class_name)) {
+        storage_class_name = NULL;
+    }
     if (storage_class_name) { 
     if(!cJSON_IsString(storage_class_name) && !cJSON_IsNull(storage_class_name))
     {
@@ -265,6 +311,9 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
 
     // v1_persistent_volume_claim_spec->volume_attributes_class_name
     cJSON *volume_attributes_class_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "volumeAttributesClassName");
+    if (cJSON_IsNull(volume_attributes_class_name)) {
+        volume_attributes_class_name = NULL;
+    }
     if (volume_attributes_class_name) { 
     if(!cJSON_IsString(volume_attributes_class_name) && !cJSON_IsNull(volume_attributes_class_name))
     {
@@ -274,6 +323,9 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
 
     // v1_persistent_volume_claim_spec->volume_mode
     cJSON *volume_mode = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "volumeMode");
+    if (cJSON_IsNull(volume_mode)) {
+        volume_mode = NULL;
+    }
     if (volume_mode) { 
     if(!cJSON_IsString(volume_mode) && !cJSON_IsNull(volume_mode))
     {
@@ -283,6 +335,9 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
 
     // v1_persistent_volume_claim_spec->volume_name
     cJSON *volume_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "volumeName");
+    if (cJSON_IsNull(volume_name)) {
+        volume_name = NULL;
+    }
     if (volume_name) { 
     if(!cJSON_IsString(volume_name) && !cJSON_IsNull(volume_name))
     {
@@ -291,7 +346,7 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     }
 
 
-    v1_persistent_volume_claim_spec_local_var = v1_persistent_volume_claim_spec_create (
+    v1_persistent_volume_claim_spec_local_var = v1_persistent_volume_claim_spec_create_internal (
         access_modes ? access_modesList : NULL,
         data_source ? data_source_local_nonprim : NULL,
         data_source_ref ? data_source_ref_local_nonprim : NULL,

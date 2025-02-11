@@ -5,17 +5,12 @@
 
 #define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
-#define intToStr(dst, src) \
-    do {\
-    char dst[256];\
-    snprintf(dst, 256, "%ld", (long int)(src));\
-}while(0)
 
 
-// create a ValidatingAdmissionPolicyBinding
+// create a MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_binding_t*
-AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, v1alpha1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+v1alpha1_mutating_admission_policy_t*
+AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicy(apiClient_t *apiClient, v1alpha1_mutating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -23,11 +18,14 @@ AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicyBinding_0(apiCli
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies");
+
 
 
 
@@ -84,13 +82,15 @@ AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicyBinding_0(apiCli
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
-        localVarSingleItemJSON_body = v1alpha1_validating_admission_policy_binding_convertToJSON(body);
+        //not string, not binary
+        localVarSingleItemJSON_body = v1alpha1_mutating_admission_policy_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -99,6 +99,7 @@ AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicyBinding_0(apiCli
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -118,11 +119,14 @@ AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicyBinding_0(apiCli
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_binding_t *elementToReturn = v1alpha1_validating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1alpha1_mutating_admission_policy_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1alpha1_mutating_admission_policy_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -197,10 +201,10 @@ end:
 
 }
 
-// create a ValidatingAdmissionPolicy
+// create a MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicy_0(apiClient_t *apiClient, v1alpha1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+v1alpha1_mutating_admission_policy_binding_t*
+AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicyBinding(apiClient_t *apiClient, v1alpha1_mutating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -208,11 +212,14 @@ AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicy_0(apiClient_t *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings");
+
 
 
 
@@ -269,13 +276,15 @@ AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicy_0(apiClient_t *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
-        localVarSingleItemJSON_body = v1alpha1_validating_admission_policy_convertToJSON(body);
+        //not string, not binary
+        localVarSingleItemJSON_body = v1alpha1_mutating_admission_policy_binding_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -284,6 +293,7 @@ AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicy_0(apiClient_t *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -303,11 +313,14 @@ AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicy_0(apiClient_t *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_t *elementToReturn = v1alpha1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1alpha1_mutating_admission_policy_binding_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1alpha1_mutating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -382,10 +395,10 @@ end:
 
 }
 
-// delete collection of ValidatingAdmissionPolicyBinding
+// delete collection of MutatingAdmissionPolicy
 //
 v1_status_t*
-AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -393,11 +406,14 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBindin
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies");
+
 
 
 
@@ -461,6 +477,19 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBindin
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -567,13 +596,15 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBindin
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -582,6 +613,7 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBindin
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -593,11 +625,14 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBindin
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -676,6 +711,18 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBindin
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -780,10 +827,10 @@ end:
 
 }
 
-// delete collection of ValidatingAdmissionPolicy
+// delete collection of MutatingAdmissionPolicyBinding
 //
 v1_status_t*
-AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -791,11 +838,14 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0(api
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings");
+
 
 
 
@@ -859,6 +909,19 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0(api
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -965,13 +1028,15 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0(api
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -980,6 +1045,7 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0(api
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -991,11 +1057,14 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0(api
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1074,6 +1143,18 @@ AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0(api
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -1178,10 +1259,10 @@ end:
 
 }
 
-// delete a ValidatingAdmissionPolicyBinding
+// delete a MutatingAdmissionPolicy
 //
 v1_status_t*
-AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1189,15 +1270,20 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0(apiCli
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name}");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1246,6 +1332,19 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0(apiCli
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -1274,13 +1373,15 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0(apiCli
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1289,6 +1390,7 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0(apiCli
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1304,11 +1406,14 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0(apiCli
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1364,6 +1469,18 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0(apiCli
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -1396,10 +1513,10 @@ end:
 
 }
 
-// delete a ValidatingAdmissionPolicy
+// delete a MutatingAdmissionPolicyBinding
 //
 v1_status_t*
-AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1407,15 +1524,20 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0(apiClient_t *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1464,6 +1586,19 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0(apiClient_t *
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -1492,13 +1627,15 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0(apiClient_t *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1507,6 +1644,7 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0(apiClient_t *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1522,11 +1660,14 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0(apiClient_t *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1582,6 +1723,18 @@ AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0(apiClient_t *
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
@@ -1617,7 +1770,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-AdmissionregistrationV1alpha1API_getAPIResources_1(apiClient_t *apiClient)
+AdmissionregistrationV1alpha1API_getAPIResources(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1625,17 +1778,21 @@ AdmissionregistrationV1alpha1API_getAPIResources_1(apiClient_t *apiClient)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/");
+
 
 
 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1644,6 +1801,7 @@ AdmissionregistrationV1alpha1API_getAPIResources_1(apiClient_t *apiClient)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1655,11 +1813,14 @@ AdmissionregistrationV1alpha1API_getAPIResources_1(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_api_resource_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_api_resource_list_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1681,10 +1842,10 @@ end:
 
 }
 
-// list or watch objects of kind ValidatingAdmissionPolicyBinding
+// list or watch objects of kind MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_binding_list_t*
-AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+v1alpha1_mutating_admission_policy_list_t*
+AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1692,11 +1853,14 @@ AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicyBinding_0(apiClien
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies");
+
 
 
 
@@ -1840,8 +2004,10 @@ AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicyBinding_0(apiClien
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1850,6 +2016,7 @@ AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicyBinding_0(apiClien
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1861,11 +2028,14 @@ AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicyBinding_0(apiClien
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_binding_list_t *elementToReturn = v1alpha1_validating_admission_policy_binding_list_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1alpha1_mutating_admission_policy_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1alpha1_mutating_admission_policy_list_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2019,10 +2189,10 @@ end:
 
 }
 
-// list or watch objects of kind ValidatingAdmissionPolicy
+// list or watch objects of kind MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_list_t*
-AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+v1alpha1_mutating_admission_policy_binding_list_t*
+AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2030,11 +2200,14 @@ AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicy_0(apiClient_t *ap
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings");
+
 
 
 
@@ -2178,8 +2351,10 @@ AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicy_0(apiClient_t *ap
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2188,6 +2363,7 @@ AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicy_0(apiClient_t *ap
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2199,11 +2375,14 @@ AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicy_0(apiClient_t *ap
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_list_t *elementToReturn = v1alpha1_validating_admission_policy_list_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1alpha1_mutating_admission_policy_binding_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1alpha1_mutating_admission_policy_binding_list_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2357,10 +2536,10 @@ end:
 
 }
 
-// partially update the specified ValidatingAdmissionPolicyBinding
+// partially update the specified MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_binding_t*
-AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
+v1alpha1_mutating_admission_policy_t*
+AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2368,15 +2547,20 @@ AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyBinding_0(apiClie
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name}");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2452,17 +2636,20 @@ AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyBinding_0(apiClie
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2471,6 +2658,7 @@ AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyBinding_0(apiClie
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -2486,11 +2674,14 @@ AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyBinding_0(apiClie
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_binding_t *elementToReturn = v1alpha1_validating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1alpha1_mutating_admission_policy_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1alpha1_mutating_admission_policy_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2578,10 +2769,10 @@ end:
 
 }
 
-// partially update status of the specified ValidatingAdmissionPolicy
+// partially update the specified MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyStatus_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
+v1alpha1_mutating_admission_policy_binding_t*
+AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2589,15 +2780,20 @@ AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyStatus_0(apiClien
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}/status");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2673,17 +2869,20 @@ AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyStatus_0(apiClien
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2692,6 +2891,7 @@ AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyStatus_0(apiClien
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -2707,11 +2907,14 @@ AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyStatus_0(apiClien
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_t *elementToReturn = v1alpha1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1alpha1_mutating_admission_policy_binding_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1alpha1_mutating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2799,231 +3002,10 @@ end:
 
 }
 
-// partially update the specified ValidatingAdmissionPolicy
+// read the specified MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
-{
-    list_t    *localVarQueryParameters = list_createList();
-    list_t    *localVarHeaderParameters = NULL;
-    list_t    *localVarFormParameters = NULL;
-    list_t *localVarHeaderType = list_createList();
-    list_t *localVarContentType = list_createList();
-    char      *localVarBodyParameters = NULL;
-
-    // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}");
-
-
-    // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
-    if(name == NULL) {
-        goto end;
-    }
-    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
-    sprintf(localVarToReplace_name, "{%s}", "name");
-
-    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
-
-
-
-    // query parameters
-    char *keyQuery_pretty = NULL;
-    char * valueQuery_pretty = NULL;
-    keyValuePair_t *keyPairQuery_pretty = 0;
-    if (pretty)
-    {
-        keyQuery_pretty = strdup("pretty");
-        valueQuery_pretty = strdup((pretty));
-        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
-        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_dryRun = NULL;
-    char * valueQuery_dryRun = NULL;
-    keyValuePair_t *keyPairQuery_dryRun = 0;
-    if (dryRun)
-    {
-        keyQuery_dryRun = strdup("dryRun");
-        valueQuery_dryRun = strdup((dryRun));
-        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
-        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
-    }
-
-    // query parameters
-    char *keyQuery_fieldManager = NULL;
-    char * valueQuery_fieldManager = NULL;
-    keyValuePair_t *keyPairQuery_fieldManager = 0;
-    if (fieldManager)
-    {
-        keyQuery_fieldManager = strdup("fieldManager");
-        valueQuery_fieldManager = strdup((fieldManager));
-        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
-        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
-    }
-
-    // query parameters
-    char *keyQuery_fieldValidation = NULL;
-    char * valueQuery_fieldValidation = NULL;
-    keyValuePair_t *keyPairQuery_fieldValidation = 0;
-    if (fieldValidation)
-    {
-        keyQuery_fieldValidation = strdup("fieldValidation");
-        valueQuery_fieldValidation = strdup((fieldValidation));
-        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
-        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
-    }
-
-    // query parameters
-    char *keyQuery_force = NULL;
-    char * valueQuery_force = NULL;
-    keyValuePair_t *keyPairQuery_force = 0;
-    if (force)
-    {
-        keyQuery_force = strdup("force");
-        valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
-        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
-        keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
-        list_addElement(localVarQueryParameters,keyPairQuery_force);
-    }
-
-    // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
-    if (body != NULL)
-    {
-        //string
-        localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
-    }
-    list_addElement(localVarHeaderType,"application/json"); //produces
-    list_addElement(localVarHeaderType,"application/yaml"); //produces
-    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
-    list_addElement(localVarContentType,"application/json-patch+json"); //consumes
-    list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
-    list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
-    list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
-    apiClient_invoke(apiClient,
-                    localVarPath,
-                    localVarQueryParameters,
-                    localVarHeaderParameters,
-                    localVarFormParameters,
-                    localVarHeaderType,
-                    localVarContentType,
-                    localVarBodyParameters,
-                    "PATCH");
-
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 200) {
-    //    printf("%s\n","OK");
-    //}
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 201) {
-    //    printf("%s\n","Created");
-    //}
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 401) {
-    //    printf("%s\n","Unauthorized");
-    //}
-    //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_t *elementToReturn = v1alpha1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
-    }
-
-    //return type
-    if (apiClient->dataReceived) {
-        free(apiClient->dataReceived);
-        apiClient->dataReceived = NULL;
-        apiClient->dataReceivedLen = 0;
-    }
-    list_freeList(localVarQueryParameters);
-    
-    
-    list_freeList(localVarHeaderType);
-    list_freeList(localVarContentType);
-    free(localVarPath);
-    free(localVarToReplace_name);
-    if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
-        localVarSingleItemJSON_body = NULL;
-    }
-    free(localVarBodyParameters);
-    if(keyQuery_pretty){
-        free(keyQuery_pretty);
-        keyQuery_pretty = NULL;
-    }
-    if(valueQuery_pretty){
-        free(valueQuery_pretty);
-        valueQuery_pretty = NULL;
-    }
-    if(keyPairQuery_pretty){
-        keyValuePair_free(keyPairQuery_pretty);
-        keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_dryRun){
-        free(keyQuery_dryRun);
-        keyQuery_dryRun = NULL;
-    }
-    if(valueQuery_dryRun){
-        free(valueQuery_dryRun);
-        valueQuery_dryRun = NULL;
-    }
-    if(keyPairQuery_dryRun){
-        keyValuePair_free(keyPairQuery_dryRun);
-        keyPairQuery_dryRun = NULL;
-    }
-    if(keyQuery_fieldManager){
-        free(keyQuery_fieldManager);
-        keyQuery_fieldManager = NULL;
-    }
-    if(valueQuery_fieldManager){
-        free(valueQuery_fieldManager);
-        valueQuery_fieldManager = NULL;
-    }
-    if(keyPairQuery_fieldManager){
-        keyValuePair_free(keyPairQuery_fieldManager);
-        keyPairQuery_fieldManager = NULL;
-    }
-    if(keyQuery_fieldValidation){
-        free(keyQuery_fieldValidation);
-        keyQuery_fieldValidation = NULL;
-    }
-    if(valueQuery_fieldValidation){
-        free(valueQuery_fieldValidation);
-        valueQuery_fieldValidation = NULL;
-    }
-    if(keyPairQuery_fieldValidation){
-        keyValuePair_free(keyPairQuery_fieldValidation);
-        keyPairQuery_fieldValidation = NULL;
-    }
-    if(keyQuery_force){
-        free(keyQuery_force);
-        keyQuery_force = NULL;
-    }
-    if(valueQuery_force){
-        free(valueQuery_force);
-        valueQuery_force = NULL;
-    }
-    if(keyPairQuery_force){
-        keyValuePair_free(keyPairQuery_force);
-        keyPairQuery_force = NULL;
-    }
-    return elementToReturn;
-end:
-    free(localVarPath);
-    return NULL;
-
-}
-
-// read the specified ValidatingAdmissionPolicyBinding
-//
-v1alpha1_validating_admission_policy_binding_t*
-AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, char *pretty)
+v1alpha1_mutating_admission_policy_t*
+AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3031,15 +3013,20 @@ AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyBinding_0(apiClien
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name}");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3064,6 +3051,7 @@ AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyBinding_0(apiClien
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3072,6 +3060,7 @@ AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyBinding_0(apiClien
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -3083,11 +3072,14 @@ AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyBinding_0(apiClien
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_binding_t *elementToReturn = v1alpha1_validating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1alpha1_mutating_admission_policy_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1alpha1_mutating_admission_policy_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3122,10 +3114,10 @@ end:
 
 }
 
-// read status of the specified ValidatingAdmissionPolicy
+// read the specified MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyStatus_0(apiClient_t *apiClient, char *name, char *pretty)
+v1alpha1_mutating_admission_policy_binding_t*
+AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3133,15 +3125,20 @@ AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyStatus_0(apiClient
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}/status");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3166,6 +3163,7 @@ AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyStatus_0(apiClient
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3174,6 +3172,7 @@ AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyStatus_0(apiClient
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -3185,11 +3184,14 @@ AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyStatus_0(apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_t *elementToReturn = v1alpha1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1alpha1_mutating_admission_policy_binding_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1alpha1_mutating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3224,10 +3226,10 @@ end:
 
 }
 
-// read the specified ValidatingAdmissionPolicy
+// replace the specified MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, char *pretty)
+v1alpha1_mutating_admission_policy_t*
+AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, v1alpha1_mutating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3235,117 +3237,20 @@ AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicy_0(apiClient_t *ap
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies/{name}");
 
-
-    // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
-    if(name == NULL) {
+    if(!name)
         goto end;
-    }
-    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
-    sprintf(localVarToReplace_name, "{%s}", "name");
-
-    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
-
-
-
-    // query parameters
-    char *keyQuery_pretty = NULL;
-    char * valueQuery_pretty = NULL;
-    keyValuePair_t *keyPairQuery_pretty = 0;
-    if (pretty)
-    {
-        keyQuery_pretty = strdup("pretty");
-        valueQuery_pretty = strdup((pretty));
-        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
-        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-    list_addElement(localVarHeaderType,"application/json"); //produces
-    list_addElement(localVarHeaderType,"application/yaml"); //produces
-    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
-    apiClient_invoke(apiClient,
-                    localVarPath,
-                    localVarQueryParameters,
-                    localVarHeaderParameters,
-                    localVarFormParameters,
-                    localVarHeaderType,
-                    localVarContentType,
-                    localVarBodyParameters,
-                    "GET");
-
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 200) {
-    //    printf("%s\n","OK");
-    //}
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 401) {
-    //    printf("%s\n","Unauthorized");
-    //}
-    //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_t *elementToReturn = v1alpha1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
-    }
-
-    //return type
-    if (apiClient->dataReceived) {
-        free(apiClient->dataReceived);
-        apiClient->dataReceived = NULL;
-        apiClient->dataReceivedLen = 0;
-    }
-    list_freeList(localVarQueryParameters);
-    
-    
-    list_freeList(localVarHeaderType);
-    
-    free(localVarPath);
-    free(localVarToReplace_name);
-    if(keyQuery_pretty){
-        free(keyQuery_pretty);
-        keyQuery_pretty = NULL;
-    }
-    if(valueQuery_pretty){
-        free(valueQuery_pretty);
-        valueQuery_pretty = NULL;
-    }
-    if(keyPairQuery_pretty){
-        keyValuePair_free(keyPairQuery_pretty);
-        keyPairQuery_pretty = NULL;
-    }
-    return elementToReturn;
-end:
-    free(localVarPath);
-    return NULL;
-
-}
-
-// replace the specified ValidatingAdmissionPolicyBinding
-//
-v1alpha1_validating_admission_policy_binding_t*
-AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, v1alpha1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
-{
-    list_t    *localVarQueryParameters = list_createList();
-    list_t    *localVarHeaderParameters = NULL;
-    list_t    *localVarFormParameters = NULL;
-    list_t *localVarHeaderType = list_createList();
-    list_t *localVarContentType = NULL;
-    char      *localVarBodyParameters = NULL;
-
-    // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name}");
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3408,13 +3313,15 @@ AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyBinding_0(apiCl
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
-        localVarSingleItemJSON_body = v1alpha1_validating_admission_policy_binding_convertToJSON(body);
+        //not string, not binary
+        localVarSingleItemJSON_body = v1alpha1_mutating_admission_policy_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3423,6 +3330,7 @@ AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyBinding_0(apiCl
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -3438,11 +3346,14 @@ AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyBinding_0(apiCl
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_binding_t *elementToReturn = v1alpha1_validating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1alpha1_mutating_admission_policy_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1alpha1_mutating_admission_policy_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3518,10 +3429,10 @@ end:
 
 }
 
-// replace status of the specified ValidatingAdmissionPolicy
+// replace the specified MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyStatus_0(apiClient_t *apiClient, char *name, v1alpha1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+v1alpha1_mutating_admission_policy_binding_t*
+AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, v1alpha1_mutating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3529,15 +3440,20 @@ AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyStatus_0(apiCli
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}/status");
+    char *localVarPath = strdup("/apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings/{name}");
+
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3600,13 +3516,15 @@ AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyStatus_0(apiCli
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
-        localVarSingleItemJSON_body = v1alpha1_validating_admission_policy_convertToJSON(body);
+        //not string, not binary
+        localVarSingleItemJSON_body = v1alpha1_mutating_admission_policy_binding_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -3615,6 +3533,7 @@ AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyStatus_0(apiCli
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -3630,203 +3549,14 @@ AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyStatus_0(apiCli
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_t *elementToReturn = v1alpha1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
-    }
-
-    //return type
-    if (apiClient->dataReceived) {
-        free(apiClient->dataReceived);
-        apiClient->dataReceived = NULL;
-        apiClient->dataReceivedLen = 0;
-    }
-    list_freeList(localVarQueryParameters);
-    
-    
-    list_freeList(localVarHeaderType);
-    
-    free(localVarPath);
-    free(localVarToReplace_name);
-    if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
-        localVarSingleItemJSON_body = NULL;
-    }
-    free(localVarBodyParameters);
-    if(keyQuery_pretty){
-        free(keyQuery_pretty);
-        keyQuery_pretty = NULL;
-    }
-    if(valueQuery_pretty){
-        free(valueQuery_pretty);
-        valueQuery_pretty = NULL;
-    }
-    if(keyPairQuery_pretty){
-        keyValuePair_free(keyPairQuery_pretty);
-        keyPairQuery_pretty = NULL;
-    }
-    if(keyQuery_dryRun){
-        free(keyQuery_dryRun);
-        keyQuery_dryRun = NULL;
-    }
-    if(valueQuery_dryRun){
-        free(valueQuery_dryRun);
-        valueQuery_dryRun = NULL;
-    }
-    if(keyPairQuery_dryRun){
-        keyValuePair_free(keyPairQuery_dryRun);
-        keyPairQuery_dryRun = NULL;
-    }
-    if(keyQuery_fieldManager){
-        free(keyQuery_fieldManager);
-        keyQuery_fieldManager = NULL;
-    }
-    if(valueQuery_fieldManager){
-        free(valueQuery_fieldManager);
-        valueQuery_fieldManager = NULL;
-    }
-    if(keyPairQuery_fieldManager){
-        keyValuePair_free(keyPairQuery_fieldManager);
-        keyPairQuery_fieldManager = NULL;
-    }
-    if(keyQuery_fieldValidation){
-        free(keyQuery_fieldValidation);
-        keyQuery_fieldValidation = NULL;
-    }
-    if(valueQuery_fieldValidation){
-        free(valueQuery_fieldValidation);
-        valueQuery_fieldValidation = NULL;
-    }
-    if(keyPairQuery_fieldValidation){
-        keyValuePair_free(keyPairQuery_fieldValidation);
-        keyPairQuery_fieldValidation = NULL;
-    }
-    return elementToReturn;
-end:
-    free(localVarPath);
-    return NULL;
-
-}
-
-// replace the specified ValidatingAdmissionPolicy
-//
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, v1alpha1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
-{
-    list_t    *localVarQueryParameters = list_createList();
-    list_t    *localVarHeaderParameters = NULL;
-    list_t    *localVarFormParameters = NULL;
-    list_t *localVarHeaderType = list_createList();
-    list_t *localVarContentType = NULL;
-    char      *localVarBodyParameters = NULL;
-
-    // create the path
-    long sizeOfPath = strlen("/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}");
-
-
-    // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen("{ name }");
-    if(name == NULL) {
-        goto end;
-    }
-    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
-    sprintf(localVarToReplace_name, "{%s}", "name");
-
-    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
-
-
-
-    // query parameters
-    char *keyQuery_pretty = NULL;
-    char * valueQuery_pretty = NULL;
-    keyValuePair_t *keyPairQuery_pretty = 0;
-    if (pretty)
-    {
-        keyQuery_pretty = strdup("pretty");
-        valueQuery_pretty = strdup((pretty));
-        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
-        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
-    }
-
-    // query parameters
-    char *keyQuery_dryRun = NULL;
-    char * valueQuery_dryRun = NULL;
-    keyValuePair_t *keyPairQuery_dryRun = 0;
-    if (dryRun)
-    {
-        keyQuery_dryRun = strdup("dryRun");
-        valueQuery_dryRun = strdup((dryRun));
-        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
-        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
-    }
-
-    // query parameters
-    char *keyQuery_fieldManager = NULL;
-    char * valueQuery_fieldManager = NULL;
-    keyValuePair_t *keyPairQuery_fieldManager = 0;
-    if (fieldManager)
-    {
-        keyQuery_fieldManager = strdup("fieldManager");
-        valueQuery_fieldManager = strdup((fieldManager));
-        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
-        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
-    }
-
-    // query parameters
-    char *keyQuery_fieldValidation = NULL;
-    char * valueQuery_fieldValidation = NULL;
-    keyValuePair_t *keyPairQuery_fieldValidation = 0;
-    if (fieldValidation)
-    {
-        keyQuery_fieldValidation = strdup("fieldValidation");
-        valueQuery_fieldValidation = strdup((fieldValidation));
-        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
-        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
-    }
-
-    // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
-    if (body != NULL)
-    {
-        //string
-        localVarSingleItemJSON_body = v1alpha1_validating_admission_policy_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
-    }
-    list_addElement(localVarHeaderType,"application/json"); //produces
-    list_addElement(localVarHeaderType,"application/yaml"); //produces
-    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
-    apiClient_invoke(apiClient,
-                    localVarPath,
-                    localVarQueryParameters,
-                    localVarHeaderParameters,
-                    localVarFormParameters,
-                    localVarHeaderType,
-                    localVarContentType,
-                    localVarBodyParameters,
-                    "PUT");
-
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 200) {
-    //    printf("%s\n","OK");
-    //}
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 201) {
-    //    printf("%s\n","Created");
-    //}
-    // uncomment below to debug the error response
-    //if (apiClient->response_code == 401) {
-    //    printf("%s\n","Unauthorized");
-    //}
-    //nonprimitive not container
-    cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1alpha1_validating_admission_policy_t *elementToReturn = v1alpha1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1alpha1_mutating_admission_policy_binding_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AdmissionregistrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1alpha1_mutating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        cJSON_Delete(AdmissionregistrationV1alpha1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type

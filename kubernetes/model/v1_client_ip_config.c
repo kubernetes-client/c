@@ -5,7 +5,7 @@
 
 
 
-v1_client_ip_config_t *v1_client_ip_config_create(
+static v1_client_ip_config_t *v1_client_ip_config_create_internal(
     int timeout_seconds
     ) {
     v1_client_ip_config_t *v1_client_ip_config_local_var = malloc(sizeof(v1_client_ip_config_t));
@@ -14,12 +14,24 @@ v1_client_ip_config_t *v1_client_ip_config_create(
     }
     v1_client_ip_config_local_var->timeout_seconds = timeout_seconds;
 
+    v1_client_ip_config_local_var->_library_owned = 1;
     return v1_client_ip_config_local_var;
 }
 
+__attribute__((deprecated)) v1_client_ip_config_t *v1_client_ip_config_create(
+    int timeout_seconds
+    ) {
+    return v1_client_ip_config_create_internal (
+        timeout_seconds
+        );
+}
 
 void v1_client_ip_config_free(v1_client_ip_config_t *v1_client_ip_config) {
     if(NULL == v1_client_ip_config){
+        return ;
+    }
+    if(v1_client_ip_config->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_client_ip_config_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -50,6 +62,9 @@ v1_client_ip_config_t *v1_client_ip_config_parseFromJSON(cJSON *v1_client_ip_con
 
     // v1_client_ip_config->timeout_seconds
     cJSON *timeout_seconds = cJSON_GetObjectItemCaseSensitive(v1_client_ip_configJSON, "timeoutSeconds");
+    if (cJSON_IsNull(timeout_seconds)) {
+        timeout_seconds = NULL;
+    }
     if (timeout_seconds) { 
     if(!cJSON_IsNumber(timeout_seconds))
     {
@@ -58,7 +73,7 @@ v1_client_ip_config_t *v1_client_ip_config_parseFromJSON(cJSON *v1_client_ip_con
     }
 
 
-    v1_client_ip_config_local_var = v1_client_ip_config_create (
+    v1_client_ip_config_local_var = v1_client_ip_config_create_internal (
         timeout_seconds ? timeout_seconds->valuedouble : 0
         );
 

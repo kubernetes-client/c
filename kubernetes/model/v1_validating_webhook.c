@@ -5,7 +5,7 @@
 
 
 
-v1_validating_webhook_t *v1_validating_webhook_create(
+static v1_validating_webhook_t *v1_validating_webhook_create_internal(
     list_t *admission_review_versions,
     admissionregistration_v1_webhook_client_config_t *client_config,
     char *failure_policy,
@@ -34,12 +34,44 @@ v1_validating_webhook_t *v1_validating_webhook_create(
     v1_validating_webhook_local_var->side_effects = side_effects;
     v1_validating_webhook_local_var->timeout_seconds = timeout_seconds;
 
+    v1_validating_webhook_local_var->_library_owned = 1;
     return v1_validating_webhook_local_var;
 }
 
+__attribute__((deprecated)) v1_validating_webhook_t *v1_validating_webhook_create(
+    list_t *admission_review_versions,
+    admissionregistration_v1_webhook_client_config_t *client_config,
+    char *failure_policy,
+    list_t *match_conditions,
+    char *match_policy,
+    char *name,
+    v1_label_selector_t *namespace_selector,
+    v1_label_selector_t *object_selector,
+    list_t *rules,
+    char *side_effects,
+    int timeout_seconds
+    ) {
+    return v1_validating_webhook_create_internal (
+        admission_review_versions,
+        client_config,
+        failure_policy,
+        match_conditions,
+        match_policy,
+        name,
+        namespace_selector,
+        object_selector,
+        rules,
+        side_effects,
+        timeout_seconds
+        );
+}
 
 void v1_validating_webhook_free(v1_validating_webhook_t *v1_validating_webhook) {
     if(NULL == v1_validating_webhook){
+        return ;
+    }
+    if(v1_validating_webhook->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_validating_webhook_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -109,7 +141,7 @@ cJSON *v1_validating_webhook_convertToJSON(v1_validating_webhook_t *v1_validatin
 
     listEntry_t *admission_review_versionsListEntry;
     list_ForEach(admission_review_versionsListEntry, v1_validating_webhook->admission_review_versions) {
-    if(cJSON_AddStringToObject(admission_review_versions, "", (char*)admission_review_versionsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(admission_review_versions, "", admission_review_versionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -269,6 +301,9 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     // v1_validating_webhook->admission_review_versions
     cJSON *admission_review_versions = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "admissionReviewVersions");
+    if (cJSON_IsNull(admission_review_versions)) {
+        admission_review_versions = NULL;
+    }
     if (!admission_review_versions) {
         goto end;
     }
@@ -291,6 +326,9 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     // v1_validating_webhook->client_config
     cJSON *client_config = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "clientConfig");
+    if (cJSON_IsNull(client_config)) {
+        client_config = NULL;
+    }
     if (!client_config) {
         goto end;
     }
@@ -300,6 +338,9 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     // v1_validating_webhook->failure_policy
     cJSON *failure_policy = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "failurePolicy");
+    if (cJSON_IsNull(failure_policy)) {
+        failure_policy = NULL;
+    }
     if (failure_policy) { 
     if(!cJSON_IsString(failure_policy) && !cJSON_IsNull(failure_policy))
     {
@@ -309,6 +350,9 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     // v1_validating_webhook->match_conditions
     cJSON *match_conditions = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "matchConditions");
+    if (cJSON_IsNull(match_conditions)) {
+        match_conditions = NULL;
+    }
     if (match_conditions) { 
     cJSON *match_conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(match_conditions)){
@@ -330,6 +374,9 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     // v1_validating_webhook->match_policy
     cJSON *match_policy = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "matchPolicy");
+    if (cJSON_IsNull(match_policy)) {
+        match_policy = NULL;
+    }
     if (match_policy) { 
     if(!cJSON_IsString(match_policy) && !cJSON_IsNull(match_policy))
     {
@@ -339,6 +386,9 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     // v1_validating_webhook->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -351,18 +401,27 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     // v1_validating_webhook->namespace_selector
     cJSON *namespace_selector = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "namespaceSelector");
+    if (cJSON_IsNull(namespace_selector)) {
+        namespace_selector = NULL;
+    }
     if (namespace_selector) { 
     namespace_selector_local_nonprim = v1_label_selector_parseFromJSON(namespace_selector); //nonprimitive
     }
 
     // v1_validating_webhook->object_selector
     cJSON *object_selector = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "objectSelector");
+    if (cJSON_IsNull(object_selector)) {
+        object_selector = NULL;
+    }
     if (object_selector) { 
     object_selector_local_nonprim = v1_label_selector_parseFromJSON(object_selector); //nonprimitive
     }
 
     // v1_validating_webhook->rules
     cJSON *rules = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "rules");
+    if (cJSON_IsNull(rules)) {
+        rules = NULL;
+    }
     if (rules) { 
     cJSON *rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(rules)){
@@ -384,6 +443,9 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     // v1_validating_webhook->side_effects
     cJSON *side_effects = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "sideEffects");
+    if (cJSON_IsNull(side_effects)) {
+        side_effects = NULL;
+    }
     if (!side_effects) {
         goto end;
     }
@@ -396,6 +458,9 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     // v1_validating_webhook->timeout_seconds
     cJSON *timeout_seconds = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "timeoutSeconds");
+    if (cJSON_IsNull(timeout_seconds)) {
+        timeout_seconds = NULL;
+    }
     if (timeout_seconds) { 
     if(!cJSON_IsNumber(timeout_seconds))
     {
@@ -404,7 +469,7 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
     }
 
 
-    v1_validating_webhook_local_var = v1_validating_webhook_create (
+    v1_validating_webhook_local_var = v1_validating_webhook_create_internal (
         admission_review_versionsList,
         client_config_local_nonprim,
         failure_policy && !cJSON_IsNull(failure_policy) ? strdup(failure_policy->valuestring) : NULL,

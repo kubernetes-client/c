@@ -5,7 +5,7 @@
 
 
 
-v1_limit_response_t *v1_limit_response_create(
+static v1_limit_response_t *v1_limit_response_create_internal(
     v1_queuing_configuration_t *queuing,
     char *type
     ) {
@@ -16,12 +16,26 @@ v1_limit_response_t *v1_limit_response_create(
     v1_limit_response_local_var->queuing = queuing;
     v1_limit_response_local_var->type = type;
 
+    v1_limit_response_local_var->_library_owned = 1;
     return v1_limit_response_local_var;
 }
 
+__attribute__((deprecated)) v1_limit_response_t *v1_limit_response_create(
+    v1_queuing_configuration_t *queuing,
+    char *type
+    ) {
+    return v1_limit_response_create_internal (
+        queuing,
+        type
+        );
+}
 
 void v1_limit_response_free(v1_limit_response_t *v1_limit_response) {
     if(NULL == v1_limit_response){
+        return ;
+    }
+    if(v1_limit_response->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_limit_response_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -77,12 +91,18 @@ v1_limit_response_t *v1_limit_response_parseFromJSON(cJSON *v1_limit_responseJSO
 
     // v1_limit_response->queuing
     cJSON *queuing = cJSON_GetObjectItemCaseSensitive(v1_limit_responseJSON, "queuing");
+    if (cJSON_IsNull(queuing)) {
+        queuing = NULL;
+    }
     if (queuing) { 
     queuing_local_nonprim = v1_queuing_configuration_parseFromJSON(queuing); //nonprimitive
     }
 
     // v1_limit_response->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_limit_responseJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -94,7 +114,7 @@ v1_limit_response_t *v1_limit_response_parseFromJSON(cJSON *v1_limit_responseJSO
     }
 
 
-    v1_limit_response_local_var = v1_limit_response_create (
+    v1_limit_response_local_var = v1_limit_response_create_internal (
         queuing ? queuing_local_nonprim : NULL,
         strdup(type->valuestring)
         );

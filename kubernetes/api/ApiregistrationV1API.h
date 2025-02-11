@@ -22,19 +22,19 @@ ApiregistrationV1API_createAPIService(apiClient_t *apiClient, v1_api_service_t *
 // delete an APIService
 //
 v1_status_t*
-ApiregistrationV1API_deleteAPIService(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+ApiregistrationV1API_deleteAPIService(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // delete collection of APIService
 //
 v1_status_t*
-ApiregistrationV1API_deleteCollectionAPIService(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+ApiregistrationV1API_deleteCollectionAPIService(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-ApiregistrationV1API_getAPIResources_4(apiClient_t *apiClient);
+ApiregistrationV1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind APIService

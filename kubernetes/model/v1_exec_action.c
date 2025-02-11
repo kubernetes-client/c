@@ -5,7 +5,7 @@
 
 
 
-v1_exec_action_t *v1_exec_action_create(
+static v1_exec_action_t *v1_exec_action_create_internal(
     list_t *command
     ) {
     v1_exec_action_t *v1_exec_action_local_var = malloc(sizeof(v1_exec_action_t));
@@ -14,12 +14,24 @@ v1_exec_action_t *v1_exec_action_create(
     }
     v1_exec_action_local_var->command = command;
 
+    v1_exec_action_local_var->_library_owned = 1;
     return v1_exec_action_local_var;
 }
 
+__attribute__((deprecated)) v1_exec_action_t *v1_exec_action_create(
+    list_t *command
+    ) {
+    return v1_exec_action_create_internal (
+        command
+        );
+}
 
 void v1_exec_action_free(v1_exec_action_t *v1_exec_action) {
     if(NULL == v1_exec_action){
+        return ;
+    }
+    if(v1_exec_action->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_exec_action_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -45,7 +57,7 @@ cJSON *v1_exec_action_convertToJSON(v1_exec_action_t *v1_exec_action) {
 
     listEntry_t *commandListEntry;
     list_ForEach(commandListEntry, v1_exec_action->command) {
-    if(cJSON_AddStringToObject(command, "", (char*)commandListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(command, "", commandListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -69,6 +81,9 @@ v1_exec_action_t *v1_exec_action_parseFromJSON(cJSON *v1_exec_actionJSON){
 
     // v1_exec_action->command
     cJSON *command = cJSON_GetObjectItemCaseSensitive(v1_exec_actionJSON, "command");
+    if (cJSON_IsNull(command)) {
+        command = NULL;
+    }
     if (command) { 
     cJSON *command_local = NULL;
     if(!cJSON_IsArray(command)) {
@@ -87,7 +102,7 @@ v1_exec_action_t *v1_exec_action_parseFromJSON(cJSON *v1_exec_actionJSON){
     }
 
 
-    v1_exec_action_local_var = v1_exec_action_create (
+    v1_exec_action_local_var = v1_exec_action_create_internal (
         command ? commandList : NULL
         );
 

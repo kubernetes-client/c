@@ -5,7 +5,7 @@
 
 
 
-v1_pod_template_spec_t *v1_pod_template_spec_create(
+static v1_pod_template_spec_t *v1_pod_template_spec_create_internal(
     v1_object_meta_t *metadata,
     v1_pod_spec_t *spec
     ) {
@@ -16,12 +16,26 @@ v1_pod_template_spec_t *v1_pod_template_spec_create(
     v1_pod_template_spec_local_var->metadata = metadata;
     v1_pod_template_spec_local_var->spec = spec;
 
+    v1_pod_template_spec_local_var->_library_owned = 1;
     return v1_pod_template_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_template_spec_t *v1_pod_template_spec_create(
+    v1_object_meta_t *metadata,
+    v1_pod_spec_t *spec
+    ) {
+    return v1_pod_template_spec_create_internal (
+        metadata,
+        spec
+        );
+}
 
 void v1_pod_template_spec_free(v1_pod_template_spec_t *v1_pod_template_spec) {
     if(NULL == v1_pod_template_spec){
+        return ;
+    }
+    if(v1_pod_template_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_template_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -84,18 +98,24 @@ v1_pod_template_spec_t *v1_pod_template_spec_parseFromJSON(cJSON *v1_pod_templat
 
     // v1_pod_template_spec->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_pod_template_specJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_pod_template_spec->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_pod_template_specJSON, "spec");
+    if (cJSON_IsNull(spec)) {
+        spec = NULL;
+    }
     if (spec) { 
     spec_local_nonprim = v1_pod_spec_parseFromJSON(spec); //nonprimitive
     }
 
 
-    v1_pod_template_spec_local_var = v1_pod_template_spec_create (
+    v1_pod_template_spec_local_var = v1_pod_template_spec_create_internal (
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL
         );

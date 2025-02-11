@@ -26,9 +26,10 @@ typedef struct v1alpha3_device_claim_t {
     list_t *constraints; //nonprimitive container
     list_t *requests; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_claim_t;
 
-v1alpha3_device_claim_t *v1alpha3_device_claim_create(
+__attribute__((deprecated)) v1alpha3_device_claim_t *v1alpha3_device_claim_create(
     list_t *config,
     list_t *constraints,
     list_t *requests

@@ -24,9 +24,10 @@ typedef struct v1_custom_resource_subresources_t {
     struct v1_custom_resource_subresource_scale_t *scale; //model
     object_t *status; //object
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_custom_resource_subresources_t;
 
-v1_custom_resource_subresources_t *v1_custom_resource_subresources_create(
+__attribute__((deprecated)) v1_custom_resource_subresources_t *v1_custom_resource_subresources_create(
     v1_custom_resource_subresource_scale_t *scale,
     object_t *status
 );

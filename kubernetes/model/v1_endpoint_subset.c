@@ -5,7 +5,7 @@
 
 
 
-v1_endpoint_subset_t *v1_endpoint_subset_create(
+static v1_endpoint_subset_t *v1_endpoint_subset_create_internal(
     list_t *addresses,
     list_t *not_ready_addresses,
     list_t *ports
@@ -18,12 +18,28 @@ v1_endpoint_subset_t *v1_endpoint_subset_create(
     v1_endpoint_subset_local_var->not_ready_addresses = not_ready_addresses;
     v1_endpoint_subset_local_var->ports = ports;
 
+    v1_endpoint_subset_local_var->_library_owned = 1;
     return v1_endpoint_subset_local_var;
 }
 
+__attribute__((deprecated)) v1_endpoint_subset_t *v1_endpoint_subset_create(
+    list_t *addresses,
+    list_t *not_ready_addresses,
+    list_t *ports
+    ) {
+    return v1_endpoint_subset_create_internal (
+        addresses,
+        not_ready_addresses,
+        ports
+        );
+}
 
 void v1_endpoint_subset_free(v1_endpoint_subset_t *v1_endpoint_subset) {
     if(NULL == v1_endpoint_subset){
+        return ;
+    }
+    if(v1_endpoint_subset->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_endpoint_subset_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -136,6 +152,9 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
 
     // v1_endpoint_subset->addresses
     cJSON *addresses = cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "addresses");
+    if (cJSON_IsNull(addresses)) {
+        addresses = NULL;
+    }
     if (addresses) { 
     cJSON *addresses_local_nonprimitive = NULL;
     if(!cJSON_IsArray(addresses)){
@@ -157,6 +176,9 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
 
     // v1_endpoint_subset->not_ready_addresses
     cJSON *not_ready_addresses = cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "notReadyAddresses");
+    if (cJSON_IsNull(not_ready_addresses)) {
+        not_ready_addresses = NULL;
+    }
     if (not_ready_addresses) { 
     cJSON *not_ready_addresses_local_nonprimitive = NULL;
     if(!cJSON_IsArray(not_ready_addresses)){
@@ -178,6 +200,9 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
 
     // v1_endpoint_subset->ports
     cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "ports");
+    if (cJSON_IsNull(ports)) {
+        ports = NULL;
+    }
     if (ports) { 
     cJSON *ports_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ports)){
@@ -198,7 +223,7 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
     }
 
 
-    v1_endpoint_subset_local_var = v1_endpoint_subset_create (
+    v1_endpoint_subset_local_var = v1_endpoint_subset_create_internal (
         addresses ? addressesList : NULL,
         not_ready_addresses ? not_ready_addressesList : NULL,
         ports ? portsList : NULL

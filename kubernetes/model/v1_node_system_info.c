@@ -5,7 +5,7 @@
 
 
 
-v1_node_system_info_t *v1_node_system_info_create(
+static v1_node_system_info_t *v1_node_system_info_create_internal(
     char *architecture,
     char *boot_id,
     char *container_runtime_version,
@@ -32,12 +32,42 @@ v1_node_system_info_t *v1_node_system_info_create(
     v1_node_system_info_local_var->os_image = os_image;
     v1_node_system_info_local_var->system_uuid = system_uuid;
 
+    v1_node_system_info_local_var->_library_owned = 1;
     return v1_node_system_info_local_var;
 }
 
+__attribute__((deprecated)) v1_node_system_info_t *v1_node_system_info_create(
+    char *architecture,
+    char *boot_id,
+    char *container_runtime_version,
+    char *kernel_version,
+    char *kube_proxy_version,
+    char *kubelet_version,
+    char *machine_id,
+    char *operating_system,
+    char *os_image,
+    char *system_uuid
+    ) {
+    return v1_node_system_info_create_internal (
+        architecture,
+        boot_id,
+        container_runtime_version,
+        kernel_version,
+        kube_proxy_version,
+        kubelet_version,
+        machine_id,
+        operating_system,
+        os_image,
+        system_uuid
+        );
+}
 
 void v1_node_system_info_free(v1_node_system_info_t *v1_node_system_info) {
     if(NULL == v1_node_system_info){
+        return ;
+    }
+    if(v1_node_system_info->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_node_system_info_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -190,6 +220,9 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
 
     // v1_node_system_info->architecture
     cJSON *architecture = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "architecture");
+    if (cJSON_IsNull(architecture)) {
+        architecture = NULL;
+    }
     if (!architecture) {
         goto end;
     }
@@ -202,6 +235,9 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
 
     // v1_node_system_info->boot_id
     cJSON *boot_id = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "bootID");
+    if (cJSON_IsNull(boot_id)) {
+        boot_id = NULL;
+    }
     if (!boot_id) {
         goto end;
     }
@@ -214,6 +250,9 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
 
     // v1_node_system_info->container_runtime_version
     cJSON *container_runtime_version = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "containerRuntimeVersion");
+    if (cJSON_IsNull(container_runtime_version)) {
+        container_runtime_version = NULL;
+    }
     if (!container_runtime_version) {
         goto end;
     }
@@ -226,6 +265,9 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
 
     // v1_node_system_info->kernel_version
     cJSON *kernel_version = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "kernelVersion");
+    if (cJSON_IsNull(kernel_version)) {
+        kernel_version = NULL;
+    }
     if (!kernel_version) {
         goto end;
     }
@@ -238,6 +280,9 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
 
     // v1_node_system_info->kube_proxy_version
     cJSON *kube_proxy_version = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "kubeProxyVersion");
+    if (cJSON_IsNull(kube_proxy_version)) {
+        kube_proxy_version = NULL;
+    }
     if (!kube_proxy_version) {
         goto end;
     }
@@ -250,6 +295,9 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
 
     // v1_node_system_info->kubelet_version
     cJSON *kubelet_version = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "kubeletVersion");
+    if (cJSON_IsNull(kubelet_version)) {
+        kubelet_version = NULL;
+    }
     if (!kubelet_version) {
         goto end;
     }
@@ -262,6 +310,9 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
 
     // v1_node_system_info->machine_id
     cJSON *machine_id = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "machineID");
+    if (cJSON_IsNull(machine_id)) {
+        machine_id = NULL;
+    }
     if (!machine_id) {
         goto end;
     }
@@ -274,6 +325,9 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
 
     // v1_node_system_info->operating_system
     cJSON *operating_system = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "operatingSystem");
+    if (cJSON_IsNull(operating_system)) {
+        operating_system = NULL;
+    }
     if (!operating_system) {
         goto end;
     }
@@ -286,6 +340,9 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
 
     // v1_node_system_info->os_image
     cJSON *os_image = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "osImage");
+    if (cJSON_IsNull(os_image)) {
+        os_image = NULL;
+    }
     if (!os_image) {
         goto end;
     }
@@ -298,6 +355,9 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
 
     // v1_node_system_info->system_uuid
     cJSON *system_uuid = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "systemUUID");
+    if (cJSON_IsNull(system_uuid)) {
+        system_uuid = NULL;
+    }
     if (!system_uuid) {
         goto end;
     }
@@ -309,7 +369,7 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
     }
 
 
-    v1_node_system_info_local_var = v1_node_system_info_create (
+    v1_node_system_info_local_var = v1_node_system_info_create_internal (
         strdup(architecture->valuestring),
         strdup(boot_id->valuestring),
         strdup(container_runtime_version->valuestring),

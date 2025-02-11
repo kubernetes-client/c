@@ -5,7 +5,7 @@
 
 
 
-v1_se_linux_options_t *v1_se_linux_options_create(
+static v1_se_linux_options_t *v1_se_linux_options_create_internal(
     char *level,
     char *role,
     char *type,
@@ -20,12 +20,30 @@ v1_se_linux_options_t *v1_se_linux_options_create(
     v1_se_linux_options_local_var->type = type;
     v1_se_linux_options_local_var->user = user;
 
+    v1_se_linux_options_local_var->_library_owned = 1;
     return v1_se_linux_options_local_var;
 }
 
+__attribute__((deprecated)) v1_se_linux_options_t *v1_se_linux_options_create(
+    char *level,
+    char *role,
+    char *type,
+    char *user
+    ) {
+    return v1_se_linux_options_create_internal (
+        level,
+        role,
+        type,
+        user
+        );
+}
 
 void v1_se_linux_options_free(v1_se_linux_options_t *v1_se_linux_options) {
     if(NULL == v1_se_linux_options){
+        return ;
+    }
+    if(v1_se_linux_options->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_se_linux_options_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -96,6 +114,9 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
 
     // v1_se_linux_options->level
     cJSON *level = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "level");
+    if (cJSON_IsNull(level)) {
+        level = NULL;
+    }
     if (level) { 
     if(!cJSON_IsString(level) && !cJSON_IsNull(level))
     {
@@ -105,6 +126,9 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
 
     // v1_se_linux_options->role
     cJSON *role = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "role");
+    if (cJSON_IsNull(role)) {
+        role = NULL;
+    }
     if (role) { 
     if(!cJSON_IsString(role) && !cJSON_IsNull(role))
     {
@@ -114,6 +138,9 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
 
     // v1_se_linux_options->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (type) { 
     if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
@@ -123,6 +150,9 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
 
     // v1_se_linux_options->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "user");
+    if (cJSON_IsNull(user)) {
+        user = NULL;
+    }
     if (user) { 
     if(!cJSON_IsString(user) && !cJSON_IsNull(user))
     {
@@ -131,7 +161,7 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
     }
 
 
-    v1_se_linux_options_local_var = v1_se_linux_options_create (
+    v1_se_linux_options_local_var = v1_se_linux_options_create_internal (
         level && !cJSON_IsNull(level) ? strdup(level->valuestring) : NULL,
         role && !cJSON_IsNull(role) ? strdup(role->valuestring) : NULL,
         type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL,

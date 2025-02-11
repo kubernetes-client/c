@@ -5,7 +5,7 @@
 
 
 
-apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config_create(
+static apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config_create_internal(
     char *ca_bundle,
     apiextensions_v1_service_reference_t *service,
     char *url
@@ -18,12 +18,28 @@ apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config
     apiextensions_v1_webhook_client_config_local_var->service = service;
     apiextensions_v1_webhook_client_config_local_var->url = url;
 
+    apiextensions_v1_webhook_client_config_local_var->_library_owned = 1;
     return apiextensions_v1_webhook_client_config_local_var;
 }
 
+__attribute__((deprecated)) apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config_create(
+    char *ca_bundle,
+    apiextensions_v1_service_reference_t *service,
+    char *url
+    ) {
+    return apiextensions_v1_webhook_client_config_create_internal (
+        ca_bundle,
+        service,
+        url
+        );
+}
 
 void apiextensions_v1_webhook_client_config_free(apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config) {
     if(NULL == apiextensions_v1_webhook_client_config){
+        return ;
+    }
+    if(apiextensions_v1_webhook_client_config->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "apiextensions_v1_webhook_client_config_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -90,6 +106,9 @@ apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config
 
     // apiextensions_v1_webhook_client_config->ca_bundle
     cJSON *ca_bundle = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "caBundle");
+    if (cJSON_IsNull(ca_bundle)) {
+        ca_bundle = NULL;
+    }
     if (ca_bundle) { 
     if(!cJSON_IsString(ca_bundle))
     {
@@ -99,12 +118,18 @@ apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config
 
     // apiextensions_v1_webhook_client_config->service
     cJSON *service = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "service");
+    if (cJSON_IsNull(service)) {
+        service = NULL;
+    }
     if (service) { 
     service_local_nonprim = apiextensions_v1_service_reference_parseFromJSON(service); //nonprimitive
     }
 
     // apiextensions_v1_webhook_client_config->url
     cJSON *url = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "url");
+    if (cJSON_IsNull(url)) {
+        url = NULL;
+    }
     if (url) { 
     if(!cJSON_IsString(url) && !cJSON_IsNull(url))
     {
@@ -113,7 +138,7 @@ apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config
     }
 
 
-    apiextensions_v1_webhook_client_config_local_var = apiextensions_v1_webhook_client_config_create (
+    apiextensions_v1_webhook_client_config_local_var = apiextensions_v1_webhook_client_config_create_internal (
         ca_bundle ? strdup(ca_bundle->valuestring) : NULL,
         service ? service_local_nonprim : NULL,
         url && !cJSON_IsNull(url) ? strdup(url->valuestring) : NULL

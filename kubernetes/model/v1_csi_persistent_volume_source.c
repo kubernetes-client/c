@@ -5,7 +5,7 @@
 
 
 
-v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create(
+static v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create_internal(
     v1_secret_reference_t *controller_expand_secret_ref,
     v1_secret_reference_t *controller_publish_secret_ref,
     char *driver,
@@ -32,12 +32,42 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create(
     v1_csi_persistent_volume_source_local_var->volume_attributes = volume_attributes;
     v1_csi_persistent_volume_source_local_var->volume_handle = volume_handle;
 
+    v1_csi_persistent_volume_source_local_var->_library_owned = 1;
     return v1_csi_persistent_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create(
+    v1_secret_reference_t *controller_expand_secret_ref,
+    v1_secret_reference_t *controller_publish_secret_ref,
+    char *driver,
+    char *fs_type,
+    v1_secret_reference_t *node_expand_secret_ref,
+    v1_secret_reference_t *node_publish_secret_ref,
+    v1_secret_reference_t *node_stage_secret_ref,
+    int read_only,
+    list_t* volume_attributes,
+    char *volume_handle
+    ) {
+    return v1_csi_persistent_volume_source_create_internal (
+        controller_expand_secret_ref,
+        controller_publish_secret_ref,
+        driver,
+        fs_type,
+        node_expand_secret_ref,
+        node_publish_secret_ref,
+        node_stage_secret_ref,
+        read_only,
+        volume_attributes,
+        volume_handle
+        );
+}
 
 void v1_csi_persistent_volume_source_free(v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source) {
     if(NULL == v1_csi_persistent_volume_source){
+        return ;
+    }
+    if(v1_csi_persistent_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_csi_persistent_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -71,7 +101,7 @@ void v1_csi_persistent_volume_source_free(v1_csi_persistent_volume_source_t *v1_
     }
     if (v1_csi_persistent_volume_source->volume_attributes) {
         list_ForEach(listEntry, v1_csi_persistent_volume_source->volume_attributes) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -189,8 +219,8 @@ cJSON *v1_csi_persistent_volume_source_convertToJSON(v1_csi_persistent_volume_so
     listEntry_t *volume_attributesListEntry;
     if (v1_csi_persistent_volume_source->volume_attributes) {
     list_ForEach(volume_attributesListEntry, v1_csi_persistent_volume_source->volume_attributes) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)volume_attributesListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = volume_attributesListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -239,18 +269,27 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
 
     // v1_csi_persistent_volume_source->controller_expand_secret_ref
     cJSON *controller_expand_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "controllerExpandSecretRef");
+    if (cJSON_IsNull(controller_expand_secret_ref)) {
+        controller_expand_secret_ref = NULL;
+    }
     if (controller_expand_secret_ref) { 
     controller_expand_secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(controller_expand_secret_ref); //nonprimitive
     }
 
     // v1_csi_persistent_volume_source->controller_publish_secret_ref
     cJSON *controller_publish_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "controllerPublishSecretRef");
+    if (cJSON_IsNull(controller_publish_secret_ref)) {
+        controller_publish_secret_ref = NULL;
+    }
     if (controller_publish_secret_ref) { 
     controller_publish_secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(controller_publish_secret_ref); //nonprimitive
     }
 
     // v1_csi_persistent_volume_source->driver
     cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "driver");
+    if (cJSON_IsNull(driver)) {
+        driver = NULL;
+    }
     if (!driver) {
         goto end;
     }
@@ -263,6 +302,9 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
 
     // v1_csi_persistent_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "fsType");
+    if (cJSON_IsNull(fs_type)) {
+        fs_type = NULL;
+    }
     if (fs_type) { 
     if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
@@ -272,24 +314,36 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
 
     // v1_csi_persistent_volume_source->node_expand_secret_ref
     cJSON *node_expand_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "nodeExpandSecretRef");
+    if (cJSON_IsNull(node_expand_secret_ref)) {
+        node_expand_secret_ref = NULL;
+    }
     if (node_expand_secret_ref) { 
     node_expand_secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(node_expand_secret_ref); //nonprimitive
     }
 
     // v1_csi_persistent_volume_source->node_publish_secret_ref
     cJSON *node_publish_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "nodePublishSecretRef");
+    if (cJSON_IsNull(node_publish_secret_ref)) {
+        node_publish_secret_ref = NULL;
+    }
     if (node_publish_secret_ref) { 
     node_publish_secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(node_publish_secret_ref); //nonprimitive
     }
 
     // v1_csi_persistent_volume_source->node_stage_secret_ref
     cJSON *node_stage_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "nodeStageSecretRef");
+    if (cJSON_IsNull(node_stage_secret_ref)) {
+        node_stage_secret_ref = NULL;
+    }
     if (node_stage_secret_ref) { 
     node_stage_secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(node_stage_secret_ref); //nonprimitive
     }
 
     // v1_csi_persistent_volume_source->read_only
     cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "readOnly");
+    if (cJSON_IsNull(read_only)) {
+        read_only = NULL;
+    }
     if (read_only) { 
     if(!cJSON_IsBool(read_only))
     {
@@ -299,6 +353,9 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
 
     // v1_csi_persistent_volume_source->volume_attributes
     cJSON *volume_attributes = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "volumeAttributes");
+    if (cJSON_IsNull(volume_attributes)) {
+        volume_attributes = NULL;
+    }
     if (volume_attributes) { 
     cJSON *volume_attributes_local_map = NULL;
     if(!cJSON_IsObject(volume_attributes) && !cJSON_IsNull(volume_attributes))
@@ -324,6 +381,9 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
 
     // v1_csi_persistent_volume_source->volume_handle
     cJSON *volume_handle = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "volumeHandle");
+    if (cJSON_IsNull(volume_handle)) {
+        volume_handle = NULL;
+    }
     if (!volume_handle) {
         goto end;
     }
@@ -335,7 +395,7 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
     }
 
 
-    v1_csi_persistent_volume_source_local_var = v1_csi_persistent_volume_source_create (
+    v1_csi_persistent_volume_source_local_var = v1_csi_persistent_volume_source_create_internal (
         controller_expand_secret_ref ? controller_expand_secret_ref_local_nonprim : NULL,
         controller_publish_secret_ref ? controller_publish_secret_ref_local_nonprim : NULL,
         strdup(driver->valuestring),
@@ -373,7 +433,7 @@ end:
     if (volume_attributesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, volume_attributesList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

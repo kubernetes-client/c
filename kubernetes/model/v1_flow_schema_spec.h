@@ -27,9 +27,10 @@ typedef struct v1_flow_schema_spec_t {
     struct v1_priority_level_configuration_reference_t *priority_level_configuration; //model
     list_t *rules; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_flow_schema_spec_t;
 
-v1_flow_schema_spec_t *v1_flow_schema_spec_create(
+__attribute__((deprecated)) v1_flow_schema_spec_t *v1_flow_schema_spec_create(
     v1_flow_distinguisher_method_t *distinguisher_method,
     int matching_precedence,
     v1_priority_level_configuration_reference_t *priority_level_configuration,

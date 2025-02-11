@@ -5,7 +5,7 @@
 
 
 
-rbac_v1_subject_t *rbac_v1_subject_create(
+static rbac_v1_subject_t *rbac_v1_subject_create_internal(
     char *api_group,
     char *kind,
     char *name,
@@ -20,12 +20,30 @@ rbac_v1_subject_t *rbac_v1_subject_create(
     rbac_v1_subject_local_var->name = name;
     rbac_v1_subject_local_var->_namespace = _namespace;
 
+    rbac_v1_subject_local_var->_library_owned = 1;
     return rbac_v1_subject_local_var;
 }
 
+__attribute__((deprecated)) rbac_v1_subject_t *rbac_v1_subject_create(
+    char *api_group,
+    char *kind,
+    char *name,
+    char *_namespace
+    ) {
+    return rbac_v1_subject_create_internal (
+        api_group,
+        kind,
+        name,
+        _namespace
+        );
+}
 
 void rbac_v1_subject_free(rbac_v1_subject_t *rbac_v1_subject) {
     if(NULL == rbac_v1_subject){
+        return ;
+    }
+    if(rbac_v1_subject->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "rbac_v1_subject_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -98,6 +116,9 @@ rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(cJSON *rbac_v1_subjectJSON){
 
     // rbac_v1_subject->api_group
     cJSON *api_group = cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "apiGroup");
+    if (cJSON_IsNull(api_group)) {
+        api_group = NULL;
+    }
     if (api_group) { 
     if(!cJSON_IsString(api_group) && !cJSON_IsNull(api_group))
     {
@@ -107,6 +128,9 @@ rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(cJSON *rbac_v1_subjectJSON){
 
     // rbac_v1_subject->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (!kind) {
         goto end;
     }
@@ -119,6 +143,9 @@ rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(cJSON *rbac_v1_subjectJSON){
 
     // rbac_v1_subject->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -131,6 +158,9 @@ rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(cJSON *rbac_v1_subjectJSON){
 
     // rbac_v1_subject->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "namespace");
+    if (cJSON_IsNull(_namespace)) {
+        _namespace = NULL;
+    }
     if (_namespace) { 
     if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
@@ -139,7 +169,7 @@ rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(cJSON *rbac_v1_subjectJSON){
     }
 
 
-    rbac_v1_subject_local_var = rbac_v1_subject_create (
+    rbac_v1_subject_local_var = rbac_v1_subject_create_internal (
         api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
         strdup(kind->valuestring),
         strdup(name->valuestring),

@@ -5,7 +5,7 @@
 
 
 
-v1_component_condition_t *v1_component_condition_create(
+static v1_component_condition_t *v1_component_condition_create_internal(
     char *error,
     char *message,
     char *status,
@@ -20,12 +20,30 @@ v1_component_condition_t *v1_component_condition_create(
     v1_component_condition_local_var->status = status;
     v1_component_condition_local_var->type = type;
 
+    v1_component_condition_local_var->_library_owned = 1;
     return v1_component_condition_local_var;
 }
 
+__attribute__((deprecated)) v1_component_condition_t *v1_component_condition_create(
+    char *error,
+    char *message,
+    char *status,
+    char *type
+    ) {
+    return v1_component_condition_create_internal (
+        error,
+        message,
+        status,
+        type
+        );
+}
 
 void v1_component_condition_free(v1_component_condition_t *v1_component_condition) {
     if(NULL == v1_component_condition){
+        return ;
+    }
+    if(v1_component_condition->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_component_condition_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -98,6 +116,9 @@ v1_component_condition_t *v1_component_condition_parseFromJSON(cJSON *v1_compone
 
     // v1_component_condition->error
     cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "error");
+    if (cJSON_IsNull(error)) {
+        error = NULL;
+    }
     if (error) { 
     if(!cJSON_IsString(error) && !cJSON_IsNull(error))
     {
@@ -107,6 +128,9 @@ v1_component_condition_t *v1_component_condition_parseFromJSON(cJSON *v1_compone
 
     // v1_component_condition->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "message");
+    if (cJSON_IsNull(message)) {
+        message = NULL;
+    }
     if (message) { 
     if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
@@ -116,6 +140,9 @@ v1_component_condition_t *v1_component_condition_parseFromJSON(cJSON *v1_compone
 
     // v1_component_condition->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
     if (!status) {
         goto end;
     }
@@ -128,6 +155,9 @@ v1_component_condition_t *v1_component_condition_parseFromJSON(cJSON *v1_compone
 
     // v1_component_condition->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -139,7 +169,7 @@ v1_component_condition_t *v1_component_condition_parseFromJSON(cJSON *v1_compone
     }
 
 
-    v1_component_condition_local_var = v1_component_condition_create (
+    v1_component_condition_local_var = v1_component_condition_create_internal (
         error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         strdup(status->valuestring),

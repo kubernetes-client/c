@@ -5,7 +5,7 @@
 
 
 
-v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_create(
+static v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_create_internal(
     list_t *non_resource_rules,
     list_t *resource_rules,
     list_t *subjects
@@ -18,12 +18,28 @@ v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_create(
     v1_policy_rules_with_subjects_local_var->resource_rules = resource_rules;
     v1_policy_rules_with_subjects_local_var->subjects = subjects;
 
+    v1_policy_rules_with_subjects_local_var->_library_owned = 1;
     return v1_policy_rules_with_subjects_local_var;
 }
 
+__attribute__((deprecated)) v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_create(
+    list_t *non_resource_rules,
+    list_t *resource_rules,
+    list_t *subjects
+    ) {
+    return v1_policy_rules_with_subjects_create_internal (
+        non_resource_rules,
+        resource_rules,
+        subjects
+        );
+}
 
 void v1_policy_rules_with_subjects_free(v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects) {
     if(NULL == v1_policy_rules_with_subjects){
+        return ;
+    }
+    if(v1_policy_rules_with_subjects->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_policy_rules_with_subjects_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -137,6 +153,9 @@ v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_parseFromJSON(cJS
 
     // v1_policy_rules_with_subjects->non_resource_rules
     cJSON *non_resource_rules = cJSON_GetObjectItemCaseSensitive(v1_policy_rules_with_subjectsJSON, "nonResourceRules");
+    if (cJSON_IsNull(non_resource_rules)) {
+        non_resource_rules = NULL;
+    }
     if (non_resource_rules) { 
     cJSON *non_resource_rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(non_resource_rules)){
@@ -158,6 +177,9 @@ v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_parseFromJSON(cJS
 
     // v1_policy_rules_with_subjects->resource_rules
     cJSON *resource_rules = cJSON_GetObjectItemCaseSensitive(v1_policy_rules_with_subjectsJSON, "resourceRules");
+    if (cJSON_IsNull(resource_rules)) {
+        resource_rules = NULL;
+    }
     if (resource_rules) { 
     cJSON *resource_rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(resource_rules)){
@@ -179,6 +201,9 @@ v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_parseFromJSON(cJS
 
     // v1_policy_rules_with_subjects->subjects
     cJSON *subjects = cJSON_GetObjectItemCaseSensitive(v1_policy_rules_with_subjectsJSON, "subjects");
+    if (cJSON_IsNull(subjects)) {
+        subjects = NULL;
+    }
     if (!subjects) {
         goto end;
     }
@@ -202,7 +227,7 @@ v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_parseFromJSON(cJS
     }
 
 
-    v1_policy_rules_with_subjects_local_var = v1_policy_rules_with_subjects_create (
+    v1_policy_rules_with_subjects_local_var = v1_policy_rules_with_subjects_create_internal (
         non_resource_rules ? non_resource_rulesList : NULL,
         resource_rules ? resource_rulesList : NULL,
         subjectsList

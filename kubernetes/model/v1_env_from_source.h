@@ -25,9 +25,10 @@ typedef struct v1_env_from_source_t {
     char *prefix; // string
     struct v1_secret_env_source_t *secret_ref; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_env_from_source_t;
 
-v1_env_from_source_t *v1_env_from_source_create(
+__attribute__((deprecated)) v1_env_from_source_t *v1_env_from_source_create(
     v1_config_map_env_source_t *config_map_ref,
     char *prefix,
     v1_secret_env_source_t *secret_ref

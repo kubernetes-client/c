@@ -26,9 +26,10 @@ typedef struct v1_certificate_signing_request_condition_t {
     char *status; // string
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_certificate_signing_request_condition_t;
 
-v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condition_create(
+__attribute__((deprecated)) v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condition_create(
     char *last_transition_time,
     char *last_update_time,
     char *message,

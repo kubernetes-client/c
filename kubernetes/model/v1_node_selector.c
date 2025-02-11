@@ -5,7 +5,7 @@
 
 
 
-v1_node_selector_t *v1_node_selector_create(
+static v1_node_selector_t *v1_node_selector_create_internal(
     list_t *node_selector_terms
     ) {
     v1_node_selector_t *v1_node_selector_local_var = malloc(sizeof(v1_node_selector_t));
@@ -14,12 +14,24 @@ v1_node_selector_t *v1_node_selector_create(
     }
     v1_node_selector_local_var->node_selector_terms = node_selector_terms;
 
+    v1_node_selector_local_var->_library_owned = 1;
     return v1_node_selector_local_var;
 }
 
+__attribute__((deprecated)) v1_node_selector_t *v1_node_selector_create(
+    list_t *node_selector_terms
+    ) {
+    return v1_node_selector_create_internal (
+        node_selector_terms
+        );
+}
 
 void v1_node_selector_free(v1_node_selector_t *v1_node_selector) {
     if(NULL == v1_node_selector){
+        return ;
+    }
+    if(v1_node_selector->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_node_selector_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -73,6 +85,9 @@ v1_node_selector_t *v1_node_selector_parseFromJSON(cJSON *v1_node_selectorJSON){
 
     // v1_node_selector->node_selector_terms
     cJSON *node_selector_terms = cJSON_GetObjectItemCaseSensitive(v1_node_selectorJSON, "nodeSelectorTerms");
+    if (cJSON_IsNull(node_selector_terms)) {
+        node_selector_terms = NULL;
+    }
     if (!node_selector_terms) {
         goto end;
     }
@@ -96,7 +111,7 @@ v1_node_selector_t *v1_node_selector_parseFromJSON(cJSON *v1_node_selectorJSON){
     }
 
 
-    v1_node_selector_local_var = v1_node_selector_create (
+    v1_node_selector_local_var = v1_node_selector_create_internal (
         node_selector_termsList
         );
 

@@ -22,9 +22,10 @@ typedef struct v1_scale_status_t {
     int replicas; //numeric
     char *selector; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_scale_status_t;
 
-v1_scale_status_t *v1_scale_status_create(
+__attribute__((deprecated)) v1_scale_status_t *v1_scale_status_create(
     int replicas,
     char *selector
 );

@@ -26,9 +26,10 @@ typedef struct v1_endpoints_t {
     struct v1_object_meta_t *metadata; //model
     list_t *subsets; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_endpoints_t;
 
-v1_endpoints_t *v1_endpoints_create(
+__attribute__((deprecated)) v1_endpoints_t *v1_endpoints_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

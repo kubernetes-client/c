@@ -24,7 +24,6 @@ v1alpha3_allocation_result_t* instantiate_v1alpha3_allocation_result(int include
   v1alpha3_allocation_result_t* v1alpha3_allocation_result = NULL;
   if (include_optional) {
     v1alpha3_allocation_result = v1alpha3_allocation_result_create(
-      "0",
        // false, not to have infinite recursion
       instantiate_v1alpha3_device_allocation_result(0),
        // false, not to have infinite recursion
@@ -32,7 +31,6 @@ v1alpha3_allocation_result_t* instantiate_v1alpha3_allocation_result(int include
     );
   } else {
     v1alpha3_allocation_result = v1alpha3_allocation_result_create(
-      "0",
       NULL,
       NULL
     );

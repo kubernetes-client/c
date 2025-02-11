@@ -28,9 +28,10 @@ typedef struct authentication_v1_token_request_t {
     struct v1_token_request_spec_t *spec; //model
     struct v1_token_request_status_t *status; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } authentication_v1_token_request_t;
 
-authentication_v1_token_request_t *authentication_v1_token_request_create(
+__attribute__((deprecated)) authentication_v1_token_request_t *authentication_v1_token_request_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

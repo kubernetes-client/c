@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference_create(
+static v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference_create_internal(
     char *api_group,
     char *name,
     char *resource,
@@ -20,12 +20,30 @@ v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_r
     v1alpha3_resource_claim_consumer_reference_local_var->resource = resource;
     v1alpha3_resource_claim_consumer_reference_local_var->uid = uid;
 
+    v1alpha3_resource_claim_consumer_reference_local_var->_library_owned = 1;
     return v1alpha3_resource_claim_consumer_reference_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference_create(
+    char *api_group,
+    char *name,
+    char *resource,
+    char *uid
+    ) {
+    return v1alpha3_resource_claim_consumer_reference_create_internal (
+        api_group,
+        name,
+        resource,
+        uid
+        );
+}
 
 void v1alpha3_resource_claim_consumer_reference_free(v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference) {
     if(NULL == v1alpha3_resource_claim_consumer_reference){
+        return ;
+    }
+    if(v1alpha3_resource_claim_consumer_reference->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_resource_claim_consumer_reference_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -99,6 +117,9 @@ v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_r
 
     // v1alpha3_resource_claim_consumer_reference->api_group
     cJSON *api_group = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "apiGroup");
+    if (cJSON_IsNull(api_group)) {
+        api_group = NULL;
+    }
     if (api_group) { 
     if(!cJSON_IsString(api_group) && !cJSON_IsNull(api_group))
     {
@@ -108,6 +129,9 @@ v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_r
 
     // v1alpha3_resource_claim_consumer_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -120,6 +144,9 @@ v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_r
 
     // v1alpha3_resource_claim_consumer_reference->resource
     cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "resource");
+    if (cJSON_IsNull(resource)) {
+        resource = NULL;
+    }
     if (!resource) {
         goto end;
     }
@@ -132,6 +159,9 @@ v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_r
 
     // v1alpha3_resource_claim_consumer_reference->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "uid");
+    if (cJSON_IsNull(uid)) {
+        uid = NULL;
+    }
     if (!uid) {
         goto end;
     }
@@ -143,7 +173,7 @@ v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_r
     }
 
 
-    v1alpha3_resource_claim_consumer_reference_local_var = v1alpha3_resource_claim_consumer_reference_create (
+    v1alpha3_resource_claim_consumer_reference_local_var = v1alpha3_resource_claim_consumer_reference_create_internal (
         api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
         strdup(name->valuestring),
         strdup(resource->valuestring),

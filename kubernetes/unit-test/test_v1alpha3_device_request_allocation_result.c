@@ -22,6 +22,7 @@ v1alpha3_device_request_allocation_result_t* instantiate_v1alpha3_device_request
   v1alpha3_device_request_allocation_result_t* v1alpha3_device_request_allocation_result = NULL;
   if (include_optional) {
     v1alpha3_device_request_allocation_result = v1alpha3_device_request_allocation_result_create(
+      1,
       "0",
       "0",
       "0",
@@ -29,6 +30,7 @@ v1alpha3_device_request_allocation_result_t* instantiate_v1alpha3_device_request
     );
   } else {
     v1alpha3_device_request_allocation_result = v1alpha3_device_request_allocation_result_create(
+      1,
       "0",
       "0",
       "0",

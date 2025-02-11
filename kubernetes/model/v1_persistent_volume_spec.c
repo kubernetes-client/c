@@ -5,7 +5,7 @@
 
 
 
-v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
+static v1_persistent_volume_spec_t *v1_persistent_volume_spec_create_internal(
     list_t *access_modes,
     v1_aws_elastic_block_store_volume_source_t *aws_elastic_block_store,
     v1_azure_disk_volume_source_t *azure_disk,
@@ -74,12 +74,84 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
     v1_persistent_volume_spec_local_var->volume_mode = volume_mode;
     v1_persistent_volume_spec_local_var->vsphere_volume = vsphere_volume;
 
+    v1_persistent_volume_spec_local_var->_library_owned = 1;
     return v1_persistent_volume_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
+    list_t *access_modes,
+    v1_aws_elastic_block_store_volume_source_t *aws_elastic_block_store,
+    v1_azure_disk_volume_source_t *azure_disk,
+    v1_azure_file_persistent_volume_source_t *azure_file,
+    list_t* capacity,
+    v1_ceph_fs_persistent_volume_source_t *cephfs,
+    v1_cinder_persistent_volume_source_t *cinder,
+    v1_object_reference_t *claim_ref,
+    v1_csi_persistent_volume_source_t *csi,
+    v1_fc_volume_source_t *fc,
+    v1_flex_persistent_volume_source_t *flex_volume,
+    v1_flocker_volume_source_t *flocker,
+    v1_gce_persistent_disk_volume_source_t *gce_persistent_disk,
+    v1_glusterfs_persistent_volume_source_t *glusterfs,
+    v1_host_path_volume_source_t *host_path,
+    v1_iscsi_persistent_volume_source_t *iscsi,
+    v1_local_volume_source_t *local,
+    list_t *mount_options,
+    v1_nfs_volume_source_t *nfs,
+    v1_volume_node_affinity_t *node_affinity,
+    char *persistent_volume_reclaim_policy,
+    v1_photon_persistent_disk_volume_source_t *photon_persistent_disk,
+    v1_portworx_volume_source_t *portworx_volume,
+    v1_quobyte_volume_source_t *quobyte,
+    v1_rbd_persistent_volume_source_t *rbd,
+    v1_scale_io_persistent_volume_source_t *scale_io,
+    char *storage_class_name,
+    v1_storage_os_persistent_volume_source_t *storageos,
+    char *volume_attributes_class_name,
+    char *volume_mode,
+    v1_vsphere_virtual_disk_volume_source_t *vsphere_volume
+    ) {
+    return v1_persistent_volume_spec_create_internal (
+        access_modes,
+        aws_elastic_block_store,
+        azure_disk,
+        azure_file,
+        capacity,
+        cephfs,
+        cinder,
+        claim_ref,
+        csi,
+        fc,
+        flex_volume,
+        flocker,
+        gce_persistent_disk,
+        glusterfs,
+        host_path,
+        iscsi,
+        local,
+        mount_options,
+        nfs,
+        node_affinity,
+        persistent_volume_reclaim_policy,
+        photon_persistent_disk,
+        portworx_volume,
+        quobyte,
+        rbd,
+        scale_io,
+        storage_class_name,
+        storageos,
+        volume_attributes_class_name,
+        volume_mode,
+        vsphere_volume
+        );
+}
 
 void v1_persistent_volume_spec_free(v1_persistent_volume_spec_t *v1_persistent_volume_spec) {
     if(NULL == v1_persistent_volume_spec){
+        return ;
+    }
+    if(v1_persistent_volume_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_persistent_volume_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -104,7 +176,7 @@ void v1_persistent_volume_spec_free(v1_persistent_volume_spec_t *v1_persistent_v
     }
     if (v1_persistent_volume_spec->capacity) {
         list_ForEach(listEntry, v1_persistent_volume_spec->capacity) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -234,7 +306,7 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
 
     listEntry_t *access_modesListEntry;
     list_ForEach(access_modesListEntry, v1_persistent_volume_spec->access_modes) {
-    if(cJSON_AddStringToObject(access_modes, "", (char*)access_modesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(access_modes, "", access_modesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -291,8 +363,8 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
     listEntry_t *capacityListEntry;
     if (v1_persistent_volume_spec->capacity) {
     list_ForEach(capacityListEntry, v1_persistent_volume_spec->capacity) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)capacityListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = capacityListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -466,7 +538,7 @@ cJSON *v1_persistent_volume_spec_convertToJSON(v1_persistent_volume_spec_t *v1_p
 
     listEntry_t *mount_optionsListEntry;
     list_ForEach(mount_optionsListEntry, v1_persistent_volume_spec->mount_options) {
-    if(cJSON_AddStringToObject(mount_options, "", (char*)mount_optionsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(mount_options, "", mount_optionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -717,6 +789,9 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->access_modes
     cJSON *access_modes = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "accessModes");
+    if (cJSON_IsNull(access_modes)) {
+        access_modes = NULL;
+    }
     if (access_modes) { 
     cJSON *access_modes_local = NULL;
     if(!cJSON_IsArray(access_modes)) {
@@ -736,24 +811,36 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->aws_elastic_block_store
     cJSON *aws_elastic_block_store = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "awsElasticBlockStore");
+    if (cJSON_IsNull(aws_elastic_block_store)) {
+        aws_elastic_block_store = NULL;
+    }
     if (aws_elastic_block_store) { 
     aws_elastic_block_store_local_nonprim = v1_aws_elastic_block_store_volume_source_parseFromJSON(aws_elastic_block_store); //nonprimitive
     }
 
     // v1_persistent_volume_spec->azure_disk
     cJSON *azure_disk = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "azureDisk");
+    if (cJSON_IsNull(azure_disk)) {
+        azure_disk = NULL;
+    }
     if (azure_disk) { 
     azure_disk_local_nonprim = v1_azure_disk_volume_source_parseFromJSON(azure_disk); //nonprimitive
     }
 
     // v1_persistent_volume_spec->azure_file
     cJSON *azure_file = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "azureFile");
+    if (cJSON_IsNull(azure_file)) {
+        azure_file = NULL;
+    }
     if (azure_file) { 
     azure_file_local_nonprim = v1_azure_file_persistent_volume_source_parseFromJSON(azure_file); //nonprimitive
     }
 
     // v1_persistent_volume_spec->capacity
     cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "capacity");
+    if (cJSON_IsNull(capacity)) {
+        capacity = NULL;
+    }
     if (capacity) { 
     cJSON *capacity_local_map = NULL;
     if(!cJSON_IsObject(capacity) && !cJSON_IsNull(capacity))
@@ -779,78 +866,117 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->cephfs
     cJSON *cephfs = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "cephfs");
+    if (cJSON_IsNull(cephfs)) {
+        cephfs = NULL;
+    }
     if (cephfs) { 
     cephfs_local_nonprim = v1_ceph_fs_persistent_volume_source_parseFromJSON(cephfs); //nonprimitive
     }
 
     // v1_persistent_volume_spec->cinder
     cJSON *cinder = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "cinder");
+    if (cJSON_IsNull(cinder)) {
+        cinder = NULL;
+    }
     if (cinder) { 
     cinder_local_nonprim = v1_cinder_persistent_volume_source_parseFromJSON(cinder); //nonprimitive
     }
 
     // v1_persistent_volume_spec->claim_ref
     cJSON *claim_ref = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "claimRef");
+    if (cJSON_IsNull(claim_ref)) {
+        claim_ref = NULL;
+    }
     if (claim_ref) { 
     claim_ref_local_nonprim = v1_object_reference_parseFromJSON(claim_ref); //nonprimitive
     }
 
     // v1_persistent_volume_spec->csi
     cJSON *csi = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "csi");
+    if (cJSON_IsNull(csi)) {
+        csi = NULL;
+    }
     if (csi) { 
     csi_local_nonprim = v1_csi_persistent_volume_source_parseFromJSON(csi); //nonprimitive
     }
 
     // v1_persistent_volume_spec->fc
     cJSON *fc = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "fc");
+    if (cJSON_IsNull(fc)) {
+        fc = NULL;
+    }
     if (fc) { 
     fc_local_nonprim = v1_fc_volume_source_parseFromJSON(fc); //nonprimitive
     }
 
     // v1_persistent_volume_spec->flex_volume
     cJSON *flex_volume = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "flexVolume");
+    if (cJSON_IsNull(flex_volume)) {
+        flex_volume = NULL;
+    }
     if (flex_volume) { 
     flex_volume_local_nonprim = v1_flex_persistent_volume_source_parseFromJSON(flex_volume); //nonprimitive
     }
 
     // v1_persistent_volume_spec->flocker
     cJSON *flocker = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "flocker");
+    if (cJSON_IsNull(flocker)) {
+        flocker = NULL;
+    }
     if (flocker) { 
     flocker_local_nonprim = v1_flocker_volume_source_parseFromJSON(flocker); //nonprimitive
     }
 
     // v1_persistent_volume_spec->gce_persistent_disk
     cJSON *gce_persistent_disk = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "gcePersistentDisk");
+    if (cJSON_IsNull(gce_persistent_disk)) {
+        gce_persistent_disk = NULL;
+    }
     if (gce_persistent_disk) { 
     gce_persistent_disk_local_nonprim = v1_gce_persistent_disk_volume_source_parseFromJSON(gce_persistent_disk); //nonprimitive
     }
 
     // v1_persistent_volume_spec->glusterfs
     cJSON *glusterfs = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "glusterfs");
+    if (cJSON_IsNull(glusterfs)) {
+        glusterfs = NULL;
+    }
     if (glusterfs) { 
     glusterfs_local_nonprim = v1_glusterfs_persistent_volume_source_parseFromJSON(glusterfs); //nonprimitive
     }
 
     // v1_persistent_volume_spec->host_path
     cJSON *host_path = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "hostPath");
+    if (cJSON_IsNull(host_path)) {
+        host_path = NULL;
+    }
     if (host_path) { 
     host_path_local_nonprim = v1_host_path_volume_source_parseFromJSON(host_path); //nonprimitive
     }
 
     // v1_persistent_volume_spec->iscsi
     cJSON *iscsi = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "iscsi");
+    if (cJSON_IsNull(iscsi)) {
+        iscsi = NULL;
+    }
     if (iscsi) { 
     iscsi_local_nonprim = v1_iscsi_persistent_volume_source_parseFromJSON(iscsi); //nonprimitive
     }
 
     // v1_persistent_volume_spec->local
     cJSON *local = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "local");
+    if (cJSON_IsNull(local)) {
+        local = NULL;
+    }
     if (local) { 
     local_local_nonprim = v1_local_volume_source_parseFromJSON(local); //nonprimitive
     }
 
     // v1_persistent_volume_spec->mount_options
     cJSON *mount_options = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "mountOptions");
+    if (cJSON_IsNull(mount_options)) {
+        mount_options = NULL;
+    }
     if (mount_options) { 
     cJSON *mount_options_local = NULL;
     if(!cJSON_IsArray(mount_options)) {
@@ -870,18 +996,27 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->nfs
     cJSON *nfs = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "nfs");
+    if (cJSON_IsNull(nfs)) {
+        nfs = NULL;
+    }
     if (nfs) { 
     nfs_local_nonprim = v1_nfs_volume_source_parseFromJSON(nfs); //nonprimitive
     }
 
     // v1_persistent_volume_spec->node_affinity
     cJSON *node_affinity = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "nodeAffinity");
+    if (cJSON_IsNull(node_affinity)) {
+        node_affinity = NULL;
+    }
     if (node_affinity) { 
     node_affinity_local_nonprim = v1_volume_node_affinity_parseFromJSON(node_affinity); //nonprimitive
     }
 
     // v1_persistent_volume_spec->persistent_volume_reclaim_policy
     cJSON *persistent_volume_reclaim_policy = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "persistentVolumeReclaimPolicy");
+    if (cJSON_IsNull(persistent_volume_reclaim_policy)) {
+        persistent_volume_reclaim_policy = NULL;
+    }
     if (persistent_volume_reclaim_policy) { 
     if(!cJSON_IsString(persistent_volume_reclaim_policy) && !cJSON_IsNull(persistent_volume_reclaim_policy))
     {
@@ -891,36 +1026,54 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->photon_persistent_disk
     cJSON *photon_persistent_disk = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "photonPersistentDisk");
+    if (cJSON_IsNull(photon_persistent_disk)) {
+        photon_persistent_disk = NULL;
+    }
     if (photon_persistent_disk) { 
     photon_persistent_disk_local_nonprim = v1_photon_persistent_disk_volume_source_parseFromJSON(photon_persistent_disk); //nonprimitive
     }
 
     // v1_persistent_volume_spec->portworx_volume
     cJSON *portworx_volume = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "portworxVolume");
+    if (cJSON_IsNull(portworx_volume)) {
+        portworx_volume = NULL;
+    }
     if (portworx_volume) { 
     portworx_volume_local_nonprim = v1_portworx_volume_source_parseFromJSON(portworx_volume); //nonprimitive
     }
 
     // v1_persistent_volume_spec->quobyte
     cJSON *quobyte = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "quobyte");
+    if (cJSON_IsNull(quobyte)) {
+        quobyte = NULL;
+    }
     if (quobyte) { 
     quobyte_local_nonprim = v1_quobyte_volume_source_parseFromJSON(quobyte); //nonprimitive
     }
 
     // v1_persistent_volume_spec->rbd
     cJSON *rbd = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "rbd");
+    if (cJSON_IsNull(rbd)) {
+        rbd = NULL;
+    }
     if (rbd) { 
     rbd_local_nonprim = v1_rbd_persistent_volume_source_parseFromJSON(rbd); //nonprimitive
     }
 
     // v1_persistent_volume_spec->scale_io
     cJSON *scale_io = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "scaleIO");
+    if (cJSON_IsNull(scale_io)) {
+        scale_io = NULL;
+    }
     if (scale_io) { 
     scale_io_local_nonprim = v1_scale_io_persistent_volume_source_parseFromJSON(scale_io); //nonprimitive
     }
 
     // v1_persistent_volume_spec->storage_class_name
     cJSON *storage_class_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "storageClassName");
+    if (cJSON_IsNull(storage_class_name)) {
+        storage_class_name = NULL;
+    }
     if (storage_class_name) { 
     if(!cJSON_IsString(storage_class_name) && !cJSON_IsNull(storage_class_name))
     {
@@ -930,12 +1083,18 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->storageos
     cJSON *storageos = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "storageos");
+    if (cJSON_IsNull(storageos)) {
+        storageos = NULL;
+    }
     if (storageos) { 
     storageos_local_nonprim = v1_storage_os_persistent_volume_source_parseFromJSON(storageos); //nonprimitive
     }
 
     // v1_persistent_volume_spec->volume_attributes_class_name
     cJSON *volume_attributes_class_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "volumeAttributesClassName");
+    if (cJSON_IsNull(volume_attributes_class_name)) {
+        volume_attributes_class_name = NULL;
+    }
     if (volume_attributes_class_name) { 
     if(!cJSON_IsString(volume_attributes_class_name) && !cJSON_IsNull(volume_attributes_class_name))
     {
@@ -945,6 +1104,9 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->volume_mode
     cJSON *volume_mode = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "volumeMode");
+    if (cJSON_IsNull(volume_mode)) {
+        volume_mode = NULL;
+    }
     if (volume_mode) { 
     if(!cJSON_IsString(volume_mode) && !cJSON_IsNull(volume_mode))
     {
@@ -954,12 +1116,15 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
 
     // v1_persistent_volume_spec->vsphere_volume
     cJSON *vsphere_volume = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_specJSON, "vsphereVolume");
+    if (cJSON_IsNull(vsphere_volume)) {
+        vsphere_volume = NULL;
+    }
     if (vsphere_volume) { 
     vsphere_volume_local_nonprim = v1_vsphere_virtual_disk_volume_source_parseFromJSON(vsphere_volume); //nonprimitive
     }
 
 
-    v1_persistent_volume_spec_local_var = v1_persistent_volume_spec_create (
+    v1_persistent_volume_spec_local_var = v1_persistent_volume_spec_create_internal (
         access_modes ? access_modesList : NULL,
         aws_elastic_block_store ? aws_elastic_block_store_local_nonprim : NULL,
         azure_disk ? azure_disk_local_nonprim : NULL,
@@ -1019,7 +1184,7 @@ end:
     if (capacityList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, capacityList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

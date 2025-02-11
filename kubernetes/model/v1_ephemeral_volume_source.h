@@ -22,9 +22,10 @@ typedef struct v1_ephemeral_volume_source_t v1_ephemeral_volume_source_t;
 typedef struct v1_ephemeral_volume_source_t {
     struct v1_persistent_volume_claim_template_t *volume_claim_template; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ephemeral_volume_source_t;
 
-v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_create(
+__attribute__((deprecated)) v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_create(
     v1_persistent_volume_claim_template_t *volume_claim_template
 );
 

@@ -81,9 +81,10 @@ typedef struct v1_volume_t {
     struct v1_storage_os_volume_source_t *storageos; //model
     struct v1_vsphere_virtual_disk_volume_source_t *vsphere_volume; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_t;
 
-v1_volume_t *v1_volume_create(
+__attribute__((deprecated)) v1_volume_t *v1_volume_create(
     v1_aws_elastic_block_store_volume_source_t *aws_elastic_block_store,
     v1_azure_disk_volume_source_t *azure_disk,
     v1_azure_file_volume_source_t *azure_file,

@@ -27,9 +27,10 @@ typedef struct v1_network_policy_spec_t {
     struct v1_label_selector_t *pod_selector; //model
     list_t *policy_types; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_network_policy_spec_t;
 
-v1_network_policy_spec_t *v1_network_policy_spec_create(
+__attribute__((deprecated)) v1_network_policy_spec_t *v1_network_policy_spec_create(
     list_t *egress,
     list_t *ingress,
     v1_label_selector_t *pod_selector,

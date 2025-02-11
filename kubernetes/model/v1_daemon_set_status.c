@@ -5,7 +5,7 @@
 
 
 
-v1_daemon_set_status_t *v1_daemon_set_status_create(
+static v1_daemon_set_status_t *v1_daemon_set_status_create_internal(
     int collision_count,
     list_t *conditions,
     int current_number_scheduled,
@@ -32,12 +32,42 @@ v1_daemon_set_status_t *v1_daemon_set_status_create(
     v1_daemon_set_status_local_var->observed_generation = observed_generation;
     v1_daemon_set_status_local_var->updated_number_scheduled = updated_number_scheduled;
 
+    v1_daemon_set_status_local_var->_library_owned = 1;
     return v1_daemon_set_status_local_var;
 }
 
+__attribute__((deprecated)) v1_daemon_set_status_t *v1_daemon_set_status_create(
+    int collision_count,
+    list_t *conditions,
+    int current_number_scheduled,
+    int desired_number_scheduled,
+    int number_available,
+    int number_misscheduled,
+    int number_ready,
+    int number_unavailable,
+    long observed_generation,
+    int updated_number_scheduled
+    ) {
+    return v1_daemon_set_status_create_internal (
+        collision_count,
+        conditions,
+        current_number_scheduled,
+        desired_number_scheduled,
+        number_available,
+        number_misscheduled,
+        number_ready,
+        number_unavailable,
+        observed_generation,
+        updated_number_scheduled
+        );
+}
 
 void v1_daemon_set_status_free(v1_daemon_set_status_t *v1_daemon_set_status) {
     if(NULL == v1_daemon_set_status){
+        return ;
+    }
+    if(v1_daemon_set_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_daemon_set_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -166,6 +196,9 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     // v1_daemon_set_status->collision_count
     cJSON *collision_count = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "collisionCount");
+    if (cJSON_IsNull(collision_count)) {
+        collision_count = NULL;
+    }
     if (collision_count) { 
     if(!cJSON_IsNumber(collision_count))
     {
@@ -175,6 +208,9 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     // v1_daemon_set_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -196,6 +232,9 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     // v1_daemon_set_status->current_number_scheduled
     cJSON *current_number_scheduled = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "currentNumberScheduled");
+    if (cJSON_IsNull(current_number_scheduled)) {
+        current_number_scheduled = NULL;
+    }
     if (!current_number_scheduled) {
         goto end;
     }
@@ -208,6 +247,9 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     // v1_daemon_set_status->desired_number_scheduled
     cJSON *desired_number_scheduled = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "desiredNumberScheduled");
+    if (cJSON_IsNull(desired_number_scheduled)) {
+        desired_number_scheduled = NULL;
+    }
     if (!desired_number_scheduled) {
         goto end;
     }
@@ -220,6 +262,9 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     // v1_daemon_set_status->number_available
     cJSON *number_available = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberAvailable");
+    if (cJSON_IsNull(number_available)) {
+        number_available = NULL;
+    }
     if (number_available) { 
     if(!cJSON_IsNumber(number_available))
     {
@@ -229,6 +274,9 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     // v1_daemon_set_status->number_misscheduled
     cJSON *number_misscheduled = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberMisscheduled");
+    if (cJSON_IsNull(number_misscheduled)) {
+        number_misscheduled = NULL;
+    }
     if (!number_misscheduled) {
         goto end;
     }
@@ -241,6 +289,9 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     // v1_daemon_set_status->number_ready
     cJSON *number_ready = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberReady");
+    if (cJSON_IsNull(number_ready)) {
+        number_ready = NULL;
+    }
     if (!number_ready) {
         goto end;
     }
@@ -253,6 +304,9 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     // v1_daemon_set_status->number_unavailable
     cJSON *number_unavailable = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberUnavailable");
+    if (cJSON_IsNull(number_unavailable)) {
+        number_unavailable = NULL;
+    }
     if (number_unavailable) { 
     if(!cJSON_IsNumber(number_unavailable))
     {
@@ -262,6 +316,9 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     // v1_daemon_set_status->observed_generation
     cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "observedGeneration");
+    if (cJSON_IsNull(observed_generation)) {
+        observed_generation = NULL;
+    }
     if (observed_generation) { 
     if(!cJSON_IsNumber(observed_generation))
     {
@@ -271,6 +328,9 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     // v1_daemon_set_status->updated_number_scheduled
     cJSON *updated_number_scheduled = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "updatedNumberScheduled");
+    if (cJSON_IsNull(updated_number_scheduled)) {
+        updated_number_scheduled = NULL;
+    }
     if (updated_number_scheduled) { 
     if(!cJSON_IsNumber(updated_number_scheduled))
     {
@@ -279,7 +339,7 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     }
 
 
-    v1_daemon_set_status_local_var = v1_daemon_set_status_create (
+    v1_daemon_set_status_local_var = v1_daemon_set_status_create_internal (
         collision_count ? collision_count->valuedouble : 0,
         conditions ? conditionsList : NULL,
         current_number_scheduled->valuedouble,

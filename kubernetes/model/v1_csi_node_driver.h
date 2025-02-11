@@ -25,9 +25,10 @@ typedef struct v1_csi_node_driver_t {
     char *node_id; // string
     list_t *topology_keys; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_csi_node_driver_t;
 
-v1_csi_node_driver_t *v1_csi_node_driver_create(
+__attribute__((deprecated)) v1_csi_node_driver_t *v1_csi_node_driver_create(
     v1_volume_node_resources_t *allocatable,
     char *name,
     char *node_id,

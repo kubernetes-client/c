@@ -5,7 +5,7 @@
 
 
 
-v1_env_var_source_t *v1_env_var_source_create(
+static v1_env_var_source_t *v1_env_var_source_create_internal(
     v1_config_map_key_selector_t *config_map_key_ref,
     v1_object_field_selector_t *field_ref,
     v1_resource_field_selector_t *resource_field_ref,
@@ -20,12 +20,30 @@ v1_env_var_source_t *v1_env_var_source_create(
     v1_env_var_source_local_var->resource_field_ref = resource_field_ref;
     v1_env_var_source_local_var->secret_key_ref = secret_key_ref;
 
+    v1_env_var_source_local_var->_library_owned = 1;
     return v1_env_var_source_local_var;
 }
 
+__attribute__((deprecated)) v1_env_var_source_t *v1_env_var_source_create(
+    v1_config_map_key_selector_t *config_map_key_ref,
+    v1_object_field_selector_t *field_ref,
+    v1_resource_field_selector_t *resource_field_ref,
+    v1_secret_key_selector_t *secret_key_ref
+    ) {
+    return v1_env_var_source_create_internal (
+        config_map_key_ref,
+        field_ref,
+        resource_field_ref,
+        secret_key_ref
+        );
+}
 
 void v1_env_var_source_free(v1_env_var_source_t *v1_env_var_source) {
     if(NULL == v1_env_var_source){
+        return ;
+    }
+    if(v1_env_var_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_env_var_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -128,30 +146,42 @@ v1_env_var_source_t *v1_env_var_source_parseFromJSON(cJSON *v1_env_var_sourceJSO
 
     // v1_env_var_source->config_map_key_ref
     cJSON *config_map_key_ref = cJSON_GetObjectItemCaseSensitive(v1_env_var_sourceJSON, "configMapKeyRef");
+    if (cJSON_IsNull(config_map_key_ref)) {
+        config_map_key_ref = NULL;
+    }
     if (config_map_key_ref) { 
     config_map_key_ref_local_nonprim = v1_config_map_key_selector_parseFromJSON(config_map_key_ref); //nonprimitive
     }
 
     // v1_env_var_source->field_ref
     cJSON *field_ref = cJSON_GetObjectItemCaseSensitive(v1_env_var_sourceJSON, "fieldRef");
+    if (cJSON_IsNull(field_ref)) {
+        field_ref = NULL;
+    }
     if (field_ref) { 
     field_ref_local_nonprim = v1_object_field_selector_parseFromJSON(field_ref); //nonprimitive
     }
 
     // v1_env_var_source->resource_field_ref
     cJSON *resource_field_ref = cJSON_GetObjectItemCaseSensitive(v1_env_var_sourceJSON, "resourceFieldRef");
+    if (cJSON_IsNull(resource_field_ref)) {
+        resource_field_ref = NULL;
+    }
     if (resource_field_ref) { 
     resource_field_ref_local_nonprim = v1_resource_field_selector_parseFromJSON(resource_field_ref); //nonprimitive
     }
 
     // v1_env_var_source->secret_key_ref
     cJSON *secret_key_ref = cJSON_GetObjectItemCaseSensitive(v1_env_var_sourceJSON, "secretKeyRef");
+    if (cJSON_IsNull(secret_key_ref)) {
+        secret_key_ref = NULL;
+    }
     if (secret_key_ref) { 
     secret_key_ref_local_nonprim = v1_secret_key_selector_parseFromJSON(secret_key_ref); //nonprimitive
     }
 
 
-    v1_env_var_source_local_var = v1_env_var_source_create (
+    v1_env_var_source_local_var = v1_env_var_source_create_internal (
         config_map_key_ref ? config_map_key_ref_local_nonprim : NULL,
         field_ref ? field_ref_local_nonprim : NULL,
         resource_field_ref ? resource_field_ref_local_nonprim : NULL,

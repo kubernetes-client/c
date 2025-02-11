@@ -40,9 +40,10 @@ typedef struct v1_job_spec_t {
     struct v1_pod_template_spec_t *_template; //model
     int ttl_seconds_after_finished; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_job_spec_t;
 
-v1_job_spec_t *v1_job_spec_create(
+__attribute__((deprecated)) v1_job_spec_t *v1_job_spec_create(
     long active_deadline_seconds,
     int backoff_limit,
     int backoff_limit_per_index,

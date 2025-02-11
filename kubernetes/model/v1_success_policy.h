@@ -22,9 +22,10 @@ typedef struct v1_success_policy_t v1_success_policy_t;
 typedef struct v1_success_policy_t {
     list_t *rules; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_success_policy_t;
 
-v1_success_policy_t *v1_success_policy_create(
+__attribute__((deprecated)) v1_success_policy_t *v1_success_policy_create(
     list_t *rules
 );
 

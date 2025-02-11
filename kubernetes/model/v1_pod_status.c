@@ -5,7 +5,7 @@
 
 
 
-v1_pod_status_t *v1_pod_status_create(
+static v1_pod_status_t *v1_pod_status_create_internal(
     list_t *conditions,
     list_t *container_statuses,
     list_t *ephemeral_container_statuses,
@@ -44,12 +44,54 @@ v1_pod_status_t *v1_pod_status_create(
     v1_pod_status_local_var->resource_claim_statuses = resource_claim_statuses;
     v1_pod_status_local_var->start_time = start_time;
 
+    v1_pod_status_local_var->_library_owned = 1;
     return v1_pod_status_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
+    list_t *conditions,
+    list_t *container_statuses,
+    list_t *ephemeral_container_statuses,
+    char *host_ip,
+    list_t *host_ips,
+    list_t *init_container_statuses,
+    char *message,
+    char *nominated_node_name,
+    char *phase,
+    char *pod_ip,
+    list_t *pod_ips,
+    char *qos_class,
+    char *reason,
+    char *resize,
+    list_t *resource_claim_statuses,
+    char *start_time
+    ) {
+    return v1_pod_status_create_internal (
+        conditions,
+        container_statuses,
+        ephemeral_container_statuses,
+        host_ip,
+        host_ips,
+        init_container_statuses,
+        message,
+        nominated_node_name,
+        phase,
+        pod_ip,
+        pod_ips,
+        qos_class,
+        reason,
+        resize,
+        resource_claim_statuses,
+        start_time
+        );
+}
 
 void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
     if(NULL == v1_pod_status){
+        return ;
+    }
+    if(v1_pod_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -390,6 +432,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -411,6 +456,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->container_statuses
     cJSON *container_statuses = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "containerStatuses");
+    if (cJSON_IsNull(container_statuses)) {
+        container_statuses = NULL;
+    }
     if (container_statuses) { 
     cJSON *container_statuses_local_nonprimitive = NULL;
     if(!cJSON_IsArray(container_statuses)){
@@ -432,6 +480,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->ephemeral_container_statuses
     cJSON *ephemeral_container_statuses = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "ephemeralContainerStatuses");
+    if (cJSON_IsNull(ephemeral_container_statuses)) {
+        ephemeral_container_statuses = NULL;
+    }
     if (ephemeral_container_statuses) { 
     cJSON *ephemeral_container_statuses_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ephemeral_container_statuses)){
@@ -453,6 +504,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->host_ip
     cJSON *host_ip = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "hostIP");
+    if (cJSON_IsNull(host_ip)) {
+        host_ip = NULL;
+    }
     if (host_ip) { 
     if(!cJSON_IsString(host_ip) && !cJSON_IsNull(host_ip))
     {
@@ -462,6 +516,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->host_ips
     cJSON *host_ips = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "hostIPs");
+    if (cJSON_IsNull(host_ips)) {
+        host_ips = NULL;
+    }
     if (host_ips) { 
     cJSON *host_ips_local_nonprimitive = NULL;
     if(!cJSON_IsArray(host_ips)){
@@ -483,6 +540,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->init_container_statuses
     cJSON *init_container_statuses = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "initContainerStatuses");
+    if (cJSON_IsNull(init_container_statuses)) {
+        init_container_statuses = NULL;
+    }
     if (init_container_statuses) { 
     cJSON *init_container_statuses_local_nonprimitive = NULL;
     if(!cJSON_IsArray(init_container_statuses)){
@@ -504,6 +564,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "message");
+    if (cJSON_IsNull(message)) {
+        message = NULL;
+    }
     if (message) { 
     if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
@@ -513,6 +576,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->nominated_node_name
     cJSON *nominated_node_name = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "nominatedNodeName");
+    if (cJSON_IsNull(nominated_node_name)) {
+        nominated_node_name = NULL;
+    }
     if (nominated_node_name) { 
     if(!cJSON_IsString(nominated_node_name) && !cJSON_IsNull(nominated_node_name))
     {
@@ -522,6 +588,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "phase");
+    if (cJSON_IsNull(phase)) {
+        phase = NULL;
+    }
     if (phase) { 
     if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
     {
@@ -531,6 +600,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->pod_ip
     cJSON *pod_ip = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "podIP");
+    if (cJSON_IsNull(pod_ip)) {
+        pod_ip = NULL;
+    }
     if (pod_ip) { 
     if(!cJSON_IsString(pod_ip) && !cJSON_IsNull(pod_ip))
     {
@@ -540,6 +612,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->pod_ips
     cJSON *pod_ips = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "podIPs");
+    if (cJSON_IsNull(pod_ips)) {
+        pod_ips = NULL;
+    }
     if (pod_ips) { 
     cJSON *pod_ips_local_nonprimitive = NULL;
     if(!cJSON_IsArray(pod_ips)){
@@ -561,6 +636,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->qos_class
     cJSON *qos_class = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "qosClass");
+    if (cJSON_IsNull(qos_class)) {
+        qos_class = NULL;
+    }
     if (qos_class) { 
     if(!cJSON_IsString(qos_class) && !cJSON_IsNull(qos_class))
     {
@@ -570,6 +648,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "reason");
+    if (cJSON_IsNull(reason)) {
+        reason = NULL;
+    }
     if (reason) { 
     if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
@@ -579,6 +660,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->resize
     cJSON *resize = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "resize");
+    if (cJSON_IsNull(resize)) {
+        resize = NULL;
+    }
     if (resize) { 
     if(!cJSON_IsString(resize) && !cJSON_IsNull(resize))
     {
@@ -588,6 +672,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->resource_claim_statuses
     cJSON *resource_claim_statuses = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "resourceClaimStatuses");
+    if (cJSON_IsNull(resource_claim_statuses)) {
+        resource_claim_statuses = NULL;
+    }
     if (resource_claim_statuses) { 
     cJSON *resource_claim_statuses_local_nonprimitive = NULL;
     if(!cJSON_IsArray(resource_claim_statuses)){
@@ -609,6 +696,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     // v1_pod_status->start_time
     cJSON *start_time = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "startTime");
+    if (cJSON_IsNull(start_time)) {
+        start_time = NULL;
+    }
     if (start_time) { 
     if(!cJSON_IsString(start_time) && !cJSON_IsNull(start_time))
     {
@@ -617,7 +707,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     }
 
 
-    v1_pod_status_local_var = v1_pod_status_create (
+    v1_pod_status_local_var = v1_pod_status_create_internal (
         conditions ? conditionsList : NULL,
         container_statuses ? container_statusesList : NULL,
         ephemeral_container_statuses ? ephemeral_container_statusesList : NULL,

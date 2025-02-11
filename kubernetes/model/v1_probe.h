@@ -34,9 +34,10 @@ typedef struct v1_probe_t {
     long termination_grace_period_seconds; //numeric
     int timeout_seconds; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_probe_t;
 
-v1_probe_t *v1_probe_create(
+__attribute__((deprecated)) v1_probe_t *v1_probe_create(
     v1_exec_action_t *exec,
     int failure_threshold,
     v1_grpc_action_t *grpc,

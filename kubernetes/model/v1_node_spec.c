@@ -5,7 +5,7 @@
 
 
 
-v1_node_spec_t *v1_node_spec_create(
+static v1_node_spec_t *v1_node_spec_create_internal(
     v1_node_config_source_t *config_source,
     char *external_id,
     char *pod_cidr,
@@ -26,12 +26,36 @@ v1_node_spec_t *v1_node_spec_create(
     v1_node_spec_local_var->taints = taints;
     v1_node_spec_local_var->unschedulable = unschedulable;
 
+    v1_node_spec_local_var->_library_owned = 1;
     return v1_node_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_node_spec_t *v1_node_spec_create(
+    v1_node_config_source_t *config_source,
+    char *external_id,
+    char *pod_cidr,
+    list_t *pod_cidrs,
+    char *provider_id,
+    list_t *taints,
+    int unschedulable
+    ) {
+    return v1_node_spec_create_internal (
+        config_source,
+        external_id,
+        pod_cidr,
+        pod_cidrs,
+        provider_id,
+        taints,
+        unschedulable
+        );
+}
 
 void v1_node_spec_free(v1_node_spec_t *v1_node_spec) {
     if(NULL == v1_node_spec){
+        return ;
+    }
+    if(v1_node_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_node_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -109,7 +133,7 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
 
     listEntry_t *pod_cidrsListEntry;
     list_ForEach(pod_cidrsListEntry, v1_node_spec->pod_cidrs) {
-    if(cJSON_AddStringToObject(pod_cidrs, "", (char*)pod_cidrsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(pod_cidrs, "", pod_cidrsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -175,12 +199,18 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     // v1_node_spec->config_source
     cJSON *config_source = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "configSource");
+    if (cJSON_IsNull(config_source)) {
+        config_source = NULL;
+    }
     if (config_source) { 
     config_source_local_nonprim = v1_node_config_source_parseFromJSON(config_source); //nonprimitive
     }
 
     // v1_node_spec->external_id
     cJSON *external_id = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "externalID");
+    if (cJSON_IsNull(external_id)) {
+        external_id = NULL;
+    }
     if (external_id) { 
     if(!cJSON_IsString(external_id) && !cJSON_IsNull(external_id))
     {
@@ -190,6 +220,9 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     // v1_node_spec->pod_cidr
     cJSON *pod_cidr = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "podCIDR");
+    if (cJSON_IsNull(pod_cidr)) {
+        pod_cidr = NULL;
+    }
     if (pod_cidr) { 
     if(!cJSON_IsString(pod_cidr) && !cJSON_IsNull(pod_cidr))
     {
@@ -199,6 +232,9 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     // v1_node_spec->pod_cidrs
     cJSON *pod_cidrs = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "podCIDRs");
+    if (cJSON_IsNull(pod_cidrs)) {
+        pod_cidrs = NULL;
+    }
     if (pod_cidrs) { 
     cJSON *pod_cidrs_local = NULL;
     if(!cJSON_IsArray(pod_cidrs)) {
@@ -218,6 +254,9 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     // v1_node_spec->provider_id
     cJSON *provider_id = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "providerID");
+    if (cJSON_IsNull(provider_id)) {
+        provider_id = NULL;
+    }
     if (provider_id) { 
     if(!cJSON_IsString(provider_id) && !cJSON_IsNull(provider_id))
     {
@@ -227,6 +266,9 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     // v1_node_spec->taints
     cJSON *taints = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "taints");
+    if (cJSON_IsNull(taints)) {
+        taints = NULL;
+    }
     if (taints) { 
     cJSON *taints_local_nonprimitive = NULL;
     if(!cJSON_IsArray(taints)){
@@ -248,6 +290,9 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     // v1_node_spec->unschedulable
     cJSON *unschedulable = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "unschedulable");
+    if (cJSON_IsNull(unschedulable)) {
+        unschedulable = NULL;
+    }
     if (unschedulable) { 
     if(!cJSON_IsBool(unschedulable))
     {
@@ -256,7 +301,7 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     }
 
 
-    v1_node_spec_local_var = v1_node_spec_create (
+    v1_node_spec_local_var = v1_node_spec_create_internal (
         config_source ? config_source_local_nonprim : NULL,
         external_id && !cJSON_IsNull(external_id) ? strdup(external_id->valuestring) : NULL,
         pod_cidr && !cJSON_IsNull(pod_cidr) ? strdup(pod_cidr->valuestring) : NULL,

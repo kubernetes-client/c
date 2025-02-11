@@ -5,7 +5,7 @@
 
 
 
-v1_http_header_t *v1_http_header_create(
+static v1_http_header_t *v1_http_header_create_internal(
     char *name,
     char *value
     ) {
@@ -16,12 +16,26 @@ v1_http_header_t *v1_http_header_create(
     v1_http_header_local_var->name = name;
     v1_http_header_local_var->value = value;
 
+    v1_http_header_local_var->_library_owned = 1;
     return v1_http_header_local_var;
 }
 
+__attribute__((deprecated)) v1_http_header_t *v1_http_header_create(
+    char *name,
+    char *value
+    ) {
+    return v1_http_header_create_internal (
+        name,
+        value
+        );
+}
 
 void v1_http_header_free(v1_http_header_t *v1_http_header) {
     if(NULL == v1_http_header){
+        return ;
+    }
+    if(v1_http_header->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_http_header_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -70,6 +84,9 @@ v1_http_header_t *v1_http_header_parseFromJSON(cJSON *v1_http_headerJSON){
 
     // v1_http_header->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_http_headerJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -82,6 +99,9 @@ v1_http_header_t *v1_http_header_parseFromJSON(cJSON *v1_http_headerJSON){
 
     // v1_http_header->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_http_headerJSON, "value");
+    if (cJSON_IsNull(value)) {
+        value = NULL;
+    }
     if (!value) {
         goto end;
     }
@@ -93,7 +113,7 @@ v1_http_header_t *v1_http_header_parseFromJSON(cJSON *v1_http_headerJSON){
     }
 
 
-    v1_http_header_local_var = v1_http_header_create (
+    v1_http_header_local_var = v1_http_header_create_internal (
         strdup(name->valuestring),
         strdup(value->valuestring)
         );

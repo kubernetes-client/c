@@ -5,7 +5,7 @@
 
 
 
-v1_git_repo_volume_source_t *v1_git_repo_volume_source_create(
+static v1_git_repo_volume_source_t *v1_git_repo_volume_source_create_internal(
     char *directory,
     char *repository,
     char *revision
@@ -18,12 +18,28 @@ v1_git_repo_volume_source_t *v1_git_repo_volume_source_create(
     v1_git_repo_volume_source_local_var->repository = repository;
     v1_git_repo_volume_source_local_var->revision = revision;
 
+    v1_git_repo_volume_source_local_var->_library_owned = 1;
     return v1_git_repo_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_git_repo_volume_source_t *v1_git_repo_volume_source_create(
+    char *directory,
+    char *repository,
+    char *revision
+    ) {
+    return v1_git_repo_volume_source_create_internal (
+        directory,
+        repository,
+        revision
+        );
+}
 
 void v1_git_repo_volume_source_free(v1_git_repo_volume_source_t *v1_git_repo_volume_source) {
     if(NULL == v1_git_repo_volume_source){
+        return ;
+    }
+    if(v1_git_repo_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_git_repo_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -83,6 +99,9 @@ v1_git_repo_volume_source_t *v1_git_repo_volume_source_parseFromJSON(cJSON *v1_g
 
     // v1_git_repo_volume_source->directory
     cJSON *directory = cJSON_GetObjectItemCaseSensitive(v1_git_repo_volume_sourceJSON, "directory");
+    if (cJSON_IsNull(directory)) {
+        directory = NULL;
+    }
     if (directory) { 
     if(!cJSON_IsString(directory) && !cJSON_IsNull(directory))
     {
@@ -92,6 +111,9 @@ v1_git_repo_volume_source_t *v1_git_repo_volume_source_parseFromJSON(cJSON *v1_g
 
     // v1_git_repo_volume_source->repository
     cJSON *repository = cJSON_GetObjectItemCaseSensitive(v1_git_repo_volume_sourceJSON, "repository");
+    if (cJSON_IsNull(repository)) {
+        repository = NULL;
+    }
     if (!repository) {
         goto end;
     }
@@ -104,6 +126,9 @@ v1_git_repo_volume_source_t *v1_git_repo_volume_source_parseFromJSON(cJSON *v1_g
 
     // v1_git_repo_volume_source->revision
     cJSON *revision = cJSON_GetObjectItemCaseSensitive(v1_git_repo_volume_sourceJSON, "revision");
+    if (cJSON_IsNull(revision)) {
+        revision = NULL;
+    }
     if (revision) { 
     if(!cJSON_IsString(revision) && !cJSON_IsNull(revision))
     {
@@ -112,7 +137,7 @@ v1_git_repo_volume_source_t *v1_git_repo_volume_source_parseFromJSON(cJSON *v1_g
     }
 
 
-    v1_git_repo_volume_source_local_var = v1_git_repo_volume_source_create (
+    v1_git_repo_volume_source_local_var = v1_git_repo_volume_source_create_internal (
         directory && !cJSON_IsNull(directory) ? strdup(directory->valuestring) : NULL,
         strdup(repository->valuestring),
         revision && !cJSON_IsNull(revision) ? strdup(revision->valuestring) : NULL

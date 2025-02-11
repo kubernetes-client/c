@@ -5,7 +5,7 @@
 
 
 
-v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement_create(
+static v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement_create_internal(
     char *container_name,
     char *_operator,
     list_t *values
@@ -18,12 +18,28 @@ v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit
     v1_pod_failure_policy_on_exit_codes_requirement_local_var->_operator = _operator;
     v1_pod_failure_policy_on_exit_codes_requirement_local_var->values = values;
 
+    v1_pod_failure_policy_on_exit_codes_requirement_local_var->_library_owned = 1;
     return v1_pod_failure_policy_on_exit_codes_requirement_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement_create(
+    char *container_name,
+    char *_operator,
+    list_t *values
+    ) {
+    return v1_pod_failure_policy_on_exit_codes_requirement_create_internal (
+        container_name,
+        _operator,
+        values
+        );
+}
 
 void v1_pod_failure_policy_on_exit_codes_requirement_free(v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement) {
     if(NULL == v1_pod_failure_policy_on_exit_codes_requirement){
+        return ;
+    }
+    if(v1_pod_failure_policy_on_exit_codes_requirement->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_failure_policy_on_exit_codes_requirement_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -99,6 +115,9 @@ v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit
 
     // v1_pod_failure_policy_on_exit_codes_requirement->container_name
     cJSON *container_name = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policy_on_exit_codes_requirementJSON, "containerName");
+    if (cJSON_IsNull(container_name)) {
+        container_name = NULL;
+    }
     if (container_name) { 
     if(!cJSON_IsString(container_name) && !cJSON_IsNull(container_name))
     {
@@ -108,6 +127,9 @@ v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit
 
     // v1_pod_failure_policy_on_exit_codes_requirement->_operator
     cJSON *_operator = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policy_on_exit_codes_requirementJSON, "operator");
+    if (cJSON_IsNull(_operator)) {
+        _operator = NULL;
+    }
     if (!_operator) {
         goto end;
     }
@@ -120,6 +142,9 @@ v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit
 
     // v1_pod_failure_policy_on_exit_codes_requirement->values
     cJSON *values = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policy_on_exit_codes_requirementJSON, "values");
+    if (cJSON_IsNull(values)) {
+        values = NULL;
+    }
     if (!values) {
         goto end;
     }
@@ -137,7 +162,7 @@ v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit
         {
             goto end;
         }
-        double *values_local_value = (double *)calloc(1, sizeof(double));
+        double *values_local_value = calloc(1, sizeof(double));
         if(!values_local_value)
         {
             goto end;
@@ -147,7 +172,7 @@ v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit
     }
 
 
-    v1_pod_failure_policy_on_exit_codes_requirement_local_var = v1_pod_failure_policy_on_exit_codes_requirement_create (
+    v1_pod_failure_policy_on_exit_codes_requirement_local_var = v1_pod_failure_policy_on_exit_codes_requirement_create_internal (
         container_name && !cJSON_IsNull(container_name) ? strdup(container_name->valuestring) : NULL,
         strdup(_operator->valuestring),
         valuesList

@@ -26,9 +26,10 @@ typedef struct v1_limit_range_item_t {
     list_t* min; //map
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_limit_range_item_t;
 
-v1_limit_range_item_t *v1_limit_range_item_create(
+__attribute__((deprecated)) v1_limit_range_item_t *v1_limit_range_item_create(
     list_t* _default,
     list_t* default_request,
     list_t* max,

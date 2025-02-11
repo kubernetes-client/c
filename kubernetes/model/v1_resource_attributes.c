@@ -5,7 +5,7 @@
 
 
 
-v1_resource_attributes_t *v1_resource_attributes_create(
+static v1_resource_attributes_t *v1_resource_attributes_create_internal(
     v1_field_selector_attributes_t *field_selector,
     char *group,
     v1_label_selector_attributes_t *label_selector,
@@ -30,12 +30,40 @@ v1_resource_attributes_t *v1_resource_attributes_create(
     v1_resource_attributes_local_var->verb = verb;
     v1_resource_attributes_local_var->version = version;
 
+    v1_resource_attributes_local_var->_library_owned = 1;
     return v1_resource_attributes_local_var;
 }
 
+__attribute__((deprecated)) v1_resource_attributes_t *v1_resource_attributes_create(
+    v1_field_selector_attributes_t *field_selector,
+    char *group,
+    v1_label_selector_attributes_t *label_selector,
+    char *name,
+    char *_namespace,
+    char *resource,
+    char *subresource,
+    char *verb,
+    char *version
+    ) {
+    return v1_resource_attributes_create_internal (
+        field_selector,
+        group,
+        label_selector,
+        name,
+        _namespace,
+        resource,
+        subresource,
+        verb,
+        version
+        );
+}
 
 void v1_resource_attributes_free(v1_resource_attributes_t *v1_resource_attributes) {
     if(NULL == v1_resource_attributes){
+        return ;
+    }
+    if(v1_resource_attributes->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_resource_attributes_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -182,12 +210,18 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
 
     // v1_resource_attributes->field_selector
     cJSON *field_selector = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "fieldSelector");
+    if (cJSON_IsNull(field_selector)) {
+        field_selector = NULL;
+    }
     if (field_selector) { 
     field_selector_local_nonprim = v1_field_selector_attributes_parseFromJSON(field_selector); //nonprimitive
     }
 
     // v1_resource_attributes->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "group");
+    if (cJSON_IsNull(group)) {
+        group = NULL;
+    }
     if (group) { 
     if(!cJSON_IsString(group) && !cJSON_IsNull(group))
     {
@@ -197,12 +231,18 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
 
     // v1_resource_attributes->label_selector
     cJSON *label_selector = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "labelSelector");
+    if (cJSON_IsNull(label_selector)) {
+        label_selector = NULL;
+    }
     if (label_selector) { 
     label_selector_local_nonprim = v1_label_selector_attributes_parseFromJSON(label_selector); //nonprimitive
     }
 
     // v1_resource_attributes->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -212,6 +252,9 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
 
     // v1_resource_attributes->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "namespace");
+    if (cJSON_IsNull(_namespace)) {
+        _namespace = NULL;
+    }
     if (_namespace) { 
     if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
@@ -221,6 +264,9 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
 
     // v1_resource_attributes->resource
     cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "resource");
+    if (cJSON_IsNull(resource)) {
+        resource = NULL;
+    }
     if (resource) { 
     if(!cJSON_IsString(resource) && !cJSON_IsNull(resource))
     {
@@ -230,6 +276,9 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
 
     // v1_resource_attributes->subresource
     cJSON *subresource = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "subresource");
+    if (cJSON_IsNull(subresource)) {
+        subresource = NULL;
+    }
     if (subresource) { 
     if(!cJSON_IsString(subresource) && !cJSON_IsNull(subresource))
     {
@@ -239,6 +288,9 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
 
     // v1_resource_attributes->verb
     cJSON *verb = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "verb");
+    if (cJSON_IsNull(verb)) {
+        verb = NULL;
+    }
     if (verb) { 
     if(!cJSON_IsString(verb) && !cJSON_IsNull(verb))
     {
@@ -248,6 +300,9 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
 
     // v1_resource_attributes->version
     cJSON *version = cJSON_GetObjectItemCaseSensitive(v1_resource_attributesJSON, "version");
+    if (cJSON_IsNull(version)) {
+        version = NULL;
+    }
     if (version) { 
     if(!cJSON_IsString(version) && !cJSON_IsNull(version))
     {
@@ -256,7 +311,7 @@ v1_resource_attributes_t *v1_resource_attributes_parseFromJSON(cJSON *v1_resourc
     }
 
 
-    v1_resource_attributes_local_var = v1_resource_attributes_create (
+    v1_resource_attributes_local_var = v1_resource_attributes_create_internal (
         field_selector ? field_selector_local_nonprim : NULL,
         group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         label_selector ? label_selector_local_nonprim : NULL,

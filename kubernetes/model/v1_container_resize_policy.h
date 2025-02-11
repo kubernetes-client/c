@@ -22,9 +22,10 @@ typedef struct v1_container_resize_policy_t {
     char *resource_name; // string
     char *restart_policy; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_container_resize_policy_t;
 
-v1_container_resize_policy_t *v1_container_resize_policy_create(
+__attribute__((deprecated)) v1_container_resize_policy_t *v1_container_resize_policy_create(
     char *resource_name,
     char *restart_policy
 );

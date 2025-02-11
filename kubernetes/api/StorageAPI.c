@@ -5,17 +5,12 @@
 
 #define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
-#define intToStr(dst, src) \
-    do {\
-    char dst[256];\
-    snprintf(dst, 256, "%ld", (long int)(src));\
-}while(0)
 
 
 // get information of a group
 //
 v1_api_group_t*
-StorageAPI_getAPIGroup_19(apiClient_t *apiClient)
+StorageAPI_getAPIGroup(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -23,11 +18,14 @@ StorageAPI_getAPIGroup_19(apiClient_t *apiClient)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/storage.k8s.io/")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/storage.k8s.io/");
+    char *localVarPath = strdup("/apis/storage.k8s.io/");
+
 
 
 
@@ -42,6 +40,7 @@ StorageAPI_getAPIGroup_19(apiClient_t *apiClient)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -53,11 +52,14 @@ StorageAPI_getAPIGroup_19(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StorageAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(StorageAPIlocalVarJSON);
-    cJSON_Delete(StorageAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_api_group_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_api_group_parseFromJSON(StorageAPIlocalVarJSON);
+        cJSON_Delete(StorageAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type

@@ -25,9 +25,10 @@ typedef struct v1_volume_attachment_status_t {
     list_t* attachment_metadata; //map
     struct v1_volume_error_t *detach_error; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_attachment_status_t;
 
-v1_volume_attachment_status_t *v1_volume_attachment_status_create(
+__attribute__((deprecated)) v1_volume_attachment_status_t *v1_volume_attachment_status_create(
     v1_volume_error_t *attach_error,
     int attached,
     list_t* attachment_metadata,

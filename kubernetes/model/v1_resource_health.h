@@ -1,7 +1,7 @@
 /*
  * v1_resource_health.h
  *
- * ResourceHealth represents the health of a resource. It has the latest device health information. This is a part of KEP https://kep.k8s.io/4680 and historical health changes are planned to be added in future iterations of a KEP.
+ * ResourceHealth represents the health of a resource. It has the latest device health information. This is a part of KEP https://kep.k8s.io/4680.
  */
 
 #ifndef _v1_resource_health_H_
@@ -22,9 +22,10 @@ typedef struct v1_resource_health_t {
     char *health; // string
     char *resource_id; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_resource_health_t;
 
-v1_resource_health_t *v1_resource_health_create(
+__attribute__((deprecated)) v1_resource_health_t *v1_resource_health_create(
     char *health,
     char *resource_id
 );

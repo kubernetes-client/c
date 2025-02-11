@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_create(
+static v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_create_internal(
     v1alpha3_opaque_device_configuration_t *opaque,
     list_t *requests
     ) {
@@ -16,12 +16,26 @@ v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_creat
     v1alpha3_device_claim_configuration_local_var->opaque = opaque;
     v1alpha3_device_claim_configuration_local_var->requests = requests;
 
+    v1alpha3_device_claim_configuration_local_var->_library_owned = 1;
     return v1alpha3_device_claim_configuration_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_create(
+    v1alpha3_opaque_device_configuration_t *opaque,
+    list_t *requests
+    ) {
+    return v1alpha3_device_claim_configuration_create_internal (
+        opaque,
+        requests
+        );
+}
 
 void v1alpha3_device_claim_configuration_free(v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration) {
     if(NULL == v1alpha3_device_claim_configuration){
+        return ;
+    }
+    if(v1alpha3_device_claim_configuration->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_device_claim_configuration_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -64,7 +78,7 @@ cJSON *v1alpha3_device_claim_configuration_convertToJSON(v1alpha3_device_claim_c
 
     listEntry_t *requestsListEntry;
     list_ForEach(requestsListEntry, v1alpha3_device_claim_configuration->requests) {
-    if(cJSON_AddStringToObject(requests, "", (char*)requestsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(requests, "", requestsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -91,12 +105,18 @@ v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_parse
 
     // v1alpha3_device_claim_configuration->opaque
     cJSON *opaque = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_claim_configurationJSON, "opaque");
+    if (cJSON_IsNull(opaque)) {
+        opaque = NULL;
+    }
     if (opaque) { 
     opaque_local_nonprim = v1alpha3_opaque_device_configuration_parseFromJSON(opaque); //nonprimitive
     }
 
     // v1alpha3_device_claim_configuration->requests
     cJSON *requests = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_claim_configurationJSON, "requests");
+    if (cJSON_IsNull(requests)) {
+        requests = NULL;
+    }
     if (requests) { 
     cJSON *requests_local = NULL;
     if(!cJSON_IsArray(requests)) {
@@ -115,7 +135,7 @@ v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_parse
     }
 
 
-    v1alpha3_device_claim_configuration_local_var = v1alpha3_device_claim_configuration_create (
+    v1alpha3_device_claim_configuration_local_var = v1alpha3_device_claim_configuration_create_internal (
         opaque ? opaque_local_nonprim : NULL,
         requests ? requestsList : NULL
         );

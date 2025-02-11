@@ -22,9 +22,10 @@ typedef struct v1_stateful_set_persistent_volume_claim_retention_policy_t {
     char *when_deleted; // string
     char *when_scaled; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_stateful_set_persistent_volume_claim_retention_policy_t;
 
-v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy_create(
+__attribute__((deprecated)) v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy_create(
     char *when_deleted,
     char *when_scaled
 );

@@ -5,7 +5,7 @@
 
 
 
-v1_managed_fields_entry_t *v1_managed_fields_entry_create(
+static v1_managed_fields_entry_t *v1_managed_fields_entry_create_internal(
     char *api_version,
     char *fields_type,
     object_t *fields_v1,
@@ -26,12 +26,36 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_create(
     v1_managed_fields_entry_local_var->subresource = subresource;
     v1_managed_fields_entry_local_var->time = time;
 
+    v1_managed_fields_entry_local_var->_library_owned = 1;
     return v1_managed_fields_entry_local_var;
 }
 
+__attribute__((deprecated)) v1_managed_fields_entry_t *v1_managed_fields_entry_create(
+    char *api_version,
+    char *fields_type,
+    object_t *fields_v1,
+    char *manager,
+    char *operation,
+    char *subresource,
+    char *time
+    ) {
+    return v1_managed_fields_entry_create_internal (
+        api_version,
+        fields_type,
+        fields_v1,
+        manager,
+        operation,
+        subresource,
+        time
+        );
+}
 
 void v1_managed_fields_entry_free(v1_managed_fields_entry_t *v1_managed_fields_entry) {
     if(NULL == v1_managed_fields_entry){
+        return ;
+    }
+    if(v1_managed_fields_entry->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_managed_fields_entry_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -143,6 +167,9 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
 
     // v1_managed_fields_entry->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -152,6 +179,9 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
 
     // v1_managed_fields_entry->fields_type
     cJSON *fields_type = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "fieldsType");
+    if (cJSON_IsNull(fields_type)) {
+        fields_type = NULL;
+    }
     if (fields_type) { 
     if(!cJSON_IsString(fields_type) && !cJSON_IsNull(fields_type))
     {
@@ -161,6 +191,9 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
 
     // v1_managed_fields_entry->fields_v1
     cJSON *fields_v1 = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "fieldsV1");
+    if (cJSON_IsNull(fields_v1)) {
+        fields_v1 = NULL;
+    }
     object_t *fields_v1_local_object = NULL;
     if (fields_v1) { 
     fields_v1_local_object = object_parseFromJSON(fields_v1); //object
@@ -168,6 +201,9 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
 
     // v1_managed_fields_entry->manager
     cJSON *manager = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "manager");
+    if (cJSON_IsNull(manager)) {
+        manager = NULL;
+    }
     if (manager) { 
     if(!cJSON_IsString(manager) && !cJSON_IsNull(manager))
     {
@@ -177,6 +213,9 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
 
     // v1_managed_fields_entry->operation
     cJSON *operation = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "operation");
+    if (cJSON_IsNull(operation)) {
+        operation = NULL;
+    }
     if (operation) { 
     if(!cJSON_IsString(operation) && !cJSON_IsNull(operation))
     {
@@ -186,6 +225,9 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
 
     // v1_managed_fields_entry->subresource
     cJSON *subresource = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "subresource");
+    if (cJSON_IsNull(subresource)) {
+        subresource = NULL;
+    }
     if (subresource) { 
     if(!cJSON_IsString(subresource) && !cJSON_IsNull(subresource))
     {
@@ -195,6 +237,9 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
 
     // v1_managed_fields_entry->time
     cJSON *time = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "time");
+    if (cJSON_IsNull(time)) {
+        time = NULL;
+    }
     if (time) { 
     if(!cJSON_IsString(time) && !cJSON_IsNull(time))
     {
@@ -203,7 +248,7 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
     }
 
 
-    v1_managed_fields_entry_local_var = v1_managed_fields_entry_create (
+    v1_managed_fields_entry_local_var = v1_managed_fields_entry_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         fields_type && !cJSON_IsNull(fields_type) ? strdup(fields_type->valuestring) : NULL,
         fields_v1 ? fields_v1_local_object : NULL,

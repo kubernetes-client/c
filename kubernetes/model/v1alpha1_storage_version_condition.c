@@ -5,7 +5,7 @@
 
 
 
-v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_create(
+static v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_create_internal(
     char *last_transition_time,
     char *message,
     long observed_generation,
@@ -24,12 +24,34 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_create(
     v1alpha1_storage_version_condition_local_var->status = status;
     v1alpha1_storage_version_condition_local_var->type = type;
 
+    v1alpha1_storage_version_condition_local_var->_library_owned = 1;
     return v1alpha1_storage_version_condition_local_var;
 }
 
+__attribute__((deprecated)) v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_create(
+    char *last_transition_time,
+    char *message,
+    long observed_generation,
+    char *reason,
+    char *status,
+    char *type
+    ) {
+    return v1alpha1_storage_version_condition_create_internal (
+        last_transition_time,
+        message,
+        observed_generation,
+        reason,
+        status,
+        type
+        );
+}
 
 void v1alpha1_storage_version_condition_free(v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition) {
     if(NULL == v1alpha1_storage_version_condition){
+        return ;
+    }
+    if(v1alpha1_storage_version_condition->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha1_storage_version_condition_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -124,6 +146,9 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
 
     // v1alpha1_storage_version_condition->last_transition_time
     cJSON *last_transition_time = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_conditionJSON, "lastTransitionTime");
+    if (cJSON_IsNull(last_transition_time)) {
+        last_transition_time = NULL;
+    }
     if (last_transition_time) { 
     if(!cJSON_IsString(last_transition_time) && !cJSON_IsNull(last_transition_time))
     {
@@ -133,6 +158,9 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
 
     // v1alpha1_storage_version_condition->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_conditionJSON, "message");
+    if (cJSON_IsNull(message)) {
+        message = NULL;
+    }
     if (!message) {
         goto end;
     }
@@ -145,6 +173,9 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
 
     // v1alpha1_storage_version_condition->observed_generation
     cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_conditionJSON, "observedGeneration");
+    if (cJSON_IsNull(observed_generation)) {
+        observed_generation = NULL;
+    }
     if (observed_generation) { 
     if(!cJSON_IsNumber(observed_generation))
     {
@@ -154,6 +185,9 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
 
     // v1alpha1_storage_version_condition->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_conditionJSON, "reason");
+    if (cJSON_IsNull(reason)) {
+        reason = NULL;
+    }
     if (!reason) {
         goto end;
     }
@@ -166,6 +200,9 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
 
     // v1alpha1_storage_version_condition->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_conditionJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
     if (!status) {
         goto end;
     }
@@ -178,6 +215,9 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
 
     // v1alpha1_storage_version_condition->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_conditionJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -189,7 +229,7 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
     }
 
 
-    v1alpha1_storage_version_condition_local_var = v1alpha1_storage_version_condition_create (
+    v1alpha1_storage_version_condition_local_var = v1alpha1_storage_version_condition_create_internal (
         last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
         strdup(message->valuestring),
         observed_generation ? observed_generation->valuedouble : 0,
