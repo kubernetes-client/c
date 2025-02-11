@@ -122,6 +122,7 @@ void delete_configmap(apiClient_t * apiClient, char *name, char *namespace_)
                                                               NULL, // char *pretty
                                                               NULL, // char *dryRun
                                                               NULL, // int *gracePeriodSeconds
+                                                              NULL, // int *ignoreStoreReadErrorWithClusterBreakingPotential
                                                               NULL, // int *orphanDependents
                                                               NULL, // char *propagationPolicy
                                                               NULL  // v1_delete_options_t *body

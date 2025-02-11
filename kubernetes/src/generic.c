@@ -60,7 +60,11 @@ void makeResourcePath(char* path, genericClient_t *client, const char* name) {
 char* callInternal(genericClient_t *client,
                    const char *path, list_t *queryParameters, list_t *headerParameters, list_t *formParameters, list_t *headerType, list_t *contentType, const char *body, const char *method)
 {
-    apiClient_invoke(client->client, path, queryParameters, headerParameters, formParameters, headerType, contentType, body, strlen(body), method);
+    size_t len = 0;
+    if (body != NULL) {
+        len = strlen(body);
+    }
+    apiClient_invoke(client->client, path, queryParameters, headerParameters, formParameters, headerType, contentType, body, len, method);
 
     if (client->client->response_code == 401) {
         return NULL;
