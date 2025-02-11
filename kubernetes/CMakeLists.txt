@@ -1,6 +1,9 @@
 cmake_minimum_required (VERSION 2.6...3.10.2)
 project (CGenerator C)
 
+enable_language(C)
+enable_language(CXX)
+
 cmake_policy(SET CMP0063 NEW)
 
 set(CMAKE_C_VISIBILITY_PRESET default)

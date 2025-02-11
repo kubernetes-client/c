@@ -11,7 +11,7 @@ int shc_request(char **p_http_response, int *p_http_response_length, char *type,
         fprintf(stderr, "%s: Cannot create http client. [%s].\n", fname, strerror(errno));
         return -1;
     }
-    apiClient_invoke(http_client, NULL, NULL, NULL, NULL, NULL, contentType, post_data, type);
+    apiClient_invoke(http_client, NULL, NULL, NULL, NULL, NULL, contentType, post_data, strlen(post_data), type);
 
     int rc = http_client->response_code;
     switch (rc) {

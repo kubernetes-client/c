@@ -29,6 +29,8 @@
 
 #define KUBE_CONFIG_DEFAULT_LOCATION "%s/.kube/config"
 
+int load_kube_config_common(char **pBasePath, sslConfig_t ** pSslConfig, list_t ** pApiKeys, kubeconfig_t * kubeconfig);
+
 static int setBasePath(char **pBasePath, char *basePath)
 {
     char *_basePath = strdup(basePath);
