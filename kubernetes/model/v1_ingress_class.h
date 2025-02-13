@@ -26,9 +26,10 @@ typedef struct v1_ingress_class_t {
     struct v1_object_meta_t *metadata; //model
     struct v1_ingress_class_spec_t *spec; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ingress_class_t;
 
-v1_ingress_class_t *v1_ingress_class_create(
+__attribute__((deprecated)) v1_ingress_class_t *v1_ingress_class_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

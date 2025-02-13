@@ -35,9 +35,10 @@ typedef struct v1_validating_webhook_t {
     char *side_effects; // string
     int timeout_seconds; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_validating_webhook_t;
 
-v1_validating_webhook_t *v1_validating_webhook_create(
+__attribute__((deprecated)) v1_validating_webhook_t *v1_validating_webhook_create(
     list_t *admission_review_versions,
     admissionregistration_v1_webhook_client_config_t *client_config,
     char *failure_policy,

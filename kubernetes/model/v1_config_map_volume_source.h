@@ -25,9 +25,10 @@ typedef struct v1_config_map_volume_source_t {
     char *name; // string
     int optional; //boolean
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_config_map_volume_source_t;
 
-v1_config_map_volume_source_t *v1_config_map_volume_source_create(
+__attribute__((deprecated)) v1_config_map_volume_source_t *v1_config_map_volume_source_create(
     int default_mode,
     list_t *items,
     char *name,

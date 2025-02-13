@@ -27,9 +27,10 @@ typedef struct v1_service_port_t {
     char *protocol; // string
     int_or_string_t *target_port; // custom
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_service_port_t;
 
-v1_service_port_t *v1_service_port_create(
+__attribute__((deprecated)) v1_service_port_t *v1_service_port_create(
     char *app_protocol,
     char *name,
     int node_port,

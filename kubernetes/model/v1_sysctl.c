@@ -5,7 +5,7 @@
 
 
 
-v1_sysctl_t *v1_sysctl_create(
+static v1_sysctl_t *v1_sysctl_create_internal(
     char *name,
     char *value
     ) {
@@ -16,12 +16,26 @@ v1_sysctl_t *v1_sysctl_create(
     v1_sysctl_local_var->name = name;
     v1_sysctl_local_var->value = value;
 
+    v1_sysctl_local_var->_library_owned = 1;
     return v1_sysctl_local_var;
 }
 
+__attribute__((deprecated)) v1_sysctl_t *v1_sysctl_create(
+    char *name,
+    char *value
+    ) {
+    return v1_sysctl_create_internal (
+        name,
+        value
+        );
+}
 
 void v1_sysctl_free(v1_sysctl_t *v1_sysctl) {
     if(NULL == v1_sysctl){
+        return ;
+    }
+    if(v1_sysctl->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_sysctl_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -70,6 +84,9 @@ v1_sysctl_t *v1_sysctl_parseFromJSON(cJSON *v1_sysctlJSON){
 
     // v1_sysctl->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_sysctlJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -82,6 +99,9 @@ v1_sysctl_t *v1_sysctl_parseFromJSON(cJSON *v1_sysctlJSON){
 
     // v1_sysctl->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_sysctlJSON, "value");
+    if (cJSON_IsNull(value)) {
+        value = NULL;
+    }
     if (!value) {
         goto end;
     }
@@ -93,7 +113,7 @@ v1_sysctl_t *v1_sysctl_parseFromJSON(cJSON *v1_sysctlJSON){
     }
 
 
-    v1_sysctl_local_var = v1_sysctl_create (
+    v1_sysctl_local_var = v1_sysctl_create_internal (
         strdup(name->valuestring),
         strdup(value->valuestring)
         );

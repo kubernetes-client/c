@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_resource_claim_template_spec_t *v1alpha3_resource_claim_template_spec_create(
+static v1alpha3_resource_claim_template_spec_t *v1alpha3_resource_claim_template_spec_create_internal(
     v1_object_meta_t *metadata,
     v1alpha3_resource_claim_spec_t *spec
     ) {
@@ -16,12 +16,26 @@ v1alpha3_resource_claim_template_spec_t *v1alpha3_resource_claim_template_spec_c
     v1alpha3_resource_claim_template_spec_local_var->metadata = metadata;
     v1alpha3_resource_claim_template_spec_local_var->spec = spec;
 
+    v1alpha3_resource_claim_template_spec_local_var->_library_owned = 1;
     return v1alpha3_resource_claim_template_spec_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_resource_claim_template_spec_t *v1alpha3_resource_claim_template_spec_create(
+    v1_object_meta_t *metadata,
+    v1alpha3_resource_claim_spec_t *spec
+    ) {
+    return v1alpha3_resource_claim_template_spec_create_internal (
+        metadata,
+        spec
+        );
+}
 
 void v1alpha3_resource_claim_template_spec_free(v1alpha3_resource_claim_template_spec_t *v1alpha3_resource_claim_template_spec) {
     if(NULL == v1alpha3_resource_claim_template_spec){
+        return ;
+    }
+    if(v1alpha3_resource_claim_template_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_resource_claim_template_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -85,12 +99,18 @@ v1alpha3_resource_claim_template_spec_t *v1alpha3_resource_claim_template_spec_p
 
     // v1alpha3_resource_claim_template_spec->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_template_specJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1alpha3_resource_claim_template_spec->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_template_specJSON, "spec");
+    if (cJSON_IsNull(spec)) {
+        spec = NULL;
+    }
     if (!spec) {
         goto end;
     }
@@ -99,7 +119,7 @@ v1alpha3_resource_claim_template_spec_t *v1alpha3_resource_claim_template_spec_p
     spec_local_nonprim = v1alpha3_resource_claim_spec_parseFromJSON(spec); //nonprimitive
 
 
-    v1alpha3_resource_claim_template_spec_local_var = v1alpha3_resource_claim_template_spec_create (
+    v1alpha3_resource_claim_template_spec_local_var = v1alpha3_resource_claim_template_spec_create_internal (
         metadata ? metadata_local_nonprim : NULL,
         spec_local_nonprim
         );

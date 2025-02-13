@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**NodeAPI_getAPIGroup_14**](NodeAPI.md#NodeAPI_getAPIGroup_14) | **GET** /apis/node.k8s.io/ | 
+[**NodeAPI_getAPIGroup**](NodeAPI.md#NodeAPI_getAPIGroup) | **GET** /apis/node.k8s.io/ | 
 
 
-# **NodeAPI_getAPIGroup_14**
+# **NodeAPI_getAPIGroup**
 ```c
 // get information of a group
 //
-v1_api_group_t* NodeAPI_getAPIGroup_14(apiClient_t *apiClient);
+v1_api_group_t* NodeAPI_getAPIGroup(apiClient_t *apiClient);
 ```
 
 ### Parameters

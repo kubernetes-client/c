@@ -24,9 +24,10 @@ typedef struct v1_config_map_projection_t {
     char *name; // string
     int optional; //boolean
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_config_map_projection_t;
 
-v1_config_map_projection_t *v1_config_map_projection_create(
+__attribute__((deprecated)) v1_config_map_projection_t *v1_config_map_projection_create(
     list_t *items,
     char *name,
     int optional

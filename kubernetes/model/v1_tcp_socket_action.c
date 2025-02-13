@@ -5,7 +5,7 @@
 
 
 
-v1_tcp_socket_action_t *v1_tcp_socket_action_create(
+static v1_tcp_socket_action_t *v1_tcp_socket_action_create_internal(
     char *host,
     int_or_string_t *port
     ) {
@@ -16,12 +16,26 @@ v1_tcp_socket_action_t *v1_tcp_socket_action_create(
     v1_tcp_socket_action_local_var->host = host;
     v1_tcp_socket_action_local_var->port = port;
 
+    v1_tcp_socket_action_local_var->_library_owned = 1;
     return v1_tcp_socket_action_local_var;
 }
 
+__attribute__((deprecated)) v1_tcp_socket_action_t *v1_tcp_socket_action_create(
+    char *host,
+    int_or_string_t *port
+    ) {
+    return v1_tcp_socket_action_create_internal (
+        host,
+        port
+        );
+}
 
 void v1_tcp_socket_action_free(v1_tcp_socket_action_t *v1_tcp_socket_action) {
     if(NULL == v1_tcp_socket_action){
+        return ;
+    }
+    if(v1_tcp_socket_action->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_tcp_socket_action_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -77,6 +91,9 @@ v1_tcp_socket_action_t *v1_tcp_socket_action_parseFromJSON(cJSON *v1_tcp_socket_
 
     // v1_tcp_socket_action->host
     cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_tcp_socket_actionJSON, "host");
+    if (cJSON_IsNull(host)) {
+        host = NULL;
+    }
     if (host) { 
     if(!cJSON_IsString(host) && !cJSON_IsNull(host))
     {
@@ -86,6 +103,9 @@ v1_tcp_socket_action_t *v1_tcp_socket_action_parseFromJSON(cJSON *v1_tcp_socket_
 
     // v1_tcp_socket_action->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_tcp_socket_actionJSON, "port");
+    if (cJSON_IsNull(port)) {
+        port = NULL;
+    }
     if (!port) {
         goto end;
     }
@@ -94,7 +114,7 @@ v1_tcp_socket_action_t *v1_tcp_socket_action_parseFromJSON(cJSON *v1_tcp_socket_
     port_local_nonprim = int_or_string_parseFromJSON(port); //custom
 
 
-    v1_tcp_socket_action_local_var = v1_tcp_socket_action_create (
+    v1_tcp_socket_action_local_var = v1_tcp_socket_action_create_internal (
         host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
         port_local_nonprim
         );

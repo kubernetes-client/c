@@ -23,9 +23,10 @@ typedef struct v1_ingress_rule_t {
     char *host; // string
     struct v1_http_ingress_rule_value_t *http; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ingress_rule_t;
 
-v1_ingress_rule_t *v1_ingress_rule_create(
+__attribute__((deprecated)) v1_ingress_rule_t *v1_ingress_rule_create(
     char *host,
     v1_http_ingress_rule_value_t *http
 );

@@ -21,9 +21,10 @@ typedef struct v1_flow_distinguisher_method_t v1_flow_distinguisher_method_t;
 typedef struct v1_flow_distinguisher_method_t {
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_flow_distinguisher_method_t;
 
-v1_flow_distinguisher_method_t *v1_flow_distinguisher_method_create(
+__attribute__((deprecated)) v1_flow_distinguisher_method_t *v1_flow_distinguisher_method_create(
     char *type
 );
 

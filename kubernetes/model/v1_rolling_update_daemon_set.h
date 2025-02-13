@@ -23,9 +23,10 @@ typedef struct v1_rolling_update_daemon_set_t {
     int_or_string_t *max_surge; // custom
     int_or_string_t *max_unavailable; // custom
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_rolling_update_daemon_set_t;
 
-v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_create(
+__attribute__((deprecated)) v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_create(
     int_or_string_t *max_surge,
     int_or_string_t *max_unavailable
 );

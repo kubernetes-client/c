@@ -23,9 +23,10 @@ typedef struct v1_downward_api_volume_source_t {
     int default_mode; //numeric
     list_t *items; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_downward_api_volume_source_t;
 
-v1_downward_api_volume_source_t *v1_downward_api_volume_source_create(
+__attribute__((deprecated)) v1_downward_api_volume_source_t *v1_downward_api_volume_source_create(
     int default_mode,
     list_t *items
 );

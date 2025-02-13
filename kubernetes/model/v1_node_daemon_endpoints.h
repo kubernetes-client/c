@@ -22,9 +22,10 @@ typedef struct v1_node_daemon_endpoints_t v1_node_daemon_endpoints_t;
 typedef struct v1_node_daemon_endpoints_t {
     struct v1_daemon_endpoint_t *kubelet_endpoint; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_daemon_endpoints_t;
 
-v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_create(
+__attribute__((deprecated)) v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_create(
     v1_daemon_endpoint_t *kubelet_endpoint
 );
 

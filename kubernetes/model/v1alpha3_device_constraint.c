@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_device_constraint_t *v1alpha3_device_constraint_create(
+static v1alpha3_device_constraint_t *v1alpha3_device_constraint_create_internal(
     char *match_attribute,
     list_t *requests
     ) {
@@ -16,12 +16,26 @@ v1alpha3_device_constraint_t *v1alpha3_device_constraint_create(
     v1alpha3_device_constraint_local_var->match_attribute = match_attribute;
     v1alpha3_device_constraint_local_var->requests = requests;
 
+    v1alpha3_device_constraint_local_var->_library_owned = 1;
     return v1alpha3_device_constraint_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_device_constraint_t *v1alpha3_device_constraint_create(
+    char *match_attribute,
+    list_t *requests
+    ) {
+    return v1alpha3_device_constraint_create_internal (
+        match_attribute,
+        requests
+        );
+}
 
 void v1alpha3_device_constraint_free(v1alpha3_device_constraint_t *v1alpha3_device_constraint) {
     if(NULL == v1alpha3_device_constraint){
+        return ;
+    }
+    if(v1alpha3_device_constraint->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_device_constraint_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -59,7 +73,7 @@ cJSON *v1alpha3_device_constraint_convertToJSON(v1alpha3_device_constraint_t *v1
 
     listEntry_t *requestsListEntry;
     list_ForEach(requestsListEntry, v1alpha3_device_constraint->requests) {
-    if(cJSON_AddStringToObject(requests, "", (char*)requestsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(requests, "", requestsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -83,6 +97,9 @@ v1alpha3_device_constraint_t *v1alpha3_device_constraint_parseFromJSON(cJSON *v1
 
     // v1alpha3_device_constraint->match_attribute
     cJSON *match_attribute = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_constraintJSON, "matchAttribute");
+    if (cJSON_IsNull(match_attribute)) {
+        match_attribute = NULL;
+    }
     if (match_attribute) { 
     if(!cJSON_IsString(match_attribute) && !cJSON_IsNull(match_attribute))
     {
@@ -92,6 +109,9 @@ v1alpha3_device_constraint_t *v1alpha3_device_constraint_parseFromJSON(cJSON *v1
 
     // v1alpha3_device_constraint->requests
     cJSON *requests = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_constraintJSON, "requests");
+    if (cJSON_IsNull(requests)) {
+        requests = NULL;
+    }
     if (requests) { 
     cJSON *requests_local = NULL;
     if(!cJSON_IsArray(requests)) {
@@ -110,7 +130,7 @@ v1alpha3_device_constraint_t *v1alpha3_device_constraint_parseFromJSON(cJSON *v1
     }
 
 
-    v1alpha3_device_constraint_local_var = v1alpha3_device_constraint_create (
+    v1alpha3_device_constraint_local_var = v1alpha3_device_constraint_create_internal (
         match_attribute && !cJSON_IsNull(match_attribute) ? strdup(match_attribute->valuestring) : NULL,
         requests ? requestsList : NULL
         );

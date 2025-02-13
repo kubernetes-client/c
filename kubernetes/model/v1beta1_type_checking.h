@@ -22,9 +22,10 @@ typedef struct v1beta1_type_checking_t v1beta1_type_checking_t;
 typedef struct v1beta1_type_checking_t {
     list_t *expression_warnings; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_type_checking_t;
 
-v1beta1_type_checking_t *v1beta1_type_checking_create(
+__attribute__((deprecated)) v1beta1_type_checking_t *v1beta1_type_checking_create(
     list_t *expression_warnings
 );
 

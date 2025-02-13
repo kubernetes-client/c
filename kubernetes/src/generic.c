@@ -2,6 +2,12 @@
 #include "../include/generic.h"
 #include "../include/utils.h"
 
+void makeNamespacedResourcePath(char* path, genericClient_t *client, const char* namespace, const char* name);
+void makeResourcePath(char* path, genericClient_t *client, const char* name);
+char* callInternal(genericClient_t *client,
+                   const char *path, list_t *queryParameters, list_t *headerParameters, list_t *formParameters, list_t *headerType, list_t *contentType, const char *body, const char *method);
+char *callSimplifiedInternal(genericClient_t *client, const char *path, const char *method, const char *body);
+
 genericClient_t* genericClient_create(apiClient_t *client, const char *apiGroup, const char* apiVersion, const char* resourcePlural) {
     genericClient_t *result = malloc(sizeof(genericClient_t));
     result->client = client;
@@ -54,7 +60,11 @@ void makeResourcePath(char* path, genericClient_t *client, const char* name) {
 char* callInternal(genericClient_t *client,
                    const char *path, list_t *queryParameters, list_t *headerParameters, list_t *formParameters, list_t *headerType, list_t *contentType, const char *body, const char *method)
 {
-    apiClient_invoke(client->client, path, queryParameters, headerParameters, formParameters, headerType, contentType, body, method);
+    size_t len = 0;
+    if (body != NULL) {
+        len = strlen(body);
+    }
+    apiClient_invoke(client->client, path, queryParameters, headerParameters, formParameters, headerType, contentType, body, len, method);
 
     if (client->client->response_code == 401) {
         return NULL;

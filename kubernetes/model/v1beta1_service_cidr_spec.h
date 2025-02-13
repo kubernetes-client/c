@@ -21,9 +21,10 @@ typedef struct v1beta1_service_cidr_spec_t v1beta1_service_cidr_spec_t;
 typedef struct v1beta1_service_cidr_spec_t {
     list_t *cidrs; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_service_cidr_spec_t;
 
-v1beta1_service_cidr_spec_t *v1beta1_service_cidr_spec_create(
+__attribute__((deprecated)) v1beta1_service_cidr_spec_t *v1beta1_service_cidr_spec_create(
     list_t *cidrs
 );
 

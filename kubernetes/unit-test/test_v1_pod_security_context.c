@@ -33,6 +33,7 @@ v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optio
       56,
       1,
       56,
+      "0",
        // false, not to have infinite recursion
       instantiate_v1_se_linux_options(0),
        // false, not to have infinite recursion
@@ -51,6 +52,7 @@ v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optio
       56,
       1,
       56,
+      "0",
       NULL,
       NULL,
       list_createList(),

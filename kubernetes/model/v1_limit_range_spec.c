@@ -5,7 +5,7 @@
 
 
 
-v1_limit_range_spec_t *v1_limit_range_spec_create(
+static v1_limit_range_spec_t *v1_limit_range_spec_create_internal(
     list_t *limits
     ) {
     v1_limit_range_spec_t *v1_limit_range_spec_local_var = malloc(sizeof(v1_limit_range_spec_t));
@@ -14,12 +14,24 @@ v1_limit_range_spec_t *v1_limit_range_spec_create(
     }
     v1_limit_range_spec_local_var->limits = limits;
 
+    v1_limit_range_spec_local_var->_library_owned = 1;
     return v1_limit_range_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_limit_range_spec_t *v1_limit_range_spec_create(
+    list_t *limits
+    ) {
+    return v1_limit_range_spec_create_internal (
+        limits
+        );
+}
 
 void v1_limit_range_spec_free(v1_limit_range_spec_t *v1_limit_range_spec) {
     if(NULL == v1_limit_range_spec){
+        return ;
+    }
+    if(v1_limit_range_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_limit_range_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -73,6 +85,9 @@ v1_limit_range_spec_t *v1_limit_range_spec_parseFromJSON(cJSON *v1_limit_range_s
 
     // v1_limit_range_spec->limits
     cJSON *limits = cJSON_GetObjectItemCaseSensitive(v1_limit_range_specJSON, "limits");
+    if (cJSON_IsNull(limits)) {
+        limits = NULL;
+    }
     if (!limits) {
         goto end;
     }
@@ -96,7 +111,7 @@ v1_limit_range_spec_t *v1_limit_range_spec_parseFromJSON(cJSON *v1_limit_range_s
     }
 
 
-    v1_limit_range_spec_local_var = v1_limit_range_spec_create (
+    v1_limit_range_spec_local_var = v1_limit_range_spec_create_internal (
         limitsList
         );
 

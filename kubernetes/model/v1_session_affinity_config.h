@@ -22,9 +22,10 @@ typedef struct v1_session_affinity_config_t v1_session_affinity_config_t;
 typedef struct v1_session_affinity_config_t {
     struct v1_client_ip_config_t *client_ip; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_session_affinity_config_t;
 
-v1_session_affinity_config_t *v1_session_affinity_config_create(
+__attribute__((deprecated)) v1_session_affinity_config_t *v1_session_affinity_config_create(
     v1_client_ip_config_t *client_ip
 );
 

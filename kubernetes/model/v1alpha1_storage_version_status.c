@@ -5,7 +5,7 @@
 
 
 
-v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_create(
+static v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_create_internal(
     char *common_encoding_version,
     list_t *conditions,
     list_t *storage_versions
@@ -18,12 +18,28 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_create(
     v1alpha1_storage_version_status_local_var->conditions = conditions;
     v1alpha1_storage_version_status_local_var->storage_versions = storage_versions;
 
+    v1alpha1_storage_version_status_local_var->_library_owned = 1;
     return v1alpha1_storage_version_status_local_var;
 }
 
+__attribute__((deprecated)) v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_create(
+    char *common_encoding_version,
+    list_t *conditions,
+    list_t *storage_versions
+    ) {
+    return v1alpha1_storage_version_status_create_internal (
+        common_encoding_version,
+        conditions,
+        storage_versions
+        );
+}
 
 void v1alpha1_storage_version_status_free(v1alpha1_storage_version_status_t *v1alpha1_storage_version_status) {
     if(NULL == v1alpha1_storage_version_status){
+        return ;
+    }
+    if(v1alpha1_storage_version_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha1_storage_version_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -118,6 +134,9 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
 
     // v1alpha1_storage_version_status->common_encoding_version
     cJSON *common_encoding_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_statusJSON, "commonEncodingVersion");
+    if (cJSON_IsNull(common_encoding_version)) {
+        common_encoding_version = NULL;
+    }
     if (common_encoding_version) { 
     if(!cJSON_IsString(common_encoding_version) && !cJSON_IsNull(common_encoding_version))
     {
@@ -127,6 +146,9 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
 
     // v1alpha1_storage_version_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -148,6 +170,9 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
 
     // v1alpha1_storage_version_status->storage_versions
     cJSON *storage_versions = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_statusJSON, "storageVersions");
+    if (cJSON_IsNull(storage_versions)) {
+        storage_versions = NULL;
+    }
     if (storage_versions) { 
     cJSON *storage_versions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(storage_versions)){
@@ -168,7 +193,7 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
     }
 
 
-    v1alpha1_storage_version_status_local_var = v1alpha1_storage_version_status_create (
+    v1alpha1_storage_version_status_local_var = v1alpha1_storage_version_status_create_internal (
         common_encoding_version && !cJSON_IsNull(common_encoding_version) ? strdup(common_encoding_version->valuestring) : NULL,
         conditions ? conditionsList : NULL,
         storage_versions ? storage_versionsList : NULL

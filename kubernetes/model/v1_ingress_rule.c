@@ -5,7 +5,7 @@
 
 
 
-v1_ingress_rule_t *v1_ingress_rule_create(
+static v1_ingress_rule_t *v1_ingress_rule_create_internal(
     char *host,
     v1_http_ingress_rule_value_t *http
     ) {
@@ -16,12 +16,26 @@ v1_ingress_rule_t *v1_ingress_rule_create(
     v1_ingress_rule_local_var->host = host;
     v1_ingress_rule_local_var->http = http;
 
+    v1_ingress_rule_local_var->_library_owned = 1;
     return v1_ingress_rule_local_var;
 }
 
+__attribute__((deprecated)) v1_ingress_rule_t *v1_ingress_rule_create(
+    char *host,
+    v1_http_ingress_rule_value_t *http
+    ) {
+    return v1_ingress_rule_create_internal (
+        host,
+        http
+        );
+}
 
 void v1_ingress_rule_free(v1_ingress_rule_t *v1_ingress_rule) {
     if(NULL == v1_ingress_rule){
+        return ;
+    }
+    if(v1_ingress_rule->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_ingress_rule_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -76,6 +90,9 @@ v1_ingress_rule_t *v1_ingress_rule_parseFromJSON(cJSON *v1_ingress_ruleJSON){
 
     // v1_ingress_rule->host
     cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_ingress_ruleJSON, "host");
+    if (cJSON_IsNull(host)) {
+        host = NULL;
+    }
     if (host) { 
     if(!cJSON_IsString(host) && !cJSON_IsNull(host))
     {
@@ -85,12 +102,15 @@ v1_ingress_rule_t *v1_ingress_rule_parseFromJSON(cJSON *v1_ingress_ruleJSON){
 
     // v1_ingress_rule->http
     cJSON *http = cJSON_GetObjectItemCaseSensitive(v1_ingress_ruleJSON, "http");
+    if (cJSON_IsNull(http)) {
+        http = NULL;
+    }
     if (http) { 
     http_local_nonprim = v1_http_ingress_rule_value_parseFromJSON(http); //nonprimitive
     }
 
 
-    v1_ingress_rule_local_var = v1_ingress_rule_create (
+    v1_ingress_rule_local_var = v1_ingress_rule_create_internal (
         host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
         http ? http_local_nonprim : NULL
         );

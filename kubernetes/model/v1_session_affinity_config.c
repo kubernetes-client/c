@@ -5,7 +5,7 @@
 
 
 
-v1_session_affinity_config_t *v1_session_affinity_config_create(
+static v1_session_affinity_config_t *v1_session_affinity_config_create_internal(
     v1_client_ip_config_t *client_ip
     ) {
     v1_session_affinity_config_t *v1_session_affinity_config_local_var = malloc(sizeof(v1_session_affinity_config_t));
@@ -14,12 +14,24 @@ v1_session_affinity_config_t *v1_session_affinity_config_create(
     }
     v1_session_affinity_config_local_var->client_ip = client_ip;
 
+    v1_session_affinity_config_local_var->_library_owned = 1;
     return v1_session_affinity_config_local_var;
 }
 
+__attribute__((deprecated)) v1_session_affinity_config_t *v1_session_affinity_config_create(
+    v1_client_ip_config_t *client_ip
+    ) {
+    return v1_session_affinity_config_create_internal (
+        client_ip
+        );
+}
 
 void v1_session_affinity_config_free(v1_session_affinity_config_t *v1_session_affinity_config) {
     if(NULL == v1_session_affinity_config){
+        return ;
+    }
+    if(v1_session_affinity_config->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_session_affinity_config_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -62,12 +74,15 @@ v1_session_affinity_config_t *v1_session_affinity_config_parseFromJSON(cJSON *v1
 
     // v1_session_affinity_config->client_ip
     cJSON *client_ip = cJSON_GetObjectItemCaseSensitive(v1_session_affinity_configJSON, "clientIP");
+    if (cJSON_IsNull(client_ip)) {
+        client_ip = NULL;
+    }
     if (client_ip) { 
     client_ip_local_nonprim = v1_client_ip_config_parseFromJSON(client_ip); //nonprimitive
     }
 
 
-    v1_session_affinity_config_local_var = v1_session_affinity_config_create (
+    v1_session_affinity_config_local_var = v1_session_affinity_config_create_internal (
         client_ip ? client_ip_local_nonprim : NULL
         );
 

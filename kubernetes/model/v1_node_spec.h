@@ -29,9 +29,10 @@ typedef struct v1_node_spec_t {
     list_t *taints; //nonprimitive container
     int unschedulable; //boolean
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_spec_t;
 
-v1_node_spec_t *v1_node_spec_create(
+__attribute__((deprecated)) v1_node_spec_t *v1_node_spec_create(
     v1_node_config_source_t *config_source,
     char *external_id,
     char *pod_cidr,

@@ -29,9 +29,10 @@ typedef struct v1_rbd_persistent_volume_source_t {
     struct v1_secret_reference_t *secret_ref; //model
     char *user; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_rbd_persistent_volume_source_t;
 
-v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_create(
+__attribute__((deprecated)) v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_create(
     char *fs_type,
     char *image,
     char *keyring,

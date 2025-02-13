@@ -21,9 +21,10 @@ typedef struct v1_client_ip_config_t v1_client_ip_config_t;
 typedef struct v1_client_ip_config_t {
     int timeout_seconds; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_client_ip_config_t;
 
-v1_client_ip_config_t *v1_client_ip_config_create(
+__attribute__((deprecated)) v1_client_ip_config_t *v1_client_ip_config_create(
     int timeout_seconds
 );
 

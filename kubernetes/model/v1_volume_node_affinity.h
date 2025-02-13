@@ -22,9 +22,10 @@ typedef struct v1_volume_node_affinity_t v1_volume_node_affinity_t;
 typedef struct v1_volume_node_affinity_t {
     struct v1_node_selector_t *required; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_node_affinity_t;
 
-v1_volume_node_affinity_t *v1_volume_node_affinity_create(
+__attribute__((deprecated)) v1_volume_node_affinity_t *v1_volume_node_affinity_create(
     v1_node_selector_t *required
 );
 

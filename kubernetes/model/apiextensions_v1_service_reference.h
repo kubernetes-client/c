@@ -24,9 +24,10 @@ typedef struct apiextensions_v1_service_reference_t {
     char *path; // string
     int port; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } apiextensions_v1_service_reference_t;
 
-apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_create(
+__attribute__((deprecated)) apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_create(
     char *name,
     char *_namespace,
     char *path,

@@ -26,9 +26,10 @@ typedef struct v1_role_t {
     struct v1_object_meta_t *metadata; //model
     list_t *rules; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_role_t;
 
-v1_role_t *v1_role_create(
+__attribute__((deprecated)) v1_role_t *v1_role_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

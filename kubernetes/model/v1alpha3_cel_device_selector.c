@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_cel_device_selector_t *v1alpha3_cel_device_selector_create(
+static v1alpha3_cel_device_selector_t *v1alpha3_cel_device_selector_create_internal(
     char *expression
     ) {
     v1alpha3_cel_device_selector_t *v1alpha3_cel_device_selector_local_var = malloc(sizeof(v1alpha3_cel_device_selector_t));
@@ -14,12 +14,24 @@ v1alpha3_cel_device_selector_t *v1alpha3_cel_device_selector_create(
     }
     v1alpha3_cel_device_selector_local_var->expression = expression;
 
+    v1alpha3_cel_device_selector_local_var->_library_owned = 1;
     return v1alpha3_cel_device_selector_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_cel_device_selector_t *v1alpha3_cel_device_selector_create(
+    char *expression
+    ) {
+    return v1alpha3_cel_device_selector_create_internal (
+        expression
+        );
+}
 
 void v1alpha3_cel_device_selector_free(v1alpha3_cel_device_selector_t *v1alpha3_cel_device_selector) {
     if(NULL == v1alpha3_cel_device_selector){
+        return ;
+    }
+    if(v1alpha3_cel_device_selector->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_cel_device_selector_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -55,6 +67,9 @@ v1alpha3_cel_device_selector_t *v1alpha3_cel_device_selector_parseFromJSON(cJSON
 
     // v1alpha3_cel_device_selector->expression
     cJSON *expression = cJSON_GetObjectItemCaseSensitive(v1alpha3_cel_device_selectorJSON, "expression");
+    if (cJSON_IsNull(expression)) {
+        expression = NULL;
+    }
     if (!expression) {
         goto end;
     }
@@ -66,7 +81,7 @@ v1alpha3_cel_device_selector_t *v1alpha3_cel_device_selector_parseFromJSON(cJSON
     }
 
 
-    v1alpha3_cel_device_selector_local_var = v1alpha3_cel_device_selector_create (
+    v1alpha3_cel_device_selector_local_var = v1alpha3_cel_device_selector_create_internal (
         strdup(expression->valuestring)
         );
 

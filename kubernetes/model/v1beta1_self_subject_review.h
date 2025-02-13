@@ -26,9 +26,10 @@ typedef struct v1beta1_self_subject_review_t {
     struct v1_object_meta_t *metadata; //model
     struct v1beta1_self_subject_review_status_t *status; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_self_subject_review_t;
 
-v1beta1_self_subject_review_t *v1beta1_self_subject_review_create(
+__attribute__((deprecated)) v1beta1_self_subject_review_t *v1beta1_self_subject_review_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

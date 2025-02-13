@@ -5,7 +5,7 @@
 
 
 
-v1_volume_mount_status_t *v1_volume_mount_status_create(
+static v1_volume_mount_status_t *v1_volume_mount_status_create_internal(
     char *mount_path,
     char *name,
     int read_only,
@@ -20,12 +20,30 @@ v1_volume_mount_status_t *v1_volume_mount_status_create(
     v1_volume_mount_status_local_var->read_only = read_only;
     v1_volume_mount_status_local_var->recursive_read_only = recursive_read_only;
 
+    v1_volume_mount_status_local_var->_library_owned = 1;
     return v1_volume_mount_status_local_var;
 }
 
+__attribute__((deprecated)) v1_volume_mount_status_t *v1_volume_mount_status_create(
+    char *mount_path,
+    char *name,
+    int read_only,
+    char *recursive_read_only
+    ) {
+    return v1_volume_mount_status_create_internal (
+        mount_path,
+        name,
+        read_only,
+        recursive_read_only
+        );
+}
 
 void v1_volume_mount_status_free(v1_volume_mount_status_t *v1_volume_mount_status) {
     if(NULL == v1_volume_mount_status){
+        return ;
+    }
+    if(v1_volume_mount_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_volume_mount_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -94,6 +112,9 @@ v1_volume_mount_status_t *v1_volume_mount_status_parseFromJSON(cJSON *v1_volume_
 
     // v1_volume_mount_status->mount_path
     cJSON *mount_path = cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "mountPath");
+    if (cJSON_IsNull(mount_path)) {
+        mount_path = NULL;
+    }
     if (!mount_path) {
         goto end;
     }
@@ -106,6 +127,9 @@ v1_volume_mount_status_t *v1_volume_mount_status_parseFromJSON(cJSON *v1_volume_
 
     // v1_volume_mount_status->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -118,6 +142,9 @@ v1_volume_mount_status_t *v1_volume_mount_status_parseFromJSON(cJSON *v1_volume_
 
     // v1_volume_mount_status->read_only
     cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "readOnly");
+    if (cJSON_IsNull(read_only)) {
+        read_only = NULL;
+    }
     if (read_only) { 
     if(!cJSON_IsBool(read_only))
     {
@@ -127,6 +154,9 @@ v1_volume_mount_status_t *v1_volume_mount_status_parseFromJSON(cJSON *v1_volume_
 
     // v1_volume_mount_status->recursive_read_only
     cJSON *recursive_read_only = cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "recursiveReadOnly");
+    if (cJSON_IsNull(recursive_read_only)) {
+        recursive_read_only = NULL;
+    }
     if (recursive_read_only) { 
     if(!cJSON_IsString(recursive_read_only) && !cJSON_IsNull(recursive_read_only))
     {
@@ -135,7 +165,7 @@ v1_volume_mount_status_t *v1_volume_mount_status_parseFromJSON(cJSON *v1_volume_
     }
 
 
-    v1_volume_mount_status_local_var = v1_volume_mount_status_create (
+    v1_volume_mount_status_local_var = v1_volume_mount_status_create_internal (
         strdup(mount_path->valuestring),
         strdup(name->valuestring),
         read_only ? read_only->valueint : 0,

@@ -23,9 +23,10 @@ typedef struct apiregistration_v1_service_reference_t {
     char *_namespace; // string
     int port; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } apiregistration_v1_service_reference_t;
 
-apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_create(
+__attribute__((deprecated)) apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_create(
     char *name,
     char *_namespace,
     int port

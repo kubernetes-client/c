@@ -37,9 +37,10 @@ typedef struct v1_object_meta_t {
     char *self_link; // string
     char *uid; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_object_meta_t;
 
-v1_object_meta_t *v1_object_meta_create(
+__attribute__((deprecated)) v1_object_meta_t *v1_object_meta_create(
     list_t* annotations,
     char *creation_timestamp,
     long deletion_grace_period_seconds,

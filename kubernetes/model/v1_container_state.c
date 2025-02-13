@@ -5,7 +5,7 @@
 
 
 
-v1_container_state_t *v1_container_state_create(
+static v1_container_state_t *v1_container_state_create_internal(
     v1_container_state_running_t *running,
     v1_container_state_terminated_t *terminated,
     v1_container_state_waiting_t *waiting
@@ -18,12 +18,28 @@ v1_container_state_t *v1_container_state_create(
     v1_container_state_local_var->terminated = terminated;
     v1_container_state_local_var->waiting = waiting;
 
+    v1_container_state_local_var->_library_owned = 1;
     return v1_container_state_local_var;
 }
 
+__attribute__((deprecated)) v1_container_state_t *v1_container_state_create(
+    v1_container_state_running_t *running,
+    v1_container_state_terminated_t *terminated,
+    v1_container_state_waiting_t *waiting
+    ) {
+    return v1_container_state_create_internal (
+        running,
+        terminated,
+        waiting
+        );
+}
 
 void v1_container_state_free(v1_container_state_t *v1_container_state) {
     if(NULL == v1_container_state){
+        return ;
+    }
+    if(v1_container_state->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_container_state_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -106,24 +122,33 @@ v1_container_state_t *v1_container_state_parseFromJSON(cJSON *v1_container_state
 
     // v1_container_state->running
     cJSON *running = cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "running");
+    if (cJSON_IsNull(running)) {
+        running = NULL;
+    }
     if (running) { 
     running_local_nonprim = v1_container_state_running_parseFromJSON(running); //nonprimitive
     }
 
     // v1_container_state->terminated
     cJSON *terminated = cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "terminated");
+    if (cJSON_IsNull(terminated)) {
+        terminated = NULL;
+    }
     if (terminated) { 
     terminated_local_nonprim = v1_container_state_terminated_parseFromJSON(terminated); //nonprimitive
     }
 
     // v1_container_state->waiting
     cJSON *waiting = cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "waiting");
+    if (cJSON_IsNull(waiting)) {
+        waiting = NULL;
+    }
     if (waiting) { 
     waiting_local_nonprim = v1_container_state_waiting_parseFromJSON(waiting); //nonprimitive
     }
 
 
-    v1_container_state_local_var = v1_container_state_create (
+    v1_container_state_local_var = v1_container_state_create_internal (
         running ? running_local_nonprim : NULL,
         terminated ? terminated_local_nonprim : NULL,
         waiting ? waiting_local_nonprim : NULL

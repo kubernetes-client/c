@@ -23,9 +23,10 @@ typedef struct v1_ingress_service_backend_t {
     char *name; // string
     struct v1_service_backend_port_t *port; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ingress_service_backend_t;
 
-v1_ingress_service_backend_t *v1_ingress_service_backend_create(
+__attribute__((deprecated)) v1_ingress_service_backend_t *v1_ingress_service_backend_create(
     char *name,
     v1_service_backend_port_t *port
 );

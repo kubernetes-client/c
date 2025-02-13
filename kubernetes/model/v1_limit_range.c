@@ -5,7 +5,7 @@
 
 
 
-v1_limit_range_t *v1_limit_range_create(
+static v1_limit_range_t *v1_limit_range_create_internal(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
@@ -20,12 +20,30 @@ v1_limit_range_t *v1_limit_range_create(
     v1_limit_range_local_var->metadata = metadata;
     v1_limit_range_local_var->spec = spec;
 
+    v1_limit_range_local_var->_library_owned = 1;
     return v1_limit_range_local_var;
 }
 
+__attribute__((deprecated)) v1_limit_range_t *v1_limit_range_create(
+    char *api_version,
+    char *kind,
+    v1_object_meta_t *metadata,
+    v1_limit_range_spec_t *spec
+    ) {
+    return v1_limit_range_create_internal (
+        api_version,
+        kind,
+        metadata,
+        spec
+        );
+}
 
 void v1_limit_range_free(v1_limit_range_t *v1_limit_range) {
     if(NULL == v1_limit_range){
+        return ;
+    }
+    if(v1_limit_range->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_limit_range_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -112,6 +130,9 @@ v1_limit_range_t *v1_limit_range_parseFromJSON(cJSON *v1_limit_rangeJSON){
 
     // v1_limit_range->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -121,6 +142,9 @@ v1_limit_range_t *v1_limit_range_parseFromJSON(cJSON *v1_limit_rangeJSON){
 
     // v1_limit_range->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -130,18 +154,24 @@ v1_limit_range_t *v1_limit_range_parseFromJSON(cJSON *v1_limit_rangeJSON){
 
     // v1_limit_range->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_limit_range->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "spec");
+    if (cJSON_IsNull(spec)) {
+        spec = NULL;
+    }
     if (spec) { 
     spec_local_nonprim = v1_limit_range_spec_parseFromJSON(spec); //nonprimitive
     }
 
 
-    v1_limit_range_local_var = v1_limit_range_create (
+    v1_limit_range_local_var = v1_limit_range_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,

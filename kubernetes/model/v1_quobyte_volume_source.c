@@ -5,7 +5,7 @@
 
 
 
-v1_quobyte_volume_source_t *v1_quobyte_volume_source_create(
+static v1_quobyte_volume_source_t *v1_quobyte_volume_source_create_internal(
     char *group,
     int read_only,
     char *registry,
@@ -24,12 +24,34 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_create(
     v1_quobyte_volume_source_local_var->user = user;
     v1_quobyte_volume_source_local_var->volume = volume;
 
+    v1_quobyte_volume_source_local_var->_library_owned = 1;
     return v1_quobyte_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_quobyte_volume_source_t *v1_quobyte_volume_source_create(
+    char *group,
+    int read_only,
+    char *registry,
+    char *tenant,
+    char *user,
+    char *volume
+    ) {
+    return v1_quobyte_volume_source_create_internal (
+        group,
+        read_only,
+        registry,
+        tenant,
+        user,
+        volume
+        );
+}
 
 void v1_quobyte_volume_source_free(v1_quobyte_volume_source_t *v1_quobyte_volume_source) {
     if(NULL == v1_quobyte_volume_source){
+        return ;
+    }
+    if(v1_quobyte_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_quobyte_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -122,6 +144,9 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quo
 
     // v1_quobyte_volume_source->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "group");
+    if (cJSON_IsNull(group)) {
+        group = NULL;
+    }
     if (group) { 
     if(!cJSON_IsString(group) && !cJSON_IsNull(group))
     {
@@ -131,6 +156,9 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quo
 
     // v1_quobyte_volume_source->read_only
     cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "readOnly");
+    if (cJSON_IsNull(read_only)) {
+        read_only = NULL;
+    }
     if (read_only) { 
     if(!cJSON_IsBool(read_only))
     {
@@ -140,6 +168,9 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quo
 
     // v1_quobyte_volume_source->registry
     cJSON *registry = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "registry");
+    if (cJSON_IsNull(registry)) {
+        registry = NULL;
+    }
     if (!registry) {
         goto end;
     }
@@ -152,6 +183,9 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quo
 
     // v1_quobyte_volume_source->tenant
     cJSON *tenant = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "tenant");
+    if (cJSON_IsNull(tenant)) {
+        tenant = NULL;
+    }
     if (tenant) { 
     if(!cJSON_IsString(tenant) && !cJSON_IsNull(tenant))
     {
@@ -161,6 +195,9 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quo
 
     // v1_quobyte_volume_source->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "user");
+    if (cJSON_IsNull(user)) {
+        user = NULL;
+    }
     if (user) { 
     if(!cJSON_IsString(user) && !cJSON_IsNull(user))
     {
@@ -170,6 +207,9 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quo
 
     // v1_quobyte_volume_source->volume
     cJSON *volume = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "volume");
+    if (cJSON_IsNull(volume)) {
+        volume = NULL;
+    }
     if (!volume) {
         goto end;
     }
@@ -181,7 +221,7 @@ v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quo
     }
 
 
-    v1_quobyte_volume_source_local_var = v1_quobyte_volume_source_create (
+    v1_quobyte_volume_source_local_var = v1_quobyte_volume_source_create_internal (
         group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
         strdup(registry->valuestring),

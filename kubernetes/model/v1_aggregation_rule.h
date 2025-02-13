@@ -22,9 +22,10 @@ typedef struct v1_aggregation_rule_t v1_aggregation_rule_t;
 typedef struct v1_aggregation_rule_t {
     list_t *cluster_role_selectors; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_aggregation_rule_t;
 
-v1_aggregation_rule_t *v1_aggregation_rule_create(
+__attribute__((deprecated)) v1_aggregation_rule_t *v1_aggregation_rule_create(
     list_t *cluster_role_selectors
 );
 

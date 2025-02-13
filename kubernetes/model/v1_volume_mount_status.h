@@ -24,9 +24,10 @@ typedef struct v1_volume_mount_status_t {
     int read_only; //boolean
     char *recursive_read_only; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_mount_status_t;
 
-v1_volume_mount_status_t *v1_volume_mount_status_create(
+__attribute__((deprecated)) v1_volume_mount_status_t *v1_volume_mount_status_create(
     char *mount_path,
     char *name,
     int read_only,

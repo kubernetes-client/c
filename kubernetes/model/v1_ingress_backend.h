@@ -24,9 +24,10 @@ typedef struct v1_ingress_backend_t {
     struct v1_typed_local_object_reference_t *resource; //model
     struct v1_ingress_service_backend_t *service; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ingress_backend_t;
 
-v1_ingress_backend_t *v1_ingress_backend_create(
+__attribute__((deprecated)) v1_ingress_backend_t *v1_ingress_backend_create(
     v1_typed_local_object_reference_t *resource,
     v1_ingress_service_backend_t *service
 );

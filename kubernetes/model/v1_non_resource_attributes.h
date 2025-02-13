@@ -22,9 +22,10 @@ typedef struct v1_non_resource_attributes_t {
     char *path; // string
     char *verb; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_non_resource_attributes_t;
 
-v1_non_resource_attributes_t *v1_non_resource_attributes_create(
+__attribute__((deprecated)) v1_non_resource_attributes_t *v1_non_resource_attributes_create(
     char *path,
     char *verb
 );

@@ -5,7 +5,7 @@
 
 
 
-v1_pod_resource_claim_status_t *v1_pod_resource_claim_status_create(
+static v1_pod_resource_claim_status_t *v1_pod_resource_claim_status_create_internal(
     char *name,
     char *resource_claim_name
     ) {
@@ -16,12 +16,26 @@ v1_pod_resource_claim_status_t *v1_pod_resource_claim_status_create(
     v1_pod_resource_claim_status_local_var->name = name;
     v1_pod_resource_claim_status_local_var->resource_claim_name = resource_claim_name;
 
+    v1_pod_resource_claim_status_local_var->_library_owned = 1;
     return v1_pod_resource_claim_status_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_resource_claim_status_t *v1_pod_resource_claim_status_create(
+    char *name,
+    char *resource_claim_name
+    ) {
+    return v1_pod_resource_claim_status_create_internal (
+        name,
+        resource_claim_name
+        );
+}
 
 void v1_pod_resource_claim_status_free(v1_pod_resource_claim_status_t *v1_pod_resource_claim_status) {
     if(NULL == v1_pod_resource_claim_status){
+        return ;
+    }
+    if(v1_pod_resource_claim_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_resource_claim_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -69,6 +83,9 @@ v1_pod_resource_claim_status_t *v1_pod_resource_claim_status_parseFromJSON(cJSON
 
     // v1_pod_resource_claim_status->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_pod_resource_claim_statusJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -81,6 +98,9 @@ v1_pod_resource_claim_status_t *v1_pod_resource_claim_status_parseFromJSON(cJSON
 
     // v1_pod_resource_claim_status->resource_claim_name
     cJSON *resource_claim_name = cJSON_GetObjectItemCaseSensitive(v1_pod_resource_claim_statusJSON, "resourceClaimName");
+    if (cJSON_IsNull(resource_claim_name)) {
+        resource_claim_name = NULL;
+    }
     if (resource_claim_name) { 
     if(!cJSON_IsString(resource_claim_name) && !cJSON_IsNull(resource_claim_name))
     {
@@ -89,7 +109,7 @@ v1_pod_resource_claim_status_t *v1_pod_resource_claim_status_parseFromJSON(cJSON
     }
 
 
-    v1_pod_resource_claim_status_local_var = v1_pod_resource_claim_status_create (
+    v1_pod_resource_claim_status_local_var = v1_pod_resource_claim_status_create_internal (
         strdup(name->valuestring),
         resource_claim_name && !cJSON_IsNull(resource_claim_name) ? strdup(resource_claim_name->valuestring) : NULL
         );

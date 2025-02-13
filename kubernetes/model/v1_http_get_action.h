@@ -27,9 +27,10 @@ typedef struct v1_http_get_action_t {
     int_or_string_t *port; // custom
     char *scheme; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_http_get_action_t;
 
-v1_http_get_action_t *v1_http_get_action_create(
+__attribute__((deprecated)) v1_http_get_action_t *v1_http_get_action_create(
     char *host,
     list_t *http_headers,
     char *path,

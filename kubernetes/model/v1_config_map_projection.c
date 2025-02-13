@@ -5,7 +5,7 @@
 
 
 
-v1_config_map_projection_t *v1_config_map_projection_create(
+static v1_config_map_projection_t *v1_config_map_projection_create_internal(
     list_t *items,
     char *name,
     int optional
@@ -18,12 +18,28 @@ v1_config_map_projection_t *v1_config_map_projection_create(
     v1_config_map_projection_local_var->name = name;
     v1_config_map_projection_local_var->optional = optional;
 
+    v1_config_map_projection_local_var->_library_owned = 1;
     return v1_config_map_projection_local_var;
 }
 
+__attribute__((deprecated)) v1_config_map_projection_t *v1_config_map_projection_create(
+    list_t *items,
+    char *name,
+    int optional
+    ) {
+    return v1_config_map_projection_create_internal (
+        items,
+        name,
+        optional
+        );
+}
 
 void v1_config_map_projection_free(v1_config_map_projection_t *v1_config_map_projection) {
     if(NULL == v1_config_map_projection){
+        return ;
+    }
+    if(v1_config_map_projection->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_config_map_projection_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -96,6 +112,9 @@ v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(cJSON *v1_con
 
     // v1_config_map_projection->items
     cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_config_map_projectionJSON, "items");
+    if (cJSON_IsNull(items)) {
+        items = NULL;
+    }
     if (items) { 
     cJSON *items_local_nonprimitive = NULL;
     if(!cJSON_IsArray(items)){
@@ -117,6 +136,9 @@ v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(cJSON *v1_con
 
     // v1_config_map_projection->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_config_map_projectionJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -126,6 +148,9 @@ v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(cJSON *v1_con
 
     // v1_config_map_projection->optional
     cJSON *optional = cJSON_GetObjectItemCaseSensitive(v1_config_map_projectionJSON, "optional");
+    if (cJSON_IsNull(optional)) {
+        optional = NULL;
+    }
     if (optional) { 
     if(!cJSON_IsBool(optional))
     {
@@ -134,7 +159,7 @@ v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(cJSON *v1_con
     }
 
 
-    v1_config_map_projection_local_var = v1_config_map_projection_create (
+    v1_config_map_projection_local_var = v1_config_map_projection_create_internal (
         items ? itemsList : NULL,
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         optional ? optional->valueint : 0

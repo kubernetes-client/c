@@ -22,9 +22,10 @@ typedef struct v1_server_address_by_client_cidr_t {
     char *client_cidr; // string
     char *server_address; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_server_address_by_client_cidr_t;
 
-v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_create(
+__attribute__((deprecated)) v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_create(
     char *client_cidr,
     char *server_address
 );

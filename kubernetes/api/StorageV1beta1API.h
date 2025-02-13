@@ -16,48 +16,48 @@
 // create a VolumeAttributesClass
 //
 v1beta1_volume_attributes_class_t*
-StorageV1beta1API_createVolumeAttributesClass_0(apiClient_t *apiClient, v1beta1_volume_attributes_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+StorageV1beta1API_createVolumeAttributesClass(apiClient_t *apiClient, v1beta1_volume_attributes_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // delete collection of VolumeAttributesClass
 //
 v1_status_t*
-StorageV1beta1API_deleteCollectionVolumeAttributesClass_0(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+StorageV1beta1API_deleteCollectionVolumeAttributesClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a VolumeAttributesClass
 //
 v1beta1_volume_attributes_class_t*
-StorageV1beta1API_deleteVolumeAttributesClass_0(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+StorageV1beta1API_deleteVolumeAttributesClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-StorageV1beta1API_getAPIResources_31(apiClient_t *apiClient);
+StorageV1beta1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind VolumeAttributesClass
 //
 v1beta1_volume_attributes_class_list_t*
-StorageV1beta1API_listVolumeAttributesClass_0(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+StorageV1beta1API_listVolumeAttributesClass(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 
 
 // partially update the specified VolumeAttributesClass
 //
 v1beta1_volume_attributes_class_t*
-StorageV1beta1API_patchVolumeAttributesClass_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+StorageV1beta1API_patchVolumeAttributesClass(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // read the specified VolumeAttributesClass
 //
 v1beta1_volume_attributes_class_t*
-StorageV1beta1API_readVolumeAttributesClass_0(apiClient_t *apiClient, char *name, char *pretty);
+StorageV1beta1API_readVolumeAttributesClass(apiClient_t *apiClient, char *name, char *pretty);
 
 
 // replace the specified VolumeAttributesClass
 //
 v1beta1_volume_attributes_class_t*
-StorageV1beta1API_replaceVolumeAttributesClass_0(apiClient_t *apiClient, char *name, v1beta1_volume_attributes_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+StorageV1beta1API_replaceVolumeAttributesClass(apiClient_t *apiClient, char *name, v1beta1_volume_attributes_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 

@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_device_claim_t *v1alpha3_device_claim_create(
+static v1alpha3_device_claim_t *v1alpha3_device_claim_create_internal(
     list_t *config,
     list_t *constraints,
     list_t *requests
@@ -18,12 +18,28 @@ v1alpha3_device_claim_t *v1alpha3_device_claim_create(
     v1alpha3_device_claim_local_var->constraints = constraints;
     v1alpha3_device_claim_local_var->requests = requests;
 
+    v1alpha3_device_claim_local_var->_library_owned = 1;
     return v1alpha3_device_claim_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_device_claim_t *v1alpha3_device_claim_create(
+    list_t *config,
+    list_t *constraints,
+    list_t *requests
+    ) {
+    return v1alpha3_device_claim_create_internal (
+        config,
+        constraints,
+        requests
+        );
+}
 
 void v1alpha3_device_claim_free(v1alpha3_device_claim_t *v1alpha3_device_claim) {
     if(NULL == v1alpha3_device_claim){
+        return ;
+    }
+    if(v1alpha3_device_claim->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_device_claim_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -136,6 +152,9 @@ v1alpha3_device_claim_t *v1alpha3_device_claim_parseFromJSON(cJSON *v1alpha3_dev
 
     // v1alpha3_device_claim->config
     cJSON *config = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_claimJSON, "config");
+    if (cJSON_IsNull(config)) {
+        config = NULL;
+    }
     if (config) { 
     cJSON *config_local_nonprimitive = NULL;
     if(!cJSON_IsArray(config)){
@@ -157,6 +176,9 @@ v1alpha3_device_claim_t *v1alpha3_device_claim_parseFromJSON(cJSON *v1alpha3_dev
 
     // v1alpha3_device_claim->constraints
     cJSON *constraints = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_claimJSON, "constraints");
+    if (cJSON_IsNull(constraints)) {
+        constraints = NULL;
+    }
     if (constraints) { 
     cJSON *constraints_local_nonprimitive = NULL;
     if(!cJSON_IsArray(constraints)){
@@ -178,6 +200,9 @@ v1alpha3_device_claim_t *v1alpha3_device_claim_parseFromJSON(cJSON *v1alpha3_dev
 
     // v1alpha3_device_claim->requests
     cJSON *requests = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_claimJSON, "requests");
+    if (cJSON_IsNull(requests)) {
+        requests = NULL;
+    }
     if (requests) { 
     cJSON *requests_local_nonprimitive = NULL;
     if(!cJSON_IsArray(requests)){
@@ -198,7 +223,7 @@ v1alpha3_device_claim_t *v1alpha3_device_claim_parseFromJSON(cJSON *v1alpha3_dev
     }
 
 
-    v1alpha3_device_claim_local_var = v1alpha3_device_claim_create (
+    v1alpha3_device_claim_local_var = v1alpha3_device_claim_create_internal (
         config ? configList : NULL,
         constraints ? constraintsList : NULL,
         requests ? requestsList : NULL

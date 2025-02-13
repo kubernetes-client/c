@@ -4,38 +4,35 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicyBinding_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicyBinding_0) | **POST** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings | 
-[**AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicy_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicy_0) | **POST** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies | 
-[**AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBinding_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBinding_0) | **DELETE** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings | 
-[**AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0) | **DELETE** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies | 
-[**AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0) | **DELETE** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name} | 
-[**AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0) | **DELETE** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name} | 
-[**AdmissionregistrationV1alpha1API_getAPIResources_1**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_getAPIResources_1) | **GET** /apis/admissionregistration.k8s.io/v1alpha1/ | 
-[**AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicyBinding_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicyBinding_0) | **GET** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings | 
-[**AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicy_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicy_0) | **GET** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies | 
-[**AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyBinding_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyBinding_0) | **PATCH** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name} | 
-[**AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyStatus_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyStatus_0) | **PATCH** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}/status | 
-[**AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicy_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicy_0) | **PATCH** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name} | 
-[**AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyBinding_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyBinding_0) | **GET** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name} | 
-[**AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyStatus_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyStatus_0) | **GET** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}/status | 
-[**AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicy_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicy_0) | **GET** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name} | 
-[**AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyBinding_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyBinding_0) | **PUT** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicybindings/{name} | 
-[**AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyStatus_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyStatus_0) | **PUT** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name}/status | 
-[**AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicy_0**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicy_0) | **PUT** /apis/admissionregistration.k8s.io/v1alpha1/validatingadmissionpolicies/{name} | 
+[**AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicy**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicy) | **POST** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies | 
+[**AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicyBinding**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicyBinding) | **POST** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings | 
+[**AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicy**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicy) | **DELETE** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies | 
+[**AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicyBinding**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicyBinding) | **DELETE** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings | 
+[**AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicy**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicy) | **DELETE** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies/{name} | 
+[**AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicyBinding**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicyBinding) | **DELETE** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings/{name} | 
+[**AdmissionregistrationV1alpha1API_getAPIResources**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_getAPIResources) | **GET** /apis/admissionregistration.k8s.io/v1alpha1/ | 
+[**AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicy**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicy) | **GET** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies | 
+[**AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicyBinding**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicyBinding) | **GET** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings | 
+[**AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicy**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicy) | **PATCH** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies/{name} | 
+[**AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicyBinding**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicyBinding) | **PATCH** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings/{name} | 
+[**AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicy**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicy) | **GET** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies/{name} | 
+[**AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicyBinding**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicyBinding) | **GET** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings/{name} | 
+[**AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicy**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicy) | **PUT** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicies/{name} | 
+[**AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicyBinding**](AdmissionregistrationV1alpha1API.md#AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicyBinding) | **PUT** /apis/admissionregistration.k8s.io/v1alpha1/mutatingadmissionpolicybindings/{name} | 
 
 
-# **AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicyBinding_0**
+# **AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicy**
 ```c
-// create a ValidatingAdmissionPolicyBinding
+// create a MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_binding_t* AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, v1alpha1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1alpha1_mutating_admission_policy_t* AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicy(apiClient_t *apiClient, v1alpha1_mutating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**body** | **[v1alpha1_validating_admission_policy_binding_t](v1alpha1_validating_admission_policy_binding.md) \*** |  | 
+**body** | **[v1alpha1_mutating_admission_policy_t](v1alpha1_mutating_admission_policy.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
@@ -43,7 +40,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1alpha1_validating_admission_policy_binding_t](v1alpha1_validating_admission_policy_binding.md) *
+[v1alpha1_mutating_admission_policy_t](v1alpha1_mutating_admission_policy.md) *
 
 
 ### Authorization
@@ -53,22 +50,22 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicy_0**
+# **AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicyBinding**
 ```c
-// create a ValidatingAdmissionPolicy
+// create a MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_t* AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicy_0(apiClient_t *apiClient, v1alpha1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1alpha1_mutating_admission_policy_binding_t* AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicyBinding(apiClient_t *apiClient, v1alpha1_mutating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**body** | **[v1alpha1_validating_admission_policy_t](v1alpha1_validating_admission_policy.md) \*** |  | 
+**body** | **[v1alpha1_mutating_admission_policy_binding_t](v1alpha1_mutating_admission_policy_binding.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
@@ -76,7 +73,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1alpha1_validating_admission_policy_t](v1alpha1_validating_admission_policy.md) *
+[v1alpha1_mutating_admission_policy_binding_t](v1alpha1_mutating_admission_policy_binding.md) *
 
 
 ### Authorization
@@ -86,15 +83,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBinding_0**
+# **AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicy**
 ```c
-// delete collection of ValidatingAdmissionPolicyBinding
+// delete collection of MutatingAdmissionPolicy
 //
-v1_status_t* AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+v1_status_t* AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -106,6 +103,7 @@ Name | Type | Description  | Notes
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
 **gracePeriodSeconds** | **int \*** | The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. | [optional] 
+**ignoreStoreReadErrorWithClusterBreakingPotential** | **int \*** | if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it | [optional] 
 **labelSelector** | **char \*** | A selector to restrict the list of returned objects by their labels. Defaults to everything. | [optional] 
 **limit** | **int \*** | limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned. | [optional] 
 **orphanDependents** | **int \*** | Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both. | [optional] 
@@ -128,15 +126,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0**
+# **AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicyBinding**
 ```c
-// delete collection of ValidatingAdmissionPolicy
+// delete collection of MutatingAdmissionPolicyBinding
 //
-v1_status_t* AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+v1_status_t* AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -148,6 +146,7 @@ Name | Type | Description  | Notes
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
 **gracePeriodSeconds** | **int \*** | The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. | [optional] 
+**ignoreStoreReadErrorWithClusterBreakingPotential** | **int \*** | if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it | [optional] 
 **labelSelector** | **char \*** | A selector to restrict the list of returned objects by their labels. Defaults to everything. | [optional] 
 **limit** | **int \*** | limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned. | [optional] 
 **orphanDependents** | **int \*** | Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both. | [optional] 
@@ -170,25 +169,26 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0**
+# **AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicy**
 ```c
-// delete a ValidatingAdmissionPolicyBinding
+// delete a MutatingAdmissionPolicy
 //
-v1_status_t* AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+v1_status_t* AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicyBinding | 
+**name** | **char \*** | name of the MutatingAdmissionPolicy | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **gracePeriodSeconds** | **int \*** | The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. | [optional] 
+**ignoreStoreReadErrorWithClusterBreakingPotential** | **int \*** | if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it | [optional] 
 **orphanDependents** | **int \*** | Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both. | [optional] 
 **propagationPolicy** | **char \*** | Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground. | [optional] 
 **body** | **[v1_delete_options_t](v1_delete_options.md) \*** |  | [optional] 
@@ -205,25 +205,26 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0**
+# **AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicyBinding**
 ```c
-// delete a ValidatingAdmissionPolicy
+// delete a MutatingAdmissionPolicyBinding
 //
-v1_status_t* AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+v1_status_t* AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
+**name** | **char \*** | name of the MutatingAdmissionPolicyBinding | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **gracePeriodSeconds** | **int \*** | The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. | [optional] 
+**ignoreStoreReadErrorWithClusterBreakingPotential** | **int \*** | if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it | [optional] 
 **orphanDependents** | **int \*** | Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both. | [optional] 
 **propagationPolicy** | **char \*** | Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground. | [optional] 
 **body** | **[v1_delete_options_t](v1_delete_options.md) \*** |  | [optional] 
@@ -240,15 +241,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_getAPIResources_1**
+# **AdmissionregistrationV1alpha1API_getAPIResources**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* AdmissionregistrationV1alpha1API_getAPIResources_1(apiClient_t *apiClient);
+v1_api_resource_list_t* AdmissionregistrationV1alpha1API_getAPIResources(apiClient_t *apiClient);
 ```
 
 ### Parameters
@@ -268,15 +269,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicyBinding_0**
+# **AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicy**
 ```c
-// list or watch objects of kind ValidatingAdmissionPolicyBinding
+// list or watch objects of kind MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_binding_list_t* AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+v1alpha1_mutating_admission_policy_list_t* AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -297,7 +298,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1alpha1_validating_admission_policy_binding_list_t](v1alpha1_validating_admission_policy_binding_list.md) *
+[v1alpha1_mutating_admission_policy_list_t](v1alpha1_mutating_admission_policy_list.md) *
 
 
 ### Authorization
@@ -307,15 +308,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch, application/cbor-seq
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicy_0**
+# **AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicyBinding**
 ```c
-// list or watch objects of kind ValidatingAdmissionPolicy
+// list or watch objects of kind MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_list_t* AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+v1alpha1_mutating_admission_policy_binding_list_t* AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -336,7 +337,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1alpha1_validating_admission_policy_list_t](v1alpha1_validating_admission_policy_list.md) *
+[v1alpha1_mutating_admission_policy_binding_list_t](v1alpha1_mutating_admission_policy_binding_list.md) *
 
 
 ### Authorization
@@ -346,22 +347,22 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch, application/cbor-seq
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyBinding_0**
+# **AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicy**
 ```c
-// partially update the specified ValidatingAdmissionPolicyBinding
+// partially update the specified MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_binding_t* AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1alpha1_mutating_admission_policy_t* AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicyBinding | 
+**name** | **char \*** | name of the MutatingAdmissionPolicy | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -371,7 +372,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1alpha1_validating_admission_policy_binding_t](v1alpha1_validating_admission_policy_binding.md) *
+[v1alpha1_mutating_admission_policy_t](v1alpha1_mutating_admission_policy.md) *
 
 
 ### Authorization
@@ -380,23 +381,23 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml, application/apply-patch+cbor
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyStatus_0**
+# **AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicyBinding**
 ```c
-// partially update status of the specified ValidatingAdmissionPolicy
+// partially update the specified MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_t* AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyStatus_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1alpha1_mutating_admission_policy_binding_t* AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
+**name** | **char \*** | name of the MutatingAdmissionPolicyBinding | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -406,7 +407,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1alpha1_validating_admission_policy_t](v1alpha1_validating_admission_policy.md) *
+[v1alpha1_mutating_admission_policy_binding_t](v1alpha1_mutating_admission_policy_binding.md) *
 
 
 ### Authorization
@@ -415,63 +416,28 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml, application/apply-patch+cbor
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicy_0**
+# **AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicy**
 ```c
-// partially update the specified ValidatingAdmissionPolicy
+// read the specified MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_t* AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1alpha1_mutating_admission_policy_t* AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
-**body** | **[object_t](object.md) \*** |  | 
-**pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
-**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
-**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
-**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
-**force** | **int \*** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
-
-### Return type
-
-[v1alpha1_validating_admission_policy_t](v1alpha1_validating_admission_policy.md) *
-
-
-### Authorization
-
-[BearerToken](../README.md#BearerToken)
-
-### HTTP request headers
-
- - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyBinding_0**
-```c
-// read the specified ValidatingAdmissionPolicyBinding
-//
-v1alpha1_validating_admission_policy_binding_t* AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, char *pretty);
-```
-
-### Parameters
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicyBinding | 
+**name** | **char \*** | name of the MutatingAdmissionPolicy | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 
 ### Return type
 
-[v1alpha1_validating_admission_policy_binding_t](v1alpha1_validating_admission_policy_binding.md) *
+[v1alpha1_mutating_admission_policy_t](v1alpha1_mutating_admission_policy.md) *
 
 
 ### Authorization
@@ -481,27 +447,27 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyStatus_0**
+# **AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicyBinding**
 ```c
-// read status of the specified ValidatingAdmissionPolicy
+// read the specified MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_t* AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyStatus_0(apiClient_t *apiClient, char *name, char *pretty);
+v1alpha1_mutating_admission_policy_binding_t* AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
+**name** | **char \*** | name of the MutatingAdmissionPolicyBinding | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 
 ### Return type
 
-[v1alpha1_validating_admission_policy_t](v1alpha1_validating_admission_policy.md) *
+[v1alpha1_mutating_admission_policy_binding_t](v1alpha1_mutating_admission_policy_binding.md) *
 
 
 ### Authorization
@@ -511,53 +477,23 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicy_0**
+# **AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicy**
 ```c
-// read the specified ValidatingAdmissionPolicy
+// replace the specified MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_t* AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, char *pretty);
+v1alpha1_mutating_admission_policy_t* AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, v1alpha1_mutating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
-**pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
-
-### Return type
-
-[v1alpha1_validating_admission_policy_t](v1alpha1_validating_admission_policy.md) *
-
-
-### Authorization
-
-[BearerToken](../README.md#BearerToken)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyBinding_0**
-```c
-// replace the specified ValidatingAdmissionPolicyBinding
-//
-v1alpha1_validating_admission_policy_binding_t* AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, v1alpha1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
-```
-
-### Parameters
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicyBinding | 
-**body** | **[v1alpha1_validating_admission_policy_binding_t](v1alpha1_validating_admission_policy_binding.md) \*** |  | 
+**name** | **char \*** | name of the MutatingAdmissionPolicy | 
+**body** | **[v1alpha1_mutating_admission_policy_t](v1alpha1_mutating_admission_policy.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
@@ -565,7 +501,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1alpha1_validating_admission_policy_binding_t](v1alpha1_validating_admission_policy_binding.md) *
+[v1alpha1_mutating_admission_policy_t](v1alpha1_mutating_admission_policy.md) *
 
 
 ### Authorization
@@ -575,23 +511,23 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyStatus_0**
+# **AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicyBinding**
 ```c
-// replace status of the specified ValidatingAdmissionPolicy
+// replace the specified MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_t* AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyStatus_0(apiClient_t *apiClient, char *name, v1alpha1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1alpha1_mutating_admission_policy_binding_t* AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, v1alpha1_mutating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
-**body** | **[v1alpha1_validating_admission_policy_t](v1alpha1_validating_admission_policy.md) \*** |  | 
+**name** | **char \*** | name of the MutatingAdmissionPolicyBinding | 
+**body** | **[v1alpha1_mutating_admission_policy_binding_t](v1alpha1_mutating_admission_policy_binding.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
@@ -599,7 +535,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1alpha1_validating_admission_policy_t](v1alpha1_validating_admission_policy.md) *
+[v1alpha1_mutating_admission_policy_binding_t](v1alpha1_mutating_admission_policy_binding.md) *
 
 
 ### Authorization
@@ -609,41 +545,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicy_0**
-```c
-// replace the specified ValidatingAdmissionPolicy
-//
-v1alpha1_validating_admission_policy_t* AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, v1alpha1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
-```
-
-### Parameters
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
-**body** | **[v1alpha1_validating_admission_policy_t](v1alpha1_validating_admission_policy.md) \*** |  | 
-**pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
-**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
-**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
-**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
-
-### Return type
-
-[v1alpha1_validating_admission_policy_t](v1alpha1_validating_admission_policy.md) *
-
-
-### Authorization
-
-[BearerToken](../README.md#BearerToken)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

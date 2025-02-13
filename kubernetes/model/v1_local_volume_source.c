@@ -5,7 +5,7 @@
 
 
 
-v1_local_volume_source_t *v1_local_volume_source_create(
+static v1_local_volume_source_t *v1_local_volume_source_create_internal(
     char *fs_type,
     char *path
     ) {
@@ -16,12 +16,26 @@ v1_local_volume_source_t *v1_local_volume_source_create(
     v1_local_volume_source_local_var->fs_type = fs_type;
     v1_local_volume_source_local_var->path = path;
 
+    v1_local_volume_source_local_var->_library_owned = 1;
     return v1_local_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_local_volume_source_t *v1_local_volume_source_create(
+    char *fs_type,
+    char *path
+    ) {
+    return v1_local_volume_source_create_internal (
+        fs_type,
+        path
+        );
+}
 
 void v1_local_volume_source_free(v1_local_volume_source_t *v1_local_volume_source) {
     if(NULL == v1_local_volume_source){
+        return ;
+    }
+    if(v1_local_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_local_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -69,6 +83,9 @@ v1_local_volume_source_t *v1_local_volume_source_parseFromJSON(cJSON *v1_local_v
 
     // v1_local_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_local_volume_sourceJSON, "fsType");
+    if (cJSON_IsNull(fs_type)) {
+        fs_type = NULL;
+    }
     if (fs_type) { 
     if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
@@ -78,6 +95,9 @@ v1_local_volume_source_t *v1_local_volume_source_parseFromJSON(cJSON *v1_local_v
 
     // v1_local_volume_source->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_local_volume_sourceJSON, "path");
+    if (cJSON_IsNull(path)) {
+        path = NULL;
+    }
     if (!path) {
         goto end;
     }
@@ -89,7 +109,7 @@ v1_local_volume_source_t *v1_local_volume_source_parseFromJSON(cJSON *v1_local_v
     }
 
 
-    v1_local_volume_source_local_var = v1_local_volume_source_create (
+    v1_local_volume_source_local_var = v1_local_volume_source_create_internal (
         fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         strdup(path->valuestring)
         );

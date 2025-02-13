@@ -26,9 +26,10 @@ typedef struct v1_custom_resource_definition_names_t {
     list_t *short_names; //primitive container
     char *singular; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_custom_resource_definition_names_t;
 
-v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_create(
+__attribute__((deprecated)) v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_create(
     list_t *categories,
     char *kind,
     char *list_kind,

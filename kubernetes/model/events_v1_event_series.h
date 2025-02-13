@@ -22,9 +22,10 @@ typedef struct events_v1_event_series_t {
     int count; //numeric
     char *last_observed_time; //date time
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } events_v1_event_series_t;
 
-events_v1_event_series_t *events_v1_event_series_create(
+__attribute__((deprecated)) events_v1_event_series_t *events_v1_event_series_create(
     int count,
     char *last_observed_time
 );

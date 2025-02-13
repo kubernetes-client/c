@@ -27,9 +27,10 @@ typedef struct v1alpha1_match_resources_t {
     struct v1_label_selector_t *object_selector; //model
     list_t *resource_rules; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha1_match_resources_t;
 
-v1alpha1_match_resources_t *v1alpha1_match_resources_create(
+__attribute__((deprecated)) v1alpha1_match_resources_t *v1alpha1_match_resources_create(
     list_t *exclude_resource_rules,
     char *match_policy,
     v1_label_selector_t *namespace_selector,

@@ -22,9 +22,10 @@ typedef struct v1_ingress_tls_t {
     list_t *hosts; //primitive container
     char *secret_name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ingress_tls_t;
 
-v1_ingress_tls_t *v1_ingress_tls_create(
+__attribute__((deprecated)) v1_ingress_tls_t *v1_ingress_tls_create(
     list_t *hosts,
     char *secret_name
 );

@@ -5,7 +5,7 @@
 
 
 
-v1_success_policy_t *v1_success_policy_create(
+static v1_success_policy_t *v1_success_policy_create_internal(
     list_t *rules
     ) {
     v1_success_policy_t *v1_success_policy_local_var = malloc(sizeof(v1_success_policy_t));
@@ -14,12 +14,24 @@ v1_success_policy_t *v1_success_policy_create(
     }
     v1_success_policy_local_var->rules = rules;
 
+    v1_success_policy_local_var->_library_owned = 1;
     return v1_success_policy_local_var;
 }
 
+__attribute__((deprecated)) v1_success_policy_t *v1_success_policy_create(
+    list_t *rules
+    ) {
+    return v1_success_policy_create_internal (
+        rules
+        );
+}
 
 void v1_success_policy_free(v1_success_policy_t *v1_success_policy) {
     if(NULL == v1_success_policy){
+        return ;
+    }
+    if(v1_success_policy->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_success_policy_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -73,6 +85,9 @@ v1_success_policy_t *v1_success_policy_parseFromJSON(cJSON *v1_success_policyJSO
 
     // v1_success_policy->rules
     cJSON *rules = cJSON_GetObjectItemCaseSensitive(v1_success_policyJSON, "rules");
+    if (cJSON_IsNull(rules)) {
+        rules = NULL;
+    }
     if (!rules) {
         goto end;
     }
@@ -96,7 +111,7 @@ v1_success_policy_t *v1_success_policy_parseFromJSON(cJSON *v1_success_policyJSO
     }
 
 
-    v1_success_policy_local_var = v1_success_policy_create (
+    v1_success_policy_local_var = v1_success_policy_create_internal (
         rulesList
         );
 

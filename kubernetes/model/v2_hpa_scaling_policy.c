@@ -5,7 +5,7 @@
 
 
 
-v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_create(
+static v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_create_internal(
     int period_seconds,
     char *type,
     int value
@@ -18,12 +18,28 @@ v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_create(
     v2_hpa_scaling_policy_local_var->type = type;
     v2_hpa_scaling_policy_local_var->value = value;
 
+    v2_hpa_scaling_policy_local_var->_library_owned = 1;
     return v2_hpa_scaling_policy_local_var;
 }
 
+__attribute__((deprecated)) v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_create(
+    int period_seconds,
+    char *type,
+    int value
+    ) {
+    return v2_hpa_scaling_policy_create_internal (
+        period_seconds,
+        type,
+        value
+        );
+}
 
 void v2_hpa_scaling_policy_free(v2_hpa_scaling_policy_t *v2_hpa_scaling_policy) {
     if(NULL == v2_hpa_scaling_policy){
+        return ;
+    }
+    if(v2_hpa_scaling_policy->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v2_hpa_scaling_policy_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -77,6 +93,9 @@ v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_parseFromJSON(cJSON *v2_hpa_scali
 
     // v2_hpa_scaling_policy->period_seconds
     cJSON *period_seconds = cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_policyJSON, "periodSeconds");
+    if (cJSON_IsNull(period_seconds)) {
+        period_seconds = NULL;
+    }
     if (!period_seconds) {
         goto end;
     }
@@ -89,6 +108,9 @@ v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_parseFromJSON(cJSON *v2_hpa_scali
 
     // v2_hpa_scaling_policy->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_policyJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -101,6 +123,9 @@ v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_parseFromJSON(cJSON *v2_hpa_scali
 
     // v2_hpa_scaling_policy->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_policyJSON, "value");
+    if (cJSON_IsNull(value)) {
+        value = NULL;
+    }
     if (!value) {
         goto end;
     }
@@ -112,7 +137,7 @@ v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_parseFromJSON(cJSON *v2_hpa_scali
     }
 
 
-    v2_hpa_scaling_policy_local_var = v2_hpa_scaling_policy_create (
+    v2_hpa_scaling_policy_local_var = v2_hpa_scaling_policy_create_internal (
         period_seconds->valuedouble,
         strdup(type->valuestring),
         value->valuedouble

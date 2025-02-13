@@ -5,11 +5,6 @@
 
 #define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
-#define intToStr(dst, src) \
-    do {\
-    char dst[256];\
-    snprintf(dst, 256, "%ld", (long int)(src));\
-}while(0)
 
 
 // create a HorizontalPodAutoscaler
@@ -23,15 +18,20 @@ AutoscalingV1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers");
+    char *localVarPath = strdup("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -94,13 +94,15 @@ AutoscalingV1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_horizontal_pod_autoscaler_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -109,6 +111,7 @@ AutoscalingV1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -128,11 +131,14 @@ AutoscalingV1API_createNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_horizontal_pod_autoscaler_t *elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_horizontal_pod_autoscaler_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -211,7 +217,7 @@ end:
 // delete collection of HorizontalPodAutoscaler
 //
 v1_status_t*
-AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -219,15 +225,20 @@ AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers");
+    char *localVarPath = strdup("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -297,6 +308,19 @@ AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *
         snprintf(valueQuery_gracePeriodSeconds, MAX_NUMBER_LENGTH, "%d", *gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = keyValuePair_create(keyQuery_gracePeriodSeconds, valueQuery_gracePeriodSeconds);
         list_addElement(localVarQueryParameters,keyPairQuery_gracePeriodSeconds);
+    }
+
+    // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
     }
 
     // query parameters
@@ -403,13 +427,15 @@ AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -418,6 +444,7 @@ AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -429,11 +456,14 @@ AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -513,6 +543,18 @@ AutoscalingV1API_deleteCollectionNamespacedHorizontalPodAutoscaler(apiClient_t *
     if(keyPairQuery_gracePeriodSeconds){
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
+    }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
     }
     if(keyQuery_labelSelector){
         free(keyQuery_labelSelector);
@@ -620,7 +662,7 @@ end:
 // delete a HorizontalPodAutoscaler
 //
 v1_status_t*
-AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
+AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -628,15 +670,22 @@ AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}");
+    char *localVarPath = strdup("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -646,7 +695,7 @@ AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -695,6 +744,19 @@ AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
     }
 
     // query parameters
+    char *keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    char * valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    keyValuePair_t *keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = 0;
+    if (ignoreStoreReadErrorWithClusterBreakingPotential)
+    {
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = strdup("ignoreStoreReadErrorWithClusterBreakingPotential");
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential, MAX_NUMBER_LENGTH, "%d", *ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = keyValuePair_create(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential, valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        list_addElement(localVarQueryParameters,keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+    }
+
+    // query parameters
     char *keyQuery_orphanDependents = NULL;
     char * valueQuery_orphanDependents = NULL;
     keyValuePair_t *keyPairQuery_orphanDependents = 0;
@@ -723,13 +785,15 @@ AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -738,6 +802,7 @@ AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -753,11 +818,14 @@ AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_status_t *elementToReturn = v1_status_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_status_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_status_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -815,6 +883,18 @@ AutoscalingV1API_deleteNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient,
         keyValuePair_free(keyPairQuery_gracePeriodSeconds);
         keyPairQuery_gracePeriodSeconds = NULL;
     }
+    if(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        free(valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        valueQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
+    if(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential){
+        keyValuePair_free(keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential);
+        keyPairQuery_ignoreStoreReadErrorWithClusterBreakingPotential = NULL;
+    }
     if(keyQuery_orphanDependents){
         free(keyQuery_orphanDependents);
         keyQuery_orphanDependents = NULL;
@@ -849,7 +929,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-AutoscalingV1API_getAPIResources_10(apiClient_t *apiClient)
+AutoscalingV1API_getAPIResources(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -857,17 +937,21 @@ AutoscalingV1API_getAPIResources_10(apiClient_t *apiClient)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/");
+    char *localVarPath = strdup("/apis/autoscaling/v1/");
+
 
 
 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -876,6 +960,7 @@ AutoscalingV1API_getAPIResources_10(apiClient_t *apiClient)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -887,11 +972,14 @@ AutoscalingV1API_getAPIResources_10(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_api_resource_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_api_resource_list_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -924,11 +1012,14 @@ AutoscalingV1API_listHorizontalPodAutoscalerForAllNamespaces(apiClient_t *apiCli
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/horizontalpodautoscalers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/horizontalpodautoscalers");
+    char *localVarPath = strdup("/apis/autoscaling/v1/horizontalpodautoscalers");
+
 
 
 
@@ -1072,8 +1163,10 @@ AutoscalingV1API_listHorizontalPodAutoscalerForAllNamespaces(apiClient_t *apiCli
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1082,6 +1175,7 @@ AutoscalingV1API_listHorizontalPodAutoscalerForAllNamespaces(apiClient_t *apiCli
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1093,11 +1187,14 @@ AutoscalingV1API_listHorizontalPodAutoscalerForAllNamespaces(apiClient_t *apiCli
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_horizontal_pod_autoscaler_list_t *elementToReturn = v1_horizontal_pod_autoscaler_list_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_horizontal_pod_autoscaler_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_horizontal_pod_autoscaler_list_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1262,15 +1359,20 @@ AutoscalingV1API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers");
+    char *localVarPath = strdup("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers");
+
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1420,8 +1522,10 @@ AutoscalingV1API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, c
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+    list_addElement(localVarHeaderType,"application/cbor-seq"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1430,6 +1534,7 @@ AutoscalingV1API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1441,11 +1546,14 @@ AutoscalingV1API_listNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_horizontal_pod_autoscaler_list_t *elementToReturn = v1_horizontal_pod_autoscaler_list_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_horizontal_pod_autoscaler_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_horizontal_pod_autoscaler_list_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1611,15 +1719,22 @@ AutoscalingV1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}");
+    char *localVarPath = strdup("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1629,7 +1744,7 @@ AutoscalingV1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, 
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1705,17 +1820,20 @@ AutoscalingV1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1724,6 +1842,7 @@ AutoscalingV1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -1739,11 +1858,14 @@ AutoscalingV1API_patchNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_horizontal_pod_autoscaler_t *elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_horizontal_pod_autoscaler_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1843,15 +1965,22 @@ AutoscalingV1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiCl
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status");
+    char *localVarPath = strdup("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1861,7 +1990,7 @@ AutoscalingV1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiCl
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1937,17 +2066,20 @@ AutoscalingV1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiCl
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
     list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
     list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -1956,6 +2088,7 @@ AutoscalingV1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiCl
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -1971,11 +2104,14 @@ AutoscalingV1API_patchNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiCl
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_horizontal_pod_autoscaler_t *elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_horizontal_pod_autoscaler_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2075,15 +2211,22 @@ AutoscalingV1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}");
+    char *localVarPath = strdup("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2093,7 +2236,7 @@ AutoscalingV1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, c
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2118,6 +2261,7 @@ AutoscalingV1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, c
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2126,6 +2270,7 @@ AutoscalingV1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2137,11 +2282,14 @@ AutoscalingV1API_readNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_horizontal_pod_autoscaler_t *elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_horizontal_pod_autoscaler_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2188,15 +2336,22 @@ AutoscalingV1API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiCli
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status");
+    char *localVarPath = strdup("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2206,7 +2361,7 @@ AutoscalingV1API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiCli
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2231,6 +2386,7 @@ AutoscalingV1API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiCli
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2239,6 +2395,7 @@ AutoscalingV1API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiCli
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2250,11 +2407,14 @@ AutoscalingV1API_readNamespacedHorizontalPodAutoscalerStatus(apiClient_t *apiCli
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_horizontal_pod_autoscaler_t *elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_horizontal_pod_autoscaler_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2301,15 +2461,22 @@ AutoscalingV1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}");
+    char *localVarPath = strdup("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2319,7 +2486,7 @@ AutoscalingV1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2382,13 +2549,15 @@ AutoscalingV1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_horizontal_pod_autoscaler_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2397,6 +2566,7 @@ AutoscalingV1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -2412,11 +2582,14 @@ AutoscalingV1API_replaceNamespacedHorizontalPodAutoscaler(apiClient_t *apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_horizontal_pod_autoscaler_t *elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_horizontal_pod_autoscaler_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2504,15 +2677,22 @@ AutoscalingV1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *api
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status");
+    char *localVarPath = strdup("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status");
+
+    if(!name)
+        goto end;
+    if(!_namespace)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2522,7 +2702,7 @@ AutoscalingV1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *api
     localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(name)+3 + strlen(_namespace)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2585,13 +2765,15 @@ AutoscalingV1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *api
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_horizontal_pod_autoscaler_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -2600,6 +2782,7 @@ AutoscalingV1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *api
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -2615,11 +2798,14 @@ AutoscalingV1API_replaceNamespacedHorizontalPodAutoscalerStatus(apiClient_t *api
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_horizontal_pod_autoscaler_t *elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
-    cJSON_Delete(AutoscalingV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_horizontal_pod_autoscaler_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AutoscalingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_horizontal_pod_autoscaler_parseFromJSON(AutoscalingV1APIlocalVarJSON);
+        cJSON_Delete(AutoscalingV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type

@@ -25,9 +25,10 @@ typedef struct v1_cinder_persistent_volume_source_t {
     struct v1_secret_reference_t *secret_ref; //model
     char *volume_id; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_cinder_persistent_volume_source_t;
 
-v1_cinder_persistent_volume_source_t *v1_cinder_persistent_volume_source_create(
+__attribute__((deprecated)) v1_cinder_persistent_volume_source_t *v1_cinder_persistent_volume_source_create(
     char *fs_type,
     int read_only,
     v1_secret_reference_t *secret_ref,

@@ -22,9 +22,10 @@ typedef struct v1_event_source_t {
     char *component; // string
     char *host; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_event_source_t;
 
-v1_event_source_t *v1_event_source_create(
+__attribute__((deprecated)) v1_event_source_t *v1_event_source_create(
     char *component,
     char *host
 );

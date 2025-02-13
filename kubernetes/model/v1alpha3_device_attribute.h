@@ -24,9 +24,10 @@ typedef struct v1alpha3_device_attribute_t {
     char *string; // string
     char *version; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_attribute_t;
 
-v1alpha3_device_attribute_t *v1alpha3_device_attribute_create(
+__attribute__((deprecated)) v1alpha3_device_attribute_t *v1alpha3_device_attribute_create(
     int _bool,
     long _int,
     char *string,

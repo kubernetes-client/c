@@ -5,7 +5,7 @@
 
 
 
-v1_status_details_t *v1_status_details_create(
+static v1_status_details_t *v1_status_details_create_internal(
     list_t *causes,
     char *group,
     char *kind,
@@ -24,12 +24,34 @@ v1_status_details_t *v1_status_details_create(
     v1_status_details_local_var->retry_after_seconds = retry_after_seconds;
     v1_status_details_local_var->uid = uid;
 
+    v1_status_details_local_var->_library_owned = 1;
     return v1_status_details_local_var;
 }
 
+__attribute__((deprecated)) v1_status_details_t *v1_status_details_create(
+    list_t *causes,
+    char *group,
+    char *kind,
+    char *name,
+    int retry_after_seconds,
+    char *uid
+    ) {
+    return v1_status_details_create_internal (
+        causes,
+        group,
+        kind,
+        name,
+        retry_after_seconds,
+        uid
+        );
+}
 
 void v1_status_details_free(v1_status_details_t *v1_status_details) {
     if(NULL == v1_status_details){
+        return ;
+    }
+    if(v1_status_details->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_status_details_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -138,6 +160,9 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
 
     // v1_status_details->causes
     cJSON *causes = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "causes");
+    if (cJSON_IsNull(causes)) {
+        causes = NULL;
+    }
     if (causes) { 
     cJSON *causes_local_nonprimitive = NULL;
     if(!cJSON_IsArray(causes)){
@@ -159,6 +184,9 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
 
     // v1_status_details->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "group");
+    if (cJSON_IsNull(group)) {
+        group = NULL;
+    }
     if (group) { 
     if(!cJSON_IsString(group) && !cJSON_IsNull(group))
     {
@@ -168,6 +196,9 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
 
     // v1_status_details->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -177,6 +208,9 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
 
     // v1_status_details->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -186,6 +220,9 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
 
     // v1_status_details->retry_after_seconds
     cJSON *retry_after_seconds = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "retryAfterSeconds");
+    if (cJSON_IsNull(retry_after_seconds)) {
+        retry_after_seconds = NULL;
+    }
     if (retry_after_seconds) { 
     if(!cJSON_IsNumber(retry_after_seconds))
     {
@@ -195,6 +232,9 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
 
     // v1_status_details->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "uid");
+    if (cJSON_IsNull(uid)) {
+        uid = NULL;
+    }
     if (uid) { 
     if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
@@ -203,7 +243,7 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
     }
 
 
-    v1_status_details_local_var = v1_status_details_create (
+    v1_status_details_local_var = v1_status_details_create_internal (
         causes ? causesList : NULL,
         group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,

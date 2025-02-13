@@ -5,7 +5,7 @@
 
 
 
-v1_windows_security_context_options_t *v1_windows_security_context_options_create(
+static v1_windows_security_context_options_t *v1_windows_security_context_options_create_internal(
     char *gmsa_credential_spec,
     char *gmsa_credential_spec_name,
     int host_process,
@@ -20,12 +20,30 @@ v1_windows_security_context_options_t *v1_windows_security_context_options_creat
     v1_windows_security_context_options_local_var->host_process = host_process;
     v1_windows_security_context_options_local_var->run_as_user_name = run_as_user_name;
 
+    v1_windows_security_context_options_local_var->_library_owned = 1;
     return v1_windows_security_context_options_local_var;
 }
 
+__attribute__((deprecated)) v1_windows_security_context_options_t *v1_windows_security_context_options_create(
+    char *gmsa_credential_spec,
+    char *gmsa_credential_spec_name,
+    int host_process,
+    char *run_as_user_name
+    ) {
+    return v1_windows_security_context_options_create_internal (
+        gmsa_credential_spec,
+        gmsa_credential_spec_name,
+        host_process,
+        run_as_user_name
+        );
+}
 
 void v1_windows_security_context_options_free(v1_windows_security_context_options_t *v1_windows_security_context_options) {
     if(NULL == v1_windows_security_context_options){
+        return ;
+    }
+    if(v1_windows_security_context_options->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_windows_security_context_options_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -92,6 +110,9 @@ v1_windows_security_context_options_t *v1_windows_security_context_options_parse
 
     // v1_windows_security_context_options->gmsa_credential_spec
     cJSON *gmsa_credential_spec = cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "gmsaCredentialSpec");
+    if (cJSON_IsNull(gmsa_credential_spec)) {
+        gmsa_credential_spec = NULL;
+    }
     if (gmsa_credential_spec) { 
     if(!cJSON_IsString(gmsa_credential_spec) && !cJSON_IsNull(gmsa_credential_spec))
     {
@@ -101,6 +122,9 @@ v1_windows_security_context_options_t *v1_windows_security_context_options_parse
 
     // v1_windows_security_context_options->gmsa_credential_spec_name
     cJSON *gmsa_credential_spec_name = cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "gmsaCredentialSpecName");
+    if (cJSON_IsNull(gmsa_credential_spec_name)) {
+        gmsa_credential_spec_name = NULL;
+    }
     if (gmsa_credential_spec_name) { 
     if(!cJSON_IsString(gmsa_credential_spec_name) && !cJSON_IsNull(gmsa_credential_spec_name))
     {
@@ -110,6 +134,9 @@ v1_windows_security_context_options_t *v1_windows_security_context_options_parse
 
     // v1_windows_security_context_options->host_process
     cJSON *host_process = cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "hostProcess");
+    if (cJSON_IsNull(host_process)) {
+        host_process = NULL;
+    }
     if (host_process) { 
     if(!cJSON_IsBool(host_process))
     {
@@ -119,6 +146,9 @@ v1_windows_security_context_options_t *v1_windows_security_context_options_parse
 
     // v1_windows_security_context_options->run_as_user_name
     cJSON *run_as_user_name = cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "runAsUserName");
+    if (cJSON_IsNull(run_as_user_name)) {
+        run_as_user_name = NULL;
+    }
     if (run_as_user_name) { 
     if(!cJSON_IsString(run_as_user_name) && !cJSON_IsNull(run_as_user_name))
     {
@@ -127,7 +157,7 @@ v1_windows_security_context_options_t *v1_windows_security_context_options_parse
     }
 
 
-    v1_windows_security_context_options_local_var = v1_windows_security_context_options_create (
+    v1_windows_security_context_options_local_var = v1_windows_security_context_options_create_internal (
         gmsa_credential_spec && !cJSON_IsNull(gmsa_credential_spec) ? strdup(gmsa_credential_spec->valuestring) : NULL,
         gmsa_credential_spec_name && !cJSON_IsNull(gmsa_credential_spec_name) ? strdup(gmsa_credential_spec_name->valuestring) : NULL,
         host_process ? host_process->valueint : 0,

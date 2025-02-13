@@ -11,6 +11,6 @@
 // get information of a group
 //
 v1_api_group_t*
-PolicyAPI_getAPIGroup_15(apiClient_t *apiClient);
+PolicyAPI_getAPIGroup(apiClient_t *apiClient);
 
 

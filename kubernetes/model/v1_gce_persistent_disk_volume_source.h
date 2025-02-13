@@ -24,9 +24,10 @@ typedef struct v1_gce_persistent_disk_volume_source_t {
     char *pd_name; // string
     int read_only; //boolean
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_gce_persistent_disk_volume_source_t;
 
-v1_gce_persistent_disk_volume_source_t *v1_gce_persistent_disk_volume_source_create(
+__attribute__((deprecated)) v1_gce_persistent_disk_volume_source_t *v1_gce_persistent_disk_volume_source_create(
     char *fs_type,
     int partition,
     char *pd_name,

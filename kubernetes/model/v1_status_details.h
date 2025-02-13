@@ -27,9 +27,10 @@ typedef struct v1_status_details_t {
     int retry_after_seconds; //numeric
     char *uid; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_status_details_t;
 
-v1_status_details_t *v1_status_details_create(
+__attribute__((deprecated)) v1_status_details_t *v1_status_details_create(
     list_t *causes,
     char *group,
     char *kind,

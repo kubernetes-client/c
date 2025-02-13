@@ -26,9 +26,10 @@ typedef struct v1beta1_validating_admission_policy_binding_t {
     struct v1_object_meta_t *metadata; //model
     struct v1beta1_validating_admission_policy_binding_spec_t *spec; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_validating_admission_policy_binding_t;
 
-v1beta1_validating_admission_policy_binding_t *v1beta1_validating_admission_policy_binding_create(
+__attribute__((deprecated)) v1beta1_validating_admission_policy_binding_t *v1beta1_validating_admission_policy_binding_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

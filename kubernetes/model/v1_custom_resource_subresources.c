@@ -5,7 +5,7 @@
 
 
 
-v1_custom_resource_subresources_t *v1_custom_resource_subresources_create(
+static v1_custom_resource_subresources_t *v1_custom_resource_subresources_create_internal(
     v1_custom_resource_subresource_scale_t *scale,
     object_t *status
     ) {
@@ -16,12 +16,26 @@ v1_custom_resource_subresources_t *v1_custom_resource_subresources_create(
     v1_custom_resource_subresources_local_var->scale = scale;
     v1_custom_resource_subresources_local_var->status = status;
 
+    v1_custom_resource_subresources_local_var->_library_owned = 1;
     return v1_custom_resource_subresources_local_var;
 }
 
+__attribute__((deprecated)) v1_custom_resource_subresources_t *v1_custom_resource_subresources_create(
+    v1_custom_resource_subresource_scale_t *scale,
+    object_t *status
+    ) {
+    return v1_custom_resource_subresources_create_internal (
+        scale,
+        status
+        );
+}
 
 void v1_custom_resource_subresources_free(v1_custom_resource_subresources_t *v1_custom_resource_subresources) {
     if(NULL == v1_custom_resource_subresources){
+        return ;
+    }
+    if(v1_custom_resource_subresources->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_custom_resource_subresources_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -81,19 +95,25 @@ v1_custom_resource_subresources_t *v1_custom_resource_subresources_parseFromJSON
 
     // v1_custom_resource_subresources->scale
     cJSON *scale = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresourcesJSON, "scale");
+    if (cJSON_IsNull(scale)) {
+        scale = NULL;
+    }
     if (scale) { 
     scale_local_nonprim = v1_custom_resource_subresource_scale_parseFromJSON(scale); //nonprimitive
     }
 
     // v1_custom_resource_subresources->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresourcesJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
     object_t *status_local_object = NULL;
     if (status) { 
     status_local_object = object_parseFromJSON(status); //object
     }
 
 
-    v1_custom_resource_subresources_local_var = v1_custom_resource_subresources_create (
+    v1_custom_resource_subresources_local_var = v1_custom_resource_subresources_create_internal (
         scale ? scale_local_nonprim : NULL,
         status ? status_local_object : NULL
         );

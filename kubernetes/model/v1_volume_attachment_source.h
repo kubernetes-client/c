@@ -1,7 +1,7 @@
 /*
  * v1_volume_attachment_source.h
  *
- * VolumeAttachmentSource represents a volume that should be attached. Right now only PersistenVolumes can be attached via external attacher, in future we may allow also inline volumes in pods. Exactly one member can be set.
+ * VolumeAttachmentSource represents a volume that should be attached. Right now only PersistentVolumes can be attached via external attacher, in the future we may allow also inline volumes in pods. Exactly one member can be set.
  */
 
 #ifndef _v1_volume_attachment_source_H_
@@ -23,9 +23,10 @@ typedef struct v1_volume_attachment_source_t {
     struct v1_persistent_volume_spec_t *inline_volume_spec; //model
     char *persistent_volume_name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_attachment_source_t;
 
-v1_volume_attachment_source_t *v1_volume_attachment_source_create(
+__attribute__((deprecated)) v1_volume_attachment_source_t *v1_volume_attachment_source_create(
     v1_persistent_volume_spec_t *inline_volume_spec,
     char *persistent_volume_name
 );

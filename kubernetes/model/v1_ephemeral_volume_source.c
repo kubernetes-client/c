@@ -5,7 +5,7 @@
 
 
 
-v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_create(
+static v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_create_internal(
     v1_persistent_volume_claim_template_t *volume_claim_template
     ) {
     v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_local_var = malloc(sizeof(v1_ephemeral_volume_source_t));
@@ -14,12 +14,24 @@ v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_create(
     }
     v1_ephemeral_volume_source_local_var->volume_claim_template = volume_claim_template;
 
+    v1_ephemeral_volume_source_local_var->_library_owned = 1;
     return v1_ephemeral_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_create(
+    v1_persistent_volume_claim_template_t *volume_claim_template
+    ) {
+    return v1_ephemeral_volume_source_create_internal (
+        volume_claim_template
+        );
+}
 
 void v1_ephemeral_volume_source_free(v1_ephemeral_volume_source_t *v1_ephemeral_volume_source) {
     if(NULL == v1_ephemeral_volume_source){
+        return ;
+    }
+    if(v1_ephemeral_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_ephemeral_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -62,12 +74,15 @@ v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_parseFromJSON(cJSON *v1
 
     // v1_ephemeral_volume_source->volume_claim_template
     cJSON *volume_claim_template = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_volume_sourceJSON, "volumeClaimTemplate");
+    if (cJSON_IsNull(volume_claim_template)) {
+        volume_claim_template = NULL;
+    }
     if (volume_claim_template) { 
     volume_claim_template_local_nonprim = v1_persistent_volume_claim_template_parseFromJSON(volume_claim_template); //nonprimitive
     }
 
 
-    v1_ephemeral_volume_source_local_var = v1_ephemeral_volume_source_create (
+    v1_ephemeral_volume_source_local_var = v1_ephemeral_volume_source_create_internal (
         volume_claim_template ? volume_claim_template_local_nonprim : NULL
         );
 

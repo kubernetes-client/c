@@ -5,7 +5,7 @@
 
 
 
-v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_create(
+static v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_create_internal(
     list_t *failed,
     list_t *succeeded
     ) {
@@ -16,12 +16,26 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_create(
     v1_uncounted_terminated_pods_local_var->failed = failed;
     v1_uncounted_terminated_pods_local_var->succeeded = succeeded;
 
+    v1_uncounted_terminated_pods_local_var->_library_owned = 1;
     return v1_uncounted_terminated_pods_local_var;
 }
 
+__attribute__((deprecated)) v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_create(
+    list_t *failed,
+    list_t *succeeded
+    ) {
+    return v1_uncounted_terminated_pods_create_internal (
+        failed,
+        succeeded
+        );
+}
 
 void v1_uncounted_terminated_pods_free(v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods) {
     if(NULL == v1_uncounted_terminated_pods){
+        return ;
+    }
+    if(v1_uncounted_terminated_pods->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_uncounted_terminated_pods_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -54,7 +68,7 @@ cJSON *v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_t
 
     listEntry_t *failedListEntry;
     list_ForEach(failedListEntry, v1_uncounted_terminated_pods->failed) {
-    if(cJSON_AddStringToObject(failed, "", (char*)failedListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(failed, "", failedListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -71,7 +85,7 @@ cJSON *v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_t
 
     listEntry_t *succeededListEntry;
     list_ForEach(succeededListEntry, v1_uncounted_terminated_pods->succeeded) {
-    if(cJSON_AddStringToObject(succeeded, "", (char*)succeededListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(succeeded, "", succeededListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -98,6 +112,9 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON
 
     // v1_uncounted_terminated_pods->failed
     cJSON *failed = cJSON_GetObjectItemCaseSensitive(v1_uncounted_terminated_podsJSON, "failed");
+    if (cJSON_IsNull(failed)) {
+        failed = NULL;
+    }
     if (failed) { 
     cJSON *failed_local = NULL;
     if(!cJSON_IsArray(failed)) {
@@ -117,6 +134,9 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON
 
     // v1_uncounted_terminated_pods->succeeded
     cJSON *succeeded = cJSON_GetObjectItemCaseSensitive(v1_uncounted_terminated_podsJSON, "succeeded");
+    if (cJSON_IsNull(succeeded)) {
+        succeeded = NULL;
+    }
     if (succeeded) { 
     cJSON *succeeded_local = NULL;
     if(!cJSON_IsArray(succeeded)) {
@@ -135,7 +155,7 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON
     }
 
 
-    v1_uncounted_terminated_pods_local_var = v1_uncounted_terminated_pods_create (
+    v1_uncounted_terminated_pods_local_var = v1_uncounted_terminated_pods_create_internal (
         failed ? failedList : NULL,
         succeeded ? succeededList : NULL
         );

@@ -23,9 +23,10 @@ typedef struct v1_certificate_signing_request_status_t {
     char *certificate; //ByteArray
     list_t *conditions; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_certificate_signing_request_status_t;
 
-v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_create(
+__attribute__((deprecated)) v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_create(
     char *certificate,
     list_t *conditions
 );

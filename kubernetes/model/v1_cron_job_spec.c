@@ -5,7 +5,7 @@
 
 
 
-v1_cron_job_spec_t *v1_cron_job_spec_create(
+static v1_cron_job_spec_t *v1_cron_job_spec_create_internal(
     char *concurrency_policy,
     int failed_jobs_history_limit,
     v1_job_template_spec_t *job_template,
@@ -28,12 +28,38 @@ v1_cron_job_spec_t *v1_cron_job_spec_create(
     v1_cron_job_spec_local_var->suspend = suspend;
     v1_cron_job_spec_local_var->time_zone = time_zone;
 
+    v1_cron_job_spec_local_var->_library_owned = 1;
     return v1_cron_job_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_cron_job_spec_t *v1_cron_job_spec_create(
+    char *concurrency_policy,
+    int failed_jobs_history_limit,
+    v1_job_template_spec_t *job_template,
+    char *schedule,
+    long starting_deadline_seconds,
+    int successful_jobs_history_limit,
+    int suspend,
+    char *time_zone
+    ) {
+    return v1_cron_job_spec_create_internal (
+        concurrency_policy,
+        failed_jobs_history_limit,
+        job_template,
+        schedule,
+        starting_deadline_seconds,
+        successful_jobs_history_limit,
+        suspend,
+        time_zone
+        );
+}
 
 void v1_cron_job_spec_free(v1_cron_job_spec_t *v1_cron_job_spec) {
     if(NULL == v1_cron_job_spec){
+        return ;
+    }
+    if(v1_cron_job_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_cron_job_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -146,6 +172,9 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
     // v1_cron_job_spec->concurrency_policy
     cJSON *concurrency_policy = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "concurrencyPolicy");
+    if (cJSON_IsNull(concurrency_policy)) {
+        concurrency_policy = NULL;
+    }
     if (concurrency_policy) { 
     if(!cJSON_IsString(concurrency_policy) && !cJSON_IsNull(concurrency_policy))
     {
@@ -155,6 +184,9 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
     // v1_cron_job_spec->failed_jobs_history_limit
     cJSON *failed_jobs_history_limit = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "failedJobsHistoryLimit");
+    if (cJSON_IsNull(failed_jobs_history_limit)) {
+        failed_jobs_history_limit = NULL;
+    }
     if (failed_jobs_history_limit) { 
     if(!cJSON_IsNumber(failed_jobs_history_limit))
     {
@@ -164,6 +196,9 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
     // v1_cron_job_spec->job_template
     cJSON *job_template = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "jobTemplate");
+    if (cJSON_IsNull(job_template)) {
+        job_template = NULL;
+    }
     if (!job_template) {
         goto end;
     }
@@ -173,6 +208,9 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
     // v1_cron_job_spec->schedule
     cJSON *schedule = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "schedule");
+    if (cJSON_IsNull(schedule)) {
+        schedule = NULL;
+    }
     if (!schedule) {
         goto end;
     }
@@ -185,6 +223,9 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
     // v1_cron_job_spec->starting_deadline_seconds
     cJSON *starting_deadline_seconds = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "startingDeadlineSeconds");
+    if (cJSON_IsNull(starting_deadline_seconds)) {
+        starting_deadline_seconds = NULL;
+    }
     if (starting_deadline_seconds) { 
     if(!cJSON_IsNumber(starting_deadline_seconds))
     {
@@ -194,6 +235,9 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
     // v1_cron_job_spec->successful_jobs_history_limit
     cJSON *successful_jobs_history_limit = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "successfulJobsHistoryLimit");
+    if (cJSON_IsNull(successful_jobs_history_limit)) {
+        successful_jobs_history_limit = NULL;
+    }
     if (successful_jobs_history_limit) { 
     if(!cJSON_IsNumber(successful_jobs_history_limit))
     {
@@ -203,6 +247,9 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
     // v1_cron_job_spec->suspend
     cJSON *suspend = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "suspend");
+    if (cJSON_IsNull(suspend)) {
+        suspend = NULL;
+    }
     if (suspend) { 
     if(!cJSON_IsBool(suspend))
     {
@@ -212,6 +259,9 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
     // v1_cron_job_spec->time_zone
     cJSON *time_zone = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "timeZone");
+    if (cJSON_IsNull(time_zone)) {
+        time_zone = NULL;
+    }
     if (time_zone) { 
     if(!cJSON_IsString(time_zone) && !cJSON_IsNull(time_zone))
     {
@@ -220,7 +270,7 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
     }
 
 
-    v1_cron_job_spec_local_var = v1_cron_job_spec_create (
+    v1_cron_job_spec_local_var = v1_cron_job_spec_create_internal (
         concurrency_policy && !cJSON_IsNull(concurrency_policy) ? strdup(concurrency_policy->valuestring) : NULL,
         failed_jobs_history_limit ? failed_jobs_history_limit->valuedouble : 0,
         job_template_local_nonprim,

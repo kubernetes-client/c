@@ -5,7 +5,7 @@
 
 
 
-v1_volume_attachment_status_t *v1_volume_attachment_status_create(
+static v1_volume_attachment_status_t *v1_volume_attachment_status_create_internal(
     v1_volume_error_t *attach_error,
     int attached,
     list_t* attachment_metadata,
@@ -20,12 +20,30 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_create(
     v1_volume_attachment_status_local_var->attachment_metadata = attachment_metadata;
     v1_volume_attachment_status_local_var->detach_error = detach_error;
 
+    v1_volume_attachment_status_local_var->_library_owned = 1;
     return v1_volume_attachment_status_local_var;
 }
 
+__attribute__((deprecated)) v1_volume_attachment_status_t *v1_volume_attachment_status_create(
+    v1_volume_error_t *attach_error,
+    int attached,
+    list_t* attachment_metadata,
+    v1_volume_error_t *detach_error
+    ) {
+    return v1_volume_attachment_status_create_internal (
+        attach_error,
+        attached,
+        attachment_metadata,
+        detach_error
+        );
+}
 
 void v1_volume_attachment_status_free(v1_volume_attachment_status_t *v1_volume_attachment_status) {
     if(NULL == v1_volume_attachment_status){
+        return ;
+    }
+    if(v1_volume_attachment_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_volume_attachment_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -35,7 +53,7 @@ void v1_volume_attachment_status_free(v1_volume_attachment_status_t *v1_volume_a
     }
     if (v1_volume_attachment_status->attachment_metadata) {
         list_ForEach(listEntry, v1_volume_attachment_status->attachment_metadata) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -85,8 +103,8 @@ cJSON *v1_volume_attachment_status_convertToJSON(v1_volume_attachment_status_t *
     listEntry_t *attachment_metadataListEntry;
     if (v1_volume_attachment_status->attachment_metadata) {
     list_ForEach(attachment_metadataListEntry, v1_volume_attachment_status->attachment_metadata) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)attachment_metadataListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = attachment_metadataListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -130,12 +148,18 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
 
     // v1_volume_attachment_status->attach_error
     cJSON *attach_error = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attachError");
+    if (cJSON_IsNull(attach_error)) {
+        attach_error = NULL;
+    }
     if (attach_error) { 
     attach_error_local_nonprim = v1_volume_error_parseFromJSON(attach_error); //nonprimitive
     }
 
     // v1_volume_attachment_status->attached
     cJSON *attached = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attached");
+    if (cJSON_IsNull(attached)) {
+        attached = NULL;
+    }
     if (!attached) {
         goto end;
     }
@@ -148,6 +172,9 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
 
     // v1_volume_attachment_status->attachment_metadata
     cJSON *attachment_metadata = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attachmentMetadata");
+    if (cJSON_IsNull(attachment_metadata)) {
+        attachment_metadata = NULL;
+    }
     if (attachment_metadata) { 
     cJSON *attachment_metadata_local_map = NULL;
     if(!cJSON_IsObject(attachment_metadata) && !cJSON_IsNull(attachment_metadata))
@@ -173,12 +200,15 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
 
     // v1_volume_attachment_status->detach_error
     cJSON *detach_error = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "detachError");
+    if (cJSON_IsNull(detach_error)) {
+        detach_error = NULL;
+    }
     if (detach_error) { 
     detach_error_local_nonprim = v1_volume_error_parseFromJSON(detach_error); //nonprimitive
     }
 
 
-    v1_volume_attachment_status_local_var = v1_volume_attachment_status_create (
+    v1_volume_attachment_status_local_var = v1_volume_attachment_status_create_internal (
         attach_error ? attach_error_local_nonprim : NULL,
         attached->valueint,
         attachment_metadata ? attachment_metadataList : NULL,
@@ -194,7 +224,7 @@ end:
     if (attachment_metadataList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, attachment_metadataList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

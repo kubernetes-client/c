@@ -1,7 +1,7 @@
 /*
  * v1_binding.h
  *
- * Binding ties one object to another; for example, a pod is bound to a node by a scheduler. Deprecated in 1.7, please use the bindings subresource of pods instead.
+ * Binding ties one object to another; for example, a pod is bound to a node by a scheduler.
  */
 
 #ifndef _v1_binding_H_
@@ -26,9 +26,10 @@ typedef struct v1_binding_t {
     struct v1_object_meta_t *metadata; //model
     struct v1_object_reference_t *target; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_binding_t;
 
-v1_binding_t *v1_binding_create(
+__attribute__((deprecated)) v1_binding_t *v1_binding_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

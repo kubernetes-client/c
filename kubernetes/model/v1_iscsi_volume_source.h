@@ -32,9 +32,10 @@ typedef struct v1_iscsi_volume_source_t {
     struct v1_local_object_reference_t *secret_ref; //model
     char *target_portal; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_iscsi_volume_source_t;
 
-v1_iscsi_volume_source_t *v1_iscsi_volume_source_create(
+__attribute__((deprecated)) v1_iscsi_volume_source_t *v1_iscsi_volume_source_create(
     int chap_auth_discovery,
     int chap_auth_session,
     char *fs_type,

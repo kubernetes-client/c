@@ -16,7 +16,6 @@
 #include "../model/v1alpha3_device_class_spec.h"
 v1alpha3_device_class_spec_t* instantiate_v1alpha3_device_class_spec(int include_optional);
 
-#include "test_v1_node_selector.c"
 
 
 v1alpha3_device_class_spec_t* instantiate_v1alpha3_device_class_spec(int include_optional) {
@@ -24,15 +23,12 @@ v1alpha3_device_class_spec_t* instantiate_v1alpha3_device_class_spec(int include
   if (include_optional) {
     v1alpha3_device_class_spec = v1alpha3_device_class_spec_create(
       list_createList(),
-      list_createList(),
-       // false, not to have infinite recursion
-      instantiate_v1_node_selector(0)
+      list_createList()
     );
   } else {
     v1alpha3_device_class_spec = v1alpha3_device_class_spec_create(
       list_createList(),
-      list_createList(),
-      NULL
+      list_createList()
     );
   }
 

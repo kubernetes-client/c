@@ -22,9 +22,10 @@ typedef struct v1_flocker_volume_source_t {
     char *dataset_name; // string
     char *dataset_uuid; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_flocker_volume_source_t;
 
-v1_flocker_volume_source_t *v1_flocker_volume_source_create(
+__attribute__((deprecated)) v1_flocker_volume_source_t *v1_flocker_volume_source_create(
     char *dataset_name,
     char *dataset_uuid
 );

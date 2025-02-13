@@ -13,6 +13,10 @@
 #endif
 #include "../include/apiClient.h"
 
+char *kubeconfig_mk_cert_key_tempfile(const char *data);
+void unsetSslConfig(sslConfig_t * sslConfig);
+void clear_and_free_string_pair_list(list_t * list);
+
 static bool is_cert_or_key_base64_encoded(const char *data)
 {
     if (NULL == strstr(data, "BEGIN")) {

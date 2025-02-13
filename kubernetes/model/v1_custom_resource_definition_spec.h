@@ -29,9 +29,10 @@ typedef struct v1_custom_resource_definition_spec_t {
     char *scope; // string
     list_t *versions; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_custom_resource_definition_spec_t;
 
-v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_create(
+__attribute__((deprecated)) v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_create(
     v1_custom_resource_conversion_t *conversion,
     char *group,
     v1_custom_resource_definition_names_t *names,

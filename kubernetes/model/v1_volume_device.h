@@ -22,9 +22,10 @@ typedef struct v1_volume_device_t {
     char *device_path; // string
     char *name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_device_t;
 
-v1_volume_device_t *v1_volume_device_create(
+__attribute__((deprecated)) v1_volume_device_t *v1_volume_device_create(
     char *device_path,
     char *name
 );

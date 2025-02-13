@@ -22,9 +22,10 @@ typedef struct v1_uncounted_terminated_pods_t {
     list_t *failed; //primitive container
     list_t *succeeded; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_uncounted_terminated_pods_t;
 
-v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_create(
+__attribute__((deprecated)) v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_create(
     list_t *failed,
     list_t *succeeded
 );

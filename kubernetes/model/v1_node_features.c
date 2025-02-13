@@ -5,7 +5,7 @@
 
 
 
-v1_node_features_t *v1_node_features_create(
+static v1_node_features_t *v1_node_features_create_internal(
     int supplemental_groups_policy
     ) {
     v1_node_features_t *v1_node_features_local_var = malloc(sizeof(v1_node_features_t));
@@ -14,12 +14,24 @@ v1_node_features_t *v1_node_features_create(
     }
     v1_node_features_local_var->supplemental_groups_policy = supplemental_groups_policy;
 
+    v1_node_features_local_var->_library_owned = 1;
     return v1_node_features_local_var;
 }
 
+__attribute__((deprecated)) v1_node_features_t *v1_node_features_create(
+    int supplemental_groups_policy
+    ) {
+    return v1_node_features_create_internal (
+        supplemental_groups_policy
+        );
+}
 
 void v1_node_features_free(v1_node_features_t *v1_node_features) {
     if(NULL == v1_node_features){
+        return ;
+    }
+    if(v1_node_features->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_node_features_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -50,6 +62,9 @@ v1_node_features_t *v1_node_features_parseFromJSON(cJSON *v1_node_featuresJSON){
 
     // v1_node_features->supplemental_groups_policy
     cJSON *supplemental_groups_policy = cJSON_GetObjectItemCaseSensitive(v1_node_featuresJSON, "supplementalGroupsPolicy");
+    if (cJSON_IsNull(supplemental_groups_policy)) {
+        supplemental_groups_policy = NULL;
+    }
     if (supplemental_groups_policy) { 
     if(!cJSON_IsBool(supplemental_groups_policy))
     {
@@ -58,7 +73,7 @@ v1_node_features_t *v1_node_features_parseFromJSON(cJSON *v1_node_featuresJSON){
     }
 
 
-    v1_node_features_local_var = v1_node_features_create (
+    v1_node_features_local_var = v1_node_features_create_internal (
         supplemental_groups_policy ? supplemental_groups_policy->valueint : 0
         );
 

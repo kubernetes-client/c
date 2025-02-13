@@ -23,9 +23,10 @@ typedef struct v1_cross_version_object_reference_t {
     char *kind; // string
     char *name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_cross_version_object_reference_t;
 
-v1_cross_version_object_reference_t *v1_cross_version_object_reference_create(
+__attribute__((deprecated)) v1_cross_version_object_reference_t *v1_cross_version_object_reference_create(
     char *api_version,
     char *kind,
     char *name

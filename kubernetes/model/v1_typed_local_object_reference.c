@@ -5,7 +5,7 @@
 
 
 
-v1_typed_local_object_reference_t *v1_typed_local_object_reference_create(
+static v1_typed_local_object_reference_t *v1_typed_local_object_reference_create_internal(
     char *api_group,
     char *kind,
     char *name
@@ -18,12 +18,28 @@ v1_typed_local_object_reference_t *v1_typed_local_object_reference_create(
     v1_typed_local_object_reference_local_var->kind = kind;
     v1_typed_local_object_reference_local_var->name = name;
 
+    v1_typed_local_object_reference_local_var->_library_owned = 1;
     return v1_typed_local_object_reference_local_var;
 }
 
+__attribute__((deprecated)) v1_typed_local_object_reference_t *v1_typed_local_object_reference_create(
+    char *api_group,
+    char *kind,
+    char *name
+    ) {
+    return v1_typed_local_object_reference_create_internal (
+        api_group,
+        kind,
+        name
+        );
+}
 
 void v1_typed_local_object_reference_free(v1_typed_local_object_reference_t *v1_typed_local_object_reference) {
     if(NULL == v1_typed_local_object_reference){
+        return ;
+    }
+    if(v1_typed_local_object_reference->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_typed_local_object_reference_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -84,6 +100,9 @@ v1_typed_local_object_reference_t *v1_typed_local_object_reference_parseFromJSON
 
     // v1_typed_local_object_reference->api_group
     cJSON *api_group = cJSON_GetObjectItemCaseSensitive(v1_typed_local_object_referenceJSON, "apiGroup");
+    if (cJSON_IsNull(api_group)) {
+        api_group = NULL;
+    }
     if (api_group) { 
     if(!cJSON_IsString(api_group) && !cJSON_IsNull(api_group))
     {
@@ -93,6 +112,9 @@ v1_typed_local_object_reference_t *v1_typed_local_object_reference_parseFromJSON
 
     // v1_typed_local_object_reference->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_typed_local_object_referenceJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (!kind) {
         goto end;
     }
@@ -105,6 +127,9 @@ v1_typed_local_object_reference_t *v1_typed_local_object_reference_parseFromJSON
 
     // v1_typed_local_object_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_typed_local_object_referenceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -116,7 +141,7 @@ v1_typed_local_object_reference_t *v1_typed_local_object_reference_parseFromJSON
     }
 
 
-    v1_typed_local_object_reference_local_var = v1_typed_local_object_reference_create (
+    v1_typed_local_object_reference_local_var = v1_typed_local_object_reference_create_internal (
         api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
         strdup(kind->valuestring),
         strdup(name->valuestring)

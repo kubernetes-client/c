@@ -5,7 +5,7 @@
 
 
 
-v1_label_selector_t *v1_label_selector_create(
+static v1_label_selector_t *v1_label_selector_create_internal(
     list_t *match_expressions,
     list_t* match_labels
     ) {
@@ -16,12 +16,26 @@ v1_label_selector_t *v1_label_selector_create(
     v1_label_selector_local_var->match_expressions = match_expressions;
     v1_label_selector_local_var->match_labels = match_labels;
 
+    v1_label_selector_local_var->_library_owned = 1;
     return v1_label_selector_local_var;
 }
 
+__attribute__((deprecated)) v1_label_selector_t *v1_label_selector_create(
+    list_t *match_expressions,
+    list_t* match_labels
+    ) {
+    return v1_label_selector_create_internal (
+        match_expressions,
+        match_labels
+        );
+}
 
 void v1_label_selector_free(v1_label_selector_t *v1_label_selector) {
     if(NULL == v1_label_selector){
+        return ;
+    }
+    if(v1_label_selector->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_label_selector_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -34,7 +48,7 @@ void v1_label_selector_free(v1_label_selector_t *v1_label_selector) {
     }
     if (v1_label_selector->match_labels) {
         list_ForEach(listEntry, v1_label_selector->match_labels) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -78,8 +92,8 @@ cJSON *v1_label_selector_convertToJSON(v1_label_selector_t *v1_label_selector) {
     listEntry_t *match_labelsListEntry;
     if (v1_label_selector->match_labels) {
     list_ForEach(match_labelsListEntry, v1_label_selector->match_labels) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)match_labelsListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = match_labelsListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -107,6 +121,9 @@ v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSO
 
     // v1_label_selector->match_expressions
     cJSON *match_expressions = cJSON_GetObjectItemCaseSensitive(v1_label_selectorJSON, "matchExpressions");
+    if (cJSON_IsNull(match_expressions)) {
+        match_expressions = NULL;
+    }
     if (match_expressions) { 
     cJSON *match_expressions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(match_expressions)){
@@ -128,6 +145,9 @@ v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSO
 
     // v1_label_selector->match_labels
     cJSON *match_labels = cJSON_GetObjectItemCaseSensitive(v1_label_selectorJSON, "matchLabels");
+    if (cJSON_IsNull(match_labels)) {
+        match_labels = NULL;
+    }
     if (match_labels) { 
     cJSON *match_labels_local_map = NULL;
     if(!cJSON_IsObject(match_labels) && !cJSON_IsNull(match_labels))
@@ -152,7 +172,7 @@ v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSO
     }
 
 
-    v1_label_selector_local_var = v1_label_selector_create (
+    v1_label_selector_local_var = v1_label_selector_create_internal (
         match_expressions ? match_expressionsList : NULL,
         match_labels ? match_labelsList : NULL
         );
@@ -171,7 +191,7 @@ end:
     if (match_labelsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, match_labelsList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

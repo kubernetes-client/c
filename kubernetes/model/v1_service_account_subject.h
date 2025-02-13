@@ -22,9 +22,10 @@ typedef struct v1_service_account_subject_t {
     char *name; // string
     char *_namespace; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_service_account_subject_t;
 
-v1_service_account_subject_t *v1_service_account_subject_create(
+__attribute__((deprecated)) v1_service_account_subject_t *v1_service_account_subject_create(
     char *name,
     char *_namespace
 );

@@ -5,7 +5,7 @@
 
 
 
-v2_pods_metric_status_t *v2_pods_metric_status_create(
+static v2_pods_metric_status_t *v2_pods_metric_status_create_internal(
     v2_metric_value_status_t *current,
     v2_metric_identifier_t *metric
     ) {
@@ -16,12 +16,26 @@ v2_pods_metric_status_t *v2_pods_metric_status_create(
     v2_pods_metric_status_local_var->current = current;
     v2_pods_metric_status_local_var->metric = metric;
 
+    v2_pods_metric_status_local_var->_library_owned = 1;
     return v2_pods_metric_status_local_var;
 }
 
+__attribute__((deprecated)) v2_pods_metric_status_t *v2_pods_metric_status_create(
+    v2_metric_value_status_t *current,
+    v2_metric_identifier_t *metric
+    ) {
+    return v2_pods_metric_status_create_internal (
+        current,
+        metric
+        );
+}
 
 void v2_pods_metric_status_free(v2_pods_metric_status_t *v2_pods_metric_status) {
     if(NULL == v2_pods_metric_status){
+        return ;
+    }
+    if(v2_pods_metric_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v2_pods_metric_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -86,6 +100,9 @@ v2_pods_metric_status_t *v2_pods_metric_status_parseFromJSON(cJSON *v2_pods_metr
 
     // v2_pods_metric_status->current
     cJSON *current = cJSON_GetObjectItemCaseSensitive(v2_pods_metric_statusJSON, "current");
+    if (cJSON_IsNull(current)) {
+        current = NULL;
+    }
     if (!current) {
         goto end;
     }
@@ -95,6 +112,9 @@ v2_pods_metric_status_t *v2_pods_metric_status_parseFromJSON(cJSON *v2_pods_metr
 
     // v2_pods_metric_status->metric
     cJSON *metric = cJSON_GetObjectItemCaseSensitive(v2_pods_metric_statusJSON, "metric");
+    if (cJSON_IsNull(metric)) {
+        metric = NULL;
+    }
     if (!metric) {
         goto end;
     }
@@ -103,7 +123,7 @@ v2_pods_metric_status_t *v2_pods_metric_status_parseFromJSON(cJSON *v2_pods_metr
     metric_local_nonprim = v2_metric_identifier_parseFromJSON(metric); //nonprimitive
 
 
-    v2_pods_metric_status_local_var = v2_pods_metric_status_create (
+    v2_pods_metric_status_local_var = v2_pods_metric_status_create_internal (
         current_local_nonprim,
         metric_local_nonprim
         );

@@ -30,9 +30,10 @@ typedef struct v1_api_resource_t {
     list_t *verbs; //primitive container
     char *version; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_api_resource_t;
 
-v1_api_resource_t *v1_api_resource_create(
+__attribute__((deprecated)) v1_api_resource_t *v1_api_resource_create(
     list_t *categories,
     char *group,
     char *kind,

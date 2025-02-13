@@ -5,7 +5,7 @@
 
 
 
-v1_host_alias_t *v1_host_alias_create(
+static v1_host_alias_t *v1_host_alias_create_internal(
     list_t *hostnames,
     char *ip
     ) {
@@ -16,12 +16,26 @@ v1_host_alias_t *v1_host_alias_create(
     v1_host_alias_local_var->hostnames = hostnames;
     v1_host_alias_local_var->ip = ip;
 
+    v1_host_alias_local_var->_library_owned = 1;
     return v1_host_alias_local_var;
 }
 
+__attribute__((deprecated)) v1_host_alias_t *v1_host_alias_create(
+    list_t *hostnames,
+    char *ip
+    ) {
+    return v1_host_alias_create_internal (
+        hostnames,
+        ip
+        );
+}
 
 void v1_host_alias_free(v1_host_alias_t *v1_host_alias) {
     if(NULL == v1_host_alias){
+        return ;
+    }
+    if(v1_host_alias->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_host_alias_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -51,7 +65,7 @@ cJSON *v1_host_alias_convertToJSON(v1_host_alias_t *v1_host_alias) {
 
     listEntry_t *hostnamesListEntry;
     list_ForEach(hostnamesListEntry, v1_host_alias->hostnames) {
-    if(cJSON_AddStringToObject(hostnames, "", (char*)hostnamesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(hostnames, "", hostnamesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -84,6 +98,9 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
 
     // v1_host_alias->hostnames
     cJSON *hostnames = cJSON_GetObjectItemCaseSensitive(v1_host_aliasJSON, "hostnames");
+    if (cJSON_IsNull(hostnames)) {
+        hostnames = NULL;
+    }
     if (hostnames) { 
     cJSON *hostnames_local = NULL;
     if(!cJSON_IsArray(hostnames)) {
@@ -103,6 +120,9 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
 
     // v1_host_alias->ip
     cJSON *ip = cJSON_GetObjectItemCaseSensitive(v1_host_aliasJSON, "ip");
+    if (cJSON_IsNull(ip)) {
+        ip = NULL;
+    }
     if (!ip) {
         goto end;
     }
@@ -114,7 +134,7 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
     }
 
 
-    v1_host_alias_local_var = v1_host_alias_create (
+    v1_host_alias_local_var = v1_host_alias_create_internal (
         hostnames ? hostnamesList : NULL,
         strdup(ip->valuestring)
         );

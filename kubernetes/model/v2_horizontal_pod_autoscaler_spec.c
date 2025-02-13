@@ -5,7 +5,7 @@
 
 
 
-v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec_create(
+static v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec_create_internal(
     v2_horizontal_pod_autoscaler_behavior_t *behavior,
     int max_replicas,
     list_t *metrics,
@@ -22,12 +22,32 @@ v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec_create(
     v2_horizontal_pod_autoscaler_spec_local_var->min_replicas = min_replicas;
     v2_horizontal_pod_autoscaler_spec_local_var->scale_target_ref = scale_target_ref;
 
+    v2_horizontal_pod_autoscaler_spec_local_var->_library_owned = 1;
     return v2_horizontal_pod_autoscaler_spec_local_var;
 }
 
+__attribute__((deprecated)) v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec_create(
+    v2_horizontal_pod_autoscaler_behavior_t *behavior,
+    int max_replicas,
+    list_t *metrics,
+    int min_replicas,
+    v2_cross_version_object_reference_t *scale_target_ref
+    ) {
+    return v2_horizontal_pod_autoscaler_spec_create_internal (
+        behavior,
+        max_replicas,
+        metrics,
+        min_replicas,
+        scale_target_ref
+        );
+}
 
 void v2_horizontal_pod_autoscaler_spec_free(v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec) {
     if(NULL == v2_horizontal_pod_autoscaler_spec){
+        return ;
+    }
+    if(v2_horizontal_pod_autoscaler_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v2_horizontal_pod_autoscaler_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -138,12 +158,18 @@ v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec_parseFrom
 
     // v2_horizontal_pod_autoscaler_spec->behavior
     cJSON *behavior = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_specJSON, "behavior");
+    if (cJSON_IsNull(behavior)) {
+        behavior = NULL;
+    }
     if (behavior) { 
     behavior_local_nonprim = v2_horizontal_pod_autoscaler_behavior_parseFromJSON(behavior); //nonprimitive
     }
 
     // v2_horizontal_pod_autoscaler_spec->max_replicas
     cJSON *max_replicas = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_specJSON, "maxReplicas");
+    if (cJSON_IsNull(max_replicas)) {
+        max_replicas = NULL;
+    }
     if (!max_replicas) {
         goto end;
     }
@@ -156,6 +182,9 @@ v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec_parseFrom
 
     // v2_horizontal_pod_autoscaler_spec->metrics
     cJSON *metrics = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_specJSON, "metrics");
+    if (cJSON_IsNull(metrics)) {
+        metrics = NULL;
+    }
     if (metrics) { 
     cJSON *metrics_local_nonprimitive = NULL;
     if(!cJSON_IsArray(metrics)){
@@ -177,6 +206,9 @@ v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec_parseFrom
 
     // v2_horizontal_pod_autoscaler_spec->min_replicas
     cJSON *min_replicas = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_specJSON, "minReplicas");
+    if (cJSON_IsNull(min_replicas)) {
+        min_replicas = NULL;
+    }
     if (min_replicas) { 
     if(!cJSON_IsNumber(min_replicas))
     {
@@ -186,6 +218,9 @@ v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec_parseFrom
 
     // v2_horizontal_pod_autoscaler_spec->scale_target_ref
     cJSON *scale_target_ref = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_specJSON, "scaleTargetRef");
+    if (cJSON_IsNull(scale_target_ref)) {
+        scale_target_ref = NULL;
+    }
     if (!scale_target_ref) {
         goto end;
     }
@@ -194,7 +229,7 @@ v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec_parseFrom
     scale_target_ref_local_nonprim = v2_cross_version_object_reference_parseFromJSON(scale_target_ref); //nonprimitive
 
 
-    v2_horizontal_pod_autoscaler_spec_local_var = v2_horizontal_pod_autoscaler_spec_create (
+    v2_horizontal_pod_autoscaler_spec_local_var = v2_horizontal_pod_autoscaler_spec_create_internal (
         behavior ? behavior_local_nonprim : NULL,
         max_replicas->valuedouble,
         metrics ? metricsList : NULL,

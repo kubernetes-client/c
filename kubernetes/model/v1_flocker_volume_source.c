@@ -5,7 +5,7 @@
 
 
 
-v1_flocker_volume_source_t *v1_flocker_volume_source_create(
+static v1_flocker_volume_source_t *v1_flocker_volume_source_create_internal(
     char *dataset_name,
     char *dataset_uuid
     ) {
@@ -16,12 +16,26 @@ v1_flocker_volume_source_t *v1_flocker_volume_source_create(
     v1_flocker_volume_source_local_var->dataset_name = dataset_name;
     v1_flocker_volume_source_local_var->dataset_uuid = dataset_uuid;
 
+    v1_flocker_volume_source_local_var->_library_owned = 1;
     return v1_flocker_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_flocker_volume_source_t *v1_flocker_volume_source_create(
+    char *dataset_name,
+    char *dataset_uuid
+    ) {
+    return v1_flocker_volume_source_create_internal (
+        dataset_name,
+        dataset_uuid
+        );
+}
 
 void v1_flocker_volume_source_free(v1_flocker_volume_source_t *v1_flocker_volume_source) {
     if(NULL == v1_flocker_volume_source){
+        return ;
+    }
+    if(v1_flocker_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_flocker_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -68,6 +82,9 @@ v1_flocker_volume_source_t *v1_flocker_volume_source_parseFromJSON(cJSON *v1_flo
 
     // v1_flocker_volume_source->dataset_name
     cJSON *dataset_name = cJSON_GetObjectItemCaseSensitive(v1_flocker_volume_sourceJSON, "datasetName");
+    if (cJSON_IsNull(dataset_name)) {
+        dataset_name = NULL;
+    }
     if (dataset_name) { 
     if(!cJSON_IsString(dataset_name) && !cJSON_IsNull(dataset_name))
     {
@@ -77,6 +94,9 @@ v1_flocker_volume_source_t *v1_flocker_volume_source_parseFromJSON(cJSON *v1_flo
 
     // v1_flocker_volume_source->dataset_uuid
     cJSON *dataset_uuid = cJSON_GetObjectItemCaseSensitive(v1_flocker_volume_sourceJSON, "datasetUUID");
+    if (cJSON_IsNull(dataset_uuid)) {
+        dataset_uuid = NULL;
+    }
     if (dataset_uuid) { 
     if(!cJSON_IsString(dataset_uuid) && !cJSON_IsNull(dataset_uuid))
     {
@@ -85,7 +105,7 @@ v1_flocker_volume_source_t *v1_flocker_volume_source_parseFromJSON(cJSON *v1_flo
     }
 
 
-    v1_flocker_volume_source_local_var = v1_flocker_volume_source_create (
+    v1_flocker_volume_source_local_var = v1_flocker_volume_source_create_internal (
         dataset_name && !cJSON_IsNull(dataset_name) ? strdup(dataset_name->valuestring) : NULL,
         dataset_uuid && !cJSON_IsNull(dataset_uuid) ? strdup(dataset_uuid->valuestring) : NULL
         );

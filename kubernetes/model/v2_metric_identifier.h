@@ -23,9 +23,10 @@ typedef struct v2_metric_identifier_t {
     char *name; // string
     struct v1_label_selector_t *selector; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v2_metric_identifier_t;
 
-v2_metric_identifier_t *v2_metric_identifier_create(
+__attribute__((deprecated)) v2_metric_identifier_t *v2_metric_identifier_create(
     char *name,
     v1_label_selector_t *selector
 );

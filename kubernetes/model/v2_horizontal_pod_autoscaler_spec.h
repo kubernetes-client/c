@@ -28,9 +28,10 @@ typedef struct v2_horizontal_pod_autoscaler_spec_t {
     int min_replicas; //numeric
     struct v2_cross_version_object_reference_t *scale_target_ref; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v2_horizontal_pod_autoscaler_spec_t;
 
-v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec_create(
+__attribute__((deprecated)) v2_horizontal_pod_autoscaler_spec_t *v2_horizontal_pod_autoscaler_spec_create(
     v2_horizontal_pod_autoscaler_behavior_t *behavior,
     int max_replicas,
     list_t *metrics,

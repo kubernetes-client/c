@@ -25,13 +25,13 @@ v1alpha3_resource_claim_status_t* instantiate_v1alpha3_resource_claim_status(int
     v1alpha3_resource_claim_status = v1alpha3_resource_claim_status_create(
        // false, not to have infinite recursion
       instantiate_v1alpha3_allocation_result(0),
-      1,
+      list_createList(),
       list_createList()
     );
   } else {
     v1alpha3_resource_claim_status = v1alpha3_resource_claim_status_create(
       NULL,
-      1,
+      list_createList(),
       list_createList()
     );
   }

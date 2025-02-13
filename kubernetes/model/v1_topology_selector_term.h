@@ -22,9 +22,10 @@ typedef struct v1_topology_selector_term_t v1_topology_selector_term_t;
 typedef struct v1_topology_selector_term_t {
     list_t *match_label_expressions; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_topology_selector_term_t;
 
-v1_topology_selector_term_t *v1_topology_selector_term_create(
+__attribute__((deprecated)) v1_topology_selector_term_t *v1_topology_selector_term_create(
     list_t *match_label_expressions
 );
 

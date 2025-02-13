@@ -23,9 +23,10 @@ typedef struct v1alpha3_device_claim_configuration_t {
     struct v1alpha3_opaque_device_configuration_t *opaque; //model
     list_t *requests; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_claim_configuration_t;
 
-v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_create(
+__attribute__((deprecated)) v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_create(
     v1alpha3_opaque_device_configuration_t *opaque,
     list_t *requests
 );

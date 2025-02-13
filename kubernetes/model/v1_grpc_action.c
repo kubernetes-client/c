@@ -5,7 +5,7 @@
 
 
 
-v1_grpc_action_t *v1_grpc_action_create(
+static v1_grpc_action_t *v1_grpc_action_create_internal(
     int port,
     char *service
     ) {
@@ -16,12 +16,26 @@ v1_grpc_action_t *v1_grpc_action_create(
     v1_grpc_action_local_var->port = port;
     v1_grpc_action_local_var->service = service;
 
+    v1_grpc_action_local_var->_library_owned = 1;
     return v1_grpc_action_local_var;
 }
 
+__attribute__((deprecated)) v1_grpc_action_t *v1_grpc_action_create(
+    int port,
+    char *service
+    ) {
+    return v1_grpc_action_create_internal (
+        port,
+        service
+        );
+}
 
 void v1_grpc_action_free(v1_grpc_action_t *v1_grpc_action) {
     if(NULL == v1_grpc_action){
+        return ;
+    }
+    if(v1_grpc_action->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_grpc_action_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -65,6 +79,9 @@ v1_grpc_action_t *v1_grpc_action_parseFromJSON(cJSON *v1_grpc_actionJSON){
 
     // v1_grpc_action->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_grpc_actionJSON, "port");
+    if (cJSON_IsNull(port)) {
+        port = NULL;
+    }
     if (!port) {
         goto end;
     }
@@ -77,6 +94,9 @@ v1_grpc_action_t *v1_grpc_action_parseFromJSON(cJSON *v1_grpc_actionJSON){
 
     // v1_grpc_action->service
     cJSON *service = cJSON_GetObjectItemCaseSensitive(v1_grpc_actionJSON, "service");
+    if (cJSON_IsNull(service)) {
+        service = NULL;
+    }
     if (service) { 
     if(!cJSON_IsString(service) && !cJSON_IsNull(service))
     {
@@ -85,7 +105,7 @@ v1_grpc_action_t *v1_grpc_action_parseFromJSON(cJSON *v1_grpc_actionJSON){
     }
 
 
-    v1_grpc_action_local_var = v1_grpc_action_create (
+    v1_grpc_action_local_var = v1_grpc_action_create_internal (
         port->valuedouble,
         service && !cJSON_IsNull(service) ? strdup(service->valuestring) : NULL
         );

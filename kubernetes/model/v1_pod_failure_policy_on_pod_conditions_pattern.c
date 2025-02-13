@@ -5,7 +5,7 @@
 
 
 
-v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern_create(
+static v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern_create_internal(
     char *status,
     char *type
     ) {
@@ -16,12 +16,26 @@ v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_
     v1_pod_failure_policy_on_pod_conditions_pattern_local_var->status = status;
     v1_pod_failure_policy_on_pod_conditions_pattern_local_var->type = type;
 
+    v1_pod_failure_policy_on_pod_conditions_pattern_local_var->_library_owned = 1;
     return v1_pod_failure_policy_on_pod_conditions_pattern_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern_create(
+    char *status,
+    char *type
+    ) {
+    return v1_pod_failure_policy_on_pod_conditions_pattern_create_internal (
+        status,
+        type
+        );
+}
 
 void v1_pod_failure_policy_on_pod_conditions_pattern_free(v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern) {
     if(NULL == v1_pod_failure_policy_on_pod_conditions_pattern){
+        return ;
+    }
+    if(v1_pod_failure_policy_on_pod_conditions_pattern->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_failure_policy_on_pod_conditions_pattern_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -70,6 +84,9 @@ v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_
 
     // v1_pod_failure_policy_on_pod_conditions_pattern->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policy_on_pod_conditions_patternJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
     if (!status) {
         goto end;
     }
@@ -82,6 +99,9 @@ v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_
 
     // v1_pod_failure_policy_on_pod_conditions_pattern->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policy_on_pod_conditions_patternJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -93,7 +113,7 @@ v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_
     }
 
 
-    v1_pod_failure_policy_on_pod_conditions_pattern_local_var = v1_pod_failure_policy_on_pod_conditions_pattern_create (
+    v1_pod_failure_policy_on_pod_conditions_pattern_local_var = v1_pod_failure_policy_on_pod_conditions_pattern_create_internal (
         strdup(status->valuestring),
         strdup(type->valuestring)
         );

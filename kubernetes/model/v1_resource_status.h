@@ -1,7 +1,7 @@
 /*
  * v1_resource_status.h
  *
- * 
+ * ResourceStatus represents the status of a single resource allocated to a Pod.
  */
 
 #ifndef _v1_resource_status_H_
@@ -23,9 +23,10 @@ typedef struct v1_resource_status_t {
     char *name; // string
     list_t *resources; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_resource_status_t;
 
-v1_resource_status_t *v1_resource_status_create(
+__attribute__((deprecated)) v1_resource_status_t *v1_resource_status_create(
     char *name,
     list_t *resources
 );

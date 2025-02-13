@@ -26,9 +26,10 @@ typedef struct v1_persistent_volume_claim_condition_t {
     char *status; // string
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_persistent_volume_claim_condition_t;
 
-v1_persistent_volume_claim_condition_t *v1_persistent_volume_claim_condition_create(
+__attribute__((deprecated)) v1_persistent_volume_claim_condition_t *v1_persistent_volume_claim_condition_create(
     char *last_probe_time,
     char *last_transition_time,
     char *message,

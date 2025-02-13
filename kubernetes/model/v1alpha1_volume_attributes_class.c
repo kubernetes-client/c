@@ -5,7 +5,7 @@
 
 
 
-v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_create(
+static v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_create_internal(
     char *api_version,
     char *driver_name,
     char *kind,
@@ -22,12 +22,32 @@ v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_create(
     v1alpha1_volume_attributes_class_local_var->metadata = metadata;
     v1alpha1_volume_attributes_class_local_var->parameters = parameters;
 
+    v1alpha1_volume_attributes_class_local_var->_library_owned = 1;
     return v1alpha1_volume_attributes_class_local_var;
 }
 
+__attribute__((deprecated)) v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_create(
+    char *api_version,
+    char *driver_name,
+    char *kind,
+    v1_object_meta_t *metadata,
+    list_t* parameters
+    ) {
+    return v1alpha1_volume_attributes_class_create_internal (
+        api_version,
+        driver_name,
+        kind,
+        metadata,
+        parameters
+        );
+}
 
 void v1alpha1_volume_attributes_class_free(v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class) {
     if(NULL == v1alpha1_volume_attributes_class){
+        return ;
+    }
+    if(v1alpha1_volume_attributes_class->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha1_volume_attributes_class_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -49,7 +69,7 @@ void v1alpha1_volume_attributes_class_free(v1alpha1_volume_attributes_class_t *v
     }
     if (v1alpha1_volume_attributes_class->parameters) {
         list_ForEach(listEntry, v1alpha1_volume_attributes_class->parameters) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -111,8 +131,8 @@ cJSON *v1alpha1_volume_attributes_class_convertToJSON(v1alpha1_volume_attributes
     listEntry_t *parametersListEntry;
     if (v1alpha1_volume_attributes_class->parameters) {
     list_ForEach(parametersListEntry, v1alpha1_volume_attributes_class->parameters) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)parametersListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = parametersListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -140,6 +160,9 @@ v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_parseFromJS
 
     // v1alpha1_volume_attributes_class->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -149,6 +172,9 @@ v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_parseFromJS
 
     // v1alpha1_volume_attributes_class->driver_name
     cJSON *driver_name = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "driverName");
+    if (cJSON_IsNull(driver_name)) {
+        driver_name = NULL;
+    }
     if (!driver_name) {
         goto end;
     }
@@ -161,6 +187,9 @@ v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_parseFromJS
 
     // v1alpha1_volume_attributes_class->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -170,12 +199,18 @@ v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_parseFromJS
 
     // v1alpha1_volume_attributes_class->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1alpha1_volume_attributes_class->parameters
     cJSON *parameters = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "parameters");
+    if (cJSON_IsNull(parameters)) {
+        parameters = NULL;
+    }
     if (parameters) { 
     cJSON *parameters_local_map = NULL;
     if(!cJSON_IsObject(parameters) && !cJSON_IsNull(parameters))
@@ -200,7 +235,7 @@ v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_parseFromJS
     }
 
 
-    v1alpha1_volume_attributes_class_local_var = v1alpha1_volume_attributes_class_create (
+    v1alpha1_volume_attributes_class_local_var = v1alpha1_volume_attributes_class_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         strdup(driver_name->valuestring),
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
@@ -217,7 +252,7 @@ end:
     if (parametersList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, parametersList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

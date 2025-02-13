@@ -21,9 +21,10 @@ typedef struct v1_scale_spec_t v1_scale_spec_t;
 typedef struct v1_scale_spec_t {
     int replicas; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_scale_spec_t;
 
-v1_scale_spec_t *v1_scale_spec_create(
+__attribute__((deprecated)) v1_scale_spec_t *v1_scale_spec_create(
     int replicas
 );
 

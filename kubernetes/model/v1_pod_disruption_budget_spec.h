@@ -26,9 +26,10 @@ typedef struct v1_pod_disruption_budget_spec_t {
     struct v1_label_selector_t *selector; //model
     char *unhealthy_pod_eviction_policy; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_disruption_budget_spec_t;
 
-v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_create(
+__attribute__((deprecated)) v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_create(
     int_or_string_t *max_unavailable,
     int_or_string_t *min_available,
     v1_label_selector_t *selector,

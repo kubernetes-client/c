@@ -5,10 +5,9 @@
 
 
 
-v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_create(
+static v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_create_internal(
     list_t *config,
-    list_t *selectors,
-    v1_node_selector_t *suitable_nodes
+    list_t *selectors
     ) {
     v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_local_var = malloc(sizeof(v1alpha3_device_class_spec_t));
     if (!v1alpha3_device_class_spec_local_var) {
@@ -16,14 +15,27 @@ v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_create(
     }
     v1alpha3_device_class_spec_local_var->config = config;
     v1alpha3_device_class_spec_local_var->selectors = selectors;
-    v1alpha3_device_class_spec_local_var->suitable_nodes = suitable_nodes;
 
+    v1alpha3_device_class_spec_local_var->_library_owned = 1;
     return v1alpha3_device_class_spec_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_create(
+    list_t *config,
+    list_t *selectors
+    ) {
+    return v1alpha3_device_class_spec_create_internal (
+        config,
+        selectors
+        );
+}
 
 void v1alpha3_device_class_spec_free(v1alpha3_device_class_spec_t *v1alpha3_device_class_spec) {
     if(NULL == v1alpha3_device_class_spec){
+        return ;
+    }
+    if(v1alpha3_device_class_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_device_class_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -40,10 +52,6 @@ void v1alpha3_device_class_spec_free(v1alpha3_device_class_spec_t *v1alpha3_devi
         }
         list_freeList(v1alpha3_device_class_spec->selectors);
         v1alpha3_device_class_spec->selectors = NULL;
-    }
-    if (v1alpha3_device_class_spec->suitable_nodes) {
-        v1_node_selector_free(v1alpha3_device_class_spec->suitable_nodes);
-        v1alpha3_device_class_spec->suitable_nodes = NULL;
     }
     free(v1alpha3_device_class_spec);
 }
@@ -90,19 +98,6 @@ cJSON *v1alpha3_device_class_spec_convertToJSON(v1alpha3_device_class_spec_t *v1
     }
     }
 
-
-    // v1alpha3_device_class_spec->suitable_nodes
-    if(v1alpha3_device_class_spec->suitable_nodes) {
-    cJSON *suitable_nodes_local_JSON = v1_node_selector_convertToJSON(v1alpha3_device_class_spec->suitable_nodes);
-    if(suitable_nodes_local_JSON == NULL) {
-    goto fail; //model
-    }
-    cJSON_AddItemToObject(item, "suitableNodes", suitable_nodes_local_JSON);
-    if(item->child == NULL) {
-    goto fail;
-    }
-    }
-
     return item;
 fail:
     if (item) {
@@ -121,11 +116,11 @@ v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_parseFromJSON(cJSON *v1
     // define the local list for v1alpha3_device_class_spec->selectors
     list_t *selectorsList = NULL;
 
-    // define the local variable for v1alpha3_device_class_spec->suitable_nodes
-    v1_node_selector_t *suitable_nodes_local_nonprim = NULL;
-
     // v1alpha3_device_class_spec->config
     cJSON *config = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_class_specJSON, "config");
+    if (cJSON_IsNull(config)) {
+        config = NULL;
+    }
     if (config) { 
     cJSON *config_local_nonprimitive = NULL;
     if(!cJSON_IsArray(config)){
@@ -147,6 +142,9 @@ v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_parseFromJSON(cJSON *v1
 
     // v1alpha3_device_class_spec->selectors
     cJSON *selectors = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_class_specJSON, "selectors");
+    if (cJSON_IsNull(selectors)) {
+        selectors = NULL;
+    }
     if (selectors) { 
     cJSON *selectors_local_nonprimitive = NULL;
     if(!cJSON_IsArray(selectors)){
@@ -166,17 +164,10 @@ v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_parseFromJSON(cJSON *v1
     }
     }
 
-    // v1alpha3_device_class_spec->suitable_nodes
-    cJSON *suitable_nodes = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_class_specJSON, "suitableNodes");
-    if (suitable_nodes) { 
-    suitable_nodes_local_nonprim = v1_node_selector_parseFromJSON(suitable_nodes); //nonprimitive
-    }
 
-
-    v1alpha3_device_class_spec_local_var = v1alpha3_device_class_spec_create (
+    v1alpha3_device_class_spec_local_var = v1alpha3_device_class_spec_create_internal (
         config ? configList : NULL,
-        selectors ? selectorsList : NULL,
-        suitable_nodes ? suitable_nodes_local_nonprim : NULL
+        selectors ? selectorsList : NULL
         );
 
     return v1alpha3_device_class_spec_local_var;
@@ -198,10 +189,6 @@ end:
         }
         list_freeList(selectorsList);
         selectorsList = NULL;
-    }
-    if (suitable_nodes_local_nonprim) {
-        v1_node_selector_free(suitable_nodes_local_nonprim);
-        suitable_nodes_local_nonprim = NULL;
     }
     return NULL;
 

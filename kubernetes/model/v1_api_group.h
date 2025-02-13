@@ -28,9 +28,10 @@ typedef struct v1_api_group_t {
     list_t *server_address_by_client_cidrs; //nonprimitive container
     list_t *versions; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_api_group_t;
 
-v1_api_group_t *v1_api_group_create(
+__attribute__((deprecated)) v1_api_group_t *v1_api_group_create(
     char *api_version,
     char *kind,
     char *name,

@@ -58,6 +58,11 @@ mapping :: = MAPPING - START(node node) * MAPPING - END
 
 #define VALUE_TRUE_LOWERCASE_STRING "true"
 
+int append_key_stringseq_to_mapping_node(yaml_document_t * output_document, int parent_node, const char *key_string, char **strings, int strings_count);
+int append_auth_provider_config_to_mapping_node(yaml_document_t * output_document, int parent_node, const kubeconfig_property_t * auth_provider_config);
+int append_key_kvpseq_to_mapping_node(yaml_document_t * output_document, int parent_node, const char *key_string, keyValuePair_t ** kvps, int kvps_count);
+
+
 static char *load_file_content(const char *path)
 {
 

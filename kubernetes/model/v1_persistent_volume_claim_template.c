@@ -5,7 +5,7 @@
 
 
 
-v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template_create(
+static v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template_create_internal(
     v1_object_meta_t *metadata,
     v1_persistent_volume_claim_spec_t *spec
     ) {
@@ -16,12 +16,26 @@ v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template_creat
     v1_persistent_volume_claim_template_local_var->metadata = metadata;
     v1_persistent_volume_claim_template_local_var->spec = spec;
 
+    v1_persistent_volume_claim_template_local_var->_library_owned = 1;
     return v1_persistent_volume_claim_template_local_var;
 }
 
+__attribute__((deprecated)) v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template_create(
+    v1_object_meta_t *metadata,
+    v1_persistent_volume_claim_spec_t *spec
+    ) {
+    return v1_persistent_volume_claim_template_create_internal (
+        metadata,
+        spec
+        );
+}
 
 void v1_persistent_volume_claim_template_free(v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template) {
     if(NULL == v1_persistent_volume_claim_template){
+        return ;
+    }
+    if(v1_persistent_volume_claim_template->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_persistent_volume_claim_template_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -85,12 +99,18 @@ v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template_parse
 
     // v1_persistent_volume_claim_template->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_templateJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_persistent_volume_claim_template->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_templateJSON, "spec");
+    if (cJSON_IsNull(spec)) {
+        spec = NULL;
+    }
     if (!spec) {
         goto end;
     }
@@ -99,7 +119,7 @@ v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template_parse
     spec_local_nonprim = v1_persistent_volume_claim_spec_parseFromJSON(spec); //nonprimitive
 
 
-    v1_persistent_volume_claim_template_local_var = v1_persistent_volume_claim_template_create (
+    v1_persistent_volume_claim_template_local_var = v1_persistent_volume_claim_template_create_internal (
         metadata ? metadata_local_nonprim : NULL,
         spec_local_nonprim
         );

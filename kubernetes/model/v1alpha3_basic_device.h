@@ -23,9 +23,10 @@ typedef struct v1alpha3_basic_device_t {
     list_t* attributes; //map
     list_t* capacity; //map
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_basic_device_t;
 
-v1alpha3_basic_device_t *v1alpha3_basic_device_create(
+__attribute__((deprecated)) v1alpha3_basic_device_t *v1alpha3_basic_device_create(
     list_t* attributes,
     list_t* capacity
 );

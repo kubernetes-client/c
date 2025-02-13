@@ -26,9 +26,10 @@ typedef struct v1_replica_set_spec_t {
     struct v1_label_selector_t *selector; //model
     struct v1_pod_template_spec_t *_template; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_replica_set_spec_t;
 
-v1_replica_set_spec_t *v1_replica_set_spec_create(
+__attribute__((deprecated)) v1_replica_set_spec_t *v1_replica_set_spec_create(
     int min_ready_seconds,
     int replicas,
     v1_label_selector_t *selector,

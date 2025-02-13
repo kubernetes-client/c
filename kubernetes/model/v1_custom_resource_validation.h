@@ -22,9 +22,10 @@ typedef struct v1_custom_resource_validation_t v1_custom_resource_validation_t;
 typedef struct v1_custom_resource_validation_t {
     struct v1_json_schema_props_t *open_apiv3_schema; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_custom_resource_validation_t;
 
-v1_custom_resource_validation_t *v1_custom_resource_validation_create(
+__attribute__((deprecated)) v1_custom_resource_validation_t *v1_custom_resource_validation_create(
     v1_json_schema_props_t *open_apiv3_schema
 );
 

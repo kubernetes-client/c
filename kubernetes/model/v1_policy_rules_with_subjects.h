@@ -26,9 +26,10 @@ typedef struct v1_policy_rules_with_subjects_t {
     list_t *resource_rules; //nonprimitive container
     list_t *subjects; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_policy_rules_with_subjects_t;
 
-v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_create(
+__attribute__((deprecated)) v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_create(
     list_t *non_resource_rules,
     list_t *resource_rules,
     list_t *subjects

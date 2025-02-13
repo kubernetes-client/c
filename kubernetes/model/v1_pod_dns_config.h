@@ -24,9 +24,10 @@ typedef struct v1_pod_dns_config_t {
     list_t *options; //nonprimitive container
     list_t *searches; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_dns_config_t;
 
-v1_pod_dns_config_t *v1_pod_dns_config_create(
+__attribute__((deprecated)) v1_pod_dns_config_t *v1_pod_dns_config_create(
     list_t *nameservers,
     list_t *options,
     list_t *searches

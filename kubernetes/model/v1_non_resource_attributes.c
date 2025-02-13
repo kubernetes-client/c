@@ -5,7 +5,7 @@
 
 
 
-v1_non_resource_attributes_t *v1_non_resource_attributes_create(
+static v1_non_resource_attributes_t *v1_non_resource_attributes_create_internal(
     char *path,
     char *verb
     ) {
@@ -16,12 +16,26 @@ v1_non_resource_attributes_t *v1_non_resource_attributes_create(
     v1_non_resource_attributes_local_var->path = path;
     v1_non_resource_attributes_local_var->verb = verb;
 
+    v1_non_resource_attributes_local_var->_library_owned = 1;
     return v1_non_resource_attributes_local_var;
 }
 
+__attribute__((deprecated)) v1_non_resource_attributes_t *v1_non_resource_attributes_create(
+    char *path,
+    char *verb
+    ) {
+    return v1_non_resource_attributes_create_internal (
+        path,
+        verb
+        );
+}
 
 void v1_non_resource_attributes_free(v1_non_resource_attributes_t *v1_non_resource_attributes) {
     if(NULL == v1_non_resource_attributes){
+        return ;
+    }
+    if(v1_non_resource_attributes->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_non_resource_attributes_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -68,6 +82,9 @@ v1_non_resource_attributes_t *v1_non_resource_attributes_parseFromJSON(cJSON *v1
 
     // v1_non_resource_attributes->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_non_resource_attributesJSON, "path");
+    if (cJSON_IsNull(path)) {
+        path = NULL;
+    }
     if (path) { 
     if(!cJSON_IsString(path) && !cJSON_IsNull(path))
     {
@@ -77,6 +94,9 @@ v1_non_resource_attributes_t *v1_non_resource_attributes_parseFromJSON(cJSON *v1
 
     // v1_non_resource_attributes->verb
     cJSON *verb = cJSON_GetObjectItemCaseSensitive(v1_non_resource_attributesJSON, "verb");
+    if (cJSON_IsNull(verb)) {
+        verb = NULL;
+    }
     if (verb) { 
     if(!cJSON_IsString(verb) && !cJSON_IsNull(verb))
     {
@@ -85,7 +105,7 @@ v1_non_resource_attributes_t *v1_non_resource_attributes_parseFromJSON(cJSON *v1
     }
 
 
-    v1_non_resource_attributes_local_var = v1_non_resource_attributes_create (
+    v1_non_resource_attributes_local_var = v1_non_resource_attributes_create_internal (
         path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
         verb && !cJSON_IsNull(verb) ? strdup(verb->valuestring) : NULL
         );

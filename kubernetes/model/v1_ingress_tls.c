@@ -5,7 +5,7 @@
 
 
 
-v1_ingress_tls_t *v1_ingress_tls_create(
+static v1_ingress_tls_t *v1_ingress_tls_create_internal(
     list_t *hosts,
     char *secret_name
     ) {
@@ -16,12 +16,26 @@ v1_ingress_tls_t *v1_ingress_tls_create(
     v1_ingress_tls_local_var->hosts = hosts;
     v1_ingress_tls_local_var->secret_name = secret_name;
 
+    v1_ingress_tls_local_var->_library_owned = 1;
     return v1_ingress_tls_local_var;
 }
 
+__attribute__((deprecated)) v1_ingress_tls_t *v1_ingress_tls_create(
+    list_t *hosts,
+    char *secret_name
+    ) {
+    return v1_ingress_tls_create_internal (
+        hosts,
+        secret_name
+        );
+}
 
 void v1_ingress_tls_free(v1_ingress_tls_t *v1_ingress_tls) {
     if(NULL == v1_ingress_tls){
+        return ;
+    }
+    if(v1_ingress_tls->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_ingress_tls_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -51,7 +65,7 @@ cJSON *v1_ingress_tls_convertToJSON(v1_ingress_tls_t *v1_ingress_tls) {
 
     listEntry_t *hostsListEntry;
     list_ForEach(hostsListEntry, v1_ingress_tls->hosts) {
-    if(cJSON_AddStringToObject(hosts, "", (char*)hostsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(hosts, "", hostsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -83,6 +97,9 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
 
     // v1_ingress_tls->hosts
     cJSON *hosts = cJSON_GetObjectItemCaseSensitive(v1_ingress_tlsJSON, "hosts");
+    if (cJSON_IsNull(hosts)) {
+        hosts = NULL;
+    }
     if (hosts) { 
     cJSON *hosts_local = NULL;
     if(!cJSON_IsArray(hosts)) {
@@ -102,6 +119,9 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
 
     // v1_ingress_tls->secret_name
     cJSON *secret_name = cJSON_GetObjectItemCaseSensitive(v1_ingress_tlsJSON, "secretName");
+    if (cJSON_IsNull(secret_name)) {
+        secret_name = NULL;
+    }
     if (secret_name) { 
     if(!cJSON_IsString(secret_name) && !cJSON_IsNull(secret_name))
     {
@@ -110,7 +130,7 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
     }
 
 
-    v1_ingress_tls_local_var = v1_ingress_tls_create (
+    v1_ingress_tls_local_var = v1_ingress_tls_create_internal (
         hosts ? hostsList : NULL,
         secret_name && !cJSON_IsNull(secret_name) ? strdup(secret_name->valuestring) : NULL
         );

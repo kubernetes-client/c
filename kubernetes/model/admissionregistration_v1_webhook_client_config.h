@@ -24,9 +24,10 @@ typedef struct admissionregistration_v1_webhook_client_config_t {
     struct admissionregistration_v1_service_reference_t *service; //model
     char *url; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } admissionregistration_v1_webhook_client_config_t;
 
-admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webhook_client_config_create(
+__attribute__((deprecated)) admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webhook_client_config_create(
     char *ca_bundle,
     admissionregistration_v1_service_reference_t *service,
     char *url

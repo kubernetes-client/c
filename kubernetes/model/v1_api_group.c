@@ -5,7 +5,7 @@
 
 
 
-v1_api_group_t *v1_api_group_create(
+static v1_api_group_t *v1_api_group_create_internal(
     char *api_version,
     char *kind,
     char *name,
@@ -24,12 +24,34 @@ v1_api_group_t *v1_api_group_create(
     v1_api_group_local_var->server_address_by_client_cidrs = server_address_by_client_cidrs;
     v1_api_group_local_var->versions = versions;
 
+    v1_api_group_local_var->_library_owned = 1;
     return v1_api_group_local_var;
 }
 
+__attribute__((deprecated)) v1_api_group_t *v1_api_group_create(
+    char *api_version,
+    char *kind,
+    char *name,
+    v1_group_version_for_discovery_t *preferred_version,
+    list_t *server_address_by_client_cidrs,
+    list_t *versions
+    ) {
+    return v1_api_group_create_internal (
+        api_version,
+        kind,
+        name,
+        preferred_version,
+        server_address_by_client_cidrs,
+        versions
+        );
+}
 
 void v1_api_group_free(v1_api_group_t *v1_api_group) {
     if(NULL == v1_api_group){
+        return ;
+    }
+    if(v1_api_group->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_api_group_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -170,6 +192,9 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
 
     // v1_api_group->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -179,6 +204,9 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
 
     // v1_api_group->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -188,6 +216,9 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
 
     // v1_api_group->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -200,12 +231,18 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
 
     // v1_api_group->preferred_version
     cJSON *preferred_version = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "preferredVersion");
+    if (cJSON_IsNull(preferred_version)) {
+        preferred_version = NULL;
+    }
     if (preferred_version) { 
     preferred_version_local_nonprim = v1_group_version_for_discovery_parseFromJSON(preferred_version); //nonprimitive
     }
 
     // v1_api_group->server_address_by_client_cidrs
     cJSON *server_address_by_client_cidrs = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "serverAddressByClientCIDRs");
+    if (cJSON_IsNull(server_address_by_client_cidrs)) {
+        server_address_by_client_cidrs = NULL;
+    }
     if (server_address_by_client_cidrs) { 
     cJSON *server_address_by_client_cidrs_local_nonprimitive = NULL;
     if(!cJSON_IsArray(server_address_by_client_cidrs)){
@@ -227,6 +264,9 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
 
     // v1_api_group->versions
     cJSON *versions = cJSON_GetObjectItemCaseSensitive(v1_api_groupJSON, "versions");
+    if (cJSON_IsNull(versions)) {
+        versions = NULL;
+    }
     if (!versions) {
         goto end;
     }
@@ -250,7 +290,7 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
     }
 
 
-    v1_api_group_local_var = v1_api_group_create (
+    v1_api_group_local_var = v1_api_group_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         strdup(name->valuestring),

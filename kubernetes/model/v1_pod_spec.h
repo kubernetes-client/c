@@ -26,6 +26,7 @@ typedef struct v1_pod_spec_t v1_pod_spec_t;
 #include "v1_pod_resource_claim.h"
 #include "v1_pod_scheduling_gate.h"
 #include "v1_pod_security_context.h"
+#include "v1_resource_requirements.h"
 #include "v1_toleration.h"
 #include "v1_topology_spread_constraint.h"
 #include "v1_volume.h"
@@ -58,6 +59,7 @@ typedef struct v1_pod_spec_t {
     char *priority_class_name; // string
     list_t *readiness_gates; //nonprimitive container
     list_t *resource_claims; //nonprimitive container
+    struct v1_resource_requirements_t *resources; //model
     char *restart_policy; // string
     char *runtime_class_name; // string
     char *scheduler_name; // string
@@ -73,9 +75,10 @@ typedef struct v1_pod_spec_t {
     list_t *topology_spread_constraints; //nonprimitive container
     list_t *volumes; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_spec_t;
 
-v1_pod_spec_t *v1_pod_spec_create(
+__attribute__((deprecated)) v1_pod_spec_t *v1_pod_spec_create(
     long active_deadline_seconds,
     v1_affinity_t *affinity,
     int automount_service_account_token,
@@ -101,6 +104,7 @@ v1_pod_spec_t *v1_pod_spec_create(
     char *priority_class_name,
     list_t *readiness_gates,
     list_t *resource_claims,
+    v1_resource_requirements_t *resources,
     char *restart_policy,
     char *runtime_class_name,
     char *scheduler_name,

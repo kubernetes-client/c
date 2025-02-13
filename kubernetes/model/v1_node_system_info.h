@@ -30,9 +30,10 @@ typedef struct v1_node_system_info_t {
     char *os_image; // string
     char *system_uuid; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_system_info_t;
 
-v1_node_system_info_t *v1_node_system_info_create(
+__attribute__((deprecated)) v1_node_system_info_t *v1_node_system_info_create(
     char *architecture,
     char *boot_id,
     char *container_runtime_version,

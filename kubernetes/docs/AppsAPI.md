@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AppsAPI_getAPIGroup_2**](AppsAPI.md#AppsAPI_getAPIGroup_2) | **GET** /apis/apps/ | 
+[**AppsAPI_getAPIGroup**](AppsAPI.md#AppsAPI_getAPIGroup) | **GET** /apis/apps/ | 
 
 
-# **AppsAPI_getAPIGroup_2**
+# **AppsAPI_getAPIGroup**
 ```c
 // get information of a group
 //
-v1_api_group_t* AppsAPI_getAPIGroup_2(apiClient_t *apiClient);
+v1_api_group_t* AppsAPI_getAPIGroup(apiClient_t *apiClient);
 ```
 
 ### Parameters

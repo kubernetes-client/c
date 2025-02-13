@@ -24,9 +24,10 @@ typedef struct v1_env_var_t {
     char *value; // string
     struct v1_env_var_source_t *value_from; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_env_var_t;
 
-v1_env_var_t *v1_env_var_create(
+__attribute__((deprecated)) v1_env_var_t *v1_env_var_create(
     char *name,
     char *value,
     v1_env_var_source_t *value_from

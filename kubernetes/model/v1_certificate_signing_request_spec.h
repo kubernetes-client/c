@@ -28,9 +28,10 @@ typedef struct v1_certificate_signing_request_spec_t {
     list_t *usages; //primitive container
     char *username; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_certificate_signing_request_spec_t;
 
-v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_create(
+__attribute__((deprecated)) v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_create(
     int expiration_seconds,
     list_t* extra,
     list_t *groups,

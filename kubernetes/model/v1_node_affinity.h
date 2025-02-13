@@ -24,9 +24,10 @@ typedef struct v1_node_affinity_t {
     list_t *preferred_during_scheduling_ignored_during_execution; //nonprimitive container
     struct v1_node_selector_t *required_during_scheduling_ignored_during_execution; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_affinity_t;
 
-v1_node_affinity_t *v1_node_affinity_create(
+__attribute__((deprecated)) v1_node_affinity_t *v1_node_affinity_create(
     list_t *preferred_during_scheduling_ignored_during_execution,
     v1_node_selector_t *required_during_scheduling_ignored_during_execution
 );

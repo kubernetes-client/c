@@ -23,9 +23,10 @@ typedef struct v1_custom_resource_conversion_t {
     char *strategy; // string
     struct v1_webhook_conversion_t *webhook; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_custom_resource_conversion_t;
 
-v1_custom_resource_conversion_t *v1_custom_resource_conversion_create(
+__attribute__((deprecated)) v1_custom_resource_conversion_t *v1_custom_resource_conversion_create(
     char *strategy,
     v1_webhook_conversion_t *webhook
 );

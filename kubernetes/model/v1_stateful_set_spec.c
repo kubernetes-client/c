@@ -5,7 +5,7 @@
 
 
 
-v1_stateful_set_spec_t *v1_stateful_set_spec_create(
+static v1_stateful_set_spec_t *v1_stateful_set_spec_create_internal(
     int min_ready_seconds,
     v1_stateful_set_ordinals_t *ordinals,
     v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy,
@@ -34,12 +34,44 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_create(
     v1_stateful_set_spec_local_var->update_strategy = update_strategy;
     v1_stateful_set_spec_local_var->volume_claim_templates = volume_claim_templates;
 
+    v1_stateful_set_spec_local_var->_library_owned = 1;
     return v1_stateful_set_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_stateful_set_spec_t *v1_stateful_set_spec_create(
+    int min_ready_seconds,
+    v1_stateful_set_ordinals_t *ordinals,
+    v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy,
+    char *pod_management_policy,
+    int replicas,
+    int revision_history_limit,
+    v1_label_selector_t *selector,
+    char *service_name,
+    v1_pod_template_spec_t *_template,
+    v1_stateful_set_update_strategy_t *update_strategy,
+    list_t *volume_claim_templates
+    ) {
+    return v1_stateful_set_spec_create_internal (
+        min_ready_seconds,
+        ordinals,
+        persistent_volume_claim_retention_policy,
+        pod_management_policy,
+        replicas,
+        revision_history_limit,
+        selector,
+        service_name,
+        _template,
+        update_strategy,
+        volume_claim_templates
+        );
+}
 
 void v1_stateful_set_spec_free(v1_stateful_set_spec_t *v1_stateful_set_spec) {
     if(NULL == v1_stateful_set_spec){
+        return ;
+    }
+    if(v1_stateful_set_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_stateful_set_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -243,6 +275,9 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     // v1_stateful_set_spec->min_ready_seconds
     cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "minReadySeconds");
+    if (cJSON_IsNull(min_ready_seconds)) {
+        min_ready_seconds = NULL;
+    }
     if (min_ready_seconds) { 
     if(!cJSON_IsNumber(min_ready_seconds))
     {
@@ -252,18 +287,27 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     // v1_stateful_set_spec->ordinals
     cJSON *ordinals = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "ordinals");
+    if (cJSON_IsNull(ordinals)) {
+        ordinals = NULL;
+    }
     if (ordinals) { 
     ordinals_local_nonprim = v1_stateful_set_ordinals_parseFromJSON(ordinals); //nonprimitive
     }
 
     // v1_stateful_set_spec->persistent_volume_claim_retention_policy
     cJSON *persistent_volume_claim_retention_policy = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "persistentVolumeClaimRetentionPolicy");
+    if (cJSON_IsNull(persistent_volume_claim_retention_policy)) {
+        persistent_volume_claim_retention_policy = NULL;
+    }
     if (persistent_volume_claim_retention_policy) { 
     persistent_volume_claim_retention_policy_local_nonprim = v1_stateful_set_persistent_volume_claim_retention_policy_parseFromJSON(persistent_volume_claim_retention_policy); //nonprimitive
     }
 
     // v1_stateful_set_spec->pod_management_policy
     cJSON *pod_management_policy = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "podManagementPolicy");
+    if (cJSON_IsNull(pod_management_policy)) {
+        pod_management_policy = NULL;
+    }
     if (pod_management_policy) { 
     if(!cJSON_IsString(pod_management_policy) && !cJSON_IsNull(pod_management_policy))
     {
@@ -273,6 +317,9 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     // v1_stateful_set_spec->replicas
     cJSON *replicas = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "replicas");
+    if (cJSON_IsNull(replicas)) {
+        replicas = NULL;
+    }
     if (replicas) { 
     if(!cJSON_IsNumber(replicas))
     {
@@ -282,6 +329,9 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     // v1_stateful_set_spec->revision_history_limit
     cJSON *revision_history_limit = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "revisionHistoryLimit");
+    if (cJSON_IsNull(revision_history_limit)) {
+        revision_history_limit = NULL;
+    }
     if (revision_history_limit) { 
     if(!cJSON_IsNumber(revision_history_limit))
     {
@@ -291,6 +341,9 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     // v1_stateful_set_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "selector");
+    if (cJSON_IsNull(selector)) {
+        selector = NULL;
+    }
     if (!selector) {
         goto end;
     }
@@ -300,6 +353,9 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     // v1_stateful_set_spec->service_name
     cJSON *service_name = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "serviceName");
+    if (cJSON_IsNull(service_name)) {
+        service_name = NULL;
+    }
     if (!service_name) {
         goto end;
     }
@@ -312,6 +368,9 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     // v1_stateful_set_spec->_template
     cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "template");
+    if (cJSON_IsNull(_template)) {
+        _template = NULL;
+    }
     if (!_template) {
         goto end;
     }
@@ -321,12 +380,18 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     // v1_stateful_set_spec->update_strategy
     cJSON *update_strategy = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "updateStrategy");
+    if (cJSON_IsNull(update_strategy)) {
+        update_strategy = NULL;
+    }
     if (update_strategy) { 
     update_strategy_local_nonprim = v1_stateful_set_update_strategy_parseFromJSON(update_strategy); //nonprimitive
     }
 
     // v1_stateful_set_spec->volume_claim_templates
     cJSON *volume_claim_templates = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "volumeClaimTemplates");
+    if (cJSON_IsNull(volume_claim_templates)) {
+        volume_claim_templates = NULL;
+    }
     if (volume_claim_templates) { 
     cJSON *volume_claim_templates_local_nonprimitive = NULL;
     if(!cJSON_IsArray(volume_claim_templates)){
@@ -347,7 +412,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     }
 
 
-    v1_stateful_set_spec_local_var = v1_stateful_set_spec_create (
+    v1_stateful_set_spec_local_var = v1_stateful_set_spec_create_internal (
         min_ready_seconds ? min_ready_seconds->valuedouble : 0,
         ordinals ? ordinals_local_nonprim : NULL,
         persistent_volume_claim_retention_policy ? persistent_volume_claim_retention_policy_local_nonprim : NULL,

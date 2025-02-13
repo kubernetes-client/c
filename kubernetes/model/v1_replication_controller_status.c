@@ -5,7 +5,7 @@
 
 
 
-v1_replication_controller_status_t *v1_replication_controller_status_create(
+static v1_replication_controller_status_t *v1_replication_controller_status_create_internal(
     int available_replicas,
     list_t *conditions,
     int fully_labeled_replicas,
@@ -24,12 +24,34 @@ v1_replication_controller_status_t *v1_replication_controller_status_create(
     v1_replication_controller_status_local_var->ready_replicas = ready_replicas;
     v1_replication_controller_status_local_var->replicas = replicas;
 
+    v1_replication_controller_status_local_var->_library_owned = 1;
     return v1_replication_controller_status_local_var;
 }
 
+__attribute__((deprecated)) v1_replication_controller_status_t *v1_replication_controller_status_create(
+    int available_replicas,
+    list_t *conditions,
+    int fully_labeled_replicas,
+    long observed_generation,
+    int ready_replicas,
+    int replicas
+    ) {
+    return v1_replication_controller_status_create_internal (
+        available_replicas,
+        conditions,
+        fully_labeled_replicas,
+        observed_generation,
+        ready_replicas,
+        replicas
+        );
+}
 
 void v1_replication_controller_status_free(v1_replication_controller_status_t *v1_replication_controller_status) {
     if(NULL == v1_replication_controller_status){
+        return ;
+    }
+    if(v1_replication_controller_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_replication_controller_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -123,6 +145,9 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
 
     // v1_replication_controller_status->available_replicas
     cJSON *available_replicas = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "availableReplicas");
+    if (cJSON_IsNull(available_replicas)) {
+        available_replicas = NULL;
+    }
     if (available_replicas) { 
     if(!cJSON_IsNumber(available_replicas))
     {
@@ -132,6 +157,9 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
 
     // v1_replication_controller_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -153,6 +181,9 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
 
     // v1_replication_controller_status->fully_labeled_replicas
     cJSON *fully_labeled_replicas = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "fullyLabeledReplicas");
+    if (cJSON_IsNull(fully_labeled_replicas)) {
+        fully_labeled_replicas = NULL;
+    }
     if (fully_labeled_replicas) { 
     if(!cJSON_IsNumber(fully_labeled_replicas))
     {
@@ -162,6 +193,9 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
 
     // v1_replication_controller_status->observed_generation
     cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "observedGeneration");
+    if (cJSON_IsNull(observed_generation)) {
+        observed_generation = NULL;
+    }
     if (observed_generation) { 
     if(!cJSON_IsNumber(observed_generation))
     {
@@ -171,6 +205,9 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
 
     // v1_replication_controller_status->ready_replicas
     cJSON *ready_replicas = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "readyReplicas");
+    if (cJSON_IsNull(ready_replicas)) {
+        ready_replicas = NULL;
+    }
     if (ready_replicas) { 
     if(!cJSON_IsNumber(ready_replicas))
     {
@@ -180,6 +217,9 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
 
     // v1_replication_controller_status->replicas
     cJSON *replicas = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "replicas");
+    if (cJSON_IsNull(replicas)) {
+        replicas = NULL;
+    }
     if (!replicas) {
         goto end;
     }
@@ -191,7 +231,7 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
     }
 
 
-    v1_replication_controller_status_local_var = v1_replication_controller_status_create (
+    v1_replication_controller_status_local_var = v1_replication_controller_status_create_internal (
         available_replicas ? available_replicas->valuedouble : 0,
         conditions ? conditionsList : NULL,
         fully_labeled_replicas ? fully_labeled_replicas->valuedouble : 0,

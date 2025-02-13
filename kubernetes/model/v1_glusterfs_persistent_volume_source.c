@@ -5,7 +5,7 @@
 
 
 
-v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source_create(
+static v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source_create_internal(
     char *endpoints,
     char *endpoints_namespace,
     char *path,
@@ -20,12 +20,30 @@ v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source_c
     v1_glusterfs_persistent_volume_source_local_var->path = path;
     v1_glusterfs_persistent_volume_source_local_var->read_only = read_only;
 
+    v1_glusterfs_persistent_volume_source_local_var->_library_owned = 1;
     return v1_glusterfs_persistent_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source_create(
+    char *endpoints,
+    char *endpoints_namespace,
+    char *path,
+    int read_only
+    ) {
+    return v1_glusterfs_persistent_volume_source_create_internal (
+        endpoints,
+        endpoints_namespace,
+        path,
+        read_only
+        );
+}
 
 void v1_glusterfs_persistent_volume_source_free(v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source) {
     if(NULL == v1_glusterfs_persistent_volume_source){
+        return ;
+    }
+    if(v1_glusterfs_persistent_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_glusterfs_persistent_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -94,6 +112,9 @@ v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source_p
 
     // v1_glusterfs_persistent_volume_source->endpoints
     cJSON *endpoints = cJSON_GetObjectItemCaseSensitive(v1_glusterfs_persistent_volume_sourceJSON, "endpoints");
+    if (cJSON_IsNull(endpoints)) {
+        endpoints = NULL;
+    }
     if (!endpoints) {
         goto end;
     }
@@ -106,6 +127,9 @@ v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source_p
 
     // v1_glusterfs_persistent_volume_source->endpoints_namespace
     cJSON *endpoints_namespace = cJSON_GetObjectItemCaseSensitive(v1_glusterfs_persistent_volume_sourceJSON, "endpointsNamespace");
+    if (cJSON_IsNull(endpoints_namespace)) {
+        endpoints_namespace = NULL;
+    }
     if (endpoints_namespace) { 
     if(!cJSON_IsString(endpoints_namespace) && !cJSON_IsNull(endpoints_namespace))
     {
@@ -115,6 +139,9 @@ v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source_p
 
     // v1_glusterfs_persistent_volume_source->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_glusterfs_persistent_volume_sourceJSON, "path");
+    if (cJSON_IsNull(path)) {
+        path = NULL;
+    }
     if (!path) {
         goto end;
     }
@@ -127,6 +154,9 @@ v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source_p
 
     // v1_glusterfs_persistent_volume_source->read_only
     cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_glusterfs_persistent_volume_sourceJSON, "readOnly");
+    if (cJSON_IsNull(read_only)) {
+        read_only = NULL;
+    }
     if (read_only) { 
     if(!cJSON_IsBool(read_only))
     {
@@ -135,7 +165,7 @@ v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source_p
     }
 
 
-    v1_glusterfs_persistent_volume_source_local_var = v1_glusterfs_persistent_volume_source_create (
+    v1_glusterfs_persistent_volume_source_local_var = v1_glusterfs_persistent_volume_source_create_internal (
         strdup(endpoints->valuestring),
         endpoints_namespace && !cJSON_IsNull(endpoints_namespace) ? strdup(endpoints_namespace->valuestring) : NULL,
         strdup(path->valuestring),

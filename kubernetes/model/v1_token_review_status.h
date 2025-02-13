@@ -25,9 +25,10 @@ typedef struct v1_token_review_status_t {
     char *error; // string
     struct v1_user_info_t *user; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_token_review_status_t;
 
-v1_token_review_status_t *v1_token_review_status_create(
+__attribute__((deprecated)) v1_token_review_status_t *v1_token_review_status_create(
     list_t *audiences,
     int authenticated,
     char *error,

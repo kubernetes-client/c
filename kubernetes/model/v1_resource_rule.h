@@ -24,9 +24,10 @@ typedef struct v1_resource_rule_t {
     list_t *resources; //primitive container
     list_t *verbs; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_resource_rule_t;
 
-v1_resource_rule_t *v1_resource_rule_create(
+__attribute__((deprecated)) v1_resource_rule_t *v1_resource_rule_create(
     list_t *api_groups,
     list_t *resource_names,
     list_t *resources,

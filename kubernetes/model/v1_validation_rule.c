@@ -5,7 +5,7 @@
 
 
 
-v1_validation_rule_t *v1_validation_rule_create(
+static v1_validation_rule_t *v1_validation_rule_create_internal(
     char *field_path,
     char *message,
     char *message_expression,
@@ -24,12 +24,34 @@ v1_validation_rule_t *v1_validation_rule_create(
     v1_validation_rule_local_var->reason = reason;
     v1_validation_rule_local_var->rule = rule;
 
+    v1_validation_rule_local_var->_library_owned = 1;
     return v1_validation_rule_local_var;
 }
 
+__attribute__((deprecated)) v1_validation_rule_t *v1_validation_rule_create(
+    char *field_path,
+    char *message,
+    char *message_expression,
+    int optional_old_self,
+    char *reason,
+    char *rule
+    ) {
+    return v1_validation_rule_create_internal (
+        field_path,
+        message,
+        message_expression,
+        optional_old_self,
+        reason,
+        rule
+        );
+}
 
 void v1_validation_rule_free(v1_validation_rule_t *v1_validation_rule) {
     if(NULL == v1_validation_rule){
+        return ;
+    }
+    if(v1_validation_rule->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_validation_rule_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -121,6 +143,9 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
 
     // v1_validation_rule->field_path
     cJSON *field_path = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "fieldPath");
+    if (cJSON_IsNull(field_path)) {
+        field_path = NULL;
+    }
     if (field_path) { 
     if(!cJSON_IsString(field_path) && !cJSON_IsNull(field_path))
     {
@@ -130,6 +155,9 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
 
     // v1_validation_rule->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "message");
+    if (cJSON_IsNull(message)) {
+        message = NULL;
+    }
     if (message) { 
     if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
@@ -139,6 +167,9 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
 
     // v1_validation_rule->message_expression
     cJSON *message_expression = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "messageExpression");
+    if (cJSON_IsNull(message_expression)) {
+        message_expression = NULL;
+    }
     if (message_expression) { 
     if(!cJSON_IsString(message_expression) && !cJSON_IsNull(message_expression))
     {
@@ -148,6 +179,9 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
 
     // v1_validation_rule->optional_old_self
     cJSON *optional_old_self = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "optionalOldSelf");
+    if (cJSON_IsNull(optional_old_self)) {
+        optional_old_self = NULL;
+    }
     if (optional_old_self) { 
     if(!cJSON_IsBool(optional_old_self))
     {
@@ -157,6 +191,9 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
 
     // v1_validation_rule->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "reason");
+    if (cJSON_IsNull(reason)) {
+        reason = NULL;
+    }
     if (reason) { 
     if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
@@ -166,6 +203,9 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
 
     // v1_validation_rule->rule
     cJSON *rule = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "rule");
+    if (cJSON_IsNull(rule)) {
+        rule = NULL;
+    }
     if (!rule) {
         goto end;
     }
@@ -177,7 +217,7 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
     }
 
 
-    v1_validation_rule_local_var = v1_validation_rule_create (
+    v1_validation_rule_local_var = v1_validation_rule_create_internal (
         field_path && !cJSON_IsNull(field_path) ? strdup(field_path->valuestring) : NULL,
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         message_expression && !cJSON_IsNull(message_expression) ? strdup(message_expression->valuestring) : NULL,

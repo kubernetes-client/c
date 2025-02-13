@@ -27,9 +27,10 @@ typedef struct v1_replica_set_status_t {
     int ready_replicas; //numeric
     int replicas; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_replica_set_status_t;
 
-v1_replica_set_status_t *v1_replica_set_status_create(
+__attribute__((deprecated)) v1_replica_set_status_t *v1_replica_set_status_create(
     int available_replicas,
     list_t *conditions,
     int fully_labeled_replicas,

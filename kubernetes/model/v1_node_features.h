@@ -21,9 +21,10 @@ typedef struct v1_node_features_t v1_node_features_t;
 typedef struct v1_node_features_t {
     int supplemental_groups_policy; //boolean
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_features_t;
 
-v1_node_features_t *v1_node_features_create(
+__attribute__((deprecated)) v1_node_features_t *v1_node_features_create(
     int supplemental_groups_policy
 );
 

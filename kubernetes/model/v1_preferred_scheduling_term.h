@@ -23,9 +23,10 @@ typedef struct v1_preferred_scheduling_term_t {
     struct v1_node_selector_term_t *preference; //model
     int weight; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_preferred_scheduling_term_t;
 
-v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_create(
+__attribute__((deprecated)) v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_create(
     v1_node_selector_term_t *preference,
     int weight
 );

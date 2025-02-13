@@ -55,9 +55,10 @@ typedef struct v1_ephemeral_container_t {
     list_t *volume_mounts; //nonprimitive container
     char *working_dir; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ephemeral_container_t;
 
-v1_ephemeral_container_t *v1_ephemeral_container_create(
+__attribute__((deprecated)) v1_ephemeral_container_t *v1_ephemeral_container_create(
     list_t *args,
     list_t *command,
     list_t *env,

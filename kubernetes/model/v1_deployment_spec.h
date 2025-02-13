@@ -31,9 +31,10 @@ typedef struct v1_deployment_spec_t {
     struct v1_deployment_strategy_t *strategy; //model
     struct v1_pod_template_spec_t *_template; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_deployment_spec_t;
 
-v1_deployment_spec_t *v1_deployment_spec_create(
+__attribute__((deprecated)) v1_deployment_spec_t *v1_deployment_spec_create(
     int min_ready_seconds,
     int paused,
     int progress_deadline_seconds,

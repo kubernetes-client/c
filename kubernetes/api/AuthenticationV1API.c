@@ -5,11 +5,6 @@
 
 #define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
-#define intToStr(dst, src) \
-    do {\
-    char dst[256];\
-    snprintf(dst, 256, "%ld", (long int)(src));\
-}while(0)
 
 
 // create a SelfSubjectReview
@@ -23,11 +18,14 @@ AuthenticationV1API_createSelfSubjectReview(apiClient_t *apiClient, v1_self_subj
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/authentication.k8s.io/v1/selfsubjectreviews")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/authentication.k8s.io/v1/selfsubjectreviews");
+    char *localVarPath = strdup("/apis/authentication.k8s.io/v1/selfsubjectreviews");
+
 
 
 
@@ -84,13 +82,15 @@ AuthenticationV1API_createSelfSubjectReview(apiClient_t *apiClient, v1_self_subj
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_self_subject_review_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -99,6 +99,7 @@ AuthenticationV1API_createSelfSubjectReview(apiClient_t *apiClient, v1_self_subj
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -118,11 +119,14 @@ AuthenticationV1API_createSelfSubjectReview(apiClient_t *apiClient, v1_self_subj
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthenticationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_self_subject_review_t *elementToReturn = v1_self_subject_review_parseFromJSON(AuthenticationV1APIlocalVarJSON);
-    cJSON_Delete(AuthenticationV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_self_subject_review_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AuthenticationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_self_subject_review_parseFromJSON(AuthenticationV1APIlocalVarJSON);
+        cJSON_Delete(AuthenticationV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -208,11 +212,14 @@ AuthenticationV1API_createTokenReview(apiClient_t *apiClient, v1_token_review_t 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/authentication.k8s.io/v1/tokenreviews")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/authentication.k8s.io/v1/tokenreviews");
+    char *localVarPath = strdup("/apis/authentication.k8s.io/v1/tokenreviews");
+
 
 
 
@@ -269,13 +276,15 @@ AuthenticationV1API_createTokenReview(apiClient_t *apiClient, v1_token_review_t 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_token_review_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -284,6 +293,7 @@ AuthenticationV1API_createTokenReview(apiClient_t *apiClient, v1_token_review_t 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -303,11 +313,14 @@ AuthenticationV1API_createTokenReview(apiClient_t *apiClient, v1_token_review_t 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthenticationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_token_review_t *elementToReturn = v1_token_review_parseFromJSON(AuthenticationV1APIlocalVarJSON);
-    cJSON_Delete(AuthenticationV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_token_review_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AuthenticationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_token_review_parseFromJSON(AuthenticationV1APIlocalVarJSON);
+        cJSON_Delete(AuthenticationV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -385,7 +398,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-AuthenticationV1API_getAPIResources_6(apiClient_t *apiClient)
+AuthenticationV1API_getAPIResources(apiClient_t *apiClient)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -393,17 +406,21 @@ AuthenticationV1API_getAPIResources_6(apiClient_t *apiClient)
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/authentication.k8s.io/v1/")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/authentication.k8s.io/v1/");
+    char *localVarPath = strdup("/apis/authentication.k8s.io/v1/");
+
 
 
 
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -412,6 +429,7 @@ AuthenticationV1API_getAPIResources_6(apiClient_t *apiClient)
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -423,11 +441,14 @@ AuthenticationV1API_getAPIResources_6(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthenticationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(AuthenticationV1APIlocalVarJSON);
-    cJSON_Delete(AuthenticationV1APIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_api_resource_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *AuthenticationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_api_resource_list_parseFromJSON(AuthenticationV1APIlocalVarJSON);
+        cJSON_Delete(AuthenticationV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type

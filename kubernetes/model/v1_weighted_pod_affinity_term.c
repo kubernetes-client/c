@@ -5,7 +5,7 @@
 
 
 
-v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_create(
+static v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_create_internal(
     v1_pod_affinity_term_t *pod_affinity_term,
     int weight
     ) {
@@ -16,12 +16,26 @@ v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_create(
     v1_weighted_pod_affinity_term_local_var->pod_affinity_term = pod_affinity_term;
     v1_weighted_pod_affinity_term_local_var->weight = weight;
 
+    v1_weighted_pod_affinity_term_local_var->_library_owned = 1;
     return v1_weighted_pod_affinity_term_local_var;
 }
 
+__attribute__((deprecated)) v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_create(
+    v1_pod_affinity_term_t *pod_affinity_term,
+    int weight
+    ) {
+    return v1_weighted_pod_affinity_term_create_internal (
+        pod_affinity_term,
+        weight
+        );
+}
 
 void v1_weighted_pod_affinity_term_free(v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term) {
     if(NULL == v1_weighted_pod_affinity_term){
+        return ;
+    }
+    if(v1_weighted_pod_affinity_term->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_weighted_pod_affinity_term_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -74,6 +88,9 @@ v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_parseFromJSON(cJS
 
     // v1_weighted_pod_affinity_term->pod_affinity_term
     cJSON *pod_affinity_term = cJSON_GetObjectItemCaseSensitive(v1_weighted_pod_affinity_termJSON, "podAffinityTerm");
+    if (cJSON_IsNull(pod_affinity_term)) {
+        pod_affinity_term = NULL;
+    }
     if (!pod_affinity_term) {
         goto end;
     }
@@ -83,6 +100,9 @@ v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_parseFromJSON(cJS
 
     // v1_weighted_pod_affinity_term->weight
     cJSON *weight = cJSON_GetObjectItemCaseSensitive(v1_weighted_pod_affinity_termJSON, "weight");
+    if (cJSON_IsNull(weight)) {
+        weight = NULL;
+    }
     if (!weight) {
         goto end;
     }
@@ -94,7 +114,7 @@ v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_parseFromJSON(cJS
     }
 
 
-    v1_weighted_pod_affinity_term_local_var = v1_weighted_pod_affinity_term_create (
+    v1_weighted_pod_affinity_term_local_var = v1_weighted_pod_affinity_term_create_internal (
         pod_affinity_term_local_nonprim,
         weight->valuedouble
         );

@@ -26,9 +26,10 @@ typedef struct v1_subject_rules_review_status_t {
     list_t *non_resource_rules; //nonprimitive container
     list_t *resource_rules; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_subject_rules_review_status_t;
 
-v1_subject_rules_review_status_t *v1_subject_rules_review_status_create(
+__attribute__((deprecated)) v1_subject_rules_review_status_t *v1_subject_rules_review_status_create(
     char *evaluation_error,
     int incomplete,
     list_t *non_resource_rules,

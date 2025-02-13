@@ -22,9 +22,10 @@ typedef struct v1_exempt_priority_level_configuration_t {
     int lendable_percent; //numeric
     int nominal_concurrency_shares; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_exempt_priority_level_configuration_t;
 
-v1_exempt_priority_level_configuration_t *v1_exempt_priority_level_configuration_create(
+__attribute__((deprecated)) v1_exempt_priority_level_configuration_t *v1_exempt_priority_level_configuration_create(
     int lendable_percent,
     int nominal_concurrency_shares
 );

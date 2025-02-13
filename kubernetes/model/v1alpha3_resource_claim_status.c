@@ -5,9 +5,9 @@
 
 
 
-v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_create(
+static v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_create_internal(
     v1alpha3_allocation_result_t *allocation,
-    int deallocation_requested,
+    list_t *devices,
     list_t *reserved_for
     ) {
     v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_local_var = malloc(sizeof(v1alpha3_resource_claim_status_t));
@@ -15,21 +15,44 @@ v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_create(
         return NULL;
     }
     v1alpha3_resource_claim_status_local_var->allocation = allocation;
-    v1alpha3_resource_claim_status_local_var->deallocation_requested = deallocation_requested;
+    v1alpha3_resource_claim_status_local_var->devices = devices;
     v1alpha3_resource_claim_status_local_var->reserved_for = reserved_for;
 
+    v1alpha3_resource_claim_status_local_var->_library_owned = 1;
     return v1alpha3_resource_claim_status_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_create(
+    v1alpha3_allocation_result_t *allocation,
+    list_t *devices,
+    list_t *reserved_for
+    ) {
+    return v1alpha3_resource_claim_status_create_internal (
+        allocation,
+        devices,
+        reserved_for
+        );
+}
 
 void v1alpha3_resource_claim_status_free(v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status) {
     if(NULL == v1alpha3_resource_claim_status){
+        return ;
+    }
+    if(v1alpha3_resource_claim_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_resource_claim_status_free");
         return ;
     }
     listEntry_t *listEntry;
     if (v1alpha3_resource_claim_status->allocation) {
         v1alpha3_allocation_result_free(v1alpha3_resource_claim_status->allocation);
         v1alpha3_resource_claim_status->allocation = NULL;
+    }
+    if (v1alpha3_resource_claim_status->devices) {
+        list_ForEach(listEntry, v1alpha3_resource_claim_status->devices) {
+            v1alpha3_allocated_device_status_free(listEntry->data);
+        }
+        list_freeList(v1alpha3_resource_claim_status->devices);
+        v1alpha3_resource_claim_status->devices = NULL;
     }
     if (v1alpha3_resource_claim_status->reserved_for) {
         list_ForEach(listEntry, v1alpha3_resource_claim_status->reserved_for) {
@@ -57,10 +80,22 @@ cJSON *v1alpha3_resource_claim_status_convertToJSON(v1alpha3_resource_claim_stat
     }
 
 
-    // v1alpha3_resource_claim_status->deallocation_requested
-    if(v1alpha3_resource_claim_status->deallocation_requested) {
-    if(cJSON_AddBoolToObject(item, "deallocationRequested", v1alpha3_resource_claim_status->deallocation_requested) == NULL) {
-    goto fail; //Bool
+    // v1alpha3_resource_claim_status->devices
+    if(v1alpha3_resource_claim_status->devices) {
+    cJSON *devices = cJSON_AddArrayToObject(item, "devices");
+    if(devices == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *devicesListEntry;
+    if (v1alpha3_resource_claim_status->devices) {
+    list_ForEach(devicesListEntry, v1alpha3_resource_claim_status->devices) {
+    cJSON *itemLocal = v1alpha3_allocated_device_status_convertToJSON(devicesListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(devices, itemLocal);
+    }
     }
     }
 
@@ -99,26 +134,50 @@ v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_parseFromJSON(c
     // define the local variable for v1alpha3_resource_claim_status->allocation
     v1alpha3_allocation_result_t *allocation_local_nonprim = NULL;
 
+    // define the local list for v1alpha3_resource_claim_status->devices
+    list_t *devicesList = NULL;
+
     // define the local list for v1alpha3_resource_claim_status->reserved_for
     list_t *reserved_forList = NULL;
 
     // v1alpha3_resource_claim_status->allocation
     cJSON *allocation = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_statusJSON, "allocation");
+    if (cJSON_IsNull(allocation)) {
+        allocation = NULL;
+    }
     if (allocation) { 
     allocation_local_nonprim = v1alpha3_allocation_result_parseFromJSON(allocation); //nonprimitive
     }
 
-    // v1alpha3_resource_claim_status->deallocation_requested
-    cJSON *deallocation_requested = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_statusJSON, "deallocationRequested");
-    if (deallocation_requested) { 
-    if(!cJSON_IsBool(deallocation_requested))
+    // v1alpha3_resource_claim_status->devices
+    cJSON *devices = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_statusJSON, "devices");
+    if (cJSON_IsNull(devices)) {
+        devices = NULL;
+    }
+    if (devices) { 
+    cJSON *devices_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(devices)){
+        goto end; //nonprimitive container
+    }
+
+    devicesList = list_createList();
+
+    cJSON_ArrayForEach(devices_local_nonprimitive,devices )
     {
-    goto end; //Bool
+        if(!cJSON_IsObject(devices_local_nonprimitive)){
+            goto end;
+        }
+        v1alpha3_allocated_device_status_t *devicesItem = v1alpha3_allocated_device_status_parseFromJSON(devices_local_nonprimitive);
+
+        list_addElement(devicesList, devicesItem);
     }
     }
 
     // v1alpha3_resource_claim_status->reserved_for
     cJSON *reserved_for = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_statusJSON, "reservedFor");
+    if (cJSON_IsNull(reserved_for)) {
+        reserved_for = NULL;
+    }
     if (reserved_for) { 
     cJSON *reserved_for_local_nonprimitive = NULL;
     if(!cJSON_IsArray(reserved_for)){
@@ -139,9 +198,9 @@ v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_parseFromJSON(c
     }
 
 
-    v1alpha3_resource_claim_status_local_var = v1alpha3_resource_claim_status_create (
+    v1alpha3_resource_claim_status_local_var = v1alpha3_resource_claim_status_create_internal (
         allocation ? allocation_local_nonprim : NULL,
-        deallocation_requested ? deallocation_requested->valueint : 0,
+        devices ? devicesList : NULL,
         reserved_for ? reserved_forList : NULL
         );
 
@@ -150,6 +209,15 @@ end:
     if (allocation_local_nonprim) {
         v1alpha3_allocation_result_free(allocation_local_nonprim);
         allocation_local_nonprim = NULL;
+    }
+    if (devicesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, devicesList) {
+            v1alpha3_allocated_device_status_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(devicesList);
+        devicesList = NULL;
     }
     if (reserved_forList) {
         listEntry_t *listEntry = NULL;

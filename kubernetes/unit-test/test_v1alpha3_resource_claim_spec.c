@@ -23,13 +23,11 @@ v1alpha3_resource_claim_spec_t* instantiate_v1alpha3_resource_claim_spec(int inc
   v1alpha3_resource_claim_spec_t* v1alpha3_resource_claim_spec = NULL;
   if (include_optional) {
     v1alpha3_resource_claim_spec = v1alpha3_resource_claim_spec_create(
-      "0",
        // false, not to have infinite recursion
       instantiate_v1alpha3_device_claim(0)
     );
   } else {
     v1alpha3_resource_claim_spec = v1alpha3_resource_claim_spec_create(
-      "0",
       NULL
     );
   }

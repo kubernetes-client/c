@@ -21,14 +21,13 @@ typedef struct v1alpha3_allocation_result_t v1alpha3_allocation_result_t;
 
 
 typedef struct v1alpha3_allocation_result_t {
-    char *controller; // string
     struct v1alpha3_device_allocation_result_t *devices; //model
     struct v1_node_selector_t *node_selector; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_allocation_result_t;
 
-v1alpha3_allocation_result_t *v1alpha3_allocation_result_create(
-    char *controller,
+__attribute__((deprecated)) v1alpha3_allocation_result_t *v1alpha3_allocation_result_create(
     v1alpha3_device_allocation_result_t *devices,
     v1_node_selector_t *node_selector
 );

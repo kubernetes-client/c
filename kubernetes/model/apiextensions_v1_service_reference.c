@@ -5,7 +5,7 @@
 
 
 
-apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_create(
+static apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_create_internal(
     char *name,
     char *_namespace,
     char *path,
@@ -20,12 +20,30 @@ apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_create(
     apiextensions_v1_service_reference_local_var->path = path;
     apiextensions_v1_service_reference_local_var->port = port;
 
+    apiextensions_v1_service_reference_local_var->_library_owned = 1;
     return apiextensions_v1_service_reference_local_var;
 }
 
+__attribute__((deprecated)) apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_create(
+    char *name,
+    char *_namespace,
+    char *path,
+    int port
+    ) {
+    return apiextensions_v1_service_reference_create_internal (
+        name,
+        _namespace,
+        path,
+        port
+        );
+}
 
 void apiextensions_v1_service_reference_free(apiextensions_v1_service_reference_t *apiextensions_v1_service_reference) {
     if(NULL == apiextensions_v1_service_reference){
+        return ;
+    }
+    if(apiextensions_v1_service_reference->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "apiextensions_v1_service_reference_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -94,6 +112,9 @@ apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFr
 
     // apiextensions_v1_service_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -106,6 +127,9 @@ apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFr
 
     // apiextensions_v1_service_reference->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "namespace");
+    if (cJSON_IsNull(_namespace)) {
+        _namespace = NULL;
+    }
     if (!_namespace) {
         goto end;
     }
@@ -118,6 +142,9 @@ apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFr
 
     // apiextensions_v1_service_reference->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "path");
+    if (cJSON_IsNull(path)) {
+        path = NULL;
+    }
     if (path) { 
     if(!cJSON_IsString(path) && !cJSON_IsNull(path))
     {
@@ -127,6 +154,9 @@ apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFr
 
     // apiextensions_v1_service_reference->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "port");
+    if (cJSON_IsNull(port)) {
+        port = NULL;
+    }
     if (port) { 
     if(!cJSON_IsNumber(port))
     {
@@ -135,7 +165,7 @@ apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFr
     }
 
 
-    apiextensions_v1_service_reference_local_var = apiextensions_v1_service_reference_create (
+    apiextensions_v1_service_reference_local_var = apiextensions_v1_service_reference_create_internal (
         strdup(name->valuestring),
         strdup(_namespace->valuestring),
         path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,

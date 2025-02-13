@@ -5,7 +5,7 @@
 
 
 
-v2_resource_metric_source_t *v2_resource_metric_source_create(
+static v2_resource_metric_source_t *v2_resource_metric_source_create_internal(
     char *name,
     v2_metric_target_t *target
     ) {
@@ -16,12 +16,26 @@ v2_resource_metric_source_t *v2_resource_metric_source_create(
     v2_resource_metric_source_local_var->name = name;
     v2_resource_metric_source_local_var->target = target;
 
+    v2_resource_metric_source_local_var->_library_owned = 1;
     return v2_resource_metric_source_local_var;
 }
 
+__attribute__((deprecated)) v2_resource_metric_source_t *v2_resource_metric_source_create(
+    char *name,
+    v2_metric_target_t *target
+    ) {
+    return v2_resource_metric_source_create_internal (
+        name,
+        target
+        );
+}
 
 void v2_resource_metric_source_free(v2_resource_metric_source_t *v2_resource_metric_source) {
     if(NULL == v2_resource_metric_source){
+        return ;
+    }
+    if(v2_resource_metric_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v2_resource_metric_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -78,6 +92,9 @@ v2_resource_metric_source_t *v2_resource_metric_source_parseFromJSON(cJSON *v2_r
 
     // v2_resource_metric_source->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v2_resource_metric_sourceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -90,6 +107,9 @@ v2_resource_metric_source_t *v2_resource_metric_source_parseFromJSON(cJSON *v2_r
 
     // v2_resource_metric_source->target
     cJSON *target = cJSON_GetObjectItemCaseSensitive(v2_resource_metric_sourceJSON, "target");
+    if (cJSON_IsNull(target)) {
+        target = NULL;
+    }
     if (!target) {
         goto end;
     }
@@ -98,7 +118,7 @@ v2_resource_metric_source_t *v2_resource_metric_source_parseFromJSON(cJSON *v2_r
     target_local_nonprim = v2_metric_target_parseFromJSON(target); //nonprimitive
 
 
-    v2_resource_metric_source_local_var = v2_resource_metric_source_create (
+    v2_resource_metric_source_local_var = v2_resource_metric_source_create_internal (
         strdup(name->valuestring),
         target_local_nonprim
         );

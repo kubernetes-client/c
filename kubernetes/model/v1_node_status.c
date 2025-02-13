@@ -5,7 +5,7 @@
 
 
 
-v1_node_status_t *v1_node_status_create(
+static v1_node_status_t *v1_node_status_create_internal(
     list_t *addresses,
     list_t* allocatable,
     list_t* capacity,
@@ -38,12 +38,48 @@ v1_node_status_t *v1_node_status_create(
     v1_node_status_local_var->volumes_attached = volumes_attached;
     v1_node_status_local_var->volumes_in_use = volumes_in_use;
 
+    v1_node_status_local_var->_library_owned = 1;
     return v1_node_status_local_var;
 }
 
+__attribute__((deprecated)) v1_node_status_t *v1_node_status_create(
+    list_t *addresses,
+    list_t* allocatable,
+    list_t* capacity,
+    list_t *conditions,
+    v1_node_config_status_t *config,
+    v1_node_daemon_endpoints_t *daemon_endpoints,
+    v1_node_features_t *features,
+    list_t *images,
+    v1_node_system_info_t *node_info,
+    char *phase,
+    list_t *runtime_handlers,
+    list_t *volumes_attached,
+    list_t *volumes_in_use
+    ) {
+    return v1_node_status_create_internal (
+        addresses,
+        allocatable,
+        capacity,
+        conditions,
+        config,
+        daemon_endpoints,
+        features,
+        images,
+        node_info,
+        phase,
+        runtime_handlers,
+        volumes_attached,
+        volumes_in_use
+        );
+}
 
 void v1_node_status_free(v1_node_status_t *v1_node_status) {
     if(NULL == v1_node_status){
+        return ;
+    }
+    if(v1_node_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_node_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -56,7 +92,7 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
     }
     if (v1_node_status->allocatable) {
         list_ForEach(listEntry, v1_node_status->allocatable) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -66,7 +102,7 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
     }
     if (v1_node_status->capacity) {
         list_ForEach(listEntry, v1_node_status->capacity) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -165,8 +201,8 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     listEntry_t *allocatableListEntry;
     if (v1_node_status->allocatable) {
     list_ForEach(allocatableListEntry, v1_node_status->allocatable) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)allocatableListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = allocatableListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -185,8 +221,8 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     listEntry_t *capacityListEntry;
     if (v1_node_status->capacity) {
     list_ForEach(capacityListEntry, v1_node_status->capacity) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)capacityListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = capacityListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -344,7 +380,7 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     listEntry_t *volumes_in_useListEntry;
     list_ForEach(volumes_in_useListEntry, v1_node_status->volumes_in_use) {
-    if(cJSON_AddStringToObject(volumes_in_use, "", (char*)volumes_in_useListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(volumes_in_use, "", volumes_in_useListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -401,6 +437,9 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->addresses
     cJSON *addresses = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "addresses");
+    if (cJSON_IsNull(addresses)) {
+        addresses = NULL;
+    }
     if (addresses) { 
     cJSON *addresses_local_nonprimitive = NULL;
     if(!cJSON_IsArray(addresses)){
@@ -422,6 +461,9 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->allocatable
     cJSON *allocatable = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "allocatable");
+    if (cJSON_IsNull(allocatable)) {
+        allocatable = NULL;
+    }
     if (allocatable) { 
     cJSON *allocatable_local_map = NULL;
     if(!cJSON_IsObject(allocatable) && !cJSON_IsNull(allocatable))
@@ -447,6 +489,9 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->capacity
     cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "capacity");
+    if (cJSON_IsNull(capacity)) {
+        capacity = NULL;
+    }
     if (capacity) { 
     cJSON *capacity_local_map = NULL;
     if(!cJSON_IsObject(capacity) && !cJSON_IsNull(capacity))
@@ -472,6 +517,9 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -493,24 +541,36 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->config
     cJSON *config = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "config");
+    if (cJSON_IsNull(config)) {
+        config = NULL;
+    }
     if (config) { 
     config_local_nonprim = v1_node_config_status_parseFromJSON(config); //nonprimitive
     }
 
     // v1_node_status->daemon_endpoints
     cJSON *daemon_endpoints = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "daemonEndpoints");
+    if (cJSON_IsNull(daemon_endpoints)) {
+        daemon_endpoints = NULL;
+    }
     if (daemon_endpoints) { 
     daemon_endpoints_local_nonprim = v1_node_daemon_endpoints_parseFromJSON(daemon_endpoints); //nonprimitive
     }
 
     // v1_node_status->features
     cJSON *features = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "features");
+    if (cJSON_IsNull(features)) {
+        features = NULL;
+    }
     if (features) { 
     features_local_nonprim = v1_node_features_parseFromJSON(features); //nonprimitive
     }
 
     // v1_node_status->images
     cJSON *images = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "images");
+    if (cJSON_IsNull(images)) {
+        images = NULL;
+    }
     if (images) { 
     cJSON *images_local_nonprimitive = NULL;
     if(!cJSON_IsArray(images)){
@@ -532,12 +592,18 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->node_info
     cJSON *node_info = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "nodeInfo");
+    if (cJSON_IsNull(node_info)) {
+        node_info = NULL;
+    }
     if (node_info) { 
     node_info_local_nonprim = v1_node_system_info_parseFromJSON(node_info); //nonprimitive
     }
 
     // v1_node_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "phase");
+    if (cJSON_IsNull(phase)) {
+        phase = NULL;
+    }
     if (phase) { 
     if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
     {
@@ -547,6 +613,9 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->runtime_handlers
     cJSON *runtime_handlers = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "runtimeHandlers");
+    if (cJSON_IsNull(runtime_handlers)) {
+        runtime_handlers = NULL;
+    }
     if (runtime_handlers) { 
     cJSON *runtime_handlers_local_nonprimitive = NULL;
     if(!cJSON_IsArray(runtime_handlers)){
@@ -568,6 +637,9 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->volumes_attached
     cJSON *volumes_attached = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "volumesAttached");
+    if (cJSON_IsNull(volumes_attached)) {
+        volumes_attached = NULL;
+    }
     if (volumes_attached) { 
     cJSON *volumes_attached_local_nonprimitive = NULL;
     if(!cJSON_IsArray(volumes_attached)){
@@ -589,6 +661,9 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // v1_node_status->volumes_in_use
     cJSON *volumes_in_use = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "volumesInUse");
+    if (cJSON_IsNull(volumes_in_use)) {
+        volumes_in_use = NULL;
+    }
     if (volumes_in_use) { 
     cJSON *volumes_in_use_local = NULL;
     if(!cJSON_IsArray(volumes_in_use)) {
@@ -607,7 +682,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     }
 
 
-    v1_node_status_local_var = v1_node_status_create (
+    v1_node_status_local_var = v1_node_status_create_internal (
         addresses ? addressesList : NULL,
         allocatable ? allocatableList : NULL,
         capacity ? capacityList : NULL,
@@ -637,7 +712,7 @@ end:
     if (allocatableList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, allocatableList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);
@@ -651,7 +726,7 @@ end:
     if (capacityList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, capacityList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

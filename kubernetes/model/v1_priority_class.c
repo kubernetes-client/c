@@ -5,7 +5,7 @@
 
 
 
-v1_priority_class_t *v1_priority_class_create(
+static v1_priority_class_t *v1_priority_class_create_internal(
     char *api_version,
     char *description,
     int global_default,
@@ -26,12 +26,36 @@ v1_priority_class_t *v1_priority_class_create(
     v1_priority_class_local_var->preemption_policy = preemption_policy;
     v1_priority_class_local_var->value = value;
 
+    v1_priority_class_local_var->_library_owned = 1;
     return v1_priority_class_local_var;
 }
 
+__attribute__((deprecated)) v1_priority_class_t *v1_priority_class_create(
+    char *api_version,
+    char *description,
+    int global_default,
+    char *kind,
+    v1_object_meta_t *metadata,
+    char *preemption_policy,
+    int value
+    ) {
+    return v1_priority_class_create_internal (
+        api_version,
+        description,
+        global_default,
+        kind,
+        metadata,
+        preemption_policy,
+        value
+        );
+}
 
 void v1_priority_class_free(v1_priority_class_t *v1_priority_class) {
     if(NULL == v1_priority_class){
+        return ;
+    }
+    if(v1_priority_class->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_priority_class_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -139,6 +163,9 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
 
     // v1_priority_class->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -148,6 +175,9 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
 
     // v1_priority_class->description
     cJSON *description = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "description");
+    if (cJSON_IsNull(description)) {
+        description = NULL;
+    }
     if (description) { 
     if(!cJSON_IsString(description) && !cJSON_IsNull(description))
     {
@@ -157,6 +187,9 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
 
     // v1_priority_class->global_default
     cJSON *global_default = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "globalDefault");
+    if (cJSON_IsNull(global_default)) {
+        global_default = NULL;
+    }
     if (global_default) { 
     if(!cJSON_IsBool(global_default))
     {
@@ -166,6 +199,9 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
 
     // v1_priority_class->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -175,12 +211,18 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
 
     // v1_priority_class->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_priority_class->preemption_policy
     cJSON *preemption_policy = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "preemptionPolicy");
+    if (cJSON_IsNull(preemption_policy)) {
+        preemption_policy = NULL;
+    }
     if (preemption_policy) { 
     if(!cJSON_IsString(preemption_policy) && !cJSON_IsNull(preemption_policy))
     {
@@ -190,6 +232,9 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
 
     // v1_priority_class->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "value");
+    if (cJSON_IsNull(value)) {
+        value = NULL;
+    }
     if (!value) {
         goto end;
     }
@@ -201,7 +246,7 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
     }
 
 
-    v1_priority_class_local_var = v1_priority_class_create (
+    v1_priority_class_local_var = v1_priority_class_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
         global_default ? global_default->valueint : 0,

@@ -5,7 +5,7 @@
 
 
 
-flowcontrol_v1_subject_t *flowcontrol_v1_subject_create(
+static flowcontrol_v1_subject_t *flowcontrol_v1_subject_create_internal(
     v1_group_subject_t *group,
     char *kind,
     v1_service_account_subject_t *service_account,
@@ -20,12 +20,30 @@ flowcontrol_v1_subject_t *flowcontrol_v1_subject_create(
     flowcontrol_v1_subject_local_var->service_account = service_account;
     flowcontrol_v1_subject_local_var->user = user;
 
+    flowcontrol_v1_subject_local_var->_library_owned = 1;
     return flowcontrol_v1_subject_local_var;
 }
 
+__attribute__((deprecated)) flowcontrol_v1_subject_t *flowcontrol_v1_subject_create(
+    v1_group_subject_t *group,
+    char *kind,
+    v1_service_account_subject_t *service_account,
+    v1_user_subject_t *user
+    ) {
+    return flowcontrol_v1_subject_create_internal (
+        group,
+        kind,
+        service_account,
+        user
+        );
+}
 
 void flowcontrol_v1_subject_free(flowcontrol_v1_subject_t *flowcontrol_v1_subject) {
     if(NULL == flowcontrol_v1_subject){
+        return ;
+    }
+    if(flowcontrol_v1_subject->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "flowcontrol_v1_subject_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -121,12 +139,18 @@ flowcontrol_v1_subject_t *flowcontrol_v1_subject_parseFromJSON(cJSON *flowcontro
 
     // flowcontrol_v1_subject->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "group");
+    if (cJSON_IsNull(group)) {
+        group = NULL;
+    }
     if (group) { 
     group_local_nonprim = v1_group_subject_parseFromJSON(group); //nonprimitive
     }
 
     // flowcontrol_v1_subject->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (!kind) {
         goto end;
     }
@@ -139,18 +163,24 @@ flowcontrol_v1_subject_t *flowcontrol_v1_subject_parseFromJSON(cJSON *flowcontro
 
     // flowcontrol_v1_subject->service_account
     cJSON *service_account = cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "serviceAccount");
+    if (cJSON_IsNull(service_account)) {
+        service_account = NULL;
+    }
     if (service_account) { 
     service_account_local_nonprim = v1_service_account_subject_parseFromJSON(service_account); //nonprimitive
     }
 
     // flowcontrol_v1_subject->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "user");
+    if (cJSON_IsNull(user)) {
+        user = NULL;
+    }
     if (user) { 
     user_local_nonprim = v1_user_subject_parseFromJSON(user); //nonprimitive
     }
 
 
-    flowcontrol_v1_subject_local_var = flowcontrol_v1_subject_create (
+    flowcontrol_v1_subject_local_var = flowcontrol_v1_subject_create_internal (
         group ? group_local_nonprim : NULL,
         strdup(kind->valuestring),
         service_account ? service_account_local_nonprim : NULL,

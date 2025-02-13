@@ -23,9 +23,10 @@ typedef struct v1_tcp_socket_action_t {
     char *host; // string
     int_or_string_t *port; // custom
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_tcp_socket_action_t;
 
-v1_tcp_socket_action_t *v1_tcp_socket_action_create(
+__attribute__((deprecated)) v1_tcp_socket_action_t *v1_tcp_socket_action_create(
     char *host,
     int_or_string_t *port
 );

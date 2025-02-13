@@ -32,9 +32,10 @@ typedef struct v1_storage_class_t {
     char *reclaim_policy; // string
     char *volume_binding_mode; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_storage_class_t;
 
-v1_storage_class_t *v1_storage_class_create(
+__attribute__((deprecated)) v1_storage_class_t *v1_storage_class_create(
     int allow_volume_expansion,
     list_t *allowed_topologies,
     char *api_version,

@@ -4,22 +4,22 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**EventsV1API_createNamespacedEvent_0**](EventsV1API.md#EventsV1API_createNamespacedEvent_0) | **POST** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
-[**EventsV1API_deleteCollectionNamespacedEvent_0**](EventsV1API.md#EventsV1API_deleteCollectionNamespacedEvent_0) | **DELETE** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
-[**EventsV1API_deleteNamespacedEvent_0**](EventsV1API.md#EventsV1API_deleteNamespacedEvent_0) | **DELETE** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
-[**EventsV1API_getAPIResources_18**](EventsV1API.md#EventsV1API_getAPIResources_18) | **GET** /apis/events.k8s.io/v1/ | 
-[**EventsV1API_listEventForAllNamespaces_0**](EventsV1API.md#EventsV1API_listEventForAllNamespaces_0) | **GET** /apis/events.k8s.io/v1/events | 
-[**EventsV1API_listNamespacedEvent_0**](EventsV1API.md#EventsV1API_listNamespacedEvent_0) | **GET** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
-[**EventsV1API_patchNamespacedEvent_0**](EventsV1API.md#EventsV1API_patchNamespacedEvent_0) | **PATCH** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
-[**EventsV1API_readNamespacedEvent_0**](EventsV1API.md#EventsV1API_readNamespacedEvent_0) | **GET** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
-[**EventsV1API_replaceNamespacedEvent_0**](EventsV1API.md#EventsV1API_replaceNamespacedEvent_0) | **PUT** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
+[**EventsV1API_createNamespacedEvent**](EventsV1API.md#EventsV1API_createNamespacedEvent) | **POST** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
+[**EventsV1API_deleteCollectionNamespacedEvent**](EventsV1API.md#EventsV1API_deleteCollectionNamespacedEvent) | **DELETE** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
+[**EventsV1API_deleteNamespacedEvent**](EventsV1API.md#EventsV1API_deleteNamespacedEvent) | **DELETE** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
+[**EventsV1API_getAPIResources**](EventsV1API.md#EventsV1API_getAPIResources) | **GET** /apis/events.k8s.io/v1/ | 
+[**EventsV1API_listEventForAllNamespaces**](EventsV1API.md#EventsV1API_listEventForAllNamespaces) | **GET** /apis/events.k8s.io/v1/events | 
+[**EventsV1API_listNamespacedEvent**](EventsV1API.md#EventsV1API_listNamespacedEvent) | **GET** /apis/events.k8s.io/v1/namespaces/{namespace}/events | 
+[**EventsV1API_patchNamespacedEvent**](EventsV1API.md#EventsV1API_patchNamespacedEvent) | **PATCH** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
+[**EventsV1API_readNamespacedEvent**](EventsV1API.md#EventsV1API_readNamespacedEvent) | **GET** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
+[**EventsV1API_replaceNamespacedEvent**](EventsV1API.md#EventsV1API_replaceNamespacedEvent) | **PUT** /apis/events.k8s.io/v1/namespaces/{namespace}/events/{name} | 
 
 
-# **EventsV1API_createNamespacedEvent_0**
+# **EventsV1API_createNamespacedEvent**
 ```c
 // create an Event
 //
-events_v1_event_t* EventsV1API_createNamespacedEvent_0(apiClient_t *apiClient, char *_namespace, events_v1_event_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+events_v1_event_t* EventsV1API_createNamespacedEvent(apiClient_t *apiClient, char *_namespace, events_v1_event_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -45,15 +45,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_deleteCollectionNamespacedEvent_0**
+# **EventsV1API_deleteCollectionNamespacedEvent**
 ```c
 // delete collection of Event
 //
-v1_status_t* EventsV1API_deleteCollectionNamespacedEvent_0(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+v1_status_t* EventsV1API_deleteCollectionNamespacedEvent(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -66,6 +66,7 @@ Name | Type | Description  | Notes
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
 **gracePeriodSeconds** | **int \*** | The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. | [optional] 
+**ignoreStoreReadErrorWithClusterBreakingPotential** | **int \*** | if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it | [optional] 
 **labelSelector** | **char \*** | A selector to restrict the list of returned objects by their labels. Defaults to everything. | [optional] 
 **limit** | **int \*** | limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned. | [optional] 
 **orphanDependents** | **int \*** | Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both. | [optional] 
@@ -88,15 +89,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_deleteNamespacedEvent_0**
+# **EventsV1API_deleteNamespacedEvent**
 ```c
 // delete an Event
 //
-v1_status_t* EventsV1API_deleteNamespacedEvent_0(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+v1_status_t* EventsV1API_deleteNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -108,6 +109,7 @@ Name | Type | Description  | Notes
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **gracePeriodSeconds** | **int \*** | The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. | [optional] 
+**ignoreStoreReadErrorWithClusterBreakingPotential** | **int \*** | if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it | [optional] 
 **orphanDependents** | **int \*** | Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both. | [optional] 
 **propagationPolicy** | **char \*** | Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground. | [optional] 
 **body** | **[v1_delete_options_t](v1_delete_options.md) \*** |  | [optional] 
@@ -124,15 +126,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_getAPIResources_18**
+# **EventsV1API_getAPIResources**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* EventsV1API_getAPIResources_18(apiClient_t *apiClient);
+v1_api_resource_list_t* EventsV1API_getAPIResources(apiClient_t *apiClient);
 ```
 
 ### Parameters
@@ -152,15 +154,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_listEventForAllNamespaces_0**
+# **EventsV1API_listEventForAllNamespaces**
 ```c
 // list or watch objects of kind Event
 //
-events_v1_event_list_t* EventsV1API_listEventForAllNamespaces_0(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+events_v1_event_list_t* EventsV1API_listEventForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -191,15 +193,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch, application/cbor-seq
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_listNamespacedEvent_0**
+# **EventsV1API_listNamespacedEvent**
 ```c
 // list or watch objects of kind Event
 //
-events_v1_event_list_t* EventsV1API_listNamespacedEvent_0(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+events_v1_event_list_t* EventsV1API_listNamespacedEvent(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -231,15 +233,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor, application/json;stream=watch, application/vnd.kubernetes.protobuf;stream=watch, application/cbor-seq
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_patchNamespacedEvent_0**
+# **EventsV1API_patchNamespacedEvent**
 ```c
 // partially update the specified Event
 //
-events_v1_event_t* EventsV1API_patchNamespacedEvent_0(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+events_v1_event_t* EventsV1API_patchNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespace, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
@@ -266,16 +268,16 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml, application/apply-patch+cbor
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_readNamespacedEvent_0**
+# **EventsV1API_readNamespacedEvent**
 ```c
 // read the specified Event
 //
-events_v1_event_t* EventsV1API_readNamespacedEvent_0(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
+events_v1_event_t* EventsV1API_readNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespace, char *pretty);
 ```
 
 ### Parameters
@@ -298,15 +300,15 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **EventsV1API_replaceNamespacedEvent_0**
+# **EventsV1API_replaceNamespacedEvent**
 ```c
 // replace the specified Event
 //
-events_v1_event_t* EventsV1API_replaceNamespacedEvent_0(apiClient_t *apiClient, char *name, char *_namespace, events_v1_event_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+events_v1_event_t* EventsV1API_replaceNamespacedEvent(apiClient_t *apiClient, char *name, char *_namespace, events_v1_event_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
@@ -333,7 +335,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -22,9 +22,10 @@ typedef struct v1_expression_warning_t {
     char *field_ref; // string
     char *warning; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_expression_warning_t;
 
-v1_expression_warning_t *v1_expression_warning_create(
+__attribute__((deprecated)) v1_expression_warning_t *v1_expression_warning_create(
     char *field_ref,
     char *warning
 );

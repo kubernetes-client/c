@@ -22,19 +22,19 @@ NodeV1API_createRuntimeClass(apiClient_t *apiClient, v1_runtime_class_t *body, c
 // delete collection of RuntimeClass
 //
 v1_status_t*
-NodeV1API_deleteCollectionRuntimeClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+NodeV1API_deleteCollectionRuntimeClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a RuntimeClass
 //
 v1_status_t*
-NodeV1API_deleteRuntimeClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+NodeV1API_deleteRuntimeClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-NodeV1API_getAPIResources_24(apiClient_t *apiClient);
+NodeV1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind RuntimeClass

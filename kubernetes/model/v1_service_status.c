@@ -5,7 +5,7 @@
 
 
 
-v1_service_status_t *v1_service_status_create(
+static v1_service_status_t *v1_service_status_create_internal(
     list_t *conditions,
     v1_load_balancer_status_t *load_balancer
     ) {
@@ -16,12 +16,26 @@ v1_service_status_t *v1_service_status_create(
     v1_service_status_local_var->conditions = conditions;
     v1_service_status_local_var->load_balancer = load_balancer;
 
+    v1_service_status_local_var->_library_owned = 1;
     return v1_service_status_local_var;
 }
 
+__attribute__((deprecated)) v1_service_status_t *v1_service_status_create(
+    list_t *conditions,
+    v1_load_balancer_status_t *load_balancer
+    ) {
+    return v1_service_status_create_internal (
+        conditions,
+        load_balancer
+        );
+}
 
 void v1_service_status_free(v1_service_status_t *v1_service_status) {
     if(NULL == v1_service_status){
+        return ;
+    }
+    if(v1_service_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_service_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -94,6 +108,9 @@ v1_service_status_t *v1_service_status_parseFromJSON(cJSON *v1_service_statusJSO
 
     // v1_service_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_service_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -115,12 +132,15 @@ v1_service_status_t *v1_service_status_parseFromJSON(cJSON *v1_service_statusJSO
 
     // v1_service_status->load_balancer
     cJSON *load_balancer = cJSON_GetObjectItemCaseSensitive(v1_service_statusJSON, "loadBalancer");
+    if (cJSON_IsNull(load_balancer)) {
+        load_balancer = NULL;
+    }
     if (load_balancer) { 
     load_balancer_local_nonprim = v1_load_balancer_status_parseFromJSON(load_balancer); //nonprimitive
     }
 
 
-    v1_service_status_local_var = v1_service_status_create (
+    v1_service_status_local_var = v1_service_status_create_internal (
         conditions ? conditionsList : NULL,
         load_balancer ? load_balancer_local_nonprim : NULL
         );

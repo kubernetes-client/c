@@ -39,9 +39,10 @@ typedef struct v1_container_status_t {
     struct v1_container_user_t *user; //model
     list_t *volume_mounts; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_container_status_t;
 
-v1_container_status_t *v1_container_status_create(
+__attribute__((deprecated)) v1_container_status_t *v1_container_status_create(
     list_t* allocated_resources,
     list_t *allocated_resources_status,
     char *container_id,

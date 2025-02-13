@@ -5,7 +5,8 @@
 
 
 
-v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result_create(
+static v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result_create_internal(
+    int admin_access,
     char *device,
     char *driver,
     char *pool,
@@ -15,17 +16,38 @@ v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_
     if (!v1alpha3_device_request_allocation_result_local_var) {
         return NULL;
     }
+    v1alpha3_device_request_allocation_result_local_var->admin_access = admin_access;
     v1alpha3_device_request_allocation_result_local_var->device = device;
     v1alpha3_device_request_allocation_result_local_var->driver = driver;
     v1alpha3_device_request_allocation_result_local_var->pool = pool;
     v1alpha3_device_request_allocation_result_local_var->request = request;
 
+    v1alpha3_device_request_allocation_result_local_var->_library_owned = 1;
     return v1alpha3_device_request_allocation_result_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result_create(
+    int admin_access,
+    char *device,
+    char *driver,
+    char *pool,
+    char *request
+    ) {
+    return v1alpha3_device_request_allocation_result_create_internal (
+        admin_access,
+        device,
+        driver,
+        pool,
+        request
+        );
+}
 
 void v1alpha3_device_request_allocation_result_free(v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result) {
     if(NULL == v1alpha3_device_request_allocation_result){
+        return ;
+    }
+    if(v1alpha3_device_request_allocation_result->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_device_request_allocation_result_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -50,6 +72,14 @@ void v1alpha3_device_request_allocation_result_free(v1alpha3_device_request_allo
 
 cJSON *v1alpha3_device_request_allocation_result_convertToJSON(v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1alpha3_device_request_allocation_result->admin_access
+    if(v1alpha3_device_request_allocation_result->admin_access) {
+    if(cJSON_AddBoolToObject(item, "adminAccess", v1alpha3_device_request_allocation_result->admin_access) == NULL) {
+    goto fail; //Bool
+    }
+    }
+
 
     // v1alpha3_device_request_allocation_result->device
     if (!v1alpha3_device_request_allocation_result->device) {
@@ -98,8 +128,23 @@ v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_
 
     v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result_local_var = NULL;
 
+    // v1alpha3_device_request_allocation_result->admin_access
+    cJSON *admin_access = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "adminAccess");
+    if (cJSON_IsNull(admin_access)) {
+        admin_access = NULL;
+    }
+    if (admin_access) { 
+    if(!cJSON_IsBool(admin_access))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1alpha3_device_request_allocation_result->device
     cJSON *device = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "device");
+    if (cJSON_IsNull(device)) {
+        device = NULL;
+    }
     if (!device) {
         goto end;
     }
@@ -112,6 +157,9 @@ v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_
 
     // v1alpha3_device_request_allocation_result->driver
     cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "driver");
+    if (cJSON_IsNull(driver)) {
+        driver = NULL;
+    }
     if (!driver) {
         goto end;
     }
@@ -124,6 +172,9 @@ v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_
 
     // v1alpha3_device_request_allocation_result->pool
     cJSON *pool = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "pool");
+    if (cJSON_IsNull(pool)) {
+        pool = NULL;
+    }
     if (!pool) {
         goto end;
     }
@@ -136,6 +187,9 @@ v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_
 
     // v1alpha3_device_request_allocation_result->request
     cJSON *request = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "request");
+    if (cJSON_IsNull(request)) {
+        request = NULL;
+    }
     if (!request) {
         goto end;
     }
@@ -147,7 +201,8 @@ v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_
     }
 
 
-    v1alpha3_device_request_allocation_result_local_var = v1alpha3_device_request_allocation_result_create (
+    v1alpha3_device_request_allocation_result_local_var = v1alpha3_device_request_allocation_result_create_internal (
+        admin_access ? admin_access->valueint : 0,
         strdup(device->valuestring),
         strdup(driver->valuestring),
         strdup(pool->valuestring),

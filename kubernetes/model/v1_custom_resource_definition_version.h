@@ -33,9 +33,10 @@ typedef struct v1_custom_resource_definition_version_t {
     int storage; //boolean
     struct v1_custom_resource_subresources_t *subresources; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_custom_resource_definition_version_t;
 
-v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_create(
+__attribute__((deprecated)) v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_create(
     list_t *additional_printer_columns,
     int deprecated,
     char *deprecation_warning,

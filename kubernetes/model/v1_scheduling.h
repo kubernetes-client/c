@@ -23,9 +23,10 @@ typedef struct v1_scheduling_t {
     list_t* node_selector; //map
     list_t *tolerations; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_scheduling_t;
 
-v1_scheduling_t *v1_scheduling_create(
+__attribute__((deprecated)) v1_scheduling_t *v1_scheduling_create(
     list_t* node_selector,
     list_t *tolerations
 );

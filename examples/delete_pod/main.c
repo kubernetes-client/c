@@ -13,6 +13,7 @@ void delete_a_pod(apiClient_t * apiClient)
                                                   NULL, // char *pretty
                                                   NULL, // char *dryRun
                                                   NULL, // int *gracePeriodSeconds
+                                                  NULL, // int* ignoreStoreReadErrorWithClusterBreakingPotential
                                                   NULL, // int *orphanDependents
                                                   NULL, // char *propagationPolicy
                                                   NULL  // v1_delete_options_t *body

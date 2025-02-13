@@ -23,9 +23,10 @@ typedef struct v1_custom_resource_subresource_scale_t {
     char *spec_replicas_path; // string
     char *status_replicas_path; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_custom_resource_subresource_scale_t;
 
-v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale_create(
+__attribute__((deprecated)) v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale_create(
     char *label_selector_path,
     char *spec_replicas_path,
     char *status_replicas_path

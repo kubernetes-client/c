@@ -5,7 +5,7 @@
 
 
 
-v1_volume_node_resources_t *v1_volume_node_resources_create(
+static v1_volume_node_resources_t *v1_volume_node_resources_create_internal(
     int count
     ) {
     v1_volume_node_resources_t *v1_volume_node_resources_local_var = malloc(sizeof(v1_volume_node_resources_t));
@@ -14,12 +14,24 @@ v1_volume_node_resources_t *v1_volume_node_resources_create(
     }
     v1_volume_node_resources_local_var->count = count;
 
+    v1_volume_node_resources_local_var->_library_owned = 1;
     return v1_volume_node_resources_local_var;
 }
 
+__attribute__((deprecated)) v1_volume_node_resources_t *v1_volume_node_resources_create(
+    int count
+    ) {
+    return v1_volume_node_resources_create_internal (
+        count
+        );
+}
 
 void v1_volume_node_resources_free(v1_volume_node_resources_t *v1_volume_node_resources) {
     if(NULL == v1_volume_node_resources){
+        return ;
+    }
+    if(v1_volume_node_resources->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_volume_node_resources_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -50,6 +62,9 @@ v1_volume_node_resources_t *v1_volume_node_resources_parseFromJSON(cJSON *v1_vol
 
     // v1_volume_node_resources->count
     cJSON *count = cJSON_GetObjectItemCaseSensitive(v1_volume_node_resourcesJSON, "count");
+    if (cJSON_IsNull(count)) {
+        count = NULL;
+    }
     if (count) { 
     if(!cJSON_IsNumber(count))
     {
@@ -58,7 +73,7 @@ v1_volume_node_resources_t *v1_volume_node_resources_parseFromJSON(cJSON *v1_vol
     }
 
 
-    v1_volume_node_resources_local_var = v1_volume_node_resources_create (
+    v1_volume_node_resources_local_var = v1_volume_node_resources_create_internal (
         count ? count->valuedouble : 0
         );
 

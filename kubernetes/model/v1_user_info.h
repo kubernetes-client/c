@@ -24,9 +24,10 @@ typedef struct v1_user_info_t {
     char *uid; // string
     char *username; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_user_info_t;
 
-v1_user_info_t *v1_user_info_create(
+__attribute__((deprecated)) v1_user_info_t *v1_user_info_create(
     list_t* extra,
     list_t *groups,
     char *uid,

@@ -23,9 +23,10 @@ typedef struct v1_watch_event_t {
     object_t *object; //object
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_watch_event_t;
 
-v1_watch_event_t *v1_watch_event_create(
+__attribute__((deprecated)) v1_watch_event_t *v1_watch_event_create(
     object_t *object,
     char *type
 );

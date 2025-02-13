@@ -5,7 +5,7 @@
 
 
 
-v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_create(
+static v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_create_internal(
     v1_label_selector_t *label_selector,
     char *name,
     int optional,
@@ -22,12 +22,32 @@ v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_create(
     v1_cluster_trust_bundle_projection_local_var->path = path;
     v1_cluster_trust_bundle_projection_local_var->signer_name = signer_name;
 
+    v1_cluster_trust_bundle_projection_local_var->_library_owned = 1;
     return v1_cluster_trust_bundle_projection_local_var;
 }
 
+__attribute__((deprecated)) v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_create(
+    v1_label_selector_t *label_selector,
+    char *name,
+    int optional,
+    char *path,
+    char *signer_name
+    ) {
+    return v1_cluster_trust_bundle_projection_create_internal (
+        label_selector,
+        name,
+        optional,
+        path,
+        signer_name
+        );
+}
 
 void v1_cluster_trust_bundle_projection_free(v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection) {
     if(NULL == v1_cluster_trust_bundle_projection){
+        return ;
+    }
+    if(v1_cluster_trust_bundle_projection->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_cluster_trust_bundle_projection_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -115,12 +135,18 @@ v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_parseFr
 
     // v1_cluster_trust_bundle_projection->label_selector
     cJSON *label_selector = cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "labelSelector");
+    if (cJSON_IsNull(label_selector)) {
+        label_selector = NULL;
+    }
     if (label_selector) { 
     label_selector_local_nonprim = v1_label_selector_parseFromJSON(label_selector); //nonprimitive
     }
 
     // v1_cluster_trust_bundle_projection->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -130,6 +156,9 @@ v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_parseFr
 
     // v1_cluster_trust_bundle_projection->optional
     cJSON *optional = cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "optional");
+    if (cJSON_IsNull(optional)) {
+        optional = NULL;
+    }
     if (optional) { 
     if(!cJSON_IsBool(optional))
     {
@@ -139,6 +168,9 @@ v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_parseFr
 
     // v1_cluster_trust_bundle_projection->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "path");
+    if (cJSON_IsNull(path)) {
+        path = NULL;
+    }
     if (!path) {
         goto end;
     }
@@ -151,6 +183,9 @@ v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_parseFr
 
     // v1_cluster_trust_bundle_projection->signer_name
     cJSON *signer_name = cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "signerName");
+    if (cJSON_IsNull(signer_name)) {
+        signer_name = NULL;
+    }
     if (signer_name) { 
     if(!cJSON_IsString(signer_name) && !cJSON_IsNull(signer_name))
     {
@@ -159,7 +194,7 @@ v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_parseFr
     }
 
 
-    v1_cluster_trust_bundle_projection_local_var = v1_cluster_trust_bundle_projection_create (
+    v1_cluster_trust_bundle_projection_local_var = v1_cluster_trust_bundle_projection_create_internal (
         label_selector ? label_selector_local_nonprim : NULL,
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         optional ? optional->valueint : 0,

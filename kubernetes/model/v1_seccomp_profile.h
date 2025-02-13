@@ -22,9 +22,10 @@ typedef struct v1_seccomp_profile_t {
     char *localhost_profile; // string
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_seccomp_profile_t;
 
-v1_seccomp_profile_t *v1_seccomp_profile_create(
+__attribute__((deprecated)) v1_seccomp_profile_t *v1_seccomp_profile_create(
     char *localhost_profile,
     char *type
 );

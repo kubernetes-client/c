@@ -5,7 +5,7 @@
 
 
 
-v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_create(
+static v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_create_internal(
     int current_cpu_utilization_percentage,
     int current_replicas,
     int desired_replicas,
@@ -22,12 +22,32 @@ v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_creat
     v1_horizontal_pod_autoscaler_status_local_var->last_scale_time = last_scale_time;
     v1_horizontal_pod_autoscaler_status_local_var->observed_generation = observed_generation;
 
+    v1_horizontal_pod_autoscaler_status_local_var->_library_owned = 1;
     return v1_horizontal_pod_autoscaler_status_local_var;
 }
 
+__attribute__((deprecated)) v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_create(
+    int current_cpu_utilization_percentage,
+    int current_replicas,
+    int desired_replicas,
+    char *last_scale_time,
+    long observed_generation
+    ) {
+    return v1_horizontal_pod_autoscaler_status_create_internal (
+        current_cpu_utilization_percentage,
+        current_replicas,
+        desired_replicas,
+        last_scale_time,
+        observed_generation
+        );
+}
 
 void v1_horizontal_pod_autoscaler_status_free(v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status) {
     if(NULL == v1_horizontal_pod_autoscaler_status){
+        return ;
+    }
+    if(v1_horizontal_pod_autoscaler_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_horizontal_pod_autoscaler_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -96,6 +116,9 @@ v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_parse
 
     // v1_horizontal_pod_autoscaler_status->current_cpu_utilization_percentage
     cJSON *current_cpu_utilization_percentage = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_statusJSON, "currentCPUUtilizationPercentage");
+    if (cJSON_IsNull(current_cpu_utilization_percentage)) {
+        current_cpu_utilization_percentage = NULL;
+    }
     if (current_cpu_utilization_percentage) { 
     if(!cJSON_IsNumber(current_cpu_utilization_percentage))
     {
@@ -105,6 +128,9 @@ v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_parse
 
     // v1_horizontal_pod_autoscaler_status->current_replicas
     cJSON *current_replicas = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_statusJSON, "currentReplicas");
+    if (cJSON_IsNull(current_replicas)) {
+        current_replicas = NULL;
+    }
     if (!current_replicas) {
         goto end;
     }
@@ -117,6 +143,9 @@ v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_parse
 
     // v1_horizontal_pod_autoscaler_status->desired_replicas
     cJSON *desired_replicas = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_statusJSON, "desiredReplicas");
+    if (cJSON_IsNull(desired_replicas)) {
+        desired_replicas = NULL;
+    }
     if (!desired_replicas) {
         goto end;
     }
@@ -129,6 +158,9 @@ v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_parse
 
     // v1_horizontal_pod_autoscaler_status->last_scale_time
     cJSON *last_scale_time = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_statusJSON, "lastScaleTime");
+    if (cJSON_IsNull(last_scale_time)) {
+        last_scale_time = NULL;
+    }
     if (last_scale_time) { 
     if(!cJSON_IsString(last_scale_time) && !cJSON_IsNull(last_scale_time))
     {
@@ -138,6 +170,9 @@ v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_parse
 
     // v1_horizontal_pod_autoscaler_status->observed_generation
     cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_statusJSON, "observedGeneration");
+    if (cJSON_IsNull(observed_generation)) {
+        observed_generation = NULL;
+    }
     if (observed_generation) { 
     if(!cJSON_IsNumber(observed_generation))
     {
@@ -146,7 +181,7 @@ v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_parse
     }
 
 
-    v1_horizontal_pod_autoscaler_status_local_var = v1_horizontal_pod_autoscaler_status_create (
+    v1_horizontal_pod_autoscaler_status_local_var = v1_horizontal_pod_autoscaler_status_create_internal (
         current_cpu_utilization_percentage ? current_cpu_utilization_percentage->valuedouble : 0,
         current_replicas->valuedouble,
         desired_replicas->valuedouble,

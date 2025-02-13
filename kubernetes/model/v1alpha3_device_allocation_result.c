@@ -5,7 +5,7 @@
 
 
 
-v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_create(
+static v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_create_internal(
     list_t *config,
     list_t *results
     ) {
@@ -16,12 +16,26 @@ v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_create(
     v1alpha3_device_allocation_result_local_var->config = config;
     v1alpha3_device_allocation_result_local_var->results = results;
 
+    v1alpha3_device_allocation_result_local_var->_library_owned = 1;
     return v1alpha3_device_allocation_result_local_var;
 }
 
+__attribute__((deprecated)) v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_create(
+    list_t *config,
+    list_t *results
+    ) {
+    return v1alpha3_device_allocation_result_create_internal (
+        config,
+        results
+        );
+}
 
 void v1alpha3_device_allocation_result_free(v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result) {
     if(NULL == v1alpha3_device_allocation_result){
+        return ;
+    }
+    if(v1alpha3_device_allocation_result->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha3_device_allocation_result_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -104,6 +118,9 @@ v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_parseFrom
 
     // v1alpha3_device_allocation_result->config
     cJSON *config = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_allocation_resultJSON, "config");
+    if (cJSON_IsNull(config)) {
+        config = NULL;
+    }
     if (config) { 
     cJSON *config_local_nonprimitive = NULL;
     if(!cJSON_IsArray(config)){
@@ -125,6 +142,9 @@ v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_parseFrom
 
     // v1alpha3_device_allocation_result->results
     cJSON *results = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_allocation_resultJSON, "results");
+    if (cJSON_IsNull(results)) {
+        results = NULL;
+    }
     if (results) { 
     cJSON *results_local_nonprimitive = NULL;
     if(!cJSON_IsArray(results)){
@@ -145,7 +165,7 @@ v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_parseFrom
     }
 
 
-    v1alpha3_device_allocation_result_local_var = v1alpha3_device_allocation_result_create (
+    v1alpha3_device_allocation_result_local_var = v1alpha3_device_allocation_result_create_internal (
         config ? configList : NULL,
         results ? resultsList : NULL
         );

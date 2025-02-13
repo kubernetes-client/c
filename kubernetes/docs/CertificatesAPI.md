@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CertificatesAPI_getAPIGroup_7**](CertificatesAPI.md#CertificatesAPI_getAPIGroup_7) | **GET** /apis/certificates.k8s.io/ | 
+[**CertificatesAPI_getAPIGroup**](CertificatesAPI.md#CertificatesAPI_getAPIGroup) | **GET** /apis/certificates.k8s.io/ | 
 
 
-# **CertificatesAPI_getAPIGroup_7**
+# **CertificatesAPI_getAPIGroup**
 ```c
 // get information of a group
 //
-v1_api_group_t* CertificatesAPI_getAPIGroup_7(apiClient_t *apiClient);
+v1_api_group_t* CertificatesAPI_getAPIGroup(apiClient_t *apiClient);
 ```
 
 ### Parameters

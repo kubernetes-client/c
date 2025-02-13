@@ -23,9 +23,10 @@ typedef struct v2_horizontal_pod_autoscaler_behavior_t {
     struct v2_hpa_scaling_rules_t *scale_down; //model
     struct v2_hpa_scaling_rules_t *scale_up; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v2_horizontal_pod_autoscaler_behavior_t;
 
-v2_horizontal_pod_autoscaler_behavior_t *v2_horizontal_pod_autoscaler_behavior_create(
+__attribute__((deprecated)) v2_horizontal_pod_autoscaler_behavior_t *v2_horizontal_pod_autoscaler_behavior_create(
     v2_hpa_scaling_rules_t *scale_down,
     v2_hpa_scaling_rules_t *scale_up
 );

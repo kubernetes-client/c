@@ -5,7 +5,7 @@
 
 
 
-core_v1_event_series_t *core_v1_event_series_create(
+static core_v1_event_series_t *core_v1_event_series_create_internal(
     int count,
     char *last_observed_time
     ) {
@@ -16,12 +16,26 @@ core_v1_event_series_t *core_v1_event_series_create(
     core_v1_event_series_local_var->count = count;
     core_v1_event_series_local_var->last_observed_time = last_observed_time;
 
+    core_v1_event_series_local_var->_library_owned = 1;
     return core_v1_event_series_local_var;
 }
 
+__attribute__((deprecated)) core_v1_event_series_t *core_v1_event_series_create(
+    int count,
+    char *last_observed_time
+    ) {
+    return core_v1_event_series_create_internal (
+        count,
+        last_observed_time
+        );
+}
 
 void core_v1_event_series_free(core_v1_event_series_t *core_v1_event_series) {
     if(NULL == core_v1_event_series){
+        return ;
+    }
+    if(core_v1_event_series->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "core_v1_event_series_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -64,6 +78,9 @@ core_v1_event_series_t *core_v1_event_series_parseFromJSON(cJSON *core_v1_event_
 
     // core_v1_event_series->count
     cJSON *count = cJSON_GetObjectItemCaseSensitive(core_v1_event_seriesJSON, "count");
+    if (cJSON_IsNull(count)) {
+        count = NULL;
+    }
     if (count) { 
     if(!cJSON_IsNumber(count))
     {
@@ -73,6 +90,9 @@ core_v1_event_series_t *core_v1_event_series_parseFromJSON(cJSON *core_v1_event_
 
     // core_v1_event_series->last_observed_time
     cJSON *last_observed_time = cJSON_GetObjectItemCaseSensitive(core_v1_event_seriesJSON, "lastObservedTime");
+    if (cJSON_IsNull(last_observed_time)) {
+        last_observed_time = NULL;
+    }
     if (last_observed_time) { 
     if(!cJSON_IsString(last_observed_time) && !cJSON_IsNull(last_observed_time))
     {
@@ -81,7 +101,7 @@ core_v1_event_series_t *core_v1_event_series_parseFromJSON(cJSON *core_v1_event_
     }
 
 
-    core_v1_event_series_local_var = core_v1_event_series_create (
+    core_v1_event_series_local_var = core_v1_event_series_create_internal (
         count ? count->valuedouble : 0,
         last_observed_time && !cJSON_IsNull(last_observed_time) ? strdup(last_observed_time->valuestring) : NULL
         );

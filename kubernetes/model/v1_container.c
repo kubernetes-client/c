@@ -5,7 +5,7 @@
 
 
 
-v1_container_t *v1_container_create(
+static v1_container_t *v1_container_create_internal(
     list_t *args,
     list_t *command,
     list_t *env,
@@ -60,12 +60,70 @@ v1_container_t *v1_container_create(
     v1_container_local_var->volume_mounts = volume_mounts;
     v1_container_local_var->working_dir = working_dir;
 
+    v1_container_local_var->_library_owned = 1;
     return v1_container_local_var;
 }
 
+__attribute__((deprecated)) v1_container_t *v1_container_create(
+    list_t *args,
+    list_t *command,
+    list_t *env,
+    list_t *env_from,
+    char *image,
+    char *image_pull_policy,
+    v1_lifecycle_t *lifecycle,
+    v1_probe_t *liveness_probe,
+    char *name,
+    list_t *ports,
+    v1_probe_t *readiness_probe,
+    list_t *resize_policy,
+    v1_resource_requirements_t *resources,
+    char *restart_policy,
+    v1_security_context_t *security_context,
+    v1_probe_t *startup_probe,
+    int _stdin,
+    int stdin_once,
+    char *termination_message_path,
+    char *termination_message_policy,
+    int tty,
+    list_t *volume_devices,
+    list_t *volume_mounts,
+    char *working_dir
+    ) {
+    return v1_container_create_internal (
+        args,
+        command,
+        env,
+        env_from,
+        image,
+        image_pull_policy,
+        lifecycle,
+        liveness_probe,
+        name,
+        ports,
+        readiness_probe,
+        resize_policy,
+        resources,
+        restart_policy,
+        security_context,
+        startup_probe,
+        _stdin,
+        stdin_once,
+        termination_message_path,
+        termination_message_policy,
+        tty,
+        volume_devices,
+        volume_mounts,
+        working_dir
+        );
+}
 
 void v1_container_free(v1_container_t *v1_container) {
     if(NULL == v1_container){
+        return ;
+    }
+    if(v1_container->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_container_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -192,7 +250,7 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
 
     listEntry_t *argsListEntry;
     list_ForEach(argsListEntry, v1_container->args) {
-    if(cJSON_AddStringToObject(args, "", (char*)argsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(args, "", argsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -209,7 +267,7 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
 
     listEntry_t *commandListEntry;
     list_ForEach(commandListEntry, v1_container->command) {
-    if(cJSON_AddStringToObject(command, "", (char*)commandListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(command, "", commandListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -551,6 +609,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->args
     cJSON *args = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "args");
+    if (cJSON_IsNull(args)) {
+        args = NULL;
+    }
     if (args) { 
     cJSON *args_local = NULL;
     if(!cJSON_IsArray(args)) {
@@ -570,6 +631,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->command
     cJSON *command = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "command");
+    if (cJSON_IsNull(command)) {
+        command = NULL;
+    }
     if (command) { 
     cJSON *command_local = NULL;
     if(!cJSON_IsArray(command)) {
@@ -589,6 +653,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->env
     cJSON *env = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "env");
+    if (cJSON_IsNull(env)) {
+        env = NULL;
+    }
     if (env) { 
     cJSON *env_local_nonprimitive = NULL;
     if(!cJSON_IsArray(env)){
@@ -610,6 +677,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->env_from
     cJSON *env_from = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "envFrom");
+    if (cJSON_IsNull(env_from)) {
+        env_from = NULL;
+    }
     if (env_from) { 
     cJSON *env_from_local_nonprimitive = NULL;
     if(!cJSON_IsArray(env_from)){
@@ -631,6 +701,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->image
     cJSON *image = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "image");
+    if (cJSON_IsNull(image)) {
+        image = NULL;
+    }
     if (image) { 
     if(!cJSON_IsString(image) && !cJSON_IsNull(image))
     {
@@ -640,6 +713,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->image_pull_policy
     cJSON *image_pull_policy = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "imagePullPolicy");
+    if (cJSON_IsNull(image_pull_policy)) {
+        image_pull_policy = NULL;
+    }
     if (image_pull_policy) { 
     if(!cJSON_IsString(image_pull_policy) && !cJSON_IsNull(image_pull_policy))
     {
@@ -649,18 +725,27 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->lifecycle
     cJSON *lifecycle = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "lifecycle");
+    if (cJSON_IsNull(lifecycle)) {
+        lifecycle = NULL;
+    }
     if (lifecycle) { 
     lifecycle_local_nonprim = v1_lifecycle_parseFromJSON(lifecycle); //nonprimitive
     }
 
     // v1_container->liveness_probe
     cJSON *liveness_probe = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "livenessProbe");
+    if (cJSON_IsNull(liveness_probe)) {
+        liveness_probe = NULL;
+    }
     if (liveness_probe) { 
     liveness_probe_local_nonprim = v1_probe_parseFromJSON(liveness_probe); //nonprimitive
     }
 
     // v1_container->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -673,6 +758,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->ports
     cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "ports");
+    if (cJSON_IsNull(ports)) {
+        ports = NULL;
+    }
     if (ports) { 
     cJSON *ports_local_nonprimitive = NULL;
     if(!cJSON_IsArray(ports)){
@@ -694,12 +782,18 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->readiness_probe
     cJSON *readiness_probe = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "readinessProbe");
+    if (cJSON_IsNull(readiness_probe)) {
+        readiness_probe = NULL;
+    }
     if (readiness_probe) { 
     readiness_probe_local_nonprim = v1_probe_parseFromJSON(readiness_probe); //nonprimitive
     }
 
     // v1_container->resize_policy
     cJSON *resize_policy = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "resizePolicy");
+    if (cJSON_IsNull(resize_policy)) {
+        resize_policy = NULL;
+    }
     if (resize_policy) { 
     cJSON *resize_policy_local_nonprimitive = NULL;
     if(!cJSON_IsArray(resize_policy)){
@@ -721,12 +815,18 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "resources");
+    if (cJSON_IsNull(resources)) {
+        resources = NULL;
+    }
     if (resources) { 
     resources_local_nonprim = v1_resource_requirements_parseFromJSON(resources); //nonprimitive
     }
 
     // v1_container->restart_policy
     cJSON *restart_policy = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "restartPolicy");
+    if (cJSON_IsNull(restart_policy)) {
+        restart_policy = NULL;
+    }
     if (restart_policy) { 
     if(!cJSON_IsString(restart_policy) && !cJSON_IsNull(restart_policy))
     {
@@ -736,18 +836,27 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->security_context
     cJSON *security_context = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "securityContext");
+    if (cJSON_IsNull(security_context)) {
+        security_context = NULL;
+    }
     if (security_context) { 
     security_context_local_nonprim = v1_security_context_parseFromJSON(security_context); //nonprimitive
     }
 
     // v1_container->startup_probe
     cJSON *startup_probe = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "startupProbe");
+    if (cJSON_IsNull(startup_probe)) {
+        startup_probe = NULL;
+    }
     if (startup_probe) { 
     startup_probe_local_nonprim = v1_probe_parseFromJSON(startup_probe); //nonprimitive
     }
 
     // v1_container->_stdin
     cJSON *_stdin = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "stdin");
+    if (cJSON_IsNull(_stdin)) {
+        _stdin = NULL;
+    }
     if (_stdin) { 
     if(!cJSON_IsBool(_stdin))
     {
@@ -757,6 +866,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->stdin_once
     cJSON *stdin_once = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "stdinOnce");
+    if (cJSON_IsNull(stdin_once)) {
+        stdin_once = NULL;
+    }
     if (stdin_once) { 
     if(!cJSON_IsBool(stdin_once))
     {
@@ -766,6 +878,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->termination_message_path
     cJSON *termination_message_path = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "terminationMessagePath");
+    if (cJSON_IsNull(termination_message_path)) {
+        termination_message_path = NULL;
+    }
     if (termination_message_path) { 
     if(!cJSON_IsString(termination_message_path) && !cJSON_IsNull(termination_message_path))
     {
@@ -775,6 +890,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->termination_message_policy
     cJSON *termination_message_policy = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "terminationMessagePolicy");
+    if (cJSON_IsNull(termination_message_policy)) {
+        termination_message_policy = NULL;
+    }
     if (termination_message_policy) { 
     if(!cJSON_IsString(termination_message_policy) && !cJSON_IsNull(termination_message_policy))
     {
@@ -784,6 +902,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->tty
     cJSON *tty = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "tty");
+    if (cJSON_IsNull(tty)) {
+        tty = NULL;
+    }
     if (tty) { 
     if(!cJSON_IsBool(tty))
     {
@@ -793,6 +914,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->volume_devices
     cJSON *volume_devices = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "volumeDevices");
+    if (cJSON_IsNull(volume_devices)) {
+        volume_devices = NULL;
+    }
     if (volume_devices) { 
     cJSON *volume_devices_local_nonprimitive = NULL;
     if(!cJSON_IsArray(volume_devices)){
@@ -814,6 +938,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->volume_mounts
     cJSON *volume_mounts = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "volumeMounts");
+    if (cJSON_IsNull(volume_mounts)) {
+        volume_mounts = NULL;
+    }
     if (volume_mounts) { 
     cJSON *volume_mounts_local_nonprimitive = NULL;
     if(!cJSON_IsArray(volume_mounts)){
@@ -835,6 +962,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // v1_container->working_dir
     cJSON *working_dir = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "workingDir");
+    if (cJSON_IsNull(working_dir)) {
+        working_dir = NULL;
+    }
     if (working_dir) { 
     if(!cJSON_IsString(working_dir) && !cJSON_IsNull(working_dir))
     {
@@ -843,7 +973,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     }
 
 
-    v1_container_local_var = v1_container_create (
+    v1_container_local_var = v1_container_create_internal (
         args ? argsList : NULL,
         command ? commandList : NULL,
         env ? envList : NULL,

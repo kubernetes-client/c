@@ -24,9 +24,10 @@ typedef struct core_v1_endpoint_port_t {
     int port; //numeric
     char *protocol; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } core_v1_endpoint_port_t;
 
-core_v1_endpoint_port_t *core_v1_endpoint_port_create(
+__attribute__((deprecated)) core_v1_endpoint_port_t *core_v1_endpoint_port_create(
     char *app_protocol,
     char *name,
     int port,

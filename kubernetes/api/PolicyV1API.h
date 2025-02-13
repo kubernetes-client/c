@@ -22,19 +22,19 @@ PolicyV1API_createNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_n
 // delete collection of PodDisruptionBudget
 //
 v1_status_t*
-PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+PolicyV1API_deleteCollectionNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a PodDisruptionBudget
 //
 v1_status_t*
-PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+PolicyV1API_deleteNamespacedPodDisruptionBudget(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-PolicyV1API_getAPIResources_25(apiClient_t *apiClient);
+PolicyV1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind PodDisruptionBudget

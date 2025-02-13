@@ -22,9 +22,10 @@ typedef struct v1_match_condition_t {
     char *expression; // string
     char *name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_match_condition_t;
 
-v1_match_condition_t *v1_match_condition_create(
+__attribute__((deprecated)) v1_match_condition_t *v1_match_condition_create(
     char *expression,
     char *name
 );

@@ -5,7 +5,7 @@
 
 
 
-v1_api_group_list_t *v1_api_group_list_create(
+static v1_api_group_list_t *v1_api_group_list_create_internal(
     char *api_version,
     list_t *groups,
     char *kind
@@ -18,12 +18,28 @@ v1_api_group_list_t *v1_api_group_list_create(
     v1_api_group_list_local_var->groups = groups;
     v1_api_group_list_local_var->kind = kind;
 
+    v1_api_group_list_local_var->_library_owned = 1;
     return v1_api_group_list_local_var;
 }
 
+__attribute__((deprecated)) v1_api_group_list_t *v1_api_group_list_create(
+    char *api_version,
+    list_t *groups,
+    char *kind
+    ) {
+    return v1_api_group_list_create_internal (
+        api_version,
+        groups,
+        kind
+        );
+}
 
 void v1_api_group_list_free(v1_api_group_list_t *v1_api_group_list) {
     if(NULL == v1_api_group_list){
+        return ;
+    }
+    if(v1_api_group_list->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_api_group_list_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -101,6 +117,9 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
 
     // v1_api_group_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_group_listJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -110,6 +129,9 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
 
     // v1_api_group_list->groups
     cJSON *groups = cJSON_GetObjectItemCaseSensitive(v1_api_group_listJSON, "groups");
+    if (cJSON_IsNull(groups)) {
+        groups = NULL;
+    }
     if (!groups) {
         goto end;
     }
@@ -134,6 +156,9 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
 
     // v1_api_group_list->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_api_group_listJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -142,7 +167,7 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
     }
 
 
-    v1_api_group_list_local_var = v1_api_group_list_create (
+    v1_api_group_list_local_var = v1_api_group_list_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         groupsList,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL

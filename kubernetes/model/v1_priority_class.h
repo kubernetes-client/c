@@ -28,9 +28,10 @@ typedef struct v1_priority_class_t {
     char *preemption_policy; // string
     int value; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_priority_class_t;
 
-v1_priority_class_t *v1_priority_class_create(
+__attribute__((deprecated)) v1_priority_class_t *v1_priority_class_create(
     char *api_version,
     char *description,
     int global_default,

@@ -24,9 +24,10 @@ typedef struct v1_network_policy_egress_rule_t {
     list_t *ports; //nonprimitive container
     list_t *to; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_network_policy_egress_rule_t;
 
-v1_network_policy_egress_rule_t *v1_network_policy_egress_rule_create(
+__attribute__((deprecated)) v1_network_policy_egress_rule_t *v1_network_policy_egress_rule_create(
     list_t *ports,
     list_t *to
 );

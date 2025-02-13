@@ -5,7 +5,7 @@
 
 
 
-v1_container_state_waiting_t *v1_container_state_waiting_create(
+static v1_container_state_waiting_t *v1_container_state_waiting_create_internal(
     char *message,
     char *reason
     ) {
@@ -16,12 +16,26 @@ v1_container_state_waiting_t *v1_container_state_waiting_create(
     v1_container_state_waiting_local_var->message = message;
     v1_container_state_waiting_local_var->reason = reason;
 
+    v1_container_state_waiting_local_var->_library_owned = 1;
     return v1_container_state_waiting_local_var;
 }
 
+__attribute__((deprecated)) v1_container_state_waiting_t *v1_container_state_waiting_create(
+    char *message,
+    char *reason
+    ) {
+    return v1_container_state_waiting_create_internal (
+        message,
+        reason
+        );
+}
 
 void v1_container_state_waiting_free(v1_container_state_waiting_t *v1_container_state_waiting) {
     if(NULL == v1_container_state_waiting){
+        return ;
+    }
+    if(v1_container_state_waiting->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_container_state_waiting_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -68,6 +82,9 @@ v1_container_state_waiting_t *v1_container_state_waiting_parseFromJSON(cJSON *v1
 
     // v1_container_state_waiting->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_container_state_waitingJSON, "message");
+    if (cJSON_IsNull(message)) {
+        message = NULL;
+    }
     if (message) { 
     if(!cJSON_IsString(message) && !cJSON_IsNull(message))
     {
@@ -77,6 +94,9 @@ v1_container_state_waiting_t *v1_container_state_waiting_parseFromJSON(cJSON *v1
 
     // v1_container_state_waiting->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_container_state_waitingJSON, "reason");
+    if (cJSON_IsNull(reason)) {
+        reason = NULL;
+    }
     if (reason) { 
     if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
     {
@@ -85,7 +105,7 @@ v1_container_state_waiting_t *v1_container_state_waiting_parseFromJSON(cJSON *v1
     }
 
 
-    v1_container_state_waiting_local_var = v1_container_state_waiting_create (
+    v1_container_state_waiting_local_var = v1_container_state_waiting_create_internal (
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
         );

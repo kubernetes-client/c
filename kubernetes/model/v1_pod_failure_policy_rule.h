@@ -25,9 +25,10 @@ typedef struct v1_pod_failure_policy_rule_t {
     struct v1_pod_failure_policy_on_exit_codes_requirement_t *on_exit_codes; //model
     list_t *on_pod_conditions; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_failure_policy_rule_t;
 
-v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_create(
+__attribute__((deprecated)) v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_create(
     char *action,
     v1_pod_failure_policy_on_exit_codes_requirement_t *on_exit_codes,
     list_t *on_pod_conditions

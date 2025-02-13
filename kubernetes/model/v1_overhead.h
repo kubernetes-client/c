@@ -21,9 +21,10 @@ typedef struct v1_overhead_t v1_overhead_t;
 typedef struct v1_overhead_t {
     list_t* pod_fixed; //map
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_overhead_t;
 
-v1_overhead_t *v1_overhead_create(
+__attribute__((deprecated)) v1_overhead_t *v1_overhead_create(
     list_t* pod_fixed
 );
 

@@ -5,7 +5,7 @@
 
 
 
-core_v1_endpoint_port_t *core_v1_endpoint_port_create(
+static core_v1_endpoint_port_t *core_v1_endpoint_port_create_internal(
     char *app_protocol,
     char *name,
     int port,
@@ -20,12 +20,30 @@ core_v1_endpoint_port_t *core_v1_endpoint_port_create(
     core_v1_endpoint_port_local_var->port = port;
     core_v1_endpoint_port_local_var->protocol = protocol;
 
+    core_v1_endpoint_port_local_var->_library_owned = 1;
     return core_v1_endpoint_port_local_var;
 }
 
+__attribute__((deprecated)) core_v1_endpoint_port_t *core_v1_endpoint_port_create(
+    char *app_protocol,
+    char *name,
+    int port,
+    char *protocol
+    ) {
+    return core_v1_endpoint_port_create_internal (
+        app_protocol,
+        name,
+        port,
+        protocol
+        );
+}
 
 void core_v1_endpoint_port_free(core_v1_endpoint_port_t *core_v1_endpoint_port) {
     if(NULL == core_v1_endpoint_port){
+        return ;
+    }
+    if(core_v1_endpoint_port->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "core_v1_endpoint_port_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -93,6 +111,9 @@ core_v1_endpoint_port_t *core_v1_endpoint_port_parseFromJSON(cJSON *core_v1_endp
 
     // core_v1_endpoint_port->app_protocol
     cJSON *app_protocol = cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "appProtocol");
+    if (cJSON_IsNull(app_protocol)) {
+        app_protocol = NULL;
+    }
     if (app_protocol) { 
     if(!cJSON_IsString(app_protocol) && !cJSON_IsNull(app_protocol))
     {
@@ -102,6 +123,9 @@ core_v1_endpoint_port_t *core_v1_endpoint_port_parseFromJSON(cJSON *core_v1_endp
 
     // core_v1_endpoint_port->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -111,6 +135,9 @@ core_v1_endpoint_port_t *core_v1_endpoint_port_parseFromJSON(cJSON *core_v1_endp
 
     // core_v1_endpoint_port->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "port");
+    if (cJSON_IsNull(port)) {
+        port = NULL;
+    }
     if (!port) {
         goto end;
     }
@@ -123,6 +150,9 @@ core_v1_endpoint_port_t *core_v1_endpoint_port_parseFromJSON(cJSON *core_v1_endp
 
     // core_v1_endpoint_port->protocol
     cJSON *protocol = cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "protocol");
+    if (cJSON_IsNull(protocol)) {
+        protocol = NULL;
+    }
     if (protocol) { 
     if(!cJSON_IsString(protocol) && !cJSON_IsNull(protocol))
     {
@@ -131,7 +161,7 @@ core_v1_endpoint_port_t *core_v1_endpoint_port_parseFromJSON(cJSON *core_v1_endp
     }
 
 
-    core_v1_endpoint_port_local_var = core_v1_endpoint_port_create (
+    core_v1_endpoint_port_local_var = core_v1_endpoint_port_create_internal (
         app_protocol && !cJSON_IsNull(app_protocol) ? strdup(app_protocol->valuestring) : NULL,
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         port->valuedouble,

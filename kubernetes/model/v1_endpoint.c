@@ -5,7 +5,7 @@
 
 
 
-v1_endpoint_t *v1_endpoint_create(
+static v1_endpoint_t *v1_endpoint_create_internal(
     list_t *addresses,
     v1_endpoint_conditions_t *conditions,
     list_t* deprecated_topology,
@@ -28,12 +28,38 @@ v1_endpoint_t *v1_endpoint_create(
     v1_endpoint_local_var->target_ref = target_ref;
     v1_endpoint_local_var->zone = zone;
 
+    v1_endpoint_local_var->_library_owned = 1;
     return v1_endpoint_local_var;
 }
 
+__attribute__((deprecated)) v1_endpoint_t *v1_endpoint_create(
+    list_t *addresses,
+    v1_endpoint_conditions_t *conditions,
+    list_t* deprecated_topology,
+    v1_endpoint_hints_t *hints,
+    char *hostname,
+    char *node_name,
+    v1_object_reference_t *target_ref,
+    char *zone
+    ) {
+    return v1_endpoint_create_internal (
+        addresses,
+        conditions,
+        deprecated_topology,
+        hints,
+        hostname,
+        node_name,
+        target_ref,
+        zone
+        );
+}
 
 void v1_endpoint_free(v1_endpoint_t *v1_endpoint) {
     if(NULL == v1_endpoint){
+        return ;
+    }
+    if(v1_endpoint->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_endpoint_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -50,7 +76,7 @@ void v1_endpoint_free(v1_endpoint_t *v1_endpoint) {
     }
     if (v1_endpoint->deprecated_topology) {
         list_ForEach(listEntry, v1_endpoint->deprecated_topology) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -95,7 +121,7 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
 
     listEntry_t *addressesListEntry;
     list_ForEach(addressesListEntry, v1_endpoint->addresses) {
-    if(cJSON_AddStringToObject(addresses, "", (char*)addressesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(addresses, "", addressesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -125,8 +151,8 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
     listEntry_t *deprecated_topologyListEntry;
     if (v1_endpoint->deprecated_topology) {
     list_ForEach(deprecated_topologyListEntry, v1_endpoint->deprecated_topology) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)deprecated_topologyListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = deprecated_topologyListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -213,6 +239,9 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     // v1_endpoint->addresses
     cJSON *addresses = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "addresses");
+    if (cJSON_IsNull(addresses)) {
+        addresses = NULL;
+    }
     if (!addresses) {
         goto end;
     }
@@ -235,12 +264,18 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     // v1_endpoint->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     conditions_local_nonprim = v1_endpoint_conditions_parseFromJSON(conditions); //nonprimitive
     }
 
     // v1_endpoint->deprecated_topology
     cJSON *deprecated_topology = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "deprecatedTopology");
+    if (cJSON_IsNull(deprecated_topology)) {
+        deprecated_topology = NULL;
+    }
     if (deprecated_topology) { 
     cJSON *deprecated_topology_local_map = NULL;
     if(!cJSON_IsObject(deprecated_topology) && !cJSON_IsNull(deprecated_topology))
@@ -266,12 +301,18 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     // v1_endpoint->hints
     cJSON *hints = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "hints");
+    if (cJSON_IsNull(hints)) {
+        hints = NULL;
+    }
     if (hints) { 
     hints_local_nonprim = v1_endpoint_hints_parseFromJSON(hints); //nonprimitive
     }
 
     // v1_endpoint->hostname
     cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "hostname");
+    if (cJSON_IsNull(hostname)) {
+        hostname = NULL;
+    }
     if (hostname) { 
     if(!cJSON_IsString(hostname) && !cJSON_IsNull(hostname))
     {
@@ -281,6 +322,9 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     // v1_endpoint->node_name
     cJSON *node_name = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "nodeName");
+    if (cJSON_IsNull(node_name)) {
+        node_name = NULL;
+    }
     if (node_name) { 
     if(!cJSON_IsString(node_name) && !cJSON_IsNull(node_name))
     {
@@ -290,12 +334,18 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
 
     // v1_endpoint->target_ref
     cJSON *target_ref = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "targetRef");
+    if (cJSON_IsNull(target_ref)) {
+        target_ref = NULL;
+    }
     if (target_ref) { 
     target_ref_local_nonprim = v1_object_reference_parseFromJSON(target_ref); //nonprimitive
     }
 
     // v1_endpoint->zone
     cJSON *zone = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "zone");
+    if (cJSON_IsNull(zone)) {
+        zone = NULL;
+    }
     if (zone) { 
     if(!cJSON_IsString(zone) && !cJSON_IsNull(zone))
     {
@@ -304,7 +354,7 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     }
 
 
-    v1_endpoint_local_var = v1_endpoint_create (
+    v1_endpoint_local_var = v1_endpoint_create_internal (
         addressesList,
         conditions ? conditions_local_nonprim : NULL,
         deprecated_topology ? deprecated_topologyList : NULL,
@@ -333,7 +383,7 @@ end:
     if (deprecated_topologyList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, deprecated_topologyList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

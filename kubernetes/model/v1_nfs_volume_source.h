@@ -23,9 +23,10 @@ typedef struct v1_nfs_volume_source_t {
     int read_only; //boolean
     char *server; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_nfs_volume_source_t;
 
-v1_nfs_volume_source_t *v1_nfs_volume_source_create(
+__attribute__((deprecated)) v1_nfs_volume_source_t *v1_nfs_volume_source_create(
     char *path,
     int read_only,
     char *server

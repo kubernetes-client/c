@@ -23,9 +23,10 @@ typedef struct v1_label_selector_t {
     list_t *match_expressions; //nonprimitive container
     list_t* match_labels; //map
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_label_selector_t;
 
-v1_label_selector_t *v1_label_selector_create(
+__attribute__((deprecated)) v1_label_selector_t *v1_label_selector_create(
     list_t *match_expressions,
     list_t* match_labels
 );

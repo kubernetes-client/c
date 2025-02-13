@@ -5,7 +5,7 @@
 
 
 
-v1_node_selector_term_t *v1_node_selector_term_create(
+static v1_node_selector_term_t *v1_node_selector_term_create_internal(
     list_t *match_expressions,
     list_t *match_fields
     ) {
@@ -16,12 +16,26 @@ v1_node_selector_term_t *v1_node_selector_term_create(
     v1_node_selector_term_local_var->match_expressions = match_expressions;
     v1_node_selector_term_local_var->match_fields = match_fields;
 
+    v1_node_selector_term_local_var->_library_owned = 1;
     return v1_node_selector_term_local_var;
 }
 
+__attribute__((deprecated)) v1_node_selector_term_t *v1_node_selector_term_create(
+    list_t *match_expressions,
+    list_t *match_fields
+    ) {
+    return v1_node_selector_term_create_internal (
+        match_expressions,
+        match_fields
+        );
+}
 
 void v1_node_selector_term_free(v1_node_selector_term_t *v1_node_selector_term) {
     if(NULL == v1_node_selector_term){
+        return ;
+    }
+    if(v1_node_selector_term->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_node_selector_term_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -104,6 +118,9 @@ v1_node_selector_term_t *v1_node_selector_term_parseFromJSON(cJSON *v1_node_sele
 
     // v1_node_selector_term->match_expressions
     cJSON *match_expressions = cJSON_GetObjectItemCaseSensitive(v1_node_selector_termJSON, "matchExpressions");
+    if (cJSON_IsNull(match_expressions)) {
+        match_expressions = NULL;
+    }
     if (match_expressions) { 
     cJSON *match_expressions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(match_expressions)){
@@ -125,6 +142,9 @@ v1_node_selector_term_t *v1_node_selector_term_parseFromJSON(cJSON *v1_node_sele
 
     // v1_node_selector_term->match_fields
     cJSON *match_fields = cJSON_GetObjectItemCaseSensitive(v1_node_selector_termJSON, "matchFields");
+    if (cJSON_IsNull(match_fields)) {
+        match_fields = NULL;
+    }
     if (match_fields) { 
     cJSON *match_fields_local_nonprimitive = NULL;
     if(!cJSON_IsArray(match_fields)){
@@ -145,7 +165,7 @@ v1_node_selector_term_t *v1_node_selector_term_parseFromJSON(cJSON *v1_node_sele
     }
 
 
-    v1_node_selector_term_local_var = v1_node_selector_term_create (
+    v1_node_selector_term_local_var = v1_node_selector_term_create_internal (
         match_expressions ? match_expressionsList : NULL,
         match_fields ? match_fieldsList : NULL
         );

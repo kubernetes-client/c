@@ -42,9 +42,10 @@ typedef struct v1_service_spec_t {
     char *traffic_distribution; // string
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_service_spec_t;
 
-v1_service_spec_t *v1_service_spec_create(
+__attribute__((deprecated)) v1_service_spec_t *v1_service_spec_create(
     int allocate_load_balancer_node_ports,
     char *cluster_ip,
     list_t *cluster_ips,

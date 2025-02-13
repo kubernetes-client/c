@@ -5,7 +5,7 @@
 
 
 
-v1beta1_validating_admission_policy_binding_spec_t *v1beta1_validating_admission_policy_binding_spec_create(
+static v1beta1_validating_admission_policy_binding_spec_t *v1beta1_validating_admission_policy_binding_spec_create_internal(
     v1beta1_match_resources_t *match_resources,
     v1beta1_param_ref_t *param_ref,
     char *policy_name,
@@ -20,12 +20,30 @@ v1beta1_validating_admission_policy_binding_spec_t *v1beta1_validating_admission
     v1beta1_validating_admission_policy_binding_spec_local_var->policy_name = policy_name;
     v1beta1_validating_admission_policy_binding_spec_local_var->validation_actions = validation_actions;
 
+    v1beta1_validating_admission_policy_binding_spec_local_var->_library_owned = 1;
     return v1beta1_validating_admission_policy_binding_spec_local_var;
 }
 
+__attribute__((deprecated)) v1beta1_validating_admission_policy_binding_spec_t *v1beta1_validating_admission_policy_binding_spec_create(
+    v1beta1_match_resources_t *match_resources,
+    v1beta1_param_ref_t *param_ref,
+    char *policy_name,
+    list_t *validation_actions
+    ) {
+    return v1beta1_validating_admission_policy_binding_spec_create_internal (
+        match_resources,
+        param_ref,
+        policy_name,
+        validation_actions
+        );
+}
 
 void v1beta1_validating_admission_policy_binding_spec_free(v1beta1_validating_admission_policy_binding_spec_t *v1beta1_validating_admission_policy_binding_spec) {
     if(NULL == v1beta1_validating_admission_policy_binding_spec){
+        return ;
+    }
+    if(v1beta1_validating_admission_policy_binding_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1beta1_validating_admission_policy_binding_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -97,7 +115,7 @@ cJSON *v1beta1_validating_admission_policy_binding_spec_convertToJSON(v1beta1_va
 
     listEntry_t *validation_actionsListEntry;
     list_ForEach(validation_actionsListEntry, v1beta1_validating_admission_policy_binding_spec->validation_actions) {
-    if(cJSON_AddStringToObject(validation_actions, "", (char*)validation_actionsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(validation_actions, "", validation_actionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -127,18 +145,27 @@ v1beta1_validating_admission_policy_binding_spec_t *v1beta1_validating_admission
 
     // v1beta1_validating_admission_policy_binding_spec->match_resources
     cJSON *match_resources = cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_binding_specJSON, "matchResources");
+    if (cJSON_IsNull(match_resources)) {
+        match_resources = NULL;
+    }
     if (match_resources) { 
     match_resources_local_nonprim = v1beta1_match_resources_parseFromJSON(match_resources); //nonprimitive
     }
 
     // v1beta1_validating_admission_policy_binding_spec->param_ref
     cJSON *param_ref = cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_binding_specJSON, "paramRef");
+    if (cJSON_IsNull(param_ref)) {
+        param_ref = NULL;
+    }
     if (param_ref) { 
     param_ref_local_nonprim = v1beta1_param_ref_parseFromJSON(param_ref); //nonprimitive
     }
 
     // v1beta1_validating_admission_policy_binding_spec->policy_name
     cJSON *policy_name = cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_binding_specJSON, "policyName");
+    if (cJSON_IsNull(policy_name)) {
+        policy_name = NULL;
+    }
     if (policy_name) { 
     if(!cJSON_IsString(policy_name) && !cJSON_IsNull(policy_name))
     {
@@ -148,6 +175,9 @@ v1beta1_validating_admission_policy_binding_spec_t *v1beta1_validating_admission
 
     // v1beta1_validating_admission_policy_binding_spec->validation_actions
     cJSON *validation_actions = cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_binding_specJSON, "validationActions");
+    if (cJSON_IsNull(validation_actions)) {
+        validation_actions = NULL;
+    }
     if (validation_actions) { 
     cJSON *validation_actions_local = NULL;
     if(!cJSON_IsArray(validation_actions)) {
@@ -166,7 +196,7 @@ v1beta1_validating_admission_policy_binding_spec_t *v1beta1_validating_admission
     }
 
 
-    v1beta1_validating_admission_policy_binding_spec_local_var = v1beta1_validating_admission_policy_binding_spec_create (
+    v1beta1_validating_admission_policy_binding_spec_local_var = v1beta1_validating_admission_policy_binding_spec_create_internal (
         match_resources ? match_resources_local_nonprim : NULL,
         param_ref ? param_ref_local_nonprim : NULL,
         policy_name && !cJSON_IsNull(policy_name) ? strdup(policy_name->valuestring) : NULL,

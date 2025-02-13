@@ -22,9 +22,10 @@ typedef struct v1_load_balancer_status_t v1_load_balancer_status_t;
 typedef struct v1_load_balancer_status_t {
     list_t *ingress; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_load_balancer_status_t;
 
-v1_load_balancer_status_t *v1_load_balancer_status_create(
+__attribute__((deprecated)) v1_load_balancer_status_t *v1_load_balancer_status_create(
     list_t *ingress
 );
 

@@ -5,7 +5,7 @@
 
 
 
-v1_pod_readiness_gate_t *v1_pod_readiness_gate_create(
+static v1_pod_readiness_gate_t *v1_pod_readiness_gate_create_internal(
     char *condition_type
     ) {
     v1_pod_readiness_gate_t *v1_pod_readiness_gate_local_var = malloc(sizeof(v1_pod_readiness_gate_t));
@@ -14,12 +14,24 @@ v1_pod_readiness_gate_t *v1_pod_readiness_gate_create(
     }
     v1_pod_readiness_gate_local_var->condition_type = condition_type;
 
+    v1_pod_readiness_gate_local_var->_library_owned = 1;
     return v1_pod_readiness_gate_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_readiness_gate_t *v1_pod_readiness_gate_create(
+    char *condition_type
+    ) {
+    return v1_pod_readiness_gate_create_internal (
+        condition_type
+        );
+}
 
 void v1_pod_readiness_gate_free(v1_pod_readiness_gate_t *v1_pod_readiness_gate) {
     if(NULL == v1_pod_readiness_gate){
+        return ;
+    }
+    if(v1_pod_readiness_gate->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_readiness_gate_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -55,6 +67,9 @@ v1_pod_readiness_gate_t *v1_pod_readiness_gate_parseFromJSON(cJSON *v1_pod_readi
 
     // v1_pod_readiness_gate->condition_type
     cJSON *condition_type = cJSON_GetObjectItemCaseSensitive(v1_pod_readiness_gateJSON, "conditionType");
+    if (cJSON_IsNull(condition_type)) {
+        condition_type = NULL;
+    }
     if (!condition_type) {
         goto end;
     }
@@ -66,7 +81,7 @@ v1_pod_readiness_gate_t *v1_pod_readiness_gate_parseFromJSON(cJSON *v1_pod_readi
     }
 
 
-    v1_pod_readiness_gate_local_var = v1_pod_readiness_gate_create (
+    v1_pod_readiness_gate_local_var = v1_pod_readiness_gate_create_internal (
         strdup(condition_type->valuestring)
         );
 

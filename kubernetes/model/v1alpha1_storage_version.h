@@ -28,9 +28,10 @@ typedef struct v1alpha1_storage_version_t {
     object_t *spec; //object
     struct v1alpha1_storage_version_status_t *status; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha1_storage_version_t;
 
-v1alpha1_storage_version_t *v1alpha1_storage_version_create(
+__attribute__((deprecated)) v1alpha1_storage_version_t *v1alpha1_storage_version_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

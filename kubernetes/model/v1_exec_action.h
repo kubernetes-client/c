@@ -21,9 +21,10 @@ typedef struct v1_exec_action_t v1_exec_action_t;
 typedef struct v1_exec_action_t {
     list_t *command; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_exec_action_t;
 
-v1_exec_action_t *v1_exec_action_create(
+__attribute__((deprecated)) v1_exec_action_t *v1_exec_action_create(
     list_t *command
 );
 

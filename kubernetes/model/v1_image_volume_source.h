@@ -22,9 +22,10 @@ typedef struct v1_image_volume_source_t {
     char *pull_policy; // string
     char *reference; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_image_volume_source_t;
 
-v1_image_volume_source_t *v1_image_volume_source_create(
+__attribute__((deprecated)) v1_image_volume_source_t *v1_image_volume_source_create(
     char *pull_policy,
     char *reference
 );

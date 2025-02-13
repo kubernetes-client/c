@@ -23,9 +23,10 @@ typedef struct v1alpha1_storage_version_migration_spec_t {
     char *continue_token; // string
     struct v1alpha1_group_version_resource_t *resource; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha1_storage_version_migration_spec_t;
 
-v1alpha1_storage_version_migration_spec_t *v1alpha1_storage_version_migration_spec_create(
+__attribute__((deprecated)) v1alpha1_storage_version_migration_spec_t *v1alpha1_storage_version_migration_spec_create(
     char *continue_token,
     v1alpha1_group_version_resource_t *resource
 );

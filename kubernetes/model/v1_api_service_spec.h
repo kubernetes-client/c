@@ -28,9 +28,10 @@ typedef struct v1_api_service_spec_t {
     char *version; // string
     int version_priority; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_api_service_spec_t;
 
-v1_api_service_spec_t *v1_api_service_spec_create(
+__attribute__((deprecated)) v1_api_service_spec_t *v1_api_service_spec_create(
     char *ca_bundle,
     char *group,
     int group_priority_minimum,

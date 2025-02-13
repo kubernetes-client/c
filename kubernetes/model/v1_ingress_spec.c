@@ -5,7 +5,7 @@
 
 
 
-v1_ingress_spec_t *v1_ingress_spec_create(
+static v1_ingress_spec_t *v1_ingress_spec_create_internal(
     v1_ingress_backend_t *default_backend,
     char *ingress_class_name,
     list_t *rules,
@@ -20,12 +20,30 @@ v1_ingress_spec_t *v1_ingress_spec_create(
     v1_ingress_spec_local_var->rules = rules;
     v1_ingress_spec_local_var->tls = tls;
 
+    v1_ingress_spec_local_var->_library_owned = 1;
     return v1_ingress_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_ingress_spec_t *v1_ingress_spec_create(
+    v1_ingress_backend_t *default_backend,
+    char *ingress_class_name,
+    list_t *rules,
+    list_t *tls
+    ) {
+    return v1_ingress_spec_create_internal (
+        default_backend,
+        ingress_class_name,
+        rules,
+        tls
+        );
+}
 
 void v1_ingress_spec_free(v1_ingress_spec_t *v1_ingress_spec) {
     if(NULL == v1_ingress_spec){
+        return ;
+    }
+    if(v1_ingress_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_ingress_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -140,12 +158,18 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
 
     // v1_ingress_spec->default_backend
     cJSON *default_backend = cJSON_GetObjectItemCaseSensitive(v1_ingress_specJSON, "defaultBackend");
+    if (cJSON_IsNull(default_backend)) {
+        default_backend = NULL;
+    }
     if (default_backend) { 
     default_backend_local_nonprim = v1_ingress_backend_parseFromJSON(default_backend); //nonprimitive
     }
 
     // v1_ingress_spec->ingress_class_name
     cJSON *ingress_class_name = cJSON_GetObjectItemCaseSensitive(v1_ingress_specJSON, "ingressClassName");
+    if (cJSON_IsNull(ingress_class_name)) {
+        ingress_class_name = NULL;
+    }
     if (ingress_class_name) { 
     if(!cJSON_IsString(ingress_class_name) && !cJSON_IsNull(ingress_class_name))
     {
@@ -155,6 +179,9 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
 
     // v1_ingress_spec->rules
     cJSON *rules = cJSON_GetObjectItemCaseSensitive(v1_ingress_specJSON, "rules");
+    if (cJSON_IsNull(rules)) {
+        rules = NULL;
+    }
     if (rules) { 
     cJSON *rules_local_nonprimitive = NULL;
     if(!cJSON_IsArray(rules)){
@@ -176,6 +203,9 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
 
     // v1_ingress_spec->tls
     cJSON *tls = cJSON_GetObjectItemCaseSensitive(v1_ingress_specJSON, "tls");
+    if (cJSON_IsNull(tls)) {
+        tls = NULL;
+    }
     if (tls) { 
     cJSON *tls_local_nonprimitive = NULL;
     if(!cJSON_IsArray(tls)){
@@ -196,7 +226,7 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
     }
 
 
-    v1_ingress_spec_local_var = v1_ingress_spec_create (
+    v1_ingress_spec_local_var = v1_ingress_spec_create_internal (
         default_backend ? default_backend_local_nonprim : NULL,
         ingress_class_name && !cJSON_IsNull(ingress_class_name) ? strdup(ingress_class_name->valuestring) : NULL,
         rules ? rulesList : NULL,

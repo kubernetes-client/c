@@ -5,7 +5,7 @@
 
 
 
-v1_storage_os_volume_source_t *v1_storage_os_volume_source_create(
+static v1_storage_os_volume_source_t *v1_storage_os_volume_source_create_internal(
     char *fs_type,
     int read_only,
     v1_local_object_reference_t *secret_ref,
@@ -22,12 +22,32 @@ v1_storage_os_volume_source_t *v1_storage_os_volume_source_create(
     v1_storage_os_volume_source_local_var->volume_name = volume_name;
     v1_storage_os_volume_source_local_var->volume_namespace = volume_namespace;
 
+    v1_storage_os_volume_source_local_var->_library_owned = 1;
     return v1_storage_os_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_storage_os_volume_source_t *v1_storage_os_volume_source_create(
+    char *fs_type,
+    int read_only,
+    v1_local_object_reference_t *secret_ref,
+    char *volume_name,
+    char *volume_namespace
+    ) {
+    return v1_storage_os_volume_source_create_internal (
+        fs_type,
+        read_only,
+        secret_ref,
+        volume_name,
+        volume_namespace
+        );
+}
 
 void v1_storage_os_volume_source_free(v1_storage_os_volume_source_t *v1_storage_os_volume_source) {
     if(NULL == v1_storage_os_volume_source){
+        return ;
+    }
+    if(v1_storage_os_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_storage_os_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -114,6 +134,9 @@ v1_storage_os_volume_source_t *v1_storage_os_volume_source_parseFromJSON(cJSON *
 
     // v1_storage_os_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_storage_os_volume_sourceJSON, "fsType");
+    if (cJSON_IsNull(fs_type)) {
+        fs_type = NULL;
+    }
     if (fs_type) { 
     if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
     {
@@ -123,6 +146,9 @@ v1_storage_os_volume_source_t *v1_storage_os_volume_source_parseFromJSON(cJSON *
 
     // v1_storage_os_volume_source->read_only
     cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_storage_os_volume_sourceJSON, "readOnly");
+    if (cJSON_IsNull(read_only)) {
+        read_only = NULL;
+    }
     if (read_only) { 
     if(!cJSON_IsBool(read_only))
     {
@@ -132,12 +158,18 @@ v1_storage_os_volume_source_t *v1_storage_os_volume_source_parseFromJSON(cJSON *
 
     // v1_storage_os_volume_source->secret_ref
     cJSON *secret_ref = cJSON_GetObjectItemCaseSensitive(v1_storage_os_volume_sourceJSON, "secretRef");
+    if (cJSON_IsNull(secret_ref)) {
+        secret_ref = NULL;
+    }
     if (secret_ref) { 
     secret_ref_local_nonprim = v1_local_object_reference_parseFromJSON(secret_ref); //nonprimitive
     }
 
     // v1_storage_os_volume_source->volume_name
     cJSON *volume_name = cJSON_GetObjectItemCaseSensitive(v1_storage_os_volume_sourceJSON, "volumeName");
+    if (cJSON_IsNull(volume_name)) {
+        volume_name = NULL;
+    }
     if (volume_name) { 
     if(!cJSON_IsString(volume_name) && !cJSON_IsNull(volume_name))
     {
@@ -147,6 +179,9 @@ v1_storage_os_volume_source_t *v1_storage_os_volume_source_parseFromJSON(cJSON *
 
     // v1_storage_os_volume_source->volume_namespace
     cJSON *volume_namespace = cJSON_GetObjectItemCaseSensitive(v1_storage_os_volume_sourceJSON, "volumeNamespace");
+    if (cJSON_IsNull(volume_namespace)) {
+        volume_namespace = NULL;
+    }
     if (volume_namespace) { 
     if(!cJSON_IsString(volume_namespace) && !cJSON_IsNull(volume_namespace))
     {
@@ -155,7 +190,7 @@ v1_storage_os_volume_source_t *v1_storage_os_volume_source_parseFromJSON(cJSON *
     }
 
 
-    v1_storage_os_volume_source_local_var = v1_storage_os_volume_source_create (
+    v1_storage_os_volume_source_local_var = v1_storage_os_volume_source_create_internal (
         fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
         secret_ref ? secret_ref_local_nonprim : NULL,

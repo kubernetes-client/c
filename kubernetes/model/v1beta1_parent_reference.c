@@ -5,7 +5,7 @@
 
 
 
-v1beta1_parent_reference_t *v1beta1_parent_reference_create(
+static v1beta1_parent_reference_t *v1beta1_parent_reference_create_internal(
     char *group,
     char *name,
     char *_namespace,
@@ -20,12 +20,30 @@ v1beta1_parent_reference_t *v1beta1_parent_reference_create(
     v1beta1_parent_reference_local_var->_namespace = _namespace;
     v1beta1_parent_reference_local_var->resource = resource;
 
+    v1beta1_parent_reference_local_var->_library_owned = 1;
     return v1beta1_parent_reference_local_var;
 }
 
+__attribute__((deprecated)) v1beta1_parent_reference_t *v1beta1_parent_reference_create(
+    char *group,
+    char *name,
+    char *_namespace,
+    char *resource
+    ) {
+    return v1beta1_parent_reference_create_internal (
+        group,
+        name,
+        _namespace,
+        resource
+        );
+}
 
 void v1beta1_parent_reference_free(v1beta1_parent_reference_t *v1beta1_parent_reference) {
     if(NULL == v1beta1_parent_reference){
+        return ;
+    }
+    if(v1beta1_parent_reference->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1beta1_parent_reference_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -98,6 +116,9 @@ v1beta1_parent_reference_t *v1beta1_parent_reference_parseFromJSON(cJSON *v1beta
 
     // v1beta1_parent_reference->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "group");
+    if (cJSON_IsNull(group)) {
+        group = NULL;
+    }
     if (group) { 
     if(!cJSON_IsString(group) && !cJSON_IsNull(group))
     {
@@ -107,6 +128,9 @@ v1beta1_parent_reference_t *v1beta1_parent_reference_parseFromJSON(cJSON *v1beta
 
     // v1beta1_parent_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -119,6 +143,9 @@ v1beta1_parent_reference_t *v1beta1_parent_reference_parseFromJSON(cJSON *v1beta
 
     // v1beta1_parent_reference->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "namespace");
+    if (cJSON_IsNull(_namespace)) {
+        _namespace = NULL;
+    }
     if (_namespace) { 
     if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
     {
@@ -128,6 +155,9 @@ v1beta1_parent_reference_t *v1beta1_parent_reference_parseFromJSON(cJSON *v1beta
 
     // v1beta1_parent_reference->resource
     cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "resource");
+    if (cJSON_IsNull(resource)) {
+        resource = NULL;
+    }
     if (!resource) {
         goto end;
     }
@@ -139,7 +169,7 @@ v1beta1_parent_reference_t *v1beta1_parent_reference_parseFromJSON(cJSON *v1beta
     }
 
 
-    v1beta1_parent_reference_local_var = v1beta1_parent_reference_create (
+    v1beta1_parent_reference_local_var = v1beta1_parent_reference_create_internal (
         group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         strdup(name->valuestring),
         _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,

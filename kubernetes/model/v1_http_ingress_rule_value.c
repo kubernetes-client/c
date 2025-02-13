@@ -5,7 +5,7 @@
 
 
 
-v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_create(
+static v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_create_internal(
     list_t *paths
     ) {
     v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_local_var = malloc(sizeof(v1_http_ingress_rule_value_t));
@@ -14,12 +14,24 @@ v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_create(
     }
     v1_http_ingress_rule_value_local_var->paths = paths;
 
+    v1_http_ingress_rule_value_local_var->_library_owned = 1;
     return v1_http_ingress_rule_value_local_var;
 }
 
+__attribute__((deprecated)) v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_create(
+    list_t *paths
+    ) {
+    return v1_http_ingress_rule_value_create_internal (
+        paths
+        );
+}
 
 void v1_http_ingress_rule_value_free(v1_http_ingress_rule_value_t *v1_http_ingress_rule_value) {
     if(NULL == v1_http_ingress_rule_value){
+        return ;
+    }
+    if(v1_http_ingress_rule_value->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_http_ingress_rule_value_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -73,6 +85,9 @@ v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_parseFromJSON(cJSON *v1
 
     // v1_http_ingress_rule_value->paths
     cJSON *paths = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_rule_valueJSON, "paths");
+    if (cJSON_IsNull(paths)) {
+        paths = NULL;
+    }
     if (!paths) {
         goto end;
     }
@@ -96,7 +111,7 @@ v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_parseFromJSON(cJSON *v1
     }
 
 
-    v1_http_ingress_rule_value_local_var = v1_http_ingress_rule_value_create (
+    v1_http_ingress_rule_value_local_var = v1_http_ingress_rule_value_create_internal (
         pathsList
         );
 

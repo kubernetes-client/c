@@ -5,7 +5,7 @@
 
 
 
-v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_create(
+static v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_create_internal(
     char *description,
     char *format,
     char *json_path,
@@ -24,12 +24,34 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_cre
     v1_custom_resource_column_definition_local_var->priority = priority;
     v1_custom_resource_column_definition_local_var->type = type;
 
+    v1_custom_resource_column_definition_local_var->_library_owned = 1;
     return v1_custom_resource_column_definition_local_var;
 }
 
+__attribute__((deprecated)) v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_create(
+    char *description,
+    char *format,
+    char *json_path,
+    char *name,
+    int priority,
+    char *type
+    ) {
+    return v1_custom_resource_column_definition_create_internal (
+        description,
+        format,
+        json_path,
+        name,
+        priority,
+        type
+        );
+}
 
 void v1_custom_resource_column_definition_free(v1_custom_resource_column_definition_t *v1_custom_resource_column_definition) {
     if(NULL == v1_custom_resource_column_definition){
+        return ;
+    }
+    if(v1_custom_resource_column_definition->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_custom_resource_column_definition_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -123,6 +145,9 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
 
     // v1_custom_resource_column_definition->description
     cJSON *description = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "description");
+    if (cJSON_IsNull(description)) {
+        description = NULL;
+    }
     if (description) { 
     if(!cJSON_IsString(description) && !cJSON_IsNull(description))
     {
@@ -132,6 +157,9 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
 
     // v1_custom_resource_column_definition->format
     cJSON *format = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "format");
+    if (cJSON_IsNull(format)) {
+        format = NULL;
+    }
     if (format) { 
     if(!cJSON_IsString(format) && !cJSON_IsNull(format))
     {
@@ -141,6 +169,9 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
 
     // v1_custom_resource_column_definition->json_path
     cJSON *json_path = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "jsonPath");
+    if (cJSON_IsNull(json_path)) {
+        json_path = NULL;
+    }
     if (!json_path) {
         goto end;
     }
@@ -153,6 +184,9 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
 
     // v1_custom_resource_column_definition->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -165,6 +199,9 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
 
     // v1_custom_resource_column_definition->priority
     cJSON *priority = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "priority");
+    if (cJSON_IsNull(priority)) {
+        priority = NULL;
+    }
     if (priority) { 
     if(!cJSON_IsNumber(priority))
     {
@@ -174,6 +211,9 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
 
     // v1_custom_resource_column_definition->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (!type) {
         goto end;
     }
@@ -185,7 +225,7 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
     }
 
 
-    v1_custom_resource_column_definition_local_var = v1_custom_resource_column_definition_create (
+    v1_custom_resource_column_definition_local_var = v1_custom_resource_column_definition_create_internal (
         description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
         format && !cJSON_IsNull(format) ? strdup(format->valuestring) : NULL,
         strdup(json_path->valuestring),

@@ -25,9 +25,10 @@ typedef struct v1_endpoint_subset_t {
     list_t *not_ready_addresses; //nonprimitive container
     list_t *ports; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_endpoint_subset_t;
 
-v1_endpoint_subset_t *v1_endpoint_subset_create(
+__attribute__((deprecated)) v1_endpoint_subset_t *v1_endpoint_subset_create(
     list_t *addresses,
     list_t *not_ready_addresses,
     list_t *ports

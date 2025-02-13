@@ -5,7 +5,7 @@
 
 
 
-v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_create(
+static v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_create_internal(
     int max_replicas,
     int min_replicas,
     v1_cross_version_object_reference_t *scale_target_ref,
@@ -20,12 +20,30 @@ v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_create(
     v1_horizontal_pod_autoscaler_spec_local_var->scale_target_ref = scale_target_ref;
     v1_horizontal_pod_autoscaler_spec_local_var->target_cpu_utilization_percentage = target_cpu_utilization_percentage;
 
+    v1_horizontal_pod_autoscaler_spec_local_var->_library_owned = 1;
     return v1_horizontal_pod_autoscaler_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_create(
+    int max_replicas,
+    int min_replicas,
+    v1_cross_version_object_reference_t *scale_target_ref,
+    int target_cpu_utilization_percentage
+    ) {
+    return v1_horizontal_pod_autoscaler_spec_create_internal (
+        max_replicas,
+        min_replicas,
+        scale_target_ref,
+        target_cpu_utilization_percentage
+        );
+}
 
 void v1_horizontal_pod_autoscaler_spec_free(v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec) {
     if(NULL == v1_horizontal_pod_autoscaler_spec){
+        return ;
+    }
+    if(v1_horizontal_pod_autoscaler_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_horizontal_pod_autoscaler_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -94,6 +112,9 @@ v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_parseFrom
 
     // v1_horizontal_pod_autoscaler_spec->max_replicas
     cJSON *max_replicas = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_specJSON, "maxReplicas");
+    if (cJSON_IsNull(max_replicas)) {
+        max_replicas = NULL;
+    }
     if (!max_replicas) {
         goto end;
     }
@@ -106,6 +127,9 @@ v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_parseFrom
 
     // v1_horizontal_pod_autoscaler_spec->min_replicas
     cJSON *min_replicas = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_specJSON, "minReplicas");
+    if (cJSON_IsNull(min_replicas)) {
+        min_replicas = NULL;
+    }
     if (min_replicas) { 
     if(!cJSON_IsNumber(min_replicas))
     {
@@ -115,6 +139,9 @@ v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_parseFrom
 
     // v1_horizontal_pod_autoscaler_spec->scale_target_ref
     cJSON *scale_target_ref = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_specJSON, "scaleTargetRef");
+    if (cJSON_IsNull(scale_target_ref)) {
+        scale_target_ref = NULL;
+    }
     if (!scale_target_ref) {
         goto end;
     }
@@ -124,6 +151,9 @@ v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_parseFrom
 
     // v1_horizontal_pod_autoscaler_spec->target_cpu_utilization_percentage
     cJSON *target_cpu_utilization_percentage = cJSON_GetObjectItemCaseSensitive(v1_horizontal_pod_autoscaler_specJSON, "targetCPUUtilizationPercentage");
+    if (cJSON_IsNull(target_cpu_utilization_percentage)) {
+        target_cpu_utilization_percentage = NULL;
+    }
     if (target_cpu_utilization_percentage) { 
     if(!cJSON_IsNumber(target_cpu_utilization_percentage))
     {
@@ -132,7 +162,7 @@ v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_parseFrom
     }
 
 
-    v1_horizontal_pod_autoscaler_spec_local_var = v1_horizontal_pod_autoscaler_spec_create (
+    v1_horizontal_pod_autoscaler_spec_local_var = v1_horizontal_pod_autoscaler_spec_create_internal (
         max_replicas->valuedouble,
         min_replicas ? min_replicas->valuedouble : 0,
         scale_target_ref_local_nonprim,

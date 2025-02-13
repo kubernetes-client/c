@@ -5,7 +5,7 @@
 
 
 
-v2_object_metric_status_t *v2_object_metric_status_create(
+static v2_object_metric_status_t *v2_object_metric_status_create_internal(
     v2_metric_value_status_t *current,
     v2_cross_version_object_reference_t *described_object,
     v2_metric_identifier_t *metric
@@ -18,12 +18,28 @@ v2_object_metric_status_t *v2_object_metric_status_create(
     v2_object_metric_status_local_var->described_object = described_object;
     v2_object_metric_status_local_var->metric = metric;
 
+    v2_object_metric_status_local_var->_library_owned = 1;
     return v2_object_metric_status_local_var;
 }
 
+__attribute__((deprecated)) v2_object_metric_status_t *v2_object_metric_status_create(
+    v2_metric_value_status_t *current,
+    v2_cross_version_object_reference_t *described_object,
+    v2_metric_identifier_t *metric
+    ) {
+    return v2_object_metric_status_create_internal (
+        current,
+        described_object,
+        metric
+        );
+}
 
 void v2_object_metric_status_free(v2_object_metric_status_t *v2_object_metric_status) {
     if(NULL == v2_object_metric_status){
+        return ;
+    }
+    if(v2_object_metric_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v2_object_metric_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -109,6 +125,9 @@ v2_object_metric_status_t *v2_object_metric_status_parseFromJSON(cJSON *v2_objec
 
     // v2_object_metric_status->current
     cJSON *current = cJSON_GetObjectItemCaseSensitive(v2_object_metric_statusJSON, "current");
+    if (cJSON_IsNull(current)) {
+        current = NULL;
+    }
     if (!current) {
         goto end;
     }
@@ -118,6 +137,9 @@ v2_object_metric_status_t *v2_object_metric_status_parseFromJSON(cJSON *v2_objec
 
     // v2_object_metric_status->described_object
     cJSON *described_object = cJSON_GetObjectItemCaseSensitive(v2_object_metric_statusJSON, "describedObject");
+    if (cJSON_IsNull(described_object)) {
+        described_object = NULL;
+    }
     if (!described_object) {
         goto end;
     }
@@ -127,6 +149,9 @@ v2_object_metric_status_t *v2_object_metric_status_parseFromJSON(cJSON *v2_objec
 
     // v2_object_metric_status->metric
     cJSON *metric = cJSON_GetObjectItemCaseSensitive(v2_object_metric_statusJSON, "metric");
+    if (cJSON_IsNull(metric)) {
+        metric = NULL;
+    }
     if (!metric) {
         goto end;
     }
@@ -135,7 +160,7 @@ v2_object_metric_status_t *v2_object_metric_status_parseFromJSON(cJSON *v2_objec
     metric_local_nonprim = v2_metric_identifier_parseFromJSON(metric); //nonprimitive
 
 
-    v2_object_metric_status_local_var = v2_object_metric_status_create (
+    v2_object_metric_status_local_var = v2_object_metric_status_create_internal (
         current_local_nonprim,
         described_object_local_nonprim,
         metric_local_nonprim

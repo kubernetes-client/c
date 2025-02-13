@@ -5,7 +5,7 @@
 
 
 
-v1_volume_attachment_t *v1_volume_attachment_create(
+static v1_volume_attachment_t *v1_volume_attachment_create_internal(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
@@ -22,12 +22,32 @@ v1_volume_attachment_t *v1_volume_attachment_create(
     v1_volume_attachment_local_var->spec = spec;
     v1_volume_attachment_local_var->status = status;
 
+    v1_volume_attachment_local_var->_library_owned = 1;
     return v1_volume_attachment_local_var;
 }
 
+__attribute__((deprecated)) v1_volume_attachment_t *v1_volume_attachment_create(
+    char *api_version,
+    char *kind,
+    v1_object_meta_t *metadata,
+    v1_volume_attachment_spec_t *spec,
+    v1_volume_attachment_status_t *status
+    ) {
+    return v1_volume_attachment_create_internal (
+        api_version,
+        kind,
+        metadata,
+        spec,
+        status
+        );
+}
 
 void v1_volume_attachment_free(v1_volume_attachment_t *v1_volume_attachment) {
     if(NULL == v1_volume_attachment){
+        return ;
+    }
+    if(v1_volume_attachment->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_volume_attachment_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -135,6 +155,9 @@ v1_volume_attachment_t *v1_volume_attachment_parseFromJSON(cJSON *v1_volume_atta
 
     // v1_volume_attachment->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_volume_attachmentJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -144,6 +167,9 @@ v1_volume_attachment_t *v1_volume_attachment_parseFromJSON(cJSON *v1_volume_atta
 
     // v1_volume_attachment->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_volume_attachmentJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -153,12 +179,18 @@ v1_volume_attachment_t *v1_volume_attachment_parseFromJSON(cJSON *v1_volume_atta
 
     // v1_volume_attachment->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_volume_attachmentJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_volume_attachment->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_volume_attachmentJSON, "spec");
+    if (cJSON_IsNull(spec)) {
+        spec = NULL;
+    }
     if (!spec) {
         goto end;
     }
@@ -168,12 +200,15 @@ v1_volume_attachment_t *v1_volume_attachment_parseFromJSON(cJSON *v1_volume_atta
 
     // v1_volume_attachment->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_volume_attachmentJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
     if (status) { 
     status_local_nonprim = v1_volume_attachment_status_parseFromJSON(status); //nonprimitive
     }
 
 
-    v1_volume_attachment_local_var = v1_volume_attachment_create (
+    v1_volume_attachment_local_var = v1_volume_attachment_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,

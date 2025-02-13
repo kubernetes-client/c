@@ -5,7 +5,7 @@
 
 
 
-v1_downward_api_projection_t *v1_downward_api_projection_create(
+static v1_downward_api_projection_t *v1_downward_api_projection_create_internal(
     list_t *items
     ) {
     v1_downward_api_projection_t *v1_downward_api_projection_local_var = malloc(sizeof(v1_downward_api_projection_t));
@@ -14,12 +14,24 @@ v1_downward_api_projection_t *v1_downward_api_projection_create(
     }
     v1_downward_api_projection_local_var->items = items;
 
+    v1_downward_api_projection_local_var->_library_owned = 1;
     return v1_downward_api_projection_local_var;
 }
 
+__attribute__((deprecated)) v1_downward_api_projection_t *v1_downward_api_projection_create(
+    list_t *items
+    ) {
+    return v1_downward_api_projection_create_internal (
+        items
+        );
+}
 
 void v1_downward_api_projection_free(v1_downward_api_projection_t *v1_downward_api_projection) {
     if(NULL == v1_downward_api_projection){
+        return ;
+    }
+    if(v1_downward_api_projection->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_downward_api_projection_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -72,6 +84,9 @@ v1_downward_api_projection_t *v1_downward_api_projection_parseFromJSON(cJSON *v1
 
     // v1_downward_api_projection->items
     cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_downward_api_projectionJSON, "items");
+    if (cJSON_IsNull(items)) {
+        items = NULL;
+    }
     if (items) { 
     cJSON *items_local_nonprimitive = NULL;
     if(!cJSON_IsArray(items)){
@@ -92,7 +107,7 @@ v1_downward_api_projection_t *v1_downward_api_projection_parseFromJSON(cJSON *v1
     }
 
 
-    v1_downward_api_projection_local_var = v1_downward_api_projection_create (
+    v1_downward_api_projection_local_var = v1_downward_api_projection_create_internal (
         items ? itemsList : NULL
         );
 

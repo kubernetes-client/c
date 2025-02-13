@@ -9,117 +9,99 @@
 #include "../model/v1_api_resource_list.h"
 #include "../model/v1_delete_options.h"
 #include "../model/v1_status.h"
-#include "../model/v1alpha1_validating_admission_policy.h"
-#include "../model/v1alpha1_validating_admission_policy_binding.h"
-#include "../model/v1alpha1_validating_admission_policy_binding_list.h"
-#include "../model/v1alpha1_validating_admission_policy_list.h"
+#include "../model/v1alpha1_mutating_admission_policy.h"
+#include "../model/v1alpha1_mutating_admission_policy_binding.h"
+#include "../model/v1alpha1_mutating_admission_policy_binding_list.h"
+#include "../model/v1alpha1_mutating_admission_policy_list.h"
 
 
-// create a ValidatingAdmissionPolicyBinding
+// create a MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_binding_t*
-AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, v1alpha1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1alpha1_mutating_admission_policy_t*
+AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicy(apiClient_t *apiClient, v1alpha1_mutating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
-// create a ValidatingAdmissionPolicy
+// create a MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_createValidatingAdmissionPolicy_0(apiClient_t *apiClient, v1alpha1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1alpha1_mutating_admission_policy_binding_t*
+AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicyBinding(apiClient_t *apiClient, v1alpha1_mutating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
-// delete collection of ValidatingAdmissionPolicyBinding
-//
-v1_status_t*
-AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
-
-
-// delete collection of ValidatingAdmissionPolicy
+// delete collection of MutatingAdmissionPolicy
 //
 v1_status_t*
-AdmissionregistrationV1alpha1API_deleteCollectionValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
-// delete a ValidatingAdmissionPolicyBinding
+// delete collection of MutatingAdmissionPolicyBinding
 //
 v1_status_t*
-AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
-// delete a ValidatingAdmissionPolicy
+// delete a MutatingAdmissionPolicy
 //
 v1_status_t*
-AdmissionregistrationV1alpha1API_deleteValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+
+
+// delete a MutatingAdmissionPolicyBinding
+//
+v1_status_t*
+AdmissionregistrationV1alpha1API_deleteMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-AdmissionregistrationV1alpha1API_getAPIResources_1(apiClient_t *apiClient);
+AdmissionregistrationV1alpha1API_getAPIResources(apiClient_t *apiClient);
 
 
-// list or watch objects of kind ValidatingAdmissionPolicyBinding
+// list or watch objects of kind MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_binding_list_t*
-AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+v1alpha1_mutating_admission_policy_list_t*
+AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 
 
-// list or watch objects of kind ValidatingAdmissionPolicy
+// list or watch objects of kind MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_list_t*
-AdmissionregistrationV1alpha1API_listValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+v1alpha1_mutating_admission_policy_binding_list_t*
+AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 
 
-// partially update the specified ValidatingAdmissionPolicyBinding
+// partially update the specified MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_binding_t*
-AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1alpha1_mutating_admission_policy_t*
+AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
-// partially update status of the specified ValidatingAdmissionPolicy
+// partially update the specified MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicyStatus_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1alpha1_mutating_admission_policy_binding_t*
+AdmissionregistrationV1alpha1API_patchMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
-// partially update the specified ValidatingAdmissionPolicy
+// read the specified MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_patchValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1alpha1_mutating_admission_policy_t*
+AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty);
 
 
-// read the specified ValidatingAdmissionPolicyBinding
+// read the specified MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_binding_t*
-AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, char *pretty);
+v1alpha1_mutating_admission_policy_binding_t*
+AdmissionregistrationV1alpha1API_readMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty);
 
 
-// read status of the specified ValidatingAdmissionPolicy
+// replace the specified MutatingAdmissionPolicy
 //
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicyStatus_0(apiClient_t *apiClient, char *name, char *pretty);
+v1alpha1_mutating_admission_policy_t*
+AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, v1alpha1_mutating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
-// read the specified ValidatingAdmissionPolicy
+// replace the specified MutatingAdmissionPolicyBinding
 //
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_readValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, char *pretty);
-
-
-// replace the specified ValidatingAdmissionPolicyBinding
-//
-v1alpha1_validating_admission_policy_binding_t*
-AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyBinding_0(apiClient_t *apiClient, char *name, v1alpha1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
-
-
-// replace status of the specified ValidatingAdmissionPolicy
-//
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicyStatus_0(apiClient_t *apiClient, char *name, v1alpha1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
-
-
-// replace the specified ValidatingAdmissionPolicy
-//
-v1alpha1_validating_admission_policy_t*
-AdmissionregistrationV1alpha1API_replaceValidatingAdmissionPolicy_0(apiClient_t *apiClient, char *name, v1alpha1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1alpha1_mutating_admission_policy_binding_t*
+AdmissionregistrationV1alpha1API_replaceMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, v1alpha1_mutating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 

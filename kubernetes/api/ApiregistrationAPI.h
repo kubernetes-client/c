@@ -11,6 +11,6 @@
 // get information of a group
 //
 v1_api_group_t*
-ApiregistrationAPI_getAPIGroup_1(apiClient_t *apiClient);
+ApiregistrationAPI_getAPIGroup(apiClient_t *apiClient);
 
 

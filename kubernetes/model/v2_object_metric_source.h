@@ -26,9 +26,10 @@ typedef struct v2_object_metric_source_t {
     struct v2_metric_identifier_t *metric; //model
     struct v2_metric_target_t *target; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v2_object_metric_source_t;
 
-v2_object_metric_source_t *v2_object_metric_source_create(
+__attribute__((deprecated)) v2_object_metric_source_t *v2_object_metric_source_create(
     v2_cross_version_object_reference_t *described_object,
     v2_metric_identifier_t *metric,
     v2_metric_target_t *target

@@ -5,7 +5,7 @@
 
 
 
-v1_token_review_status_t *v1_token_review_status_create(
+static v1_token_review_status_t *v1_token_review_status_create_internal(
     list_t *audiences,
     int authenticated,
     char *error,
@@ -20,12 +20,30 @@ v1_token_review_status_t *v1_token_review_status_create(
     v1_token_review_status_local_var->error = error;
     v1_token_review_status_local_var->user = user;
 
+    v1_token_review_status_local_var->_library_owned = 1;
     return v1_token_review_status_local_var;
 }
 
+__attribute__((deprecated)) v1_token_review_status_t *v1_token_review_status_create(
+    list_t *audiences,
+    int authenticated,
+    char *error,
+    v1_user_info_t *user
+    ) {
+    return v1_token_review_status_create_internal (
+        audiences,
+        authenticated,
+        error,
+        user
+        );
+}
 
 void v1_token_review_status_free(v1_token_review_status_t *v1_token_review_status) {
     if(NULL == v1_token_review_status){
+        return ;
+    }
+    if(v1_token_review_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_token_review_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -59,7 +77,7 @@ cJSON *v1_token_review_status_convertToJSON(v1_token_review_status_t *v1_token_r
 
     listEntry_t *audiencesListEntry;
     list_ForEach(audiencesListEntry, v1_token_review_status->audiences) {
-    if(cJSON_AddStringToObject(audiences, "", (char*)audiencesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(audiences, "", audiencesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -115,6 +133,9 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
 
     // v1_token_review_status->audiences
     cJSON *audiences = cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "audiences");
+    if (cJSON_IsNull(audiences)) {
+        audiences = NULL;
+    }
     if (audiences) { 
     cJSON *audiences_local = NULL;
     if(!cJSON_IsArray(audiences)) {
@@ -134,6 +155,9 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
 
     // v1_token_review_status->authenticated
     cJSON *authenticated = cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "authenticated");
+    if (cJSON_IsNull(authenticated)) {
+        authenticated = NULL;
+    }
     if (authenticated) { 
     if(!cJSON_IsBool(authenticated))
     {
@@ -143,6 +167,9 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
 
     // v1_token_review_status->error
     cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "error");
+    if (cJSON_IsNull(error)) {
+        error = NULL;
+    }
     if (error) { 
     if(!cJSON_IsString(error) && !cJSON_IsNull(error))
     {
@@ -152,12 +179,15 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
 
     // v1_token_review_status->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "user");
+    if (cJSON_IsNull(user)) {
+        user = NULL;
+    }
     if (user) { 
     user_local_nonprim = v1_user_info_parseFromJSON(user); //nonprimitive
     }
 
 
-    v1_token_review_status_local_var = v1_token_review_status_create (
+    v1_token_review_status_local_var = v1_token_review_status_create_internal (
         audiences ? audiencesList : NULL,
         authenticated ? authenticated->valueint : 0,
         error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,

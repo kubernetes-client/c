@@ -5,7 +5,7 @@
 
 
 
-v1_capabilities_t *v1_capabilities_create(
+static v1_capabilities_t *v1_capabilities_create_internal(
     list_t *add,
     list_t *drop
     ) {
@@ -16,12 +16,26 @@ v1_capabilities_t *v1_capabilities_create(
     v1_capabilities_local_var->add = add;
     v1_capabilities_local_var->drop = drop;
 
+    v1_capabilities_local_var->_library_owned = 1;
     return v1_capabilities_local_var;
 }
 
+__attribute__((deprecated)) v1_capabilities_t *v1_capabilities_create(
+    list_t *add,
+    list_t *drop
+    ) {
+    return v1_capabilities_create_internal (
+        add,
+        drop
+        );
+}
 
 void v1_capabilities_free(v1_capabilities_t *v1_capabilities) {
     if(NULL == v1_capabilities){
+        return ;
+    }
+    if(v1_capabilities->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_capabilities_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -54,7 +68,7 @@ cJSON *v1_capabilities_convertToJSON(v1_capabilities_t *v1_capabilities) {
 
     listEntry_t *addListEntry;
     list_ForEach(addListEntry, v1_capabilities->add) {
-    if(cJSON_AddStringToObject(add, "", (char*)addListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(add, "", addListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -71,7 +85,7 @@ cJSON *v1_capabilities_convertToJSON(v1_capabilities_t *v1_capabilities) {
 
     listEntry_t *dropListEntry;
     list_ForEach(dropListEntry, v1_capabilities->drop) {
-    if(cJSON_AddStringToObject(drop, "", (char*)dropListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(drop, "", dropListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -98,6 +112,9 @@ v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
 
     // v1_capabilities->add
     cJSON *add = cJSON_GetObjectItemCaseSensitive(v1_capabilitiesJSON, "add");
+    if (cJSON_IsNull(add)) {
+        add = NULL;
+    }
     if (add) { 
     cJSON *add_local = NULL;
     if(!cJSON_IsArray(add)) {
@@ -117,6 +134,9 @@ v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
 
     // v1_capabilities->drop
     cJSON *drop = cJSON_GetObjectItemCaseSensitive(v1_capabilitiesJSON, "drop");
+    if (cJSON_IsNull(drop)) {
+        drop = NULL;
+    }
     if (drop) { 
     cJSON *drop_local = NULL;
     if(!cJSON_IsArray(drop)) {
@@ -135,7 +155,7 @@ v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
     }
 
 
-    v1_capabilities_local_var = v1_capabilities_create (
+    v1_capabilities_local_var = v1_capabilities_create_internal (
         add ? addList : NULL,
         drop ? dropList : NULL
         );

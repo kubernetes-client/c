@@ -22,9 +22,10 @@ typedef struct v1alpha1_cluster_trust_bundle_spec_t {
     char *signer_name; // string
     char *trust_bundle; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha1_cluster_trust_bundle_spec_t;
 
-v1alpha1_cluster_trust_bundle_spec_t *v1alpha1_cluster_trust_bundle_spec_create(
+__attribute__((deprecated)) v1alpha1_cluster_trust_bundle_spec_t *v1alpha1_cluster_trust_bundle_spec_create(
     char *signer_name,
     char *trust_bundle
 );

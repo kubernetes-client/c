@@ -5,7 +5,7 @@
 
 
 
-v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_create(
+static v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_create_internal(
     list_t *conditions,
     long observed_generation,
     v1_type_checking_t *type_checking
@@ -18,12 +18,28 @@ v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_c
     v1_validating_admission_policy_status_local_var->observed_generation = observed_generation;
     v1_validating_admission_policy_status_local_var->type_checking = type_checking;
 
+    v1_validating_admission_policy_status_local_var->_library_owned = 1;
     return v1_validating_admission_policy_status_local_var;
 }
 
+__attribute__((deprecated)) v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_create(
+    list_t *conditions,
+    long observed_generation,
+    v1_type_checking_t *type_checking
+    ) {
+    return v1_validating_admission_policy_status_create_internal (
+        conditions,
+        observed_generation,
+        type_checking
+        );
+}
 
 void v1_validating_admission_policy_status_free(v1_validating_admission_policy_status_t *v1_validating_admission_policy_status) {
     if(NULL == v1_validating_admission_policy_status){
+        return ;
+    }
+    if(v1_validating_admission_policy_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_validating_admission_policy_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -104,6 +120,9 @@ v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_p
 
     // v1_validating_admission_policy_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -125,6 +144,9 @@ v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_p
 
     // v1_validating_admission_policy_status->observed_generation
     cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_statusJSON, "observedGeneration");
+    if (cJSON_IsNull(observed_generation)) {
+        observed_generation = NULL;
+    }
     if (observed_generation) { 
     if(!cJSON_IsNumber(observed_generation))
     {
@@ -134,12 +156,15 @@ v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_p
 
     // v1_validating_admission_policy_status->type_checking
     cJSON *type_checking = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_statusJSON, "typeChecking");
+    if (cJSON_IsNull(type_checking)) {
+        type_checking = NULL;
+    }
     if (type_checking) { 
     type_checking_local_nonprim = v1_type_checking_parseFromJSON(type_checking); //nonprimitive
     }
 
 
-    v1_validating_admission_policy_status_local_var = v1_validating_admission_policy_status_create (
+    v1_validating_admission_policy_status_local_var = v1_validating_admission_policy_status_create_internal (
         conditions ? conditionsList : NULL,
         observed_generation ? observed_generation->valuedouble : 0,
         type_checking ? type_checking_local_nonprim : NULL

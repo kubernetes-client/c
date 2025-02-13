@@ -24,9 +24,10 @@ typedef struct v1_pod_template_spec_t {
     struct v1_object_meta_t *metadata; //model
     struct v1_pod_spec_t *spec; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_template_spec_t;
 
-v1_pod_template_spec_t *v1_pod_template_spec_create(
+__attribute__((deprecated)) v1_pod_template_spec_t *v1_pod_template_spec_create(
     v1_object_meta_t *metadata,
     v1_pod_spec_t *spec
 );

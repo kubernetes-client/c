@@ -5,7 +5,7 @@
 
 
 
-v1_csi_driver_spec_t *v1_csi_driver_spec_create(
+static v1_csi_driver_spec_t *v1_csi_driver_spec_create_internal(
     int attach_required,
     char *fs_group_policy,
     int pod_info_on_mount,
@@ -28,12 +28,38 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_create(
     v1_csi_driver_spec_local_var->token_requests = token_requests;
     v1_csi_driver_spec_local_var->volume_lifecycle_modes = volume_lifecycle_modes;
 
+    v1_csi_driver_spec_local_var->_library_owned = 1;
     return v1_csi_driver_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_csi_driver_spec_t *v1_csi_driver_spec_create(
+    int attach_required,
+    char *fs_group_policy,
+    int pod_info_on_mount,
+    int requires_republish,
+    int se_linux_mount,
+    int storage_capacity,
+    list_t *token_requests,
+    list_t *volume_lifecycle_modes
+    ) {
+    return v1_csi_driver_spec_create_internal (
+        attach_required,
+        fs_group_policy,
+        pod_info_on_mount,
+        requires_republish,
+        se_linux_mount,
+        storage_capacity,
+        token_requests,
+        volume_lifecycle_modes
+        );
+}
 
 void v1_csi_driver_spec_free(v1_csi_driver_spec_t *v1_csi_driver_spec) {
     if(NULL == v1_csi_driver_spec){
+        return ;
+    }
+    if(v1_csi_driver_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_csi_driver_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -138,7 +164,7 @@ cJSON *v1_csi_driver_spec_convertToJSON(v1_csi_driver_spec_t *v1_csi_driver_spec
 
     listEntry_t *volume_lifecycle_modesListEntry;
     list_ForEach(volume_lifecycle_modesListEntry, v1_csi_driver_spec->volume_lifecycle_modes) {
-    if(cJSON_AddStringToObject(volume_lifecycle_modes, "", (char*)volume_lifecycle_modesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(volume_lifecycle_modes, "", volume_lifecycle_modesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -165,6 +191,9 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     // v1_csi_driver_spec->attach_required
     cJSON *attach_required = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "attachRequired");
+    if (cJSON_IsNull(attach_required)) {
+        attach_required = NULL;
+    }
     if (attach_required) { 
     if(!cJSON_IsBool(attach_required))
     {
@@ -174,6 +203,9 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     // v1_csi_driver_spec->fs_group_policy
     cJSON *fs_group_policy = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "fsGroupPolicy");
+    if (cJSON_IsNull(fs_group_policy)) {
+        fs_group_policy = NULL;
+    }
     if (fs_group_policy) { 
     if(!cJSON_IsString(fs_group_policy) && !cJSON_IsNull(fs_group_policy))
     {
@@ -183,6 +215,9 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     // v1_csi_driver_spec->pod_info_on_mount
     cJSON *pod_info_on_mount = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "podInfoOnMount");
+    if (cJSON_IsNull(pod_info_on_mount)) {
+        pod_info_on_mount = NULL;
+    }
     if (pod_info_on_mount) { 
     if(!cJSON_IsBool(pod_info_on_mount))
     {
@@ -192,6 +227,9 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     // v1_csi_driver_spec->requires_republish
     cJSON *requires_republish = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "requiresRepublish");
+    if (cJSON_IsNull(requires_republish)) {
+        requires_republish = NULL;
+    }
     if (requires_republish) { 
     if(!cJSON_IsBool(requires_republish))
     {
@@ -201,6 +239,9 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     // v1_csi_driver_spec->se_linux_mount
     cJSON *se_linux_mount = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "seLinuxMount");
+    if (cJSON_IsNull(se_linux_mount)) {
+        se_linux_mount = NULL;
+    }
     if (se_linux_mount) { 
     if(!cJSON_IsBool(se_linux_mount))
     {
@@ -210,6 +251,9 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     // v1_csi_driver_spec->storage_capacity
     cJSON *storage_capacity = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "storageCapacity");
+    if (cJSON_IsNull(storage_capacity)) {
+        storage_capacity = NULL;
+    }
     if (storage_capacity) { 
     if(!cJSON_IsBool(storage_capacity))
     {
@@ -219,6 +263,9 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     // v1_csi_driver_spec->token_requests
     cJSON *token_requests = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "tokenRequests");
+    if (cJSON_IsNull(token_requests)) {
+        token_requests = NULL;
+    }
     if (token_requests) { 
     cJSON *token_requests_local_nonprimitive = NULL;
     if(!cJSON_IsArray(token_requests)){
@@ -240,6 +287,9 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
 
     // v1_csi_driver_spec->volume_lifecycle_modes
     cJSON *volume_lifecycle_modes = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "volumeLifecycleModes");
+    if (cJSON_IsNull(volume_lifecycle_modes)) {
+        volume_lifecycle_modes = NULL;
+    }
     if (volume_lifecycle_modes) { 
     cJSON *volume_lifecycle_modes_local = NULL;
     if(!cJSON_IsArray(volume_lifecycle_modes)) {
@@ -258,7 +308,7 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
     }
 
 
-    v1_csi_driver_spec_local_var = v1_csi_driver_spec_create (
+    v1_csi_driver_spec_local_var = v1_csi_driver_spec_create_internal (
         attach_required ? attach_required->valueint : 0,
         fs_group_policy && !cJSON_IsNull(fs_group_policy) ? strdup(fs_group_policy->valuestring) : NULL,
         pod_info_on_mount ? pod_info_on_mount->valueint : 0,

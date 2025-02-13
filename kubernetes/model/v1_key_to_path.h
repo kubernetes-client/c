@@ -23,9 +23,10 @@ typedef struct v1_key_to_path_t {
     int mode; //numeric
     char *path; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_key_to_path_t;
 
-v1_key_to_path_t *v1_key_to_path_create(
+__attribute__((deprecated)) v1_key_to_path_t *v1_key_to_path_create(
     char *key,
     int mode,
     char *path

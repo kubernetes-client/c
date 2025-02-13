@@ -5,7 +5,7 @@
 
 
 
-v1_token_request_status_t *v1_token_request_status_create(
+static v1_token_request_status_t *v1_token_request_status_create_internal(
     char *expiration_timestamp,
     char *token
     ) {
@@ -16,12 +16,26 @@ v1_token_request_status_t *v1_token_request_status_create(
     v1_token_request_status_local_var->expiration_timestamp = expiration_timestamp;
     v1_token_request_status_local_var->token = token;
 
+    v1_token_request_status_local_var->_library_owned = 1;
     return v1_token_request_status_local_var;
 }
 
+__attribute__((deprecated)) v1_token_request_status_t *v1_token_request_status_create(
+    char *expiration_timestamp,
+    char *token
+    ) {
+    return v1_token_request_status_create_internal (
+        expiration_timestamp,
+        token
+        );
+}
 
 void v1_token_request_status_free(v1_token_request_status_t *v1_token_request_status) {
     if(NULL == v1_token_request_status){
+        return ;
+    }
+    if(v1_token_request_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_token_request_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -70,6 +84,9 @@ v1_token_request_status_t *v1_token_request_status_parseFromJSON(cJSON *v1_token
 
     // v1_token_request_status->expiration_timestamp
     cJSON *expiration_timestamp = cJSON_GetObjectItemCaseSensitive(v1_token_request_statusJSON, "expirationTimestamp");
+    if (cJSON_IsNull(expiration_timestamp)) {
+        expiration_timestamp = NULL;
+    }
     if (!expiration_timestamp) {
         goto end;
     }
@@ -82,6 +99,9 @@ v1_token_request_status_t *v1_token_request_status_parseFromJSON(cJSON *v1_token
 
     // v1_token_request_status->token
     cJSON *token = cJSON_GetObjectItemCaseSensitive(v1_token_request_statusJSON, "token");
+    if (cJSON_IsNull(token)) {
+        token = NULL;
+    }
     if (!token) {
         goto end;
     }
@@ -93,7 +113,7 @@ v1_token_request_status_t *v1_token_request_status_parseFromJSON(cJSON *v1_token
     }
 
 
-    v1_token_request_status_local_var = v1_token_request_status_create (
+    v1_token_request_status_local_var = v1_token_request_status_create_internal (
         strdup(expiration_timestamp->valuestring),
         strdup(token->valuestring)
         );

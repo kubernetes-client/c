@@ -5,7 +5,7 @@
 
 
 
-v1_scope_selector_t *v1_scope_selector_create(
+static v1_scope_selector_t *v1_scope_selector_create_internal(
     list_t *match_expressions
     ) {
     v1_scope_selector_t *v1_scope_selector_local_var = malloc(sizeof(v1_scope_selector_t));
@@ -14,12 +14,24 @@ v1_scope_selector_t *v1_scope_selector_create(
     }
     v1_scope_selector_local_var->match_expressions = match_expressions;
 
+    v1_scope_selector_local_var->_library_owned = 1;
     return v1_scope_selector_local_var;
 }
 
+__attribute__((deprecated)) v1_scope_selector_t *v1_scope_selector_create(
+    list_t *match_expressions
+    ) {
+    return v1_scope_selector_create_internal (
+        match_expressions
+        );
+}
 
 void v1_scope_selector_free(v1_scope_selector_t *v1_scope_selector) {
     if(NULL == v1_scope_selector){
+        return ;
+    }
+    if(v1_scope_selector->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_scope_selector_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -72,6 +84,9 @@ v1_scope_selector_t *v1_scope_selector_parseFromJSON(cJSON *v1_scope_selectorJSO
 
     // v1_scope_selector->match_expressions
     cJSON *match_expressions = cJSON_GetObjectItemCaseSensitive(v1_scope_selectorJSON, "matchExpressions");
+    if (cJSON_IsNull(match_expressions)) {
+        match_expressions = NULL;
+    }
     if (match_expressions) { 
     cJSON *match_expressions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(match_expressions)){
@@ -92,7 +107,7 @@ v1_scope_selector_t *v1_scope_selector_parseFromJSON(cJSON *v1_scope_selectorJSO
     }
 
 
-    v1_scope_selector_local_var = v1_scope_selector_create (
+    v1_scope_selector_local_var = v1_scope_selector_create_internal (
         match_expressions ? match_expressionsList : NULL
         );
 

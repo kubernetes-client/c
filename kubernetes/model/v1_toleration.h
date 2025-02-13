@@ -25,9 +25,10 @@ typedef struct v1_toleration_t {
     long toleration_seconds; //numeric
     char *value; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_toleration_t;
 
-v1_toleration_t *v1_toleration_create(
+__attribute__((deprecated)) v1_toleration_t *v1_toleration_create(
     char *effect,
     char *key,
     char *_operator,

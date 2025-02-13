@@ -5,7 +5,7 @@
 
 
 
-admissionregistration_v1_service_reference_t *admissionregistration_v1_service_reference_create(
+static admissionregistration_v1_service_reference_t *admissionregistration_v1_service_reference_create_internal(
     char *name,
     char *_namespace,
     char *path,
@@ -20,12 +20,30 @@ admissionregistration_v1_service_reference_t *admissionregistration_v1_service_r
     admissionregistration_v1_service_reference_local_var->path = path;
     admissionregistration_v1_service_reference_local_var->port = port;
 
+    admissionregistration_v1_service_reference_local_var->_library_owned = 1;
     return admissionregistration_v1_service_reference_local_var;
 }
 
+__attribute__((deprecated)) admissionregistration_v1_service_reference_t *admissionregistration_v1_service_reference_create(
+    char *name,
+    char *_namespace,
+    char *path,
+    int port
+    ) {
+    return admissionregistration_v1_service_reference_create_internal (
+        name,
+        _namespace,
+        path,
+        port
+        );
+}
 
 void admissionregistration_v1_service_reference_free(admissionregistration_v1_service_reference_t *admissionregistration_v1_service_reference) {
     if(NULL == admissionregistration_v1_service_reference){
+        return ;
+    }
+    if(admissionregistration_v1_service_reference->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "admissionregistration_v1_service_reference_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -94,6 +112,9 @@ admissionregistration_v1_service_reference_t *admissionregistration_v1_service_r
 
     // admissionregistration_v1_service_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(admissionregistration_v1_service_referenceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -106,6 +127,9 @@ admissionregistration_v1_service_reference_t *admissionregistration_v1_service_r
 
     // admissionregistration_v1_service_reference->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(admissionregistration_v1_service_referenceJSON, "namespace");
+    if (cJSON_IsNull(_namespace)) {
+        _namespace = NULL;
+    }
     if (!_namespace) {
         goto end;
     }
@@ -118,6 +142,9 @@ admissionregistration_v1_service_reference_t *admissionregistration_v1_service_r
 
     // admissionregistration_v1_service_reference->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(admissionregistration_v1_service_referenceJSON, "path");
+    if (cJSON_IsNull(path)) {
+        path = NULL;
+    }
     if (path) { 
     if(!cJSON_IsString(path) && !cJSON_IsNull(path))
     {
@@ -127,6 +154,9 @@ admissionregistration_v1_service_reference_t *admissionregistration_v1_service_r
 
     // admissionregistration_v1_service_reference->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(admissionregistration_v1_service_referenceJSON, "port");
+    if (cJSON_IsNull(port)) {
+        port = NULL;
+    }
     if (port) { 
     if(!cJSON_IsNumber(port))
     {
@@ -135,7 +165,7 @@ admissionregistration_v1_service_reference_t *admissionregistration_v1_service_r
     }
 
 
-    admissionregistration_v1_service_reference_local_var = admissionregistration_v1_service_reference_create (
+    admissionregistration_v1_service_reference_local_var = admissionregistration_v1_service_reference_create_internal (
         strdup(name->valuestring),
         strdup(_namespace->valuestring),
         path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,

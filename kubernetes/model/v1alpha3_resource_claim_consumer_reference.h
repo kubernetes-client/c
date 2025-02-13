@@ -24,9 +24,10 @@ typedef struct v1alpha3_resource_claim_consumer_reference_t {
     char *resource; // string
     char *uid; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_resource_claim_consumer_reference_t;
 
-v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference_create(
+__attribute__((deprecated)) v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference_create(
     char *api_group,
     char *name,
     char *resource,

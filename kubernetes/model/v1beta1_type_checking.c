@@ -5,7 +5,7 @@
 
 
 
-v1beta1_type_checking_t *v1beta1_type_checking_create(
+static v1beta1_type_checking_t *v1beta1_type_checking_create_internal(
     list_t *expression_warnings
     ) {
     v1beta1_type_checking_t *v1beta1_type_checking_local_var = malloc(sizeof(v1beta1_type_checking_t));
@@ -14,12 +14,24 @@ v1beta1_type_checking_t *v1beta1_type_checking_create(
     }
     v1beta1_type_checking_local_var->expression_warnings = expression_warnings;
 
+    v1beta1_type_checking_local_var->_library_owned = 1;
     return v1beta1_type_checking_local_var;
 }
 
+__attribute__((deprecated)) v1beta1_type_checking_t *v1beta1_type_checking_create(
+    list_t *expression_warnings
+    ) {
+    return v1beta1_type_checking_create_internal (
+        expression_warnings
+        );
+}
 
 void v1beta1_type_checking_free(v1beta1_type_checking_t *v1beta1_type_checking) {
     if(NULL == v1beta1_type_checking){
+        return ;
+    }
+    if(v1beta1_type_checking->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1beta1_type_checking_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -72,6 +84,9 @@ v1beta1_type_checking_t *v1beta1_type_checking_parseFromJSON(cJSON *v1beta1_type
 
     // v1beta1_type_checking->expression_warnings
     cJSON *expression_warnings = cJSON_GetObjectItemCaseSensitive(v1beta1_type_checkingJSON, "expressionWarnings");
+    if (cJSON_IsNull(expression_warnings)) {
+        expression_warnings = NULL;
+    }
     if (expression_warnings) { 
     cJSON *expression_warnings_local_nonprimitive = NULL;
     if(!cJSON_IsArray(expression_warnings)){
@@ -92,7 +107,7 @@ v1beta1_type_checking_t *v1beta1_type_checking_parseFromJSON(cJSON *v1beta1_type
     }
 
 
-    v1beta1_type_checking_local_var = v1beta1_type_checking_create (
+    v1beta1_type_checking_local_var = v1beta1_type_checking_create_internal (
         expression_warnings ? expression_warningsList : NULL
         );
 

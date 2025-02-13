@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**CustomObjectsAPI_deleteCollectionClusterCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_deleteCollectionClusterCustomObject) | **DELETE** /apis/{group}/{version}/{plural} | 
 [**CustomObjectsAPI_deleteCollectionNamespacedCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_deleteCollectionNamespacedCustomObject) | **DELETE** /apis/{group}/{version}/namespaces/{namespace}/{plural} | 
 [**CustomObjectsAPI_deleteNamespacedCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_deleteNamespacedCustomObject) | **DELETE** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name} | 
-[**CustomObjectsAPI_getAPIResources_33**](CustomObjectsAPI.md#CustomObjectsAPI_getAPIResources_33) | **GET** /apis/{group}/{version} | 
+[**CustomObjectsAPI_getAPIResources**](CustomObjectsAPI.md#CustomObjectsAPI_getAPIResources) | **GET** /apis/{group}/{version} | 
 [**CustomObjectsAPI_getClusterCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObject) | **GET** /apis/{group}/{version}/{plural}/{name} | 
 [**CustomObjectsAPI_getClusterCustomObjectScale**](CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObjectScale) | **GET** /apis/{group}/{version}/{plural}/{name}/scale | 
 [**CustomObjectsAPI_getClusterCustomObjectStatus**](CustomObjectsAPI.md#CustomObjectsAPI_getClusterCustomObjectStatus) | **GET** /apis/{group}/{version}/{plural}/{name}/status | 
@@ -186,7 +186,7 @@ Name | Type | Description  | Notes
 ```c
 // Delete collection of namespace scoped custom objects
 //
-object_t* CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, char *labelSelector, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body);
+object_t* CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, char *labelSelector, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, char *fieldSelector, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -203,6 +203,7 @@ Name | Type | Description  | Notes
 **orphanDependents** | **int \*** | Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both. | [optional] 
 **propagationPolicy** | **char \*** | Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
+**fieldSelector** | **char \*** | A selector to restrict the list of returned objects by their fields. Defaults to everything. | [optional] 
 **body** | **[v1_delete_options_t](v1_delete_options.md) \*** |  | [optional] 
 
 ### Return type
@@ -259,11 +260,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **CustomObjectsAPI_getAPIResources_33**
+# **CustomObjectsAPI_getAPIResources**
 ```c
 // get available resources
 //
-v1_api_resource_list_t* CustomObjectsAPI_getAPIResources_33(apiClient_t *apiClient, char *group, char *version);
+v1_api_resource_list_t* CustomObjectsAPI_getAPIResources(apiClient_t *apiClient, char *group, char *version);
 ```
 
 ### Parameters

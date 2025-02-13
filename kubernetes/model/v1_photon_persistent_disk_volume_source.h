@@ -22,9 +22,10 @@ typedef struct v1_photon_persistent_disk_volume_source_t {
     char *fs_type; // string
     char *pd_id; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_photon_persistent_disk_volume_source_t;
 
-v1_photon_persistent_disk_volume_source_t *v1_photon_persistent_disk_volume_source_create(
+__attribute__((deprecated)) v1_photon_persistent_disk_volume_source_t *v1_photon_persistent_disk_volume_source_create(
     char *fs_type,
     char *pd_id
 );

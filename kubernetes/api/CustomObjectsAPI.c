@@ -5,11 +5,6 @@
 
 #define MAX_NUMBER_LENGTH 16
 #define MAX_BUFFER_LENGTH 4096
-#define intToStr(dst, src) \
-    do {\
-    char dst[256];\
-    snprintf(dst, 256, "%ld", (long int)(src));\
-}while(0)
 
 
 // Creates a cluster scoped Custom object
@@ -23,15 +18,24 @@ CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -41,7 +45,7 @@ CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, 
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -51,7 +55,7 @@ CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, 
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -114,9 +118,10 @@ CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     apiClient_invoke(apiClient,
@@ -127,6 +132,7 @@ CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -138,11 +144,14 @@ CustomObjectsAPI_createClusterCustomObject(apiClient_t *apiClient, char *group, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -231,15 +240,26 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *grou
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -249,7 +269,7 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *grou
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -259,7 +279,7 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *grou
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -269,7 +289,7 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *grou
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -332,9 +352,10 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *grou
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     apiClient_invoke(apiClient,
@@ -345,6 +366,7 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *grou
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "POST");
 
     // uncomment below to debug the error response
@@ -356,11 +378,14 @@ CustomObjectsAPI_createNamespacedCustomObject(apiClient_t *apiClient, char *grou
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -450,15 +475,26 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char *group, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}/{name}");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}/{name}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -468,7 +504,7 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char *group, 
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -478,7 +514,7 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char *group, 
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -488,7 +524,7 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char *group, 
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -553,9 +589,10 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char *group, 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     apiClient_invoke(apiClient,
@@ -566,6 +603,7 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char *group, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -577,11 +615,14 @@ CustomObjectsAPI_deleteClusterCustomObject(apiClient_t *apiClient, char *group, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -671,15 +712,24 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -689,7 +739,7 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -699,7 +749,7 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -788,9 +838,10 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     apiClient_invoke(apiClient,
@@ -801,6 +852,7 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -812,11 +864,14 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -921,7 +976,7 @@ end:
 // Delete collection of namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, char *labelSelector, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body)
+CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, char *labelSelector, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, char *fieldSelector, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -929,15 +984,26 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -947,7 +1013,7 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -957,7 +1023,7 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -967,7 +1033,7 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -1052,13 +1118,26 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
         list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
     }
 
+    // query parameters
+    char *keyQuery_fieldSelector = NULL;
+    char * valueQuery_fieldSelector = NULL;
+    keyValuePair_t *keyPairQuery_fieldSelector = 0;
+    if (fieldSelector)
+    {
+        keyQuery_fieldSelector = strdup("fieldSelector");
+        valueQuery_fieldSelector = strdup((fieldSelector));
+        keyPairQuery_fieldSelector = keyValuePair_create(keyQuery_fieldSelector, valueQuery_fieldSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldSelector);
+    }
+
     // Body Param
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     apiClient_invoke(apiClient,
@@ -1069,6 +1148,7 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1080,11 +1160,14 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1180,6 +1263,18 @@ CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, 
         keyValuePair_free(keyPairQuery_dryRun);
         keyPairQuery_dryRun = NULL;
     }
+    if(keyQuery_fieldSelector){
+        free(keyQuery_fieldSelector);
+        keyQuery_fieldSelector = NULL;
+    }
+    if(valueQuery_fieldSelector){
+        free(valueQuery_fieldSelector);
+        valueQuery_fieldSelector = NULL;
+    }
+    if(keyPairQuery_fieldSelector){
+        keyValuePair_free(keyPairQuery_fieldSelector);
+        keyPairQuery_fieldSelector = NULL;
+    }
     return elementToReturn;
 end:
     free(localVarPath);
@@ -1198,15 +1293,28 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char *grou
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -1216,7 +1324,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char *grou
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -1226,7 +1334,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char *grou
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1236,7 +1344,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char *grou
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -1246,7 +1354,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char *grou
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1311,9 +1419,10 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char *grou
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     apiClient_invoke(apiClient,
@@ -1324,6 +1433,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char *grou
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "DELETE");
 
     // uncomment below to debug the error response
@@ -1335,11 +1445,14 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char *grou
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1422,7 +1535,7 @@ end:
 // get available resources
 //
 v1_api_resource_list_t*
-CustomObjectsAPI_getAPIResources_33(apiClient_t *apiClient, char *group, char *version)
+CustomObjectsAPI_getAPIResources(apiClient_t *apiClient, char *group, char *version)
 {
     list_t    *localVarQueryParameters = NULL;
     list_t    *localVarHeaderParameters = NULL;
@@ -1430,15 +1543,22 @@ CustomObjectsAPI_getAPIResources_33(apiClient_t *apiClient, char *group, char *v
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}");
+    char *localVarPath = strdup("/apis/{group}/{version}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -1448,7 +1568,7 @@ CustomObjectsAPI_getAPIResources_33(apiClient_t *apiClient, char *group, char *v
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -1467,6 +1587,7 @@ CustomObjectsAPI_getAPIResources_33(apiClient_t *apiClient, char *group, char *v
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1478,11 +1599,14 @@ CustomObjectsAPI_getAPIResources_33(apiClient_t *apiClient, char *group, char *v
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    v1_api_resource_list_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_api_resource_list_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1517,15 +1641,26 @@ CustomObjectsAPI_getClusterCustomObject(apiClient_t *apiClient, char *group, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}/{name}");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}/{name}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -1535,7 +1670,7 @@ CustomObjectsAPI_getClusterCustomObject(apiClient_t *apiClient, char *group, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -1545,7 +1680,7 @@ CustomObjectsAPI_getClusterCustomObject(apiClient_t *apiClient, char *group, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -1555,7 +1690,7 @@ CustomObjectsAPI_getClusterCustomObject(apiClient_t *apiClient, char *group, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1574,6 +1709,7 @@ CustomObjectsAPI_getClusterCustomObject(apiClient_t *apiClient, char *group, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1585,11 +1721,14 @@ CustomObjectsAPI_getClusterCustomObject(apiClient_t *apiClient, char *group, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1626,15 +1765,26 @@ CustomObjectsAPI_getClusterCustomObjectScale(apiClient_t *apiClient, char *group
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}/{name}/scale")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}/{name}/scale");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}/{name}/scale");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -1644,7 +1794,7 @@ CustomObjectsAPI_getClusterCustomObjectScale(apiClient_t *apiClient, char *group
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -1654,7 +1804,7 @@ CustomObjectsAPI_getClusterCustomObjectScale(apiClient_t *apiClient, char *group
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -1664,7 +1814,7 @@ CustomObjectsAPI_getClusterCustomObjectScale(apiClient_t *apiClient, char *group
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1685,6 +1835,7 @@ CustomObjectsAPI_getClusterCustomObjectScale(apiClient_t *apiClient, char *group
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1696,11 +1847,14 @@ CustomObjectsAPI_getClusterCustomObjectScale(apiClient_t *apiClient, char *group
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1737,15 +1891,26 @@ CustomObjectsAPI_getClusterCustomObjectStatus(apiClient_t *apiClient, char *grou
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}/{name}/status");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}/{name}/status");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -1755,7 +1920,7 @@ CustomObjectsAPI_getClusterCustomObjectStatus(apiClient_t *apiClient, char *grou
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -1765,7 +1930,7 @@ CustomObjectsAPI_getClusterCustomObjectStatus(apiClient_t *apiClient, char *grou
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -1775,7 +1940,7 @@ CustomObjectsAPI_getClusterCustomObjectStatus(apiClient_t *apiClient, char *grou
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1796,6 +1961,7 @@ CustomObjectsAPI_getClusterCustomObjectStatus(apiClient_t *apiClient, char *grou
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1807,11 +1973,14 @@ CustomObjectsAPI_getClusterCustomObjectStatus(apiClient_t *apiClient, char *grou
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1848,15 +2017,28 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char *group, 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -1866,7 +2048,7 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char *group, 
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -1876,7 +2058,7 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char *group, 
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -1886,7 +2068,7 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char *group, 
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -1896,7 +2078,7 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char *group, 
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -1915,6 +2097,7 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char *group, 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -1926,11 +2109,14 @@ CustomObjectsAPI_getNamespacedCustomObject(apiClient_t *apiClient, char *group, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -1968,15 +2154,28 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char *gr
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -1986,7 +2185,7 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char *gr
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -1996,7 +2195,7 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char *gr
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2006,7 +2205,7 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char *gr
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -2016,7 +2215,7 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char *gr
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2037,6 +2236,7 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char *gr
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2048,11 +2248,14 @@ CustomObjectsAPI_getNamespacedCustomObjectScale(apiClient_t *apiClient, char *gr
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2090,15 +2293,28 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char *g
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -2108,7 +2324,7 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char *g
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -2118,7 +2334,7 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char *g
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2128,7 +2344,7 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char *g
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -2138,7 +2354,7 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char *g
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -2159,6 +2375,7 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char *g
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2170,11 +2387,14 @@ CustomObjectsAPI_getNamespacedCustomObjectStatus(apiClient_t *apiClient, char *g
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2212,15 +2432,24 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char *group, ch
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -2230,7 +2459,7 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char *group, ch
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -2240,7 +2469,7 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char *group, ch
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -2384,6 +2613,7 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char *group, ch
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2395,11 +2625,14 @@ CustomObjectsAPI_listClusterCustomObject(apiClient_t *apiClient, char *group, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2555,15 +2788,24 @@ CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}#‎")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}#‎");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}#‎");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -2573,7 +2815,7 @@ CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -2583,7 +2825,7 @@ CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -2727,6 +2969,7 @@ CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -2738,11 +2981,14 @@ CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -2898,15 +3144,26 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char *group,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -2916,7 +3173,7 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char *group,
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -2926,7 +3183,7 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char *group,
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -2936,7 +3193,7 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char *group,
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -3080,6 +3337,7 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char *group,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "GET");
 
     // uncomment below to debug the error response
@@ -3091,11 +3349,14 @@ CustomObjectsAPI_listNamespacedCustomObject(apiClient_t *apiClient, char *group,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3252,15 +3513,26 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, c
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}/{name}");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}/{name}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -3270,7 +3542,7 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, c
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -3280,7 +3552,7 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, c
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -3290,7 +3562,7 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, c
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3354,9 +3626,10 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, c
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
@@ -3369,6 +3642,7 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, c
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -3380,11 +3654,14 @@ CustomObjectsAPI_patchClusterCustomObject(apiClient_t *apiClient, char *group, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3474,15 +3751,26 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *gro
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}/{name}/scale")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}/{name}/scale");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}/{name}/scale");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -3492,7 +3780,7 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *gro
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -3502,7 +3790,7 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *gro
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -3512,7 +3800,7 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *gro
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3576,9 +3864,10 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *gro
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3593,6 +3882,7 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *gro
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -3604,11 +3894,14 @@ CustomObjectsAPI_patchClusterCustomObjectScale(apiClient_t *apiClient, char *gro
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3698,15 +3991,26 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *gr
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}/{name}/status");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}/{name}/status");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -3716,7 +4020,7 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *gr
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -3726,7 +4030,7 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *gr
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -3736,7 +4040,7 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *gr
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -3800,9 +4104,10 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *gr
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3817,6 +4122,7 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *gr
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -3828,11 +4134,14 @@ CustomObjectsAPI_patchClusterCustomObjectStatus(apiClient_t *apiClient, char *gr
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -3922,15 +4231,28 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -3940,7 +4262,7 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -3950,7 +4272,7 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -3960,7 +4282,7 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -3970,7 +4292,7 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4034,9 +4356,10 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarContentType,"application/json-patch+json"); //consumes
@@ -4049,6 +4372,7 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -4060,11 +4384,14 @@ CustomObjectsAPI_patchNamespacedCustomObject(apiClient_t *apiClient, char *group
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4155,15 +4482,28 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -4173,7 +4513,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -4183,7 +4523,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -4193,7 +4533,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -4203,7 +4543,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4267,9 +4607,10 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -4285,6 +4626,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -4296,11 +4638,14 @@ CustomObjectsAPI_patchNamespacedCustomObjectScale(apiClient_t *apiClient, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4391,15 +4736,28 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = list_createList();
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -4409,7 +4767,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -4419,7 +4777,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -4429,7 +4787,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -4439,7 +4797,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4503,9 +4861,10 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -4521,6 +4880,7 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PATCH");
 
     // uncomment below to debug the error response
@@ -4532,11 +4892,14 @@ CustomObjectsAPI_patchNamespacedCustomObjectStatus(apiClient_t *apiClient, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4627,15 +4990,26 @@ CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group,
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}/{name}");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}/{name}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -4645,7 +5019,7 @@ CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group,
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -4655,7 +5029,7 @@ CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group,
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -4665,7 +5039,7 @@ CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group,
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4716,9 +5090,10 @@ CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group,
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     apiClient_invoke(apiClient,
@@ -4729,6 +5104,7 @@ CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group,
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -4740,11 +5116,14 @@ CustomObjectsAPI_replaceClusterCustomObject(apiClient_t *apiClient, char *group,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -4822,15 +5201,26 @@ CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *g
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}/{name}/scale")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}/{name}/scale");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}/{name}/scale");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -4840,7 +5230,7 @@ CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *g
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -4850,7 +5240,7 @@ CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *g
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -4860,7 +5250,7 @@ CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *g
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -4911,9 +5301,10 @@ CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *g
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -4926,6 +5317,7 @@ CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *g
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -4941,11 +5333,14 @@ CustomObjectsAPI_replaceClusterCustomObjectScale(apiClient_t *apiClient, char *g
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5023,15 +5418,26 @@ CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/{plural}/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/{plural}/{name}/status");
+    char *localVarPath = strdup("/apis/{group}/{version}/{plural}/{name}/status");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -5041,7 +5447,7 @@ CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -5051,7 +5457,7 @@ CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -5061,7 +5467,7 @@ CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5112,9 +5518,10 @@ CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -5127,6 +5534,7 @@ CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5142,11 +5550,14 @@ CustomObjectsAPI_replaceClusterCustomObjectStatus(apiClient_t *apiClient, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5224,15 +5635,28 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *gro
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -5242,7 +5666,7 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *gro
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -5252,7 +5676,7 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *gro
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5262,7 +5686,7 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *gro
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -5272,7 +5696,7 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *gro
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5323,9 +5747,10 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *gro
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     apiClient_invoke(apiClient,
@@ -5336,6 +5761,7 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *gro
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5347,11 +5773,14 @@ CustomObjectsAPI_replaceNamespacedCustomObject(apiClient_t *apiClient, char *gro
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5430,15 +5859,28 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -5448,7 +5890,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -5458,7 +5900,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5468,7 +5910,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -5478,7 +5920,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5529,9 +5971,10 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -5544,6 +5987,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5559,11 +6003,14 @@ CustomObjectsAPI_replaceNamespacedCustomObjectScale(apiClient_t *apiClient, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type
@@ -5642,15 +6089,28 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     list_t *localVarHeaderType = list_createList();
     list_t *localVarContentType = NULL;
     char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
 
     // create the path
-    long sizeOfPath = strlen("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status")+1;
-    char *localVarPath = malloc(sizeOfPath);
-    snprintf(localVarPath, sizeOfPath, "/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status");
+    char *localVarPath = strdup("/apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status");
+
+    if(!group)
+        goto end;
+    if(!version)
+        goto end;
+    if(!_namespace)
+        goto end;
+    if(!plural)
+        goto end;
+    if(!name)
+        goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ group }");
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -5660,7 +6120,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ version }");
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -5670,7 +6130,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ namespace }");
+    long sizeOfPathParams__namespace = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ namespace }") - 1;
     if(_namespace == NULL) {
         goto end;
     }
@@ -5680,7 +6140,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace__namespace, _namespace);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ plural }");
+    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ plural }") - 1;
     if(plural == NULL) {
         goto end;
     }
@@ -5690,7 +6150,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
 
     // Path Params
-    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + strlen("{ name }");
+    long sizeOfPathParams_name = strlen(group)+3 + strlen(version)+3 + strlen(_namespace)+3 + strlen(plural)+3 + strlen(name)+3 + sizeof("{ name }") - 1;
     if(name == NULL) {
         goto end;
     }
@@ -5741,9 +6201,10 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
-        //string
+        //not string, not binary
         localVarSingleItemJSON_body = object_convertToJSON(body);
         localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -5756,6 +6217,7 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
                     localVarHeaderType,
                     localVarContentType,
                     localVarBodyParameters,
+                    localVarBodyLength,
                     "PUT");
 
     // uncomment below to debug the error response
@@ -5771,11 +6233,14 @@ CustomObjectsAPI_replaceNamespacedCustomObjectStatus(apiClient_t *apiClient, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
-    object_t *elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
-    cJSON_Delete(CustomObjectsAPIlocalVarJSON);
-    if(elementToReturn == NULL) {
-        // return 0;
+    object_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *CustomObjectsAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = object_parseFromJSON(CustomObjectsAPIlocalVarJSON);
+        cJSON_Delete(CustomObjectsAPIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
     }
 
     //return type

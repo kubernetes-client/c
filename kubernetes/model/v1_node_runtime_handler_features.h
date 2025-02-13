@@ -22,9 +22,10 @@ typedef struct v1_node_runtime_handler_features_t {
     int recursive_read_only_mounts; //boolean
     int user_namespaces; //boolean
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_runtime_handler_features_t;
 
-v1_node_runtime_handler_features_t *v1_node_runtime_handler_features_create(
+__attribute__((deprecated)) v1_node_runtime_handler_features_t *v1_node_runtime_handler_features_create(
     int recursive_read_only_mounts,
     int user_namespaces
 );

@@ -5,13 +5,14 @@
 
 
 
-v1_pod_security_context_t *v1_pod_security_context_create(
+static v1_pod_security_context_t *v1_pod_security_context_create_internal(
     v1_app_armor_profile_t *app_armor_profile,
     long fs_group,
     char *fs_group_change_policy,
     long run_as_group,
     int run_as_non_root,
     long run_as_user,
+    char *se_linux_change_policy,
     v1_se_linux_options_t *se_linux_options,
     v1_seccomp_profile_t *seccomp_profile,
     list_t *supplemental_groups,
@@ -29,6 +30,7 @@ v1_pod_security_context_t *v1_pod_security_context_create(
     v1_pod_security_context_local_var->run_as_group = run_as_group;
     v1_pod_security_context_local_var->run_as_non_root = run_as_non_root;
     v1_pod_security_context_local_var->run_as_user = run_as_user;
+    v1_pod_security_context_local_var->se_linux_change_policy = se_linux_change_policy;
     v1_pod_security_context_local_var->se_linux_options = se_linux_options;
     v1_pod_security_context_local_var->seccomp_profile = seccomp_profile;
     v1_pod_security_context_local_var->supplemental_groups = supplemental_groups;
@@ -36,12 +38,48 @@ v1_pod_security_context_t *v1_pod_security_context_create(
     v1_pod_security_context_local_var->sysctls = sysctls;
     v1_pod_security_context_local_var->windows_options = windows_options;
 
+    v1_pod_security_context_local_var->_library_owned = 1;
     return v1_pod_security_context_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_security_context_t *v1_pod_security_context_create(
+    v1_app_armor_profile_t *app_armor_profile,
+    long fs_group,
+    char *fs_group_change_policy,
+    long run_as_group,
+    int run_as_non_root,
+    long run_as_user,
+    char *se_linux_change_policy,
+    v1_se_linux_options_t *se_linux_options,
+    v1_seccomp_profile_t *seccomp_profile,
+    list_t *supplemental_groups,
+    char *supplemental_groups_policy,
+    list_t *sysctls,
+    v1_windows_security_context_options_t *windows_options
+    ) {
+    return v1_pod_security_context_create_internal (
+        app_armor_profile,
+        fs_group,
+        fs_group_change_policy,
+        run_as_group,
+        run_as_non_root,
+        run_as_user,
+        se_linux_change_policy,
+        se_linux_options,
+        seccomp_profile,
+        supplemental_groups,
+        supplemental_groups_policy,
+        sysctls,
+        windows_options
+        );
+}
 
 void v1_pod_security_context_free(v1_pod_security_context_t *v1_pod_security_context) {
     if(NULL == v1_pod_security_context){
+        return ;
+    }
+    if(v1_pod_security_context->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_security_context_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -52,6 +90,10 @@ void v1_pod_security_context_free(v1_pod_security_context_t *v1_pod_security_con
     if (v1_pod_security_context->fs_group_change_policy) {
         free(v1_pod_security_context->fs_group_change_policy);
         v1_pod_security_context->fs_group_change_policy = NULL;
+    }
+    if (v1_pod_security_context->se_linux_change_policy) {
+        free(v1_pod_security_context->se_linux_change_policy);
+        v1_pod_security_context->se_linux_change_policy = NULL;
     }
     if (v1_pod_security_context->se_linux_options) {
         v1_se_linux_options_free(v1_pod_security_context->se_linux_options);
@@ -138,6 +180,14 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
     if(v1_pod_security_context->run_as_user) {
     if(cJSON_AddNumberToObject(item, "runAsUser", v1_pod_security_context->run_as_user) == NULL) {
     goto fail; //Numeric
+    }
+    }
+
+
+    // v1_pod_security_context->se_linux_change_policy
+    if(v1_pod_security_context->se_linux_change_policy) {
+    if(cJSON_AddStringToObject(item, "seLinuxChangePolicy", v1_pod_security_context->se_linux_change_policy) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -257,12 +307,18 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->app_armor_profile
     cJSON *app_armor_profile = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "appArmorProfile");
+    if (cJSON_IsNull(app_armor_profile)) {
+        app_armor_profile = NULL;
+    }
     if (app_armor_profile) { 
     app_armor_profile_local_nonprim = v1_app_armor_profile_parseFromJSON(app_armor_profile); //nonprimitive
     }
 
     // v1_pod_security_context->fs_group
     cJSON *fs_group = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "fsGroup");
+    if (cJSON_IsNull(fs_group)) {
+        fs_group = NULL;
+    }
     if (fs_group) { 
     if(!cJSON_IsNumber(fs_group))
     {
@@ -272,6 +328,9 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->fs_group_change_policy
     cJSON *fs_group_change_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "fsGroupChangePolicy");
+    if (cJSON_IsNull(fs_group_change_policy)) {
+        fs_group_change_policy = NULL;
+    }
     if (fs_group_change_policy) { 
     if(!cJSON_IsString(fs_group_change_policy) && !cJSON_IsNull(fs_group_change_policy))
     {
@@ -281,6 +340,9 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->run_as_group
     cJSON *run_as_group = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "runAsGroup");
+    if (cJSON_IsNull(run_as_group)) {
+        run_as_group = NULL;
+    }
     if (run_as_group) { 
     if(!cJSON_IsNumber(run_as_group))
     {
@@ -290,6 +352,9 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->run_as_non_root
     cJSON *run_as_non_root = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "runAsNonRoot");
+    if (cJSON_IsNull(run_as_non_root)) {
+        run_as_non_root = NULL;
+    }
     if (run_as_non_root) { 
     if(!cJSON_IsBool(run_as_non_root))
     {
@@ -299,6 +364,9 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->run_as_user
     cJSON *run_as_user = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "runAsUser");
+    if (cJSON_IsNull(run_as_user)) {
+        run_as_user = NULL;
+    }
     if (run_as_user) { 
     if(!cJSON_IsNumber(run_as_user))
     {
@@ -306,20 +374,41 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     }
     }
 
+    // v1_pod_security_context->se_linux_change_policy
+    cJSON *se_linux_change_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "seLinuxChangePolicy");
+    if (cJSON_IsNull(se_linux_change_policy)) {
+        se_linux_change_policy = NULL;
+    }
+    if (se_linux_change_policy) { 
+    if(!cJSON_IsString(se_linux_change_policy) && !cJSON_IsNull(se_linux_change_policy))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_pod_security_context->se_linux_options
     cJSON *se_linux_options = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "seLinuxOptions");
+    if (cJSON_IsNull(se_linux_options)) {
+        se_linux_options = NULL;
+    }
     if (se_linux_options) { 
     se_linux_options_local_nonprim = v1_se_linux_options_parseFromJSON(se_linux_options); //nonprimitive
     }
 
     // v1_pod_security_context->seccomp_profile
     cJSON *seccomp_profile = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "seccompProfile");
+    if (cJSON_IsNull(seccomp_profile)) {
+        seccomp_profile = NULL;
+    }
     if (seccomp_profile) { 
     seccomp_profile_local_nonprim = v1_seccomp_profile_parseFromJSON(seccomp_profile); //nonprimitive
     }
 
     // v1_pod_security_context->supplemental_groups
     cJSON *supplemental_groups = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "supplementalGroups");
+    if (cJSON_IsNull(supplemental_groups)) {
+        supplemental_groups = NULL;
+    }
     if (supplemental_groups) { 
     cJSON *supplemental_groups_local = NULL;
     if(!cJSON_IsArray(supplemental_groups)) {
@@ -333,7 +422,7 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
         {
             goto end;
         }
-        double *supplemental_groups_local_value = (double *)calloc(1, sizeof(double));
+        double *supplemental_groups_local_value = calloc(1, sizeof(double));
         if(!supplemental_groups_local_value)
         {
             goto end;
@@ -345,6 +434,9 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->supplemental_groups_policy
     cJSON *supplemental_groups_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "supplementalGroupsPolicy");
+    if (cJSON_IsNull(supplemental_groups_policy)) {
+        supplemental_groups_policy = NULL;
+    }
     if (supplemental_groups_policy) { 
     if(!cJSON_IsString(supplemental_groups_policy) && !cJSON_IsNull(supplemental_groups_policy))
     {
@@ -354,6 +446,9 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->sysctls
     cJSON *sysctls = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "sysctls");
+    if (cJSON_IsNull(sysctls)) {
+        sysctls = NULL;
+    }
     if (sysctls) { 
     cJSON *sysctls_local_nonprimitive = NULL;
     if(!cJSON_IsArray(sysctls)){
@@ -375,18 +470,22 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // v1_pod_security_context->windows_options
     cJSON *windows_options = cJSON_GetObjectItemCaseSensitive(v1_pod_security_contextJSON, "windowsOptions");
+    if (cJSON_IsNull(windows_options)) {
+        windows_options = NULL;
+    }
     if (windows_options) { 
     windows_options_local_nonprim = v1_windows_security_context_options_parseFromJSON(windows_options); //nonprimitive
     }
 
 
-    v1_pod_security_context_local_var = v1_pod_security_context_create (
+    v1_pod_security_context_local_var = v1_pod_security_context_create_internal (
         app_armor_profile ? app_armor_profile_local_nonprim : NULL,
         fs_group ? fs_group->valuedouble : 0,
         fs_group_change_policy && !cJSON_IsNull(fs_group_change_policy) ? strdup(fs_group_change_policy->valuestring) : NULL,
         run_as_group ? run_as_group->valuedouble : 0,
         run_as_non_root ? run_as_non_root->valueint : 0,
         run_as_user ? run_as_user->valuedouble : 0,
+        se_linux_change_policy && !cJSON_IsNull(se_linux_change_policy) ? strdup(se_linux_change_policy->valuestring) : NULL,
         se_linux_options ? se_linux_options_local_nonprim : NULL,
         seccomp_profile ? seccomp_profile_local_nonprim : NULL,
         supplemental_groups ? supplemental_groupsList : NULL,

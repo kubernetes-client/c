@@ -26,9 +26,10 @@ typedef struct v1_component_status_t {
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_component_status_t;
 
-v1_component_status_t *v1_component_status_create(
+__attribute__((deprecated)) v1_component_status_t *v1_component_status_create(
     char *api_version,
     list_t *conditions,
     char *kind,

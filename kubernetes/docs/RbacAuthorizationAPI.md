@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**RbacAuthorizationAPI_getAPIGroup_16**](RbacAuthorizationAPI.md#RbacAuthorizationAPI_getAPIGroup_16) | **GET** /apis/rbac.authorization.k8s.io/ | 
+[**RbacAuthorizationAPI_getAPIGroup**](RbacAuthorizationAPI.md#RbacAuthorizationAPI_getAPIGroup) | **GET** /apis/rbac.authorization.k8s.io/ | 
 
 
-# **RbacAuthorizationAPI_getAPIGroup_16**
+# **RbacAuthorizationAPI_getAPIGroup**
 ```c
 // get information of a group
 //
-v1_api_group_t* RbacAuthorizationAPI_getAPIGroup_16(apiClient_t *apiClient);
+v1_api_group_t* RbacAuthorizationAPI_getAPIGroup(apiClient_t *apiClient);
 ```
 
 ### Parameters

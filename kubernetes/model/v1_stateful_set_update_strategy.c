@@ -5,7 +5,7 @@
 
 
 
-v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_create(
+static v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_create_internal(
     v1_rolling_update_stateful_set_strategy_t *rolling_update,
     char *type
     ) {
@@ -16,12 +16,26 @@ v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_create(
     v1_stateful_set_update_strategy_local_var->rolling_update = rolling_update;
     v1_stateful_set_update_strategy_local_var->type = type;
 
+    v1_stateful_set_update_strategy_local_var->_library_owned = 1;
     return v1_stateful_set_update_strategy_local_var;
 }
 
+__attribute__((deprecated)) v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_create(
+    v1_rolling_update_stateful_set_strategy_t *rolling_update,
+    char *type
+    ) {
+    return v1_stateful_set_update_strategy_create_internal (
+        rolling_update,
+        type
+        );
+}
 
 void v1_stateful_set_update_strategy_free(v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy) {
     if(NULL == v1_stateful_set_update_strategy){
+        return ;
+    }
+    if(v1_stateful_set_update_strategy->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_stateful_set_update_strategy_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -76,12 +90,18 @@ v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_parseFromJSON
 
     // v1_stateful_set_update_strategy->rolling_update
     cJSON *rolling_update = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_update_strategyJSON, "rollingUpdate");
+    if (cJSON_IsNull(rolling_update)) {
+        rolling_update = NULL;
+    }
     if (rolling_update) { 
     rolling_update_local_nonprim = v1_rolling_update_stateful_set_strategy_parseFromJSON(rolling_update); //nonprimitive
     }
 
     // v1_stateful_set_update_strategy->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_update_strategyJSON, "type");
+    if (cJSON_IsNull(type)) {
+        type = NULL;
+    }
     if (type) { 
     if(!cJSON_IsString(type) && !cJSON_IsNull(type))
     {
@@ -90,7 +110,7 @@ v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_parseFromJSON
     }
 
 
-    v1_stateful_set_update_strategy_local_var = v1_stateful_set_update_strategy_create (
+    v1_stateful_set_update_strategy_local_var = v1_stateful_set_update_strategy_create_internal (
         rolling_update ? rolling_update_local_nonprim : NULL,
         type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );

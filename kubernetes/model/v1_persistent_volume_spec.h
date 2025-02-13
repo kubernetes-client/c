@@ -75,9 +75,10 @@ typedef struct v1_persistent_volume_spec_t {
     char *volume_mode; // string
     struct v1_vsphere_virtual_disk_volume_source_t *vsphere_volume; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_persistent_volume_spec_t;
 
-v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
+__attribute__((deprecated)) v1_persistent_volume_spec_t *v1_persistent_volume_spec_create(
     list_t *access_modes,
     v1_aws_elastic_block_store_volume_source_t *aws_elastic_block_store,
     v1_azure_disk_volume_source_t *azure_disk,

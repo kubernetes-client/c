@@ -5,7 +5,7 @@
 
 
 
-v1_service_account_token_projection_t *v1_service_account_token_projection_create(
+static v1_service_account_token_projection_t *v1_service_account_token_projection_create_internal(
     char *audience,
     long expiration_seconds,
     char *path
@@ -18,12 +18,28 @@ v1_service_account_token_projection_t *v1_service_account_token_projection_creat
     v1_service_account_token_projection_local_var->expiration_seconds = expiration_seconds;
     v1_service_account_token_projection_local_var->path = path;
 
+    v1_service_account_token_projection_local_var->_library_owned = 1;
     return v1_service_account_token_projection_local_var;
 }
 
+__attribute__((deprecated)) v1_service_account_token_projection_t *v1_service_account_token_projection_create(
+    char *audience,
+    long expiration_seconds,
+    char *path
+    ) {
+    return v1_service_account_token_projection_create_internal (
+        audience,
+        expiration_seconds,
+        path
+        );
+}
 
 void v1_service_account_token_projection_free(v1_service_account_token_projection_t *v1_service_account_token_projection) {
     if(NULL == v1_service_account_token_projection){
+        return ;
+    }
+    if(v1_service_account_token_projection->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_service_account_token_projection_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -79,6 +95,9 @@ v1_service_account_token_projection_t *v1_service_account_token_projection_parse
 
     // v1_service_account_token_projection->audience
     cJSON *audience = cJSON_GetObjectItemCaseSensitive(v1_service_account_token_projectionJSON, "audience");
+    if (cJSON_IsNull(audience)) {
+        audience = NULL;
+    }
     if (audience) { 
     if(!cJSON_IsString(audience) && !cJSON_IsNull(audience))
     {
@@ -88,6 +107,9 @@ v1_service_account_token_projection_t *v1_service_account_token_projection_parse
 
     // v1_service_account_token_projection->expiration_seconds
     cJSON *expiration_seconds = cJSON_GetObjectItemCaseSensitive(v1_service_account_token_projectionJSON, "expirationSeconds");
+    if (cJSON_IsNull(expiration_seconds)) {
+        expiration_seconds = NULL;
+    }
     if (expiration_seconds) { 
     if(!cJSON_IsNumber(expiration_seconds))
     {
@@ -97,6 +119,9 @@ v1_service_account_token_projection_t *v1_service_account_token_projection_parse
 
     // v1_service_account_token_projection->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_service_account_token_projectionJSON, "path");
+    if (cJSON_IsNull(path)) {
+        path = NULL;
+    }
     if (!path) {
         goto end;
     }
@@ -108,7 +133,7 @@ v1_service_account_token_projection_t *v1_service_account_token_projection_parse
     }
 
 
-    v1_service_account_token_projection_local_var = v1_service_account_token_projection_create (
+    v1_service_account_token_projection_local_var = v1_service_account_token_projection_create_internal (
         audience && !cJSON_IsNull(audience) ? strdup(audience->valuestring) : NULL,
         expiration_seconds ? expiration_seconds->valuedouble : 0,
         strdup(path->valuestring)

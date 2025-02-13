@@ -29,9 +29,10 @@ typedef struct v1_deployment_status_t {
     int unavailable_replicas; //numeric
     int updated_replicas; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_deployment_status_t;
 
-v1_deployment_status_t *v1_deployment_status_create(
+__attribute__((deprecated)) v1_deployment_status_t *v1_deployment_status_create(
     int available_replicas,
     int collision_count,
     list_t *conditions,

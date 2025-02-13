@@ -5,7 +5,7 @@
 
 
 
-v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_source_create(
+static v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_source_create_internal(
     char *claim_name,
     int read_only
     ) {
@@ -16,12 +16,26 @@ v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_so
     v1_persistent_volume_claim_volume_source_local_var->claim_name = claim_name;
     v1_persistent_volume_claim_volume_source_local_var->read_only = read_only;
 
+    v1_persistent_volume_claim_volume_source_local_var->_library_owned = 1;
     return v1_persistent_volume_claim_volume_source_local_var;
 }
 
+__attribute__((deprecated)) v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_source_create(
+    char *claim_name,
+    int read_only
+    ) {
+    return v1_persistent_volume_claim_volume_source_create_internal (
+        claim_name,
+        read_only
+        );
+}
 
 void v1_persistent_volume_claim_volume_source_free(v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_source) {
     if(NULL == v1_persistent_volume_claim_volume_source){
+        return ;
+    }
+    if(v1_persistent_volume_claim_volume_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_persistent_volume_claim_volume_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -65,6 +79,9 @@ v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_so
 
     // v1_persistent_volume_claim_volume_source->claim_name
     cJSON *claim_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_volume_sourceJSON, "claimName");
+    if (cJSON_IsNull(claim_name)) {
+        claim_name = NULL;
+    }
     if (!claim_name) {
         goto end;
     }
@@ -77,6 +94,9 @@ v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_so
 
     // v1_persistent_volume_claim_volume_source->read_only
     cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_volume_sourceJSON, "readOnly");
+    if (cJSON_IsNull(read_only)) {
+        read_only = NULL;
+    }
     if (read_only) { 
     if(!cJSON_IsBool(read_only))
     {
@@ -85,7 +105,7 @@ v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_so
     }
 
 
-    v1_persistent_volume_claim_volume_source_local_var = v1_persistent_volume_claim_volume_source_create (
+    v1_persistent_volume_claim_volume_source_local_var = v1_persistent_volume_claim_volume_source_create_internal (
         strdup(claim_name->valuestring),
         read_only ? read_only->valueint : 0
         );

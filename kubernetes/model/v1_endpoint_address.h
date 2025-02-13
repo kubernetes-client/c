@@ -25,9 +25,10 @@ typedef struct v1_endpoint_address_t {
     char *node_name; // string
     struct v1_object_reference_t *target_ref; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_endpoint_address_t;
 
-v1_endpoint_address_t *v1_endpoint_address_create(
+__attribute__((deprecated)) v1_endpoint_address_t *v1_endpoint_address_create(
     char *hostname,
     char *ip,
     char *node_name,

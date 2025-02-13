@@ -22,9 +22,10 @@ typedef struct v1_downward_api_projection_t v1_downward_api_projection_t;
 typedef struct v1_downward_api_projection_t {
     list_t *items; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_downward_api_projection_t;
 
-v1_downward_api_projection_t *v1_downward_api_projection_create(
+__attribute__((deprecated)) v1_downward_api_projection_t *v1_downward_api_projection_create(
     list_t *items
 );
 

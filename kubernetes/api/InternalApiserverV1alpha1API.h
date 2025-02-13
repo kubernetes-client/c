@@ -22,19 +22,19 @@ InternalApiserverV1alpha1API_createStorageVersion(apiClient_t *apiClient, v1alph
 // delete collection of StorageVersion
 //
 v1_status_t*
-InternalApiserverV1alpha1API_deleteCollectionStorageVersion(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+InternalApiserverV1alpha1API_deleteCollectionStorageVersion(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a StorageVersion
 //
 v1_status_t*
-InternalApiserverV1alpha1API_deleteStorageVersion(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+InternalApiserverV1alpha1API_deleteStorageVersion(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-InternalApiserverV1alpha1API_getAPIResources_21(apiClient_t *apiClient);
+InternalApiserverV1alpha1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind StorageVersion

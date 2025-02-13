@@ -22,19 +22,19 @@ DiscoveryV1API_createNamespacedEndpointSlice(apiClient_t *apiClient, char *_name
 // delete collection of EndpointSlice
 //
 v1_status_t*
-DiscoveryV1API_deleteCollectionNamespacedEndpointSlice(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+DiscoveryV1API_deleteCollectionNamespacedEndpointSlice(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete an EndpointSlice
 //
 v1_status_t*
-DiscoveryV1API_deleteNamespacedEndpointSlice(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+DiscoveryV1API_deleteNamespacedEndpointSlice(apiClient_t *apiClient, char *name, char *_namespace, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
 //
 v1_api_resource_list_t*
-DiscoveryV1API_getAPIResources_17(apiClient_t *apiClient);
+DiscoveryV1API_getAPIResources(apiClient_t *apiClient);
 
 
 // list or watch objects of kind EndpointSlice

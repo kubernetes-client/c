@@ -31,9 +31,10 @@ typedef struct v1_scale_io_persistent_volume_source_t {
     char *system; // string
     char *volume_name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_scale_io_persistent_volume_source_t;
 
-v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_create(
+__attribute__((deprecated)) v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_create(
     char *fs_type,
     char *gateway,
     char *protection_domain,

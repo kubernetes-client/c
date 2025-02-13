@@ -28,9 +28,10 @@ typedef struct v1_subject_access_review_spec_t {
     char *uid; // string
     char *user; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_subject_access_review_spec_t;
 
-v1_subject_access_review_spec_t *v1_subject_access_review_spec_create(
+__attribute__((deprecated)) v1_subject_access_review_spec_t *v1_subject_access_review_spec_create(
     list_t* extra,
     list_t *groups,
     v1_non_resource_attributes_t *non_resource_attributes,

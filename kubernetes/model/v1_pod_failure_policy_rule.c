@@ -5,7 +5,7 @@
 
 
 
-v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_create(
+static v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_create_internal(
     char *action,
     v1_pod_failure_policy_on_exit_codes_requirement_t *on_exit_codes,
     list_t *on_pod_conditions
@@ -18,12 +18,28 @@ v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_create(
     v1_pod_failure_policy_rule_local_var->on_exit_codes = on_exit_codes;
     v1_pod_failure_policy_rule_local_var->on_pod_conditions = on_pod_conditions;
 
+    v1_pod_failure_policy_rule_local_var->_library_owned = 1;
     return v1_pod_failure_policy_rule_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_create(
+    char *action,
+    v1_pod_failure_policy_on_exit_codes_requirement_t *on_exit_codes,
+    list_t *on_pod_conditions
+    ) {
+    return v1_pod_failure_policy_rule_create_internal (
+        action,
+        on_exit_codes,
+        on_pod_conditions
+        );
+}
 
 void v1_pod_failure_policy_rule_free(v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule) {
     if(NULL == v1_pod_failure_policy_rule){
+        return ;
+    }
+    if(v1_pod_failure_policy_rule->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_failure_policy_rule_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -109,6 +125,9 @@ v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_parseFromJSON(cJSON *v1
 
     // v1_pod_failure_policy_rule->action
     cJSON *action = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policy_ruleJSON, "action");
+    if (cJSON_IsNull(action)) {
+        action = NULL;
+    }
     if (!action) {
         goto end;
     }
@@ -121,12 +140,18 @@ v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_parseFromJSON(cJSON *v1
 
     // v1_pod_failure_policy_rule->on_exit_codes
     cJSON *on_exit_codes = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policy_ruleJSON, "onExitCodes");
+    if (cJSON_IsNull(on_exit_codes)) {
+        on_exit_codes = NULL;
+    }
     if (on_exit_codes) { 
     on_exit_codes_local_nonprim = v1_pod_failure_policy_on_exit_codes_requirement_parseFromJSON(on_exit_codes); //nonprimitive
     }
 
     // v1_pod_failure_policy_rule->on_pod_conditions
     cJSON *on_pod_conditions = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policy_ruleJSON, "onPodConditions");
+    if (cJSON_IsNull(on_pod_conditions)) {
+        on_pod_conditions = NULL;
+    }
     if (on_pod_conditions) { 
     cJSON *on_pod_conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(on_pod_conditions)){
@@ -147,7 +172,7 @@ v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_parseFromJSON(cJSON *v1
     }
 
 
-    v1_pod_failure_policy_rule_local_var = v1_pod_failure_policy_rule_create (
+    v1_pod_failure_policy_rule_local_var = v1_pod_failure_policy_rule_create_internal (
         strdup(action->valuestring),
         on_exit_codes ? on_exit_codes_local_nonprim : NULL,
         on_pod_conditions ? on_pod_conditionsList : NULL

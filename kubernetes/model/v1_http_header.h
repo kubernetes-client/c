@@ -22,9 +22,10 @@ typedef struct v1_http_header_t {
     char *name; // string
     char *value; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_http_header_t;
 
-v1_http_header_t *v1_http_header_create(
+__attribute__((deprecated)) v1_http_header_t *v1_http_header_create(
     char *name,
     char *value
 );

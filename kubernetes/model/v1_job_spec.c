@@ -5,7 +5,7 @@
 
 
 
-v1_job_spec_t *v1_job_spec_create(
+static v1_job_spec_t *v1_job_spec_create_internal(
     long active_deadline_seconds,
     int backoff_limit,
     int backoff_limit_per_index,
@@ -44,12 +44,54 @@ v1_job_spec_t *v1_job_spec_create(
     v1_job_spec_local_var->_template = _template;
     v1_job_spec_local_var->ttl_seconds_after_finished = ttl_seconds_after_finished;
 
+    v1_job_spec_local_var->_library_owned = 1;
     return v1_job_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_job_spec_t *v1_job_spec_create(
+    long active_deadline_seconds,
+    int backoff_limit,
+    int backoff_limit_per_index,
+    char *completion_mode,
+    int completions,
+    char *managed_by,
+    int manual_selector,
+    int max_failed_indexes,
+    int parallelism,
+    v1_pod_failure_policy_t *pod_failure_policy,
+    char *pod_replacement_policy,
+    v1_label_selector_t *selector,
+    v1_success_policy_t *success_policy,
+    int suspend,
+    v1_pod_template_spec_t *_template,
+    int ttl_seconds_after_finished
+    ) {
+    return v1_job_spec_create_internal (
+        active_deadline_seconds,
+        backoff_limit,
+        backoff_limit_per_index,
+        completion_mode,
+        completions,
+        managed_by,
+        manual_selector,
+        max_failed_indexes,
+        parallelism,
+        pod_failure_policy,
+        pod_replacement_policy,
+        selector,
+        success_policy,
+        suspend,
+        _template,
+        ttl_seconds_after_finished
+        );
+}
 
 void v1_job_spec_free(v1_job_spec_t *v1_job_spec) {
     if(NULL == v1_job_spec){
+        return ;
+    }
+    if(v1_job_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_job_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -261,6 +303,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->active_deadline_seconds
     cJSON *active_deadline_seconds = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "activeDeadlineSeconds");
+    if (cJSON_IsNull(active_deadline_seconds)) {
+        active_deadline_seconds = NULL;
+    }
     if (active_deadline_seconds) { 
     if(!cJSON_IsNumber(active_deadline_seconds))
     {
@@ -270,6 +315,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->backoff_limit
     cJSON *backoff_limit = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "backoffLimit");
+    if (cJSON_IsNull(backoff_limit)) {
+        backoff_limit = NULL;
+    }
     if (backoff_limit) { 
     if(!cJSON_IsNumber(backoff_limit))
     {
@@ -279,6 +327,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->backoff_limit_per_index
     cJSON *backoff_limit_per_index = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "backoffLimitPerIndex");
+    if (cJSON_IsNull(backoff_limit_per_index)) {
+        backoff_limit_per_index = NULL;
+    }
     if (backoff_limit_per_index) { 
     if(!cJSON_IsNumber(backoff_limit_per_index))
     {
@@ -288,6 +339,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->completion_mode
     cJSON *completion_mode = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "completionMode");
+    if (cJSON_IsNull(completion_mode)) {
+        completion_mode = NULL;
+    }
     if (completion_mode) { 
     if(!cJSON_IsString(completion_mode) && !cJSON_IsNull(completion_mode))
     {
@@ -297,6 +351,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->completions
     cJSON *completions = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "completions");
+    if (cJSON_IsNull(completions)) {
+        completions = NULL;
+    }
     if (completions) { 
     if(!cJSON_IsNumber(completions))
     {
@@ -306,6 +363,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->managed_by
     cJSON *managed_by = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "managedBy");
+    if (cJSON_IsNull(managed_by)) {
+        managed_by = NULL;
+    }
     if (managed_by) { 
     if(!cJSON_IsString(managed_by) && !cJSON_IsNull(managed_by))
     {
@@ -315,6 +375,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->manual_selector
     cJSON *manual_selector = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "manualSelector");
+    if (cJSON_IsNull(manual_selector)) {
+        manual_selector = NULL;
+    }
     if (manual_selector) { 
     if(!cJSON_IsBool(manual_selector))
     {
@@ -324,6 +387,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->max_failed_indexes
     cJSON *max_failed_indexes = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "maxFailedIndexes");
+    if (cJSON_IsNull(max_failed_indexes)) {
+        max_failed_indexes = NULL;
+    }
     if (max_failed_indexes) { 
     if(!cJSON_IsNumber(max_failed_indexes))
     {
@@ -333,6 +399,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->parallelism
     cJSON *parallelism = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "parallelism");
+    if (cJSON_IsNull(parallelism)) {
+        parallelism = NULL;
+    }
     if (parallelism) { 
     if(!cJSON_IsNumber(parallelism))
     {
@@ -342,12 +411,18 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->pod_failure_policy
     cJSON *pod_failure_policy = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "podFailurePolicy");
+    if (cJSON_IsNull(pod_failure_policy)) {
+        pod_failure_policy = NULL;
+    }
     if (pod_failure_policy) { 
     pod_failure_policy_local_nonprim = v1_pod_failure_policy_parseFromJSON(pod_failure_policy); //nonprimitive
     }
 
     // v1_job_spec->pod_replacement_policy
     cJSON *pod_replacement_policy = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "podReplacementPolicy");
+    if (cJSON_IsNull(pod_replacement_policy)) {
+        pod_replacement_policy = NULL;
+    }
     if (pod_replacement_policy) { 
     if(!cJSON_IsString(pod_replacement_policy) && !cJSON_IsNull(pod_replacement_policy))
     {
@@ -357,18 +432,27 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "selector");
+    if (cJSON_IsNull(selector)) {
+        selector = NULL;
+    }
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
     // v1_job_spec->success_policy
     cJSON *success_policy = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "successPolicy");
+    if (cJSON_IsNull(success_policy)) {
+        success_policy = NULL;
+    }
     if (success_policy) { 
     success_policy_local_nonprim = v1_success_policy_parseFromJSON(success_policy); //nonprimitive
     }
 
     // v1_job_spec->suspend
     cJSON *suspend = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "suspend");
+    if (cJSON_IsNull(suspend)) {
+        suspend = NULL;
+    }
     if (suspend) { 
     if(!cJSON_IsBool(suspend))
     {
@@ -378,6 +462,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->_template
     cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "template");
+    if (cJSON_IsNull(_template)) {
+        _template = NULL;
+    }
     if (!_template) {
         goto end;
     }
@@ -387,6 +474,9 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
 
     // v1_job_spec->ttl_seconds_after_finished
     cJSON *ttl_seconds_after_finished = cJSON_GetObjectItemCaseSensitive(v1_job_specJSON, "ttlSecondsAfterFinished");
+    if (cJSON_IsNull(ttl_seconds_after_finished)) {
+        ttl_seconds_after_finished = NULL;
+    }
     if (ttl_seconds_after_finished) { 
     if(!cJSON_IsNumber(ttl_seconds_after_finished))
     {
@@ -395,7 +485,7 @@ v1_job_spec_t *v1_job_spec_parseFromJSON(cJSON *v1_job_specJSON){
     }
 
 
-    v1_job_spec_local_var = v1_job_spec_create (
+    v1_job_spec_local_var = v1_job_spec_create_internal (
         active_deadline_seconds ? active_deadline_seconds->valuedouble : 0,
         backoff_limit ? backoff_limit->valuedouble : 0,
         backoff_limit_per_index ? backoff_limit_per_index->valuedouble : 0,

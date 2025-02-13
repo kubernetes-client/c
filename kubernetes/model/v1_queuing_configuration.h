@@ -23,9 +23,10 @@ typedef struct v1_queuing_configuration_t {
     int queue_length_limit; //numeric
     int queues; //numeric
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_queuing_configuration_t;
 
-v1_queuing_configuration_t *v1_queuing_configuration_create(
+__attribute__((deprecated)) v1_queuing_configuration_t *v1_queuing_configuration_create(
     int hand_size,
     int queue_length_limit,
     int queues

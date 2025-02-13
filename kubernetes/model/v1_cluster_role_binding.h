@@ -28,9 +28,10 @@ typedef struct v1_cluster_role_binding_t {
     struct v1_role_ref_t *role_ref; //model
     list_t *subjects; //nonprimitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_cluster_role_binding_t;
 
-v1_cluster_role_binding_t *v1_cluster_role_binding_create(
+__attribute__((deprecated)) v1_cluster_role_binding_t *v1_cluster_role_binding_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

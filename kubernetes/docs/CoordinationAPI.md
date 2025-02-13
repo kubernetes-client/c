@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CoordinationAPI_getAPIGroup_8**](CoordinationAPI.md#CoordinationAPI_getAPIGroup_8) | **GET** /apis/coordination.k8s.io/ | 
+[**CoordinationAPI_getAPIGroup**](CoordinationAPI.md#CoordinationAPI_getAPIGroup) | **GET** /apis/coordination.k8s.io/ | 
 
 
-# **CoordinationAPI_getAPIGroup_8**
+# **CoordinationAPI_getAPIGroup**
 ```c
 // get information of a group
 //
-v1_api_group_t* CoordinationAPI_getAPIGroup_8(apiClient_t *apiClient);
+v1_api_group_t* CoordinationAPI_getAPIGroup(apiClient_t *apiClient);
 ```
 
 ### Parameters

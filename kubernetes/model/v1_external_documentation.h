@@ -22,9 +22,10 @@ typedef struct v1_external_documentation_t {
     char *description; // string
     char *url; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_external_documentation_t;
 
-v1_external_documentation_t *v1_external_documentation_create(
+__attribute__((deprecated)) v1_external_documentation_t *v1_external_documentation_create(
     char *description,
     char *url
 );

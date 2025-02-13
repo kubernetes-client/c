@@ -5,7 +5,7 @@
 
 
 
-v1_node_runtime_handler_t *v1_node_runtime_handler_create(
+static v1_node_runtime_handler_t *v1_node_runtime_handler_create_internal(
     v1_node_runtime_handler_features_t *features,
     char *name
     ) {
@@ -16,12 +16,26 @@ v1_node_runtime_handler_t *v1_node_runtime_handler_create(
     v1_node_runtime_handler_local_var->features = features;
     v1_node_runtime_handler_local_var->name = name;
 
+    v1_node_runtime_handler_local_var->_library_owned = 1;
     return v1_node_runtime_handler_local_var;
 }
 
+__attribute__((deprecated)) v1_node_runtime_handler_t *v1_node_runtime_handler_create(
+    v1_node_runtime_handler_features_t *features,
+    char *name
+    ) {
+    return v1_node_runtime_handler_create_internal (
+        features,
+        name
+        );
+}
 
 void v1_node_runtime_handler_free(v1_node_runtime_handler_t *v1_node_runtime_handler) {
     if(NULL == v1_node_runtime_handler){
+        return ;
+    }
+    if(v1_node_runtime_handler->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_node_runtime_handler_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -76,12 +90,18 @@ v1_node_runtime_handler_t *v1_node_runtime_handler_parseFromJSON(cJSON *v1_node_
 
     // v1_node_runtime_handler->features
     cJSON *features = cJSON_GetObjectItemCaseSensitive(v1_node_runtime_handlerJSON, "features");
+    if (cJSON_IsNull(features)) {
+        features = NULL;
+    }
     if (features) { 
     features_local_nonprim = v1_node_runtime_handler_features_parseFromJSON(features); //nonprimitive
     }
 
     // v1_node_runtime_handler->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_node_runtime_handlerJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (name) { 
     if(!cJSON_IsString(name) && !cJSON_IsNull(name))
     {
@@ -90,7 +110,7 @@ v1_node_runtime_handler_t *v1_node_runtime_handler_parseFromJSON(cJSON *v1_node_
     }
 
 
-    v1_node_runtime_handler_local_var = v1_node_runtime_handler_create (
+    v1_node_runtime_handler_local_var = v1_node_runtime_handler_create_internal (
         features ? features_local_nonprim : NULL,
         name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL
         );

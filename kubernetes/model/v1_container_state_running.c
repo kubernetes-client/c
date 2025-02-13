@@ -5,7 +5,7 @@
 
 
 
-v1_container_state_running_t *v1_container_state_running_create(
+static v1_container_state_running_t *v1_container_state_running_create_internal(
     char *started_at
     ) {
     v1_container_state_running_t *v1_container_state_running_local_var = malloc(sizeof(v1_container_state_running_t));
@@ -14,12 +14,24 @@ v1_container_state_running_t *v1_container_state_running_create(
     }
     v1_container_state_running_local_var->started_at = started_at;
 
+    v1_container_state_running_local_var->_library_owned = 1;
     return v1_container_state_running_local_var;
 }
 
+__attribute__((deprecated)) v1_container_state_running_t *v1_container_state_running_create(
+    char *started_at
+    ) {
+    return v1_container_state_running_create_internal (
+        started_at
+        );
+}
 
 void v1_container_state_running_free(v1_container_state_running_t *v1_container_state_running) {
     if(NULL == v1_container_state_running){
+        return ;
+    }
+    if(v1_container_state_running->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_container_state_running_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -54,6 +66,9 @@ v1_container_state_running_t *v1_container_state_running_parseFromJSON(cJSON *v1
 
     // v1_container_state_running->started_at
     cJSON *started_at = cJSON_GetObjectItemCaseSensitive(v1_container_state_runningJSON, "startedAt");
+    if (cJSON_IsNull(started_at)) {
+        started_at = NULL;
+    }
     if (started_at) { 
     if(!cJSON_IsString(started_at) && !cJSON_IsNull(started_at))
     {
@@ -62,7 +77,7 @@ v1_container_state_running_t *v1_container_state_running_parseFromJSON(cJSON *v1
     }
 
 
-    v1_container_state_running_local_var = v1_container_state_running_create (
+    v1_container_state_running_local_var = v1_container_state_running_create_internal (
         started_at && !cJSON_IsNull(started_at) ? strdup(started_at->valuestring) : NULL
         );
 

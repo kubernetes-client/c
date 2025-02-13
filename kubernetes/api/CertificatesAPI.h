@@ -11,6 +11,6 @@
 // get information of a group
 //
 v1_api_group_t*
-CertificatesAPI_getAPIGroup_7(apiClient_t *apiClient);
+CertificatesAPI_getAPIGroup(apiClient_t *apiClient);
 
 

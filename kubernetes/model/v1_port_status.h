@@ -1,7 +1,7 @@
 /*
  * v1_port_status.h
  *
- * 
+ * PortStatus represents the error condition of a service port
  */
 
 #ifndef _v1_port_status_H_
@@ -23,9 +23,10 @@ typedef struct v1_port_status_t {
     int port; //numeric
     char *protocol; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_port_status_t;
 
-v1_port_status_t *v1_port_status_create(
+__attribute__((deprecated)) v1_port_status_t *v1_port_status_create(
     char *error,
     int port,
     char *protocol

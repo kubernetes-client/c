@@ -5,7 +5,7 @@
 
 
 
-v1_controller_revision_t *v1_controller_revision_create(
+static v1_controller_revision_t *v1_controller_revision_create_internal(
     char *api_version,
     object_t *data,
     char *kind,
@@ -22,12 +22,32 @@ v1_controller_revision_t *v1_controller_revision_create(
     v1_controller_revision_local_var->metadata = metadata;
     v1_controller_revision_local_var->revision = revision;
 
+    v1_controller_revision_local_var->_library_owned = 1;
     return v1_controller_revision_local_var;
 }
 
+__attribute__((deprecated)) v1_controller_revision_t *v1_controller_revision_create(
+    char *api_version,
+    object_t *data,
+    char *kind,
+    v1_object_meta_t *metadata,
+    long revision
+    ) {
+    return v1_controller_revision_create_internal (
+        api_version,
+        data,
+        kind,
+        metadata,
+        revision
+        );
+}
 
 void v1_controller_revision_free(v1_controller_revision_t *v1_controller_revision) {
     if(NULL == v1_controller_revision){
+        return ;
+    }
+    if(v1_controller_revision->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_controller_revision_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -120,6 +140,9 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
 
     // v1_controller_revision->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -129,6 +152,9 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
 
     // v1_controller_revision->data
     cJSON *data = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "data");
+    if (cJSON_IsNull(data)) {
+        data = NULL;
+    }
     object_t *data_local_object = NULL;
     if (data) { 
     data_local_object = object_parseFromJSON(data); //object
@@ -136,6 +162,9 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
 
     // v1_controller_revision->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -145,12 +174,18 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
 
     // v1_controller_revision->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_controller_revision->revision
     cJSON *revision = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "revision");
+    if (cJSON_IsNull(revision)) {
+        revision = NULL;
+    }
     if (!revision) {
         goto end;
     }
@@ -162,7 +197,7 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
     }
 
 
-    v1_controller_revision_local_var = v1_controller_revision_create (
+    v1_controller_revision_local_var = v1_controller_revision_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         data ? data_local_object : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,

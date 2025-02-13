@@ -28,9 +28,10 @@ typedef struct v1_api_service_t {
     struct v1_api_service_spec_t *spec; //model
     struct v1_api_service_status_t *status; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_api_service_t;
 
-v1_api_service_t *v1_api_service_create(
+__attribute__((deprecated)) v1_api_service_t *v1_api_service_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,

@@ -5,7 +5,7 @@
 
 
 
-v1_ingress_backend_t *v1_ingress_backend_create(
+static v1_ingress_backend_t *v1_ingress_backend_create_internal(
     v1_typed_local_object_reference_t *resource,
     v1_ingress_service_backend_t *service
     ) {
@@ -16,12 +16,26 @@ v1_ingress_backend_t *v1_ingress_backend_create(
     v1_ingress_backend_local_var->resource = resource;
     v1_ingress_backend_local_var->service = service;
 
+    v1_ingress_backend_local_var->_library_owned = 1;
     return v1_ingress_backend_local_var;
 }
 
+__attribute__((deprecated)) v1_ingress_backend_t *v1_ingress_backend_create(
+    v1_typed_local_object_reference_t *resource,
+    v1_ingress_service_backend_t *service
+    ) {
+    return v1_ingress_backend_create_internal (
+        resource,
+        service
+        );
+}
 
 void v1_ingress_backend_free(v1_ingress_backend_t *v1_ingress_backend) {
     if(NULL == v1_ingress_backend){
+        return ;
+    }
+    if(v1_ingress_backend->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_ingress_backend_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -84,18 +98,24 @@ v1_ingress_backend_t *v1_ingress_backend_parseFromJSON(cJSON *v1_ingress_backend
 
     // v1_ingress_backend->resource
     cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1_ingress_backendJSON, "resource");
+    if (cJSON_IsNull(resource)) {
+        resource = NULL;
+    }
     if (resource) { 
     resource_local_nonprim = v1_typed_local_object_reference_parseFromJSON(resource); //nonprimitive
     }
 
     // v1_ingress_backend->service
     cJSON *service = cJSON_GetObjectItemCaseSensitive(v1_ingress_backendJSON, "service");
+    if (cJSON_IsNull(service)) {
+        service = NULL;
+    }
     if (service) { 
     service_local_nonprim = v1_ingress_service_backend_parseFromJSON(service); //nonprimitive
     }
 
 
-    v1_ingress_backend_local_var = v1_ingress_backend_create (
+    v1_ingress_backend_local_var = v1_ingress_backend_create_internal (
         resource ? resource_local_nonprim : NULL,
         service ? service_local_nonprim : NULL
         );

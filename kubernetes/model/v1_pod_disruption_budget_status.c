@@ -5,7 +5,7 @@
 
 
 
-v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_create(
+static v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_create_internal(
     list_t *conditions,
     int current_healthy,
     int desired_healthy,
@@ -26,12 +26,36 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_create(
     v1_pod_disruption_budget_status_local_var->expected_pods = expected_pods;
     v1_pod_disruption_budget_status_local_var->observed_generation = observed_generation;
 
+    v1_pod_disruption_budget_status_local_var->_library_owned = 1;
     return v1_pod_disruption_budget_status_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_create(
+    list_t *conditions,
+    int current_healthy,
+    int desired_healthy,
+    list_t* disrupted_pods,
+    int disruptions_allowed,
+    int expected_pods,
+    long observed_generation
+    ) {
+    return v1_pod_disruption_budget_status_create_internal (
+        conditions,
+        current_healthy,
+        desired_healthy,
+        disrupted_pods,
+        disruptions_allowed,
+        expected_pods,
+        observed_generation
+        );
+}
 
 void v1_pod_disruption_budget_status_free(v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status) {
     if(NULL == v1_pod_disruption_budget_status){
+        return ;
+    }
+    if(v1_pod_disruption_budget_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_disruption_budget_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -44,7 +68,7 @@ void v1_pod_disruption_budget_status_free(v1_pod_disruption_budget_status_t *v1_
     }
     if (v1_pod_disruption_budget_status->disrupted_pods) {
         list_ForEach(listEntry, v1_pod_disruption_budget_status->disrupted_pods) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -106,7 +130,7 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
     listEntry_t *disrupted_podsListEntry;
     if (v1_pod_disruption_budget_status->disrupted_pods) {
     list_ForEach(disrupted_podsListEntry, v1_pod_disruption_budget_status->disrupted_pods) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)disrupted_podsListEntry->data;
+        keyValuePair_t *localKeyValue = disrupted_podsListEntry->data;
     }
     }
     }
@@ -157,6 +181,9 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
 
     // v1_pod_disruption_budget_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -178,6 +205,9 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
 
     // v1_pod_disruption_budget_status->current_healthy
     cJSON *current_healthy = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "currentHealthy");
+    if (cJSON_IsNull(current_healthy)) {
+        current_healthy = NULL;
+    }
     if (!current_healthy) {
         goto end;
     }
@@ -190,6 +220,9 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
 
     // v1_pod_disruption_budget_status->desired_healthy
     cJSON *desired_healthy = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "desiredHealthy");
+    if (cJSON_IsNull(desired_healthy)) {
+        desired_healthy = NULL;
+    }
     if (!desired_healthy) {
         goto end;
     }
@@ -202,6 +235,9 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
 
     // v1_pod_disruption_budget_status->disrupted_pods
     cJSON *disrupted_pods = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "disruptedPods");
+    if (cJSON_IsNull(disrupted_pods)) {
+        disrupted_pods = NULL;
+    }
     if (disrupted_pods) { 
     cJSON *disrupted_pods_local_map = NULL;
     if(!cJSON_IsObject(disrupted_pods) && !cJSON_IsNull(disrupted_pods))
@@ -222,6 +258,9 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
 
     // v1_pod_disruption_budget_status->disruptions_allowed
     cJSON *disruptions_allowed = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "disruptionsAllowed");
+    if (cJSON_IsNull(disruptions_allowed)) {
+        disruptions_allowed = NULL;
+    }
     if (!disruptions_allowed) {
         goto end;
     }
@@ -234,6 +273,9 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
 
     // v1_pod_disruption_budget_status->expected_pods
     cJSON *expected_pods = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "expectedPods");
+    if (cJSON_IsNull(expected_pods)) {
+        expected_pods = NULL;
+    }
     if (!expected_pods) {
         goto end;
     }
@@ -246,6 +288,9 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
 
     // v1_pod_disruption_budget_status->observed_generation
     cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "observedGeneration");
+    if (cJSON_IsNull(observed_generation)) {
+        observed_generation = NULL;
+    }
     if (observed_generation) { 
     if(!cJSON_IsNumber(observed_generation))
     {
@@ -254,7 +299,7 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
     }
 
 
-    v1_pod_disruption_budget_status_local_var = v1_pod_disruption_budget_status_create (
+    v1_pod_disruption_budget_status_local_var = v1_pod_disruption_budget_status_create_internal (
         conditions ? conditionsList : NULL,
         current_healthy->valuedouble,
         desired_healthy->valuedouble,
@@ -278,7 +323,7 @@ end:
     if (disrupted_podsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, disrupted_podsList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             keyValuePair_free(localKeyValue);

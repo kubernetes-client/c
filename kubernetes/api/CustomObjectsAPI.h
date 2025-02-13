@@ -37,7 +37,7 @@ CustomObjectsAPI_deleteCollectionClusterCustomObject(apiClient_t *apiClient, cha
 // Delete collection of namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, char *labelSelector, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, v1_delete_options_t *body);
+CustomObjectsAPI_deleteCollectionNamespacedCustomObject(apiClient_t *apiClient, char *group, char *version, char *_namespace, char *plural, char *pretty, char *labelSelector, int *gracePeriodSeconds, int *orphanDependents, char *propagationPolicy, char *dryRun, char *fieldSelector, v1_delete_options_t *body);
 
 
 // Deletes the specified namespace scoped custom object
@@ -49,7 +49,7 @@ CustomObjectsAPI_deleteNamespacedCustomObject(apiClient_t *apiClient, char *grou
 // get available resources
 //
 v1_api_resource_list_t*
-CustomObjectsAPI_getAPIResources_33(apiClient_t *apiClient, char *group, char *version);
+CustomObjectsAPI_getAPIResources(apiClient_t *apiClient, char *group, char *version);
 
 
 // Returns a cluster scoped custom object

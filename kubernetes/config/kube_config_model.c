@@ -1,6 +1,11 @@
 #include "kube_config_model.h"
 #include <stdlib.h>
 
+void kubeconfig_free_string_list(char **string_list, int count);
+void kubeconfig_free_string_map_list(keyValuePair_t ** map_list, int count);
+
+char *kubeconfig_mk_cert_key_tempfile(const char *data);
+
 void kubeconfig_free_string_list(char **string_list, int count)
 {
     if (string_list && count > 0) {

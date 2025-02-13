@@ -22,9 +22,10 @@ typedef struct v1_pod_failure_policy_on_pod_conditions_pattern_t {
     char *status; // string
     char *type; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_failure_policy_on_pod_conditions_pattern_t;
 
-v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern_create(
+__attribute__((deprecated)) v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern_create(
     char *status,
     char *type
 );

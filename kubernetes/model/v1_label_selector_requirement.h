@@ -23,9 +23,10 @@ typedef struct v1_label_selector_requirement_t {
     char *_operator; // string
     list_t *values; //primitive container
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_label_selector_requirement_t;
 
-v1_label_selector_requirement_t *v1_label_selector_requirement_create(
+__attribute__((deprecated)) v1_label_selector_requirement_t *v1_label_selector_requirement_create(
     char *key,
     char *_operator,
     list_t *values

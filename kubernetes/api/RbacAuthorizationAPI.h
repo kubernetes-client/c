@@ -11,6 +11,6 @@
 // get information of a group
 //
 v1_api_group_t*
-RbacAuthorizationAPI_getAPIGroup_16(apiClient_t *apiClient);
+RbacAuthorizationAPI_getAPIGroup(apiClient_t *apiClient);
 
 

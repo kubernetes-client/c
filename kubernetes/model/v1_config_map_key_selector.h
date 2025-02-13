@@ -23,9 +23,10 @@ typedef struct v1_config_map_key_selector_t {
     char *name; // string
     int optional; //boolean
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_config_map_key_selector_t;
 
-v1_config_map_key_selector_t *v1_config_map_key_selector_create(
+__attribute__((deprecated)) v1_config_map_key_selector_t *v1_config_map_key_selector_create(
     char *key,
     char *name,
     int optional

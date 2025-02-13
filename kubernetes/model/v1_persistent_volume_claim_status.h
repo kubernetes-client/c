@@ -30,9 +30,10 @@ typedef struct v1_persistent_volume_claim_status_t {
     struct v1_modify_volume_status_t *modify_volume_status; //model
     char *phase; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_persistent_volume_claim_status_t;
 
-v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_create(
+__attribute__((deprecated)) v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_create(
     list_t *access_modes,
     list_t* allocated_resource_statuses,
     list_t* allocated_resources,

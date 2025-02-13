@@ -5,7 +5,7 @@
 
 
 
-v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_create(
+static v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_create_internal(
     int_or_string_t *max_unavailable,
     int_or_string_t *min_available,
     v1_label_selector_t *selector,
@@ -20,12 +20,30 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_create(
     v1_pod_disruption_budget_spec_local_var->selector = selector;
     v1_pod_disruption_budget_spec_local_var->unhealthy_pod_eviction_policy = unhealthy_pod_eviction_policy;
 
+    v1_pod_disruption_budget_spec_local_var->_library_owned = 1;
     return v1_pod_disruption_budget_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_create(
+    int_or_string_t *max_unavailable,
+    int_or_string_t *min_available,
+    v1_label_selector_t *selector,
+    char *unhealthy_pod_eviction_policy
+    ) {
+    return v1_pod_disruption_budget_spec_create_internal (
+        max_unavailable,
+        min_available,
+        selector,
+        unhealthy_pod_eviction_policy
+        );
+}
 
 void v1_pod_disruption_budget_spec_free(v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec) {
     if(NULL == v1_pod_disruption_budget_spec){
+        return ;
+    }
+    if(v1_pod_disruption_budget_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_pod_disruption_budget_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -120,24 +138,36 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(cJS
 
     // v1_pod_disruption_budget_spec->max_unavailable
     cJSON *max_unavailable = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "maxUnavailable");
+    if (cJSON_IsNull(max_unavailable)) {
+        max_unavailable = NULL;
+    }
     if (max_unavailable) { 
     max_unavailable_local_nonprim = int_or_string_parseFromJSON(max_unavailable); //custom
     }
 
     // v1_pod_disruption_budget_spec->min_available
     cJSON *min_available = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "minAvailable");
+    if (cJSON_IsNull(min_available)) {
+        min_available = NULL;
+    }
     if (min_available) { 
     min_available_local_nonprim = int_or_string_parseFromJSON(min_available); //custom
     }
 
     // v1_pod_disruption_budget_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "selector");
+    if (cJSON_IsNull(selector)) {
+        selector = NULL;
+    }
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
     // v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy
     cJSON *unhealthy_pod_eviction_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "unhealthyPodEvictionPolicy");
+    if (cJSON_IsNull(unhealthy_pod_eviction_policy)) {
+        unhealthy_pod_eviction_policy = NULL;
+    }
     if (unhealthy_pod_eviction_policy) { 
     if(!cJSON_IsString(unhealthy_pod_eviction_policy) && !cJSON_IsNull(unhealthy_pod_eviction_policy))
     {
@@ -146,7 +176,7 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(cJS
     }
 
 
-    v1_pod_disruption_budget_spec_local_var = v1_pod_disruption_budget_spec_create (
+    v1_pod_disruption_budget_spec_local_var = v1_pod_disruption_budget_spec_create_internal (
         max_unavailable ? max_unavailable_local_nonprim : NULL,
         min_available ? min_available_local_nonprim : NULL,
         selector ? selector_local_nonprim : NULL,

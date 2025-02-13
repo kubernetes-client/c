@@ -5,7 +5,7 @@
 
 
 
-v1_cluster_role_binding_t *v1_cluster_role_binding_create(
+static v1_cluster_role_binding_t *v1_cluster_role_binding_create_internal(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
@@ -22,12 +22,32 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_create(
     v1_cluster_role_binding_local_var->role_ref = role_ref;
     v1_cluster_role_binding_local_var->subjects = subjects;
 
+    v1_cluster_role_binding_local_var->_library_owned = 1;
     return v1_cluster_role_binding_local_var;
 }
 
+__attribute__((deprecated)) v1_cluster_role_binding_t *v1_cluster_role_binding_create(
+    char *api_version,
+    char *kind,
+    v1_object_meta_t *metadata,
+    v1_role_ref_t *role_ref,
+    list_t *subjects
+    ) {
+    return v1_cluster_role_binding_create_internal (
+        api_version,
+        kind,
+        metadata,
+        role_ref,
+        subjects
+        );
+}
 
 void v1_cluster_role_binding_free(v1_cluster_role_binding_t *v1_cluster_role_binding) {
     if(NULL == v1_cluster_role_binding){
+        return ;
+    }
+    if(v1_cluster_role_binding->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_cluster_role_binding_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -145,6 +165,9 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
 
     // v1_cluster_role_binding->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
     if (api_version) { 
     if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
     {
@@ -154,6 +177,9 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
 
     // v1_cluster_role_binding->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
     if (kind) { 
     if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
     {
@@ -163,12 +189,18 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
 
     // v1_cluster_role_binding->metadata
     cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_cluster_role_binding->role_ref
     cJSON *role_ref = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "roleRef");
+    if (cJSON_IsNull(role_ref)) {
+        role_ref = NULL;
+    }
     if (!role_ref) {
         goto end;
     }
@@ -178,6 +210,9 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
 
     // v1_cluster_role_binding->subjects
     cJSON *subjects = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "subjects");
+    if (cJSON_IsNull(subjects)) {
+        subjects = NULL;
+    }
     if (subjects) { 
     cJSON *subjects_local_nonprimitive = NULL;
     if(!cJSON_IsArray(subjects)){
@@ -198,7 +233,7 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
     }
 
 
-    v1_cluster_role_binding_local_var = v1_cluster_role_binding_create (
+    v1_cluster_role_binding_local_var = v1_cluster_role_binding_create_internal (
         api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,

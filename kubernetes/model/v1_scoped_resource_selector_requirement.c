@@ -5,7 +5,7 @@
 
 
 
-v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement_create(
+static v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement_create_internal(
     char *_operator,
     char *scope_name,
     list_t *values
@@ -18,12 +18,28 @@ v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requireme
     v1_scoped_resource_selector_requirement_local_var->scope_name = scope_name;
     v1_scoped_resource_selector_requirement_local_var->values = values;
 
+    v1_scoped_resource_selector_requirement_local_var->_library_owned = 1;
     return v1_scoped_resource_selector_requirement_local_var;
 }
 
+__attribute__((deprecated)) v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement_create(
+    char *_operator,
+    char *scope_name,
+    list_t *values
+    ) {
+    return v1_scoped_resource_selector_requirement_create_internal (
+        _operator,
+        scope_name,
+        values
+        );
+}
 
 void v1_scoped_resource_selector_requirement_free(v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement) {
     if(NULL == v1_scoped_resource_selector_requirement){
+        return ;
+    }
+    if(v1_scoped_resource_selector_requirement->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_scoped_resource_selector_requirement_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -75,7 +91,7 @@ cJSON *v1_scoped_resource_selector_requirement_convertToJSON(v1_scoped_resource_
 
     listEntry_t *valuesListEntry;
     list_ForEach(valuesListEntry, v1_scoped_resource_selector_requirement->values) {
-    if(cJSON_AddStringToObject(values, "", (char*)valuesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(values, "", valuesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -99,6 +115,9 @@ v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requireme
 
     // v1_scoped_resource_selector_requirement->_operator
     cJSON *_operator = cJSON_GetObjectItemCaseSensitive(v1_scoped_resource_selector_requirementJSON, "operator");
+    if (cJSON_IsNull(_operator)) {
+        _operator = NULL;
+    }
     if (!_operator) {
         goto end;
     }
@@ -111,6 +130,9 @@ v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requireme
 
     // v1_scoped_resource_selector_requirement->scope_name
     cJSON *scope_name = cJSON_GetObjectItemCaseSensitive(v1_scoped_resource_selector_requirementJSON, "scopeName");
+    if (cJSON_IsNull(scope_name)) {
+        scope_name = NULL;
+    }
     if (!scope_name) {
         goto end;
     }
@@ -123,6 +145,9 @@ v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requireme
 
     // v1_scoped_resource_selector_requirement->values
     cJSON *values = cJSON_GetObjectItemCaseSensitive(v1_scoped_resource_selector_requirementJSON, "values");
+    if (cJSON_IsNull(values)) {
+        values = NULL;
+    }
     if (values) { 
     cJSON *values_local = NULL;
     if(!cJSON_IsArray(values)) {
@@ -141,7 +166,7 @@ v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requireme
     }
 
 
-    v1_scoped_resource_selector_requirement_local_var = v1_scoped_resource_selector_requirement_create (
+    v1_scoped_resource_selector_requirement_local_var = v1_scoped_resource_selector_requirement_create_internal (
         strdup(_operator->valuestring),
         strdup(scope_name->valuestring),
         values ? valuesList : NULL

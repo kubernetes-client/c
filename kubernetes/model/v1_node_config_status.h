@@ -25,9 +25,10 @@ typedef struct v1_node_config_status_t {
     char *error; // string
     struct v1_node_config_source_t *last_known_good; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_config_status_t;
 
-v1_node_config_status_t *v1_node_config_status_create(
+__attribute__((deprecated)) v1_node_config_status_t *v1_node_config_status_create(
     v1_node_config_source_t *active,
     v1_node_config_source_t *assigned,
     char *error,

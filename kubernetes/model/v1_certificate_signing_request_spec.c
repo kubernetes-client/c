@@ -5,7 +5,7 @@
 
 
 
-v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_create(
+static v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_create_internal(
     int expiration_seconds,
     list_t* extra,
     list_t *groups,
@@ -28,18 +28,44 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_creat
     v1_certificate_signing_request_spec_local_var->usages = usages;
     v1_certificate_signing_request_spec_local_var->username = username;
 
+    v1_certificate_signing_request_spec_local_var->_library_owned = 1;
     return v1_certificate_signing_request_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_create(
+    int expiration_seconds,
+    list_t* extra,
+    list_t *groups,
+    char *request,
+    char *signer_name,
+    char *uid,
+    list_t *usages,
+    char *username
+    ) {
+    return v1_certificate_signing_request_spec_create_internal (
+        expiration_seconds,
+        extra,
+        groups,
+        request,
+        signer_name,
+        uid,
+        usages,
+        username
+        );
+}
 
 void v1_certificate_signing_request_spec_free(v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec) {
     if(NULL == v1_certificate_signing_request_spec){
         return ;
     }
+    if(v1_certificate_signing_request_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_certificate_signing_request_spec_free");
+        return ;
+    }
     listEntry_t *listEntry;
     if (v1_certificate_signing_request_spec->extra) {
         list_ForEach(listEntry, v1_certificate_signing_request_spec->extra) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -101,7 +127,7 @@ cJSON *v1_certificate_signing_request_spec_convertToJSON(v1_certificate_signing_
     listEntry_t *extraListEntry;
     if (v1_certificate_signing_request_spec->extra) {
     list_ForEach(extraListEntry, v1_certificate_signing_request_spec->extra) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)extraListEntry->data;
+        keyValuePair_t *localKeyValue = extraListEntry->data;
     }
     }
     }
@@ -116,7 +142,7 @@ cJSON *v1_certificate_signing_request_spec_convertToJSON(v1_certificate_signing_
 
     listEntry_t *groupsListEntry;
     list_ForEach(groupsListEntry, v1_certificate_signing_request_spec->groups) {
-    if(cJSON_AddStringToObject(groups, "", (char*)groupsListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(groups, "", groupsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -159,7 +185,7 @@ cJSON *v1_certificate_signing_request_spec_convertToJSON(v1_certificate_signing_
 
     listEntry_t *usagesListEntry;
     list_ForEach(usagesListEntry, v1_certificate_signing_request_spec->usages) {
-    if(cJSON_AddStringToObject(usages, "", (char*)usagesListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(usages, "", usagesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -197,6 +223,9 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     // v1_certificate_signing_request_spec->expiration_seconds
     cJSON *expiration_seconds = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "expirationSeconds");
+    if (cJSON_IsNull(expiration_seconds)) {
+        expiration_seconds = NULL;
+    }
     if (expiration_seconds) { 
     if(!cJSON_IsNumber(expiration_seconds))
     {
@@ -206,6 +235,9 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     // v1_certificate_signing_request_spec->extra
     cJSON *extra = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "extra");
+    if (cJSON_IsNull(extra)) {
+        extra = NULL;
+    }
     if (extra) { 
     cJSON *extra_local_map = NULL;
     if(!cJSON_IsObject(extra) && !cJSON_IsNull(extra))
@@ -226,6 +258,9 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     // v1_certificate_signing_request_spec->groups
     cJSON *groups = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "groups");
+    if (cJSON_IsNull(groups)) {
+        groups = NULL;
+    }
     if (groups) { 
     cJSON *groups_local = NULL;
     if(!cJSON_IsArray(groups)) {
@@ -245,6 +280,9 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     // v1_certificate_signing_request_spec->request
     cJSON *request = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "request");
+    if (cJSON_IsNull(request)) {
+        request = NULL;
+    }
     if (!request) {
         goto end;
     }
@@ -257,6 +295,9 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     // v1_certificate_signing_request_spec->signer_name
     cJSON *signer_name = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "signerName");
+    if (cJSON_IsNull(signer_name)) {
+        signer_name = NULL;
+    }
     if (!signer_name) {
         goto end;
     }
@@ -269,6 +310,9 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     // v1_certificate_signing_request_spec->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "uid");
+    if (cJSON_IsNull(uid)) {
+        uid = NULL;
+    }
     if (uid) { 
     if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
@@ -278,6 +322,9 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     // v1_certificate_signing_request_spec->usages
     cJSON *usages = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "usages");
+    if (cJSON_IsNull(usages)) {
+        usages = NULL;
+    }
     if (usages) { 
     cJSON *usages_local = NULL;
     if(!cJSON_IsArray(usages)) {
@@ -297,6 +344,9 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     // v1_certificate_signing_request_spec->username
     cJSON *username = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "username");
+    if (cJSON_IsNull(username)) {
+        username = NULL;
+    }
     if (username) { 
     if(!cJSON_IsString(username) && !cJSON_IsNull(username))
     {
@@ -305,7 +355,7 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
     }
 
 
-    v1_certificate_signing_request_spec_local_var = v1_certificate_signing_request_spec_create (
+    v1_certificate_signing_request_spec_local_var = v1_certificate_signing_request_spec_create_internal (
         expiration_seconds ? expiration_seconds->valuedouble : 0,
         extra ? extraList : NULL,
         groups ? groupsList : NULL,
@@ -321,7 +371,7 @@ end:
     if (extraList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, extraList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             keyValuePair_free(localKeyValue);

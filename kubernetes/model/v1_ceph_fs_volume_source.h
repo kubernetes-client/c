@@ -27,9 +27,10 @@ typedef struct v1_ceph_fs_volume_source_t {
     struct v1_local_object_reference_t *secret_ref; //model
     char *user; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_ceph_fs_volume_source_t;
 
-v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_create(
+__attribute__((deprecated)) v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_create(
     list_t *monitors,
     char *path,
     int read_only,

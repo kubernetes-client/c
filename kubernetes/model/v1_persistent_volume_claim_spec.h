@@ -33,9 +33,10 @@ typedef struct v1_persistent_volume_claim_spec_t {
     char *volume_mode; // string
     char *volume_name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_persistent_volume_claim_spec_t;
 
-v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create(
+__attribute__((deprecated)) v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create(
     list_t *access_modes,
     v1_typed_local_object_reference_t *data_source,
     v1_typed_object_reference_t *data_source_ref,

@@ -5,7 +5,7 @@
 
 
 
-v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status_create(
+static v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status_create_internal(
     list_t *conditions,
     char *resource_version
     ) {
@@ -16,12 +16,26 @@ v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_
     v1alpha1_storage_version_migration_status_local_var->conditions = conditions;
     v1alpha1_storage_version_migration_status_local_var->resource_version = resource_version;
 
+    v1alpha1_storage_version_migration_status_local_var->_library_owned = 1;
     return v1alpha1_storage_version_migration_status_local_var;
 }
 
+__attribute__((deprecated)) v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status_create(
+    list_t *conditions,
+    char *resource_version
+    ) {
+    return v1alpha1_storage_version_migration_status_create_internal (
+        conditions,
+        resource_version
+        );
+}
 
 void v1alpha1_storage_version_migration_status_free(v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status) {
     if(NULL == v1alpha1_storage_version_migration_status){
+        return ;
+    }
+    if(v1alpha1_storage_version_migration_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1alpha1_storage_version_migration_status_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -86,6 +100,9 @@ v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_
 
     // v1alpha1_storage_version_migration_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migration_statusJSON, "conditions");
+    if (cJSON_IsNull(conditions)) {
+        conditions = NULL;
+    }
     if (conditions) { 
     cJSON *conditions_local_nonprimitive = NULL;
     if(!cJSON_IsArray(conditions)){
@@ -107,6 +124,9 @@ v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_
 
     // v1alpha1_storage_version_migration_status->resource_version
     cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migration_statusJSON, "resourceVersion");
+    if (cJSON_IsNull(resource_version)) {
+        resource_version = NULL;
+    }
     if (resource_version) { 
     if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
     {
@@ -115,7 +135,7 @@ v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_
     }
 
 
-    v1alpha1_storage_version_migration_status_local_var = v1alpha1_storage_version_migration_status_create (
+    v1alpha1_storage_version_migration_status_local_var = v1alpha1_storage_version_migration_status_create_internal (
         conditions ? conditionsList : NULL,
         resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL
         );

@@ -26,9 +26,10 @@ typedef struct v1_cluster_trust_bundle_projection_t {
     char *path; // string
     char *signer_name; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_cluster_trust_bundle_projection_t;
 
-v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_create(
+__attribute__((deprecated)) v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_create(
     v1_label_selector_t *label_selector,
     char *name,
     int optional,

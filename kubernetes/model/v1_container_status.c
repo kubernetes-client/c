@@ -5,7 +5,7 @@
 
 
 
-v1_container_status_t *v1_container_status_create(
+static v1_container_status_t *v1_container_status_create_internal(
     list_t* allocated_resources,
     list_t *allocated_resources_status,
     char *container_id,
@@ -40,18 +40,56 @@ v1_container_status_t *v1_container_status_create(
     v1_container_status_local_var->user = user;
     v1_container_status_local_var->volume_mounts = volume_mounts;
 
+    v1_container_status_local_var->_library_owned = 1;
     return v1_container_status_local_var;
 }
 
+__attribute__((deprecated)) v1_container_status_t *v1_container_status_create(
+    list_t* allocated_resources,
+    list_t *allocated_resources_status,
+    char *container_id,
+    char *image,
+    char *image_id,
+    v1_container_state_t *last_state,
+    char *name,
+    int ready,
+    v1_resource_requirements_t *resources,
+    int restart_count,
+    int started,
+    v1_container_state_t *state,
+    v1_container_user_t *user,
+    list_t *volume_mounts
+    ) {
+    return v1_container_status_create_internal (
+        allocated_resources,
+        allocated_resources_status,
+        container_id,
+        image,
+        image_id,
+        last_state,
+        name,
+        ready,
+        resources,
+        restart_count,
+        started,
+        state,
+        user,
+        volume_mounts
+        );
+}
 
 void v1_container_status_free(v1_container_status_t *v1_container_status) {
     if(NULL == v1_container_status){
         return ;
     }
+    if(v1_container_status->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_container_status_free");
+        return ;
+    }
     listEntry_t *listEntry;
     if (v1_container_status->allocated_resources) {
         list_ForEach(listEntry, v1_container_status->allocated_resources) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free (localKeyValue->key);
             free (localKeyValue->value);
             keyValuePair_free(localKeyValue);
@@ -121,8 +159,8 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     listEntry_t *allocated_resourcesListEntry;
     if (v1_container_status->allocated_resources) {
     list_ForEach(allocated_resourcesListEntry, v1_container_status->allocated_resources) {
-        keyValuePair_t *localKeyValue = (keyValuePair_t*)allocated_resourcesListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        keyValuePair_t *localKeyValue = allocated_resourcesListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -318,6 +356,9 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->allocated_resources
     cJSON *allocated_resources = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "allocatedResources");
+    if (cJSON_IsNull(allocated_resources)) {
+        allocated_resources = NULL;
+    }
     if (allocated_resources) { 
     cJSON *allocated_resources_local_map = NULL;
     if(!cJSON_IsObject(allocated_resources) && !cJSON_IsNull(allocated_resources))
@@ -343,6 +384,9 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->allocated_resources_status
     cJSON *allocated_resources_status = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "allocatedResourcesStatus");
+    if (cJSON_IsNull(allocated_resources_status)) {
+        allocated_resources_status = NULL;
+    }
     if (allocated_resources_status) { 
     cJSON *allocated_resources_status_local_nonprimitive = NULL;
     if(!cJSON_IsArray(allocated_resources_status)){
@@ -364,6 +408,9 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->container_id
     cJSON *container_id = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "containerID");
+    if (cJSON_IsNull(container_id)) {
+        container_id = NULL;
+    }
     if (container_id) { 
     if(!cJSON_IsString(container_id) && !cJSON_IsNull(container_id))
     {
@@ -373,6 +420,9 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->image
     cJSON *image = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "image");
+    if (cJSON_IsNull(image)) {
+        image = NULL;
+    }
     if (!image) {
         goto end;
     }
@@ -385,6 +435,9 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->image_id
     cJSON *image_id = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "imageID");
+    if (cJSON_IsNull(image_id)) {
+        image_id = NULL;
+    }
     if (!image_id) {
         goto end;
     }
@@ -397,12 +450,18 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->last_state
     cJSON *last_state = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "lastState");
+    if (cJSON_IsNull(last_state)) {
+        last_state = NULL;
+    }
     if (last_state) { 
     last_state_local_nonprim = v1_container_state_parseFromJSON(last_state); //nonprimitive
     }
 
     // v1_container_status->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -415,6 +474,9 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->ready
     cJSON *ready = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "ready");
+    if (cJSON_IsNull(ready)) {
+        ready = NULL;
+    }
     if (!ready) {
         goto end;
     }
@@ -427,12 +489,18 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "resources");
+    if (cJSON_IsNull(resources)) {
+        resources = NULL;
+    }
     if (resources) { 
     resources_local_nonprim = v1_resource_requirements_parseFromJSON(resources); //nonprimitive
     }
 
     // v1_container_status->restart_count
     cJSON *restart_count = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "restartCount");
+    if (cJSON_IsNull(restart_count)) {
+        restart_count = NULL;
+    }
     if (!restart_count) {
         goto end;
     }
@@ -445,6 +513,9 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->started
     cJSON *started = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "started");
+    if (cJSON_IsNull(started)) {
+        started = NULL;
+    }
     if (started) { 
     if(!cJSON_IsBool(started))
     {
@@ -454,18 +525,27 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
 
     // v1_container_status->state
     cJSON *state = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "state");
+    if (cJSON_IsNull(state)) {
+        state = NULL;
+    }
     if (state) { 
     state_local_nonprim = v1_container_state_parseFromJSON(state); //nonprimitive
     }
 
     // v1_container_status->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "user");
+    if (cJSON_IsNull(user)) {
+        user = NULL;
+    }
     if (user) { 
     user_local_nonprim = v1_container_user_parseFromJSON(user); //nonprimitive
     }
 
     // v1_container_status->volume_mounts
     cJSON *volume_mounts = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "volumeMounts");
+    if (cJSON_IsNull(volume_mounts)) {
+        volume_mounts = NULL;
+    }
     if (volume_mounts) { 
     cJSON *volume_mounts_local_nonprimitive = NULL;
     if(!cJSON_IsArray(volume_mounts)){
@@ -486,7 +566,7 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     }
 
 
-    v1_container_status_local_var = v1_container_status_create (
+    v1_container_status_local_var = v1_container_status_create_internal (
         allocated_resources ? allocated_resourcesList : NULL,
         allocated_resources_status ? allocated_resources_statusList : NULL,
         container_id && !cJSON_IsNull(container_id) ? strdup(container_id->valuestring) : NULL,
@@ -508,7 +588,7 @@ end:
     if (allocated_resourcesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, allocated_resourcesList) {
-            keyValuePair_t *localKeyValue = (keyValuePair_t*) listEntry->data;
+            keyValuePair_t *localKeyValue = listEntry->data;
             free(localKeyValue->key);
             localKeyValue->key = NULL;
             free(localKeyValue->value);

@@ -5,7 +5,7 @@
 
 
 
-v1_csi_node_spec_t *v1_csi_node_spec_create(
+static v1_csi_node_spec_t *v1_csi_node_spec_create_internal(
     list_t *drivers
     ) {
     v1_csi_node_spec_t *v1_csi_node_spec_local_var = malloc(sizeof(v1_csi_node_spec_t));
@@ -14,12 +14,24 @@ v1_csi_node_spec_t *v1_csi_node_spec_create(
     }
     v1_csi_node_spec_local_var->drivers = drivers;
 
+    v1_csi_node_spec_local_var->_library_owned = 1;
     return v1_csi_node_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_csi_node_spec_t *v1_csi_node_spec_create(
+    list_t *drivers
+    ) {
+    return v1_csi_node_spec_create_internal (
+        drivers
+        );
+}
 
 void v1_csi_node_spec_free(v1_csi_node_spec_t *v1_csi_node_spec) {
     if(NULL == v1_csi_node_spec){
+        return ;
+    }
+    if(v1_csi_node_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_csi_node_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -73,6 +85,9 @@ v1_csi_node_spec_t *v1_csi_node_spec_parseFromJSON(cJSON *v1_csi_node_specJSON){
 
     // v1_csi_node_spec->drivers
     cJSON *drivers = cJSON_GetObjectItemCaseSensitive(v1_csi_node_specJSON, "drivers");
+    if (cJSON_IsNull(drivers)) {
+        drivers = NULL;
+    }
     if (!drivers) {
         goto end;
     }
@@ -96,7 +111,7 @@ v1_csi_node_spec_t *v1_csi_node_spec_parseFromJSON(cJSON *v1_csi_node_specJSON){
     }
 
 
-    v1_csi_node_spec_local_var = v1_csi_node_spec_create (
+    v1_csi_node_spec_local_var = v1_csi_node_spec_create_internal (
         driversList
         );
 

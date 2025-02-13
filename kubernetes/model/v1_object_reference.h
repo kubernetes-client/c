@@ -27,9 +27,10 @@ typedef struct v1_object_reference_t {
     char *resource_version; // string
     char *uid; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_object_reference_t;
 
-v1_object_reference_t *v1_object_reference_create(
+__attribute__((deprecated)) v1_object_reference_t *v1_object_reference_create(
     char *api_version,
     char *field_path,
     char *kind,

@@ -1,7 +1,7 @@
 /*
  * v1_grpc_action.h
  *
- * 
+ * GRPCAction specifies an action involving a GRPC service.
  */
 
 #ifndef _v1_grpc_action_H_
@@ -22,9 +22,10 @@ typedef struct v1_grpc_action_t {
     int port; //numeric
     char *service; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_grpc_action_t;
 
-v1_grpc_action_t *v1_grpc_action_create(
+__attribute__((deprecated)) v1_grpc_action_t *v1_grpc_action_create(
     int port,
     char *service
 );

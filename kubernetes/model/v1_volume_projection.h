@@ -30,9 +30,10 @@ typedef struct v1_volume_projection_t {
     struct v1_secret_projection_t *secret; //model
     struct v1_service_account_token_projection_t *service_account_token; //model
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_volume_projection_t;
 
-v1_volume_projection_t *v1_volume_projection_create(
+__attribute__((deprecated)) v1_volume_projection_t *v1_volume_projection_create(
     v1_cluster_trust_bundle_projection_t *cluster_trust_bundle,
     v1_config_map_projection_t *config_map,
     v1_downward_api_projection_t *downward_api,

@@ -5,7 +5,7 @@
 
 
 
-v1_namespace_spec_t *v1_namespace_spec_create(
+static v1_namespace_spec_t *v1_namespace_spec_create_internal(
     list_t *finalizers
     ) {
     v1_namespace_spec_t *v1_namespace_spec_local_var = malloc(sizeof(v1_namespace_spec_t));
@@ -14,12 +14,24 @@ v1_namespace_spec_t *v1_namespace_spec_create(
     }
     v1_namespace_spec_local_var->finalizers = finalizers;
 
+    v1_namespace_spec_local_var->_library_owned = 1;
     return v1_namespace_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_namespace_spec_t *v1_namespace_spec_create(
+    list_t *finalizers
+    ) {
+    return v1_namespace_spec_create_internal (
+        finalizers
+        );
+}
 
 void v1_namespace_spec_free(v1_namespace_spec_t *v1_namespace_spec) {
     if(NULL == v1_namespace_spec){
+        return ;
+    }
+    if(v1_namespace_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_namespace_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -45,7 +57,7 @@ cJSON *v1_namespace_spec_convertToJSON(v1_namespace_spec_t *v1_namespace_spec) {
 
     listEntry_t *finalizersListEntry;
     list_ForEach(finalizersListEntry, v1_namespace_spec->finalizers) {
-    if(cJSON_AddStringToObject(finalizers, "", (char*)finalizersListEntry->data) == NULL)
+    if(cJSON_AddStringToObject(finalizers, "", finalizersListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -69,6 +81,9 @@ v1_namespace_spec_t *v1_namespace_spec_parseFromJSON(cJSON *v1_namespace_specJSO
 
     // v1_namespace_spec->finalizers
     cJSON *finalizers = cJSON_GetObjectItemCaseSensitive(v1_namespace_specJSON, "finalizers");
+    if (cJSON_IsNull(finalizers)) {
+        finalizers = NULL;
+    }
     if (finalizers) { 
     cJSON *finalizers_local = NULL;
     if(!cJSON_IsArray(finalizers)) {
@@ -87,7 +102,7 @@ v1_namespace_spec_t *v1_namespace_spec_parseFromJSON(cJSON *v1_namespace_specJSO
     }
 
 
-    v1_namespace_spec_local_var = v1_namespace_spec_create (
+    v1_namespace_spec_local_var = v1_namespace_spec_create_internal (
         finalizers ? finalizersList : NULL
         );
 

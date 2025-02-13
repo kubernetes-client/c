@@ -5,7 +5,7 @@
 
 
 
-v1_toleration_t *v1_toleration_create(
+static v1_toleration_t *v1_toleration_create_internal(
     char *effect,
     char *key,
     char *_operator,
@@ -22,12 +22,32 @@ v1_toleration_t *v1_toleration_create(
     v1_toleration_local_var->toleration_seconds = toleration_seconds;
     v1_toleration_local_var->value = value;
 
+    v1_toleration_local_var->_library_owned = 1;
     return v1_toleration_local_var;
 }
 
+__attribute__((deprecated)) v1_toleration_t *v1_toleration_create(
+    char *effect,
+    char *key,
+    char *_operator,
+    long toleration_seconds,
+    char *value
+    ) {
+    return v1_toleration_create_internal (
+        effect,
+        key,
+        _operator,
+        toleration_seconds,
+        value
+        );
+}
 
 void v1_toleration_free(v1_toleration_t *v1_toleration) {
     if(NULL == v1_toleration){
+        return ;
+    }
+    if(v1_toleration->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_toleration_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -106,6 +126,9 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
 
     // v1_toleration->effect
     cJSON *effect = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "effect");
+    if (cJSON_IsNull(effect)) {
+        effect = NULL;
+    }
     if (effect) { 
     if(!cJSON_IsString(effect) && !cJSON_IsNull(effect))
     {
@@ -115,6 +138,9 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
 
     // v1_toleration->key
     cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "key");
+    if (cJSON_IsNull(key)) {
+        key = NULL;
+    }
     if (key) { 
     if(!cJSON_IsString(key) && !cJSON_IsNull(key))
     {
@@ -124,6 +150,9 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
 
     // v1_toleration->_operator
     cJSON *_operator = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "operator");
+    if (cJSON_IsNull(_operator)) {
+        _operator = NULL;
+    }
     if (_operator) { 
     if(!cJSON_IsString(_operator) && !cJSON_IsNull(_operator))
     {
@@ -133,6 +162,9 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
 
     // v1_toleration->toleration_seconds
     cJSON *toleration_seconds = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "tolerationSeconds");
+    if (cJSON_IsNull(toleration_seconds)) {
+        toleration_seconds = NULL;
+    }
     if (toleration_seconds) { 
     if(!cJSON_IsNumber(toleration_seconds))
     {
@@ -142,6 +174,9 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
 
     // v1_toleration->value
     cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "value");
+    if (cJSON_IsNull(value)) {
+        value = NULL;
+    }
     if (value) { 
     if(!cJSON_IsString(value) && !cJSON_IsNull(value))
     {
@@ -150,7 +185,7 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
     }
 
 
-    v1_toleration_local_var = v1_toleration_create (
+    v1_toleration_local_var = v1_toleration_create_internal (
         effect && !cJSON_IsNull(effect) ? strdup(effect->valuestring) : NULL,
         key && !cJSON_IsNull(key) ? strdup(key->valuestring) : NULL,
         _operator && !cJSON_IsNull(_operator) ? strdup(_operator->valuestring) : NULL,

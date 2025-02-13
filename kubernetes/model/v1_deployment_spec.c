@@ -5,7 +5,7 @@
 
 
 
-v1_deployment_spec_t *v1_deployment_spec_create(
+static v1_deployment_spec_t *v1_deployment_spec_create_internal(
     int min_ready_seconds,
     int paused,
     int progress_deadline_seconds,
@@ -28,12 +28,38 @@ v1_deployment_spec_t *v1_deployment_spec_create(
     v1_deployment_spec_local_var->strategy = strategy;
     v1_deployment_spec_local_var->_template = _template;
 
+    v1_deployment_spec_local_var->_library_owned = 1;
     return v1_deployment_spec_local_var;
 }
 
+__attribute__((deprecated)) v1_deployment_spec_t *v1_deployment_spec_create(
+    int min_ready_seconds,
+    int paused,
+    int progress_deadline_seconds,
+    int replicas,
+    int revision_history_limit,
+    v1_label_selector_t *selector,
+    v1_deployment_strategy_t *strategy,
+    v1_pod_template_spec_t *_template
+    ) {
+    return v1_deployment_spec_create_internal (
+        min_ready_seconds,
+        paused,
+        progress_deadline_seconds,
+        replicas,
+        revision_history_limit,
+        selector,
+        strategy,
+        _template
+        );
+}
 
 void v1_deployment_spec_free(v1_deployment_spec_t *v1_deployment_spec) {
     if(NULL == v1_deployment_spec){
+        return ;
+    }
+    if(v1_deployment_spec->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_deployment_spec_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -158,6 +184,9 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
 
     // v1_deployment_spec->min_ready_seconds
     cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "minReadySeconds");
+    if (cJSON_IsNull(min_ready_seconds)) {
+        min_ready_seconds = NULL;
+    }
     if (min_ready_seconds) { 
     if(!cJSON_IsNumber(min_ready_seconds))
     {
@@ -167,6 +196,9 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
 
     // v1_deployment_spec->paused
     cJSON *paused = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "paused");
+    if (cJSON_IsNull(paused)) {
+        paused = NULL;
+    }
     if (paused) { 
     if(!cJSON_IsBool(paused))
     {
@@ -176,6 +208,9 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
 
     // v1_deployment_spec->progress_deadline_seconds
     cJSON *progress_deadline_seconds = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "progressDeadlineSeconds");
+    if (cJSON_IsNull(progress_deadline_seconds)) {
+        progress_deadline_seconds = NULL;
+    }
     if (progress_deadline_seconds) { 
     if(!cJSON_IsNumber(progress_deadline_seconds))
     {
@@ -185,6 +220,9 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
 
     // v1_deployment_spec->replicas
     cJSON *replicas = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "replicas");
+    if (cJSON_IsNull(replicas)) {
+        replicas = NULL;
+    }
     if (replicas) { 
     if(!cJSON_IsNumber(replicas))
     {
@@ -194,6 +232,9 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
 
     // v1_deployment_spec->revision_history_limit
     cJSON *revision_history_limit = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "revisionHistoryLimit");
+    if (cJSON_IsNull(revision_history_limit)) {
+        revision_history_limit = NULL;
+    }
     if (revision_history_limit) { 
     if(!cJSON_IsNumber(revision_history_limit))
     {
@@ -203,6 +244,9 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
 
     // v1_deployment_spec->selector
     cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "selector");
+    if (cJSON_IsNull(selector)) {
+        selector = NULL;
+    }
     if (!selector) {
         goto end;
     }
@@ -212,12 +256,18 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
 
     // v1_deployment_spec->strategy
     cJSON *strategy = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "strategy");
+    if (cJSON_IsNull(strategy)) {
+        strategy = NULL;
+    }
     if (strategy) { 
     strategy_local_nonprim = v1_deployment_strategy_parseFromJSON(strategy); //nonprimitive
     }
 
     // v1_deployment_spec->_template
     cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "template");
+    if (cJSON_IsNull(_template)) {
+        _template = NULL;
+    }
     if (!_template) {
         goto end;
     }
@@ -226,7 +276,7 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
     _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 
 
-    v1_deployment_spec_local_var = v1_deployment_spec_create (
+    v1_deployment_spec_local_var = v1_deployment_spec_create_internal (
         min_ready_seconds ? min_ready_seconds->valuedouble : 0,
         paused ? paused->valueint : 0,
         progress_deadline_seconds ? progress_deadline_seconds->valuedouble : 0,

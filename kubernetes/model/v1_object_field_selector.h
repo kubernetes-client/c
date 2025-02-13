@@ -22,9 +22,10 @@ typedef struct v1_object_field_selector_t {
     char *api_version; // string
     char *field_path; // string
 
+    int _library_owned; // Is the library responsible for freeing this object?
 } v1_object_field_selector_t;
 
-v1_object_field_selector_t *v1_object_field_selector_create(
+__attribute__((deprecated)) v1_object_field_selector_t *v1_object_field_selector_create(
     char *api_version,
     char *field_path
 );

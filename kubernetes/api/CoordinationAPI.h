@@ -11,6 +11,6 @@
 // get information of a group
 //
 v1_api_group_t*
-CoordinationAPI_getAPIGroup_8(apiClient_t *apiClient);
+CoordinationAPI_getAPIGroup(apiClient_t *apiClient);
 
 

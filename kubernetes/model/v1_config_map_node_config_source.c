@@ -5,7 +5,7 @@
 
 
 
-v1_config_map_node_config_source_t *v1_config_map_node_config_source_create(
+static v1_config_map_node_config_source_t *v1_config_map_node_config_source_create_internal(
     char *kubelet_config_key,
     char *name,
     char *_namespace,
@@ -22,12 +22,32 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_create(
     v1_config_map_node_config_source_local_var->resource_version = resource_version;
     v1_config_map_node_config_source_local_var->uid = uid;
 
+    v1_config_map_node_config_source_local_var->_library_owned = 1;
     return v1_config_map_node_config_source_local_var;
 }
 
+__attribute__((deprecated)) v1_config_map_node_config_source_t *v1_config_map_node_config_source_create(
+    char *kubelet_config_key,
+    char *name,
+    char *_namespace,
+    char *resource_version,
+    char *uid
+    ) {
+    return v1_config_map_node_config_source_create_internal (
+        kubelet_config_key,
+        name,
+        _namespace,
+        resource_version,
+        uid
+        );
+}
 
 void v1_config_map_node_config_source_free(v1_config_map_node_config_source_t *v1_config_map_node_config_source) {
     if(NULL == v1_config_map_node_config_source){
+        return ;
+    }
+    if(v1_config_map_node_config_source->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_config_map_node_config_source_free");
         return ;
     }
     listEntry_t *listEntry;
@@ -113,6 +133,9 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
 
     // v1_config_map_node_config_source->kubelet_config_key
     cJSON *kubelet_config_key = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "kubeletConfigKey");
+    if (cJSON_IsNull(kubelet_config_key)) {
+        kubelet_config_key = NULL;
+    }
     if (!kubelet_config_key) {
         goto end;
     }
@@ -125,6 +148,9 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
 
     // v1_config_map_node_config_source->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "name");
+    if (cJSON_IsNull(name)) {
+        name = NULL;
+    }
     if (!name) {
         goto end;
     }
@@ -137,6 +163,9 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
 
     // v1_config_map_node_config_source->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "namespace");
+    if (cJSON_IsNull(_namespace)) {
+        _namespace = NULL;
+    }
     if (!_namespace) {
         goto end;
     }
@@ -149,6 +178,9 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
 
     // v1_config_map_node_config_source->resource_version
     cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "resourceVersion");
+    if (cJSON_IsNull(resource_version)) {
+        resource_version = NULL;
+    }
     if (resource_version) { 
     if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
     {
@@ -158,6 +190,9 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
 
     // v1_config_map_node_config_source->uid
     cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "uid");
+    if (cJSON_IsNull(uid)) {
+        uid = NULL;
+    }
     if (uid) { 
     if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
     {
@@ -166,7 +201,7 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
     }
 
 
-    v1_config_map_node_config_source_local_var = v1_config_map_node_config_source_create (
+    v1_config_map_node_config_source_local_var = v1_config_map_node_config_source_create_internal (
         strdup(kubelet_config_key->valuestring),
         strdup(name->valuestring),
         strdup(_namespace->valuestring),
