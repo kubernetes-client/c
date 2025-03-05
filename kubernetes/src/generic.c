@@ -69,9 +69,10 @@ char* callInternal(genericClient_t *client,
     if (client->client->response_code == 401) {
         return NULL;
     }
-    char* elementToReturn =  strndup((char*)client->client->dataReceived, client->client->dataReceivedLen);
+    char* elementToReturn = NULL;
 
     if (client->client->dataReceived) {
+        elementToReturn = strndup((char*)client->client->dataReceived, client->client->dataReceivedLen);
         free(client->client->dataReceived);
         client->client->dataReceived = NULL;
         client->client->dataReceivedLen = 0;
