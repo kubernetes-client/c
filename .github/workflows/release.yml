@@ -29,8 +29,8 @@ jobs:
           cat OWNERS | grep ${{ github.actor }}
       - name: Prepare
         run: |
-          git config user.email "k8s.ci.robot@gmail.com"
-          git config user.name "Kubernetes Prow Robot"
+          git config user.email "k8s-publishing-bot@users.noreply.github.com"
+          git config user.name "Kubernetes Publisher"
       - name: Release Prepare
         run: |
           git tag -a v${{ github.event.inputs.releaseVersion }} -m "version ${{ github.event.inputs.releaseVersion }}"
