@@ -27,12 +27,14 @@ v1_lifecycle_t* instantiate_v1_lifecycle(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_lifecycle_handler(0),
        // false, not to have infinite recursion
-      instantiate_v1_lifecycle_handler(0)
+      instantiate_v1_lifecycle_handler(0),
+      "0"
     );
   } else {
     v1_lifecycle = v1_lifecycle_create(
       NULL,
-      NULL
+      NULL,
+      "0"
     );
   }
 

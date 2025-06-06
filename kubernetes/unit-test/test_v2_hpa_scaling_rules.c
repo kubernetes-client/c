@@ -24,13 +24,15 @@ v2_hpa_scaling_rules_t* instantiate_v2_hpa_scaling_rules(int include_optional) {
     v2_hpa_scaling_rules = v2_hpa_scaling_rules_create(
       list_createList(),
       "0",
-      56
+      56,
+      "0"
     );
   } else {
     v2_hpa_scaling_rules = v2_hpa_scaling_rules_create(
       list_createList(),
       "0",
-      56
+      56,
+      "0"
     );
   }
 

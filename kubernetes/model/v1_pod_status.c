@@ -14,6 +14,7 @@ static v1_pod_status_t *v1_pod_status_create_internal(
     list_t *init_container_statuses,
     char *message,
     char *nominated_node_name,
+    long observed_generation,
     char *phase,
     char *pod_ip,
     list_t *pod_ips,
@@ -35,6 +36,7 @@ static v1_pod_status_t *v1_pod_status_create_internal(
     v1_pod_status_local_var->init_container_statuses = init_container_statuses;
     v1_pod_status_local_var->message = message;
     v1_pod_status_local_var->nominated_node_name = nominated_node_name;
+    v1_pod_status_local_var->observed_generation = observed_generation;
     v1_pod_status_local_var->phase = phase;
     v1_pod_status_local_var->pod_ip = pod_ip;
     v1_pod_status_local_var->pod_ips = pod_ips;
@@ -57,6 +59,7 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
     list_t *init_container_statuses,
     char *message,
     char *nominated_node_name,
+    long observed_generation,
     char *phase,
     char *pod_ip,
     list_t *pod_ips,
@@ -75,6 +78,7 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
         init_container_statuses,
         message,
         nominated_node_name,
+        observed_generation,
         phase,
         pod_ip,
         pod_ips,
@@ -306,6 +310,14 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     if(v1_pod_status->nominated_node_name) {
     if(cJSON_AddStringToObject(item, "nominatedNodeName", v1_pod_status->nominated_node_name) == NULL) {
     goto fail; //String
+    }
+    }
+
+
+    // v1_pod_status->observed_generation
+    if(v1_pod_status->observed_generation) {
+    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_pod_status->observed_generation) == NULL) {
+    goto fail; //Numeric
     }
     }
 
@@ -586,6 +598,18 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     }
     }
 
+    // v1_pod_status->observed_generation
+    cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "observedGeneration");
+    if (cJSON_IsNull(observed_generation)) {
+        observed_generation = NULL;
+    }
+    if (observed_generation) { 
+    if(!cJSON_IsNumber(observed_generation))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1_pod_status->phase
     cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "phase");
     if (cJSON_IsNull(phase)) {
@@ -716,6 +740,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         init_container_statuses ? init_container_statusesList : NULL,
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         nominated_node_name && !cJSON_IsNull(nominated_node_name) ? strdup(nominated_node_name->valuestring) : NULL,
+        observed_generation ? observed_generation->valuedouble : 0,
         phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
         pod_ip && !cJSON_IsNull(pod_ip) ? strdup(pod_ip->valuestring) : NULL,
         pod_ips ? pod_ipsList : NULL,

@@ -16,6 +16,7 @@
 typedef struct v1alpha3_resource_slice_spec_t v1alpha3_resource_slice_spec_t;
 
 #include "v1_node_selector.h"
+#include "v1alpha3_counter_set.h"
 #include "v1alpha3_device.h"
 #include "v1alpha3_resource_pool.h"
 
@@ -27,7 +28,9 @@ typedef struct v1alpha3_resource_slice_spec_t {
     char *driver; // string
     char *node_name; // string
     struct v1_node_selector_t *node_selector; //model
+    int per_device_node_selection; //boolean
     struct v1alpha3_resource_pool_t *pool; //model
+    list_t *shared_counters; //nonprimitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_resource_slice_spec_t;
@@ -38,7 +41,9 @@ __attribute__((deprecated)) v1alpha3_resource_slice_spec_t *v1alpha3_resource_sl
     char *driver,
     char *node_name,
     v1_node_selector_t *node_selector,
-    v1alpha3_resource_pool_t *pool
+    int per_device_node_selection,
+    v1alpha3_resource_pool_t *pool,
+    list_t *shared_counters
 );
 
 void v1alpha3_resource_slice_spec_free(v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec);

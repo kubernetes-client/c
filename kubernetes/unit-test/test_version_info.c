@@ -30,10 +30,18 @@ version_info_t* instantiate_version_info(int include_optional) {
       "0",
       "0",
       "0",
+      "0",
+      "0",
+      "0",
+      "0",
       "0"
     );
   } else {
     version_info = version_info_create(
+      "0",
+      "0",
+      "0",
+      "0",
       "0",
       "0",
       "0",

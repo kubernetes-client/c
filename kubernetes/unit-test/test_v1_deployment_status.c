@@ -29,6 +29,7 @@ v1_deployment_status_t* instantiate_v1_deployment_status(int include_optional) {
       56,
       56,
       56,
+      56,
       56
     );
   } else {
@@ -36,6 +37,7 @@ v1_deployment_status_t* instantiate_v1_deployment_status(int include_optional) {
       56,
       56,
       list_createList(),
+      56,
       56,
       56,
       56,

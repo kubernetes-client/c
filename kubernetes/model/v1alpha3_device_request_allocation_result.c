@@ -10,7 +10,8 @@ static v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allo
     char *device,
     char *driver,
     char *pool,
-    char *request
+    char *request,
+    list_t *tolerations
     ) {
     v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result_local_var = malloc(sizeof(v1alpha3_device_request_allocation_result_t));
     if (!v1alpha3_device_request_allocation_result_local_var) {
@@ -21,6 +22,7 @@ static v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allo
     v1alpha3_device_request_allocation_result_local_var->driver = driver;
     v1alpha3_device_request_allocation_result_local_var->pool = pool;
     v1alpha3_device_request_allocation_result_local_var->request = request;
+    v1alpha3_device_request_allocation_result_local_var->tolerations = tolerations;
 
     v1alpha3_device_request_allocation_result_local_var->_library_owned = 1;
     return v1alpha3_device_request_allocation_result_local_var;
@@ -31,14 +33,16 @@ __attribute__((deprecated)) v1alpha3_device_request_allocation_result_t *v1alpha
     char *device,
     char *driver,
     char *pool,
-    char *request
+    char *request,
+    list_t *tolerations
     ) {
     return v1alpha3_device_request_allocation_result_create_internal (
         admin_access,
         device,
         driver,
         pool,
-        request
+        request,
+        tolerations
         );
 }
 
@@ -66,6 +70,13 @@ void v1alpha3_device_request_allocation_result_free(v1alpha3_device_request_allo
     if (v1alpha3_device_request_allocation_result->request) {
         free(v1alpha3_device_request_allocation_result->request);
         v1alpha3_device_request_allocation_result->request = NULL;
+    }
+    if (v1alpha3_device_request_allocation_result->tolerations) {
+        list_ForEach(listEntry, v1alpha3_device_request_allocation_result->tolerations) {
+            v1alpha3_device_toleration_free(listEntry->data);
+        }
+        list_freeList(v1alpha3_device_request_allocation_result->tolerations);
+        v1alpha3_device_request_allocation_result->tolerations = NULL;
     }
     free(v1alpha3_device_request_allocation_result);
 }
@@ -116,6 +127,26 @@ cJSON *v1alpha3_device_request_allocation_result_convertToJSON(v1alpha3_device_r
     goto fail; //String
     }
 
+
+    // v1alpha3_device_request_allocation_result->tolerations
+    if(v1alpha3_device_request_allocation_result->tolerations) {
+    cJSON *tolerations = cJSON_AddArrayToObject(item, "tolerations");
+    if(tolerations == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *tolerationsListEntry;
+    if (v1alpha3_device_request_allocation_result->tolerations) {
+    list_ForEach(tolerationsListEntry, v1alpha3_device_request_allocation_result->tolerations) {
+    cJSON *itemLocal = v1alpha3_device_toleration_convertToJSON(tolerationsListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(tolerations, itemLocal);
+    }
+    }
+    }
+
     return item;
 fail:
     if (item) {
@@ -127,6 +158,9 @@ fail:
 v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result_parseFromJSON(cJSON *v1alpha3_device_request_allocation_resultJSON){
 
     v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result_local_var = NULL;
+
+    // define the local list for v1alpha3_device_request_allocation_result->tolerations
+    list_t *tolerationsList = NULL;
 
     // v1alpha3_device_request_allocation_result->admin_access
     cJSON *admin_access = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "adminAccess");
@@ -200,17 +234,51 @@ v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_
     goto end; //String
     }
 
+    // v1alpha3_device_request_allocation_result->tolerations
+    cJSON *tolerations = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "tolerations");
+    if (cJSON_IsNull(tolerations)) {
+        tolerations = NULL;
+    }
+    if (tolerations) { 
+    cJSON *tolerations_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(tolerations)){
+        goto end; //nonprimitive container
+    }
+
+    tolerationsList = list_createList();
+
+    cJSON_ArrayForEach(tolerations_local_nonprimitive,tolerations )
+    {
+        if(!cJSON_IsObject(tolerations_local_nonprimitive)){
+            goto end;
+        }
+        v1alpha3_device_toleration_t *tolerationsItem = v1alpha3_device_toleration_parseFromJSON(tolerations_local_nonprimitive);
+
+        list_addElement(tolerationsList, tolerationsItem);
+    }
+    }
+
 
     v1alpha3_device_request_allocation_result_local_var = v1alpha3_device_request_allocation_result_create_internal (
         admin_access ? admin_access->valueint : 0,
         strdup(device->valuestring),
         strdup(driver->valuestring),
         strdup(pool->valuestring),
-        strdup(request->valuestring)
+        strdup(request->valuestring),
+        tolerations ? tolerationsList : NULL
         );
 
     return v1alpha3_device_request_allocation_result_local_var;
 end:
+    if (tolerationsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, tolerationsList) {
+            v1alpha3_device_toleration_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(tolerationsList);
+        tolerationsList = NULL;
+    }
     return NULL;
 
 }
