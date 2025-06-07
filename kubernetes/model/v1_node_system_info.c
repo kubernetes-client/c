@@ -15,6 +15,7 @@ static v1_node_system_info_t *v1_node_system_info_create_internal(
     char *machine_id,
     char *operating_system,
     char *os_image,
+    v1_node_swap_status_t *swap,
     char *system_uuid
     ) {
     v1_node_system_info_t *v1_node_system_info_local_var = malloc(sizeof(v1_node_system_info_t));
@@ -30,6 +31,7 @@ static v1_node_system_info_t *v1_node_system_info_create_internal(
     v1_node_system_info_local_var->machine_id = machine_id;
     v1_node_system_info_local_var->operating_system = operating_system;
     v1_node_system_info_local_var->os_image = os_image;
+    v1_node_system_info_local_var->swap = swap;
     v1_node_system_info_local_var->system_uuid = system_uuid;
 
     v1_node_system_info_local_var->_library_owned = 1;
@@ -46,6 +48,7 @@ __attribute__((deprecated)) v1_node_system_info_t *v1_node_system_info_create(
     char *machine_id,
     char *operating_system,
     char *os_image,
+    v1_node_swap_status_t *swap,
     char *system_uuid
     ) {
     return v1_node_system_info_create_internal (
@@ -58,6 +61,7 @@ __attribute__((deprecated)) v1_node_system_info_t *v1_node_system_info_create(
         machine_id,
         operating_system,
         os_image,
+        swap,
         system_uuid
         );
 }
@@ -106,6 +110,10 @@ void v1_node_system_info_free(v1_node_system_info_t *v1_node_system_info) {
     if (v1_node_system_info->os_image) {
         free(v1_node_system_info->os_image);
         v1_node_system_info->os_image = NULL;
+    }
+    if (v1_node_system_info->swap) {
+        v1_node_swap_status_free(v1_node_system_info->swap);
+        v1_node_system_info->swap = NULL;
     }
     if (v1_node_system_info->system_uuid) {
         free(v1_node_system_info->system_uuid);
@@ -198,6 +206,19 @@ cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_i
     }
 
 
+    // v1_node_system_info->swap
+    if(v1_node_system_info->swap) {
+    cJSON *swap_local_JSON = v1_node_swap_status_convertToJSON(v1_node_system_info->swap);
+    if(swap_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "swap", swap_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_node_system_info->system_uuid
     if (!v1_node_system_info->system_uuid) {
         goto fail;
@@ -217,6 +238,9 @@ fail:
 v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_infoJSON){
 
     v1_node_system_info_t *v1_node_system_info_local_var = NULL;
+
+    // define the local variable for v1_node_system_info->swap
+    v1_node_swap_status_t *swap_local_nonprim = NULL;
 
     // v1_node_system_info->architecture
     cJSON *architecture = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "architecture");
@@ -353,6 +377,15 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
     goto end; //String
     }
 
+    // v1_node_system_info->swap
+    cJSON *swap = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "swap");
+    if (cJSON_IsNull(swap)) {
+        swap = NULL;
+    }
+    if (swap) { 
+    swap_local_nonprim = v1_node_swap_status_parseFromJSON(swap); //nonprimitive
+    }
+
     // v1_node_system_info->system_uuid
     cJSON *system_uuid = cJSON_GetObjectItemCaseSensitive(v1_node_system_infoJSON, "systemUUID");
     if (cJSON_IsNull(system_uuid)) {
@@ -379,11 +412,16 @@ v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_i
         strdup(machine_id->valuestring),
         strdup(operating_system->valuestring),
         strdup(os_image->valuestring),
+        swap ? swap_local_nonprim : NULL,
         strdup(system_uuid->valuestring)
         );
 
     return v1_node_system_info_local_var;
 end:
+    if (swap_local_nonprim) {
+        v1_node_swap_status_free(swap_local_nonprim);
+        swap_local_nonprim = NULL;
+    }
     return NULL;
 
 }

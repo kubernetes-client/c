@@ -9,6 +9,7 @@ static v1_pod_condition_t *v1_pod_condition_create_internal(
     char *last_probe_time,
     char *last_transition_time,
     char *message,
+    long observed_generation,
     char *reason,
     char *status,
     char *type
@@ -20,6 +21,7 @@ static v1_pod_condition_t *v1_pod_condition_create_internal(
     v1_pod_condition_local_var->last_probe_time = last_probe_time;
     v1_pod_condition_local_var->last_transition_time = last_transition_time;
     v1_pod_condition_local_var->message = message;
+    v1_pod_condition_local_var->observed_generation = observed_generation;
     v1_pod_condition_local_var->reason = reason;
     v1_pod_condition_local_var->status = status;
     v1_pod_condition_local_var->type = type;
@@ -32,6 +34,7 @@ __attribute__((deprecated)) v1_pod_condition_t *v1_pod_condition_create(
     char *last_probe_time,
     char *last_transition_time,
     char *message,
+    long observed_generation,
     char *reason,
     char *status,
     char *type
@@ -40,6 +43,7 @@ __attribute__((deprecated)) v1_pod_condition_t *v1_pod_condition_create(
         last_probe_time,
         last_transition_time,
         message,
+        observed_generation,
         reason,
         status,
         type
@@ -105,6 +109,14 @@ cJSON *v1_pod_condition_convertToJSON(v1_pod_condition_t *v1_pod_condition) {
     if(v1_pod_condition->message) {
     if(cJSON_AddStringToObject(item, "message", v1_pod_condition->message) == NULL) {
     goto fail; //String
+    }
+    }
+
+
+    // v1_pod_condition->observed_generation
+    if(v1_pod_condition->observed_generation) {
+    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_pod_condition->observed_generation) == NULL) {
+    goto fail; //Numeric
     }
     }
 
@@ -182,6 +194,18 @@ v1_pod_condition_t *v1_pod_condition_parseFromJSON(cJSON *v1_pod_conditionJSON){
     }
     }
 
+    // v1_pod_condition->observed_generation
+    cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_pod_conditionJSON, "observedGeneration");
+    if (cJSON_IsNull(observed_generation)) {
+        observed_generation = NULL;
+    }
+    if (observed_generation) { 
+    if(!cJSON_IsNumber(observed_generation))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1_pod_condition->reason
     cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_pod_conditionJSON, "reason");
     if (cJSON_IsNull(reason)) {
@@ -229,6 +253,7 @@ v1_pod_condition_t *v1_pod_condition_parseFromJSON(cJSON *v1_pod_conditionJSON){
         last_probe_time && !cJSON_IsNull(last_probe_time) ? strdup(last_probe_time->valuestring) : NULL,
         last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        observed_generation ? observed_generation->valuedouble : 0,
         reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
         strdup(status->valuestring),
         strdup(type->valuestring)

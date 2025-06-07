@@ -15,6 +15,7 @@
 
 typedef struct v1beta1_device_request_allocation_result_t v1beta1_device_request_allocation_result_t;
 
+#include "v1beta1_device_toleration.h"
 
 
 
@@ -24,6 +25,7 @@ typedef struct v1beta1_device_request_allocation_result_t {
     char *driver; // string
     char *pool; // string
     char *request; // string
+    list_t *tolerations; //nonprimitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_device_request_allocation_result_t;
@@ -33,7 +35,8 @@ __attribute__((deprecated)) v1beta1_device_request_allocation_result_t *v1beta1_
     char *device,
     char *driver,
     char *pool,
-    char *request
+    char *request,
+    list_t *tolerations
 );
 
 void v1beta1_device_request_allocation_result_free(v1beta1_device_request_allocation_result_t *v1beta1_device_request_allocation_result);

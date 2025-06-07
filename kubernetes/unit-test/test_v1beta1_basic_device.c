@@ -16,18 +16,30 @@
 #include "../model/v1beta1_basic_device.h"
 v1beta1_basic_device_t* instantiate_v1beta1_basic_device(int include_optional);
 
+#include "test_v1_node_selector.c"
 
 
 v1beta1_basic_device_t* instantiate_v1beta1_basic_device(int include_optional) {
   v1beta1_basic_device_t* v1beta1_basic_device = NULL;
   if (include_optional) {
     v1beta1_basic_device = v1beta1_basic_device_create(
+      1,
       list_createList(),
+      list_createList(),
+      list_createList(),
+      "0",
+       // false, not to have infinite recursion
+      instantiate_v1_node_selector(0),
       list_createList()
     );
   } else {
     v1beta1_basic_device = v1beta1_basic_device_create(
+      1,
       list_createList(),
+      list_createList(),
+      list_createList(),
+      "0",
+      NULL,
       list_createList()
     );
   }

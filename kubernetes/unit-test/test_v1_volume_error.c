@@ -22,11 +22,13 @@ v1_volume_error_t* instantiate_v1_volume_error(int include_optional) {
   v1_volume_error_t* v1_volume_error = NULL;
   if (include_optional) {
     v1_volume_error = v1_volume_error_create(
+      56,
       "0",
       "2013-10-20T19:20:30+01:00"
     );
   } else {
     v1_volume_error = v1_volume_error_create(
+      56,
       "0",
       "2013-10-20T19:20:30+01:00"
     );

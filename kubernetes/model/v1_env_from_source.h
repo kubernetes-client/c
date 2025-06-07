@@ -1,7 +1,7 @@
 /*
  * v1_env_from_source.h
  *
- * EnvFromSource represents the source of a set of ConfigMaps
+ * EnvFromSource represents the source of a set of ConfigMaps or Secrets
  */
 
 #ifndef _v1_env_from_source_H_

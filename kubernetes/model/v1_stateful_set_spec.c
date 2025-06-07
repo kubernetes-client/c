@@ -189,11 +189,10 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
 
     // v1_stateful_set_spec->service_name
-    if (!v1_stateful_set_spec->service_name) {
-        goto fail;
-    }
+    if(v1_stateful_set_spec->service_name) {
     if(cJSON_AddStringToObject(item, "serviceName", v1_stateful_set_spec->service_name) == NULL) {
     goto fail; //String
+    }
     }
 
 
@@ -356,14 +355,11 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     if (cJSON_IsNull(service_name)) {
         service_name = NULL;
     }
-    if (!service_name) {
-        goto end;
-    }
-
-    
-    if(!cJSON_IsString(service_name))
+    if (service_name) { 
+    if(!cJSON_IsString(service_name) && !cJSON_IsNull(service_name))
     {
     goto end; //String
+    }
     }
 
     // v1_stateful_set_spec->_template
@@ -420,7 +416,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
         replicas ? replicas->valuedouble : 0,
         revision_history_limit ? revision_history_limit->valuedouble : 0,
         selector_local_nonprim,
-        strdup(service_name->valuestring),
+        service_name && !cJSON_IsNull(service_name) ? strdup(service_name->valuestring) : NULL,
         _template_local_nonprim,
         update_strategy ? update_strategy_local_nonprim : NULL,
         volume_claim_templates ? volume_claim_templatesList : NULL

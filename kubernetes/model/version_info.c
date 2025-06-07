@@ -8,11 +8,15 @@
 static version_info_t *version_info_create_internal(
     char *build_date,
     char *compiler,
+    char *emulation_major,
+    char *emulation_minor,
     char *git_commit,
     char *git_tree_state,
     char *git_version,
     char *go_version,
     char *major,
+    char *min_compatibility_major,
+    char *min_compatibility_minor,
     char *minor,
     char *platform
     ) {
@@ -22,11 +26,15 @@ static version_info_t *version_info_create_internal(
     }
     version_info_local_var->build_date = build_date;
     version_info_local_var->compiler = compiler;
+    version_info_local_var->emulation_major = emulation_major;
+    version_info_local_var->emulation_minor = emulation_minor;
     version_info_local_var->git_commit = git_commit;
     version_info_local_var->git_tree_state = git_tree_state;
     version_info_local_var->git_version = git_version;
     version_info_local_var->go_version = go_version;
     version_info_local_var->major = major;
+    version_info_local_var->min_compatibility_major = min_compatibility_major;
+    version_info_local_var->min_compatibility_minor = min_compatibility_minor;
     version_info_local_var->minor = minor;
     version_info_local_var->platform = platform;
 
@@ -37,22 +45,30 @@ static version_info_t *version_info_create_internal(
 __attribute__((deprecated)) version_info_t *version_info_create(
     char *build_date,
     char *compiler,
+    char *emulation_major,
+    char *emulation_minor,
     char *git_commit,
     char *git_tree_state,
     char *git_version,
     char *go_version,
     char *major,
+    char *min_compatibility_major,
+    char *min_compatibility_minor,
     char *minor,
     char *platform
     ) {
     return version_info_create_internal (
         build_date,
         compiler,
+        emulation_major,
+        emulation_minor,
         git_commit,
         git_tree_state,
         git_version,
         go_version,
         major,
+        min_compatibility_major,
+        min_compatibility_minor,
         minor,
         platform
         );
@@ -75,6 +91,14 @@ void version_info_free(version_info_t *version_info) {
         free(version_info->compiler);
         version_info->compiler = NULL;
     }
+    if (version_info->emulation_major) {
+        free(version_info->emulation_major);
+        version_info->emulation_major = NULL;
+    }
+    if (version_info->emulation_minor) {
+        free(version_info->emulation_minor);
+        version_info->emulation_minor = NULL;
+    }
     if (version_info->git_commit) {
         free(version_info->git_commit);
         version_info->git_commit = NULL;
@@ -94,6 +118,14 @@ void version_info_free(version_info_t *version_info) {
     if (version_info->major) {
         free(version_info->major);
         version_info->major = NULL;
+    }
+    if (version_info->min_compatibility_major) {
+        free(version_info->min_compatibility_major);
+        version_info->min_compatibility_major = NULL;
+    }
+    if (version_info->min_compatibility_minor) {
+        free(version_info->min_compatibility_minor);
+        version_info->min_compatibility_minor = NULL;
     }
     if (version_info->minor) {
         free(version_info->minor);
@@ -124,6 +156,22 @@ cJSON *version_info_convertToJSON(version_info_t *version_info) {
     }
     if(cJSON_AddStringToObject(item, "compiler", version_info->compiler) == NULL) {
     goto fail; //String
+    }
+
+
+    // version_info->emulation_major
+    if(version_info->emulation_major) {
+    if(cJSON_AddStringToObject(item, "emulationMajor", version_info->emulation_major) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // version_info->emulation_minor
+    if(version_info->emulation_minor) {
+    if(cJSON_AddStringToObject(item, "emulationMinor", version_info->emulation_minor) == NULL) {
+    goto fail; //String
+    }
     }
 
 
@@ -169,6 +217,22 @@ cJSON *version_info_convertToJSON(version_info_t *version_info) {
     }
     if(cJSON_AddStringToObject(item, "major", version_info->major) == NULL) {
     goto fail; //String
+    }
+
+
+    // version_info->min_compatibility_major
+    if(version_info->min_compatibility_major) {
+    if(cJSON_AddStringToObject(item, "minCompatibilityMajor", version_info->min_compatibility_major) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // version_info->min_compatibility_minor
+    if(version_info->min_compatibility_minor) {
+    if(cJSON_AddStringToObject(item, "minCompatibilityMinor", version_info->min_compatibility_minor) == NULL) {
+    goto fail; //String
+    }
     }
 
 
@@ -229,6 +293,30 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
     if(!cJSON_IsString(compiler))
     {
     goto end; //String
+    }
+
+    // version_info->emulation_major
+    cJSON *emulation_major = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "emulationMajor");
+    if (cJSON_IsNull(emulation_major)) {
+        emulation_major = NULL;
+    }
+    if (emulation_major) { 
+    if(!cJSON_IsString(emulation_major) && !cJSON_IsNull(emulation_major))
+    {
+    goto end; //String
+    }
+    }
+
+    // version_info->emulation_minor
+    cJSON *emulation_minor = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "emulationMinor");
+    if (cJSON_IsNull(emulation_minor)) {
+        emulation_minor = NULL;
+    }
+    if (emulation_minor) { 
+    if(!cJSON_IsString(emulation_minor) && !cJSON_IsNull(emulation_minor))
+    {
+    goto end; //String
+    }
     }
 
     // version_info->git_commit
@@ -306,6 +394,30 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
     goto end; //String
     }
 
+    // version_info->min_compatibility_major
+    cJSON *min_compatibility_major = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "minCompatibilityMajor");
+    if (cJSON_IsNull(min_compatibility_major)) {
+        min_compatibility_major = NULL;
+    }
+    if (min_compatibility_major) { 
+    if(!cJSON_IsString(min_compatibility_major) && !cJSON_IsNull(min_compatibility_major))
+    {
+    goto end; //String
+    }
+    }
+
+    // version_info->min_compatibility_minor
+    cJSON *min_compatibility_minor = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "minCompatibilityMinor");
+    if (cJSON_IsNull(min_compatibility_minor)) {
+        min_compatibility_minor = NULL;
+    }
+    if (min_compatibility_minor) { 
+    if(!cJSON_IsString(min_compatibility_minor) && !cJSON_IsNull(min_compatibility_minor))
+    {
+    goto end; //String
+    }
+    }
+
     // version_info->minor
     cJSON *minor = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "minor");
     if (cJSON_IsNull(minor)) {
@@ -340,11 +452,15 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
     version_info_local_var = version_info_create_internal (
         strdup(build_date->valuestring),
         strdup(compiler->valuestring),
+        emulation_major && !cJSON_IsNull(emulation_major) ? strdup(emulation_major->valuestring) : NULL,
+        emulation_minor && !cJSON_IsNull(emulation_minor) ? strdup(emulation_minor->valuestring) : NULL,
         strdup(git_commit->valuestring),
         strdup(git_tree_state->valuestring),
         strdup(git_version->valuestring),
         strdup(go_version->valuestring),
         strdup(major->valuestring),
+        min_compatibility_major && !cJSON_IsNull(min_compatibility_major) ? strdup(min_compatibility_major->valuestring) : NULL,
+        min_compatibility_minor && !cJSON_IsNull(min_compatibility_minor) ? strdup(min_compatibility_minor->valuestring) : NULL,
         strdup(minor->valuestring),
         strdup(platform->valuestring)
         );

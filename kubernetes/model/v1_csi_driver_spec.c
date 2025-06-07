@@ -8,6 +8,7 @@
 static v1_csi_driver_spec_t *v1_csi_driver_spec_create_internal(
     int attach_required,
     char *fs_group_policy,
+    long node_allocatable_update_period_seconds,
     int pod_info_on_mount,
     int requires_republish,
     int se_linux_mount,
@@ -21,6 +22,7 @@ static v1_csi_driver_spec_t *v1_csi_driver_spec_create_internal(
     }
     v1_csi_driver_spec_local_var->attach_required = attach_required;
     v1_csi_driver_spec_local_var->fs_group_policy = fs_group_policy;
+    v1_csi_driver_spec_local_var->node_allocatable_update_period_seconds = node_allocatable_update_period_seconds;
     v1_csi_driver_spec_local_var->pod_info_on_mount = pod_info_on_mount;
     v1_csi_driver_spec_local_var->requires_republish = requires_republish;
     v1_csi_driver_spec_local_var->se_linux_mount = se_linux_mount;
@@ -35,6 +37,7 @@ static v1_csi_driver_spec_t *v1_csi_driver_spec_create_internal(
 __attribute__((deprecated)) v1_csi_driver_spec_t *v1_csi_driver_spec_create(
     int attach_required,
     char *fs_group_policy,
+    long node_allocatable_update_period_seconds,
     int pod_info_on_mount,
     int requires_republish,
     int se_linux_mount,
@@ -45,6 +48,7 @@ __attribute__((deprecated)) v1_csi_driver_spec_t *v1_csi_driver_spec_create(
     return v1_csi_driver_spec_create_internal (
         attach_required,
         fs_group_policy,
+        node_allocatable_update_period_seconds,
         pod_info_on_mount,
         requires_republish,
         se_linux_mount,
@@ -99,6 +103,14 @@ cJSON *v1_csi_driver_spec_convertToJSON(v1_csi_driver_spec_t *v1_csi_driver_spec
     if(v1_csi_driver_spec->fs_group_policy) {
     if(cJSON_AddStringToObject(item, "fsGroupPolicy", v1_csi_driver_spec->fs_group_policy) == NULL) {
     goto fail; //String
+    }
+    }
+
+
+    // v1_csi_driver_spec->node_allocatable_update_period_seconds
+    if(v1_csi_driver_spec->node_allocatable_update_period_seconds) {
+    if(cJSON_AddNumberToObject(item, "nodeAllocatableUpdatePeriodSeconds", v1_csi_driver_spec->node_allocatable_update_period_seconds) == NULL) {
+    goto fail; //Numeric
     }
     }
 
@@ -213,6 +225,18 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
     }
     }
 
+    // v1_csi_driver_spec->node_allocatable_update_period_seconds
+    cJSON *node_allocatable_update_period_seconds = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "nodeAllocatableUpdatePeriodSeconds");
+    if (cJSON_IsNull(node_allocatable_update_period_seconds)) {
+        node_allocatable_update_period_seconds = NULL;
+    }
+    if (node_allocatable_update_period_seconds) { 
+    if(!cJSON_IsNumber(node_allocatable_update_period_seconds))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1_csi_driver_spec->pod_info_on_mount
     cJSON *pod_info_on_mount = cJSON_GetObjectItemCaseSensitive(v1_csi_driver_specJSON, "podInfoOnMount");
     if (cJSON_IsNull(pod_info_on_mount)) {
@@ -311,6 +335,7 @@ v1_csi_driver_spec_t *v1_csi_driver_spec_parseFromJSON(cJSON *v1_csi_driver_spec
     v1_csi_driver_spec_local_var = v1_csi_driver_spec_create_internal (
         attach_required ? attach_required->valueint : 0,
         fs_group_policy && !cJSON_IsNull(fs_group_policy) ? strdup(fs_group_policy->valuestring) : NULL,
+        node_allocatable_update_period_seconds ? node_allocatable_update_period_seconds->valuedouble : 0,
         pod_info_on_mount ? pod_info_on_mount->valueint : 0,
         requires_republish ? requires_republish->valueint : 0,
         se_linux_mount ? se_linux_mount->valueint : 0,

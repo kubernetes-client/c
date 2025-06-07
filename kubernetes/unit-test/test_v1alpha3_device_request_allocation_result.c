@@ -26,7 +26,8 @@ v1alpha3_device_request_allocation_result_t* instantiate_v1alpha3_device_request
       "0",
       "0",
       "0",
-      "0"
+      "0",
+      list_createList()
     );
   } else {
     v1alpha3_device_request_allocation_result = v1alpha3_device_request_allocation_result_create(
@@ -34,7 +35,8 @@ v1alpha3_device_request_allocation_result_t* instantiate_v1alpha3_device_request
       "0",
       "0",
       "0",
-      "0"
+      "0",
+      list_createList()
     );
   }
 

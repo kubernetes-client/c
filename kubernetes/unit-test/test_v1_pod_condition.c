@@ -25,6 +25,7 @@ v1_pod_condition_t* instantiate_v1_pod_condition(int include_optional) {
       "2013-10-20T19:20:30+01:00",
       "2013-10-20T19:20:30+01:00",
       "0",
+      56,
       "0",
       "0",
       "0"
@@ -34,6 +35,7 @@ v1_pod_condition_t* instantiate_v1_pod_condition(int include_optional) {
       "2013-10-20T19:20:30+01:00",
       "2013-10-20T19:20:30+01:00",
       "0",
+      56,
       "0",
       "0",
       "0"

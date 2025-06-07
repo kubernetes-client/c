@@ -1,7 +1,7 @@
 /*
  * v1_endpoint_address.h
  *
- * EndpointAddress is a tuple that describes single IP address.
+ * EndpointAddress is a tuple that describes single IP address. Deprecated: This API is deprecated in v1.33+.
  */
 
 #ifndef _v1_endpoint_address_H_

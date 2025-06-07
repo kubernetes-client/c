@@ -27,12 +27,14 @@ v1_replica_set_status_t* instantiate_v1_replica_set_status(int include_optional)
       56,
       56,
       56,
+      56,
       56
     );
   } else {
     v1_replica_set_status = v1_replica_set_status_create(
       56,
       list_createList(),
+      56,
       56,
       56,
       56,

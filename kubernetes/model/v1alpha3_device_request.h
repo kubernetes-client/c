@@ -1,7 +1,7 @@
 /*
  * v1alpha3_device_request.h
  *
- * DeviceRequest is a request for devices required for a claim. This is typically a request for a single resource like a device, but can also ask for several identical devices.  A DeviceClassName is currently required. Clients must check that it is indeed set. It&#39;s absence indicates that something changed in a way that is not supported by the client yet, in which case it must refuse to handle the request.
+ * DeviceRequest is a request for devices required for a claim. This is typically a request for a single resource like a device, but can also ask for several identical devices.
  */
 
 #ifndef _v1alpha3_device_request_H_
@@ -16,6 +16,8 @@
 typedef struct v1alpha3_device_request_t v1alpha3_device_request_t;
 
 #include "v1alpha3_device_selector.h"
+#include "v1alpha3_device_sub_request.h"
+#include "v1alpha3_device_toleration.h"
 
 
 
@@ -24,8 +26,10 @@ typedef struct v1alpha3_device_request_t {
     char *allocation_mode; // string
     long count; //numeric
     char *device_class_name; // string
+    list_t *first_available; //nonprimitive container
     char *name; // string
     list_t *selectors; //nonprimitive container
+    list_t *tolerations; //nonprimitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_request_t;
@@ -35,8 +39,10 @@ __attribute__((deprecated)) v1alpha3_device_request_t *v1alpha3_device_request_c
     char *allocation_mode,
     long count,
     char *device_class_name,
+    list_t *first_available,
     char *name,
-    list_t *selectors
+    list_t *selectors,
+    list_t *tolerations
 );
 
 void v1alpha3_device_request_free(v1alpha3_device_request_t *v1alpha3_device_request);

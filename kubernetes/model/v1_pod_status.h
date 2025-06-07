@@ -32,6 +32,7 @@ typedef struct v1_pod_status_t {
     list_t *init_container_statuses; //nonprimitive container
     char *message; // string
     char *nominated_node_name; // string
+    long observed_generation; //numeric
     char *phase; // string
     char *pod_ip; // string
     list_t *pod_ips; //nonprimitive container
@@ -53,6 +54,7 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
     list_t *init_container_statuses,
     char *message,
     char *nominated_node_name,
+    long observed_generation,
     char *phase,
     char *pod_ip,
     list_t *pod_ips,

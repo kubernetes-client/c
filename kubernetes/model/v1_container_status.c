@@ -18,6 +18,7 @@ static v1_container_status_t *v1_container_status_create_internal(
     int restart_count,
     int started,
     v1_container_state_t *state,
+    char *stop_signal,
     v1_container_user_t *user,
     list_t *volume_mounts
     ) {
@@ -37,6 +38,7 @@ static v1_container_status_t *v1_container_status_create_internal(
     v1_container_status_local_var->restart_count = restart_count;
     v1_container_status_local_var->started = started;
     v1_container_status_local_var->state = state;
+    v1_container_status_local_var->stop_signal = stop_signal;
     v1_container_status_local_var->user = user;
     v1_container_status_local_var->volume_mounts = volume_mounts;
 
@@ -57,6 +59,7 @@ __attribute__((deprecated)) v1_container_status_t *v1_container_status_create(
     int restart_count,
     int started,
     v1_container_state_t *state,
+    char *stop_signal,
     v1_container_user_t *user,
     list_t *volume_mounts
     ) {
@@ -73,6 +76,7 @@ __attribute__((deprecated)) v1_container_status_t *v1_container_status_create(
         restart_count,
         started,
         state,
+        stop_signal,
         user,
         volume_mounts
         );
@@ -131,6 +135,10 @@ void v1_container_status_free(v1_container_status_t *v1_container_status) {
     if (v1_container_status->state) {
         v1_container_state_free(v1_container_status->state);
         v1_container_status->state = NULL;
+    }
+    if (v1_container_status->stop_signal) {
+        free(v1_container_status->stop_signal);
+        v1_container_status->stop_signal = NULL;
     }
     if (v1_container_status->user) {
         v1_container_user_free(v1_container_status->user);
@@ -285,6 +293,14 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     cJSON_AddItemToObject(item, "state", state_local_JSON);
     if(item->child == NULL) {
     goto fail;
+    }
+    }
+
+
+    // v1_container_status->stop_signal
+    if(v1_container_status->stop_signal) {
+    if(cJSON_AddStringToObject(item, "stopSignal", v1_container_status->stop_signal) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -532,6 +548,18 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     state_local_nonprim = v1_container_state_parseFromJSON(state); //nonprimitive
     }
 
+    // v1_container_status->stop_signal
+    cJSON *stop_signal = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "stopSignal");
+    if (cJSON_IsNull(stop_signal)) {
+        stop_signal = NULL;
+    }
+    if (stop_signal) { 
+    if(!cJSON_IsString(stop_signal) && !cJSON_IsNull(stop_signal))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_container_status->user
     cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "user");
     if (cJSON_IsNull(user)) {
@@ -579,6 +607,7 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
         restart_count->valuedouble,
         started ? started->valueint : 0,
         state ? state_local_nonprim : NULL,
+        stop_signal && !cJSON_IsNull(stop_signal) ? strdup(stop_signal->valuestring) : NULL,
         user ? user_local_nonprim : NULL,
         volume_mounts ? volume_mountsList : NULL
         );

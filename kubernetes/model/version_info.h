@@ -21,11 +21,15 @@ typedef struct version_info_t version_info_t;
 typedef struct version_info_t {
     char *build_date; // string
     char *compiler; // string
+    char *emulation_major; // string
+    char *emulation_minor; // string
     char *git_commit; // string
     char *git_tree_state; // string
     char *git_version; // string
     char *go_version; // string
     char *major; // string
+    char *min_compatibility_major; // string
+    char *min_compatibility_minor; // string
     char *minor; // string
     char *platform; // string
 
@@ -35,11 +39,15 @@ typedef struct version_info_t {
 __attribute__((deprecated)) version_info_t *version_info_create(
     char *build_date,
     char *compiler,
+    char *emulation_major,
+    char *emulation_minor,
     char *git_commit,
     char *git_tree_state,
     char *git_version,
     char *go_version,
     char *major,
+    char *min_compatibility_major,
+    char *min_compatibility_minor,
     char *minor,
     char *platform
 );

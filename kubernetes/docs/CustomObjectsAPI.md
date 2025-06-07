@@ -18,7 +18,7 @@ Method | HTTP request | Description
 [**CustomObjectsAPI_getNamespacedCustomObjectScale**](CustomObjectsAPI.md#CustomObjectsAPI_getNamespacedCustomObjectScale) | **GET** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/scale | 
 [**CustomObjectsAPI_getNamespacedCustomObjectStatus**](CustomObjectsAPI.md#CustomObjectsAPI_getNamespacedCustomObjectStatus) | **GET** /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name}/status | 
 [**CustomObjectsAPI_listClusterCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_listClusterCustomObject) | **GET** /apis/{group}/{version}/{plural} | 
-[**CustomObjectsAPI_listCustomObjectForAllNamespaces**](CustomObjectsAPI.md#CustomObjectsAPI_listCustomObjectForAllNamespaces) | **GET** /apis/{group}/{version}/{plural}#‎ | 
+[**CustomObjectsAPI_listCustomObjectForAllNamespaces**](CustomObjectsAPI.md#CustomObjectsAPI_listCustomObjectForAllNamespaces) | **GET** /apis/{group}/{version}/{resource_plural} | 
 [**CustomObjectsAPI_listNamespacedCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_listNamespacedCustomObject) | **GET** /apis/{group}/{version}/namespaces/{namespace}/{plural} | 
 [**CustomObjectsAPI_patchClusterCustomObject**](CustomObjectsAPI.md#CustomObjectsAPI_patchClusterCustomObject) | **PATCH** /apis/{group}/{version}/{plural}/{name} | 
 [**CustomObjectsAPI_patchClusterCustomObjectScale**](CustomObjectsAPI.md#CustomObjectsAPI_patchClusterCustomObjectScale) | **PATCH** /apis/{group}/{version}/{plural}/{name}/scale | 
@@ -530,7 +530,7 @@ Name | Type | Description  | Notes
 ```c
 // list or watch namespace scoped custom objects
 //
-object_t* CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *timeoutSeconds, int *watch);
+object_t* CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *group, char *version, char *resource_plural, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -539,7 +539,7 @@ Name | Type | Description  | Notes
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
 **group** | **char \*** | The custom resource&#39;s group name | 
 **version** | **char \*** | The custom resource&#39;s version | 
-**plural** | **char \*** | The custom resource&#39;s plural name. For TPRs this would be lowercase plural kind. | 
+**resource_plural** | **char \*** | The custom resource&#39;s plural name. For TPRs this would be lowercase plural kind. | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. | [optional] 
 **allowWatchBookmarks** | **int \*** | allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. If the feature gate WatchBookmarks is not enabled in apiserver, this field is ignored. | [optional] 
 **_continue** | **char \*** | The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. | [optional] 

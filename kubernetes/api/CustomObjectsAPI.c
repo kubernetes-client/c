@@ -2780,7 +2780,7 @@ end:
 // list or watch namespace scoped custom objects
 //
 object_t*
-CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *group, char *version, char *plural, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *timeoutSeconds, int *watch)
+CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *group, char *version, char *resource_plural, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2794,18 +2794,18 @@ CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *
     apiClient->response_code = 0;
 
     // create the path
-    char *localVarPath = strdup("/apis/{group}/{version}/{plural}#‎");
+    char *localVarPath = strdup("/apis/{group}/{version}/{resource_plural}");
 
     if(!group)
         goto end;
     if(!version)
         goto end;
-    if(!plural)
+    if(!resource_plural)
         goto end;
 
 
     // Path Params
-    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ group }") - 1;
+    long sizeOfPathParams_group = strlen(group)+3 + strlen(version)+3 + strlen(resource_plural)+3 + sizeof("{ group }") - 1;
     if(group == NULL) {
         goto end;
     }
@@ -2815,7 +2815,7 @@ CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_group, group);
 
     // Path Params
-    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ version }") - 1;
+    long sizeOfPathParams_version = strlen(group)+3 + strlen(version)+3 + strlen(resource_plural)+3 + sizeof("{ version }") - 1;
     if(version == NULL) {
         goto end;
     }
@@ -2825,14 +2825,14 @@ CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *
     localVarPath = strReplace(localVarPath, localVarToReplace_version, version);
 
     // Path Params
-    long sizeOfPathParams_plural = strlen(group)+3 + strlen(version)+3 + strlen(plural)+3 + sizeof("{ plural }") - 1;
-    if(plural == NULL) {
+    long sizeOfPathParams_resource_plural = strlen(group)+3 + strlen(version)+3 + strlen(resource_plural)+3 + sizeof("{ resource_plural }") - 1;
+    if(resource_plural == NULL) {
         goto end;
     }
-    char* localVarToReplace_plural = malloc(sizeOfPathParams_plural);
-    sprintf(localVarToReplace_plural, "{%s}", "plural");
+    char* localVarToReplace_resource_plural = malloc(sizeOfPathParams_resource_plural);
+    sprintf(localVarToReplace_resource_plural, "{%s}", "resource_plural");
 
-    localVarPath = strReplace(localVarPath, localVarToReplace_plural, plural);
+    localVarPath = strReplace(localVarPath, localVarToReplace_resource_plural, resource_plural);
 
 
 
@@ -3005,7 +3005,7 @@ CustomObjectsAPI_listCustomObjectForAllNamespaces(apiClient_t *apiClient, char *
     free(localVarPath);
     free(localVarToReplace_group);
     free(localVarToReplace_version);
-    free(localVarToReplace_plural);
+    free(localVarToReplace_resource_plural);
     if(keyQuery_pretty){
         free(keyQuery_pretty);
         keyQuery_pretty = NULL;
