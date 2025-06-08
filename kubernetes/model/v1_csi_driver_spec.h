@@ -22,6 +22,7 @@ typedef struct v1_csi_driver_spec_t v1_csi_driver_spec_t;
 typedef struct v1_csi_driver_spec_t {
     int attach_required; //boolean
     char *fs_group_policy; // string
+    long node_allocatable_update_period_seconds; //numeric
     int pod_info_on_mount; //boolean
     int requires_republish; //boolean
     int se_linux_mount; //boolean
@@ -35,6 +36,7 @@ typedef struct v1_csi_driver_spec_t {
 __attribute__((deprecated)) v1_csi_driver_spec_t *v1_csi_driver_spec_create(
     int attach_required,
     char *fs_group_policy,
+    long node_allocatable_update_period_seconds,
     int pod_info_on_mount,
     int requires_republish,
     int se_linux_mount,

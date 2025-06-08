@@ -1,7 +1,7 @@
 /*
  * core_v1_endpoint_port.h
  *
- * EndpointPort is a tuple that describes a single port.
+ * EndpointPort is a tuple that describes a single port. Deprecated: This API is deprecated in v1.33+.
  */
 
 #ifndef _core_v1_endpoint_port_H_

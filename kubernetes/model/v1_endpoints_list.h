@@ -1,7 +1,7 @@
 /*
  * v1_endpoints_list.h
  *
- * EndpointsList is a list of endpoints.
+ * EndpointsList is a list of endpoints. Deprecated: This API is deprecated in v1.33+.
  */
 
 #ifndef _v1_endpoints_list_H_

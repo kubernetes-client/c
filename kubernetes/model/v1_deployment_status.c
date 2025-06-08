@@ -12,6 +12,7 @@ static v1_deployment_status_t *v1_deployment_status_create_internal(
     long observed_generation,
     int ready_replicas,
     int replicas,
+    int terminating_replicas,
     int unavailable_replicas,
     int updated_replicas
     ) {
@@ -25,6 +26,7 @@ static v1_deployment_status_t *v1_deployment_status_create_internal(
     v1_deployment_status_local_var->observed_generation = observed_generation;
     v1_deployment_status_local_var->ready_replicas = ready_replicas;
     v1_deployment_status_local_var->replicas = replicas;
+    v1_deployment_status_local_var->terminating_replicas = terminating_replicas;
     v1_deployment_status_local_var->unavailable_replicas = unavailable_replicas;
     v1_deployment_status_local_var->updated_replicas = updated_replicas;
 
@@ -39,6 +41,7 @@ __attribute__((deprecated)) v1_deployment_status_t *v1_deployment_status_create(
     long observed_generation,
     int ready_replicas,
     int replicas,
+    int terminating_replicas,
     int unavailable_replicas,
     int updated_replicas
     ) {
@@ -49,6 +52,7 @@ __attribute__((deprecated)) v1_deployment_status_t *v1_deployment_status_create(
         observed_generation,
         ready_replicas,
         replicas,
+        terminating_replicas,
         unavailable_replicas,
         updated_replicas
         );
@@ -131,6 +135,14 @@ cJSON *v1_deployment_status_convertToJSON(v1_deployment_status_t *v1_deployment_
     // v1_deployment_status->replicas
     if(v1_deployment_status->replicas) {
     if(cJSON_AddNumberToObject(item, "replicas", v1_deployment_status->replicas) == NULL) {
+    goto fail; //Numeric
+    }
+    }
+
+
+    // v1_deployment_status->terminating_replicas
+    if(v1_deployment_status->terminating_replicas) {
+    if(cJSON_AddNumberToObject(item, "terminatingReplicas", v1_deployment_status->terminating_replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -250,6 +262,18 @@ v1_deployment_status_t *v1_deployment_status_parseFromJSON(cJSON *v1_deployment_
     }
     }
 
+    // v1_deployment_status->terminating_replicas
+    cJSON *terminating_replicas = cJSON_GetObjectItemCaseSensitive(v1_deployment_statusJSON, "terminatingReplicas");
+    if (cJSON_IsNull(terminating_replicas)) {
+        terminating_replicas = NULL;
+    }
+    if (terminating_replicas) { 
+    if(!cJSON_IsNumber(terminating_replicas))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1_deployment_status->unavailable_replicas
     cJSON *unavailable_replicas = cJSON_GetObjectItemCaseSensitive(v1_deployment_statusJSON, "unavailableReplicas");
     if (cJSON_IsNull(unavailable_replicas)) {
@@ -282,6 +306,7 @@ v1_deployment_status_t *v1_deployment_status_parseFromJSON(cJSON *v1_deployment_
         observed_generation ? observed_generation->valuedouble : 0,
         ready_replicas ? ready_replicas->valuedouble : 0,
         replicas ? replicas->valuedouble : 0,
+        terminating_replicas ? terminating_replicas->valuedouble : 0,
         unavailable_replicas ? unavailable_replicas->valuedouble : 0,
         updated_replicas ? updated_replicas->valuedouble : 0
         );

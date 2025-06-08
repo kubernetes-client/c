@@ -26,6 +26,7 @@ typedef struct v1_deployment_status_t {
     long observed_generation; //numeric
     int ready_replicas; //numeric
     int replicas; //numeric
+    int terminating_replicas; //numeric
     int unavailable_replicas; //numeric
     int updated_replicas; //numeric
 
@@ -39,6 +40,7 @@ __attribute__((deprecated)) v1_deployment_status_t *v1_deployment_status_create(
     long observed_generation,
     int ready_replicas,
     int replicas,
+    int terminating_replicas,
     int unavailable_replicas,
     int updated_replicas
 );
