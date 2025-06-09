@@ -6,6 +6,7 @@
 
 
 static v1_volume_error_t *v1_volume_error_create_internal(
+    int error_code,
     char *message,
     char *time
     ) {
@@ -13,6 +14,7 @@ static v1_volume_error_t *v1_volume_error_create_internal(
     if (!v1_volume_error_local_var) {
         return NULL;
     }
+    v1_volume_error_local_var->error_code = error_code;
     v1_volume_error_local_var->message = message;
     v1_volume_error_local_var->time = time;
 
@@ -21,10 +23,12 @@ static v1_volume_error_t *v1_volume_error_create_internal(
 }
 
 __attribute__((deprecated)) v1_volume_error_t *v1_volume_error_create(
+    int error_code,
     char *message,
     char *time
     ) {
     return v1_volume_error_create_internal (
+        error_code,
         message,
         time
         );
@@ -53,6 +57,14 @@ void v1_volume_error_free(v1_volume_error_t *v1_volume_error) {
 cJSON *v1_volume_error_convertToJSON(v1_volume_error_t *v1_volume_error) {
     cJSON *item = cJSON_CreateObject();
 
+    // v1_volume_error->error_code
+    if(v1_volume_error->error_code) {
+    if(cJSON_AddNumberToObject(item, "errorCode", v1_volume_error->error_code) == NULL) {
+    goto fail; //Numeric
+    }
+    }
+
+
     // v1_volume_error->message
     if(v1_volume_error->message) {
     if(cJSON_AddStringToObject(item, "message", v1_volume_error->message) == NULL) {
@@ -80,6 +92,18 @@ v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
 
     v1_volume_error_t *v1_volume_error_local_var = NULL;
 
+    // v1_volume_error->error_code
+    cJSON *error_code = cJSON_GetObjectItemCaseSensitive(v1_volume_errorJSON, "errorCode");
+    if (cJSON_IsNull(error_code)) {
+        error_code = NULL;
+    }
+    if (error_code) { 
+    if(!cJSON_IsNumber(error_code))
+    {
+    goto end; //Numeric
+    }
+    }
+
     // v1_volume_error->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_volume_errorJSON, "message");
     if (cJSON_IsNull(message)) {
@@ -106,6 +130,7 @@ v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
 
 
     v1_volume_error_local_var = v1_volume_error_create_internal (
+        error_code ? error_code->valuedouble : 0,
         message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         time && !cJSON_IsNull(time) ? strdup(time->valuestring) : NULL
         );

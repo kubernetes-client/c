@@ -11,7 +11,8 @@ static v1_replica_set_status_t *v1_replica_set_status_create_internal(
     int fully_labeled_replicas,
     long observed_generation,
     int ready_replicas,
-    int replicas
+    int replicas,
+    int terminating_replicas
     ) {
     v1_replica_set_status_t *v1_replica_set_status_local_var = malloc(sizeof(v1_replica_set_status_t));
     if (!v1_replica_set_status_local_var) {
@@ -23,6 +24,7 @@ static v1_replica_set_status_t *v1_replica_set_status_create_internal(
     v1_replica_set_status_local_var->observed_generation = observed_generation;
     v1_replica_set_status_local_var->ready_replicas = ready_replicas;
     v1_replica_set_status_local_var->replicas = replicas;
+    v1_replica_set_status_local_var->terminating_replicas = terminating_replicas;
 
     v1_replica_set_status_local_var->_library_owned = 1;
     return v1_replica_set_status_local_var;
@@ -34,7 +36,8 @@ __attribute__((deprecated)) v1_replica_set_status_t *v1_replica_set_status_creat
     int fully_labeled_replicas,
     long observed_generation,
     int ready_replicas,
-    int replicas
+    int replicas,
+    int terminating_replicas
     ) {
     return v1_replica_set_status_create_internal (
         available_replicas,
@@ -42,7 +45,8 @@ __attribute__((deprecated)) v1_replica_set_status_t *v1_replica_set_status_creat
         fully_labeled_replicas,
         observed_generation,
         ready_replicas,
-        replicas
+        replicas,
+        terminating_replicas
         );
 }
 
@@ -126,6 +130,14 @@ cJSON *v1_replica_set_status_convertToJSON(v1_replica_set_status_t *v1_replica_s
     }
     if(cJSON_AddNumberToObject(item, "replicas", v1_replica_set_status->replicas) == NULL) {
     goto fail; //Numeric
+    }
+
+
+    // v1_replica_set_status->terminating_replicas
+    if(v1_replica_set_status->terminating_replicas) {
+    if(cJSON_AddNumberToObject(item, "terminatingReplicas", v1_replica_set_status->terminating_replicas) == NULL) {
+    goto fail; //Numeric
+    }
     }
 
     return item;
@@ -230,6 +242,18 @@ v1_replica_set_status_t *v1_replica_set_status_parseFromJSON(cJSON *v1_replica_s
     goto end; //Numeric
     }
 
+    // v1_replica_set_status->terminating_replicas
+    cJSON *terminating_replicas = cJSON_GetObjectItemCaseSensitive(v1_replica_set_statusJSON, "terminatingReplicas");
+    if (cJSON_IsNull(terminating_replicas)) {
+        terminating_replicas = NULL;
+    }
+    if (terminating_replicas) { 
+    if(!cJSON_IsNumber(terminating_replicas))
+    {
+    goto end; //Numeric
+    }
+    }
+
 
     v1_replica_set_status_local_var = v1_replica_set_status_create_internal (
         available_replicas ? available_replicas->valuedouble : 0,
@@ -237,7 +261,8 @@ v1_replica_set_status_t *v1_replica_set_status_parseFromJSON(cJSON *v1_replica_s
         fully_labeled_replicas ? fully_labeled_replicas->valuedouble : 0,
         observed_generation ? observed_generation->valuedouble : 0,
         ready_replicas ? ready_replicas->valuedouble : 0,
-        replicas->valuedouble
+        replicas->valuedouble,
+        terminating_replicas ? terminating_replicas->valuedouble : 0
         );
 
     return v1_replica_set_status_local_var;

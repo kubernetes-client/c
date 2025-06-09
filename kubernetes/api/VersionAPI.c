@@ -7,7 +7,7 @@
 #define MAX_BUFFER_LENGTH 4096
 
 
-// get the code version
+// get the version information for this server
 //
 version_info_t*
 VersionAPI_getCode(apiClient_t *apiClient)

@@ -24,6 +24,7 @@ v1_csi_driver_spec_t* instantiate_v1_csi_driver_spec(int include_optional) {
     v1_csi_driver_spec = v1_csi_driver_spec_create(
       1,
       "0",
+      56,
       1,
       1,
       1,
@@ -35,6 +36,7 @@ v1_csi_driver_spec_t* instantiate_v1_csi_driver_spec(int include_optional) {
     v1_csi_driver_spec = v1_csi_driver_spec_create(
       1,
       "0",
+      56,
       1,
       1,
       1,

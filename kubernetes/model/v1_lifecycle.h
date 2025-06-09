@@ -22,13 +22,15 @@ typedef struct v1_lifecycle_t v1_lifecycle_t;
 typedef struct v1_lifecycle_t {
     struct v1_lifecycle_handler_t *post_start; //model
     struct v1_lifecycle_handler_t *pre_stop; //model
+    char *stop_signal; // string
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_lifecycle_t;
 
 __attribute__((deprecated)) v1_lifecycle_t *v1_lifecycle_create(
     v1_lifecycle_handler_t *post_start,
-    v1_lifecycle_handler_t *pre_stop
+    v1_lifecycle_handler_t *pre_stop,
+    char *stop_signal
 );
 
 void v1_lifecycle_free(v1_lifecycle_t *v1_lifecycle);

@@ -30,8 +30,10 @@ v1beta1_resource_slice_spec_t* instantiate_v1beta1_resource_slice_spec(int inclu
       "0",
        // false, not to have infinite recursion
       instantiate_v1_node_selector(0),
+      1,
        // false, not to have infinite recursion
-      instantiate_v1beta1_resource_pool(0)
+      instantiate_v1beta1_resource_pool(0),
+      list_createList()
     );
   } else {
     v1beta1_resource_slice_spec = v1beta1_resource_slice_spec_create(
@@ -40,7 +42,9 @@ v1beta1_resource_slice_spec_t* instantiate_v1beta1_resource_slice_spec(int inclu
       "0",
       "0",
       NULL,
-      NULL
+      1,
+      NULL,
+      list_createList()
     );
   }
 

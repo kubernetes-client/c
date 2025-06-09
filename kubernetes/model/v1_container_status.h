@@ -36,6 +36,7 @@ typedef struct v1_container_status_t {
     int restart_count; //numeric
     int started; //boolean
     struct v1_container_state_t *state; //model
+    char *stop_signal; // string
     struct v1_container_user_t *user; //model
     list_t *volume_mounts; //nonprimitive container
 
@@ -55,6 +56,7 @@ __attribute__((deprecated)) v1_container_status_t *v1_container_status_create(
     int restart_count,
     int started,
     v1_container_state_t *state,
+    char *stop_signal,
     v1_container_user_t *user,
     list_t *volume_mounts
 );

@@ -11,7 +11,9 @@ static v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_create_interna
     char *driver,
     char *node_name,
     v1_node_selector_t *node_selector,
-    v1beta1_resource_pool_t *pool
+    int per_device_node_selection,
+    v1beta1_resource_pool_t *pool,
+    list_t *shared_counters
     ) {
     v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_local_var = malloc(sizeof(v1beta1_resource_slice_spec_t));
     if (!v1beta1_resource_slice_spec_local_var) {
@@ -22,7 +24,9 @@ static v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_create_interna
     v1beta1_resource_slice_spec_local_var->driver = driver;
     v1beta1_resource_slice_spec_local_var->node_name = node_name;
     v1beta1_resource_slice_spec_local_var->node_selector = node_selector;
+    v1beta1_resource_slice_spec_local_var->per_device_node_selection = per_device_node_selection;
     v1beta1_resource_slice_spec_local_var->pool = pool;
+    v1beta1_resource_slice_spec_local_var->shared_counters = shared_counters;
 
     v1beta1_resource_slice_spec_local_var->_library_owned = 1;
     return v1beta1_resource_slice_spec_local_var;
@@ -34,7 +38,9 @@ __attribute__((deprecated)) v1beta1_resource_slice_spec_t *v1beta1_resource_slic
     char *driver,
     char *node_name,
     v1_node_selector_t *node_selector,
-    v1beta1_resource_pool_t *pool
+    int per_device_node_selection,
+    v1beta1_resource_pool_t *pool,
+    list_t *shared_counters
     ) {
     return v1beta1_resource_slice_spec_create_internal (
         all_nodes,
@@ -42,7 +48,9 @@ __attribute__((deprecated)) v1beta1_resource_slice_spec_t *v1beta1_resource_slic
         driver,
         node_name,
         node_selector,
-        pool
+        per_device_node_selection,
+        pool,
+        shared_counters
         );
 }
 
@@ -77,6 +85,13 @@ void v1beta1_resource_slice_spec_free(v1beta1_resource_slice_spec_t *v1beta1_res
     if (v1beta1_resource_slice_spec->pool) {
         v1beta1_resource_pool_free(v1beta1_resource_slice_spec->pool);
         v1beta1_resource_slice_spec->pool = NULL;
+    }
+    if (v1beta1_resource_slice_spec->shared_counters) {
+        list_ForEach(listEntry, v1beta1_resource_slice_spec->shared_counters) {
+            v1beta1_counter_set_free(listEntry->data);
+        }
+        list_freeList(v1beta1_resource_slice_spec->shared_counters);
+        v1beta1_resource_slice_spec->shared_counters = NULL;
     }
     free(v1beta1_resource_slice_spec);
 }
@@ -142,6 +157,14 @@ cJSON *v1beta1_resource_slice_spec_convertToJSON(v1beta1_resource_slice_spec_t *
     }
 
 
+    // v1beta1_resource_slice_spec->per_device_node_selection
+    if(v1beta1_resource_slice_spec->per_device_node_selection) {
+    if(cJSON_AddBoolToObject(item, "perDeviceNodeSelection", v1beta1_resource_slice_spec->per_device_node_selection) == NULL) {
+    goto fail; //Bool
+    }
+    }
+
+
     // v1beta1_resource_slice_spec->pool
     if (!v1beta1_resource_slice_spec->pool) {
         goto fail;
@@ -153,6 +176,26 @@ cJSON *v1beta1_resource_slice_spec_convertToJSON(v1beta1_resource_slice_spec_t *
     cJSON_AddItemToObject(item, "pool", pool_local_JSON);
     if(item->child == NULL) {
     goto fail;
+    }
+
+
+    // v1beta1_resource_slice_spec->shared_counters
+    if(v1beta1_resource_slice_spec->shared_counters) {
+    cJSON *shared_counters = cJSON_AddArrayToObject(item, "sharedCounters");
+    if(shared_counters == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *shared_countersListEntry;
+    if (v1beta1_resource_slice_spec->shared_counters) {
+    list_ForEach(shared_countersListEntry, v1beta1_resource_slice_spec->shared_counters) {
+    cJSON *itemLocal = v1beta1_counter_set_convertToJSON(shared_countersListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(shared_counters, itemLocal);
+    }
+    }
     }
 
     return item;
@@ -175,6 +218,9 @@ v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_parseFromJSON(cJSON *
 
     // define the local variable for v1beta1_resource_slice_spec->pool
     v1beta1_resource_pool_t *pool_local_nonprim = NULL;
+
+    // define the local list for v1beta1_resource_slice_spec->shared_counters
+    list_t *shared_countersList = NULL;
 
     // v1beta1_resource_slice_spec->all_nodes
     cJSON *all_nodes = cJSON_GetObjectItemCaseSensitive(v1beta1_resource_slice_specJSON, "allNodes");
@@ -248,6 +294,18 @@ v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_parseFromJSON(cJSON *
     node_selector_local_nonprim = v1_node_selector_parseFromJSON(node_selector); //nonprimitive
     }
 
+    // v1beta1_resource_slice_spec->per_device_node_selection
+    cJSON *per_device_node_selection = cJSON_GetObjectItemCaseSensitive(v1beta1_resource_slice_specJSON, "perDeviceNodeSelection");
+    if (cJSON_IsNull(per_device_node_selection)) {
+        per_device_node_selection = NULL;
+    }
+    if (per_device_node_selection) { 
+    if(!cJSON_IsBool(per_device_node_selection))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1beta1_resource_slice_spec->pool
     cJSON *pool = cJSON_GetObjectItemCaseSensitive(v1beta1_resource_slice_specJSON, "pool");
     if (cJSON_IsNull(pool)) {
@@ -260,6 +318,30 @@ v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_parseFromJSON(cJSON *
     
     pool_local_nonprim = v1beta1_resource_pool_parseFromJSON(pool); //nonprimitive
 
+    // v1beta1_resource_slice_spec->shared_counters
+    cJSON *shared_counters = cJSON_GetObjectItemCaseSensitive(v1beta1_resource_slice_specJSON, "sharedCounters");
+    if (cJSON_IsNull(shared_counters)) {
+        shared_counters = NULL;
+    }
+    if (shared_counters) { 
+    cJSON *shared_counters_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(shared_counters)){
+        goto end; //nonprimitive container
+    }
+
+    shared_countersList = list_createList();
+
+    cJSON_ArrayForEach(shared_counters_local_nonprimitive,shared_counters )
+    {
+        if(!cJSON_IsObject(shared_counters_local_nonprimitive)){
+            goto end;
+        }
+        v1beta1_counter_set_t *shared_countersItem = v1beta1_counter_set_parseFromJSON(shared_counters_local_nonprimitive);
+
+        list_addElement(shared_countersList, shared_countersItem);
+    }
+    }
+
 
     v1beta1_resource_slice_spec_local_var = v1beta1_resource_slice_spec_create_internal (
         all_nodes ? all_nodes->valueint : 0,
@@ -267,7 +349,9 @@ v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_parseFromJSON(cJSON *
         strdup(driver->valuestring),
         node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
         node_selector ? node_selector_local_nonprim : NULL,
-        pool_local_nonprim
+        per_device_node_selection ? per_device_node_selection->valueint : 0,
+        pool_local_nonprim,
+        shared_counters ? shared_countersList : NULL
         );
 
     return v1beta1_resource_slice_spec_local_var;
@@ -288,6 +372,15 @@ end:
     if (pool_local_nonprim) {
         v1beta1_resource_pool_free(pool_local_nonprim);
         pool_local_nonprim = NULL;
+    }
+    if (shared_countersList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, shared_countersList) {
+            v1beta1_counter_set_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(shared_countersList);
+        shared_countersList = NULL;
     }
     return NULL;
 

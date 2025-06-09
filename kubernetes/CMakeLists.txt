@@ -203,6 +203,7 @@ set(SRCS
     model/v1_flow_schema_list.c
     model/v1_flow_schema_spec.c
     model/v1_flow_schema_status.c
+    model/v1_for_node.c
     model/v1_for_zone.c
     model/v1_gce_persistent_disk_volume_source.c
     model/v1_git_repo_volume_source.c
@@ -238,6 +239,9 @@ set(SRCS
     model/v1_ingress_spec.c
     model/v1_ingress_status.c
     model/v1_ingress_tls.c
+    model/v1_ip_address.c
+    model/v1_ip_address_list.c
+    model/v1_ip_address_spec.c
     model/v1_ip_block.c
     model/v1_iscsi_persistent_volume_source.c
     model/v1_iscsi_volume_source.c
@@ -307,6 +311,7 @@ set(SRCS
     model/v1_node_selector_term.c
     model/v1_node_spec.c
     model/v1_node_status.c
+    model/v1_node_swap_status.c
     model/v1_node_system_info.c
     model/v1_non_resource_attributes.c
     model/v1_non_resource_policy_rule.c
@@ -318,6 +323,7 @@ set(SRCS
     model/v1_owner_reference.c
     model/v1_param_kind.c
     model/v1_param_ref.c
+    model/v1_parent_reference.c
     model/v1_persistent_volume.c
     model/v1_persistent_volume_claim.c
     model/v1_persistent_volume_claim_condition.c
@@ -443,6 +449,10 @@ set(SRCS
     model/v1_service_account_subject.c
     model/v1_service_account_token_projection.c
     model/v1_service_backend_port.c
+    model/v1_service_cidr.c
+    model/v1_service_cidr_list.c
+    model/v1_service_cidr_spec.c
+    model/v1_service_cidr_status.c
     model/v1_service_list.c
     model/v1_service_port.c
     model/v1_service_spec.c
@@ -558,6 +568,8 @@ set(SRCS
     model/v1alpha3_allocation_result.c
     model/v1alpha3_basic_device.c
     model/v1alpha3_cel_device_selector.c
+    model/v1alpha3_counter.c
+    model/v1alpha3_counter_set.c
     model/v1alpha3_device.c
     model/v1alpha3_device_allocation_configuration.c
     model/v1alpha3_device_allocation_result.c
@@ -569,9 +581,17 @@ set(SRCS
     model/v1alpha3_device_class_list.c
     model/v1alpha3_device_class_spec.c
     model/v1alpha3_device_constraint.c
+    model/v1alpha3_device_counter_consumption.c
     model/v1alpha3_device_request.c
     model/v1alpha3_device_request_allocation_result.c
     model/v1alpha3_device_selector.c
+    model/v1alpha3_device_sub_request.c
+    model/v1alpha3_device_taint.c
+    model/v1alpha3_device_taint_rule.c
+    model/v1alpha3_device_taint_rule_list.c
+    model/v1alpha3_device_taint_rule_spec.c
+    model/v1alpha3_device_taint_selector.c
+    model/v1alpha3_device_toleration.c
     model/v1alpha3_network_device_data.c
     model/v1alpha3_opaque_device_configuration.c
     model/v1alpha3_resource_claim.c
@@ -591,6 +611,11 @@ set(SRCS
     model/v1beta1_audit_annotation.c
     model/v1beta1_basic_device.c
     model/v1beta1_cel_device_selector.c
+    model/v1beta1_cluster_trust_bundle.c
+    model/v1beta1_cluster_trust_bundle_list.c
+    model/v1beta1_cluster_trust_bundle_spec.c
+    model/v1beta1_counter.c
+    model/v1beta1_counter_set.c
     model/v1beta1_device.c
     model/v1beta1_device_allocation_configuration.c
     model/v1beta1_device_allocation_result.c
@@ -603,13 +628,20 @@ set(SRCS
     model/v1beta1_device_class_list.c
     model/v1beta1_device_class_spec.c
     model/v1beta1_device_constraint.c
+    model/v1beta1_device_counter_consumption.c
     model/v1beta1_device_request.c
     model/v1beta1_device_request_allocation_result.c
     model/v1beta1_device_selector.c
+    model/v1beta1_device_sub_request.c
+    model/v1beta1_device_taint.c
+    model/v1beta1_device_toleration.c
     model/v1beta1_expression_warning.c
     model/v1beta1_ip_address.c
     model/v1beta1_ip_address_list.c
     model/v1beta1_ip_address_spec.c
+    model/v1beta1_lease_candidate.c
+    model/v1beta1_lease_candidate_list.c
+    model/v1beta1_lease_candidate_spec.c
     model/v1beta1_match_condition.c
     model/v1beta1_match_resources.c
     model/v1beta1_named_rule_with_operations.c
@@ -630,8 +662,6 @@ set(SRCS
     model/v1beta1_resource_slice.c
     model/v1beta1_resource_slice_list.c
     model/v1beta1_resource_slice_spec.c
-    model/v1beta1_self_subject_review.c
-    model/v1beta1_self_subject_review_status.c
     model/v1beta1_service_cidr.c
     model/v1beta1_service_cidr_list.c
     model/v1beta1_service_cidr_spec.c
@@ -648,6 +678,45 @@ set(SRCS
     model/v1beta1_variable.c
     model/v1beta1_volume_attributes_class.c
     model/v1beta1_volume_attributes_class_list.c
+    model/v1beta2_allocated_device_status.c
+    model/v1beta2_allocation_result.c
+    model/v1beta2_cel_device_selector.c
+    model/v1beta2_counter.c
+    model/v1beta2_counter_set.c
+    model/v1beta2_device.c
+    model/v1beta2_device_allocation_configuration.c
+    model/v1beta2_device_allocation_result.c
+    model/v1beta2_device_attribute.c
+    model/v1beta2_device_capacity.c
+    model/v1beta2_device_claim.c
+    model/v1beta2_device_claim_configuration.c
+    model/v1beta2_device_class.c
+    model/v1beta2_device_class_configuration.c
+    model/v1beta2_device_class_list.c
+    model/v1beta2_device_class_spec.c
+    model/v1beta2_device_constraint.c
+    model/v1beta2_device_counter_consumption.c
+    model/v1beta2_device_request.c
+    model/v1beta2_device_request_allocation_result.c
+    model/v1beta2_device_selector.c
+    model/v1beta2_device_sub_request.c
+    model/v1beta2_device_taint.c
+    model/v1beta2_device_toleration.c
+    model/v1beta2_exact_device_request.c
+    model/v1beta2_network_device_data.c
+    model/v1beta2_opaque_device_configuration.c
+    model/v1beta2_resource_claim.c
+    model/v1beta2_resource_claim_consumer_reference.c
+    model/v1beta2_resource_claim_list.c
+    model/v1beta2_resource_claim_spec.c
+    model/v1beta2_resource_claim_status.c
+    model/v1beta2_resource_claim_template.c
+    model/v1beta2_resource_claim_template_list.c
+    model/v1beta2_resource_claim_template_spec.c
+    model/v1beta2_resource_pool.c
+    model/v1beta2_resource_slice.c
+    model/v1beta2_resource_slice_list.c
+    model/v1beta2_resource_slice_spec.c
     model/v2_container_resource_metric_source.c
     model/v2_container_resource_metric_status.c
     model/v2_cross_version_object_reference.c
@@ -686,7 +755,6 @@ set(SRCS
     api/AppsV1API.c
     api/AuthenticationAPI.c
     api/AuthenticationV1API.c
-    api/AuthenticationV1beta1API.c
     api/AuthorizationAPI.c
     api/AuthorizationV1API.c
     api/AutoscalingAPI.c
@@ -697,9 +765,11 @@ set(SRCS
     api/CertificatesAPI.c
     api/CertificatesV1API.c
     api/CertificatesV1alpha1API.c
+    api/CertificatesV1beta1API.c
     api/CoordinationAPI.c
     api/CoordinationV1API.c
     api/CoordinationV1alpha2API.c
+    api/CoordinationV1beta1API.c
     api/CoreAPI.c
     api/CoreV1API.c
     api/CustomObjectsAPI.c
@@ -725,6 +795,7 @@ set(SRCS
     api/ResourceAPI.c
     api/ResourceV1alpha3API.c
     api/ResourceV1beta1API.c
+    api/ResourceV1beta2API.c
     api/SchedulingAPI.c
     api/SchedulingV1API.c
     api/StorageAPI.c
@@ -901,6 +972,7 @@ set(HDRS
     model/v1_flow_schema_list.h
     model/v1_flow_schema_spec.h
     model/v1_flow_schema_status.h
+    model/v1_for_node.h
     model/v1_for_zone.h
     model/v1_gce_persistent_disk_volume_source.h
     model/v1_git_repo_volume_source.h
@@ -936,6 +1008,9 @@ set(HDRS
     model/v1_ingress_spec.h
     model/v1_ingress_status.h
     model/v1_ingress_tls.h
+    model/v1_ip_address.h
+    model/v1_ip_address_list.h
+    model/v1_ip_address_spec.h
     model/v1_ip_block.h
     model/v1_iscsi_persistent_volume_source.h
     model/v1_iscsi_volume_source.h
@@ -1005,6 +1080,7 @@ set(HDRS
     model/v1_node_selector_term.h
     model/v1_node_spec.h
     model/v1_node_status.h
+    model/v1_node_swap_status.h
     model/v1_node_system_info.h
     model/v1_non_resource_attributes.h
     model/v1_non_resource_policy_rule.h
@@ -1016,6 +1092,7 @@ set(HDRS
     model/v1_owner_reference.h
     model/v1_param_kind.h
     model/v1_param_ref.h
+    model/v1_parent_reference.h
     model/v1_persistent_volume.h
     model/v1_persistent_volume_claim.h
     model/v1_persistent_volume_claim_condition.h
@@ -1141,6 +1218,10 @@ set(HDRS
     model/v1_service_account_subject.h
     model/v1_service_account_token_projection.h
     model/v1_service_backend_port.h
+    model/v1_service_cidr.h
+    model/v1_service_cidr_list.h
+    model/v1_service_cidr_spec.h
+    model/v1_service_cidr_status.h
     model/v1_service_list.h
     model/v1_service_port.h
     model/v1_service_spec.h
@@ -1256,6 +1337,8 @@ set(HDRS
     model/v1alpha3_allocation_result.h
     model/v1alpha3_basic_device.h
     model/v1alpha3_cel_device_selector.h
+    model/v1alpha3_counter.h
+    model/v1alpha3_counter_set.h
     model/v1alpha3_device.h
     model/v1alpha3_device_allocation_configuration.h
     model/v1alpha3_device_allocation_result.h
@@ -1267,9 +1350,17 @@ set(HDRS
     model/v1alpha3_device_class_list.h
     model/v1alpha3_device_class_spec.h
     model/v1alpha3_device_constraint.h
+    model/v1alpha3_device_counter_consumption.h
     model/v1alpha3_device_request.h
     model/v1alpha3_device_request_allocation_result.h
     model/v1alpha3_device_selector.h
+    model/v1alpha3_device_sub_request.h
+    model/v1alpha3_device_taint.h
+    model/v1alpha3_device_taint_rule.h
+    model/v1alpha3_device_taint_rule_list.h
+    model/v1alpha3_device_taint_rule_spec.h
+    model/v1alpha3_device_taint_selector.h
+    model/v1alpha3_device_toleration.h
     model/v1alpha3_network_device_data.h
     model/v1alpha3_opaque_device_configuration.h
     model/v1alpha3_resource_claim.h
@@ -1289,6 +1380,11 @@ set(HDRS
     model/v1beta1_audit_annotation.h
     model/v1beta1_basic_device.h
     model/v1beta1_cel_device_selector.h
+    model/v1beta1_cluster_trust_bundle.h
+    model/v1beta1_cluster_trust_bundle_list.h
+    model/v1beta1_cluster_trust_bundle_spec.h
+    model/v1beta1_counter.h
+    model/v1beta1_counter_set.h
     model/v1beta1_device.h
     model/v1beta1_device_allocation_configuration.h
     model/v1beta1_device_allocation_result.h
@@ -1301,13 +1397,20 @@ set(HDRS
     model/v1beta1_device_class_list.h
     model/v1beta1_device_class_spec.h
     model/v1beta1_device_constraint.h
+    model/v1beta1_device_counter_consumption.h
     model/v1beta1_device_request.h
     model/v1beta1_device_request_allocation_result.h
     model/v1beta1_device_selector.h
+    model/v1beta1_device_sub_request.h
+    model/v1beta1_device_taint.h
+    model/v1beta1_device_toleration.h
     model/v1beta1_expression_warning.h
     model/v1beta1_ip_address.h
     model/v1beta1_ip_address_list.h
     model/v1beta1_ip_address_spec.h
+    model/v1beta1_lease_candidate.h
+    model/v1beta1_lease_candidate_list.h
+    model/v1beta1_lease_candidate_spec.h
     model/v1beta1_match_condition.h
     model/v1beta1_match_resources.h
     model/v1beta1_named_rule_with_operations.h
@@ -1328,8 +1431,6 @@ set(HDRS
     model/v1beta1_resource_slice.h
     model/v1beta1_resource_slice_list.h
     model/v1beta1_resource_slice_spec.h
-    model/v1beta1_self_subject_review.h
-    model/v1beta1_self_subject_review_status.h
     model/v1beta1_service_cidr.h
     model/v1beta1_service_cidr_list.h
     model/v1beta1_service_cidr_spec.h
@@ -1346,6 +1447,45 @@ set(HDRS
     model/v1beta1_variable.h
     model/v1beta1_volume_attributes_class.h
     model/v1beta1_volume_attributes_class_list.h
+    model/v1beta2_allocated_device_status.h
+    model/v1beta2_allocation_result.h
+    model/v1beta2_cel_device_selector.h
+    model/v1beta2_counter.h
+    model/v1beta2_counter_set.h
+    model/v1beta2_device.h
+    model/v1beta2_device_allocation_configuration.h
+    model/v1beta2_device_allocation_result.h
+    model/v1beta2_device_attribute.h
+    model/v1beta2_device_capacity.h
+    model/v1beta2_device_claim.h
+    model/v1beta2_device_claim_configuration.h
+    model/v1beta2_device_class.h
+    model/v1beta2_device_class_configuration.h
+    model/v1beta2_device_class_list.h
+    model/v1beta2_device_class_spec.h
+    model/v1beta2_device_constraint.h
+    model/v1beta2_device_counter_consumption.h
+    model/v1beta2_device_request.h
+    model/v1beta2_device_request_allocation_result.h
+    model/v1beta2_device_selector.h
+    model/v1beta2_device_sub_request.h
+    model/v1beta2_device_taint.h
+    model/v1beta2_device_toleration.h
+    model/v1beta2_exact_device_request.h
+    model/v1beta2_network_device_data.h
+    model/v1beta2_opaque_device_configuration.h
+    model/v1beta2_resource_claim.h
+    model/v1beta2_resource_claim_consumer_reference.h
+    model/v1beta2_resource_claim_list.h
+    model/v1beta2_resource_claim_spec.h
+    model/v1beta2_resource_claim_status.h
+    model/v1beta2_resource_claim_template.h
+    model/v1beta2_resource_claim_template_list.h
+    model/v1beta2_resource_claim_template_spec.h
+    model/v1beta2_resource_pool.h
+    model/v1beta2_resource_slice.h
+    model/v1beta2_resource_slice_list.h
+    model/v1beta2_resource_slice_spec.h
     model/v2_container_resource_metric_source.h
     model/v2_container_resource_metric_status.h
     model/v2_cross_version_object_reference.h
@@ -1384,7 +1524,6 @@ set(HDRS
     api/AppsV1API.h
     api/AuthenticationAPI.h
     api/AuthenticationV1API.h
-    api/AuthenticationV1beta1API.h
     api/AuthorizationAPI.h
     api/AuthorizationV1API.h
     api/AutoscalingAPI.h
@@ -1395,9 +1534,11 @@ set(HDRS
     api/CertificatesAPI.h
     api/CertificatesV1API.h
     api/CertificatesV1alpha1API.h
+    api/CertificatesV1beta1API.h
     api/CoordinationAPI.h
     api/CoordinationV1API.h
     api/CoordinationV1alpha2API.h
+    api/CoordinationV1beta1API.h
     api/CoreAPI.h
     api/CoreV1API.h
     api/CustomObjectsAPI.h
@@ -1423,6 +1564,7 @@ set(HDRS
     api/ResourceAPI.h
     api/ResourceV1alpha3API.h
     api/ResourceV1beta1API.h
+    api/ResourceV1beta2API.h
     api/SchedulingAPI.h
     api/SchedulingV1API.h
     api/StorageAPI.h
@@ -1527,7 +1669,6 @@ set(HDRS "")
 #    unit-tests/manual-AppsV1API.c
 #    unit-tests/manual-AuthenticationAPI.c
 #    unit-tests/manual-AuthenticationV1API.c
-#    unit-tests/manual-AuthenticationV1beta1API.c
 #    unit-tests/manual-AuthorizationAPI.c
 #    unit-tests/manual-AuthorizationV1API.c
 #    unit-tests/manual-AutoscalingAPI.c
@@ -1538,9 +1679,11 @@ set(HDRS "")
 #    unit-tests/manual-CertificatesAPI.c
 #    unit-tests/manual-CertificatesV1API.c
 #    unit-tests/manual-CertificatesV1alpha1API.c
+#    unit-tests/manual-CertificatesV1beta1API.c
 #    unit-tests/manual-CoordinationAPI.c
 #    unit-tests/manual-CoordinationV1API.c
 #    unit-tests/manual-CoordinationV1alpha2API.c
+#    unit-tests/manual-CoordinationV1beta1API.c
 #    unit-tests/manual-CoreAPI.c
 #    unit-tests/manual-CoreV1API.c
 #    unit-tests/manual-CustomObjectsAPI.c
@@ -1566,6 +1709,7 @@ set(HDRS "")
 #    unit-tests/manual-ResourceAPI.c
 #    unit-tests/manual-ResourceV1alpha3API.c
 #    unit-tests/manual-ResourceV1beta1API.c
+#    unit-tests/manual-ResourceV1beta2API.c
 #    unit-tests/manual-SchedulingAPI.c
 #    unit-tests/manual-SchedulingV1API.c
 #    unit-tests/manual-StorageAPI.c
