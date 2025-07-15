@@ -19,9 +19,19 @@ typedef struct sslConfig_t {
                                   /* 1 -- skip ssl verify for server certificate */
 } sslConfig_t;
 
+typedef struct curl_config_t {
+    int keepalive;  /* 0 -- disable keepalive */
+                    /* 1 -- enable keepalive */
+    long keepidle;  /* keep-alive idle time: default to 120 seconds */
+    long keepintvl; /* interval time between keep-alive probes: default to 60 seconds */
+} curl_config_t;
+
+bool isWatchCall(list_t *queryParameters);
+
 typedef struct apiClient_t {
     char *basePath;
     sslConfig_t *sslConfig;
+    curl_config_t *curlConfig;
     void *dataReceived;
     long dataReceivedLen;
     void (*data_callback_func)(void **, long *);

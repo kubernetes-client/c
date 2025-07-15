@@ -75,6 +75,7 @@ void watch_list_pod(apiClient_t * apiClient)
     int watch = 1;
     int timeoutSeconds = 30;    /* Watch for 30 seconds */
     // int timeoutSeconds = 0;  /* Set timeoutSeconds to 0 to keep watching and not exit */
+    // apiClient->curlConfig->keepalive = 1; /* Enable keepalive */
     CoreV1API_listNamespacedPod(apiClient, "default",   /*namespace */
                                 NULL,   /* pretty */
                                 NULL,   /* allowWatchBookmarks */

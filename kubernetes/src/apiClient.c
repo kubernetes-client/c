@@ -6,10 +6,25 @@
 
 size_t writeDataCallback(void *buffer, size_t size, size_t nmemb, void *userp);
 
+bool isWatchCall(list_t * queryParameters)
+{
+    bool found = false;
+    listEntry_t *listEntry = NULL;
+    list_ForEach(listEntry, queryParameters) {
+        keyValuePair_t *pair = listEntry->data;
+        if (strcmp(pair->key, "watch") == 0) {
+            found = (strcmp(pair->key, "1") == 0);   
+            break;
+        }
+    }
+    return found;
+}
+
 apiClient_t *apiClient_create() {
     apiClient_t *apiClient = malloc(sizeof(apiClient_t));
     apiClient->basePath = strdup("http://localhost");
     apiClient->sslConfig = NULL;
+    apiClient->curlConfig = NULL;
     apiClient->dataReceived = NULL;
     apiClient->dataReceivedLen = 0;
     apiClient->data_callback_func = NULL;
@@ -37,6 +52,11 @@ apiClient_t *apiClient_create_with_base_path(const char *basePath
     }else{
         apiClient->sslConfig = NULL;
     }
+
+    apiClient->curlConfig = malloc(sizeof(curl_config_t));
+    apiClient->curlConfig->keepalive = 0; // default value, it can be set to 1 to enable keepalive by user
+    apiClient->curlConfig->keepidle = 120; // default value
+    apiClient->curlConfig->keepintvl = 60; // default value
 
     apiClient->dataReceived = NULL;
     apiClient->dataReceivedLen = 0;
@@ -79,6 +99,10 @@ void apiClient_free(apiClient_t *apiClient) {
             keyValuePair_free(pair);
         }
         list_freeList(apiClient->apiKeys_BearerToken);
+    }
+    if(apiClient->curlConfig) {
+        free(apiClient->curlConfig);
+        apiClient->curlConfig = NULL;
     }
     free(apiClient);
 }
@@ -407,6 +431,14 @@ void apiClient_invoke(apiClient_t    *apiClient,
             assembleTargetUrl(apiClient->basePath,
                               operationParameter,
                               queryParameters);
+        
+        if(apiClient->curlConfig->keepalive == 1 && isWatchCall(queryParameters)) {
+            curl_easy_setopt(handle, CURLOPT_TCP_KEEPALIVE, 1L);
+            curl_easy_setopt(handle, CURLOPT_TCP_KEEPIDLE, apiClient->curlConfig->keepidle);
+            curl_easy_setopt(handle, CURLOPT_TCP_KEEPINTVL, apiClient->curlConfig->keepintvl);
+            // curl_easy_setopt(handle, CURLOPT_TCP_KEEPCNT, apiClient->curlConfig->keepcnt);
+        }
+            
 
         curl_easy_setopt(handle, CURLOPT_URL, targetUrl);
         curl_easy_setopt(handle,
