@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include "config.h"
 #include "../include/list.h"
 #include "watch_util.h"
 
@@ -18,7 +19,14 @@ static int wu_convert_to_json_array(list_t * json_array, const char *json_string
     char *json_string_dup = strdup(json_string);
 
     char *token = NULL;
+#ifdef HAVE_STRTOK_R
+    char *last = NULL;
+
+    token = strtok_r(json_string_dup, JSON_ARRAY_DELIM, &last);
+#else
     token = strtok(json_string_dup, JSON_ARRAY_DELIM);
+#endif
+
     while (token) {
         cJSON *cjson = cJSON_Parse(token);
         if (cjson == NULL) {
@@ -27,7 +35,11 @@ static int wu_convert_to_json_array(list_t * json_array, const char *json_string
         }
         cJSON_Delete(cjson);
         list_addElement(json_array, strdup(token));
+#ifdef HAVE_STRTOK_R
+        token = strtok_r(NULL, JSON_ARRAY_DELIM, &last);
+#else
         token = strtok(NULL, JSON_ARRAY_DELIM);
+#endif
     }
 
   end:

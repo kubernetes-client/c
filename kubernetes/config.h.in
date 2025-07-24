@@ -1,3 +1,4 @@
 #cmakedefine HAVE_STRNDUP
 #cmakedefine HAVE_SECURE_GETENV
 #cmakedefine HAVE_GETENV
+#cmakedefine HAVE_STRTOK_R

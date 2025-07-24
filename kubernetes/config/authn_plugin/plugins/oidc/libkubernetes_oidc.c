@@ -1,3 +1,4 @@
+#include "config.h"
 #include "authn_plugin.h"
 #include "authn_plugin_util.h"
 #include "kube_config_util.h"
@@ -41,12 +42,22 @@ static time_t get_token_expiration_time(const char *token_string)
     }
 
     char *p = NULL;
-    p = strtok(dup_token_string, OIDC_ID_TOKEN_DELIM);  /* jwt header */
+#ifdef HAVE_STRTOK_R
+    char *last = NULL;
+
+    p = strtok_r(dup_token_string, OIDC_ID_TOKEN_DELIM, &last);  /* jwt header */
+#else
+    p = strtok(dup_token_string, OIDC_ID_TOKEN_DELIM);
+#endif
     if (!p) {
         fprintf(stderr, "%s: The token <%s> is not a valid JWT token.\n", fname, token_string);
         goto end;
     }
+#ifdef HAVE_STRTOK_R
+    p = strtok_r(NULL, OIDC_ID_TOKEN_DELIM, &last);  /* jwt part2 */
+#else
     p = strtok(NULL, OIDC_ID_TOKEN_DELIM);  /* jwt part2 */
+#endif
     if (!p) {
         fprintf(stderr, "%s: The token <%s> is not a valid JWT token.\n", fname, token_string);
         goto end;
