@@ -10,6 +10,8 @@
 
 static int wu_convert_to_json_array(list_t * json_array, const char *json_string)
 {
+    char *last;
+
     if (!json_string || '\0' == json_string[0] || !json_array) {
         return -1;
     }
@@ -18,7 +20,7 @@ static int wu_convert_to_json_array(list_t * json_array, const char *json_string
     char *json_string_dup = strdup(json_string);
 
     char *token = NULL;
-    token = strtok(json_string_dup, JSON_ARRAY_DELIM);
+    token = strtok_r(json_string_dup, JSON_ARRAY_DELIM, &last);
     while (token) {
         cJSON *cjson = cJSON_Parse(token);
         if (cjson == NULL) {
@@ -27,7 +29,7 @@ static int wu_convert_to_json_array(list_t * json_array, const char *json_string
         }
         cJSON_Delete(cjson);
         list_addElement(json_array, strdup(token));
-        token = strtok(NULL, JSON_ARRAY_DELIM);
+        token = strtok_r(NULL, JSON_ARRAY_DELIM, &last);
     }
 
   end:
