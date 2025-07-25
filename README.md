@@ -32,7 +32,10 @@ cd ${CLIENT_REPO_ROOT}/kubernetes
 mkdir build
 cd build
 # If you don't need to debug the C client library:
-cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_SHARED_LIBS=ON ..
+# If you don't want to build a shared but a static library:
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF ..
+
 # If you want to use `gdb` to debug the C client library, add `-DCMAKE_BUILD_TYPE=Debug` to the cmake command line, e.g.
 # cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/usr/local ..
 make
