@@ -29,7 +29,6 @@
 static time_t get_token_expiration_time(const char *token_string)
 {
     static char fname[] = "get_token_expiration_time()";
-    char *last;
 
     time_t expiration_time = 0;
 
@@ -42,6 +41,7 @@ static time_t get_token_expiration_time(const char *token_string)
     }
 
     char *p = NULL;
+    char *last = NULL;
     p = strtok_r(dup_token_string, OIDC_ID_TOKEN_DELIM, &last);  /* jwt header */
     if (!p) {
         fprintf(stderr, "%s: The token <%s> is not a valid JWT token.\n", fname, token_string);

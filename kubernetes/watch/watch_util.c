@@ -10,7 +10,7 @@
 
 static int wu_convert_to_json_array(list_t * json_array, const char *json_string)
 {
-    char *last;
+    char *last = NULL;
 
     if (!json_string || '\0' == json_string[0] || !json_array) {
         return -1;
