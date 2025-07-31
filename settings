@@ -2,12 +2,12 @@
 export KUBERNETES_BRANCH="release-1.33"
 
 # client version is not currently used by the code generator.
-export CLIENT_VERSION="0.13.0"
+export CLIENT_VERSION="0.13.1"
 
 # Name of the release package
 export PACKAGE_NAME="client"
 
 # OpenAPI-Generator branch/tag to generate the client library
-export OPENAPI_GENERATOR_COMMIT="master"
+export OPENAPI_GENERATOR_COMMIT="HEAD"
 
 export USERNAME=kubernetes
