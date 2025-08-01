@@ -1,6 +1,6 @@
 set(PROJECT_VERSION_MAJOR 0)
 set(PROJECT_VERSION_MINOR 13)
-set(PROJECT_VERSION_PATCH 0)
+set(PROJECT_VERSION_PATCH 1)
 
 set(PROJECT_PACKAGE_DESCRIPTION_SUMMARY "The Kubernetes client library for the C programming language.")
 set(PROJECT_PACKAGE_VENDOR "https://github.com/kubernetes-client")
