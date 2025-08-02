@@ -14,7 +14,7 @@ git clone https://github.com/kubernetes-client/c
 CLIENT_REPO_ROOT=${PWD}/c
 
 # Install pre-requisites
-sudo apt-get install libssl-dev libcurl4-openssl-dev libwebsockets-dev uncrustify
+sudo apt-get install libssl-dev libcurl4-openssl-dev libwebsockets-dev uncrustify cmake g++
 
 # Build pre-requisite: libyaml
 git clone https://github.com/yaml/libyaml --depth 1 --branch release/0.2.5
@@ -33,6 +33,10 @@ mkdir build
 cd build
 # If you don't need to debug the C client library:
 cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
+
+# To build a static linked client library: 
+# cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_STATIC_LIBS=ON ..
+
 # If you want to use `gdb` to debug the C client library, add `-DCMAKE_BUILD_TYPE=Debug` to the cmake command line, e.g.
 # cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/usr/local ..
 make
