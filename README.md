@@ -14,7 +14,7 @@ git clone https://github.com/kubernetes-client/c
 CLIENT_REPO_ROOT=${PWD}/c
 
 # Install pre-requisites
-sudo apt-get install libssl-dev libcurl4-openssl-dev libwebsockets-dev uncrustify cmake g++
+sudo apt-get install libssl-dev libcurl4-openssl-dev libwebsockets-dev uncrustify cmake
 
 # Build pre-requisite: libyaml
 git clone https://github.com/yaml/libyaml --depth 1 --branch release/0.2.5
