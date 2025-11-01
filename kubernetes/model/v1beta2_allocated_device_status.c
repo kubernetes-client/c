@@ -11,7 +11,8 @@ static v1beta2_allocated_device_status_t *v1beta2_allocated_device_status_create
     char *device,
     char *driver,
     v1beta2_network_device_data_t *network_data,
-    char *pool
+    char *pool,
+    char *share_id
     ) {
     v1beta2_allocated_device_status_t *v1beta2_allocated_device_status_local_var = malloc(sizeof(v1beta2_allocated_device_status_t));
     if (!v1beta2_allocated_device_status_local_var) {
@@ -23,6 +24,7 @@ static v1beta2_allocated_device_status_t *v1beta2_allocated_device_status_create
     v1beta2_allocated_device_status_local_var->driver = driver;
     v1beta2_allocated_device_status_local_var->network_data = network_data;
     v1beta2_allocated_device_status_local_var->pool = pool;
+    v1beta2_allocated_device_status_local_var->share_id = share_id;
 
     v1beta2_allocated_device_status_local_var->_library_owned = 1;
     return v1beta2_allocated_device_status_local_var;
@@ -34,7 +36,8 @@ __attribute__((deprecated)) v1beta2_allocated_device_status_t *v1beta2_allocated
     char *device,
     char *driver,
     v1beta2_network_device_data_t *network_data,
-    char *pool
+    char *pool,
+    char *share_id
     ) {
     return v1beta2_allocated_device_status_create_internal (
         conditions,
@@ -42,7 +45,8 @@ __attribute__((deprecated)) v1beta2_allocated_device_status_t *v1beta2_allocated
         device,
         driver,
         network_data,
-        pool
+        pool,
+        share_id
         );
 }
 
@@ -81,6 +85,10 @@ void v1beta2_allocated_device_status_free(v1beta2_allocated_device_status_t *v1b
     if (v1beta2_allocated_device_status->pool) {
         free(v1beta2_allocated_device_status->pool);
         v1beta2_allocated_device_status->pool = NULL;
+    }
+    if (v1beta2_allocated_device_status->share_id) {
+        free(v1beta2_allocated_device_status->share_id);
+        v1beta2_allocated_device_status->share_id = NULL;
     }
     free(v1beta2_allocated_device_status);
 }
@@ -158,6 +166,14 @@ cJSON *v1beta2_allocated_device_status_convertToJSON(v1beta2_allocated_device_st
     }
     if(cJSON_AddStringToObject(item, "pool", v1beta2_allocated_device_status->pool) == NULL) {
     goto fail; //String
+    }
+
+
+    // v1beta2_allocated_device_status->share_id
+    if(v1beta2_allocated_device_status->share_id) {
+    if(cJSON_AddStringToObject(item, "shareID", v1beta2_allocated_device_status->share_id) == NULL) {
+    goto fail; //String
+    }
     }
 
     return item;
@@ -266,6 +282,18 @@ v1beta2_allocated_device_status_t *v1beta2_allocated_device_status_parseFromJSON
     goto end; //String
     }
 
+    // v1beta2_allocated_device_status->share_id
+    cJSON *share_id = cJSON_GetObjectItemCaseSensitive(v1beta2_allocated_device_statusJSON, "shareID");
+    if (cJSON_IsNull(share_id)) {
+        share_id = NULL;
+    }
+    if (share_id) { 
+    if(!cJSON_IsString(share_id) && !cJSON_IsNull(share_id))
+    {
+    goto end; //String
+    }
+    }
+
 
     v1beta2_allocated_device_status_local_var = v1beta2_allocated_device_status_create_internal (
         conditions ? conditionsList : NULL,
@@ -273,7 +301,8 @@ v1beta2_allocated_device_status_t *v1beta2_allocated_device_status_parseFromJSON
         strdup(device->valuestring),
         strdup(driver->valuestring),
         network_data ? network_data_local_nonprim : NULL,
-        strdup(pool->valuestring)
+        strdup(pool->valuestring),
+        share_id && !cJSON_IsNull(share_id) ? strdup(share_id->valuestring) : NULL
         );
 
     return v1beta2_allocated_device_status_local_var;

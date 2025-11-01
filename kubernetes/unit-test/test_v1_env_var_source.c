@@ -18,6 +18,7 @@ v1_env_var_source_t* instantiate_v1_env_var_source(int include_optional);
 
 #include "test_v1_config_map_key_selector.c"
 #include "test_v1_object_field_selector.c"
+#include "test_v1_file_key_selector.c"
 #include "test_v1_resource_field_selector.c"
 #include "test_v1_secret_key_selector.c"
 
@@ -31,12 +32,15 @@ v1_env_var_source_t* instantiate_v1_env_var_source(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_object_field_selector(0),
        // false, not to have infinite recursion
+      instantiate_v1_file_key_selector(0),
+       // false, not to have infinite recursion
       instantiate_v1_resource_field_selector(0),
        // false, not to have infinite recursion
       instantiate_v1_secret_key_selector(0)
     );
   } else {
     v1_env_var_source = v1_env_var_source_create(
+      NULL,
       NULL,
       NULL,
       NULL,

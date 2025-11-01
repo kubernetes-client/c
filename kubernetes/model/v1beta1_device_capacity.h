@@ -15,16 +15,19 @@
 
 typedef struct v1beta1_device_capacity_t v1beta1_device_capacity_t;
 
+#include "v1beta1_capacity_request_policy.h"
 
 
 
 typedef struct v1beta1_device_capacity_t {
+    struct v1beta1_capacity_request_policy_t *request_policy; //model
     char *value; // string
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_device_capacity_t;
 
 __attribute__((deprecated)) v1beta1_device_capacity_t *v1beta1_device_capacity_create(
+    v1beta1_capacity_request_policy_t *request_policy,
     char *value
 );
 

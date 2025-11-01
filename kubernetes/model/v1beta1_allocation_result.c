@@ -6,6 +6,7 @@
 
 
 static v1beta1_allocation_result_t *v1beta1_allocation_result_create_internal(
+    char *allocation_timestamp,
     v1beta1_device_allocation_result_t *devices,
     v1_node_selector_t *node_selector
     ) {
@@ -13,6 +14,7 @@ static v1beta1_allocation_result_t *v1beta1_allocation_result_create_internal(
     if (!v1beta1_allocation_result_local_var) {
         return NULL;
     }
+    v1beta1_allocation_result_local_var->allocation_timestamp = allocation_timestamp;
     v1beta1_allocation_result_local_var->devices = devices;
     v1beta1_allocation_result_local_var->node_selector = node_selector;
 
@@ -21,10 +23,12 @@ static v1beta1_allocation_result_t *v1beta1_allocation_result_create_internal(
 }
 
 __attribute__((deprecated)) v1beta1_allocation_result_t *v1beta1_allocation_result_create(
+    char *allocation_timestamp,
     v1beta1_device_allocation_result_t *devices,
     v1_node_selector_t *node_selector
     ) {
     return v1beta1_allocation_result_create_internal (
+        allocation_timestamp,
         devices,
         node_selector
         );
@@ -39,6 +43,10 @@ void v1beta1_allocation_result_free(v1beta1_allocation_result_t *v1beta1_allocat
         return ;
     }
     listEntry_t *listEntry;
+    if (v1beta1_allocation_result->allocation_timestamp) {
+        free(v1beta1_allocation_result->allocation_timestamp);
+        v1beta1_allocation_result->allocation_timestamp = NULL;
+    }
     if (v1beta1_allocation_result->devices) {
         v1beta1_device_allocation_result_free(v1beta1_allocation_result->devices);
         v1beta1_allocation_result->devices = NULL;
@@ -52,6 +60,14 @@ void v1beta1_allocation_result_free(v1beta1_allocation_result_t *v1beta1_allocat
 
 cJSON *v1beta1_allocation_result_convertToJSON(v1beta1_allocation_result_t *v1beta1_allocation_result) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1beta1_allocation_result->allocation_timestamp
+    if(v1beta1_allocation_result->allocation_timestamp) {
+    if(cJSON_AddStringToObject(item, "allocationTimestamp", v1beta1_allocation_result->allocation_timestamp) == NULL) {
+    goto fail; //Date-Time
+    }
+    }
+
 
     // v1beta1_allocation_result->devices
     if(v1beta1_allocation_result->devices) {
@@ -96,6 +112,18 @@ v1beta1_allocation_result_t *v1beta1_allocation_result_parseFromJSON(cJSON *v1be
     // define the local variable for v1beta1_allocation_result->node_selector
     v1_node_selector_t *node_selector_local_nonprim = NULL;
 
+    // v1beta1_allocation_result->allocation_timestamp
+    cJSON *allocation_timestamp = cJSON_GetObjectItemCaseSensitive(v1beta1_allocation_resultJSON, "allocationTimestamp");
+    if (cJSON_IsNull(allocation_timestamp)) {
+        allocation_timestamp = NULL;
+    }
+    if (allocation_timestamp) { 
+    if(!cJSON_IsString(allocation_timestamp) && !cJSON_IsNull(allocation_timestamp))
+    {
+    goto end; //DateTime
+    }
+    }
+
     // v1beta1_allocation_result->devices
     cJSON *devices = cJSON_GetObjectItemCaseSensitive(v1beta1_allocation_resultJSON, "devices");
     if (cJSON_IsNull(devices)) {
@@ -116,6 +144,7 @@ v1beta1_allocation_result_t *v1beta1_allocation_result_parseFromJSON(cJSON *v1be
 
 
     v1beta1_allocation_result_local_var = v1beta1_allocation_result_create_internal (
+        allocation_timestamp && !cJSON_IsNull(allocation_timestamp) ? strdup(allocation_timestamp->valuestring) : NULL,
         devices ? devices_local_nonprim : NULL,
         node_selector ? node_selector_local_nonprim : NULL
         );

@@ -18,6 +18,7 @@ typedef struct v1_pod_status_t v1_pod_status_t;
 #include "v1_container_status.h"
 #include "v1_host_ip.h"
 #include "v1_pod_condition.h"
+#include "v1_pod_extended_resource_claim_status.h"
 #include "v1_pod_ip.h"
 #include "v1_pod_resource_claim_status.h"
 
@@ -27,6 +28,7 @@ typedef struct v1_pod_status_t {
     list_t *conditions; //nonprimitive container
     list_t *container_statuses; //nonprimitive container
     list_t *ephemeral_container_statuses; //nonprimitive container
+    struct v1_pod_extended_resource_claim_status_t *extended_resource_claim_status; //model
     char *host_ip; // string
     list_t *host_ips; //nonprimitive container
     list_t *init_container_statuses; //nonprimitive container
@@ -49,6 +51,7 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
     list_t *conditions,
     list_t *container_statuses,
     list_t *ephemeral_container_statuses,
+    v1_pod_extended_resource_claim_status_t *extended_resource_claim_status,
     char *host_ip,
     list_t *host_ips,
     list_t *init_container_statuses,

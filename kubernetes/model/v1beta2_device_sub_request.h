@@ -15,6 +15,7 @@
 
 typedef struct v1beta2_device_sub_request_t v1beta2_device_sub_request_t;
 
+#include "v1beta2_capacity_requirements.h"
 #include "v1beta2_device_selector.h"
 #include "v1beta2_device_toleration.h"
 
@@ -22,6 +23,7 @@ typedef struct v1beta2_device_sub_request_t v1beta2_device_sub_request_t;
 
 typedef struct v1beta2_device_sub_request_t {
     char *allocation_mode; // string
+    struct v1beta2_capacity_requirements_t *capacity; //model
     long count; //numeric
     char *device_class_name; // string
     char *name; // string
@@ -33,6 +35,7 @@ typedef struct v1beta2_device_sub_request_t {
 
 __attribute__((deprecated)) v1beta2_device_sub_request_t *v1beta2_device_sub_request_create(
     char *allocation_mode,
+    v1beta2_capacity_requirements_t *capacity,
     long count,
     char *device_class_name,
     char *name,

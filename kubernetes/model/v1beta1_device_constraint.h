@@ -19,6 +19,7 @@ typedef struct v1beta1_device_constraint_t v1beta1_device_constraint_t;
 
 
 typedef struct v1beta1_device_constraint_t {
+    char *distinct_attribute; // string
     char *match_attribute; // string
     list_t *requests; //primitive container
 
@@ -26,6 +27,7 @@ typedef struct v1beta1_device_constraint_t {
 } v1beta1_device_constraint_t;
 
 __attribute__((deprecated)) v1beta1_device_constraint_t *v1beta1_device_constraint_create(
+    char *distinct_attribute,
     char *match_attribute,
     list_t *requests
 );

@@ -29,6 +29,7 @@ v1beta1_allocated_device_status_t* instantiate_v1beta1_allocated_device_status(i
       "0",
        // false, not to have infinite recursion
       instantiate_v1beta1_network_device_data(0),
+      "0",
       "0"
     );
   } else {
@@ -38,6 +39,7 @@ v1beta1_allocated_device_status_t* instantiate_v1beta1_allocated_device_status(i
       "0",
       "0",
       NULL,
+      "0",
       "0"
     );
   }

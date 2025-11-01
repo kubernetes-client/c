@@ -58,15 +58,19 @@ set(SRCS
     model/core_v1_event.c
     model/core_v1_event_list.c
     model/core_v1_event_series.c
+    model/core_v1_resource_claim.c
     model/discovery_v1_endpoint_port.c
     model/events_v1_event.c
     model/events_v1_event_list.c
     model/events_v1_event_series.c
     model/flowcontrol_v1_subject.c
     model/rbac_v1_subject.c
+    model/resource_v1_resource_claim.c
     model/storage_v1_token_request.c
     model/v1_affinity.c
     model/v1_aggregation_rule.c
+    model/v1_allocated_device_status.c
+    model/v1_allocation_result.c
     model/v1_api_group.c
     model/v1_api_group_list.c
     model/v1_api_resource.c
@@ -87,6 +91,10 @@ set(SRCS
     model/v1_binding.c
     model/v1_bound_object_reference.c
     model/v1_capabilities.c
+    model/v1_capacity_request_policy.c
+    model/v1_capacity_request_policy_range.c
+    model/v1_capacity_requirements.c
+    model/v1_cel_device_selector.c
     model/v1_ceph_fs_persistent_volume_source.c
     model/v1_ceph_fs_volume_source.c
     model/v1_certificate_signing_request.c
@@ -114,9 +122,12 @@ set(SRCS
     model/v1_config_map_projection.c
     model/v1_config_map_volume_source.c
     model/v1_container.c
+    model/v1_container_extended_resource_request.c
     model/v1_container_image.c
     model/v1_container_port.c
     model/v1_container_resize_policy.c
+    model/v1_container_restart_rule.c
+    model/v1_container_restart_rule_on_exit_codes.c
     model/v1_container_state.c
     model/v1_container_state_running.c
     model/v1_container_state_terminated.c
@@ -125,6 +136,8 @@ set(SRCS
     model/v1_container_user.c
     model/v1_controller_revision.c
     model/v1_controller_revision_list.c
+    model/v1_counter.c
+    model/v1_counter_set.c
     model/v1_cron_job.c
     model/v1_cron_job_list.c
     model/v1_cron_job_spec.c
@@ -167,6 +180,25 @@ set(SRCS
     model/v1_deployment_spec.c
     model/v1_deployment_status.c
     model/v1_deployment_strategy.c
+    model/v1_device.c
+    model/v1_device_allocation_configuration.c
+    model/v1_device_allocation_result.c
+    model/v1_device_attribute.c
+    model/v1_device_capacity.c
+    model/v1_device_claim.c
+    model/v1_device_claim_configuration.c
+    model/v1_device_class.c
+    model/v1_device_class_configuration.c
+    model/v1_device_class_list.c
+    model/v1_device_class_spec.c
+    model/v1_device_constraint.c
+    model/v1_device_counter_consumption.c
+    model/v1_device_request.c
+    model/v1_device_request_allocation_result.c
+    model/v1_device_selector.c
+    model/v1_device_sub_request.c
+    model/v1_device_taint.c
+    model/v1_device_toleration.c
     model/v1_downward_api_projection.c
     model/v1_downward_api_volume_file.c
     model/v1_downward_api_volume_source.c
@@ -187,6 +219,7 @@ set(SRCS
     model/v1_ephemeral_volume_source.c
     model/v1_event_source.c
     model/v1_eviction.c
+    model/v1_exact_device_request.c
     model/v1_exec_action.c
     model/v1_exempt_priority_level_configuration.c
     model/v1_expression_warning.c
@@ -194,6 +227,7 @@ set(SRCS
     model/v1_fc_volume_source.c
     model/v1_field_selector_attributes.c
     model/v1_field_selector_requirement.c
+    model/v1_file_key_selector.c
     model/v1_flex_persistent_volume_source.c
     model/v1_flex_volume_source.c
     model/v1_flocker_volume_source.c
@@ -287,6 +321,7 @@ set(SRCS
     model/v1_namespace_list.c
     model/v1_namespace_spec.c
     model/v1_namespace_status.c
+    model/v1_network_device_data.c
     model/v1_network_policy.c
     model/v1_network_policy_egress_rule.c
     model/v1_network_policy_ingress_rule.c
@@ -319,6 +354,7 @@ set(SRCS
     model/v1_object_field_selector.c
     model/v1_object_meta.c
     model/v1_object_reference.c
+    model/v1_opaque_device_configuration.c
     model/v1_overhead.c
     model/v1_owner_reference.c
     model/v1_param_kind.c
@@ -340,6 +376,7 @@ set(SRCS
     model/v1_pod_affinity.c
     model/v1_pod_affinity_term.c
     model/v1_pod_anti_affinity.c
+    model/v1_pod_certificate_projection.c
     model/v1_pod_condition.c
     model/v1_pod_disruption_budget.c
     model/v1_pod_disruption_budget_list.c
@@ -347,6 +384,7 @@ set(SRCS
     model/v1_pod_disruption_budget_status.c
     model/v1_pod_dns_config.c
     model/v1_pod_dns_config_option.c
+    model/v1_pod_extended_resource_claim_status.c
     model/v1_pod_failure_policy.c
     model/v1_pod_failure_policy_on_exit_codes_requirement.c
     model/v1_pod_failure_policy_on_pod_conditions_pattern.c
@@ -395,16 +433,26 @@ set(SRCS
     model/v1_replication_controller_spec.c
     model/v1_replication_controller_status.c
     model/v1_resource_attributes.c
-    model/v1_resource_claim.c
+    model/v1_resource_claim_consumer_reference.c
+    model/v1_resource_claim_list.c
+    model/v1_resource_claim_spec.c
+    model/v1_resource_claim_status.c
+    model/v1_resource_claim_template.c
+    model/v1_resource_claim_template_list.c
+    model/v1_resource_claim_template_spec.c
     model/v1_resource_field_selector.c
     model/v1_resource_health.c
     model/v1_resource_policy_rule.c
+    model/v1_resource_pool.c
     model/v1_resource_quota.c
     model/v1_resource_quota_list.c
     model/v1_resource_quota_spec.c
     model/v1_resource_quota_status.c
     model/v1_resource_requirements.c
     model/v1_resource_rule.c
+    model/v1_resource_slice.c
+    model/v1_resource_slice_list.c
+    model/v1_resource_slice_spec.c
     model/v1_resource_status.c
     model/v1_role.c
     model/v1_role_binding.c
@@ -517,6 +565,8 @@ set(SRCS
     model/v1_volume_attachment_source.c
     model/v1_volume_attachment_spec.c
     model/v1_volume_attachment_status.c
+    model/v1_volume_attributes_class.c
+    model/v1_volume_attributes_class_list.c
     model/v1_volume_device.c
     model/v1_volume_error.c
     model/v1_volume_mount.c
@@ -549,6 +599,10 @@ set(SRCS
     model/v1alpha1_named_rule_with_operations.c
     model/v1alpha1_param_kind.c
     model/v1alpha1_param_ref.c
+    model/v1alpha1_pod_certificate_request.c
+    model/v1alpha1_pod_certificate_request_list.c
+    model/v1alpha1_pod_certificate_request_spec.c
+    model/v1alpha1_pod_certificate_request_status.c
     model/v1alpha1_server_storage_version.c
     model/v1alpha1_storage_version.c
     model/v1alpha1_storage_version_condition.c
@@ -564,52 +618,20 @@ set(SRCS
     model/v1alpha2_lease_candidate.c
     model/v1alpha2_lease_candidate_list.c
     model/v1alpha2_lease_candidate_spec.c
-    model/v1alpha3_allocated_device_status.c
-    model/v1alpha3_allocation_result.c
-    model/v1alpha3_basic_device.c
     model/v1alpha3_cel_device_selector.c
-    model/v1alpha3_counter.c
-    model/v1alpha3_counter_set.c
-    model/v1alpha3_device.c
-    model/v1alpha3_device_allocation_configuration.c
-    model/v1alpha3_device_allocation_result.c
-    model/v1alpha3_device_attribute.c
-    model/v1alpha3_device_claim.c
-    model/v1alpha3_device_claim_configuration.c
-    model/v1alpha3_device_class.c
-    model/v1alpha3_device_class_configuration.c
-    model/v1alpha3_device_class_list.c
-    model/v1alpha3_device_class_spec.c
-    model/v1alpha3_device_constraint.c
-    model/v1alpha3_device_counter_consumption.c
-    model/v1alpha3_device_request.c
-    model/v1alpha3_device_request_allocation_result.c
     model/v1alpha3_device_selector.c
-    model/v1alpha3_device_sub_request.c
     model/v1alpha3_device_taint.c
     model/v1alpha3_device_taint_rule.c
     model/v1alpha3_device_taint_rule_list.c
     model/v1alpha3_device_taint_rule_spec.c
     model/v1alpha3_device_taint_selector.c
-    model/v1alpha3_device_toleration.c
-    model/v1alpha3_network_device_data.c
-    model/v1alpha3_opaque_device_configuration.c
-    model/v1alpha3_resource_claim.c
-    model/v1alpha3_resource_claim_consumer_reference.c
-    model/v1alpha3_resource_claim_list.c
-    model/v1alpha3_resource_claim_spec.c
-    model/v1alpha3_resource_claim_status.c
-    model/v1alpha3_resource_claim_template.c
-    model/v1alpha3_resource_claim_template_list.c
-    model/v1alpha3_resource_claim_template_spec.c
-    model/v1alpha3_resource_pool.c
-    model/v1alpha3_resource_slice.c
-    model/v1alpha3_resource_slice_list.c
-    model/v1alpha3_resource_slice_spec.c
     model/v1beta1_allocated_device_status.c
     model/v1beta1_allocation_result.c
-    model/v1beta1_audit_annotation.c
+    model/v1beta1_apply_configuration.c
     model/v1beta1_basic_device.c
+    model/v1beta1_capacity_request_policy.c
+    model/v1beta1_capacity_request_policy_range.c
+    model/v1beta1_capacity_requirements.c
     model/v1beta1_cel_device_selector.c
     model/v1beta1_cluster_trust_bundle.c
     model/v1beta1_cluster_trust_bundle_list.c
@@ -635,15 +657,22 @@ set(SRCS
     model/v1beta1_device_sub_request.c
     model/v1beta1_device_taint.c
     model/v1beta1_device_toleration.c
-    model/v1beta1_expression_warning.c
     model/v1beta1_ip_address.c
     model/v1beta1_ip_address_list.c
     model/v1beta1_ip_address_spec.c
+    model/v1beta1_json_patch.c
     model/v1beta1_lease_candidate.c
     model/v1beta1_lease_candidate_list.c
     model/v1beta1_lease_candidate_spec.c
     model/v1beta1_match_condition.c
     model/v1beta1_match_resources.c
+    model/v1beta1_mutating_admission_policy.c
+    model/v1beta1_mutating_admission_policy_binding.c
+    model/v1beta1_mutating_admission_policy_binding_list.c
+    model/v1beta1_mutating_admission_policy_binding_spec.c
+    model/v1beta1_mutating_admission_policy_list.c
+    model/v1beta1_mutating_admission_policy_spec.c
+    model/v1beta1_mutation.c
     model/v1beta1_named_rule_with_operations.c
     model/v1beta1_network_device_data.c
     model/v1beta1_opaque_device_configuration.c
@@ -666,20 +695,14 @@ set(SRCS
     model/v1beta1_service_cidr_list.c
     model/v1beta1_service_cidr_spec.c
     model/v1beta1_service_cidr_status.c
-    model/v1beta1_type_checking.c
-    model/v1beta1_validating_admission_policy.c
-    model/v1beta1_validating_admission_policy_binding.c
-    model/v1beta1_validating_admission_policy_binding_list.c
-    model/v1beta1_validating_admission_policy_binding_spec.c
-    model/v1beta1_validating_admission_policy_list.c
-    model/v1beta1_validating_admission_policy_spec.c
-    model/v1beta1_validating_admission_policy_status.c
-    model/v1beta1_validation.c
     model/v1beta1_variable.c
     model/v1beta1_volume_attributes_class.c
     model/v1beta1_volume_attributes_class_list.c
     model/v1beta2_allocated_device_status.c
     model/v1beta2_allocation_result.c
+    model/v1beta2_capacity_request_policy.c
+    model/v1beta2_capacity_request_policy_range.c
+    model/v1beta2_capacity_requirements.c
     model/v1beta2_cel_device_selector.c
     model/v1beta2_counter.c
     model/v1beta2_counter_set.c
@@ -793,6 +816,7 @@ set(SRCS
     api/RbacAuthorizationAPI.c
     api/RbacAuthorizationV1API.c
     api/ResourceAPI.c
+    api/ResourceV1API.c
     api/ResourceV1alpha3API.c
     api/ResourceV1beta1API.c
     api/ResourceV1beta2API.c
@@ -827,15 +851,19 @@ set(HDRS
     model/core_v1_event.h
     model/core_v1_event_list.h
     model/core_v1_event_series.h
+    model/core_v1_resource_claim.h
     model/discovery_v1_endpoint_port.h
     model/events_v1_event.h
     model/events_v1_event_list.h
     model/events_v1_event_series.h
     model/flowcontrol_v1_subject.h
     model/rbac_v1_subject.h
+    model/resource_v1_resource_claim.h
     model/storage_v1_token_request.h
     model/v1_affinity.h
     model/v1_aggregation_rule.h
+    model/v1_allocated_device_status.h
+    model/v1_allocation_result.h
     model/v1_api_group.h
     model/v1_api_group_list.h
     model/v1_api_resource.h
@@ -856,6 +884,10 @@ set(HDRS
     model/v1_binding.h
     model/v1_bound_object_reference.h
     model/v1_capabilities.h
+    model/v1_capacity_request_policy.h
+    model/v1_capacity_request_policy_range.h
+    model/v1_capacity_requirements.h
+    model/v1_cel_device_selector.h
     model/v1_ceph_fs_persistent_volume_source.h
     model/v1_ceph_fs_volume_source.h
     model/v1_certificate_signing_request.h
@@ -883,9 +915,12 @@ set(HDRS
     model/v1_config_map_projection.h
     model/v1_config_map_volume_source.h
     model/v1_container.h
+    model/v1_container_extended_resource_request.h
     model/v1_container_image.h
     model/v1_container_port.h
     model/v1_container_resize_policy.h
+    model/v1_container_restart_rule.h
+    model/v1_container_restart_rule_on_exit_codes.h
     model/v1_container_state.h
     model/v1_container_state_running.h
     model/v1_container_state_terminated.h
@@ -894,6 +929,8 @@ set(HDRS
     model/v1_container_user.h
     model/v1_controller_revision.h
     model/v1_controller_revision_list.h
+    model/v1_counter.h
+    model/v1_counter_set.h
     model/v1_cron_job.h
     model/v1_cron_job_list.h
     model/v1_cron_job_spec.h
@@ -936,6 +973,25 @@ set(HDRS
     model/v1_deployment_spec.h
     model/v1_deployment_status.h
     model/v1_deployment_strategy.h
+    model/v1_device.h
+    model/v1_device_allocation_configuration.h
+    model/v1_device_allocation_result.h
+    model/v1_device_attribute.h
+    model/v1_device_capacity.h
+    model/v1_device_claim.h
+    model/v1_device_claim_configuration.h
+    model/v1_device_class.h
+    model/v1_device_class_configuration.h
+    model/v1_device_class_list.h
+    model/v1_device_class_spec.h
+    model/v1_device_constraint.h
+    model/v1_device_counter_consumption.h
+    model/v1_device_request.h
+    model/v1_device_request_allocation_result.h
+    model/v1_device_selector.h
+    model/v1_device_sub_request.h
+    model/v1_device_taint.h
+    model/v1_device_toleration.h
     model/v1_downward_api_projection.h
     model/v1_downward_api_volume_file.h
     model/v1_downward_api_volume_source.h
@@ -956,6 +1012,7 @@ set(HDRS
     model/v1_ephemeral_volume_source.h
     model/v1_event_source.h
     model/v1_eviction.h
+    model/v1_exact_device_request.h
     model/v1_exec_action.h
     model/v1_exempt_priority_level_configuration.h
     model/v1_expression_warning.h
@@ -963,6 +1020,7 @@ set(HDRS
     model/v1_fc_volume_source.h
     model/v1_field_selector_attributes.h
     model/v1_field_selector_requirement.h
+    model/v1_file_key_selector.h
     model/v1_flex_persistent_volume_source.h
     model/v1_flex_volume_source.h
     model/v1_flocker_volume_source.h
@@ -1056,6 +1114,7 @@ set(HDRS
     model/v1_namespace_list.h
     model/v1_namespace_spec.h
     model/v1_namespace_status.h
+    model/v1_network_device_data.h
     model/v1_network_policy.h
     model/v1_network_policy_egress_rule.h
     model/v1_network_policy_ingress_rule.h
@@ -1088,6 +1147,7 @@ set(HDRS
     model/v1_object_field_selector.h
     model/v1_object_meta.h
     model/v1_object_reference.h
+    model/v1_opaque_device_configuration.h
     model/v1_overhead.h
     model/v1_owner_reference.h
     model/v1_param_kind.h
@@ -1109,6 +1169,7 @@ set(HDRS
     model/v1_pod_affinity.h
     model/v1_pod_affinity_term.h
     model/v1_pod_anti_affinity.h
+    model/v1_pod_certificate_projection.h
     model/v1_pod_condition.h
     model/v1_pod_disruption_budget.h
     model/v1_pod_disruption_budget_list.h
@@ -1116,6 +1177,7 @@ set(HDRS
     model/v1_pod_disruption_budget_status.h
     model/v1_pod_dns_config.h
     model/v1_pod_dns_config_option.h
+    model/v1_pod_extended_resource_claim_status.h
     model/v1_pod_failure_policy.h
     model/v1_pod_failure_policy_on_exit_codes_requirement.h
     model/v1_pod_failure_policy_on_pod_conditions_pattern.h
@@ -1164,16 +1226,26 @@ set(HDRS
     model/v1_replication_controller_spec.h
     model/v1_replication_controller_status.h
     model/v1_resource_attributes.h
-    model/v1_resource_claim.h
+    model/v1_resource_claim_consumer_reference.h
+    model/v1_resource_claim_list.h
+    model/v1_resource_claim_spec.h
+    model/v1_resource_claim_status.h
+    model/v1_resource_claim_template.h
+    model/v1_resource_claim_template_list.h
+    model/v1_resource_claim_template_spec.h
     model/v1_resource_field_selector.h
     model/v1_resource_health.h
     model/v1_resource_policy_rule.h
+    model/v1_resource_pool.h
     model/v1_resource_quota.h
     model/v1_resource_quota_list.h
     model/v1_resource_quota_spec.h
     model/v1_resource_quota_status.h
     model/v1_resource_requirements.h
     model/v1_resource_rule.h
+    model/v1_resource_slice.h
+    model/v1_resource_slice_list.h
+    model/v1_resource_slice_spec.h
     model/v1_resource_status.h
     model/v1_role.h
     model/v1_role_binding.h
@@ -1286,6 +1358,8 @@ set(HDRS
     model/v1_volume_attachment_source.h
     model/v1_volume_attachment_spec.h
     model/v1_volume_attachment_status.h
+    model/v1_volume_attributes_class.h
+    model/v1_volume_attributes_class_list.h
     model/v1_volume_device.h
     model/v1_volume_error.h
     model/v1_volume_mount.h
@@ -1318,6 +1392,10 @@ set(HDRS
     model/v1alpha1_named_rule_with_operations.h
     model/v1alpha1_param_kind.h
     model/v1alpha1_param_ref.h
+    model/v1alpha1_pod_certificate_request.h
+    model/v1alpha1_pod_certificate_request_list.h
+    model/v1alpha1_pod_certificate_request_spec.h
+    model/v1alpha1_pod_certificate_request_status.h
     model/v1alpha1_server_storage_version.h
     model/v1alpha1_storage_version.h
     model/v1alpha1_storage_version_condition.h
@@ -1333,52 +1411,20 @@ set(HDRS
     model/v1alpha2_lease_candidate.h
     model/v1alpha2_lease_candidate_list.h
     model/v1alpha2_lease_candidate_spec.h
-    model/v1alpha3_allocated_device_status.h
-    model/v1alpha3_allocation_result.h
-    model/v1alpha3_basic_device.h
     model/v1alpha3_cel_device_selector.h
-    model/v1alpha3_counter.h
-    model/v1alpha3_counter_set.h
-    model/v1alpha3_device.h
-    model/v1alpha3_device_allocation_configuration.h
-    model/v1alpha3_device_allocation_result.h
-    model/v1alpha3_device_attribute.h
-    model/v1alpha3_device_claim.h
-    model/v1alpha3_device_claim_configuration.h
-    model/v1alpha3_device_class.h
-    model/v1alpha3_device_class_configuration.h
-    model/v1alpha3_device_class_list.h
-    model/v1alpha3_device_class_spec.h
-    model/v1alpha3_device_constraint.h
-    model/v1alpha3_device_counter_consumption.h
-    model/v1alpha3_device_request.h
-    model/v1alpha3_device_request_allocation_result.h
     model/v1alpha3_device_selector.h
-    model/v1alpha3_device_sub_request.h
     model/v1alpha3_device_taint.h
     model/v1alpha3_device_taint_rule.h
     model/v1alpha3_device_taint_rule_list.h
     model/v1alpha3_device_taint_rule_spec.h
     model/v1alpha3_device_taint_selector.h
-    model/v1alpha3_device_toleration.h
-    model/v1alpha3_network_device_data.h
-    model/v1alpha3_opaque_device_configuration.h
-    model/v1alpha3_resource_claim.h
-    model/v1alpha3_resource_claim_consumer_reference.h
-    model/v1alpha3_resource_claim_list.h
-    model/v1alpha3_resource_claim_spec.h
-    model/v1alpha3_resource_claim_status.h
-    model/v1alpha3_resource_claim_template.h
-    model/v1alpha3_resource_claim_template_list.h
-    model/v1alpha3_resource_claim_template_spec.h
-    model/v1alpha3_resource_pool.h
-    model/v1alpha3_resource_slice.h
-    model/v1alpha3_resource_slice_list.h
-    model/v1alpha3_resource_slice_spec.h
     model/v1beta1_allocated_device_status.h
     model/v1beta1_allocation_result.h
-    model/v1beta1_audit_annotation.h
+    model/v1beta1_apply_configuration.h
     model/v1beta1_basic_device.h
+    model/v1beta1_capacity_request_policy.h
+    model/v1beta1_capacity_request_policy_range.h
+    model/v1beta1_capacity_requirements.h
     model/v1beta1_cel_device_selector.h
     model/v1beta1_cluster_trust_bundle.h
     model/v1beta1_cluster_trust_bundle_list.h
@@ -1404,15 +1450,22 @@ set(HDRS
     model/v1beta1_device_sub_request.h
     model/v1beta1_device_taint.h
     model/v1beta1_device_toleration.h
-    model/v1beta1_expression_warning.h
     model/v1beta1_ip_address.h
     model/v1beta1_ip_address_list.h
     model/v1beta1_ip_address_spec.h
+    model/v1beta1_json_patch.h
     model/v1beta1_lease_candidate.h
     model/v1beta1_lease_candidate_list.h
     model/v1beta1_lease_candidate_spec.h
     model/v1beta1_match_condition.h
     model/v1beta1_match_resources.h
+    model/v1beta1_mutating_admission_policy.h
+    model/v1beta1_mutating_admission_policy_binding.h
+    model/v1beta1_mutating_admission_policy_binding_list.h
+    model/v1beta1_mutating_admission_policy_binding_spec.h
+    model/v1beta1_mutating_admission_policy_list.h
+    model/v1beta1_mutating_admission_policy_spec.h
+    model/v1beta1_mutation.h
     model/v1beta1_named_rule_with_operations.h
     model/v1beta1_network_device_data.h
     model/v1beta1_opaque_device_configuration.h
@@ -1435,20 +1488,14 @@ set(HDRS
     model/v1beta1_service_cidr_list.h
     model/v1beta1_service_cidr_spec.h
     model/v1beta1_service_cidr_status.h
-    model/v1beta1_type_checking.h
-    model/v1beta1_validating_admission_policy.h
-    model/v1beta1_validating_admission_policy_binding.h
-    model/v1beta1_validating_admission_policy_binding_list.h
-    model/v1beta1_validating_admission_policy_binding_spec.h
-    model/v1beta1_validating_admission_policy_list.h
-    model/v1beta1_validating_admission_policy_spec.h
-    model/v1beta1_validating_admission_policy_status.h
-    model/v1beta1_validation.h
     model/v1beta1_variable.h
     model/v1beta1_volume_attributes_class.h
     model/v1beta1_volume_attributes_class_list.h
     model/v1beta2_allocated_device_status.h
     model/v1beta2_allocation_result.h
+    model/v1beta2_capacity_request_policy.h
+    model/v1beta2_capacity_request_policy_range.h
+    model/v1beta2_capacity_requirements.h
     model/v1beta2_cel_device_selector.h
     model/v1beta2_counter.h
     model/v1beta2_counter_set.h
@@ -1562,6 +1609,7 @@ set(HDRS
     api/RbacAuthorizationAPI.h
     api/RbacAuthorizationV1API.h
     api/ResourceAPI.h
+    api/ResourceV1API.h
     api/ResourceV1alpha3API.h
     api/ResourceV1beta1API.h
     api/ResourceV1beta2API.h
@@ -1583,7 +1631,11 @@ include(PreTarget.cmake OPTIONAL)
 set(PROJECT_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 
 # Add library with project file with project name as library name
-add_library(${pkgName} ${SRCS} ${HDRS})
+if(NOT BUILD_STATIC_LIBS)
+  add_library(${pkgName} ${SRCS} ${HDRS})
+else()
+  add_library(${pkgName} STATIC ${SRCS} ${HDRS})
+endif()
 # Link dependent libraries
 if(NOT CMAKE_VERSION VERSION_LESS 3.4)
     target_link_libraries(${pkgName} PRIVATE OpenSSL::SSL OpenSSL::Crypto)
@@ -1707,6 +1759,7 @@ set(HDRS "")
 #    unit-tests/manual-RbacAuthorizationAPI.c
 #    unit-tests/manual-RbacAuthorizationV1API.c
 #    unit-tests/manual-ResourceAPI.c
+#    unit-tests/manual-ResourceV1API.c
 #    unit-tests/manual-ResourceV1alpha3API.c
 #    unit-tests/manual-ResourceV1beta1API.c
 #    unit-tests/manual-ResourceV1beta2API.c

@@ -23,11 +23,13 @@ v1beta1_device_class_spec_t* instantiate_v1beta1_device_class_spec(int include_o
   if (include_optional) {
     v1beta1_device_class_spec = v1beta1_device_class_spec_create(
       list_createList(),
+      "0",
       list_createList()
     );
   } else {
     v1beta1_device_class_spec = v1beta1_device_class_spec_create(
       list_createList(),
+      "0",
       list_createList()
     );
   }

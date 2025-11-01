@@ -16,16 +16,20 @@
 #include "../model/v1beta2_device_capacity.h"
 v1beta2_device_capacity_t* instantiate_v1beta2_device_capacity(int include_optional);
 
+#include "test_v1beta2_capacity_request_policy.c"
 
 
 v1beta2_device_capacity_t* instantiate_v1beta2_device_capacity(int include_optional) {
   v1beta2_device_capacity_t* v1beta2_device_capacity = NULL;
   if (include_optional) {
     v1beta2_device_capacity = v1beta2_device_capacity_create(
+       // false, not to have infinite recursion
+      instantiate_v1beta2_capacity_request_policy(0),
       "0"
     );
   } else {
     v1beta2_device_capacity = v1beta2_device_capacity_create(
+      NULL,
       "0"
     );
   }

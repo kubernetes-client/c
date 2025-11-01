@@ -6,6 +6,7 @@
 
 
 static v1beta1_device_constraint_t *v1beta1_device_constraint_create_internal(
+    char *distinct_attribute,
     char *match_attribute,
     list_t *requests
     ) {
@@ -13,6 +14,7 @@ static v1beta1_device_constraint_t *v1beta1_device_constraint_create_internal(
     if (!v1beta1_device_constraint_local_var) {
         return NULL;
     }
+    v1beta1_device_constraint_local_var->distinct_attribute = distinct_attribute;
     v1beta1_device_constraint_local_var->match_attribute = match_attribute;
     v1beta1_device_constraint_local_var->requests = requests;
 
@@ -21,10 +23,12 @@ static v1beta1_device_constraint_t *v1beta1_device_constraint_create_internal(
 }
 
 __attribute__((deprecated)) v1beta1_device_constraint_t *v1beta1_device_constraint_create(
+    char *distinct_attribute,
     char *match_attribute,
     list_t *requests
     ) {
     return v1beta1_device_constraint_create_internal (
+        distinct_attribute,
         match_attribute,
         requests
         );
@@ -39,6 +43,10 @@ void v1beta1_device_constraint_free(v1beta1_device_constraint_t *v1beta1_device_
         return ;
     }
     listEntry_t *listEntry;
+    if (v1beta1_device_constraint->distinct_attribute) {
+        free(v1beta1_device_constraint->distinct_attribute);
+        v1beta1_device_constraint->distinct_attribute = NULL;
+    }
     if (v1beta1_device_constraint->match_attribute) {
         free(v1beta1_device_constraint->match_attribute);
         v1beta1_device_constraint->match_attribute = NULL;
@@ -55,6 +63,14 @@ void v1beta1_device_constraint_free(v1beta1_device_constraint_t *v1beta1_device_
 
 cJSON *v1beta1_device_constraint_convertToJSON(v1beta1_device_constraint_t *v1beta1_device_constraint) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1beta1_device_constraint->distinct_attribute
+    if(v1beta1_device_constraint->distinct_attribute) {
+    if(cJSON_AddStringToObject(item, "distinctAttribute", v1beta1_device_constraint->distinct_attribute) == NULL) {
+    goto fail; //String
+    }
+    }
+
 
     // v1beta1_device_constraint->match_attribute
     if(v1beta1_device_constraint->match_attribute) {
@@ -95,6 +111,18 @@ v1beta1_device_constraint_t *v1beta1_device_constraint_parseFromJSON(cJSON *v1be
     // define the local list for v1beta1_device_constraint->requests
     list_t *requestsList = NULL;
 
+    // v1beta1_device_constraint->distinct_attribute
+    cJSON *distinct_attribute = cJSON_GetObjectItemCaseSensitive(v1beta1_device_constraintJSON, "distinctAttribute");
+    if (cJSON_IsNull(distinct_attribute)) {
+        distinct_attribute = NULL;
+    }
+    if (distinct_attribute) { 
+    if(!cJSON_IsString(distinct_attribute) && !cJSON_IsNull(distinct_attribute))
+    {
+    goto end; //String
+    }
+    }
+
     // v1beta1_device_constraint->match_attribute
     cJSON *match_attribute = cJSON_GetObjectItemCaseSensitive(v1beta1_device_constraintJSON, "matchAttribute");
     if (cJSON_IsNull(match_attribute)) {
@@ -131,6 +159,7 @@ v1beta1_device_constraint_t *v1beta1_device_constraint_parseFromJSON(cJSON *v1be
 
 
     v1beta1_device_constraint_local_var = v1beta1_device_constraint_create_internal (
+        distinct_attribute && !cJSON_IsNull(distinct_attribute) ? strdup(distinct_attribute->valuestring) : NULL,
         match_attribute && !cJSON_IsNull(match_attribute) ? strdup(match_attribute->valuestring) : NULL,
         requests ? requestsList : NULL
         );

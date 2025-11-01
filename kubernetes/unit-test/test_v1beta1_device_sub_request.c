@@ -16,6 +16,7 @@
 #include "../model/v1beta1_device_sub_request.h"
 v1beta1_device_sub_request_t* instantiate_v1beta1_device_sub_request(int include_optional);
 
+#include "test_v1beta1_capacity_requirements.c"
 
 
 v1beta1_device_sub_request_t* instantiate_v1beta1_device_sub_request(int include_optional) {
@@ -23,6 +24,8 @@ v1beta1_device_sub_request_t* instantiate_v1beta1_device_sub_request(int include
   if (include_optional) {
     v1beta1_device_sub_request = v1beta1_device_sub_request_create(
       "0",
+       // false, not to have infinite recursion
+      instantiate_v1beta1_capacity_requirements(0),
       56,
       "0",
       "0",
@@ -32,6 +35,7 @@ v1beta1_device_sub_request_t* instantiate_v1beta1_device_sub_request(int include
   } else {
     v1beta1_device_sub_request = v1beta1_device_sub_request_create(
       "0",
+      NULL,
       56,
       "0",
       "0",

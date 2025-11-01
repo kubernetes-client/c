@@ -45,7 +45,7 @@ void v1_resource_requirements_free(v1_resource_requirements_t *v1_resource_requi
     listEntry_t *listEntry;
     if (v1_resource_requirements->claims) {
         list_ForEach(listEntry, v1_resource_requirements->claims) {
-            v1_resource_claim_free(listEntry->data);
+            core_v1_resource_claim_free(listEntry->data);
         }
         list_freeList(v1_resource_requirements->claims);
         v1_resource_requirements->claims = NULL;
@@ -86,7 +86,7 @@ cJSON *v1_resource_requirements_convertToJSON(v1_resource_requirements_t *v1_res
     listEntry_t *claimsListEntry;
     if (v1_resource_requirements->claims) {
     list_ForEach(claimsListEntry, v1_resource_requirements->claims) {
-    cJSON *itemLocal = v1_resource_claim_convertToJSON(claimsListEntry->data);
+    cJSON *itemLocal = core_v1_resource_claim_convertToJSON(claimsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
@@ -174,7 +174,7 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
         if(!cJSON_IsObject(claims_local_nonprimitive)){
             goto end;
         }
-        v1_resource_claim_t *claimsItem = v1_resource_claim_parseFromJSON(claims_local_nonprimitive);
+        core_v1_resource_claim_t *claimsItem = core_v1_resource_claim_parseFromJSON(claims_local_nonprimitive);
 
         list_addElement(claimsList, claimsItem);
     }
@@ -248,7 +248,7 @@ end:
     if (claimsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, claimsList) {
-            v1_resource_claim_free(listEntry->data);
+            core_v1_resource_claim_free(listEntry->data);
             listEntry->data = NULL;
         }
         list_freeList(claimsList);

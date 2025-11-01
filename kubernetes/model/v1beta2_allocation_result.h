@@ -21,6 +21,7 @@ typedef struct v1beta2_allocation_result_t v1beta2_allocation_result_t;
 
 
 typedef struct v1beta2_allocation_result_t {
+    char *allocation_timestamp; //date time
     struct v1beta2_device_allocation_result_t *devices; //model
     struct v1_node_selector_t *node_selector; //model
 
@@ -28,6 +29,7 @@ typedef struct v1beta2_allocation_result_t {
 } v1beta2_allocation_result_t;
 
 __attribute__((deprecated)) v1beta2_allocation_result_t *v1beta2_allocation_result_create(
+    char *allocation_timestamp,
     v1beta2_device_allocation_result_t *devices,
     v1_node_selector_t *node_selector
 );

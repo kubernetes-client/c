@@ -25,7 +25,11 @@ typedef struct v1beta2_device_t v1beta2_device_t;
 
 typedef struct v1beta2_device_t {
     int all_nodes; //boolean
+    int allow_multiple_allocations; //boolean
     list_t* attributes; //map
+    list_t *binding_conditions; //primitive container
+    list_t *binding_failure_conditions; //primitive container
+    int binds_to_node; //boolean
     list_t* capacity; //map
     list_t *consumes_counters; //nonprimitive container
     char *name; // string
@@ -38,7 +42,11 @@ typedef struct v1beta2_device_t {
 
 __attribute__((deprecated)) v1beta2_device_t *v1beta2_device_create(
     int all_nodes,
+    int allow_multiple_allocations,
     list_t* attributes,
+    list_t *binding_conditions,
+    list_t *binding_failure_conditions,
+    int binds_to_node,
     list_t* capacity,
     list_t *consumes_counters,
     char *name,
