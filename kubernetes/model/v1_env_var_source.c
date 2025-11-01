@@ -8,6 +8,7 @@
 static v1_env_var_source_t *v1_env_var_source_create_internal(
     v1_config_map_key_selector_t *config_map_key_ref,
     v1_object_field_selector_t *field_ref,
+    v1_file_key_selector_t *file_key_ref,
     v1_resource_field_selector_t *resource_field_ref,
     v1_secret_key_selector_t *secret_key_ref
     ) {
@@ -17,6 +18,7 @@ static v1_env_var_source_t *v1_env_var_source_create_internal(
     }
     v1_env_var_source_local_var->config_map_key_ref = config_map_key_ref;
     v1_env_var_source_local_var->field_ref = field_ref;
+    v1_env_var_source_local_var->file_key_ref = file_key_ref;
     v1_env_var_source_local_var->resource_field_ref = resource_field_ref;
     v1_env_var_source_local_var->secret_key_ref = secret_key_ref;
 
@@ -27,12 +29,14 @@ static v1_env_var_source_t *v1_env_var_source_create_internal(
 __attribute__((deprecated)) v1_env_var_source_t *v1_env_var_source_create(
     v1_config_map_key_selector_t *config_map_key_ref,
     v1_object_field_selector_t *field_ref,
+    v1_file_key_selector_t *file_key_ref,
     v1_resource_field_selector_t *resource_field_ref,
     v1_secret_key_selector_t *secret_key_ref
     ) {
     return v1_env_var_source_create_internal (
         config_map_key_ref,
         field_ref,
+        file_key_ref,
         resource_field_ref,
         secret_key_ref
         );
@@ -54,6 +58,10 @@ void v1_env_var_source_free(v1_env_var_source_t *v1_env_var_source) {
     if (v1_env_var_source->field_ref) {
         v1_object_field_selector_free(v1_env_var_source->field_ref);
         v1_env_var_source->field_ref = NULL;
+    }
+    if (v1_env_var_source->file_key_ref) {
+        v1_file_key_selector_free(v1_env_var_source->file_key_ref);
+        v1_env_var_source->file_key_ref = NULL;
     }
     if (v1_env_var_source->resource_field_ref) {
         v1_resource_field_selector_free(v1_env_var_source->resource_field_ref);
@@ -89,6 +97,19 @@ cJSON *v1_env_var_source_convertToJSON(v1_env_var_source_t *v1_env_var_source) {
     goto fail; //model
     }
     cJSON_AddItemToObject(item, "fieldRef", field_ref_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
+    // v1_env_var_source->file_key_ref
+    if(v1_env_var_source->file_key_ref) {
+    cJSON *file_key_ref_local_JSON = v1_file_key_selector_convertToJSON(v1_env_var_source->file_key_ref);
+    if(file_key_ref_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "fileKeyRef", file_key_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -138,6 +159,9 @@ v1_env_var_source_t *v1_env_var_source_parseFromJSON(cJSON *v1_env_var_sourceJSO
     // define the local variable for v1_env_var_source->field_ref
     v1_object_field_selector_t *field_ref_local_nonprim = NULL;
 
+    // define the local variable for v1_env_var_source->file_key_ref
+    v1_file_key_selector_t *file_key_ref_local_nonprim = NULL;
+
     // define the local variable for v1_env_var_source->resource_field_ref
     v1_resource_field_selector_t *resource_field_ref_local_nonprim = NULL;
 
@@ -162,6 +186,15 @@ v1_env_var_source_t *v1_env_var_source_parseFromJSON(cJSON *v1_env_var_sourceJSO
     field_ref_local_nonprim = v1_object_field_selector_parseFromJSON(field_ref); //nonprimitive
     }
 
+    // v1_env_var_source->file_key_ref
+    cJSON *file_key_ref = cJSON_GetObjectItemCaseSensitive(v1_env_var_sourceJSON, "fileKeyRef");
+    if (cJSON_IsNull(file_key_ref)) {
+        file_key_ref = NULL;
+    }
+    if (file_key_ref) { 
+    file_key_ref_local_nonprim = v1_file_key_selector_parseFromJSON(file_key_ref); //nonprimitive
+    }
+
     // v1_env_var_source->resource_field_ref
     cJSON *resource_field_ref = cJSON_GetObjectItemCaseSensitive(v1_env_var_sourceJSON, "resourceFieldRef");
     if (cJSON_IsNull(resource_field_ref)) {
@@ -184,6 +217,7 @@ v1_env_var_source_t *v1_env_var_source_parseFromJSON(cJSON *v1_env_var_sourceJSO
     v1_env_var_source_local_var = v1_env_var_source_create_internal (
         config_map_key_ref ? config_map_key_ref_local_nonprim : NULL,
         field_ref ? field_ref_local_nonprim : NULL,
+        file_key_ref ? file_key_ref_local_nonprim : NULL,
         resource_field_ref ? resource_field_ref_local_nonprim : NULL,
         secret_key_ref ? secret_key_ref_local_nonprim : NULL
         );
@@ -197,6 +231,10 @@ end:
     if (field_ref_local_nonprim) {
         v1_object_field_selector_free(field_ref_local_nonprim);
         field_ref_local_nonprim = NULL;
+    }
+    if (file_key_ref_local_nonprim) {
+        v1_file_key_selector_free(file_key_ref_local_nonprim);
+        file_key_ref_local_nonprim = NULL;
     }
     if (resource_field_ref_local_nonprim) {
         v1_resource_field_selector_free(resource_field_ref_local_nonprim);

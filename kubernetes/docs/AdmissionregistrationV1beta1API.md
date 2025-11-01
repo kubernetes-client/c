@@ -4,38 +4,35 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AdmissionregistrationV1beta1API_createValidatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_createValidatingAdmissionPolicy) | **POST** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicies | 
-[**AdmissionregistrationV1beta1API_createValidatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_createValidatingAdmissionPolicyBinding) | **POST** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicybindings | 
-[**AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicies | 
-[**AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicybindings | 
-[**AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicies/{name} | 
-[**AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicybindings/{name} | 
+[**AdmissionregistrationV1beta1API_createMutatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_createMutatingAdmissionPolicy) | **POST** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicies | 
+[**AdmissionregistrationV1beta1API_createMutatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_createMutatingAdmissionPolicyBinding) | **POST** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicybindings | 
+[**AdmissionregistrationV1beta1API_deleteCollectionMutatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteCollectionMutatingAdmissionPolicy) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicies | 
+[**AdmissionregistrationV1beta1API_deleteCollectionMutatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteCollectionMutatingAdmissionPolicyBinding) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicybindings | 
+[**AdmissionregistrationV1beta1API_deleteMutatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteMutatingAdmissionPolicy) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicies/{name} | 
+[**AdmissionregistrationV1beta1API_deleteMutatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_deleteMutatingAdmissionPolicyBinding) | **DELETE** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicybindings/{name} | 
 [**AdmissionregistrationV1beta1API_getAPIResources**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_getAPIResources) | **GET** /apis/admissionregistration.k8s.io/v1beta1/ | 
-[**AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy) | **GET** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicies | 
-[**AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding) | **GET** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicybindings | 
-[**AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy) | **PATCH** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicies/{name} | 
-[**AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding) | **PATCH** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicybindings/{name} | 
-[**AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus) | **PATCH** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicies/{name}/status | 
-[**AdmissionregistrationV1beta1API_readValidatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_readValidatingAdmissionPolicy) | **GET** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicies/{name} | 
-[**AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyBinding) | **GET** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicybindings/{name} | 
-[**AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyStatus**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyStatus) | **GET** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicies/{name}/status | 
-[**AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicy) | **PUT** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicies/{name} | 
-[**AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyBinding) | **PUT** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicybindings/{name} | 
-[**AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyStatus**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyStatus) | **PUT** /apis/admissionregistration.k8s.io/v1beta1/validatingadmissionpolicies/{name}/status | 
+[**AdmissionregistrationV1beta1API_listMutatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_listMutatingAdmissionPolicy) | **GET** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicies | 
+[**AdmissionregistrationV1beta1API_listMutatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_listMutatingAdmissionPolicyBinding) | **GET** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicybindings | 
+[**AdmissionregistrationV1beta1API_patchMutatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_patchMutatingAdmissionPolicy) | **PATCH** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicies/{name} | 
+[**AdmissionregistrationV1beta1API_patchMutatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_patchMutatingAdmissionPolicyBinding) | **PATCH** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicybindings/{name} | 
+[**AdmissionregistrationV1beta1API_readMutatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_readMutatingAdmissionPolicy) | **GET** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicies/{name} | 
+[**AdmissionregistrationV1beta1API_readMutatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_readMutatingAdmissionPolicyBinding) | **GET** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicybindings/{name} | 
+[**AdmissionregistrationV1beta1API_replaceMutatingAdmissionPolicy**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_replaceMutatingAdmissionPolicy) | **PUT** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicies/{name} | 
+[**AdmissionregistrationV1beta1API_replaceMutatingAdmissionPolicyBinding**](AdmissionregistrationV1beta1API.md#AdmissionregistrationV1beta1API_replaceMutatingAdmissionPolicyBinding) | **PUT** /apis/admissionregistration.k8s.io/v1beta1/mutatingadmissionpolicybindings/{name} | 
 
 
-# **AdmissionregistrationV1beta1API_createValidatingAdmissionPolicy**
+# **AdmissionregistrationV1beta1API_createMutatingAdmissionPolicy**
 ```c
-// create a ValidatingAdmissionPolicy
+// create a MutatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_createValidatingAdmissionPolicy(apiClient_t *apiClient, v1beta1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1beta1_mutating_admission_policy_t* AdmissionregistrationV1beta1API_createMutatingAdmissionPolicy(apiClient_t *apiClient, v1beta1_mutating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**body** | **[v1beta1_validating_admission_policy_t](v1beta1_validating_admission_policy.md) \*** |  | 
+**body** | **[v1beta1_mutating_admission_policy_t](v1beta1_mutating_admission_policy.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
@@ -43,7 +40,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1beta1_validating_admission_policy_t](v1beta1_validating_admission_policy.md) *
+[v1beta1_mutating_admission_policy_t](v1beta1_mutating_admission_policy.md) *
 
 
 ### Authorization
@@ -57,18 +54,18 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_createValidatingAdmissionPolicyBinding**
+# **AdmissionregistrationV1beta1API_createMutatingAdmissionPolicyBinding**
 ```c
-// create a ValidatingAdmissionPolicyBinding
+// create a MutatingAdmissionPolicyBinding
 //
-v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_createValidatingAdmissionPolicyBinding(apiClient_t *apiClient, v1beta1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1beta1_mutating_admission_policy_binding_t* AdmissionregistrationV1beta1API_createMutatingAdmissionPolicyBinding(apiClient_t *apiClient, v1beta1_mutating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**body** | **[v1beta1_validating_admission_policy_binding_t](v1beta1_validating_admission_policy_binding.md) \*** |  | 
+**body** | **[v1beta1_mutating_admission_policy_binding_t](v1beta1_mutating_admission_policy_binding.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
@@ -76,7 +73,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1beta1_validating_admission_policy_binding_t](v1beta1_validating_admission_policy_binding.md) *
+[v1beta1_mutating_admission_policy_binding_t](v1beta1_mutating_admission_policy_binding.md) *
 
 
 ### Authorization
@@ -90,11 +87,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy**
+# **AdmissionregistrationV1beta1API_deleteCollectionMutatingAdmissionPolicy**
 ```c
-// delete collection of ValidatingAdmissionPolicy
+// delete collection of MutatingAdmissionPolicy
 //
-v1_status_t* AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+v1_status_t* AdmissionregistrationV1beta1API_deleteCollectionMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -133,11 +130,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding**
+# **AdmissionregistrationV1beta1API_deleteCollectionMutatingAdmissionPolicyBinding**
 ```c
-// delete collection of ValidatingAdmissionPolicyBinding
+// delete collection of MutatingAdmissionPolicyBinding
 //
-v1_status_t* AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+v1_status_t* AdmissionregistrationV1beta1API_deleteCollectionMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 ```
 
 ### Parameters
@@ -176,18 +173,18 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy**
+# **AdmissionregistrationV1beta1API_deleteMutatingAdmissionPolicy**
 ```c
-// delete a ValidatingAdmissionPolicy
+// delete a MutatingAdmissionPolicy
 //
-v1_status_t* AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+v1_status_t* AdmissionregistrationV1beta1API_deleteMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
+**name** | **char \*** | name of the MutatingAdmissionPolicy | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **gracePeriodSeconds** | **int \*** | The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. | [optional] 
@@ -212,18 +209,18 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding**
+# **AdmissionregistrationV1beta1API_deleteMutatingAdmissionPolicyBinding**
 ```c
-// delete a ValidatingAdmissionPolicyBinding
+// delete a MutatingAdmissionPolicyBinding
 //
-v1_status_t* AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+v1_status_t* AdmissionregistrationV1beta1API_deleteMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicyBinding | 
+**name** | **char \*** | name of the MutatingAdmissionPolicyBinding | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **gracePeriodSeconds** | **int \*** | The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. | [optional] 
@@ -276,11 +273,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy**
+# **AdmissionregistrationV1beta1API_listMutatingAdmissionPolicy**
 ```c
-// list or watch objects of kind ValidatingAdmissionPolicy
+// list or watch objects of kind MutatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_list_t* AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+v1beta1_mutating_admission_policy_list_t* AdmissionregistrationV1beta1API_listMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -301,7 +298,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1beta1_validating_admission_policy_list_t](v1beta1_validating_admission_policy_list.md) *
+[v1beta1_mutating_admission_policy_list_t](v1beta1_mutating_admission_policy_list.md) *
 
 
 ### Authorization
@@ -315,11 +312,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding**
+# **AdmissionregistrationV1beta1API_listMutatingAdmissionPolicyBinding**
 ```c
-// list or watch objects of kind ValidatingAdmissionPolicyBinding
+// list or watch objects of kind MutatingAdmissionPolicyBinding
 //
-v1beta1_validating_admission_policy_binding_list_t* AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+v1beta1_mutating_admission_policy_binding_list_t* AdmissionregistrationV1beta1API_listMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 ```
 
 ### Parameters
@@ -340,7 +337,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1beta1_validating_admission_policy_binding_list_t](v1beta1_validating_admission_policy_binding_list.md) *
+[v1beta1_mutating_admission_policy_binding_list_t](v1beta1_mutating_admission_policy_binding_list.md) *
 
 
 ### Authorization
@@ -354,18 +351,18 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy**
+# **AdmissionregistrationV1beta1API_patchMutatingAdmissionPolicy**
 ```c
-// partially update the specified ValidatingAdmissionPolicy
+// partially update the specified MutatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1beta1_mutating_admission_policy_t* AdmissionregistrationV1beta1API_patchMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
+**name** | **char \*** | name of the MutatingAdmissionPolicy | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -375,7 +372,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1beta1_validating_admission_policy_t](v1beta1_validating_admission_policy.md) *
+[v1beta1_mutating_admission_policy_t](v1beta1_mutating_admission_policy.md) *
 
 
 ### Authorization
@@ -389,18 +386,18 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding**
+# **AdmissionregistrationV1beta1API_patchMutatingAdmissionPolicyBinding**
 ```c
-// partially update the specified ValidatingAdmissionPolicyBinding
+// partially update the specified MutatingAdmissionPolicyBinding
 //
-v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1beta1_mutating_admission_policy_binding_t* AdmissionregistrationV1beta1API_patchMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicyBinding | 
+**name** | **char \*** | name of the MutatingAdmissionPolicyBinding | 
 **body** | **[object_t](object.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
@@ -410,7 +407,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1beta1_validating_admission_policy_binding_t](v1beta1_validating_admission_policy_binding.md) *
+[v1beta1_mutating_admission_policy_binding_t](v1beta1_mutating_admission_policy_binding.md) *
 
 
 ### Authorization
@@ -424,58 +421,23 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus**
+# **AdmissionregistrationV1beta1API_readMutatingAdmissionPolicy**
 ```c
-// partially update status of the specified ValidatingAdmissionPolicy
+// read the specified MutatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+v1beta1_mutating_admission_policy_t* AdmissionregistrationV1beta1API_readMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
-**body** | **[object_t](object.md) \*** |  | 
-**pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
-**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
-**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). | [optional] 
-**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
-**force** | **int \*** | Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. | [optional] 
-
-### Return type
-
-[v1beta1_validating_admission_policy_t](v1beta1_validating_admission_policy.md) *
-
-
-### Authorization
-
-[BearerToken](../README.md#BearerToken)
-
-### HTTP request headers
-
- - **Content-Type**: application/json-patch+json, application/merge-patch+json, application/strategic-merge-patch+json, application/apply-patch+yaml, application/apply-patch+cbor
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **AdmissionregistrationV1beta1API_readValidatingAdmissionPolicy**
-```c
-// read the specified ValidatingAdmissionPolicy
-//
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_readValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, char *pretty);
-```
-
-### Parameters
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
+**name** | **char \*** | name of the MutatingAdmissionPolicy | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 
 ### Return type
 
-[v1beta1_validating_admission_policy_t](v1beta1_validating_admission_policy.md) *
+[v1beta1_mutating_admission_policy_t](v1beta1_mutating_admission_policy.md) *
 
 
 ### Authorization
@@ -489,23 +451,23 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyBinding**
+# **AdmissionregistrationV1beta1API_readMutatingAdmissionPolicyBinding**
 ```c
-// read the specified ValidatingAdmissionPolicyBinding
+// read the specified MutatingAdmissionPolicyBinding
 //
-v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty);
+v1beta1_mutating_admission_policy_binding_t* AdmissionregistrationV1beta1API_readMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, char *pretty);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicyBinding | 
+**name** | **char \*** | name of the MutatingAdmissionPolicyBinding | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 
 ### Return type
 
-[v1beta1_validating_admission_policy_binding_t](v1beta1_validating_admission_policy_binding.md) *
+[v1beta1_mutating_admission_policy_binding_t](v1beta1_mutating_admission_policy_binding.md) *
 
 
 ### Authorization
@@ -519,49 +481,19 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyStatus**
+# **AdmissionregistrationV1beta1API_replaceMutatingAdmissionPolicy**
 ```c
-// read status of the specified ValidatingAdmissionPolicy
+// replace the specified MutatingAdmissionPolicy
 //
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char *name, char *pretty);
+v1beta1_mutating_admission_policy_t* AdmissionregistrationV1beta1API_replaceMutatingAdmissionPolicy(apiClient_t *apiClient, char *name, v1beta1_mutating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
-**pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
-
-### Return type
-
-[v1beta1_validating_admission_policy_t](v1beta1_validating_admission_policy.md) *
-
-
-### Authorization
-
-[BearerToken](../README.md#BearerToken)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicy**
-```c
-// replace the specified ValidatingAdmissionPolicy
-//
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicy(apiClient_t *apiClient, char *name, v1beta1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
-```
-
-### Parameters
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
-**body** | **[v1beta1_validating_admission_policy_t](v1beta1_validating_admission_policy.md) \*** |  | 
+**name** | **char \*** | name of the MutatingAdmissionPolicy | 
+**body** | **[v1beta1_mutating_admission_policy_t](v1beta1_mutating_admission_policy.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
@@ -569,7 +501,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1beta1_validating_admission_policy_t](v1beta1_validating_admission_policy.md) *
+[v1beta1_mutating_admission_policy_t](v1beta1_mutating_admission_policy.md) *
 
 
 ### Authorization
@@ -583,19 +515,19 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyBinding**
+# **AdmissionregistrationV1beta1API_replaceMutatingAdmissionPolicyBinding**
 ```c
-// replace the specified ValidatingAdmissionPolicyBinding
+// replace the specified MutatingAdmissionPolicyBinding
 //
-v1beta1_validating_admission_policy_binding_t* AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, v1beta1_validating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+v1beta1_mutating_admission_policy_binding_t* AdmissionregistrationV1beta1API_replaceMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *name, v1beta1_mutating_admission_policy_binding_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 ```
 
 ### Parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicyBinding | 
-**body** | **[v1beta1_validating_admission_policy_binding_t](v1beta1_validating_admission_policy_binding.md) \*** |  | 
+**name** | **char \*** | name of the MutatingAdmissionPolicyBinding | 
+**body** | **[v1beta1_mutating_admission_policy_binding_t](v1beta1_mutating_admission_policy_binding.md) \*** |  | 
 **pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
 **dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
 **fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
@@ -603,41 +535,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[v1beta1_validating_admission_policy_binding_t](v1beta1_validating_admission_policy_binding.md) *
-
-
-### Authorization
-
-[BearerToken](../README.md#BearerToken)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf, application/cbor
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyStatus**
-```c
-// replace status of the specified ValidatingAdmissionPolicy
-//
-v1beta1_validating_admission_policy_t* AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyStatus(apiClient_t *apiClient, char *name, v1beta1_validating_admission_policy_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
-```
-
-### Parameters
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**apiClient** | **apiClient_t \*** | context containing the client configuration |
-**name** | **char \*** | name of the ValidatingAdmissionPolicy | 
-**body** | **[v1beta1_validating_admission_policy_t](v1beta1_validating_admission_policy.md) \*** |  | 
-**pretty** | **char \*** | If &#39;true&#39;, then the output is pretty printed. Defaults to &#39;false&#39; unless the user-agent indicates a browser or command-line HTTP tool (curl and wget). | [optional] 
-**dryRun** | **char \*** | When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | [optional] 
-**fieldManager** | **char \*** | fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. | [optional] 
-**fieldValidation** | **char \*** | fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. | [optional] 
-
-### Return type
-
-[v1beta1_validating_admission_policy_t](v1beta1_validating_admission_policy.md) *
+[v1beta1_mutating_admission_policy_binding_t](v1beta1_mutating_admission_policy_binding.md) *
 
 
 ### Authorization

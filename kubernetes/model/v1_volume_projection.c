@@ -9,6 +9,7 @@ static v1_volume_projection_t *v1_volume_projection_create_internal(
     v1_cluster_trust_bundle_projection_t *cluster_trust_bundle,
     v1_config_map_projection_t *config_map,
     v1_downward_api_projection_t *downward_api,
+    v1_pod_certificate_projection_t *pod_certificate,
     v1_secret_projection_t *secret,
     v1_service_account_token_projection_t *service_account_token
     ) {
@@ -19,6 +20,7 @@ static v1_volume_projection_t *v1_volume_projection_create_internal(
     v1_volume_projection_local_var->cluster_trust_bundle = cluster_trust_bundle;
     v1_volume_projection_local_var->config_map = config_map;
     v1_volume_projection_local_var->downward_api = downward_api;
+    v1_volume_projection_local_var->pod_certificate = pod_certificate;
     v1_volume_projection_local_var->secret = secret;
     v1_volume_projection_local_var->service_account_token = service_account_token;
 
@@ -30,6 +32,7 @@ __attribute__((deprecated)) v1_volume_projection_t *v1_volume_projection_create(
     v1_cluster_trust_bundle_projection_t *cluster_trust_bundle,
     v1_config_map_projection_t *config_map,
     v1_downward_api_projection_t *downward_api,
+    v1_pod_certificate_projection_t *pod_certificate,
     v1_secret_projection_t *secret,
     v1_service_account_token_projection_t *service_account_token
     ) {
@@ -37,6 +40,7 @@ __attribute__((deprecated)) v1_volume_projection_t *v1_volume_projection_create(
         cluster_trust_bundle,
         config_map,
         downward_api,
+        pod_certificate,
         secret,
         service_account_token
         );
@@ -62,6 +66,10 @@ void v1_volume_projection_free(v1_volume_projection_t *v1_volume_projection) {
     if (v1_volume_projection->downward_api) {
         v1_downward_api_projection_free(v1_volume_projection->downward_api);
         v1_volume_projection->downward_api = NULL;
+    }
+    if (v1_volume_projection->pod_certificate) {
+        v1_pod_certificate_projection_free(v1_volume_projection->pod_certificate);
+        v1_volume_projection->pod_certificate = NULL;
     }
     if (v1_volume_projection->secret) {
         v1_secret_projection_free(v1_volume_projection->secret);
@@ -116,6 +124,19 @@ cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_proj
     }
 
 
+    // v1_volume_projection->pod_certificate
+    if(v1_volume_projection->pod_certificate) {
+    cJSON *pod_certificate_local_JSON = v1_pod_certificate_projection_convertToJSON(v1_volume_projection->pod_certificate);
+    if(pod_certificate_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "podCertificate", pod_certificate_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_volume_projection->secret
     if(v1_volume_projection->secret) {
     cJSON *secret_local_JSON = v1_secret_projection_convertToJSON(v1_volume_projection->secret);
@@ -162,6 +183,9 @@ v1_volume_projection_t *v1_volume_projection_parseFromJSON(cJSON *v1_volume_proj
     // define the local variable for v1_volume_projection->downward_api
     v1_downward_api_projection_t *downward_api_local_nonprim = NULL;
 
+    // define the local variable for v1_volume_projection->pod_certificate
+    v1_pod_certificate_projection_t *pod_certificate_local_nonprim = NULL;
+
     // define the local variable for v1_volume_projection->secret
     v1_secret_projection_t *secret_local_nonprim = NULL;
 
@@ -195,6 +219,15 @@ v1_volume_projection_t *v1_volume_projection_parseFromJSON(cJSON *v1_volume_proj
     downward_api_local_nonprim = v1_downward_api_projection_parseFromJSON(downward_api); //nonprimitive
     }
 
+    // v1_volume_projection->pod_certificate
+    cJSON *pod_certificate = cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "podCertificate");
+    if (cJSON_IsNull(pod_certificate)) {
+        pod_certificate = NULL;
+    }
+    if (pod_certificate) { 
+    pod_certificate_local_nonprim = v1_pod_certificate_projection_parseFromJSON(pod_certificate); //nonprimitive
+    }
+
     // v1_volume_projection->secret
     cJSON *secret = cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "secret");
     if (cJSON_IsNull(secret)) {
@@ -218,6 +251,7 @@ v1_volume_projection_t *v1_volume_projection_parseFromJSON(cJSON *v1_volume_proj
         cluster_trust_bundle ? cluster_trust_bundle_local_nonprim : NULL,
         config_map ? config_map_local_nonprim : NULL,
         downward_api ? downward_api_local_nonprim : NULL,
+        pod_certificate ? pod_certificate_local_nonprim : NULL,
         secret ? secret_local_nonprim : NULL,
         service_account_token ? service_account_token_local_nonprim : NULL
         );
@@ -235,6 +269,10 @@ end:
     if (downward_api_local_nonprim) {
         v1_downward_api_projection_free(downward_api_local_nonprim);
         downward_api_local_nonprim = NULL;
+    }
+    if (pod_certificate_local_nonprim) {
+        v1_pod_certificate_projection_free(pod_certificate_local_nonprim);
+        pod_certificate_local_nonprim = NULL;
     }
     if (secret_local_nonprim) {
         v1_secret_projection_free(secret_local_nonprim);

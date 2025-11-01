@@ -119,9 +119,7 @@ cJSON *v1_network_policy_spec_convertToJSON(v1_network_policy_spec_t *v1_network
 
 
     // v1_network_policy_spec->pod_selector
-    if (!v1_network_policy_spec->pod_selector) {
-        goto fail;
-    }
+    if(v1_network_policy_spec->pod_selector) {
     cJSON *pod_selector_local_JSON = v1_label_selector_convertToJSON(v1_network_policy_spec->pod_selector);
     if(pod_selector_local_JSON == NULL) {
     goto fail; //model
@@ -129,6 +127,7 @@ cJSON *v1_network_policy_spec_convertToJSON(v1_network_policy_spec_t *v1_network
     cJSON_AddItemToObject(item, "podSelector", pod_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
+    }
     }
 
 
@@ -225,12 +224,9 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
     if (cJSON_IsNull(pod_selector)) {
         pod_selector = NULL;
     }
-    if (!pod_selector) {
-        goto end;
-    }
-
-    
+    if (pod_selector) { 
     pod_selector_local_nonprim = v1_label_selector_parseFromJSON(pod_selector); //nonprimitive
+    }
 
     // v1_network_policy_spec->policy_types
     cJSON *policy_types = cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "policyTypes");
@@ -258,7 +254,7 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
     v1_network_policy_spec_local_var = v1_network_policy_spec_create_internal (
         egress ? egressList : NULL,
         ingress ? ingressList : NULL,
-        pod_selector_local_nonprim,
+        pod_selector ? pod_selector_local_nonprim : NULL,
         policy_types ? policy_typesList : NULL
         );
 

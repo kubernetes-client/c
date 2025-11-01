@@ -24,7 +24,11 @@ v1beta2_device_t* instantiate_v1beta2_device(int include_optional) {
   if (include_optional) {
     v1beta2_device = v1beta2_device_create(
       1,
+      1,
       list_createList(),
+      list_createList(),
+      list_createList(),
+      1,
       list_createList(),
       list_createList(),
       "0",
@@ -36,7 +40,11 @@ v1beta2_device_t* instantiate_v1beta2_device(int include_optional) {
   } else {
     v1beta2_device = v1beta2_device_create(
       1,
+      1,
       list_createList(),
+      list_createList(),
+      list_createList(),
+      1,
       list_createList(),
       list_createList(),
       "0",

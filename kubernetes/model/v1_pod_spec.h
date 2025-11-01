@@ -48,6 +48,7 @@ typedef struct v1_pod_spec_t {
     int host_pid; //boolean
     int host_users; //boolean
     char *hostname; // string
+    char *hostname_override; // string
     list_t *image_pull_secrets; //nonprimitive container
     list_t *init_containers; //nonprimitive container
     char *node_name; // string
@@ -93,6 +94,7 @@ __attribute__((deprecated)) v1_pod_spec_t *v1_pod_spec_create(
     int host_pid,
     int host_users,
     char *hostname,
+    char *hostname_override,
     list_t *image_pull_secrets,
     list_t *init_containers,
     char *node_name,

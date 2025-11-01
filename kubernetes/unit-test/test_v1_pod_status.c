@@ -16,6 +16,7 @@
 #include "../model/v1_pod_status.h"
 v1_pod_status_t* instantiate_v1_pod_status(int include_optional);
 
+#include "test_v1_pod_extended_resource_claim_status.c"
 
 
 v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
@@ -25,6 +26,8 @@ v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
       list_createList(),
       list_createList(),
       list_createList(),
+       // false, not to have infinite recursion
+      instantiate_v1_pod_extended_resource_claim_status(0),
       "0",
       list_createList(),
       list_createList(),
@@ -45,6 +48,7 @@ v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
       list_createList(),
       list_createList(),
       list_createList(),
+      NULL,
       "0",
       list_createList(),
       list_createList(),

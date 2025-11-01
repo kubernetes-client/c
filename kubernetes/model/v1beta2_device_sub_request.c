@@ -7,6 +7,7 @@
 
 static v1beta2_device_sub_request_t *v1beta2_device_sub_request_create_internal(
     char *allocation_mode,
+    v1beta2_capacity_requirements_t *capacity,
     long count,
     char *device_class_name,
     char *name,
@@ -18,6 +19,7 @@ static v1beta2_device_sub_request_t *v1beta2_device_sub_request_create_internal(
         return NULL;
     }
     v1beta2_device_sub_request_local_var->allocation_mode = allocation_mode;
+    v1beta2_device_sub_request_local_var->capacity = capacity;
     v1beta2_device_sub_request_local_var->count = count;
     v1beta2_device_sub_request_local_var->device_class_name = device_class_name;
     v1beta2_device_sub_request_local_var->name = name;
@@ -30,6 +32,7 @@ static v1beta2_device_sub_request_t *v1beta2_device_sub_request_create_internal(
 
 __attribute__((deprecated)) v1beta2_device_sub_request_t *v1beta2_device_sub_request_create(
     char *allocation_mode,
+    v1beta2_capacity_requirements_t *capacity,
     long count,
     char *device_class_name,
     char *name,
@@ -38,6 +41,7 @@ __attribute__((deprecated)) v1beta2_device_sub_request_t *v1beta2_device_sub_req
     ) {
     return v1beta2_device_sub_request_create_internal (
         allocation_mode,
+        capacity,
         count,
         device_class_name,
         name,
@@ -58,6 +62,10 @@ void v1beta2_device_sub_request_free(v1beta2_device_sub_request_t *v1beta2_devic
     if (v1beta2_device_sub_request->allocation_mode) {
         free(v1beta2_device_sub_request->allocation_mode);
         v1beta2_device_sub_request->allocation_mode = NULL;
+    }
+    if (v1beta2_device_sub_request->capacity) {
+        v1beta2_capacity_requirements_free(v1beta2_device_sub_request->capacity);
+        v1beta2_device_sub_request->capacity = NULL;
     }
     if (v1beta2_device_sub_request->device_class_name) {
         free(v1beta2_device_sub_request->device_class_name);
@@ -91,6 +99,19 @@ cJSON *v1beta2_device_sub_request_convertToJSON(v1beta2_device_sub_request_t *v1
     if(v1beta2_device_sub_request->allocation_mode) {
     if(cJSON_AddStringToObject(item, "allocationMode", v1beta2_device_sub_request->allocation_mode) == NULL) {
     goto fail; //String
+    }
+    }
+
+
+    // v1beta2_device_sub_request->capacity
+    if(v1beta2_device_sub_request->capacity) {
+    cJSON *capacity_local_JSON = v1beta2_capacity_requirements_convertToJSON(v1beta2_device_sub_request->capacity);
+    if(capacity_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "capacity", capacity_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
     }
     }
 
@@ -172,6 +193,9 @@ v1beta2_device_sub_request_t *v1beta2_device_sub_request_parseFromJSON(cJSON *v1
 
     v1beta2_device_sub_request_t *v1beta2_device_sub_request_local_var = NULL;
 
+    // define the local variable for v1beta2_device_sub_request->capacity
+    v1beta2_capacity_requirements_t *capacity_local_nonprim = NULL;
+
     // define the local list for v1beta2_device_sub_request->selectors
     list_t *selectorsList = NULL;
 
@@ -188,6 +212,15 @@ v1beta2_device_sub_request_t *v1beta2_device_sub_request_parseFromJSON(cJSON *v1
     {
     goto end; //String
     }
+    }
+
+    // v1beta2_device_sub_request->capacity
+    cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1beta2_device_sub_requestJSON, "capacity");
+    if (cJSON_IsNull(capacity)) {
+        capacity = NULL;
+    }
+    if (capacity) { 
+    capacity_local_nonprim = v1beta2_capacity_requirements_parseFromJSON(capacity); //nonprimitive
     }
 
     // v1beta2_device_sub_request->count
@@ -283,6 +316,7 @@ v1beta2_device_sub_request_t *v1beta2_device_sub_request_parseFromJSON(cJSON *v1
 
     v1beta2_device_sub_request_local_var = v1beta2_device_sub_request_create_internal (
         allocation_mode && !cJSON_IsNull(allocation_mode) ? strdup(allocation_mode->valuestring) : NULL,
+        capacity ? capacity_local_nonprim : NULL,
         count ? count->valuedouble : 0,
         strdup(device_class_name->valuestring),
         strdup(name->valuestring),
@@ -292,6 +326,10 @@ v1beta2_device_sub_request_t *v1beta2_device_sub_request_parseFromJSON(cJSON *v1
 
     return v1beta2_device_sub_request_local_var;
 end:
+    if (capacity_local_nonprim) {
+        v1beta2_capacity_requirements_free(capacity_local_nonprim);
+        capacity_local_nonprim = NULL;
+    }
     if (selectorsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, selectorsList) {

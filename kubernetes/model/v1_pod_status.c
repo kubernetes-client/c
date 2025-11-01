@@ -9,6 +9,7 @@ static v1_pod_status_t *v1_pod_status_create_internal(
     list_t *conditions,
     list_t *container_statuses,
     list_t *ephemeral_container_statuses,
+    v1_pod_extended_resource_claim_status_t *extended_resource_claim_status,
     char *host_ip,
     list_t *host_ips,
     list_t *init_container_statuses,
@@ -31,6 +32,7 @@ static v1_pod_status_t *v1_pod_status_create_internal(
     v1_pod_status_local_var->conditions = conditions;
     v1_pod_status_local_var->container_statuses = container_statuses;
     v1_pod_status_local_var->ephemeral_container_statuses = ephemeral_container_statuses;
+    v1_pod_status_local_var->extended_resource_claim_status = extended_resource_claim_status;
     v1_pod_status_local_var->host_ip = host_ip;
     v1_pod_status_local_var->host_ips = host_ips;
     v1_pod_status_local_var->init_container_statuses = init_container_statuses;
@@ -54,6 +56,7 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
     list_t *conditions,
     list_t *container_statuses,
     list_t *ephemeral_container_statuses,
+    v1_pod_extended_resource_claim_status_t *extended_resource_claim_status,
     char *host_ip,
     list_t *host_ips,
     list_t *init_container_statuses,
@@ -73,6 +76,7 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
         conditions,
         container_statuses,
         ephemeral_container_statuses,
+        extended_resource_claim_status,
         host_ip,
         host_ips,
         init_container_statuses,
@@ -119,6 +123,10 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
         }
         list_freeList(v1_pod_status->ephemeral_container_statuses);
         v1_pod_status->ephemeral_container_statuses = NULL;
+    }
+    if (v1_pod_status->extended_resource_claim_status) {
+        v1_pod_extended_resource_claim_status_free(v1_pod_status->extended_resource_claim_status);
+        v1_pod_status->extended_resource_claim_status = NULL;
     }
     if (v1_pod_status->host_ip) {
         free(v1_pod_status->host_ip);
@@ -246,6 +254,19 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     }
     cJSON_AddItemToArray(ephemeral_container_statuses, itemLocal);
     }
+    }
+    }
+
+
+    // v1_pod_status->extended_resource_claim_status
+    if(v1_pod_status->extended_resource_claim_status) {
+    cJSON *extended_resource_claim_status_local_JSON = v1_pod_extended_resource_claim_status_convertToJSON(v1_pod_status->extended_resource_claim_status);
+    if(extended_resource_claim_status_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "extendedResourceClaimStatus", extended_resource_claim_status_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
     }
     }
 
@@ -430,6 +451,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     // define the local list for v1_pod_status->ephemeral_container_statuses
     list_t *ephemeral_container_statusesList = NULL;
 
+    // define the local variable for v1_pod_status->extended_resource_claim_status
+    v1_pod_extended_resource_claim_status_t *extended_resource_claim_status_local_nonprim = NULL;
+
     // define the local list for v1_pod_status->host_ips
     list_t *host_ipsList = NULL;
 
@@ -512,6 +536,15 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
         list_addElement(ephemeral_container_statusesList, ephemeral_container_statusesItem);
     }
+    }
+
+    // v1_pod_status->extended_resource_claim_status
+    cJSON *extended_resource_claim_status = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "extendedResourceClaimStatus");
+    if (cJSON_IsNull(extended_resource_claim_status)) {
+        extended_resource_claim_status = NULL;
+    }
+    if (extended_resource_claim_status) { 
+    extended_resource_claim_status_local_nonprim = v1_pod_extended_resource_claim_status_parseFromJSON(extended_resource_claim_status); //nonprimitive
     }
 
     // v1_pod_status->host_ip
@@ -735,6 +768,7 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
         conditions ? conditionsList : NULL,
         container_statuses ? container_statusesList : NULL,
         ephemeral_container_statuses ? ephemeral_container_statusesList : NULL,
+        extended_resource_claim_status ? extended_resource_claim_status_local_nonprim : NULL,
         host_ip && !cJSON_IsNull(host_ip) ? strdup(host_ip->valuestring) : NULL,
         host_ips ? host_ipsList : NULL,
         init_container_statuses ? init_container_statusesList : NULL,
@@ -779,6 +813,10 @@ end:
         }
         list_freeList(ephemeral_container_statusesList);
         ephemeral_container_statusesList = NULL;
+    }
+    if (extended_resource_claim_status_local_nonprim) {
+        v1_pod_extended_resource_claim_status_free(extended_resource_claim_status_local_nonprim);
+        extended_resource_claim_status_local_nonprim = NULL;
     }
     if (host_ipsList) {
         listEntry_t *listEntry = NULL;

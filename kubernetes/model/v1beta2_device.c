@@ -7,7 +7,11 @@
 
 static v1beta2_device_t *v1beta2_device_create_internal(
     int all_nodes,
+    int allow_multiple_allocations,
     list_t* attributes,
+    list_t *binding_conditions,
+    list_t *binding_failure_conditions,
+    int binds_to_node,
     list_t* capacity,
     list_t *consumes_counters,
     char *name,
@@ -20,7 +24,11 @@ static v1beta2_device_t *v1beta2_device_create_internal(
         return NULL;
     }
     v1beta2_device_local_var->all_nodes = all_nodes;
+    v1beta2_device_local_var->allow_multiple_allocations = allow_multiple_allocations;
     v1beta2_device_local_var->attributes = attributes;
+    v1beta2_device_local_var->binding_conditions = binding_conditions;
+    v1beta2_device_local_var->binding_failure_conditions = binding_failure_conditions;
+    v1beta2_device_local_var->binds_to_node = binds_to_node;
     v1beta2_device_local_var->capacity = capacity;
     v1beta2_device_local_var->consumes_counters = consumes_counters;
     v1beta2_device_local_var->name = name;
@@ -34,7 +42,11 @@ static v1beta2_device_t *v1beta2_device_create_internal(
 
 __attribute__((deprecated)) v1beta2_device_t *v1beta2_device_create(
     int all_nodes,
+    int allow_multiple_allocations,
     list_t* attributes,
+    list_t *binding_conditions,
+    list_t *binding_failure_conditions,
+    int binds_to_node,
     list_t* capacity,
     list_t *consumes_counters,
     char *name,
@@ -44,7 +56,11 @@ __attribute__((deprecated)) v1beta2_device_t *v1beta2_device_create(
     ) {
     return v1beta2_device_create_internal (
         all_nodes,
+        allow_multiple_allocations,
         attributes,
+        binding_conditions,
+        binding_failure_conditions,
+        binds_to_node,
         capacity,
         consumes_counters,
         name,
@@ -72,6 +88,20 @@ void v1beta2_device_free(v1beta2_device_t *v1beta2_device) {
         }
         list_freeList(v1beta2_device->attributes);
         v1beta2_device->attributes = NULL;
+    }
+    if (v1beta2_device->binding_conditions) {
+        list_ForEach(listEntry, v1beta2_device->binding_conditions) {
+            free(listEntry->data);
+        }
+        list_freeList(v1beta2_device->binding_conditions);
+        v1beta2_device->binding_conditions = NULL;
+    }
+    if (v1beta2_device->binding_failure_conditions) {
+        list_ForEach(listEntry, v1beta2_device->binding_failure_conditions) {
+            free(listEntry->data);
+        }
+        list_freeList(v1beta2_device->binding_failure_conditions);
+        v1beta2_device->binding_failure_conditions = NULL;
     }
     if (v1beta2_device->capacity) {
         list_ForEach(listEntry, v1beta2_device->capacity) {
@@ -123,6 +153,14 @@ cJSON *v1beta2_device_convertToJSON(v1beta2_device_t *v1beta2_device) {
     }
 
 
+    // v1beta2_device->allow_multiple_allocations
+    if(v1beta2_device->allow_multiple_allocations) {
+    if(cJSON_AddBoolToObject(item, "allowMultipleAllocations", v1beta2_device->allow_multiple_allocations) == NULL) {
+    goto fail; //Bool
+    }
+    }
+
+
     // v1beta2_device->attributes
     if(v1beta2_device->attributes) {
     cJSON *attributes = cJSON_AddObjectToObject(item, "attributes");
@@ -135,6 +173,48 @@ cJSON *v1beta2_device_convertToJSON(v1beta2_device_t *v1beta2_device) {
     list_ForEach(attributesListEntry, v1beta2_device->attributes) {
         keyValuePair_t *localKeyValue = attributesListEntry->data;
     }
+    }
+    }
+
+
+    // v1beta2_device->binding_conditions
+    if(v1beta2_device->binding_conditions) {
+    cJSON *binding_conditions = cJSON_AddArrayToObject(item, "bindingConditions");
+    if(binding_conditions == NULL) {
+        goto fail; //primitive container
+    }
+
+    listEntry_t *binding_conditionsListEntry;
+    list_ForEach(binding_conditionsListEntry, v1beta2_device->binding_conditions) {
+    if(cJSON_AddStringToObject(binding_conditions, "", binding_conditionsListEntry->data) == NULL)
+    {
+        goto fail;
+    }
+    }
+    }
+
+
+    // v1beta2_device->binding_failure_conditions
+    if(v1beta2_device->binding_failure_conditions) {
+    cJSON *binding_failure_conditions = cJSON_AddArrayToObject(item, "bindingFailureConditions");
+    if(binding_failure_conditions == NULL) {
+        goto fail; //primitive container
+    }
+
+    listEntry_t *binding_failure_conditionsListEntry;
+    list_ForEach(binding_failure_conditionsListEntry, v1beta2_device->binding_failure_conditions) {
+    if(cJSON_AddStringToObject(binding_failure_conditions, "", binding_failure_conditionsListEntry->data) == NULL)
+    {
+        goto fail;
+    }
+    }
+    }
+
+
+    // v1beta2_device->binds_to_node
+    if(v1beta2_device->binds_to_node) {
+    if(cJSON_AddBoolToObject(item, "bindsToNode", v1beta2_device->binds_to_node) == NULL) {
+    goto fail; //Bool
     }
     }
 
@@ -239,6 +319,12 @@ v1beta2_device_t *v1beta2_device_parseFromJSON(cJSON *v1beta2_deviceJSON){
     // define the local map for v1beta2_device->attributes
     list_t *attributesList = NULL;
 
+    // define the local list for v1beta2_device->binding_conditions
+    list_t *binding_conditionsList = NULL;
+
+    // define the local list for v1beta2_device->binding_failure_conditions
+    list_t *binding_failure_conditionsList = NULL;
+
     // define the local map for v1beta2_device->capacity
     list_t *capacityList = NULL;
 
@@ -263,6 +349,18 @@ v1beta2_device_t *v1beta2_device_parseFromJSON(cJSON *v1beta2_deviceJSON){
     }
     }
 
+    // v1beta2_device->allow_multiple_allocations
+    cJSON *allow_multiple_allocations = cJSON_GetObjectItemCaseSensitive(v1beta2_deviceJSON, "allowMultipleAllocations");
+    if (cJSON_IsNull(allow_multiple_allocations)) {
+        allow_multiple_allocations = NULL;
+    }
+    if (allow_multiple_allocations) { 
+    if(!cJSON_IsBool(allow_multiple_allocations))
+    {
+    goto end; //Bool
+    }
+    }
+
     // v1beta2_device->attributes
     cJSON *attributes = cJSON_GetObjectItemCaseSensitive(v1beta2_deviceJSON, "attributes");
     if (cJSON_IsNull(attributes)) {
@@ -272,6 +370,62 @@ v1beta2_device_t *v1beta2_device_parseFromJSON(cJSON *v1beta2_deviceJSON){
 
     // The data type of the elements in v1beta2_device->attributes is currently not supported.
 
+    }
+
+    // v1beta2_device->binding_conditions
+    cJSON *binding_conditions = cJSON_GetObjectItemCaseSensitive(v1beta2_deviceJSON, "bindingConditions");
+    if (cJSON_IsNull(binding_conditions)) {
+        binding_conditions = NULL;
+    }
+    if (binding_conditions) { 
+    cJSON *binding_conditions_local = NULL;
+    if(!cJSON_IsArray(binding_conditions)) {
+        goto end;//primitive container
+    }
+    binding_conditionsList = list_createList();
+
+    cJSON_ArrayForEach(binding_conditions_local, binding_conditions)
+    {
+        if(!cJSON_IsString(binding_conditions_local))
+        {
+            goto end;
+        }
+        list_addElement(binding_conditionsList , strdup(binding_conditions_local->valuestring));
+    }
+    }
+
+    // v1beta2_device->binding_failure_conditions
+    cJSON *binding_failure_conditions = cJSON_GetObjectItemCaseSensitive(v1beta2_deviceJSON, "bindingFailureConditions");
+    if (cJSON_IsNull(binding_failure_conditions)) {
+        binding_failure_conditions = NULL;
+    }
+    if (binding_failure_conditions) { 
+    cJSON *binding_failure_conditions_local = NULL;
+    if(!cJSON_IsArray(binding_failure_conditions)) {
+        goto end;//primitive container
+    }
+    binding_failure_conditionsList = list_createList();
+
+    cJSON_ArrayForEach(binding_failure_conditions_local, binding_failure_conditions)
+    {
+        if(!cJSON_IsString(binding_failure_conditions_local))
+        {
+            goto end;
+        }
+        list_addElement(binding_failure_conditionsList , strdup(binding_failure_conditions_local->valuestring));
+    }
+    }
+
+    // v1beta2_device->binds_to_node
+    cJSON *binds_to_node = cJSON_GetObjectItemCaseSensitive(v1beta2_deviceJSON, "bindsToNode");
+    if (cJSON_IsNull(binds_to_node)) {
+        binds_to_node = NULL;
+    }
+    if (binds_to_node) { 
+    if(!cJSON_IsBool(binds_to_node))
+    {
+    goto end; //Bool
+    }
     }
 
     // v1beta2_device->capacity
@@ -372,7 +526,11 @@ v1beta2_device_t *v1beta2_device_parseFromJSON(cJSON *v1beta2_deviceJSON){
 
     v1beta2_device_local_var = v1beta2_device_create_internal (
         all_nodes ? all_nodes->valueint : 0,
+        allow_multiple_allocations ? allow_multiple_allocations->valueint : 0,
         attributes ? attributesList : NULL,
+        binding_conditions ? binding_conditionsList : NULL,
+        binding_failure_conditions ? binding_failure_conditionsList : NULL,
+        binds_to_node ? binds_to_node->valueint : 0,
         capacity ? capacityList : NULL,
         consumes_counters ? consumes_countersList : NULL,
         strdup(name->valuestring),
@@ -386,6 +544,24 @@ end:
 
     // The data type of the elements in v1beta2_device->attributes is currently not supported.
 
+    if (binding_conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, binding_conditionsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(binding_conditionsList);
+        binding_conditionsList = NULL;
+    }
+    if (binding_failure_conditionsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, binding_failure_conditionsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(binding_failure_conditionsList);
+        binding_failure_conditionsList = NULL;
+    }
 
     // The data type of the elements in v1beta2_device->capacity is currently not supported.
 

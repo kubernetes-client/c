@@ -20,6 +20,7 @@ static v1_pod_spec_t *v1_pod_spec_create_internal(
     int host_pid,
     int host_users,
     char *hostname,
+    char *hostname_override,
     list_t *image_pull_secrets,
     list_t *init_containers,
     char *node_name,
@@ -65,6 +66,7 @@ static v1_pod_spec_t *v1_pod_spec_create_internal(
     v1_pod_spec_local_var->host_pid = host_pid;
     v1_pod_spec_local_var->host_users = host_users;
     v1_pod_spec_local_var->hostname = hostname;
+    v1_pod_spec_local_var->hostname_override = hostname_override;
     v1_pod_spec_local_var->image_pull_secrets = image_pull_secrets;
     v1_pod_spec_local_var->init_containers = init_containers;
     v1_pod_spec_local_var->node_name = node_name;
@@ -111,6 +113,7 @@ __attribute__((deprecated)) v1_pod_spec_t *v1_pod_spec_create(
     int host_pid,
     int host_users,
     char *hostname,
+    char *hostname_override,
     list_t *image_pull_secrets,
     list_t *init_containers,
     char *node_name,
@@ -153,6 +156,7 @@ __attribute__((deprecated)) v1_pod_spec_t *v1_pod_spec_create(
         host_pid,
         host_users,
         hostname,
+        hostname_override,
         image_pull_secrets,
         init_containers,
         node_name,
@@ -227,6 +231,10 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
     if (v1_pod_spec->hostname) {
         free(v1_pod_spec->hostname);
         v1_pod_spec->hostname = NULL;
+    }
+    if (v1_pod_spec->hostname_override) {
+        free(v1_pod_spec->hostname_override);
+        v1_pod_spec->hostname_override = NULL;
     }
     if (v1_pod_spec->image_pull_secrets) {
         list_ForEach(listEntry, v1_pod_spec->image_pull_secrets) {
@@ -512,6 +520,14 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     // v1_pod_spec->hostname
     if(v1_pod_spec->hostname) {
     if(cJSON_AddStringToObject(item, "hostname", v1_pod_spec->hostname) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // v1_pod_spec->hostname_override
+    if(v1_pod_spec->hostname_override) {
+    if(cJSON_AddStringToObject(item, "hostnameOverride", v1_pod_spec->hostname_override) == NULL) {
     goto fail; //String
     }
     }
@@ -1126,6 +1142,18 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     }
     }
 
+    // v1_pod_spec->hostname_override
+    cJSON *hostname_override = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "hostnameOverride");
+    if (cJSON_IsNull(hostname_override)) {
+        hostname_override = NULL;
+    }
+    if (hostname_override) { 
+    if(!cJSON_IsString(hostname_override) && !cJSON_IsNull(hostname_override))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_pod_spec->image_pull_secrets
     cJSON *image_pull_secrets = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "imagePullSecrets");
     if (cJSON_IsNull(image_pull_secrets)) {
@@ -1573,6 +1601,7 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         host_pid ? host_pid->valueint : 0,
         host_users ? host_users->valueint : 0,
         hostname && !cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
+        hostname_override && !cJSON_IsNull(hostname_override) ? strdup(hostname_override->valuestring) : NULL,
         image_pull_secrets ? image_pull_secretsList : NULL,
         init_containers ? init_containersList : NULL,
         node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,

@@ -8,6 +8,7 @@
 static v1beta2_exact_device_request_t *v1beta2_exact_device_request_create_internal(
     int admin_access,
     char *allocation_mode,
+    v1beta2_capacity_requirements_t *capacity,
     long count,
     char *device_class_name,
     list_t *selectors,
@@ -19,6 +20,7 @@ static v1beta2_exact_device_request_t *v1beta2_exact_device_request_create_inter
     }
     v1beta2_exact_device_request_local_var->admin_access = admin_access;
     v1beta2_exact_device_request_local_var->allocation_mode = allocation_mode;
+    v1beta2_exact_device_request_local_var->capacity = capacity;
     v1beta2_exact_device_request_local_var->count = count;
     v1beta2_exact_device_request_local_var->device_class_name = device_class_name;
     v1beta2_exact_device_request_local_var->selectors = selectors;
@@ -31,6 +33,7 @@ static v1beta2_exact_device_request_t *v1beta2_exact_device_request_create_inter
 __attribute__((deprecated)) v1beta2_exact_device_request_t *v1beta2_exact_device_request_create(
     int admin_access,
     char *allocation_mode,
+    v1beta2_capacity_requirements_t *capacity,
     long count,
     char *device_class_name,
     list_t *selectors,
@@ -39,6 +42,7 @@ __attribute__((deprecated)) v1beta2_exact_device_request_t *v1beta2_exact_device
     return v1beta2_exact_device_request_create_internal (
         admin_access,
         allocation_mode,
+        capacity,
         count,
         device_class_name,
         selectors,
@@ -58,6 +62,10 @@ void v1beta2_exact_device_request_free(v1beta2_exact_device_request_t *v1beta2_e
     if (v1beta2_exact_device_request->allocation_mode) {
         free(v1beta2_exact_device_request->allocation_mode);
         v1beta2_exact_device_request->allocation_mode = NULL;
+    }
+    if (v1beta2_exact_device_request->capacity) {
+        v1beta2_capacity_requirements_free(v1beta2_exact_device_request->capacity);
+        v1beta2_exact_device_request->capacity = NULL;
     }
     if (v1beta2_exact_device_request->device_class_name) {
         free(v1beta2_exact_device_request->device_class_name);
@@ -95,6 +103,19 @@ cJSON *v1beta2_exact_device_request_convertToJSON(v1beta2_exact_device_request_t
     if(v1beta2_exact_device_request->allocation_mode) {
     if(cJSON_AddStringToObject(item, "allocationMode", v1beta2_exact_device_request->allocation_mode) == NULL) {
     goto fail; //String
+    }
+    }
+
+
+    // v1beta2_exact_device_request->capacity
+    if(v1beta2_exact_device_request->capacity) {
+    cJSON *capacity_local_JSON = v1beta2_capacity_requirements_convertToJSON(v1beta2_exact_device_request->capacity);
+    if(capacity_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "capacity", capacity_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
     }
     }
 
@@ -167,6 +188,9 @@ v1beta2_exact_device_request_t *v1beta2_exact_device_request_parseFromJSON(cJSON
 
     v1beta2_exact_device_request_t *v1beta2_exact_device_request_local_var = NULL;
 
+    // define the local variable for v1beta2_exact_device_request->capacity
+    v1beta2_capacity_requirements_t *capacity_local_nonprim = NULL;
+
     // define the local list for v1beta2_exact_device_request->selectors
     list_t *selectorsList = NULL;
 
@@ -195,6 +219,15 @@ v1beta2_exact_device_request_t *v1beta2_exact_device_request_parseFromJSON(cJSON
     {
     goto end; //String
     }
+    }
+
+    // v1beta2_exact_device_request->capacity
+    cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1beta2_exact_device_requestJSON, "capacity");
+    if (cJSON_IsNull(capacity)) {
+        capacity = NULL;
+    }
+    if (capacity) { 
+    capacity_local_nonprim = v1beta2_capacity_requirements_parseFromJSON(capacity); //nonprimitive
     }
 
     // v1beta2_exact_device_request->count
@@ -276,6 +309,7 @@ v1beta2_exact_device_request_t *v1beta2_exact_device_request_parseFromJSON(cJSON
     v1beta2_exact_device_request_local_var = v1beta2_exact_device_request_create_internal (
         admin_access ? admin_access->valueint : 0,
         allocation_mode && !cJSON_IsNull(allocation_mode) ? strdup(allocation_mode->valuestring) : NULL,
+        capacity ? capacity_local_nonprim : NULL,
         count ? count->valuedouble : 0,
         strdup(device_class_name->valuestring),
         selectors ? selectorsList : NULL,
@@ -284,6 +318,10 @@ v1beta2_exact_device_request_t *v1beta2_exact_device_request_parseFromJSON(cJSON
 
     return v1beta2_exact_device_request_local_var;
 end:
+    if (capacity_local_nonprim) {
+        v1beta2_capacity_requirements_free(capacity_local_nonprim);
+        capacity_local_nonprim = NULL;
+    }
     if (selectorsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, selectorsList) {

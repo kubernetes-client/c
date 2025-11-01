@@ -18,6 +18,7 @@ typedef struct v1_volume_projection_t v1_volume_projection_t;
 #include "v1_cluster_trust_bundle_projection.h"
 #include "v1_config_map_projection.h"
 #include "v1_downward_api_projection.h"
+#include "v1_pod_certificate_projection.h"
 #include "v1_secret_projection.h"
 #include "v1_service_account_token_projection.h"
 
@@ -27,6 +28,7 @@ typedef struct v1_volume_projection_t {
     struct v1_cluster_trust_bundle_projection_t *cluster_trust_bundle; //model
     struct v1_config_map_projection_t *config_map; //model
     struct v1_downward_api_projection_t *downward_api; //model
+    struct v1_pod_certificate_projection_t *pod_certificate; //model
     struct v1_secret_projection_t *secret; //model
     struct v1_service_account_token_projection_t *service_account_token; //model
 
@@ -37,6 +39,7 @@ __attribute__((deprecated)) v1_volume_projection_t *v1_volume_projection_create(
     v1_cluster_trust_bundle_projection_t *cluster_trust_bundle,
     v1_config_map_projection_t *config_map,
     v1_downward_api_projection_t *downward_api,
+    v1_pod_certificate_projection_t *pod_certificate,
     v1_secret_projection_t *secret,
     v1_service_account_token_projection_t *service_account_token
 );

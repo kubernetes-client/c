@@ -24,6 +24,7 @@ v1beta1_allocation_result_t* instantiate_v1beta1_allocation_result(int include_o
   v1beta1_allocation_result_t* v1beta1_allocation_result = NULL;
   if (include_optional) {
     v1beta1_allocation_result = v1beta1_allocation_result_create(
+      "2013-10-20T19:20:30+01:00",
        // false, not to have infinite recursion
       instantiate_v1beta1_device_allocation_result(0),
        // false, not to have infinite recursion
@@ -31,6 +32,7 @@ v1beta1_allocation_result_t* instantiate_v1beta1_allocation_result(int include_o
     );
   } else {
     v1beta1_allocation_result = v1beta1_allocation_result_create(
+      "2013-10-20T19:20:30+01:00",
       NULL,
       NULL
     );
