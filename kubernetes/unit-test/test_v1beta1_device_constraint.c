@@ -23,10 +23,12 @@ v1beta1_device_constraint_t* instantiate_v1beta1_device_constraint(int include_o
   if (include_optional) {
     v1beta1_device_constraint = v1beta1_device_constraint_create(
       "0",
+      "0",
       list_createList()
     );
   } else {
     v1beta1_device_constraint = v1beta1_device_constraint_create(
+      "0",
       "0",
       list_createList()
     );

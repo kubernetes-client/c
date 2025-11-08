@@ -1,7 +1,7 @@
 /*
  * v1beta2_allocated_device_status.h
  *
- * AllocatedDeviceStatus contains the status of an allocated device, if the driver chooses to report it. This may include driver-specific information.
+ * AllocatedDeviceStatus contains the status of an allocated device, if the driver chooses to report it. This may include driver-specific information.  The combination of Driver, Pool, Device, and ShareID must match the corresponding key in Status.Allocation.Devices.
  */
 
 #ifndef _v1beta2_allocated_device_status_H_
@@ -28,6 +28,7 @@ typedef struct v1beta2_allocated_device_status_t {
     char *driver; // string
     struct v1beta2_network_device_data_t *network_data; //model
     char *pool; // string
+    char *share_id; // string
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1beta2_allocated_device_status_t;
@@ -38,7 +39,8 @@ __attribute__((deprecated)) v1beta2_allocated_device_status_t *v1beta2_allocated
     char *device,
     char *driver,
     v1beta2_network_device_data_t *network_data,
-    char *pool
+    char *pool,
+    char *share_id
 );
 
 void v1beta2_allocated_device_status_free(v1beta2_allocated_device_status_t *v1beta2_allocated_device_status);

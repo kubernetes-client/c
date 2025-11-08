@@ -19,6 +19,8 @@
 #include "../model/v1_storage_class_list.h"
 #include "../model/v1_volume_attachment.h"
 #include "../model/v1_volume_attachment_list.h"
+#include "../model/v1_volume_attributes_class.h"
+#include "../model/v1_volume_attributes_class_list.h"
 
 
 // create a CSIDriver
@@ -49,6 +51,12 @@ StorageV1API_createStorageClass(apiClient_t *apiClient, v1_storage_class_t *body
 //
 v1_volume_attachment_t*
 StorageV1API_createVolumeAttachment(apiClient_t *apiClient, v1_volume_attachment_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+
+
+// create a VolumeAttributesClass
+//
+v1_volume_attributes_class_t*
+StorageV1API_createVolumeAttributesClass(apiClient_t *apiClient, v1_volume_attributes_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // delete a CSIDriver
@@ -93,6 +101,12 @@ v1_status_t*
 StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
 
 
+// delete collection of VolumeAttributesClass
+//
+v1_status_t*
+StorageV1API_deleteCollectionVolumeAttributesClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+
+
 // delete a CSIStorageCapacity
 //
 v1_status_t*
@@ -109,6 +123,12 @@ StorageV1API_deleteStorageClass(apiClient_t *apiClient, char *name, char *pretty
 //
 v1_volume_attachment_t*
 StorageV1API_deleteVolumeAttachment(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+
+
+// delete a VolumeAttributesClass
+//
+v1_volume_attributes_class_t*
+StorageV1API_deleteVolumeAttributesClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
@@ -153,6 +173,12 @@ v1_volume_attachment_list_t*
 StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
 
 
+// list or watch objects of kind VolumeAttributesClass
+//
+v1_volume_attributes_class_list_t*
+StorageV1API_listVolumeAttributesClass(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+
+
 // partially update the specified CSIDriver
 //
 v1_csi_driver_t*
@@ -187,6 +213,12 @@ StorageV1API_patchVolumeAttachment(apiClient_t *apiClient, char *name, object_t 
 //
 v1_volume_attachment_t*
 StorageV1API_patchVolumeAttachmentStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+
+
+// partially update the specified VolumeAttributesClass
+//
+v1_volume_attributes_class_t*
+StorageV1API_patchVolumeAttributesClass(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // read the specified CSIDriver
@@ -225,6 +257,12 @@ v1_volume_attachment_t*
 StorageV1API_readVolumeAttachmentStatus(apiClient_t *apiClient, char *name, char *pretty);
 
 
+// read the specified VolumeAttributesClass
+//
+v1_volume_attributes_class_t*
+StorageV1API_readVolumeAttributesClass(apiClient_t *apiClient, char *name, char *pretty);
+
+
 // replace the specified CSIDriver
 //
 v1_csi_driver_t*
@@ -259,5 +297,11 @@ StorageV1API_replaceVolumeAttachment(apiClient_t *apiClient, char *name, v1_volu
 //
 v1_volume_attachment_t*
 StorageV1API_replaceVolumeAttachmentStatus(apiClient_t *apiClient, char *name, v1_volume_attachment_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+
+
+// replace the specified VolumeAttributesClass
+//
+v1_volume_attributes_class_t*
+StorageV1API_replaceVolumeAttributesClass(apiClient_t *apiClient, char *name, v1_volume_attributes_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 

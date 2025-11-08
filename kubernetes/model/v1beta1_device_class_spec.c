@@ -7,6 +7,7 @@
 
 static v1beta1_device_class_spec_t *v1beta1_device_class_spec_create_internal(
     list_t *config,
+    char *extended_resource_name,
     list_t *selectors
     ) {
     v1beta1_device_class_spec_t *v1beta1_device_class_spec_local_var = malloc(sizeof(v1beta1_device_class_spec_t));
@@ -14,6 +15,7 @@ static v1beta1_device_class_spec_t *v1beta1_device_class_spec_create_internal(
         return NULL;
     }
     v1beta1_device_class_spec_local_var->config = config;
+    v1beta1_device_class_spec_local_var->extended_resource_name = extended_resource_name;
     v1beta1_device_class_spec_local_var->selectors = selectors;
 
     v1beta1_device_class_spec_local_var->_library_owned = 1;
@@ -22,10 +24,12 @@ static v1beta1_device_class_spec_t *v1beta1_device_class_spec_create_internal(
 
 __attribute__((deprecated)) v1beta1_device_class_spec_t *v1beta1_device_class_spec_create(
     list_t *config,
+    char *extended_resource_name,
     list_t *selectors
     ) {
     return v1beta1_device_class_spec_create_internal (
         config,
+        extended_resource_name,
         selectors
         );
 }
@@ -45,6 +49,10 @@ void v1beta1_device_class_spec_free(v1beta1_device_class_spec_t *v1beta1_device_
         }
         list_freeList(v1beta1_device_class_spec->config);
         v1beta1_device_class_spec->config = NULL;
+    }
+    if (v1beta1_device_class_spec->extended_resource_name) {
+        free(v1beta1_device_class_spec->extended_resource_name);
+        v1beta1_device_class_spec->extended_resource_name = NULL;
     }
     if (v1beta1_device_class_spec->selectors) {
         list_ForEach(listEntry, v1beta1_device_class_spec->selectors) {
@@ -75,6 +83,14 @@ cJSON *v1beta1_device_class_spec_convertToJSON(v1beta1_device_class_spec_t *v1be
     }
     cJSON_AddItemToArray(config, itemLocal);
     }
+    }
+    }
+
+
+    // v1beta1_device_class_spec->extended_resource_name
+    if(v1beta1_device_class_spec->extended_resource_name) {
+    if(cJSON_AddStringToObject(item, "extendedResourceName", v1beta1_device_class_spec->extended_resource_name) == NULL) {
+    goto fail; //String
     }
     }
 
@@ -140,6 +156,18 @@ v1beta1_device_class_spec_t *v1beta1_device_class_spec_parseFromJSON(cJSON *v1be
     }
     }
 
+    // v1beta1_device_class_spec->extended_resource_name
+    cJSON *extended_resource_name = cJSON_GetObjectItemCaseSensitive(v1beta1_device_class_specJSON, "extendedResourceName");
+    if (cJSON_IsNull(extended_resource_name)) {
+        extended_resource_name = NULL;
+    }
+    if (extended_resource_name) { 
+    if(!cJSON_IsString(extended_resource_name) && !cJSON_IsNull(extended_resource_name))
+    {
+    goto end; //String
+    }
+    }
+
     // v1beta1_device_class_spec->selectors
     cJSON *selectors = cJSON_GetObjectItemCaseSensitive(v1beta1_device_class_specJSON, "selectors");
     if (cJSON_IsNull(selectors)) {
@@ -167,6 +195,7 @@ v1beta1_device_class_spec_t *v1beta1_device_class_spec_parseFromJSON(cJSON *v1be
 
     v1beta1_device_class_spec_local_var = v1beta1_device_class_spec_create_internal (
         config ? configList : NULL,
+        extended_resource_name && !cJSON_IsNull(extended_resource_name) ? strdup(extended_resource_name->valuestring) : NULL,
         selectors ? selectorsList : NULL
         );
 

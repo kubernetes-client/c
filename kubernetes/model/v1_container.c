@@ -20,6 +20,7 @@ static v1_container_t *v1_container_create_internal(
     list_t *resize_policy,
     v1_resource_requirements_t *resources,
     char *restart_policy,
+    list_t *restart_policy_rules,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,
     int _stdin,
@@ -49,6 +50,7 @@ static v1_container_t *v1_container_create_internal(
     v1_container_local_var->resize_policy = resize_policy;
     v1_container_local_var->resources = resources;
     v1_container_local_var->restart_policy = restart_policy;
+    v1_container_local_var->restart_policy_rules = restart_policy_rules;
     v1_container_local_var->security_context = security_context;
     v1_container_local_var->startup_probe = startup_probe;
     v1_container_local_var->_stdin = _stdin;
@@ -79,6 +81,7 @@ __attribute__((deprecated)) v1_container_t *v1_container_create(
     list_t *resize_policy,
     v1_resource_requirements_t *resources,
     char *restart_policy,
+    list_t *restart_policy_rules,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,
     int _stdin,
@@ -105,6 +108,7 @@ __attribute__((deprecated)) v1_container_t *v1_container_create(
         resize_policy,
         resources,
         restart_policy,
+        restart_policy_rules,
         security_context,
         startup_probe,
         _stdin,
@@ -200,6 +204,13 @@ void v1_container_free(v1_container_t *v1_container) {
     if (v1_container->restart_policy) {
         free(v1_container->restart_policy);
         v1_container->restart_policy = NULL;
+    }
+    if (v1_container->restart_policy_rules) {
+        list_ForEach(listEntry, v1_container->restart_policy_rules) {
+            v1_container_restart_rule_free(listEntry->data);
+        }
+        list_freeList(v1_container->restart_policy_rules);
+        v1_container->restart_policy_rules = NULL;
     }
     if (v1_container->security_context) {
         v1_security_context_free(v1_container->security_context);
@@ -440,6 +451,26 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
     }
 
 
+    // v1_container->restart_policy_rules
+    if(v1_container->restart_policy_rules) {
+    cJSON *restart_policy_rules = cJSON_AddArrayToObject(item, "restartPolicyRules");
+    if(restart_policy_rules == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *restart_policy_rulesListEntry;
+    if (v1_container->restart_policy_rules) {
+    list_ForEach(restart_policy_rulesListEntry, v1_container->restart_policy_rules) {
+    cJSON *itemLocal = v1_container_restart_rule_convertToJSON(restart_policy_rulesListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(restart_policy_rules, itemLocal);
+    }
+    }
+    }
+
+
     // v1_container->security_context
     if(v1_container->security_context) {
     cJSON *security_context_local_JSON = v1_security_context_convertToJSON(v1_container->security_context);
@@ -594,6 +625,9 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
 
     // define the local variable for v1_container->resources
     v1_resource_requirements_t *resources_local_nonprim = NULL;
+
+    // define the local list for v1_container->restart_policy_rules
+    list_t *restart_policy_rulesList = NULL;
 
     // define the local variable for v1_container->security_context
     v1_security_context_t *security_context_local_nonprim = NULL;
@@ -834,6 +868,30 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     }
     }
 
+    // v1_container->restart_policy_rules
+    cJSON *restart_policy_rules = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "restartPolicyRules");
+    if (cJSON_IsNull(restart_policy_rules)) {
+        restart_policy_rules = NULL;
+    }
+    if (restart_policy_rules) { 
+    cJSON *restart_policy_rules_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(restart_policy_rules)){
+        goto end; //nonprimitive container
+    }
+
+    restart_policy_rulesList = list_createList();
+
+    cJSON_ArrayForEach(restart_policy_rules_local_nonprimitive,restart_policy_rules )
+    {
+        if(!cJSON_IsObject(restart_policy_rules_local_nonprimitive)){
+            goto end;
+        }
+        v1_container_restart_rule_t *restart_policy_rulesItem = v1_container_restart_rule_parseFromJSON(restart_policy_rules_local_nonprimitive);
+
+        list_addElement(restart_policy_rulesList, restart_policy_rulesItem);
+    }
+    }
+
     // v1_container->security_context
     cJSON *security_context = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "securityContext");
     if (cJSON_IsNull(security_context)) {
@@ -988,6 +1046,7 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
         resize_policy ? resize_policyList : NULL,
         resources ? resources_local_nonprim : NULL,
         restart_policy && !cJSON_IsNull(restart_policy) ? strdup(restart_policy->valuestring) : NULL,
+        restart_policy_rules ? restart_policy_rulesList : NULL,
         security_context ? security_context_local_nonprim : NULL,
         startup_probe ? startup_probe_local_nonprim : NULL,
         _stdin ? _stdin->valueint : 0,
@@ -1071,6 +1130,15 @@ end:
     if (resources_local_nonprim) {
         v1_resource_requirements_free(resources_local_nonprim);
         resources_local_nonprim = NULL;
+    }
+    if (restart_policy_rulesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, restart_policy_rulesList) {
+            v1_container_restart_rule_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(restart_policy_rulesList);
+        restart_policy_rulesList = NULL;
     }
     if (security_context_local_nonprim) {
         v1_security_context_free(security_context_local_nonprim);

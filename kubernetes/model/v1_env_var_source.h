@@ -16,6 +16,7 @@
 typedef struct v1_env_var_source_t v1_env_var_source_t;
 
 #include "v1_config_map_key_selector.h"
+#include "v1_file_key_selector.h"
 #include "v1_object_field_selector.h"
 #include "v1_resource_field_selector.h"
 #include "v1_secret_key_selector.h"
@@ -25,6 +26,7 @@ typedef struct v1_env_var_source_t v1_env_var_source_t;
 typedef struct v1_env_var_source_t {
     struct v1_config_map_key_selector_t *config_map_key_ref; //model
     struct v1_object_field_selector_t *field_ref; //model
+    struct v1_file_key_selector_t *file_key_ref; //model
     struct v1_resource_field_selector_t *resource_field_ref; //model
     struct v1_secret_key_selector_t *secret_key_ref; //model
 
@@ -34,6 +36,7 @@ typedef struct v1_env_var_source_t {
 __attribute__((deprecated)) v1_env_var_source_t *v1_env_var_source_create(
     v1_config_map_key_selector_t *config_map_key_ref,
     v1_object_field_selector_t *field_ref,
+    v1_file_key_selector_t *file_key_ref,
     v1_resource_field_selector_t *resource_field_ref,
     v1_secret_key_selector_t *secret_key_ref
 );

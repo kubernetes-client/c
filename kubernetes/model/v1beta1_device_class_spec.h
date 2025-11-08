@@ -22,6 +22,7 @@ typedef struct v1beta1_device_class_spec_t v1beta1_device_class_spec_t;
 
 typedef struct v1beta1_device_class_spec_t {
     list_t *config; //nonprimitive container
+    char *extended_resource_name; // string
     list_t *selectors; //nonprimitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -29,6 +30,7 @@ typedef struct v1beta1_device_class_spec_t {
 
 __attribute__((deprecated)) v1beta1_device_class_spec_t *v1beta1_device_class_spec_create(
     list_t *config,
+    char *extended_resource_name,
     list_t *selectors
 );
 

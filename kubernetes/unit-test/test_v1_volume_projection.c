@@ -19,6 +19,7 @@ v1_volume_projection_t* instantiate_v1_volume_projection(int include_optional);
 #include "test_v1_cluster_trust_bundle_projection.c"
 #include "test_v1_config_map_projection.c"
 #include "test_v1_downward_api_projection.c"
+#include "test_v1_pod_certificate_projection.c"
 #include "test_v1_secret_projection.c"
 #include "test_v1_service_account_token_projection.c"
 
@@ -34,12 +35,15 @@ v1_volume_projection_t* instantiate_v1_volume_projection(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_downward_api_projection(0),
        // false, not to have infinite recursion
+      instantiate_v1_pod_certificate_projection(0),
+       // false, not to have infinite recursion
       instantiate_v1_secret_projection(0),
        // false, not to have infinite recursion
       instantiate_v1_service_account_token_projection(0)
     );
   } else {
     v1_volume_projection = v1_volume_projection_create(
+      NULL,
       NULL,
       NULL,
       NULL,

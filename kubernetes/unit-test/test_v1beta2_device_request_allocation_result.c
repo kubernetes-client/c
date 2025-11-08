@@ -23,6 +23,10 @@ v1beta2_device_request_allocation_result_t* instantiate_v1beta2_device_request_a
   if (include_optional) {
     v1beta2_device_request_allocation_result = v1beta2_device_request_allocation_result_create(
       1,
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      "0",
       "0",
       "0",
       "0",
@@ -32,6 +36,10 @@ v1beta2_device_request_allocation_result_t* instantiate_v1beta2_device_request_a
   } else {
     v1beta2_device_request_allocation_result = v1beta2_device_request_allocation_result_create(
       1,
+      list_createList(),
+      list_createList(),
+      list_createList(),
+      "0",
       "0",
       "0",
       "0",

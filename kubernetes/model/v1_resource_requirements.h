@@ -15,7 +15,7 @@
 
 typedef struct v1_resource_requirements_t v1_resource_requirements_t;
 
-#include "v1_resource_claim.h"
+#include "core_v1_resource_claim.h"
 
 
 
