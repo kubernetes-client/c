@@ -9,6 +9,7 @@ include_directories(../../)
 include_directories(../../../)
 include_directories(../../../../include/)
 include_directories(../../../../external/)
+include_directories(../../../../src/)
 
 aux_source_directory(. DIR_SRCS)
 
