@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
     genericClient_t *genericClient = genericClient_create(apiClient, "apps", "v1", "deployments");
 
-    char *list = Generic_listNamespaced(genericClient, "default");
+    char *list = Generic_listNamespaced(genericClient, "default", NULL);
     printf("%s\n", list);
     free(list);
 

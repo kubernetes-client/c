@@ -20,8 +20,8 @@ void genericClient_free(genericClient_t* client);
 char* Generic_readNamespacedResource(genericClient_t *client, const char *ns, const char *name);
 char* Generic_readResource(genericClient_t *client, const char *name);
 
-char* Generic_listNamespaced(genericClient_t *client, const char *ns);
-char* Generic_list(genericClient_t *client);
+char* Generic_listNamespaced(genericClient_t *client, const char *ns, list_t *queryParameters);
+char* Generic_list(genericClient_t *client, list_t *queryParameters);
 
 char* Generic_deleteNamespacedResource(genericClient_t *client, const char *ns, const char *name);
 char* Generic_deleteResource(genericClient_t *client, const char* name);
