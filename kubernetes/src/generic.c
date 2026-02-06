@@ -123,16 +123,16 @@ char *Generic_list(genericClient_t *client, list_t *queryParameters) {
     return callSimplifiedInternal(client, path, "GET", NULL, queryParameters);
 }
 
-char* Generic_deleteNamespacedResource(genericClient_t *client, const char *namespace, const char *name) {
+char* Generic_deleteNamespacedResource(genericClient_t *client, const char *namespace, const char *name, const char* body) {
     char path[128];
     makeNamespacedResourcePath(path, client, namespace, name);
-    return callSimplifiedInternal(client, path, "DELETE", NULL, NULL);
+    return callSimplifiedInternal(client, path, "DELETE", body, NULL);
 }
 
-char* Generic_deleteResource(genericClient_t *client, const char* name) {
+char* Generic_deleteResource(genericClient_t *client, const char* name, const char* body) {
     char path[128];
     makeResourcePath(path, client, name);
-    return callSimplifiedInternal(client, path, "DELETE", NULL, NULL);
+    return callSimplifiedInternal(client, path, "DELETE", body, NULL);
 }
 
 char* Generic_createNamespacedResource(genericClient_t *client, const char *ns, const char* body) {
