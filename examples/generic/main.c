@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     list_freeList(contentType);
     free(patch);
 
-    char *del = Generic_deleteResource(genericClient, "test");
+    char *del = Generic_deleteResource(genericClient, "test", NULL);
     printf("%s\n", del);
     free(del);
 
