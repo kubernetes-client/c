@@ -135,16 +135,16 @@ char* Generic_deleteResource(genericClient_t *client, const char* name, const ch
     return callSimplifiedInternal(client, path, "DELETE", body, NULL);
 }
 
-char* Generic_createNamespacedResource(genericClient_t *client, const char *ns, const char* body) {
+char* Generic_createNamespacedResource(genericClient_t *client, const char *ns, const char* body, list_t *queryParameters) {
     char path[128];
     makeNamespacedResourcePath(path, client, ns, "");
-    return callSimplifiedInternal(client, path, "POST", body, NULL);
+    return callSimplifiedInternal(client, path, "POST", body, queryParameters);
 }
 
-char* Generic_createResource(genericClient_t *client, const char* body) {
+char* Generic_createResource(genericClient_t *client, const char* body, list_t *queryParameters) {
     char path[128];
     makeResourcePath(path, client, "");
-    return callSimplifiedInternal(client, path, "POST", body, NULL);
+    return callSimplifiedInternal(client, path, "POST", body, queryParameters);
 }
 
 char* Generic_replaceNamespacedResource(genericClient_t *client, const char *ns, const char *name, const char* body) {

@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     genericClient = genericClient_create(apiClient, "", "v1", "namespaces");
 
     const char *body = "{\"apiVersion\": \"v1\", \"kind\": \"Namespace\", \"metadata\": { \"name\": \"test\" } }";
-    char *create = Generic_createResource(genericClient, body);
+    char *create = Generic_createResource(genericClient, body, NULL);
     printf("%s\n", create);
     free(create);
 
