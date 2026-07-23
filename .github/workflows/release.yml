@@ -22,7 +22,7 @@ jobs:
           echo "${{ github.ref_name }}" | perl -ne 'die unless m/^release-\d+\.\d+$/'
           echo "${{ github.event.inputs.releaseVersion }}" | perl -ne 'die unless m/^\d+\.\d+\.\d+$/'
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Check Actor
         run: |
           # Release actor should be in the OWNER list
